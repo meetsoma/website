@@ -1,0 +1,297 @@
+---
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalUrl?: string;
+  jsonLd?: Record<string, any>;
+  ogType?: string;
+}
+
+const {
+  title,
+  description = "Soma — An AI agent that grows with you. Memory that persists. Identity that evolves.",
+  canonicalUrl = Astro.url.href.replace(/\/$/, '') || "https://soma.gravicity.ai",
+  jsonLd,
+  ogType = "website",
+} = Astro.props;
+
+// Default JSON-LD: SoftwareApplication (shows on all pages if no override)
+const defaultJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Soma',
+  description: 'An AI agent that grows with you. Memory that persists across sessions. Identity that evolves through use.',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'macOS, Linux, Windows',
+  url: 'https://soma.gravicity.ai',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'Gravicity',
+    url: 'https://gravicity.ai',
+  },
+};
+
+const schemaData = jsonLd || defaultJsonLd;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" type="application/rss+xml" title="Soma Blog" href="/rss.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content="https://soma.gravicity.ai/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://soma.gravicity.ai/og-image.png" />
+
+    <!-- Fonts: Clash Display + Satoshi from Fontshare -->
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+
+    <title>{title}</title>
+
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+
+    <script is:inline>
+      (() => {
+        const saved = localStorage.getItem('soma-theme');
+        const theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
+
+    <style is:global>
+      :root {
+        /* Soma deep space palette */
+        --bg-deep: #06080e;
+        --bg-surface: #0b1018;
+        --bg-elevated: #121a28;
+
+        /* Soma blue — drawn from the mascot's planet body */
+        --accent-bright: #6898be;
+        --accent-mid: #5282a8;
+        --accent-dark: #3e6c92;
+
+        /* Moon accent — warm complement */
+        --moon-bright: #7cb2d4;
+        --moon-mid: #669cc0;
+        --moon-glow: rgba(124, 178, 212, 0.4);
+
+        /* Signal warmth — for CTAs, highlights */
+        --warm-bright: #e8a87c;
+        --warm-mid: #d4926a;
+        --warm-glow: rgba(232, 168, 124, 0.3);
+
+        /* Text */
+        --text-primary: #e4eaf4;
+        --text-secondary: #8494aa;
+        --text-muted: #566478;
+
+        /* Borders */
+        --border-subtle: rgba(132, 148, 170, 0.12);
+        --border-accent: rgba(104, 152, 190, 0.3);
+
+        /* Surfaces */
+        --surface-card: rgba(11, 16, 24, 0.7);
+        --surface-card-strong: rgba(11, 16, 24, 0.85);
+        --surface-overlay: rgba(0, 0, 0, 0.3);
+        --surface-interactive: rgba(255, 255, 255, 0.06);
+        --surface-interactive-hover: rgba(255, 255, 255, 0.12);
+        --surface-accent-soft: rgba(104, 152, 190, 0.12);
+        --surface-warm-soft: rgba(232, 168, 124, 0.1);
+        --surface-inset-highlight: rgba(255, 255, 255, 0.04);
+
+        /* Shadows */
+        --shadow-accent-soft: rgba(104, 152, 190, 0.15);
+        --shadow-accent-mid: rgba(104, 152, 190, 0.25);
+        --shadow-warm-soft: rgba(232, 168, 124, 0.15);
+
+        /* Hero gradient */
+        --hero-title-start: #e4eaf4;
+        --hero-title-end: #7cb2d4;
+
+        /* Logo */
+        --logo-glow: rgba(104, 152, 190, 0.35);
+        --logo-glow-hover: rgba(124, 178, 212, 0.5);
+
+        /* Fonts */
+        --font-display: 'Clash Display', system-ui, sans-serif;
+        --font-body: 'Satoshi', system-ui, sans-serif;
+        --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+      }
+
+      html[data-theme='light'] {
+        /* Light theme: "darkened lights" — strong contrast against white */
+        --bg-deep: #f4f6f9;
+        --bg-surface: #ffffff;
+        --bg-elevated: #e8ecf2;
+
+        /* Deeper accent tones for readability */
+        --accent-bright: #2e6094;
+        --accent-mid: #245080;
+        --accent-dark: #1a3d66;
+
+        --moon-bright: #3878a0;
+        --moon-mid: #2d6888;
+        --moon-glow: rgba(46, 96, 148, 0.2);
+
+        --warm-bright: #a85a2a;
+        --warm-mid: #8e4820;
+        --warm-glow: rgba(168, 90, 42, 0.18);
+
+        /* Dark text for real contrast */
+        --text-primary: #0a0f1a;
+        --text-secondary: #2a3648;
+        --text-muted: #4a5a70;
+
+        /* Visible borders */
+        --border-subtle: rgba(10, 15, 26, 0.18);
+        --border-accent: rgba(46, 96, 148, 0.35);
+
+        /* Cards with subtle warmth, not invisible */
+        --surface-card: rgba(255, 255, 255, 0.95);
+        --surface-card-strong: rgba(248, 250, 252, 1);
+        --surface-overlay: rgba(100, 120, 145, 0.22);
+        --surface-interactive: rgba(10, 15, 26, 0.08);
+        --surface-interactive-hover: rgba(10, 15, 26, 0.14);
+        --surface-accent-soft: rgba(46, 96, 148, 0.1);
+        --surface-warm-soft: rgba(168, 90, 42, 0.08);
+        --surface-inset-highlight: rgba(10, 15, 26, 0.06);
+
+        /* Visible shadows */
+        --shadow-accent-soft: rgba(46, 96, 148, 0.2);
+        --shadow-accent-mid: rgba(46, 96, 148, 0.32);
+        --shadow-warm-soft: rgba(168, 90, 42, 0.18);
+
+        --hero-title-start: #1a3d66;
+        --hero-title-end: #2e6094;
+
+        --logo-glow: rgba(46, 96, 148, 0.15);
+        --logo-glow-hover: rgba(46, 96, 148, 0.28);
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: var(--font-body);
+        background: var(--bg-deep);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      ::selection {
+        background: var(--accent-bright);
+        color: var(--bg-deep);
+      }
+
+      /* Starfield — subtle, not overwhelming */
+      html[data-theme='light'] .stars { opacity: 0.2; }
+      html[data-theme='light'] .nebula { opacity: 0.4; }
+
+      /* Theme toggle */
+      .theme-toggle {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 999;
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        border: 1px solid var(--border-subtle);
+        background: var(--surface-card-strong);
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        transition: all 0.2s ease;
+        padding: 0;
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--border-accent);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px var(--shadow-accent-soft);
+      }
+
+      .theme-toggle-icon {
+        font-size: 1.05rem;
+        line-height: 1;
+        color: var(--text-secondary);
+        transition: transform 0.2s ease, color 0.2s ease;
+      }
+
+      .theme-toggle:hover .theme-toggle-icon {
+        color: var(--text-primary);
+        transform: rotate(10deg) scale(1.04);
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" type="button" aria-label="Switch color theme">
+      <span class="theme-toggle-icon" aria-hidden="true"></span>
+    </button>
+    <slot />
+    <Footer />
+
+    <script is:inline>
+      (() => {
+        const key = 'soma-theme';
+        const root = document.documentElement;
+        const toggle = document.querySelector('.theme-toggle');
+        const icon = document.querySelector('.theme-toggle-icon');
+        if (!toggle || !icon) return;
+
+        const apply = (theme, save = true) => {
+          root.dataset.theme = theme;
+          root.style.colorScheme = theme;
+          icon.textContent = theme === 'dark' ? '☀' : '☾';
+          toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+          if (save) localStorage.setItem(key, theme);
+        };
+
+        toggle.addEventListener('click', () => {
+          apply(root.dataset.theme === 'light' ? 'dark' : 'light');
+        });
+
+        apply(root.dataset.theme === 'light' ? 'light' : 'dark', false);
+      })();
+    </script>
+  </body>
+</html>

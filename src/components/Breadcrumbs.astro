@@ -1,0 +1,89 @@
+---
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+// Always starts with Home
+const crumbs: BreadcrumbItem[] = [
+  { label: 'Home', href: '/' },
+  ...items,
+];
+
+// JSON-LD BreadcrumbList schema
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    item: `https://soma.gravicity.ai${item.href}`,
+  })),
+};
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    {crumbs.map((item, i) => (
+      <li>
+        {i < crumbs.length - 1 ? (
+          <a href={item.href}>{item.label}</a>
+        ) : (
+          <span aria-current="page">{item.label}</span>
+        )}
+        {i < crumbs.length - 1 && <span class="sep" aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<style>
+  .breadcrumbs {
+    font-size: 0.82rem;
+    margin-bottom: 16px;
+  }
+
+  ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+  }
+
+  a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  a:hover {
+    color: var(--accent-bright);
+  }
+
+  span[aria-current] {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .sep {
+    margin: 0 8px;
+    color: var(--text-muted);
+    opacity: 0.5;
+  }
+</style>
