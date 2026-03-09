@@ -8,9 +8,9 @@ tags: ["memory", "mistakes", "building-in-public"]
 draft: false
 ---
 
-We deleted our own search tools and didn't notice for weeks.
+We deleted our own search tools and almost shipped without them.
 
-Not metaphorically. Literally. Two bash scripts — `soma-search.sh` and `soma-scan.sh` — that queried Soma's memory system. Type filtering, tag matching, TL;DR extraction, staleness detection. Useful, working tools that ran every day during development.
+Not metaphorically. Literally. Two bash scripts — `soma-search.sh` and `soma-scan.sh` — that queried Soma's memory system. Type filtering, tag matching, TL;DR extraction, staleness detection. Useful, working tools with tests that depended on them.
 
 Gone. One commit. `"cleanup: remove internal files before public release."` Ninety files deleted. Logo iterations, concept art, preview HTML — all genuinely disposable. But buried in the same sweep: six operational scripts. The search engine for the memory system, deleted by the system that was supposed to remember.
 
@@ -18,7 +18,7 @@ Gone. One commit. `"cleanup: remove internal files before public release."` Nine
 
 The instinct was subtraction. We were preparing for a public release and the repo had accumulated days of internal artifacts — logo drafts, vote files, design explorations. The `.soma/scripts/` directory sat next to `.soma/logos/`. Everything under `.soma/` felt internal. So we removed it all.
 
-No one checked if the scripts were referenced anywhere. No one ran the test suite after. Two tests started failing — `soma-search.sh not found`, `soma-scan.sh not found` — and the failures became background noise. The test count dropped from 124 to 122. Nobody noticed because nobody was counting.
+No one checked if the scripts were referenced anywhere. No one ran the test suite after. Two tests started failing — `soma-search.sh not found`, `soma-scan.sh not found`. The test count dropped from 124 to 122. It was caught in the same session during a test hygiene pass — but only because we happened to look.
 
 ## What We Lost
 
