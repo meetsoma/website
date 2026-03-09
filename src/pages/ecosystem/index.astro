@@ -1,13 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 ---
 
-<Layout title="Ecosystem — Soma" description="How Soma's four layers work together — extensions, skills, rituals, and protocols.">
+<Layout
+  title="Ecosystem — Soma"
+  description="How Soma's four layers work together — extensions, skills, rituals, and protocols."
+  canonicalUrl="https://soma.gravicity.ai/ecosystem"
+>
   <div class="stars"></div>
 
   <main class="container">
-    <a href="/" class="back-link">← Home</a>
+    <Breadcrumbs items={[
+      { label: 'Ecosystem', href: '/ecosystem' },
+    ]} />
 
     <header class="header">
       <h1 class="title">The Soma Ecosystem</h1>

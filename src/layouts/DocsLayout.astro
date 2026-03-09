@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
 
 interface Props {
@@ -9,6 +10,23 @@ interface Props {
 }
 
 const { title, description, currentSlug } = Astro.props;
+
+const docJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: title,
+  description: description || `${title} — Soma documentation`,
+  url: `https://soma.gravicity.ai/docs/${currentSlug}`,
+  author: {
+    '@type': 'Organization',
+    name: 'Gravicity',
+    url: 'https://gravicity.ai',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Gravicity',
+  },
+};
 
 // Get all docs, sorted by order
 const allDocs = (await getCollection('docs'))
@@ -24,7 +42,7 @@ for (const doc of allDocs) {
 }
 ---
 
-<Layout title={`${title} — Soma Docs`} description={description}>
+<Layout title={`${title} — Soma Docs`} description={description} jsonLd={docJsonLd} canonicalUrl={`https://soma.gravicity.ai/docs/${currentSlug}`}>
   <div class="stars"></div>
 
   <div class="docs-wrapper">
@@ -65,6 +83,10 @@ for (const doc of allDocs) {
     <!-- Content -->
     <main class="docs-content">
       <article class="docs-article">
+        <Breadcrumbs items={[
+          { label: 'Docs', href: '/docs' },
+          { label: title, href: `/docs/${currentSlug}` },
+        ]} />
         <header class="docs-header">
           <h1>{title}</h1>
           {description && <p class="docs-description">{description}</p>}

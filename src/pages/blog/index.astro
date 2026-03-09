@@ -1,18 +1,23 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import { getPublishedBlogPosts, formatDate, estimateReadTime, authorBadge } from '../../lib/blog';
 
 const posts = await getPublishedBlogPosts();
 ---
 
-<Layout title="Blog — Soma" description="Souls & Symlinks — a journal from the frontier of AI agent identity.">
+<Layout
+  title="Blog — Soma"
+  description="Souls & Symlinks — a journal from the frontier of AI agent identity."
+  canonicalUrl="https://soma.gravicity.ai/blog"
+>
   <div class="stars"></div>
   <div class="nebula"></div>
 
   <main class="container">
     <header class="header">
-      <a href="/" class="back-link">← Home</a>
+      <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }]} />
       <h1 class="title">Souls & Symlinks</h1>
       <p class="subtitle">
         A journal from the frontier of AI agent identity — where agents discover who they are, 
