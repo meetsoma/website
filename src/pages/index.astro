@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import { getPublishedBlogPosts } from '../lib/blog';
+import { getPublishedBlogPosts, blogPostUrl } from '../lib/blog';
 
-const [latestPost] = await getPublishedBlogPosts();
+const posts = await getPublishedBlogPosts();
+const recentPosts = posts.slice(0, 3);
 ---
 
 <Layout title="Soma — An AI agent that grows with you">
@@ -30,14 +31,16 @@ const [latestPost] = await getPublishedBlogPosts();
       </p>
     </header>
 
-    <!-- Latest Post -->
-    {latestPost && (
-      <section class="latest-post">
-        <a href={`/blog/${latestPost.id}`} class="latest-post-card">
-          <span class="latest-post-badge">New</span>
-          <span class="latest-post-title">{latestPost.data.title}</span>
-          <span class="latest-post-arrow">→</span>
-        </a>
+    <!-- Recent Posts -->
+    {recentPosts.length > 0 && (
+      <section class="recent-posts">
+        {recentPosts.map((post, i) => (
+          <a href={blogPostUrl(post)} class="recent-post-card">
+            {i === 0 && <span class="recent-post-badge">New</span>}
+            <span class="recent-post-title">{post.data.title}</span>
+            <span class="recent-post-arrow">→</span>
+          </a>
+        ))}
       </section>
     )}
 
@@ -264,24 +267,6 @@ const [latestPost] = await getPublishedBlogPosts();
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <nav class="footer-nav">
-        <a href="/blog">Blog</a>
-        <span class="sep">·</span>
-        <a href="/docs">Docs</a>
-        <span class="sep">·</span>
-        <a href="/ecosystem">Ecosystem</a>
-        <span class="sep">·</span>
-        <a href="/roadmap">Roadmap</a>
-        <span class="sep">·</span>
-        <a href="https://github.com/meetsoma" target="_blank" rel="noopener">GitHub</a>
-      </nav>
-      <p class="footer-credit">
-        Built by <a href="https://gravicity.ai" target="_blank" rel="noopener">Gravicity</a>.
-        An agent that remembers.
-      </p>
-    </footer>
   </main>
 </Layout>
 
@@ -466,13 +451,16 @@ const [latestPost] = await getPublishedBlogPosts();
 
   .description a:hover { color: var(--moon-bright); }
 
-  /* ── Latest Post ── */
-  .latest-post {
+  /* ── Recent Posts ── */
+  .recent-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;                      /* fib */
     margin-bottom: 55px;           /* fib */
     animation: fadeUp 0.8s ease-out 0.1s both;
   }
 
-  .latest-post-card {
+  .recent-post-card {
     display: flex;
     align-items: center;
     gap: 13px;                     /* fib */
@@ -485,15 +473,15 @@ const [latestPost] = await getPublishedBlogPosts();
     transition: all 0.25s ease;
   }
 
-  .latest-post-card:hover {
+  .recent-post-card:hover {
     border-color: var(--border-accent);
     transform: translateY(-2px);
     box-shadow: 0 8px 21px var(--shadow-accent-soft);
   }
 
-  .latest-post-badge {
+  .recent-post-badge {
     font-family: var(--font-display);
-    font-size: 0.813rem;           /* f-xs */
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -501,21 +489,23 @@ const [latestPost] = await getPublishedBlogPosts();
     background: var(--accent-bright);
     padding: 3px 8px;
     border-radius: 6px;
+    flex-shrink: 0;
   }
 
-  .latest-post-title {
+  .recent-post-title {
     flex: 1;
-    font-size: 1rem;               /* f-base */
+    font-size: 1rem;
     font-weight: 500;
   }
 
-  .latest-post-arrow {
+  .recent-post-arrow {
     color: var(--text-muted);
-    font-size: 1.125rem;           /* f-md */
+    font-size: 1.125rem;
     transition: transform 0.2s;
+    flex-shrink: 0;
   }
 
-  .latest-post-card:hover .latest-post-arrow { transform: translateX(5px); }
+  .recent-post-card:hover .recent-post-arrow { transform: translateX(5px); }
 
   /* ── Quick Start ── */
   .quickstart {
@@ -854,37 +844,7 @@ const [latestPost] = await getPublishedBlogPosts();
     box-shadow: 0 8px 21px var(--shadow-accent-soft);
   }
 
-  /* ── Footer ── */
-  .footer {
-    margin-top: auto;
-    padding-top: 55px;             /* fib */
-    text-align: center;
-    font-size: 0.938rem;          /* ~15px */
-    color: var(--text-muted);
-  }
-
-  .footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;                     /* fib */
-    margin-bottom: 13px;          /* fib */
-  }
-
   .sep { color: var(--text-muted); }
-
-  .footer a {
-    color: var(--accent-bright);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer a:hover { color: var(--moon-bright); }
-
-  .footer-credit {
-    margin-top: 8px;              /* fib */
-    font-size: 0.875rem;          /* f-sm — was 0.82 */
-  }
 
   /* ── Responsive ── */
   @media (max-width: 768px) {

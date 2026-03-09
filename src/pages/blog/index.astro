@@ -57,15 +57,6 @@ const posts = await getPublishedBlogPosts();
       </div>
     )}
 
-    <footer class="footer">
-      <nav class="footer-nav">
-        <a href="/">Home</a>
-        <span class="sep">·</span>
-        <a href="/docs">Docs</a>
-        <span class="sep">·</span>
-        <a href="https://github.com/meetsoma" target="_blank" rel="noopener">GitHub</a>
-      </nav>
-    </footer>
   </main>
 </Layout>
 
@@ -257,24 +248,6 @@ const posts = await getPublishedBlogPosts();
     background: var(--surface-accent-soft);
     border: 1px solid rgba(124, 178, 212, 0.15);
   }
-
-  /* Footer */
-  .footer {
-    margin-top: auto;
-    padding-top: 48px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-  }
-
-  .footer-nav { display: flex; justify-content: center; gap: 8px; }
-
-  .footer a {
-    color: var(--accent-bright);
-    text-decoration: none;
-  }
-
-  .footer a:hover { color: var(--moon-bright); }
 
   @media (max-width: 480px) {
     .container { padding: 24px 16px; }

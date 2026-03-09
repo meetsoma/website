@@ -78,9 +78,9 @@ const blogJsonLd = {
       </div>
     </article>
 
-    <footer class="footer">
+    <nav class="back-nav">
       <a href="/blog">← All posts</a>
-    </footer>
+    </nav>
   </main>
 </Layout>
 
@@ -251,20 +251,20 @@ const blogJsonLd = {
     margin: 24px 0;
   }
 
-  .footer {
-    margin-top: 64px;
-    padding-top: 32px;
+  .back-nav {
+    margin-top: 55px;
+    padding-top: 21px;
     border-top: 1px solid var(--border-subtle);
     text-align: center;
   }
 
-  .footer a {
+  .back-nav a {
     color: var(--accent-bright);
     text-decoration: none;
     font-size: 0.9rem;
   }
 
-  .footer a:hover { color: var(--moon-bright); }
+  .back-nav a:hover { color: var(--moon-bright); }
 
   @media (max-width: 480px) {
     .container { padding: 24px 16px; }

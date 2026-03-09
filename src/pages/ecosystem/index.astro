@@ -306,17 +306,6 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
       </div>
     </section>
 
-    <footer class="footer">
-      <nav class="footer-nav">
-        <a href="/">Home</a>
-        <span class="sep">·</span>
-        <a href="/blog">Blog</a>
-        <span class="sep">·</span>
-        <a href="/docs">Docs</a>
-        <span class="sep">·</span>
-        <a href="https://github.com/meetsoma" target="_blank" rel="noopener">GitHub</a>
-      </nav>
-    </footer>
   </main>
 </Layout>
 
@@ -660,15 +649,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
     color: var(--accent-bright);
   }
 
-  /* Footer */
-  .footer {
-    margin-top: auto; padding-top: 48px; text-align: center;
-    font-size: 0.9rem; color: var(--text-muted);
-  }
-  .footer-nav { display: flex; justify-content: center; gap: 8px; }
   .sep { color: var(--text-muted); }
-  .footer a { color: var(--accent-bright); text-decoration: none; }
-  .footer a:hover { color: var(--moon-bright); }
 
   @media (max-width: 768px) {
     .layer-details { grid-template-columns: 1fr; }
