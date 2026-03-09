@@ -12,7 +12,7 @@ We deleted our own search tools and almost shipped without them.
 
 Not metaphorically. Literally. Two bash scripts — `soma-search.sh` and `soma-scan.sh` — that queried Soma's memory system. Type filtering, tag matching, TL;DR extraction, staleness detection. Useful, working tools with tests that depended on them.
 
-Gone. One commit. `"cleanup: remove internal files before public release."` Ninety files deleted. Logo iterations, concept art, preview HTML — all genuinely disposable. But buried in the same sweep: six operational scripts. The search engine for the memory system, deleted by the system that was supposed to remember.
+Gone. One commit. `"cleanup: remove internal files before public release."` Ninety-seven files deleted. Logo iterations, concept art, preview HTML, media kits, design docs — lumped together with six operational scripts. Nothing was classified. Everything was treated as disposable. The search engine for the memory system, deleted by the system that was supposed to remember.
 
 ## How It Happened
 
