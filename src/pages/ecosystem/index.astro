@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 ---
 
-<Layout title="Ecosystem — Soma" description="How Soma's extensions, skills, rituals, and tools fit together.">
+<Layout title="Ecosystem — Soma" description="How Soma's four layers work together — extensions, skills, rituals, and protocols.">
   <div class="stars"></div>
 
   <main class="container">
@@ -12,8 +12,8 @@ import SectionHeader from '../../components/SectionHeader.astro';
     <header class="header">
       <h1 class="title">The Soma Ecosystem</h1>
       <p class="subtitle">
-        Extensions, skills, and rituals — three layers that give an AI agent 
-        persistent memory, evolving identity, and repeatable workflows.
+        Extensions, skills, rituals, and protocols — four layers that give an AI agent 
+        persistent memory, evolving identity, repeatable workflows, and adaptive behavior.
       </p>
     </header>
 
@@ -50,6 +50,10 @@ import SectionHeader from '../../components/SectionHeader.astro';
             <div class="diagram-node node-ritual">
               <span class="node-icon">◎</span>
               <span class="node-label">rituals</span>
+            </div>
+            <div class="diagram-node node-protocol">
+              <span class="node-icon">🧬</span>
+              <span class="node-label">protocols</span>
             </div>
           </div>
         </div>
@@ -131,8 +135,7 @@ import SectionHeader from '../../components/SectionHeader.astro';
           <div class="detail-col">
             <h4>Where they live</h4>
             <ul>
-              <li><code>~/.soma/agent/skills/</code> — global skills</li>
-              <li><code>~/.agents/skills/</code> — shared with other agents</li>
+              <li><code>~/.soma/skills/</code> — global skills</li>
               <li><code>.soma/skills/</code> — project-specific</li>
             </ul>
             <h4 class="mt">Examples</h4>
@@ -179,6 +182,98 @@ import SectionHeader from '../../components/SectionHeader.astro';
           </div>
         </div>
       </div>
+
+      <div class="layer-detail" id="protocols">
+        <div class="layer-header">
+          <span class="layer-glyph">🧬</span>
+          <div>
+            <h2 class="layer-title">Protocols</h2>
+            <p class="layer-kind">behavioral rules · adaptive · Markdown</p>
+          </div>
+        </div>
+        <p class="layer-body">
+          Protocols are behavioral rules the agent follows — not how to do a task, but how 
+          to <em>be</em>. Drop a protocol into your project and the agent adapts. The more a 
+          protocol gets used, the more deeply it's loaded. Unused protocols fade naturally.
+        </p>
+        <div class="layer-details">
+          <div class="detail-col">
+            <h4>How they work</h4>
+            <ul>
+              <li>Drop a <code>.md</code> file into <code>.soma/protocols/</code></li>
+              <li>Agent discovers it on next boot</li>
+              <li>Used protocols "heat up" — always loaded</li>
+              <li>Unused protocols "cool down" — fade out</li>
+              <li>Each protocol has a breadcrumb TL;DR for token efficiency</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h4>Where they live</h4>
+            <ul>
+              <li><code>~/.soma/protocols/</code> — global defaults</li>
+              <li><code>.soma/protocols/</code> — project-specific</li>
+            </ul>
+            <h4 class="mt">Core protocols</h4>
+            <ul>
+              <li><code>breath-cycle</code> — session lifecycle (inhale/hold/exhale)</li>
+              <li><code>frontmatter-standard</code> — document metadata rules</li>
+              <li><code>heat-tracking</code> — adaptive loading by usage</li>
+            </ul>
+            <p class="coming-soon">Heat system is enterprise. Free tier gets manual loading.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Templates -->
+    <section class="templates" id="templates">
+      <SectionHeader title="Agent Templates" />
+      <p class="templates-intro">
+        Share your entire agent setup as a template. A template is a preconfigured 
+        <code>.soma/</code> bundle — identity, protocols, skills, settings — that anyone 
+        can clone and customize. Start with a personality, not a blank slate.
+      </p>
+      <div class="templates-grid">
+        <div class="template-card">
+          <div class="template-icon">🛠️</div>
+          <h3 class="template-name">DevOps Agent</h3>
+          <p class="template-desc">
+            Deployment protocols, CI/CD skills, infra rituals. Pre-heated for 
+            shipping code to production.
+          </p>
+          <code class="template-cmd">soma init --template devops</code>
+        </div>
+        <div class="template-card">
+          <div class="template-icon">✍️</div>
+          <h3 class="template-name">Content Writer</h3>
+          <p class="template-desc">
+            SEO protocols, blog publish ritual, tone-of-voice identity. 
+            Ready to write and ship content.
+          </p>
+          <code class="template-cmd">soma init --template writer</code>
+        </div>
+        <div class="template-card">
+          <div class="template-icon">📐</div>
+          <h3 class="template-name">Architect</h3>
+          <p class="template-desc">
+            Frontmatter standards, code review protocols, ADR rituals.
+            For teams that care about structure.
+          </p>
+          <code class="template-cmd">soma init --template architect</code>
+        </div>
+        <div class="template-card">
+          <div class="template-icon">🧪</div>
+          <h3 class="template-name">Roll Your Own</h3>
+          <p class="template-desc">
+            Export your current setup as a template. Share your agent's 
+            personality with the community.
+          </p>
+          <code class="template-cmd">soma template export my-agent</code>
+        </div>
+      </div>
+      <p class="coming-soon" style="text-align: center; margin-top: 16px;">
+        Template system coming soon. <a href="https://github.com/meetsoma/agent" target="_blank" rel="noopener">Follow development →</a>
+      </p>
     </section>
 
     <!-- Repos -->
@@ -187,7 +282,7 @@ import SectionHeader from '../../components/SectionHeader.astro';
       <div class="repos-grid">
         <a href="https://github.com/meetsoma/agent" target="_blank" rel="noopener" class="repo-card">
           <h3>meetsoma/agent</h3>
-          <p>Extensions, skills, rituals, and documentation. The core.</p>
+          <p>Extensions, skills, rituals, protocols, and documentation. The core.</p>
         </a>
         <a href="https://github.com/meetsoma/cli" target="_blank" rel="noopener" class="repo-card">
           <h3>meetsoma/cli</h3>
@@ -322,6 +417,8 @@ import SectionHeader from '../../components/SectionHeader.astro';
   }
 
   .node-cli { border-color: var(--border-accent); }
+  .node-protocol { border-color: rgba(168, 232, 168, 0.25); }
+  .node-protocol .node-icon { font-size: 1rem; }
   .node-memory { border-color: rgba(232, 168, 124, 0.25); }
   .node-memory .node-icon { color: var(--warm-bright); }
 
@@ -444,6 +541,68 @@ import SectionHeader from '../../components/SectionHeader.astro';
     font-size: 0.82rem;
     color: var(--warm-bright);
     font-style: italic;
+  }
+
+  /* Templates */
+  .templates { margin-bottom: 56px; }
+
+  .templates-intro {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .templates-intro code {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+  }
+
+  .templates-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .template-card {
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    text-align: center;
+  }
+
+  .template-icon { font-size: 1.8rem; margin-bottom: 8px; }
+
+  .template-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .template-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .template-cmd {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
   }
 
   /* Repos */
