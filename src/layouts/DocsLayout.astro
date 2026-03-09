@@ -1,0 +1,406 @@
+---
+import Layout from './Layout.astro';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  title: string;
+  description?: string;
+  currentSlug: string;
+}
+
+const { title, description, currentSlug } = Astro.props;
+
+// Get all docs, sorted by order
+const allDocs = (await getCollection('docs'))
+  .filter(doc => !doc.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+// Group by section
+const sections = new Map<string, typeof allDocs>();
+for (const doc of allDocs) {
+  const section = doc.data.section;
+  if (!sections.has(section)) sections.set(section, []);
+  sections.get(section)!.push(doc);
+}
+---
+
+<Layout title={`${title} — Soma Docs`} description={description}>
+  <div class="stars"></div>
+
+  <div class="docs-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="/" class="sidebar-brand">
+        <img src="/media/soma-logo-animated.svg" alt="Soma" width="28" height="28" />
+        <span>Soma Docs</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        {[...sections.entries()].map(([sectionName, docs]) => (
+          <div class="nav-section">
+            <h3 class="nav-section-title">{sectionName}</h3>
+            <ul class="nav-list">
+              {docs.map(doc => (
+                <li>
+                  <a
+                    href={`/docs/${doc.slug}`}
+                    class:list={['nav-link', { active: doc.slug === currentSlug }]}
+                  >
+                    {doc.data.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="https://www.npmjs.com/package/meetsoma" target="_blank" rel="noopener">npm</a>
+        <span class="sep">·</span>
+        <a href="https://github.com/meetsoma" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="docs-content">
+      <article class="docs-article">
+        <header class="docs-header">
+          <h1>{title}</h1>
+          {description && <p class="docs-description">{description}</p>}
+        </header>
+
+        <div class="prose">
+          <slot />
+        </div>
+
+        <!-- Prev/Next -->
+        {(() => {
+          const currentIndex = allDocs.findIndex(d => d.slug === currentSlug);
+          const prev = currentIndex > 0 ? allDocs[currentIndex - 1] : null;
+          const next = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
+          return (
+            <nav class="docs-pager">
+              {prev ? (
+                <a href={`/docs/${prev.slug}`} class="pager-link pager-prev">
+                  <span class="pager-label">← Previous</span>
+                  <span class="pager-title">{prev.data.title}</span>
+                </a>
+              ) : <div />}
+              {next ? (
+                <a href={`/docs/${next.slug}`} class="pager-link pager-next">
+                  <span class="pager-label">Next →</span>
+                  <span class="pager-title">{next.data.title}</span>
+                </a>
+              ) : <div />}
+            </nav>
+          );
+        })()}
+      </article>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, rgba(228,234,244,0.6), transparent),
+      radial-gradient(1px 1px at 150px 100px, rgba(124,178,212,0.5), transparent);
+    background-size: 400px 180px;
+    animation: twinkle 10s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 0.6; } }
+
+  .docs-wrapper {
+    position: relative; z-index: 1;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 24px 20px;
+    border-right: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+
+  .sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .sidebar-brand img {
+    filter: drop-shadow(0 0 8px var(--logo-glow));
+  }
+
+  .sidebar-nav {
+    flex: 1;
+  }
+
+  .nav-section { margin-bottom: 20px; }
+
+  .nav-section-title {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    padding: 0 8px;
+  }
+
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+    background: var(--surface-interactive);
+  }
+
+  .nav-link.active {
+    color: var(--accent-bright);
+    background: var(--surface-accent-soft);
+    font-weight: 500;
+  }
+
+  .sidebar-footer {
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 6px;
+  }
+
+  .sidebar-footer a {
+    color: var(--accent-bright);
+    text-decoration: none;
+  }
+  .sidebar-footer a:hover { color: var(--moon-bright); }
+  .sep { color: var(--text-muted); }
+
+  /* Content */
+  .docs-content {
+    flex: 1;
+    max-width: 760px;
+    padding: 48px 48px 80px;
+  }
+
+  .docs-header {
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .docs-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .docs-description {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+  }
+
+  /* Prose styling */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--text-primary);
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .prose :global(h3) {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 32px;
+    margin-bottom: 12px;
+  }
+
+  .prose :global(p) {
+    margin-bottom: 16px;
+  }
+
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+  }
+
+  .prose :global(pre) {
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card-strong) !important;
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+
+  .prose :global(pre code) {
+    padding: 0;
+    background: none;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.88rem;
+  }
+
+  .prose :global(th) {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border-subtle);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  .prose :global(td) {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .prose :global(ul), .prose :global(ol) {
+    padding-left: 24px;
+    margin-bottom: 16px;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 6px;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--accent-bright);
+    padding: 12px 20px;
+    margin: 20px 0;
+    background: var(--surface-accent-soft);
+    border-radius: 0 8px 8px 0;
+    color: var(--text-secondary);
+  }
+
+  .prose :global(a) {
+    color: var(--accent-bright);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-accent);
+    transition: color 0.2s;
+  }
+
+  .prose :global(a:hover) {
+    color: var(--moon-bright);
+  }
+
+  /* Pager */
+  .docs-pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .pager-link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.2s;
+    min-width: 0;
+  }
+
+  .pager-link:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-accent-soft);
+  }
+
+  .pager-next { text-align: right; margin-left: auto; }
+
+  .pager-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .pager-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--accent-bright);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .docs-wrapper { flex-direction: column; }
+    .sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .docs-content { padding: 24px 20px 60px; }
+  }
+</style>
