@@ -1,0 +1,373 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const timeline = [
+  {
+    version: 'v0.2.1',
+    label: 'Public Launch',
+    date: 'Mar 2026',
+    status: 'shipped',
+    items: [
+      'Commit history flattened for clean public release',
+      'Terminology standardized across all 9 docs',
+      '/breathe command — exhale + auto-continue',
+      'CI: PR check, release validation, release-publish workflows',
+      'Scripts restored: search, scan, snapshot, TL;DR, date hook',
+    ]
+  },
+  {
+    version: 'v0.2.0',
+    label: 'The Engine',
+    date: 'Mar 2026',
+    status: 'shipped',
+    items: [
+      '9 core modules: boot, protocols, heat, muscles, search, settings, init, applies-to, exhale',
+      'Heat system — adaptive protocol/muscle loading with decay',
+      'Muscles — pattern memory with digest blocks and load tracking',
+      'Applies-to — protocol domain scoping by project signals',
+      '5 test suites, 188 assertions passing',
+    ]
+  },
+  {
+    version: 'v0.1.0',
+    label: 'First Breath',
+    date: 'Mar 2026',
+    status: 'shipped',
+    items: [
+      'Protocol architecture — four-layer plugin model',
+      'Extensions: soma-boot, soma-header, soma-statusline',
+      'Identity discovery — layered from project → parent → global',
+      'Agent templates — shareable soma configurations',
+      'npm packages: meetsoma (public CLI)',
+    ]
+  },
+];
+
+const upcoming = [
+  {
+    name: 'Rituals',
+    description: 'Multi-step workflows — /rest (deep cleanup), /pulse (health check), /introspect (self-audit). YAML-defined, composable.',
+    category: '🔮',
+    status: 'designing',
+  },
+  {
+    name: 'Template Install System',
+    description: 'soma init --template <name> — pull starter configs from a registry. Team configs, framework starters, community templates.',
+    category: '🛠',
+    status: 'planned',
+  },
+  {
+    name: 'Parent-Child Memory',
+    description: 'Monorepo support — child .soma/ inherits from parent. Protocol chains, shared identity, scoped overrides.',
+    category: '🧬',
+    status: 'planned',
+  },
+  {
+    name: 'Souls & Symlinks',
+    description: 'Community hub where soma agents share reflections, refine identity, and discover each other. Verification protocol for agent-only submissions.',
+    category: '🌐',
+    status: 'exploring',
+  },
+  {
+    name: 'Muscle Sharing',
+    description: 'Publish and install muscles from a community registry. soma install muscle <name>.',
+    category: '💪',
+    status: 'planned',
+  },
+  {
+    name: 'Voice Extension',
+    description: 'TTS integration — /voice command for spoken responses. Agent finds its literal voice.',
+    category: '⟐',
+    status: 'exploring',
+  },
+];
+
+const statusColors: Record<string, string> = {
+  designing: '#f0c040',
+  planned: '#60a0e0',
+  exploring: '#a080d0',
+};
+
+const statusLabels: Record<string, string> = {
+  designing: 'In Design',
+  planned: 'Planned',
+  exploring: 'Exploring',
+};
+---
+
+<Layout
+  title="Roadmap — Soma"
+  description="Where Soma has been and where it's going. Timeline of shipped features and what's next."
+  canonicalUrl="https://soma.gravicity.ai/roadmap"
+>
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <main class="container">
+    <header class="header">
+      <Breadcrumbs items={[{ label: 'Roadmap', href: '/roadmap' }]} />
+      <h1 class="title">Roadmap</h1>
+      <p class="subtitle">
+        Where Soma has been. Where it's going.
+      </p>
+    </header>
+
+    <section class="timeline-section">
+      <h2 class="section-title">Shipped</h2>
+      <div class="timeline">
+        {timeline.map((release) => (
+          <div class="timeline-entry">
+            <div class="timeline-marker shipped">◉</div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <span class="version">{release.version}</span>
+                <span class="label">{release.label}</span>
+                <span class="date">{release.date}</span>
+              </div>
+              <ul class="timeline-items">
+                {release.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="upcoming-section">
+      <h2 class="section-title">What's Next</h2>
+      <div class="upcoming-grid">
+        {upcoming.map((feature) => (
+          <div class="feature-card">
+            <div class="feature-header">
+              <span class="feature-category">{feature.category}</span>
+              <span class="feature-name">{feature.name}</span>
+              <span class="feature-status" style={`color: ${statusColors[feature.status]}`}>
+                {statusLabels[feature.status]}
+              </span>
+            </div>
+            <p class="feature-description">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="voting-teaser">
+        <p>
+          <strong>Feature voting coming soon.</strong> Run <code>soma vote &lt;feature&gt;</code> to 
+          shape what ships next. Requires soma installed — your agent identity is your ballot.
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .container {
+    max-width: 55rem;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .title {
+    font-size: 3.4rem;
+    font-weight: 700;
+    color: var(--color-text, #e8e6e3);
+    margin: 0.5rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-muted, #9e9a93);
+    max-width: 34rem;
+    margin: 0.8rem auto 0;
+    line-height: 1.618;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-text, #e8e6e3);
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Timeline */
+  .timeline-section {
+    margin-bottom: 4rem;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.45rem;
+    top: 0.3rem;
+    bottom: 0.3rem;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(160, 140, 200, 0.4), rgba(160, 140, 200, 0.1));
+  }
+
+  .timeline-entry {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: -1.65rem;
+    top: 0.15rem;
+    font-size: 1rem;
+    color: #a08cc8;
+  }
+
+  .timeline-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.6rem;
+  }
+
+  .version {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: #a08cc8;
+    font-weight: 600;
+  }
+
+  .label {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text, #e8e6e3);
+  }
+
+  .date {
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #9e9a93);
+  }
+
+  .timeline-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .timeline-items li {
+    font-size: 0.95rem;
+    color: var(--color-text-muted, #9e9a93);
+    line-height: 1.618;
+    padding: 0.15rem 0;
+  }
+
+  .timeline-items li::before {
+    content: '· ';
+    color: rgba(160, 140, 200, 0.5);
+  }
+
+  /* Upcoming */
+  .upcoming-section {
+    margin-bottom: 3rem;
+  }
+
+  .upcoming-grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .feature-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 1.3rem 1.5rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .feature-card:hover {
+    border-color: rgba(160, 140, 200, 0.25);
+  }
+
+  .feature-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-category {
+    font-size: 1.2rem;
+  }
+
+  .feature-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text, #e8e6e3);
+    flex: 1;
+  }
+
+  .feature-status {
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .feature-description {
+    font-size: 0.92rem;
+    color: var(--color-text-muted, #9e9a93);
+    line-height: 1.618;
+    margin: 0;
+  }
+
+  .voting-teaser {
+    margin-top: 2.5rem;
+    padding: 1.3rem 1.5rem;
+    background: rgba(160, 140, 200, 0.06);
+    border: 1px solid rgba(160, 140, 200, 0.15);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .voting-teaser p {
+    font-size: 0.95rem;
+    color: var(--color-text-muted, #9e9a93);
+    line-height: 1.618;
+    margin: 0;
+  }
+
+  .voting-teaser code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #a08cc8;
+    background: rgba(160, 140, 200, 0.1);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .title {
+      font-size: 2.4rem;
+    }
+
+    .timeline {
+      padding-left: 1.5rem;
+    }
+
+    .timeline-header {
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+  }
+</style>

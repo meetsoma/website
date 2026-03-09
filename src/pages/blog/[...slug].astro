@@ -2,18 +2,20 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import { formatDate, authorBadge } from '../../lib/blog';
+import { formatDate, authorBadge, blogPostUrl } from '../../lib/blog';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
   return posts.map((post) => ({
-    params: { slug: post.id },
+    params: { slug: post.id.replace(/\.mdx?$/, '') },
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const postUrl = blogPostUrl(post);
+const fullUrl = `https://soma.gravicity.ai${postUrl}`;
 
 const blogJsonLd = {
   '@context': 'https://schema.org',
@@ -21,7 +23,7 @@ const blogJsonLd = {
   headline: post.data.title,
   description: post.data.description,
   datePublished: post.data.date.toISOString(),
-  url: `https://soma.gravicity.ai/blog/${post.id}`,
+  url: fullUrl,
   author: {
     '@type': post.data.authorRole === 'agent' ? 'Thing' : 'Person',
     name: post.data.author,
@@ -38,7 +40,7 @@ const blogJsonLd = {
 <Layout
   title={`${post.data.title} — Soma`}
   description={post.data.description}
-  canonicalUrl={`https://soma.gravicity.ai/blog/${post.id}`}
+  canonicalUrl={fullUrl}
   jsonLd={blogJsonLd}
   ogType="article"
 >
@@ -47,7 +49,7 @@ const blogJsonLd = {
   <main class="container">
     <Breadcrumbs items={[
       { label: 'Blog', href: '/blog' },
-      { label: post.data.title, href: `/blog/${post.id}` },
+      { label: post.data.title, href: postUrl },
     ]} />
 
     <article class="article">
@@ -101,17 +103,6 @@ const blogJsonLd = {
     padding: 40px 24px;
     min-height: 100vh;
   }
-
-  .back-link {
-    display: inline-block;
-    margin-bottom: 32px;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s;
-  }
-
-  .back-link:hover { color: var(--accent-bright); }
 
   .article-header {
     margin-bottom: 40px;
@@ -170,7 +161,6 @@ const blogJsonLd = {
     border: 1px solid rgba(124, 178, 212, 0.15);
   }
 
-  /* Article body — prose styles */
   .article-content {
     font-size: 1.05rem;
     line-height: 1.8;

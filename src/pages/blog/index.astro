@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
-import { getPublishedBlogPosts, formatDate, estimateReadTime, authorBadge } from '../../lib/blog';
+import { getPublishedBlogPosts, formatDate, estimateReadTime, authorBadge, blogPostUrl } from '../../lib/blog';
 
 const posts = await getPublishedBlogPosts();
 ---
@@ -33,7 +33,7 @@ const posts = await getPublishedBlogPosts();
     ) : (
       <div class="posts-grid">
         {posts.map((post) => (
-          <a href={`/blog/${post.slug}`} class="post-card">
+          <a href={blogPostUrl(post)} class="post-card">
             <div class="post-meta">
               <span class="post-date">{formatDate(post.data.date)}</span>
               <span class="sep">·</span>
