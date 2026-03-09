@@ -74,5 +74,35 @@ FRONTMATTER
   ((synced++))
 done
 
+# Special: CHANGELOG from repo root
+CHANGELOG_SRC="$WEBSITE_DIR/../agent/CHANGELOG.md"
+if [[ -f "$CHANGELOG_SRC" ]]; then
+  changelog_body=$(awk '
+    BEGIN { in_fm=0; past_fm=0; stripped_h1=0 }
+    /^---$/ && !past_fm { in_fm=!in_fm; if(!in_fm) past_fm=1; next }
+    in_fm { next }
+    !stripped_h1 && /^# / { stripped_h1=1; next }
+    !stripped_h1 && /^$/ { next }
+    { past_fm=1; stripped_h1=1; print }
+  ' "$CHANGELOG_SRC")
+
+  if $DRY_RUN; then
+    echo "Would sync: CHANGELOG.md → changelog.md (section: Reference, order: 8)"
+  else
+    cat > "$TARGET/changelog.md" << FRONTMATTER
+---
+title: "Changelog"
+description: "What shipped, what changed, version history."
+section: "Reference"
+order: 8
+---
+
+$changelog_body
+FRONTMATTER
+    echo "✓ CHANGELOG.md → changelog.md"
+  fi
+  ((synced++))
+fi
+
 echo ""
 echo "═══ $synced docs synced ═══"
