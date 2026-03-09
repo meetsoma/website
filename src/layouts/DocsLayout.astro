@@ -1,6 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Search from '../components/Search.astro';
 import { getCollection } from 'astro:content';
 
 interface Props {
@@ -52,6 +53,8 @@ for (const doc of allDocs) {
         <img src="/media/soma-logo-animated.svg" alt="Soma" width="28" height="28" />
         <span>Soma Docs</span>
       </a>
+
+      <Search />
 
       <nav class="sidebar-nav">
         {[...sections.entries()].map(([sectionName, docs]) => (

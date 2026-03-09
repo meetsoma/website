@@ -1,0 +1,183 @@
+---
+// Pagefind search — loads after build since index is generated post-build
+---
+
+<div class="search-wrapper">
+  <div id="search"></div>
+</div>
+
+<script is:inline>
+  async function initSearch() {
+    const pagefind = await import('/pagefind/pagefind.js');
+    await pagefind.init();
+
+    const container = document.getElementById('search');
+    if (!container) return;
+
+    // Build search UI
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Search docs…';
+    input.className = 'search-input';
+    input.setAttribute('aria-label', 'Search documentation');
+
+    const results = document.createElement('div');
+    results.className = 'search-results';
+
+    container.appendChild(input);
+    container.appendChild(results);
+
+    let debounceTimer;
+
+    input.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(async () => {
+        const query = input.value.trim();
+        results.innerHTML = '';
+
+        if (!query) {
+          results.classList.remove('active');
+          return;
+        }
+
+        const search = await pagefind.search(query);
+        const items = await Promise.all(search.results.slice(0, 8).map((r) => r.data()));
+
+        if (items.length === 0) {
+          results.innerHTML = '<div class="search-empty">No results</div>';
+          results.classList.add('active');
+          return;
+        }
+
+        results.innerHTML = items.map((item) => `
+          <a href="${item.url}" class="search-result">
+            <span class="search-result-title">${item.meta?.title || item.url}</span>
+            <span class="search-result-excerpt">${item.excerpt}</span>
+          </a>
+        `).join('');
+        results.classList.add('active');
+      }, 200);
+    });
+
+    // Close results on click outside
+    document.addEventListener('click', (e) => {
+      if (!container.contains(e.target)) {
+        results.classList.remove('active');
+      }
+    });
+
+    // Keyboard shortcut: / to focus search
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== input) {
+        e.preventDefault();
+        input.focus();
+      }
+      if (e.key === 'Escape') {
+        input.blur();
+        results.classList.remove('active');
+      }
+    });
+  }
+
+  // Init when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearch);
+  } else {
+    initSearch();
+  }
+</script>
+
+<style>
+  .search-wrapper {
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  :global(.search-input) {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-interactive);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  :global(.search-input::placeholder) {
+    color: var(--text-muted);
+  }
+
+  :global(.search-input:focus) {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 0 3px var(--shadow-accent-soft);
+  }
+
+  :global(.search-results) {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--surface-card-strong);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    max-height: 360px;
+    overflow-y: auto;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+  }
+
+  :global(.search-results.active) {
+    display: block;
+  }
+
+  :global(.search-result) {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background 0.1s;
+  }
+
+  :global(.search-result:last-child) {
+    border-bottom: none;
+  }
+
+  :global(.search-result:hover) {
+    background: var(--surface-interactive-hover);
+  }
+
+  :global(.search-result-title) {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-bright);
+    margin-bottom: 2px;
+  }
+
+  :global(.search-result-excerpt) {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  :global(.search-result-excerpt mark) {
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+
+  :global(.search-empty) {
+    padding: 16px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+</style>
