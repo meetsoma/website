@@ -1,0 +1,516 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+---
+
+<Layout title="Ecosystem — Soma" description="How Soma's extensions, skills, rituals, and tools fit together.">
+  <div class="stars"></div>
+
+  <main class="container">
+    <a href="/" class="back-link">← Home</a>
+
+    <header class="header">
+      <h1 class="title">The Soma Ecosystem</h1>
+      <p class="subtitle">
+        Extensions, skills, and rituals — three layers that give an AI agent 
+        persistent memory, evolving identity, and repeatable workflows.
+      </p>
+    </header>
+
+    <!-- Architecture Diagram -->
+    <section class="diagram-section">
+      <div class="diagram">
+        <div class="diagram-row">
+          <div class="diagram-node node-you">
+            <span class="node-label">you</span>
+          </div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-node node-cli">
+            <span class="node-icon">▸</span>
+            <span class="node-label">soma cli</span>
+            <span class="node-sub">npx soma</span>
+          </div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-node node-pi">
+            <span class="node-label">pi</span>
+            <span class="node-sub">coding agent</span>
+          </div>
+        </div>
+        <div class="diagram-branch">
+          <div class="branch-line"></div>
+          <div class="branch-items">
+            <div class="diagram-node node-ext">
+              <span class="node-icon">⟐</span>
+              <span class="node-label">extensions</span>
+            </div>
+            <div class="diagram-node node-skill">
+              <span class="node-icon">◈</span>
+              <span class="node-label">skills</span>
+            </div>
+            <div class="diagram-node node-ritual">
+              <span class="node-icon">◎</span>
+              <span class="node-label">rituals</span>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-row diagram-bottom">
+          <div class="diagram-node node-memory">
+            <span class="node-icon">⟡</span>
+            <span class="node-label">memory</span>
+            <span class="node-sub">preloads · muscles · identity</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Three Layers Detail -->
+    <section class="layers-detail">
+      <div class="layer-detail" id="extensions">
+        <div class="layer-header">
+          <span class="layer-glyph">⟐</span>
+          <div>
+            <h2 class="layer-title">Extensions</h2>
+            <p class="layer-kind">system hooks · TypeScript</p>
+          </div>
+        </div>
+        <p class="layer-body">
+          Extensions are TypeScript files that hook into pi's lifecycle. They run at boot, 
+          render custom UI, intercept events, and manage background processes. They're the 
+          lowest level of customization — full access to the agent runtime.
+        </p>
+        <div class="layer-details">
+          <div class="detail-col">
+            <h4>What they do</h4>
+            <ul>
+              <li>Boot sequences — load identity, preload memory</li>
+              <li>Custom headers and statuslines</li>
+              <li>Auto-flush memory to disk</li>
+              <li>Context usage warnings</li>
+              <li>Slash commands (<code>/flush</code>, <code>/soma</code>)</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h4>Where they live</h4>
+            <ul>
+              <li><code>.soma/extensions/</code> — project-level</li>
+              <li><code>~/.soma/extensions/</code> — global</li>
+            </ul>
+            <h4 class="mt">Soma ships with</h4>
+            <ul>
+              <li><code>soma-boot.ts</code> — identity + preload + commands</li>
+              <li><code>soma-header.ts</code> — branded σῶμα header</li>
+              <li><code>soma-statusline.ts</code> — footer + auto-flush</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-detail" id="skills">
+        <div class="layer-header">
+          <span class="layer-glyph">◈</span>
+          <div>
+            <h2 class="layer-title">Skills</h2>
+            <p class="layer-kind">knowledge sets · Markdown</p>
+          </div>
+        </div>
+        <p class="layer-body">
+          Skills are markdown files that give the agent domain expertise. When the agent 
+          encounters a task that matches a skill, it loads the instructions and follows them. 
+          Low barrier to create — just write markdown.
+        </p>
+        <div class="layer-details">
+          <div class="detail-col">
+            <h4>What they contain</h4>
+            <ul>
+              <li>Task-specific instructions and best practices</li>
+              <li>Tool usage patterns and examples</li>
+              <li>Decision frameworks and checklists</li>
+              <li>Reference material the agent can cite</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h4>Where they live</h4>
+            <ul>
+              <li><code>~/.soma/agent/skills/</code> — global skills</li>
+              <li><code>~/.agents/skills/</code> — shared with other agents</li>
+              <li><code>.soma/skills/</code> — project-specific</li>
+            </ul>
+            <h4 class="mt">Examples</h4>
+            <ul>
+              <li><code>logo-creator</code> — AI logo generation workflow</li>
+              <li><code>favicon-gen</code> — favicon from any source</li>
+              <li><code>remotion-best-practices</code> — video in React</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-detail" id="rituals">
+        <div class="layer-header">
+          <span class="layer-glyph">◎</span>
+          <div>
+            <h2 class="layer-title">Rituals</h2>
+            <p class="layer-kind">workflow sequences · composable</p>
+          </div>
+        </div>
+        <p class="layer-body">
+          Rituals are multi-step workflows — predefined sequences of commands, checks, 
+          and actions that the agent performs as a unit. They're like macros with intelligence: 
+          each step can adapt based on context.
+        </p>
+        <div class="layer-details">
+          <div class="detail-col">
+            <h4>What they do</h4>
+            <ul>
+              <li>Chain multiple operations into one command</li>
+              <li>Include validation and approval gates</li>
+              <li>Compose skills and extensions together</li>
+              <li>Automate recurring agent workflows</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h4>Planned rituals</h4>
+            <ul>
+              <li><code>/publish</code> — draft → preview → approve → deploy</li>
+              <li><code>/molt</code> — flush → rotate → compress → commit</li>
+              <li><code>/patrol</code> — recon → engage → report</li>
+            </ul>
+            <p class="coming-soon">Ritual system is in active design.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Repos -->
+    <section class="repos">
+      <SectionHeader title="Repositories" />
+      <div class="repos-grid">
+        <a href="https://github.com/meetsoma/agent" target="_blank" rel="noopener" class="repo-card">
+          <h3>meetsoma/agent</h3>
+          <p>Extensions, skills, rituals, and documentation. The core.</p>
+        </a>
+        <a href="https://github.com/meetsoma/cli" target="_blank" rel="noopener" class="repo-card">
+          <h3>meetsoma/cli</h3>
+          <p>The <code>soma</code> CLI — wraps pi with Soma's config and extensions.</p>
+        </a>
+        <a href="https://github.com/meetsoma/website" target="_blank" rel="noopener" class="repo-card">
+          <h3>meetsoma/website</h3>
+          <p>This site. Astro, static, deployed on Vercel.</p>
+        </a>
+        <a href="https://github.com/meetsoma/media" target="_blank" rel="noopener" class="repo-card">
+          <h3>meetsoma/media</h3>
+          <p>Brand assets — logos, favicons, OG images, media kit.</p>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <nav class="footer-nav">
+        <a href="/">Home</a>
+        <span class="sep">·</span>
+        <a href="/blog">Blog</a>
+        <span class="sep">·</span>
+        <a href="/docs">Docs</a>
+        <span class="sep">·</span>
+        <a href="https://github.com/meetsoma" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, rgba(228,234,244,0.6), transparent),
+      radial-gradient(1px 1px at 150px 100px, rgba(124,178,212,0.5), transparent);
+    background-size: 400px 180px;
+    animation: twinkle 10s ease-in-out infinite alternate;
+  }
+
+  @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 0.6; } }
+
+  .container {
+    position: relative; z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .back-link {
+    display: inline-block; margin-bottom: 20px;
+    color: var(--text-muted); text-decoration: none; font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent-bright); }
+
+  .header { text-align: center; margin-bottom: 48px; }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Diagram */
+  .diagram-section { margin-bottom: 56px; }
+
+  .diagram {
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .diagram-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .diagram-arrow {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    font-family: var(--font-mono);
+  }
+
+  .diagram-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+    min-width: 100px;
+  }
+
+  .node-icon {
+    font-size: 1.2rem;
+    color: var(--accent-bright);
+  }
+
+  .node-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .node-sub {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+  }
+
+  .node-cli { border-color: var(--border-accent); }
+  .node-memory { border-color: rgba(232, 168, 124, 0.25); }
+  .node-memory .node-icon { color: var(--warm-bright); }
+
+  .diagram-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .branch-line {
+    width: 1px;
+    height: 16px;
+    background: var(--border-subtle);
+  }
+
+  .branch-items {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Layer Details */
+  .layers-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 56px;
+  }
+
+  .layer-detail {
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+  }
+
+  .layer-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .layer-glyph {
+    font-size: 2rem;
+    color: var(--accent-bright);
+    line-height: 1;
+  }
+
+  .layer-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .layer-kind {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .layer-body {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .layer-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .detail-col h4 {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+  }
+
+  .detail-col .mt { margin-top: 20px; }
+
+  .detail-col ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .detail-col li {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .detail-col li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent-bright);
+    font-weight: bold;
+  }
+
+  .detail-col code {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+  }
+
+  .coming-soon {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: var(--warm-bright);
+    font-style: italic;
+  }
+
+  /* Repos */
+  .repos { margin-bottom: 56px; }
+
+  .repos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .repo-card {
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.25s ease;
+  }
+
+  .repo-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px var(--shadow-accent-soft);
+  }
+
+  .repo-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--accent-bright);
+  }
+
+  .repo-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .repo-card code {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: auto; padding-top: 48px; text-align: center;
+    font-size: 0.9rem; color: var(--text-muted);
+  }
+  .footer-nav { display: flex; justify-content: center; gap: 8px; }
+  .sep { color: var(--text-muted); }
+  .footer a { color: var(--accent-bright); text-decoration: none; }
+  .footer a:hover { color: var(--moon-bright); }
+
+  @media (max-width: 768px) {
+    .layer-details { grid-template-columns: 1fr; }
+    .repos-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .container { padding: 24px 16px; }
+    .diagram { padding: 20px; }
+  }
+</style>

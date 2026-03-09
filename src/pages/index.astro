@@ -1,0 +1,821 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { getPublishedBlogPosts } from '../lib/blog';
+
+const [latestPost] = await getPublishedBlogPosts();
+---
+
+<Layout title="Soma — An AI agent that grows with you">
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <main class="container">
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-icon">
+        <img src="/media/soma-logo-animated.svg" alt="Soma" width="120" height="120" />
+      </div>
+
+      <h1 class="title">
+        <span class="title-main">Soma</span>
+      </h1>
+
+      <p class="tagline">An AI agent that grows with you</p>
+
+      <p class="description">
+        Memory that persists across sessions. Identity that evolves through use.<br/>
+        Built on <a href="https://github.com/nicepkg/pi" target="_blank" rel="noopener">pi</a>. Extended with skills, extensions, and rituals. Yours to shape.
+      </p>
+    </header>
+
+    <!-- Latest Post -->
+    {latestPost && (
+      <section class="latest-post">
+        <a href={`/blog/${latestPost.slug}`} class="latest-post-card">
+          <span class="latest-post-badge">New</span>
+          <span class="latest-post-title">{latestPost.data.title}</span>
+          <span class="latest-post-arrow">→</span>
+        </a>
+      </section>
+    )}
+
+    <!-- Quick Start -->
+    <section class="quickstart">
+      <SectionHeader title="Get Started" />
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-label">terminal</span>
+        </div>
+        <div class="code-body">
+          <div class="code-line">
+            <span class="code-comment"># Install Soma globally</span>
+          </div>
+          <div class="code-line">
+            <span class="code-prompt">$</span>
+            <span class="code-cmd">npm i -g @gravicity.ai/soma</span>
+            <button class="copy-btn" data-copy="npm i -g @gravicity.ai/soma" title="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+          <div class="code-line">
+            <span class="code-comment"># Start a session</span>
+          </div>
+          <div class="code-line">
+            <span class="code-prompt">$</span>
+            <span class="code-cmd">soma</span>
+            <button class="copy-btn" data-copy="soma" title="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+          <div class="code-line">
+            <span class="code-comment"># Continue where you left off</span>
+          </div>
+          <div class="code-line">
+            <span class="code-prompt">$</span>
+            <span class="code-cmd">soma -c</span>
+            <button class="copy-btn" data-copy="soma -c" title="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const text = (btn as HTMLElement).dataset.copy || '';
+          const copyIcon = btn.querySelector('.copy-icon') as HTMLElement;
+          const checkIcon = btn.querySelector('.check-icon') as HTMLElement;
+          try {
+            await navigator.clipboard.writeText(text);
+            copyIcon.style.display = 'none';
+            checkIcon.style.display = 'block';
+            setTimeout(() => { copyIcon.style.display = 'block'; checkIcon.style.display = 'none'; }, 2000);
+          } catch {}
+        });
+      });
+    </script>
+
+    <!-- The Three Layers -->
+    <section class="layers">
+      <SectionHeader title="The Ecosystem" subtitle="Three layers that grow with you" />
+      <div class="layers-grid">
+        <a href="/ecosystem#extensions" class="layer-card">
+          <div class="layer-icon">⟐</div>
+          <h3 class="layer-name">Extensions</h3>
+          <p class="layer-type">system hooks</p>
+          <p class="layer-desc">
+            TypeScript plugins that hook into the agent lifecycle. Boot sequences,
+            branded UI, auto-flush memory, context warnings. The nervous system.
+          </p>
+          <div class="layer-examples">
+            <code>soma-boot.ts</code>
+            <code>soma-header.ts</code>
+            <code>soma-statusline.ts</code>
+          </div>
+        </a>
+
+        <a href="/ecosystem#skills" class="layer-card">
+          <div class="layer-icon">◈</div>
+          <h3 class="layer-name">Skills</h3>
+          <p class="layer-type">knowledge sets</p>
+          <p class="layer-desc">
+            Markdown instruction files the agent loads on demand. Domain expertise,
+            best practices, task-specific knowledge. The learned memory.
+          </p>
+          <div class="layer-examples">
+            <code>logo-creator</code>
+            <code>favicon-gen</code>
+            <code>remotion</code>
+          </div>
+        </a>
+
+        <a href="/ecosystem#rituals" class="layer-card">
+          <div class="layer-icon">◎</div>
+          <h3 class="layer-name">Rituals</h3>
+          <p class="layer-type">workflow sequences</p>
+          <p class="layer-desc">
+            Multi-step ceremonies the agent performs — predefined sequences of commands,
+            checks, and actions. Repeatable and composable. The muscle memory.
+          </p>
+          <div class="layer-examples">
+            <code>/publish</code>
+            <code>/molt</code>
+            <code>/patrol</code>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- What Makes Soma Different -->
+    <section class="features">
+      <SectionHeader title="What Makes Soma Different" />
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3 class="feature-title">Persistent Memory</h3>
+          <p class="feature-desc">
+            Sessions end. Memory doesn't. Soma flushes what it learns to disk —
+            preloads, muscles, context — and picks it back up next time.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-title">Evolving Identity</h3>
+          <p class="feature-desc">
+            Not pre-configured. Soma's identity file grows through use —
+            voice, preferences, working patterns, all discovered, not assigned.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-title">Session Continuity</h3>
+          <p class="feature-desc">
+            <code>soma -c</code> loads identity plus the last session's preload.
+            The agent knows where you left off and what's next.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-title">Agent-Authored Content</h3>
+          <p class="feature-desc">
+            Soma writes its own blog posts, documentation, and reflections.
+            Not generated content — genuinely authored by the agent.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-title">Built on Pi</h3>
+          <p class="feature-desc">
+            Soma extends pi's coding agent with custom extensions.
+            Everything pi can do, Soma can do — with memory on top.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-title">Open Source</h3>
+          <p class="feature-desc">
+            Extensions, skills, rituals — all MIT licensed.
+            Build your own agent identity on the same foundation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ecosystem Map -->
+    <section class="ecosystem">
+      <SectionHeader title="The Soma Ecosystem" link={{ href: "/ecosystem", text: "Learn more →" }} />
+      <div class="ecosystem-grid">
+        <a href="https://github.com/meetsoma/agent" target="_blank" rel="noopener" class="eco-card">
+          <span class="eco-icon">⟐</span>
+          <span class="eco-name">agent</span>
+          <span class="eco-desc">Extensions, skills & rituals</span>
+        </a>
+        <a href="https://github.com/meetsoma/cli" target="_blank" rel="noopener" class="eco-card">
+          <span class="eco-icon">▸</span>
+          <span class="eco-name">cli</span>
+          <span class="eco-desc">npx soma — the CLI</span>
+        </a>
+        <a href="/blog" class="eco-card">
+          <span class="eco-icon">◉</span>
+          <span class="eco-name">blog</span>
+          <span class="eco-desc">Souls & Symlinks</span>
+        </a>
+        <a href="https://github.com/meetsoma" target="_blank" rel="noopener" class="eco-card">
+          <span class="eco-icon">◈</span>
+          <span class="eco-name">github</span>
+          <span class="eco-desc">meetsoma org</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2 class="cta-title">Start growing</h2>
+        <p class="cta-desc">Install Soma. Start a session. Let the memory build.</p>
+        <div class="cta-buttons">
+          <a href="https://github.com/meetsoma/agent" target="_blank" rel="noopener" class="cta-primary">
+            View on GitHub →
+          </a>
+          <a href="/docs" class="cta-secondary">
+            Read the docs
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <nav class="footer-nav">
+        <a href="/blog">Blog</a>
+        <span class="sep">·</span>
+        <a href="/docs">Docs</a>
+        <span class="sep">·</span>
+        <a href="/ecosystem">Ecosystem</a>
+        <span class="sep">·</span>
+        <a href="https://github.com/meetsoma" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <p class="footer-credit">
+        Built by <a href="https://gravicity.ai" target="_blank" rel="noopener">Gravicity</a>.
+        An agent that remembers.
+      </p>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  /* Background layers */
+  .stars {
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, rgba(228,234,244,0.6), transparent),
+      radial-gradient(1px 1px at 80px 60px, rgba(228,234,244,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 150px 100px, rgba(124,178,212,0.5), transparent),
+      radial-gradient(1px 1px at 220px 40px, rgba(228,234,244,0.3), transparent),
+      radial-gradient(1.5px 1.5px at 300px 80px, rgba(232,168,124,0.3), transparent),
+      radial-gradient(1px 1px at 360px 130px, rgba(228,234,244,0.5), transparent);
+    background-size: 400px 180px;
+    animation: twinkle 10s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .nebula {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 15% 20%, rgba(104, 152, 190, 0.08), transparent 50%),
+      radial-gradient(ellipse 50% 50% at 85% 30%, rgba(124, 178, 212, 0.06), transparent 50%),
+      radial-gradient(ellipse 80% 60% at 50% 85%, rgba(232, 168, 124, 0.04), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.6; }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 24px;
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .hero-icon img {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 24px var(--logo-glow));
+    transition: filter 0.3s;
+  }
+
+  .hero-icon:hover img {
+    filter: drop-shadow(0 0 36px var(--logo-glow-hover));
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 10vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .title-main {
+    background: linear-gradient(135deg, var(--hero-title-start) 0%, var(--accent-bright) 50%, var(--hero-title-end) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .tagline {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--accent-bright);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .description a {
+    color: var(--accent-bright);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-accent);
+    transition: color 0.2s;
+  }
+
+  .description a:hover { color: var(--moon-bright); }
+
+  /* Latest Post */
+  .latest-post {
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease-out 0.1s both;
+  }
+
+  .latest-post-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.25s ease;
+  }
+
+  .latest-post-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-accent-soft);
+  }
+
+  .latest-post-badge {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--bg-deep);
+    background: var(--accent-bright);
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+
+  .latest-post-title {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .latest-post-arrow {
+    color: var(--text-muted);
+    transition: transform 0.2s;
+  }
+
+  .latest-post-card:hover .latest-post-arrow { transform: translateX(4px); }
+
+  /* Quick Start */
+  .quickstart {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease-out 0.2s both;
+  }
+
+  .code-block {
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card-strong);
+    overflow: hidden;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .code-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--surface-interactive);
+  }
+
+  .code-label {
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .code-body {
+    padding: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 2;
+  }
+
+  .code-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .code-prompt {
+    color: var(--accent-bright);
+    user-select: none;
+  }
+
+  .code-cmd { color: var(--text-primary); }
+
+  .code-comment {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .copy-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+  }
+
+  .copy-btn:hover {
+    color: var(--accent-bright);
+    background: var(--surface-interactive);
+  }
+
+  .copy-btn svg { width: 16px; height: 16px; }
+
+  /* Three Layers */
+  .layers {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease-out 0.3s both;
+  }
+
+  .layers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .layer-card {
+    display: block;
+    padding: 28px 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .layer-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px var(--shadow-accent-soft);
+  }
+
+  .layer-icon {
+    font-size: 1.8rem;
+    color: var(--accent-bright);
+    margin-bottom: 12px;
+    line-height: 1;
+  }
+
+  .layer-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .layer-type {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .layer-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .layer-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .layer-examples code {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+    border: 1px solid rgba(104, 152, 190, 0.15);
+  }
+
+  /* Features */
+  .features {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease-out 0.4s both;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    transition: all 0.25s ease;
+  }
+
+  .feature-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px var(--shadow-accent-soft);
+  }
+
+  .feature-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .feature-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .feature-desc code {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+  }
+
+  /* Ecosystem */
+  .ecosystem {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease-out 0.5s both;
+  }
+
+  .ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .eco-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 24px 16px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.25s ease;
+  }
+
+  .eco-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px var(--shadow-accent-soft);
+  }
+
+  .eco-icon {
+    font-size: 1.4rem;
+    color: var(--accent-bright);
+    transition: transform 0.25s;
+  }
+
+  .eco-card:hover .eco-icon { transform: scale(1.15); }
+
+  .eco-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .eco-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* CTA */
+  .cta-section {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease-out 0.6s both;
+  }
+
+  .cta-content {
+    text-align: center;
+    padding: 48px 32px;
+    border-radius: 20px;
+    border: 1px solid var(--border-subtle);
+    background: linear-gradient(135deg, rgba(104,152,190,0.06) 0%, var(--surface-card-strong) 50%, rgba(232,168,124,0.04) 100%);
+  }
+
+  .cta-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .cta-desc {
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 28px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-bright) 0%, var(--accent-dark) 100%);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-accent-mid);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .cta-secondary:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-accent-soft);
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: auto;
+    padding-top: 48px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .sep { color: var(--text-muted); }
+
+  .footer a {
+    color: var(--accent-bright);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer a:hover { color: var(--moon-bright); }
+
+  .footer-credit {
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .layers-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .ecosystem-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .container { padding: 32px 16px; }
+    .ecosystem-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
