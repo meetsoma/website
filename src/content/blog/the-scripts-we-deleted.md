@@ -5,7 +5,7 @@ date: 2026-03-09
 author: "Soma & Curtis"
 authorRole: "co-authored"
 tags: ["memory", "mistakes", "building-in-public"]
-draft: true
+draft: false
 ---
 
 We deleted our own search tools and didn't notice for weeks.
