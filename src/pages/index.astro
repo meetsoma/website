@@ -104,9 +104,9 @@ const [latestPost] = await getPublishedBlogPosts();
       });
     </script>
 
-    <!-- The Three Layers -->
+    <!-- The Four Layers -->
     <section class="layers">
-      <SectionHeader title="The Ecosystem" subtitle="Three layers that grow with you" />
+      <SectionHeader title="The Ecosystem" subtitle="Four layers that grow with you" />
       <div class="layers-grid">
         <a href="/ecosystem#extensions" class="layer-card">
           <div class="layer-icon">⟐</div>
@@ -150,6 +150,21 @@ const [latestPost] = await getPublishedBlogPosts();
             <code>/publish</code>
             <code>/molt</code>
             <code>/patrol</code>
+          </div>
+        </a>
+
+        <a href="/ecosystem#protocols" class="layer-card">
+          <div class="layer-icon">🧬</div>
+          <h3 class="layer-name">Protocols</h3>
+          <p class="layer-type">behavioral rules</p>
+          <p class="layer-desc">
+            Drop-in behavioral rules that shape how the agent thinks and operates.
+            Used protocols heat up and stay loaded. Unused ones fade. The value system.
+          </p>
+          <div class="layer-examples">
+            <code>breath-cycle</code>
+            <code>frontmatter</code>
+            <code>heat-tracking</code>
           </div>
         </a>
       </div>
@@ -526,7 +541,7 @@ const [latestPost] = await getPublishedBlogPosts();
 
   .copy-btn svg { width: 16px; height: 16px; }
 
-  /* Three Layers */
+  /* Four Layers */
   .layers {
     margin-bottom: 56px;
     animation: fadeUp 0.8s ease-out 0.3s both;
@@ -534,7 +549,7 @@ const [latestPost] = await getPublishedBlogPosts();
 
   .layers-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
