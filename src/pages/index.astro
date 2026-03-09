@@ -14,11 +14,12 @@ const [latestPost] = await getPublishedBlogPosts();
     <!-- Hero -->
     <header class="hero">
       <div class="hero-icon">
-        <img src="/media/soma-logo-animated.svg" alt="Soma" width="120" height="120" />
+        <img src="/media/soma-logo-animated.svg" alt="Soma" width="144" height="144" />
       </div>
 
       <h1 class="title">
         <span class="title-main">Soma</span>
+        <span class="beta-badge">beta</span>
       </h1>
 
       <p class="tagline">An AI agent that grows with you</p>
@@ -32,7 +33,7 @@ const [latestPost] = await getPublishedBlogPosts();
     <!-- Latest Post -->
     {latestPost && (
       <section class="latest-post">
-        <a href={`/blog/${latestPost.slug}`} class="latest-post-card">
+        <a href={`/blog/${latestPost.id}`} class="latest-post-card">
           <span class="latest-post-badge">New</span>
           <span class="latest-post-title">{latestPost.data.title}</span>
           <span class="latest-post-arrow">→</span>
@@ -138,18 +139,18 @@ const [latestPost] = await getPublishedBlogPosts();
           </div>
         </a>
 
-        <a href="/ecosystem#rituals" class="layer-card">
+        <a href="/docs/muscles" class="layer-card">
           <div class="layer-icon">◎</div>
-          <h3 class="layer-name">Rituals</h3>
-          <p class="layer-type">workflow sequences</p>
+          <h3 class="layer-name">Muscles</h3>
+          <p class="layer-type">learned patterns</p>
           <p class="layer-desc">
-            Multi-step ceremonies the agent performs — predefined sequences of commands,
-            checks, and actions. Repeatable and composable. The muscle memory.
+            Patterns learned from experience — deployment workflows, code conventions,
+            API recipes. Heat-tracked and token-budgeted. The muscle memory.
           </p>
           <div class="layer-examples">
-            <code>/publish</code>
-            <code>/molt</code>
-            <code>/patrol</code>
+            <code>deployment</code>
+            <code>pr-workflow</code>
+            <code>logo-design</code>
           </div>
         </a>
 
@@ -213,7 +214,7 @@ const [latestPost] = await getPublishedBlogPosts();
         <div class="feature-card">
           <h3 class="feature-title">Open Source</h3>
           <p class="feature-desc">
-            Extensions, skills, rituals — all MIT licensed.
+            Extensions, skills, muscles, protocols — all MIT licensed.
             Build your own agent identity on the same foundation.
           </p>
         </div>
@@ -227,7 +228,7 @@ const [latestPost] = await getPublishedBlogPosts();
         <a href="https://github.com/meetsoma/agent" target="_blank" rel="noopener" class="eco-card">
           <span class="eco-icon">⟐</span>
           <span class="eco-name">agent</span>
-          <span class="eco-desc">Extensions, skills & rituals</span>
+          <span class="eco-desc">Extensions, skills & protocols</span>
         </a>
         <a href="https://www.npmjs.com/package/meetsoma" target="_blank" rel="noopener" class="eco-card">
           <span class="eco-icon">▸</span>
@@ -283,6 +284,30 @@ const [latestPost] = await getPublishedBlogPosts();
 </Layout>
 
 <style>
+  /* ═══════════════════════════════════════════════════════
+     Fibonacci Design System
+     ═══════════════════════════════════════════════════════
+     φ = 1.618 (golden ratio)
+
+     TYPE SCALE (rem) — each step ≈ φ^(n/4)
+     --f-xs:   0.813rem  (13px)  — smallest text (labels, badges)
+     --f-sm:   0.875rem  (14px)  — secondary text, captions
+     --f-base: 1rem      (16px)  — body text
+     --f-md:   1.125rem  (18px)  — emphasis, descriptions
+     --f-lg:   1.313rem  (21px)  — card headings, sub-headers
+     --f-xl:   1.625rem  (26px)  — section headers
+     --f-2xl:  2.625rem  (42px)  — page title
+     --f-3xl:  4.25rem   (68px)  — hero display
+
+     SPACING SCALE (px) — Fibonacci sequence
+     8, 13, 21, 34, 55, 89, 144
+
+     LINE HEIGHTS
+     Headings: 1.2
+     Body:     1.618 (φ)
+     Loose:    1.8
+  ═══════════════════════════════════════════════════════ */
+
   /* Background layers */
   .stars {
     position: fixed;
@@ -319,56 +344,61 @@ const [latestPost] = await getPublishedBlogPosts();
   .container {
     position: relative;
     z-index: 1;
-    max-width: 860px;
+    max-width: 890px;              /* ~55 * φ^4 */
     margin: 0 auto;
-    padding: 60px 24px 40px;
+    padding: 55px 21px 34px;       /* fib: 55, 21, 34 */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
 
-  /* Hero */
+  /* ── Hero ── */
   .hero {
     text-align: center;
-    margin-bottom: 48px;
+    margin-bottom: 55px;           /* fib */
+    padding-top: 34px;             /* fib */
     animation: fadeUp 0.8s ease-out;
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(21px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .hero-icon {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 24px;
+    width: 144px;                  /* fib */
+    height: 144px;
+    margin: 0 auto 34px;          /* fib */
     animation: float 5s ease-in-out infinite;
   }
 
   .hero-icon img {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 0 24px var(--logo-glow));
+    filter: drop-shadow(0 0 21px var(--logo-glow));
     transition: filter 0.3s;
   }
 
   .hero-icon:hover img {
-    filter: drop-shadow(0 0 36px var(--logo-glow-hover));
+    filter: drop-shadow(0 0 34px var(--logo-glow-hover));
   }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+    50% { transform: translateY(-8px); }
   }
 
   .title {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;                      /* fib */
     font-family: var(--font-display);
-    font-size: clamp(3rem, 10vw, 4.5rem);
+    font-size: clamp(3.5rem, 12vw, 5.5rem);
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1;
-    margin-bottom: 12px;
+    margin-bottom: 13px;           /* fib */
   }
 
   .title-main {
@@ -380,6 +410,28 @@ const [latestPost] = await getPublishedBlogPosts();
     animation: gradientShift 8s ease infinite;
   }
 
+  .beta-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.813rem;           /* f-xs */
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg-deep);
+    background: linear-gradient(135deg, var(--accent-bright) 0%, rgba(124, 178, 212, 0.8) 100%);
+    padding: 4px 10px;
+    border-radius: 8px;            /* fib */
+    margin-top: 0.15em;
+    -webkit-text-fill-color: var(--bg-deep);
+    animation: badgeBob 3s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes badgeBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
   @keyframes gradientShift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -387,20 +439,20 @@ const [latestPost] = await getPublishedBlogPosts();
 
   .tagline {
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: 1.125rem;           /* f-md */
     font-weight: 500;
     color: var(--accent-bright);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 21px;           /* fib */
   }
 
   .description {
-    font-size: 1.1rem;
+    font-size: 1.125rem;           /* f-md */
     color: var(--text-secondary);
-    max-width: 600px;
+    max-width: 610px;
     margin: 0 auto;
-    line-height: 1.7;
+    line-height: 1.618;            /* φ */
   }
 
   .description a {
@@ -412,18 +464,18 @@ const [latestPost] = await getPublishedBlogPosts();
 
   .description a:hover { color: var(--moon-bright); }
 
-  /* Latest Post */
+  /* ── Latest Post ── */
   .latest-post {
-    margin-bottom: 48px;
+    margin-bottom: 55px;           /* fib */
     animation: fadeUp 0.8s ease-out 0.1s both;
   }
 
   .latest-post-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 20px;
-    border-radius: 12px;
+    gap: 13px;                     /* fib */
+    padding: 13px 21px;           /* fib */
+    border-radius: 13px;          /* fib */
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-decoration: none;
@@ -434,42 +486,43 @@ const [latestPost] = await getPublishedBlogPosts();
   .latest-post-card:hover {
     border-color: var(--border-accent);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px var(--shadow-accent-soft);
+    box-shadow: 0 8px 21px var(--shadow-accent-soft);
   }
 
   .latest-post-badge {
     font-family: var(--font-display);
-    font-size: 0.7rem;
+    font-size: 0.813rem;           /* f-xs */
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--bg-deep);
     background: var(--accent-bright);
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: 6px;
   }
 
   .latest-post-title {
     flex: 1;
-    font-size: 0.95rem;
+    font-size: 1rem;               /* f-base */
     font-weight: 500;
   }
 
   .latest-post-arrow {
     color: var(--text-muted);
+    font-size: 1.125rem;           /* f-md */
     transition: transform 0.2s;
   }
 
-  .latest-post-card:hover .latest-post-arrow { transform: translateX(4px); }
+  .latest-post-card:hover .latest-post-arrow { transform: translateX(5px); }
 
-  /* Quick Start */
+  /* ── Quick Start ── */
   .quickstart {
-    margin-bottom: 56px;
+    margin-bottom: 55px;           /* fib */
     animation: fadeUp 0.8s ease-out 0.2s both;
   }
 
   .code-block {
-    border-radius: 16px;
+    border-radius: 13px;           /* fib */
     border: 1px solid var(--border-subtle);
     background: var(--surface-card-strong);
     overflow: hidden;
@@ -478,8 +531,8 @@ const [latestPost] = await getPublishedBlogPosts();
   .code-header {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 14px 20px;
+    gap: 8px;                      /* fib */
+    padding: 13px 21px;           /* fib */
     border-bottom: 1px solid var(--border-subtle);
   }
 
@@ -491,23 +544,23 @@ const [latestPost] = await getPublishedBlogPosts();
   }
 
   .code-label {
-    margin-left: 8px;
+    margin-left: 8px;             /* fib */
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.813rem;          /* f-xs */
     color: var(--text-muted);
   }
 
   .code-body {
-    padding: 20px;
+    padding: 21px;                /* fib */
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: 0.938rem;          /* ~15px, between base and sm */
     line-height: 2;
   }
 
   .code-line {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;                     /* fib */
   }
 
   .code-prompt {
@@ -528,8 +581,8 @@ const [latestPost] = await getPublishedBlogPosts();
     border: none;
     color: var(--text-muted);
     cursor: pointer;
-    padding: 4px;
-    border-radius: 6px;
+    padding: 5px;
+    border-radius: 8px;           /* fib */
     transition: color 0.2s, background 0.2s;
     display: flex;
     align-items: center;
@@ -540,24 +593,24 @@ const [latestPost] = await getPublishedBlogPosts();
     background: var(--surface-interactive);
   }
 
-  .copy-btn svg { width: 16px; height: 16px; }
+  .copy-btn svg { width: 18px; height: 18px; }
 
-  /* Four Layers */
+  /* ── Four Layers ── */
   .layers {
-    margin-bottom: 56px;
+    margin-bottom: 55px;           /* fib */
     animation: fadeUp 0.8s ease-out 0.3s both;
   }
 
   .layers-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 21px;                    /* fib */
   }
 
   .layer-card {
     display: block;
-    padding: 28px 24px;
-    border-radius: 16px;
+    padding: 34px 21px;           /* fib: 34 vertical, 21 horizontal */
+    border-radius: 13px;          /* fib */
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     backdrop-filter: blur(8px);
@@ -568,71 +621,72 @@ const [latestPost] = await getPublishedBlogPosts();
 
   .layer-card:hover {
     border-color: var(--border-accent);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px var(--shadow-accent-soft);
+    transform: translateY(-5px);
+    box-shadow: 0 13px 34px var(--shadow-accent-soft);
   }
 
   .layer-icon {
-    font-size: 1.8rem;
+    font-size: 2.125rem;           /* bumped — visible at distance */
     color: var(--accent-bright);
-    margin-bottom: 12px;
+    margin-bottom: 13px;           /* fib */
     line-height: 1;
   }
 
   .layer-name {
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: 1.313rem;          /* f-lg (21px) */
     font-weight: 600;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
+    line-height: 1.2;
   }
 
   .layer-type {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.813rem;          /* f-xs (13px) — was 0.72 */
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 12px;
+    margin-bottom: 13px;          /* fib */
   }
 
   .layer-desc {
-    font-size: 0.9rem;
+    font-size: 1rem;               /* f-base — was 0.9 */
     color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 16px;
+    line-height: 1.618;           /* φ */
+    margin-bottom: 13px;          /* fib */
   }
 
   .layer-examples {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;                     /* fib */
   }
 
   .layer-examples code {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.813rem;          /* f-xs — was 0.72 */
     padding: 3px 8px;
-    border-radius: 6px;
+    border-radius: 8px;           /* fib */
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
     border: 1px solid rgba(104, 152, 190, 0.15);
   }
 
-  /* Features */
+  /* ── Features ── */
   .features {
-    margin-bottom: 56px;
+    margin-bottom: 55px;           /* fib */
     animation: fadeUp 0.8s ease-out 0.4s both;
   }
 
   .features-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 21px;                    /* fib */
   }
 
   .feature-card {
-    padding: 24px;
-    border-radius: 16px;
+    padding: 34px 21px;           /* fib: 34 vertical, 21 horizontal */
+    border-radius: 13px;          /* fib */
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     transition: all 0.25s ease;
@@ -640,51 +694,52 @@ const [latestPost] = await getPublishedBlogPosts();
 
   .feature-card:hover {
     border-color: var(--border-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px var(--shadow-accent-soft);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 21px var(--shadow-accent-soft);
   }
 
   .feature-title {
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: 1.188rem;          /* ~19px, between base and lg */
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 8px;           /* fib */
+    line-height: 1.2;
   }
 
   .feature-desc {
-    font-size: 0.9rem;
+    font-size: 1rem;               /* f-base — was 0.9 */
     color: var(--text-secondary);
-    line-height: 1.5;
+    line-height: 1.618;           /* φ */
   }
 
   .feature-desc code {
     font-family: var(--font-mono);
-    font-size: 0.82rem;
-    padding: 2px 6px;
-    border-radius: 4px;
+    font-size: 0.875rem;          /* f-sm — was 0.82 */
+    padding: 2px 8px;
+    border-radius: 5px;
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
 
-  /* Ecosystem */
+  /* ── Ecosystem ── */
   .ecosystem {
-    margin-bottom: 56px;
+    margin-bottom: 55px;           /* fib */
     animation: fadeUp 0.8s ease-out 0.5s both;
   }
 
   .ecosystem-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    gap: 13px;                    /* fib */
   }
 
   .eco-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: 24px 16px;
-    border-radius: 16px;
+    gap: 8px;                     /* fib */
+    padding: 34px 13px;           /* fib: generous vertical */
+    border-radius: 13px;          /* fib */
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-decoration: none;
@@ -694,14 +749,15 @@ const [latestPost] = await getPublishedBlogPosts();
 
   .eco-card:hover {
     border-color: var(--border-accent);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px var(--shadow-accent-soft);
+    transform: translateY(-5px);
+    box-shadow: 0 13px 34px var(--shadow-accent-soft);
   }
 
   .eco-icon {
-    font-size: 1.4rem;
+    font-size: 2.125rem;           /* matched to layer-icon — was 1.4 */
     color: var(--accent-bright);
     transition: transform 0.25s;
+    line-height: 1;
   }
 
   .eco-card:hover .eco-icon { transform: scale(1.15); }
@@ -709,44 +765,49 @@ const [latestPost] = await getPublishedBlogPosts();
   .eco-name {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.125rem;          /* f-md — was 1rem */
+    line-height: 1.2;
   }
 
   .eco-desc {
-    font-size: 0.78rem;
+    font-size: 0.875rem;          /* f-sm — was 0.78 */
     color: var(--text-muted);
     text-align: center;
+    line-height: 1.4;
   }
 
-  /* CTA */
+  /* ── CTA ── */
   .cta-section {
-    margin-bottom: 56px;
+    margin-bottom: 55px;           /* fib */
     animation: fadeUp 0.8s ease-out 0.6s both;
   }
 
   .cta-content {
     text-align: center;
-    padding: 48px 32px;
-    border-radius: 20px;
+    padding: 55px 34px;           /* fib */
+    border-radius: 21px;          /* fib */
     border: 1px solid var(--border-subtle);
     background: linear-gradient(135deg, rgba(104,152,190,0.06) 0%, var(--surface-card-strong) 50%, rgba(232,168,124,0.04) 100%);
   }
 
   .cta-title {
     font-family: var(--font-display);
-    font-size: 1.6rem;
+    font-size: 1.625rem;          /* f-xl (26px) */
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 8px;           /* fib */
+    line-height: 1.2;
   }
 
   .cta-desc {
+    font-size: 1.125rem;          /* f-md */
     color: var(--text-secondary);
-    margin-bottom: 28px;
+    margin-bottom: 34px;          /* fib */
+    line-height: 1.618;           /* φ */
   }
 
   .cta-buttons {
     display: flex;
-    gap: 16px;
+    gap: 13px;                    /* fib */
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -754,49 +815,49 @@ const [latestPost] = await getPublishedBlogPosts();
   .cta-primary {
     display: inline-flex;
     align-items: center;
-    padding: 14px 28px;
-    border-radius: 12px;
+    padding: 13px 34px;           /* fib */
+    border-radius: 13px;          /* fib */
     background: linear-gradient(135deg, var(--accent-bright) 0%, var(--accent-dark) 100%);
     color: white;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1rem;               /* f-base */
     text-decoration: none;
     transition: all 0.25s ease;
   }
 
   .cta-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px var(--shadow-accent-mid);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 21px var(--shadow-accent-mid);
   }
 
   .cta-secondary {
     display: inline-flex;
     align-items: center;
-    padding: 14px 28px;
-    border-radius: 12px;
+    padding: 13px 34px;           /* fib */
+    border-radius: 13px;          /* fib */
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     color: var(--text-primary);
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1rem;               /* f-base */
     text-decoration: none;
     transition: all 0.25s ease;
   }
 
   .cta-secondary:hover {
     border-color: var(--border-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px var(--shadow-accent-soft);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 21px var(--shadow-accent-soft);
   }
 
-  /* Footer */
+  /* ── Footer ── */
   .footer {
     margin-top: auto;
-    padding-top: 48px;
+    padding-top: 55px;             /* fib */
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.938rem;          /* ~15px */
     color: var(--text-muted);
   }
 
@@ -804,8 +865,8 @@ const [latestPost] = await getPublishedBlogPosts();
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: 8px;                     /* fib */
+    margin-bottom: 13px;          /* fib */
   }
 
   .sep { color: var(--text-muted); }
@@ -819,11 +880,11 @@ const [latestPost] = await getPublishedBlogPosts();
   .footer a:hover { color: var(--moon-bright); }
 
   .footer-credit {
-    margin-top: 8px;
-    font-size: 0.82rem;
+    margin-top: 8px;              /* fib */
+    font-size: 0.875rem;          /* f-sm — was 0.82 */
   }
 
-  /* Responsive */
+  /* ── Responsive ── */
   @media (max-width: 768px) {
     .layers-grid { grid-template-columns: 1fr; }
     .features-grid { grid-template-columns: 1fr; }
@@ -831,7 +892,7 @@ const [latestPost] = await getPublishedBlogPosts();
   }
 
   @media (max-width: 480px) {
-    .container { padding: 32px 16px; }
+    .container { padding: 34px 13px; }
     .ecosystem-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>

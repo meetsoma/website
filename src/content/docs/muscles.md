@@ -5,6 +5,9 @@ section: "Core Concepts"
 order: 5.5
 ---
 
+<!-- tldr -->
+Learned patterns in `.soma/memory/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = digest only, cold = name listed. Digest blocks between `<!-- digest:start -->` / `<!-- digest:end -->` markers. Write digests — they're what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
+<!-- /tldr -->
 
 Muscles are **learned patterns** — reusable knowledge that Soma builds from experience. Unlike protocols (which are behavioral rules you write), muscles emerge organically from work. They're Soma's playbook.
 
@@ -30,11 +33,10 @@ loads: 0
 
 > Learned patterns for deploying Astro sites to Vercel.
 
-## TL;DR
-<!-- digest -->
-Build with `pnpm build`, deploy with `npx vercel --prod`. Always verify with
-curl after deploy. Check build output for page count changes.
-<!-- /digest -->
+<!-- digest:start -->
+> **Deployment** — build with `pnpm build`, deploy with `npx vercel --prod`.
+> Always verify with curl after deploy. Check build output for page count changes.
+<!-- digest:end -->
 
 ## Full Process
 
@@ -62,17 +64,17 @@ curl after deploy. Check build output for page count changes.
 
 Muscles can be large — a full logo design muscle might be 200+ lines. Loading all of that into the system prompt wastes context. The **digest system** solves this with a two-tier approach.
 
-Every muscle should have a **TL;DR block** between digest markers:
+Every muscle should have a **digest block** between markers:
 
 ```markdown
-## TL;DR
-<!-- digest -->
-Concise summary of the key patterns. 2-4 sentences max.
-Everything the agent needs to know at a glance.
-<!-- /digest -->
+<!-- digest:start -->
+> **Topic** — concise summary of the key patterns
+> - Bullet points the agent needs at a glance
+> - 2-6 lines max
+<!-- digest:end -->
 ```
 
-When a muscle loads as **warm** (digest tier), only the content between `<!-- digest -->` and `<!-- /digest -->` enters the prompt. When it loads as **hot**, the full body loads.
+When a muscle loads as **warm** (digest tier), only the content between `<!-- digest:start -->` and `<!-- digest:end -->` enters the prompt. When it loads as **hot**, the full body loads.
 
 No digest block? The muscle can only load as hot (full) or cold (not at all). Write digests.
 
@@ -110,11 +112,10 @@ loads: 0
 
 # Testing Workflow — Muscle
 
-## TL;DR
-<!-- digest -->
-Run `pnpm test` before every commit. Use vitest for unit tests.
-Coverage threshold is 80%. CI runs the same suite.
-<!-- /digest -->
+<!-- digest:start -->
+> **Testing** — run `pnpm test` before every commit. Use vitest for unit tests.
+> Coverage threshold is 80%. CI runs the same suite.
+<!-- digest:end -->
 
 ## Full Process
 

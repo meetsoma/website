@@ -5,6 +5,9 @@ section: "Core Concepts"
 order: 4
 ---
 
+<!-- tldr -->
+Two levels: project (`.soma/` in repo) and user (`~/.soma/agent/`). Project has: identity.md, STATE.md, protocols/, memory/ (muscles, preloads, sessions), settings.json, scripts/. User has: global settings, extensions (soma-boot, soma-header, soma-statusline), global skills. Identity + memory are gitignored (personal). STATE.md + skills are tracked (shareable).
+<!-- /tldr -->
 
 Soma uses two levels of storage: **project-level** (`.soma/` in your repo) and **user-level** (`~/.soma/agent/`).
 
@@ -28,7 +31,6 @@ Lives in your project root. Contains everything specific to this project.
 │   ├── preload-next.md      ← state for next session inhale
 │   └── sessions/
 │       └── 2026-03-08.md    ← daily work log
-├── scripts/                 ← dev tooling (search, scan, TL;DR gen)
 ├── skills/                  ← project-specific skills (optional)
 └── extensions/              ← project-specific extensions (optional)
 ```
@@ -71,26 +73,28 @@ Global settings and runtime. Shared across all projects.
 ## How Memory Flows
 
 ```
-Fresh session:
+Fresh session (soma):
   ~/.soma/agent/extensions/ load
   → walk up CWD for .soma/ (project → parent → global chain)
   → load identity.md (always)
   → detect project signals (git, typescript, etc.)
   → load protocols by heat (hot=full, warm=breadcrumb, cold=name)
   → load muscles by heat within token budget
-  → surface scripts table
   → inject into system prompt
 
-Resumed session (--continue):
+Continue session (soma -c):
   → same as above, plus:
   → load .soma/memory/preload-next.md
   → inject preload as continuation context
 
-Exhale (/exhale or auto at 85%):
+Breathe (/breathe or auto at 85%):
   → agent writes .soma/memory/preload-next.md
   → save protocol + muscle heat state (with decay for unused)
   → agent commits work
   → auto-continues into fresh session
+
+Exhale (/exhale):
+  → same save as breathe, but session ends
 ```
 
 ## Multiple Projects
