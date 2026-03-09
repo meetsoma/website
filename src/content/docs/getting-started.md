@@ -9,7 +9,7 @@ order: 1
 ## Install
 
 ```bash
-npm install -g @gravicity.ai/soma
+npm install -g meetsoma
 ```
 
 ## First Run
