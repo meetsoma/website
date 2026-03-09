@@ -28,6 +28,8 @@ MANIFEST=(
   "protocols.md|Protocols & Heat|Behavioral rules, heat system, domain scoping, writing your own.|Core Concepts|3"
   "memory-layout.md|Memory Layout|Project vs user level storage, git strategy, data flow.|Core Concepts|4"
   "extending.md|Extending Soma|Skills, extensions, events, APIs — build on top of Soma.|Extending|5"
+  "configuration.md|Configuration|Settings, heat thresholds, muscle budgets — tune Soma's behavior.|Reference|6"
+  "commands.md|Commands|Slash commands, CLI flags, context warnings, the breath cycle.|Reference|7"
 )
 
 mkdir -p "$TARGET"
