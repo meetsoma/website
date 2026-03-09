@@ -29,6 +29,8 @@ MANIFEST=(
   "memory-layout.md|Memory Layout|Project vs user level storage, git strategy, data flow.|Core Concepts|4"
   "extending.md|Extending Soma|Skills, extensions, events, APIs — build on top of Soma.|Extending|5"
   "configuration.md|Configuration|Settings, heat thresholds, muscle budgets — tune Soma's behavior.|Reference|6"
+  "muscles.md|Muscles|Learned patterns, digest system, heat tiers, writing your own.|Core Concepts|5.5"
+  "identity.md|Identity|Discovery, layering, customization, project vs global.|Core Concepts|2.5"
   "commands.md|Commands|Slash commands, CLI flags, context warnings, the breath cycle.|Reference|7"
 )
 
