@@ -59,14 +59,17 @@ Pick from previous sessions to resume.
 
 | Command | What it does |
 |---------|-------------|
-| `/inhale` | Start fresh — shows preload status, suggests `soma -c` |
 | `/breathe` | Save state + auto-continue into fresh session |
 | `/exhale` | Save state, write preload, session ends (alias: `/flush`) |
+| `/rest` | Disable keepalive + exhale — for when you're done for the night |
+| `/inhale` | Start fresh — shows preload status, suggests `soma -c` |
 | `/pin <name>` | Pin a protocol/muscle to hot (stays loaded) |
 | `/kill <name>` | Kill a protocol/muscle (drops to cold) |
+| `/keepalive` | Toggle cache keepalive on/off (or check status) |
+| `/status` | Show session stats — context %, cache, keepalive, turns, uptime |
+| `/preload` | List available preload files |
 | `/soma status` | Show memory status (identity, preload, muscles, protocols) |
 | `/soma init` | Create `.soma/` in current directory |
-| `/preload` | List available preload files |
 
 ## The `.soma/` Directory
 

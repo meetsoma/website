@@ -7,7 +7,7 @@ order: 7
 
 
 <!-- tldr -->
-`/inhale` — start fresh. `/breathe` — save + auto-continue. `/exhale` — save + stop (alias: `/flush`). `/pin <name>` — bump heat +5. `/kill <name>` — drop heat to 0. `/soma` — show status. CLI: `soma` (fresh), `soma -c` (continue). Context warnings and auto-exhale thresholds are configurable in `settings.json`.
+`/inhale` — start fresh. `/breathe` — save + auto-continue. `/exhale` — save + stop (alias: `/flush`). `/rest` — disable keepalive + exhale (going to bed). `/pin <name>` — bump heat +5. `/kill <name>` — drop heat to 0. `/soma` — show status. CLI: `soma` (fresh), `soma -c` (continue). Context warnings and auto-exhale thresholds are configurable in `settings.json`.
 <!-- /tldr -->
 
 Soma registers slash commands that control the breath cycle, heat system, and session management.
@@ -19,6 +19,7 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 | `/inhale` | Start a fresh session. Shows preload status and suggests `soma -c` to continue with context. |
 | `/breathe` | Save state and auto-continue into a fresh session. Seamless rotation — exhale + inhale in one motion. |
 | `/exhale` | Save state to disk. Writes `preload-next.md`, saves heat state with decay for unused content. Session ends. Alias: `/flush` |
+| `/rest` | Going to bed? Disables cache keepalive, then exhales. No pings will fire after you walk away. |
 
 ## Heat Commands
 
@@ -85,5 +86,6 @@ Commands map to Soma's breath metaphor:
 2. **Work** — the session. Heat shifts based on what you use.
 3. **Breathe** — context filling up? `/breathe` saves state and continues seamlessly.
 4. **Exhale** — done for now? `/exhale` saves state and ends the session.
+5. **Rest** — going to bed? `/rest` disables keepalive pings and exhales. No cache pings will fire after you walk away.
 
 See [How It Works](/docs/how-it-works) for the full breath cycle explanation.

@@ -71,6 +71,7 @@ When context fills up, Soma automatically breathes — saving state and continui
 
 - **`/breathe`** — save state + auto-continue (seamless rotation)
 - **`/exhale`** — save state + stop (alias: `/flush`)
+- **`/rest`** — disable keepalive + exhale (for when you're done for the night)
 
 Either way, Soma:
 1. Writes a **preload** for the next session (`preload-next.md`)
@@ -116,6 +117,18 @@ Protocols declare which projects they apply to via an `applies-to` field. For ex
 Available signals: `always`, `git`, `typescript`, `javascript`, `python`, `rust`, `go`, `frontend`, `docs`, `multi-repo`.
 
 See [Protocols](/docs/protocols) for how to write your own.
+
+## Cache Keepalive
+
+Soma automatically keeps the model's prompt cache warm between turns. When you're reading docs, thinking, or reviewing code, the cache stays hot — so the next response is fast and cheap.
+
+The keepalive sends a lightweight ping every ~4.5 minutes (configurable via the 300-second cache TTL). The statusline shows `◷` when keepalive is active.
+
+**Commands:**
+- **`/keepalive on`** — enable keepalive (default: on)
+- **`/keepalive off`** — disable keepalive
+- **`/keepalive status`** — show cache state and ping count
+- **`/rest`** — disables keepalive + exhales in one motion (for end of session)
 
 ## Context Management
 

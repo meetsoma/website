@@ -5,15 +5,17 @@ import SectionHeader from '../../components/SectionHeader.astro';
 
 const timeline = [
   {
-    version: 'v0.2.1',
-    label: 'Public Launch',
+    version: 'v0.3.0',
+    label: 'Session Intelligence',
     date: 'Mar 2026',
     items: [
-      'Commit history flattened for clean public release',
-      'Terminology standardized across all 9 docs',
-      '/breathe command — exhale + auto-continue',
-      'CI: PR check, release validation, release-publish workflows',
-      'Scripts restored: search, scan, snapshot, TL;DR, date hook',
+      '/rest command — disable keepalive + exhale for end of session',
+      'Cache keepalive — auto-ping keeps prompt cache warm between turns',
+      '/keepalive and /status commands — session observability',
+      'PII scrub — git-filter-repo rewrote all 4 repo histories, zero personal data',
+      'Audit system — 11 focused scripts covering PII, drift, stale terms, docs sync, website',
+      'Install flow simplified — soma init copies bundled extensions, no symlinks',
+      '4 new test suites, 161 tests passing',
     ]
   },
   {
@@ -25,7 +27,8 @@ const timeline = [
       'Heat system — adaptive protocol/muscle loading with decay',
       'Muscles — pattern memory with digest blocks and load tracking',
       'Applies-to — protocol domain scoping by project signals',
-      '5 test suites, 188 assertions passing',
+      '/breathe command — exhale + auto-continue into fresh session',
+      'Scripts restored: search, scan, snapshot, TL;DR, date hook',
     ]
   },
   {

@@ -30,7 +30,7 @@ Community assets are loaded into agent context across many users' machines. They
 | Category | Examples | Where it belongs instead |
 |----------|----------|------------------------|
 | **Personal identity** | Email, name, username | `identity.md`, `USER.md` |
-| **Paths** | `/Users/curtis/`, `~/Gravicity/` | Project config, `.env` |
+| **Paths** | `/Users/username/`, `~/Gravicity/` | Project config, `.env` |
 | **Secrets** | API keys, tokens, passwords | `.soma/secrets/`, `.env` |
 | **Org-specific URLs** | `mycompany.slack.com`, internal dashboards | Project memory |
 | **Hardcoded repos** | `meetsoma/soma-agent` (unless it's an example) | Replace with `your-org/your-repo` |

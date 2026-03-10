@@ -12,6 +12,29 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [Unreleased]
+
+### Added
+- **`/rest` command** — disable cache keepalive + exhale in one motion. For end-of-session use.
+- **`/keepalive` command** — toggle cache keepalive on/off/status.
+- **`/status` command** — show session stats (context %, cache, keepalive, turns, uptime).
+- **Cache keepalive system** — auto-ping keeps prompt cache warm between turns. ◷ indicator in footer.
+- **10 focused audit scripts** — PII, drift, commands, stale terms, roadmap, docs sync, stale content, overlap, tests, settings, website.
+- **Test coverage** — 161/161 passing across 9 test suites.
+- **Configurable boot sequence** — `settings.boot.steps` controls what loads on session start.
+- **Git context on boot** — recent commits and changed files injected automatically.
+- **Configurable context warnings** — `settings.context` controls all thresholds.
+
+### Changed
+- Extension ownership refactor — `soma-boot.ts` owns lifecycle, `soma-statusline.ts` owns rendering.
+- Install flow simplified — `soma init` copies bundled extensions, no symlinks needed.
+
+### Fixed
+- PII scrubbed from all git history across 4 repos.
+- CLI stripped to distribution shell — agent is source of truth.
+
+---
+
 ## [0.2.0] — 2026-03-09
 
 ### Added

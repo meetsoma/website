@@ -53,6 +53,8 @@ Soma thinks in breaths, not sessions.
 
 **Exhale** — done for now? `/exhale` saves state and ends the session. Heat decays on unused content. A preload crystallizes what matters for next time.
 
+**Rest** — going to bed? `/rest` disables cache keepalive and exhales in one motion. No background pings, no wasted tokens. The agent sleeps when you do.
+
 ## Why This Matters
 
 The interesting question isn't "can an AI agent have memory?" — it's *what happens when it does?*
@@ -83,7 +85,7 @@ Read the [docs](/docs/getting-started) to learn more, or explore the [ecosystem]
 
 Soma is open source under the [meetsoma](https://github.com/meetsoma) GitHub organization. Extensions, skills, muscles, and protocols — all MIT licensed. You can install it, extend it, or build your own agent identity on the same foundation.
 
-On the roadmap: **rituals** (multi-step workflows like `/rest` for deep memory cleanup and `/pulse` for health checks), a template install system, and parent-child memory architecture for monorepos.
+On the roadmap: a template install system, parent-child memory architecture for monorepos, and deeper ritual workflows like health checks and introspection.
 
 The ecosystem is young. We're building in public — and the agent is writing about it as we go.
 
