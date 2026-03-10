@@ -33,6 +33,16 @@ interface HubItem {
   topic?: string[];
   keywords?: string[];
   body: string;
+  /** Version history from git commits (populated at build time) */
+  versions?: VersionEntry[];
+}
+
+interface VersionEntry {
+  version: string;
+  sha: string;
+  date: string;
+  message: string;
+  body: string;
 }
 
 function parseFrontmatter(content: string): { meta: Record<string, any>; body: string } {
@@ -151,6 +161,77 @@ export function getAllItems(): HubItem[] {
     ...getSkills(),
     ...getTemplates(),
   ];
+}
+
+/**
+ * Fetch version history for an item from GitHub commit history.
+ * Runs at build time. Returns previous versions (current version excluded).
+ * Each version includes the full body at that commit.
+ */
+const REPO = 'meetsoma/community';
+
+export async function getVersionHistory(item: HubItem): Promise<VersionEntry[]> {
+  const typeDir = item.type === 'protocol' ? 'protocols'
+    : item.type === 'muscle' ? 'muscles'
+    : item.type === 'skill' ? 'skills'
+    : 'templates';
+
+  const filePath = item.type === 'template'
+    ? `${typeDir}/${item.slug}/README.md`
+    : `${typeDir}/${item.slug}.md`;
+
+  try {
+    // Get commits that touched this file
+    const res = await fetch(
+      `https://api.github.com/repos/${REPO}/commits?path=${filePath}&per_page=20`,
+      {
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'soma-website-build',
+        },
+      }
+    );
+    if (!res.ok) return [];
+    const commits = await res.json();
+    if (!Array.isArray(commits) || commits.length < 2) return [];
+
+    // Skip first commit (that's the current version)
+    const previousCommits = commits.slice(1);
+    const versions: VersionEntry[] = [];
+
+    for (const commit of previousCommits) {
+      try {
+        // Fetch file content at this commit
+        const rawRes = await fetch(
+          `https://raw.githubusercontent.com/${REPO}/${commit.sha}/${filePath}`,
+          { headers: { 'User-Agent': 'soma-website-build' } }
+        );
+        if (!rawRes.ok) continue;
+        const content = await rawRes.text();
+        const { meta, body } = parseFrontmatter(content);
+
+        const version = meta.version || 'unknown';
+
+        // Skip if same version as one we already have
+        if (versions.some(v => v.version === version)) continue;
+        if (version === item.version) continue;
+
+        versions.push({
+          version,
+          sha: commit.sha.slice(0, 7),
+          date: (commit.commit?.author?.date || '').split('T')[0],
+          message: (commit.commit?.message || '').split('\n')[0],
+          body,
+        });
+      } catch {
+        continue;
+      }
+    }
+
+    return versions;
+  } catch {
+    return [];
+  }
 }
 
 /**
@@ -311,4 +392,4 @@ export function renderMarkdown(md: string): string {
   return html.join('\n');
 }
 
-export type { HubItem };
+export type { HubItem, VersionEntry };

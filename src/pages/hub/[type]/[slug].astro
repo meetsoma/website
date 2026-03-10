@@ -1,17 +1,23 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
-import { getAllItems, type HubItem, renderMarkdown } from '../../../lib/hub';
+import { getAllItems, getVersionHistory, type HubItem, type VersionEntry, renderMarkdown } from '../../../lib/hub';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
   const items = getAllItems();
-  return items.map((item) => ({
-    params: { type: item.type, slug: item.slug },
-    props: { item },
-  }));
+  const paths = [];
+  for (const item of items) {
+    const versions = await getVersionHistory(item);
+    paths.push({
+      params: { type: item.type, slug: item.slug },
+      props: { item, versions },
+    });
+  }
+  return paths;
 }
 
-const { item } = Astro.props as { item: HubItem };
+const { item, versions } = Astro.props as { item: HubItem; versions: VersionEntry[] };
+const hasVersions = versions.length > 0;
 
 const typeLabels: Record<string, string> = {
   protocol: 'Protocol',
@@ -109,7 +115,23 @@ const ghUrl = item.type === 'template'
 
     <!-- Body -->
     <section class="body-section">
-      <div class="markdown-body" set:html={renderMarkdown(item.body)} />
+      {hasVersions && (
+        <div class="version-selector">
+          <label for="version-select">Version</label>
+          <select id="version-select">
+            <option value="current" selected>v{item.version} (latest)</option>
+            {versions.map(v => (
+              <option value={v.sha}>v{v.version} — {v.date}</option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      <div class="markdown-body version-content" data-version="current" set:html={renderMarkdown(item.body)} />
+
+      {versions.map(v => (
+        <div class="markdown-body version-content" data-version={v.sha} style="display:none" set:html={renderMarkdown(v.body)} />
+      ))}
     </section>
 
     <!-- Source -->
@@ -118,6 +140,17 @@ const ghUrl = item.type === 'template'
         View source on GitHub →
       </a>
     </section>
+
+    {hasVersions && (
+      <script>
+        document.getElementById('version-select')?.addEventListener('change', (e) => {
+          const selected = (e.target as HTMLSelectElement).value;
+          document.querySelectorAll('.version-content').forEach(el => {
+            (el as HTMLElement).style.display = el.getAttribute('data-version') === selected ? '' : 'none';
+          });
+        });
+      </script>
+    )}
 
   </main>
 </Layout>
@@ -306,6 +339,45 @@ const ghUrl = item.type === 'template'
   .tag-dim {
     background: var(--surface-interactive);
     color: var(--text-secondary);
+  }
+
+  /* Version selector */
+  .version-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .version-selector label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .version-selector select {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    cursor: pointer;
+    outline: none;
+  }
+
+  .version-selector select:hover {
+    border-color: var(--border-accent);
+  }
+
+  .version-selector select:focus {
+    border-color: var(--accent-bright);
+    box-shadow: 0 0 0 2px var(--shadow-accent-soft);
   }
 
   /* Body */
