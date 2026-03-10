@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 3.5
 ---
 
+
 > TL;DR: Everything in Soma has a temperature. Hot content loads fully into the agent's prompt. Warm content loads as a one-line reminder. Cold content is listed but not loaded. Heat rises when things get used, decays when they don't. The agent naturally learns what matters.
 
 The heat system is how Soma decides what to put in the agent's context window. Instead of loading everything (which wastes tokens) or requiring manual configuration (which nobody maintains), heat makes it automatic: use something often and it stays loaded. Stop using it and it fades.
@@ -82,6 +83,12 @@ These work for both protocols and muscles. Tab-complete the name.
       "last_referenced": "2026-03-09",
       "times_applied": 42,
       "pinned": false
+    },
+    "frontmatter-standard": {
+      "heat": 5,
+      "last_referenced": "2026-03-08",
+      "times_applied": 18,
+      "pinned": false
     }
   }
 }
@@ -139,3 +146,9 @@ Heat solves a fundamental problem: agents have limited context windows, but user
 With heat, the system self-organizes. Protocols you use daily stay hot and fully loaded. Muscles you haven't touched in a week cool down to digests, then to just names. If you need them again, one use warms them back up.
 
 The result: **the agent's prompt reflects what you actually do, not what you once configured.**
+
+## Related
+
+- [Configuration](/docs/configuration) — all heat thresholds, boot steps, context warnings
+- [Protocols](/docs/protocols) — writing protocols, domain scoping, frontmatter
+- [Muscles](/docs/muscles) — writing muscles, digest system, token budget
