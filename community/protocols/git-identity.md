@@ -8,6 +8,8 @@ breadcrumb: "Commits must be attributed correctly. Check git config user.email b
 author: Soma Team
 license: MIT
 version: 1.0.0
+created: 2026-03-09
+updated: 2026-03-09
 ---
 
 # Git Identity Protocol

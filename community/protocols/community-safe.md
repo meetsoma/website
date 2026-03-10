@@ -8,6 +8,8 @@ breadcrumb: "Community assets must never contain private data. No emails, paths,
 author: Soma Team
 license: MIT
 version: 1.0.0
+created: 2026-03-09
+updated: 2026-03-09
 ---
 
 # Community-Safe Content Protocol

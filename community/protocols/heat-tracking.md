@@ -8,6 +8,8 @@ breadcrumb: "Protocols have temperature: cold (not loaded), warm (breadcrumb in 
 author: Soma Team
 license: MIT
 version: 1.0.0
+created: 2026-03-09
+updated: 2026-03-09
 ---
 
 # Heat Tracking Protocol

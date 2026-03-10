@@ -8,6 +8,8 @@ loads: 0
 author: Soma Team
 license: MIT
 version: 1.0.0
+created: 2026-03-09
+updated: 2026-03-09
 ---
 
 # PR & Release Workflow — Muscle

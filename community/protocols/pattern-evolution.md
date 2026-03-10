@@ -8,6 +8,8 @@ breadcrumb: "Patterns mature: observation → muscle → muscle memory → proto
 author: Soma Team
 license: MIT
 version: 1.0.0
+created: 2026-03-09
+updated: 2026-03-09
 ---
 
 # Pattern Evolution Protocol

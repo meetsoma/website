@@ -8,6 +8,8 @@ breadcrumb: "Sessions have 3 phases: inhale (boot, load identity + memory + prot
 author: Soma Team
 license: MIT
 version: 1.0.0
+created: 2026-03-09
+updated: 2026-03-09
 ---
 
 # Breath Cycle Protocol
