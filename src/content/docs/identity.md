@@ -5,6 +5,9 @@ section: "Core Concepts"
 order: 2.5
 ---
 
+<!-- tldr -->
+`.soma/identity.md` — discovered by Soma through use, not configured. Layered: project (primary) → parent (context) → global (baseline). Gitignored by default (personal). Edit to refine, don't over-specify. Identity is *who*, protocols are *how*.
+<!-- /tldr -->
 
 Soma doesn't come pre-configured. She **discovers** who she is through working with you. Her `identity.md` is written by her, not for her.
 
@@ -97,7 +100,7 @@ Each project gets its own Soma. Different projects, different identities:
 ~/docs/.soma/identity.md       ← "I'm a technical writer"
 ```
 
-Same `meetsoma` CLI, same global identity underneath, different project personalities on top.
+Same `soma` CLI, same global identity underneath, different project personalities on top.
 
 ## Tips
 

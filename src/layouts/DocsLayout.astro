@@ -3,6 +3,7 @@ import Layout from './Layout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Search from '../components/Search.astro';
 import { getCollection } from 'astro:content';
+import { docUrl } from '../lib/blog';
 
 interface Props {
   title: string;
@@ -64,8 +65,8 @@ for (const doc of allDocs) {
               {docs.map(doc => (
                 <li>
                   <a
-                    href={`/docs/${doc.slug}`}
-                    class:list={['nav-link', { active: doc.slug === currentSlug }]}
+                    href={docUrl(doc)}
+                    class:list={['nav-link', { active: doc.id.replace(/\.mdx?$/, '') === currentSlug }]}
                   >
                     {doc.data.title}
                   </a>
@@ -101,19 +102,19 @@ for (const doc of allDocs) {
 
         <!-- Prev/Next -->
         {(() => {
-          const currentIndex = allDocs.findIndex(d => d.slug === currentSlug);
+          const currentIndex = allDocs.findIndex(d => d.id.replace(/\.mdx?$/, '') === currentSlug);
           const prev = currentIndex > 0 ? allDocs[currentIndex - 1] : null;
           const next = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
           return (
             <nav class="docs-pager">
               {prev ? (
-                <a href={`/docs/${prev.slug}`} class="pager-link pager-prev">
+                <a href={docUrl(prev)} class="pager-link pager-prev">
                   <span class="pager-label">← Previous</span>
                   <span class="pager-title">{prev.data.title}</span>
                 </a>
               ) : <div />}
               {next ? (
-                <a href={`/docs/${next.slug}`} class="pager-link pager-next">
+                <a href={docUrl(next)} class="pager-link pager-next">
                   <span class="pager-label">Next →</span>
                   <span class="pager-title">{next.data.title}</span>
                 </a>

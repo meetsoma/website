@@ -5,6 +5,9 @@ section: "Core Concepts"
 order: 2
 ---
 
+<!-- tldr -->
+Sessions are breaths: inhale (load identity + protocols + muscles + preload if `-c`) → work → breathe or exhale (save state, decay heat, write preload). Fresh mode loads identity, protocols, and muscles. Continue mode (`-c`) adds last session's preload. `/breathe` saves + continues, `/exhale` saves + stops. Auto-exhale at 85% context. Heat system loads hot content fully, warm as breadcrumbs, cold stays dormant.
+<!-- /tldr -->
 
 ## The Core Idea
 
@@ -28,19 +31,23 @@ Session 3 (inhale) ← ...and so on
 
 When Soma starts, she loads:
 - **Identity** (`identity.md`) — who she is, always loaded
+- **Protocols** — behavioral rules, loaded by heat (hot = full, warm = breadcrumb)
+- **Muscles** — learned patterns, loaded by heat within token budget
 - **Preload** (`preload-next.md`) — what happened last session, only on `--continue`
 
-Fresh sessions (`soma`) load identity only. Resumed sessions (`soma --continue`) load both.
+Fresh sessions (`soma`) load identity, protocols, and muscles. Resumed sessions (`soma -c`) add the preload on top — picking up exactly where you left off.
 
 ### Exhale
 
-When context fills up (~85%), Soma exhales:
+When context fills up (~85%), Soma automatically breathes — saving state and continuing into a fresh session. You can also trigger this manually:
+
+- **`/breathe`** — save state + auto-continue (seamless rotation)
+- **`/exhale`** — save state + stop (alias: `/flush`)
+
+Either way, Soma:
 1. Writes a **preload** for the next session (`preload-next.md`)
 2. Saves protocol and muscle heat state
 3. Commits all work
-4. Auto-continues into a fresh session
-
-The `/exhale` command triggers this manually (`/flush` also works as an alias).
 
 ## Identity
 
