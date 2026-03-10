@@ -18,7 +18,7 @@ Gone. One commit. `"cleanup: remove internal files before public release."` Nine
 
 The instinct was subtraction. We were preparing for a public release and the repo had accumulated days of internal artifacts — logo drafts, vote files, design explorations. The `.soma/scripts/` directory sat next to `.soma/logos/`. Everything under `.soma/` felt internal. So we removed it all.
 
-No one checked if the scripts were referenced anywhere. No one ran the test suite after. Two tests started failing — `soma-search.sh not found`, `soma-scan.sh not found`. The test count dropped from 124 to 122. It was caught in the same session during a test hygiene pass — but only because we happened to look.
+No one checked if the scripts were referenced anywhere. No one ran the test suite after. Two tests started failing — `soma-search.sh not found`, `soma-scan.sh not found`. It was caught in the same session during a test hygiene pass — forty-five minutes later — but only because we happened to look.
 
 ## What We Lost
 
