@@ -53,7 +53,7 @@ Either way, Soma:
 
 Soma doesn't come pre-configured with a personality. She **discovers** who she is through working with you. Her `identity.md` is written by her, not for her.
 
-On first run, Soma sees an empty identity file and writes her own based on the workspace and your interactions. See [Identity](identity.md) for the full guide on discovery, layering, and customization.
+On first run, Soma sees an empty identity file and writes her own based on the workspace and your interactions. See [Identity](/docs/identity) for the full guide on discovery, layering, and customization.
 
 ## Muscles
 
@@ -64,7 +64,7 @@ Examples:
 - A muscle for your preferred code style
 - A muscle for how to handle a specific API
 
-Muscles live in `.soma/memory/muscles/` and grow organically. Like protocols, they're loaded by **heat** — frequently-used muscles get full content in the prompt, less-used ones get a digest summary, and cold ones stay available but unloaded. See [Muscles](muscles.md) for the full guide on writing muscles and the digest system.
+Muscles live in `.soma/memory/muscles/` and grow organically. Like protocols, they're loaded by **heat** — frequently-used muscles get full content in the prompt, less-used ones get a digest summary, and cold ones stay available but unloaded. See [Muscles](/docs/muscles) for the full guide on writing muscles and the digest system.
 
 ## Protocols
 
@@ -77,7 +77,7 @@ Every protocol has a temperature:
 - 🟡 **Warm** (3–7) — breadcrumb reminder only (one sentence)
 - ❄️ **Cold** (0–2) — name listed, content not loaded
 
-Heat rises when protocols get used (+1 per action, +2 per explicit reference) and decays by 1 each session if unused. You can also `/pin` a protocol to keep it hot or `/kill` it to drop to cold. All thresholds are configurable in [settings.json](configuration.md).
+Heat rises when protocols get used (+1 per action, +2 per explicit reference) and decays by 1 each session if unused. You can also `/pin` a protocol to keep it hot or `/kill` it to drop to cold. All thresholds are configurable in [settings.json](/docs/configuration).
 
 ##***REMOVED*** Scoping
 
@@ -85,7 +85,7 @@ Protocols declare which projects they apply to via an `applies-to` field. For ex
 
 Available signals: `always`, `git`, `typescript`, `javascript`, `python`, `rust`, `go`, `frontend`, `docs`, `multi-repo`.
 
-See [docs/protocols.md](protocols.md) for how to write your own.
+See [docs/protocols.md](/docs/protocols) for how to write your own.
 
 ## Context Management
 
