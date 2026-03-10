@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 5.5
 ---
 
+
 <!-- tldr -->
 Learned patterns in `.soma/memory/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = digest only, cold = name listed. Digest blocks between `<!-- digest:start -->` / `<!-- digest:end -->` markers. Write digests — they're what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
 <!-- /tldr -->
@@ -80,7 +81,7 @@ No digest block? The muscle can only load as hot (full) or cold (not at all). Wr
 
 ## Heat & Loading Tiers
 
-Like protocols, muscles use the [heat system](/docs/heat-system) to decide what loads:
+Like protocols, muscles use the [heat system](heat-system.md) to decide what loads:
 
 | Tier | Heat | What Loads | When |
 |------|------|-----------|------|

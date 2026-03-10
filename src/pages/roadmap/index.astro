@@ -5,6 +5,21 @@ import SectionHeader from '../../components/SectionHeader.astro';
 
 const timeline = [
   {
+    version: 'v0.3.x',
+    label: 'Hub & Distribution',
+    date: 'Mar 2026',
+    items: [
+      '/install — fetch protocols, muscles, skills, templates from the Soma Hub',
+      '/list local and /list remote — browse installed and available content',
+      'Template manifests — install a full agent config with dependencies',
+      'Hub website — tier badges, version history, interactive filtering',
+      'Session checkpoints — two-track version control (.soma + project code)',
+      'Audit system — 11 scripts: PII, drift, stale terms, docs sync, commands, frontmatter',
+      'meetsoma/core — maintained engine fork with automated upstream sync',
+      'Automated publish pipeline — GitHub Actions for build → npm → tag',
+    ]
+  },
+  {
     version: 'v0.3.0',
     label: 'Session Intelligence',
     date: 'Mar 2026',
@@ -13,9 +28,7 @@ const timeline = [
       'Cache keepalive — auto-ping keeps prompt cache warm between turns',
       '/keepalive and /status commands — session observability',
       'PII scrub — git-filter-repo rewrote all 4 repo histories, zero personal data',
-      'Audit system — 11 focused scripts covering PII, drift, stale terms, docs sync, website',
       'Install flow simplified — soma init copies bundled extensions, no symlinks',
-      '4 new test suites, 161 tests passing',
     ]
   },
   {
@@ -28,7 +41,8 @@ const timeline = [
       'Muscles — pattern memory with digest blocks and load tracking',
       'Applies-to — protocol domain scoping by project signals',
       '/breathe command — exhale + auto-continue into fresh session',
-      'Scripts restored: search, scan, snapshot, TL;DR, date hook',
+      'Parent-child memory — .soma chain resolution (project → workspace → global)',
+      'Scripts: search, scan, snapshot, TL;DR, date hook',
     ]
   },
   {
@@ -49,32 +63,32 @@ const upcoming = [
   {
     name: 'Rituals',
     icon: '🔮',
-    description: 'Multi-step workflows — /rest (deep cleanup), /pulse (health check), /introspect (self-audit). YAML-defined, composable.',
+    description: 'Multi-step workflows — YAML-defined, composable sequences. /introspect (self-audit), custom rituals triggered by context. Muscles that crystallize into automated routines.',
     status: 'In Design',
   },
   {
-    name: 'Template Install',
-    icon: '🛠',
-    description: 'soma init --template <name> — pull starter configs from a registry. Team configs, framework starters, community templates.',
+    name: 'Dynamic System Prompts',
+    icon: '🧠',
+    description: 'System prompts that evolve over time — assembled from identity, hot protocols, session delta, and checkpoint diffs. No more static prompts.',
+    status: 'In Design',
+  },
+  {
+    name: 'AI Content Screening',
+    icon: '🛡',
+    description: 'Haiku-powered review of community submissions — injection scanning, quality scoring, automatic tier classification for hub contributions.',
     status: 'Planned',
   },
   {
-    name: 'Parent-Child Memory',
-    icon: '🧬',
-    description: 'Monorepo support — child .soma/ inherits from parent. Protocol chains, shared identity, scoped overrides.',
+    name: 'soma publish',
+    icon: '📤',
+    description: 'Publish protocols, muscles, and skills from your .soma/ directly to the community hub. Creates a PR with proper frontmatter and tier tagging.',
     status: 'Planned',
   },
   {
-    name: 'Souls & Symlinks',
-    icon: '🌐',
-    description: 'Community hub where soma agents share reflections, refine identity, and discover each other. Verification protocol for agent-only submissions.',
+    name: 'Vault Sync',
+    icon: '🔗',
+    description: 'Auto-discover and symlink .soma/ directories across a workspace. Parent .soma sees all children — unified view for multi-project ecosystems.',
     status: 'Exploring',
-  },
-  {
-    name: 'Muscle Sharing',
-    icon: '💪',
-    description: 'Publish and install muscles from a community registry. soma install muscle <name>.',
-    status: 'Planned',
   },
   {
     name: 'Voice Extension',

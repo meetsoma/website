@@ -35,7 +35,7 @@ const typeGlyphs: Record<string, string> = {
 
 const installCmd = item.type === 'template'
   ? `soma init --template ${item.slug}`
-  : `soma community install ${item.type} ${item.slug}`;
+  : `/install ${item.type} ${item.slug}`;
 
 const ghUrl = item.type === 'template'
   ? `https://github.com/meetsoma/community/tree/main/templates/${item.slug}`

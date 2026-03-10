@@ -1,20 +1,24 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import HubFilters from '../../components/islands/HubFilters';
+import HubGrid from '../../components/islands/HubGrid';
 import { getProtocols, getMuscles, getSkills, getTemplates } from '../../lib/hub';
 
 const protocols = getProtocols();
 const muscles = getMuscles();
 const skills = getSkills();
 const templates = getTemplates();
-const total = protocols.length + muscles.length + skills.length + templates.length;
 
-const typeConfig = {
-  protocol: { glyph: '🧬', color: 'rgba(168, 232, 168, 0.25)', label: 'Behavioral rules' },
-  muscle:   { glyph: '◎', color: 'rgba(232, 168, 124, 0.25)', label: 'Learned patterns' },
-  skill:    { glyph: '◈', color: 'rgba(124, 178, 212, 0.25)', label: 'Domain expertise' },
-  template: { glyph: '⟐', color: 'rgba(190, 152, 232, 0.25)', label: 'Agent configs' },
-};
+// Serialize for Preact islands
+const allItems = [
+  ...protocols.map(p => ({ ...p, body: undefined })),
+  ...muscles.map(m => ({ ...m, body: undefined })),
+  ...skills.map(s => ({ ...s, body: undefined })),
+  ...templates.map(t => ({ ...t, body: undefined })),
+];
+
+const total = allItems.length;
 ---
 
 <Layout
@@ -32,148 +36,67 @@ const typeConfig = {
     <header class="header">
       <h1 class="title">SomaHub</h1>
       <p class="subtitle">
-        {total} community resources — protocols, muscles, skills, and templates. 
-        Browse, copy, or install with <code>soma community install</code>.
+        {total} community resources for Soma agents. Protocols enforce behavior.
+        Muscles learn from repetition. Skills bring expertise. Templates bundle it all.
       </p>
     </header>
 
     <!-- Quick install -->
     <div class="install-banner">
-      <code>soma community install protocol breath-cycle</code>
-      <p class="install-note">Or copy directly from <a href="https://github.com/meetsoma/community" target="_blank" rel="noopener">meetsoma/community</a></p>
+      <code>/install protocol breath-cycle</code>
+      <p class="install-note">
+        Install from the hub directly in your session, or copy from
+        <a href="https://github.com/meetsoma/community" target="_blank" rel="noopener">meetsoma/community</a>
+      </p>
     </div>
 
-    <!-- Coming soon -->
-    <div class="roadmap-banner">
-      <h3>🚧 Coming Soon</h3>
-      <ul>
-        <li><strong>soma install</strong> — install protocols, muscles, skills from the hub via CLI</li>
-        <li><strong>Shareable templates</strong> — bootstrap a full agent setup from a template manifest</li>
-        <li><strong>AI content screening</strong> — Haiku-powered review of community submissions</li>
-        <li><strong>Tier filtering</strong> — filter hub by core, official, community, experimental</li>
-      </ul>
-      <p class="roadmap-note">Target: v0.4.0 · <a href="/roadmap">Full roadmap →</a></p>
+    <!-- How they work together -->
+    <div class="evolution-banner">
+      <h3>How Soma content evolves</h3>
+      <div class="evolution-flow">
+        <div class="evo-step">
+          <span class="evo-glyph">◈</span>
+          <strong>Skills</strong>
+          <span class="evo-desc">Plug-and-play knowledge — works across any agent framework</span>
+        </div>
+        <span class="evo-arrow">→</span>
+        <div class="evo-step">
+          <span class="evo-glyph">◎</span>
+          <strong>Muscles</strong>
+          <span class="evo-desc">Learned patterns — refine skills through repeated use</span>
+        </div>
+        <span class="evo-arrow">→</span>
+        <div class="evo-step">
+          <span class="evo-glyph">🧬</span>
+          <strong>Protocols</strong>
+          <span class="evo-desc">Behavioral rules — crystallized patterns that enforce consistency</span>
+        </div>
+        <span class="evo-arrow">→</span>
+        <div class="evo-step">
+          <span class="evo-glyph">⚙</span>
+          <strong>Scripts</strong>
+          <span class="evo-desc">Automation — protocols become executable, running without thinking</span>
+        </div>
+      </div>
+      <p class="evo-note">
+        Skills from Claude Code, OpenClaw, or any agent system work out of the box.
+        Soma's muscles and protocols <em>refine</em> them — your agent improves each time without being asked.
+      </p>
     </div>
 
-    <!-- Protocols -->
-    {protocols.length > 0 && (
-      <section class="hub-section">
-        <div class="section-header">
-          <span class="section-glyph">{typeConfig.protocol.glyph}</span>
-          <div>
-            <h2 class="section-title">Protocols</h2>
-            <p class="section-desc">{typeConfig.protocol.label} — how your agent acts</p>
-          </div>
-          <span class="section-count">{protocols.length}</span>
-        </div>
-        <div class="card-grid">
-          {protocols.map(p => (
-            <a href={`/hub/${p.type}/${p.slug}`} class="hub-card" style={`--card-accent: ${typeConfig.protocol.color}`}>
-              <div class="card-top">
-                <h3 class="card-name">{p.name}</h3>
-                <span class="card-version">v{p.version}</span>
-              </div>
-              <p class="card-desc">{p.breadcrumb || p.description}</p>
-              <div class="card-meta">
-                {p.tier && <span class={`card-tier tier-${p.tier}`}>{p.tier}</span>}
-                <span class="card-author">{p.author}</span>
-                {p.heatDefault && <span class="card-heat">{p.heatDefault}</span>}
-                {p.appliesTo && <span class="card-scope">{(p.appliesTo as string[]).join(', ')}</span>}
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
+    <!-- Filters (Preact island) -->
+    <HubFilters client:load />
 
-    <!-- Muscles -->
-    {muscles.length > 0 && (
-      <section class="hub-section">
-        <div class="section-header">
-          <span class="section-glyph">{typeConfig.muscle.glyph}</span>
-          <div>
-            <h2 class="section-title">Muscles</h2>
-            <p class="section-desc">{typeConfig.muscle.label} — reusable workflows</p>
-          </div>
-          <span class="section-count">{muscles.length}</span>
-        </div>
-        <div class="card-grid">
-          {muscles.map(m => (
-            <a href={`/hub/${m.type}/${m.slug}`} class="hub-card" style={`--card-accent: ${typeConfig.muscle.color}`}>
-              <div class="card-top">
-                <h3 class="card-name">{m.name}</h3>
-                <span class="card-version">v{m.version}</span>
-              </div>
-              <p class="card-desc">{m.description}</p>
-              <div class="card-meta">
-                <span class="card-author">{m.author}</span>
-                {m.topic && <span class="card-scope">{(m.topic as string[]).slice(0, 3).join(', ')}</span>}
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
-
-    <!-- Skills -->
-    {skills.length > 0 && (
-      <section class="hub-section">
-        <div class="section-header">
-          <span class="section-glyph">{typeConfig.skill.glyph}</span>
-          <div>
-            <h2 class="section-title">Skills</h2>
-            <p class="section-desc">{typeConfig.skill.label} — task-specific knowledge</p>
-          </div>
-          <span class="section-count">{skills.length}</span>
-        </div>
-        <div class="card-grid">
-          {skills.map(s => (
-            <a href={`/hub/${s.type}/${s.slug}`} class="hub-card" style={`--card-accent: ${typeConfig.skill.color}`}>
-              <div class="card-top">
-                <h3 class="card-name">{s.name}</h3>
-                <span class="card-version">v{s.version}</span>
-              </div>
-              <p class="card-desc">{s.description}</p>
-              <div class="card-meta">
-                <span class="card-author">{s.author}</span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
-
-    <!-- Templates -->
-    {templates.length > 0 && (
-      <section class="hub-section">
-        <div class="section-header">
-          <span class="section-glyph">{typeConfig.template.glyph}</span>
-          <div>
-            <h2 class="section-title">Templates</h2>
-            <p class="section-desc">{typeConfig.template.label} — full agent bundles</p>
-          </div>
-          <span class="section-count">{templates.length}</span>
-        </div>
-        <div class="card-grid">
-          {templates.map(t => (
-            <a href={`/hub/${t.type}/${t.slug}`} class="hub-card" style={`--card-accent: ${typeConfig.template.color}`}>
-              <div class="card-top">
-                <h3 class="card-name">{t.name}</h3>
-              </div>
-              <p class="card-desc">{t.body.split('\n').find((l: string) => l.trim() && !l.startsWith('#')) || ''}</p>
-              <div class="card-meta">
-                <code class="card-cmd">soma init --template {t.slug}</code>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
+    <!-- Grid (Preact island, reacts to filter state) -->
+    <HubGrid items={allItems} client:load />
 
     <!-- Contribute CTA -->
     <section class="contribute">
       <h2>Share yours</h2>
-      <p>Got a protocol your agent swears by? A muscle that saves you hours? Share it.</p>
+      <p>
+        Got a protocol your agent swears by? A muscle that saves you hours?
+        A skill from another framework that works great with Soma?
+      </p>
       <a href="https://github.com/meetsoma/community" target="_blank" rel="noopener" class="contribute-link">
         Contribute on GitHub →
       </a>
@@ -213,24 +136,15 @@ const typeConfig = {
   .subtitle {
     color: var(--text-secondary);
     font-size: 1.05rem;
-    max-width: 560px;
+    max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
-  }
-
-  .subtitle code {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: var(--surface-accent-soft);
-    color: var(--accent-bright);
   }
 
   /* Install banner */
   .install-banner {
     text-align: center;
-    margin-bottom: 48px;
+    margin-bottom: 24px;
     padding: 20px;
     border-radius: 12px;
     border: 1px solid var(--border-subtle);
@@ -260,60 +174,212 @@ const typeConfig = {
 
   .install-note a:hover { text-decoration: underline; }
 
-  /* Roadmap banner */
-  .roadmap-banner {
-    margin-bottom: 48px;
+  /* Evolution banner */
+  .evolution-banner {
+    margin-bottom: 32px;
     padding: 24px;
     border-radius: 12px;
-    border: 1px solid rgba(232, 168, 124, 0.3);
-    background: rgba(232, 168, 124, 0.05);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
   }
 
-  .roadmap-banner h3 {
+  .evolution-banner h3 {
     font-family: var(--font-display);
     font-size: 1.05rem;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    text-align: center;
   }
 
-  .roadmap-banner ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 12px 0;
+  .evolution-flow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
   }
 
-  .roadmap-banner li {
-    font-size: 0.88rem;
+  .evo-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    max-width: 140px;
+  }
+
+  .evo-glyph {
+    font-size: 1.4rem;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .evo-step strong {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .evo-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .evo-arrow {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    align-self: center;
+    margin-top: -12px;
+  }
+
+  .evo-note {
+    font-size: 0.82rem;
     color: var(--text-secondary);
-    padding: 4px 0;
+    text-align: center;
     line-height: 1.5;
   }
 
-  .roadmap-banner li::before {
-    content: '→ ';
-    color: var(--text-muted);
+  .evo-note em {
+    color: var(--accent-bright);
+    font-style: normal;
+    font-weight: 500;
   }
 
-  .roadmap-banner li strong {
+  /* Filter styles (for the Preact island) */
+  :global(.hub-filters) {
+    margin-bottom: 32px;
+  }
+
+  :global(.filter-row) {
+    margin-bottom: 12px;
+  }
+
+  :global(.filter-pills) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  :global(.pill) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 99px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  :global(.pill:hover) {
+    border-color: var(--border-accent);
     color: var(--text-primary);
   }
 
-  .roadmap-note {
-    font-size: 0.78rem;
+  :global(.pill.active) {
+    background: var(--surface-accent-soft);
+    border-color: var(--accent-bright);
+    color: var(--accent-bright);
+    font-weight: 500;
+  }
+
+  :global(.pill-glyph) {
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+
+  :global(.filter-row-secondary) {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  :global(.tier-select) {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  :global(.search-wrapper) {
+    position: relative;
+    flex: 1;
+    min-width: 180px;
+  }
+
+  :global(.search-input) {
+    width: 100%;
+    padding: 6px 32px 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+  }
+
+  :global(.search-input::placeholder) {
     color: var(--text-muted);
   }
 
-  .roadmap-note a {
-    color: var(--accent-bright);
-    text-decoration: none;
+  :global(.search-input:focus) {
+    outline: none;
+    border-color: var(--accent-bright);
   }
 
-  .roadmap-note a:hover { text-decoration: underline; }
+  :global(.search-clear) {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 2px;
+    line-height: 1;
+  }
 
-  /* Sections */
-  .hub-section { margin-bottom: 48px; }
+  :global(.reset-btn) {
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
 
-  .section-header {
+  :global(.reset-btn:hover) {
+    border-color: var(--warm-bright);
+    color: var(--warm-bright);
+  }
+
+  /* Hub grid (shared between Astro fallback and Preact island) */
+  :global(.hub-empty) {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  :global(.hub-section) { margin-bottom: 48px; }
+
+  :global(.section-header) {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -322,23 +388,23 @@ const typeConfig = {
     border-bottom: 1px solid var(--border-subtle);
   }
 
-  .section-glyph {
+  :global(.section-glyph) {
     font-size: 1.6rem;
     line-height: 1;
   }
 
-  .section-title {
+  :global(.section-title) {
     font-family: var(--font-display);
     font-size: 1.3rem;
     font-weight: 600;
   }
 
-  .section-desc {
+  :global(.section-desc) {
     font-size: 0.82rem;
     color: var(--text-muted);
   }
 
-  .section-count {
+  :global(.section-count) {
     margin-left: auto;
     font-family: var(--font-mono);
     font-size: 0.85rem;
@@ -348,14 +414,13 @@ const typeConfig = {
     border-radius: 99px;
   }
 
-  /* Card grid */
-  .card-grid {
+  :global(.card-grid) {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 16px;
   }
 
-  .hub-card {
+  :global(.hub-card) {
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -368,68 +433,64 @@ const typeConfig = {
     border-left: 3px solid var(--card-accent, var(--border-subtle));
   }
 
-  .hub-card:hover {
+  :global(.hub-card:hover) {
     border-color: var(--border-accent);
     transform: translateY(-2px);
     box-shadow: 0 8px 24px var(--shadow-accent-soft);
   }
 
-  .card-top {
+  :global(.card-top) {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 8px;
   }
 
-  .card-name {
+  :global(.card-name) {
     font-family: var(--font-display);
     font-size: 0.95rem;
     font-weight: 600;
     text-transform: capitalize;
   }
 
-  .card-version {
+  :global(.card-version) {
     font-family: var(--font-mono);
     font-size: 0.7rem;
     color: var(--text-muted);
   }
 
-  .card-desc {
+  :global(.card-desc) {
     font-size: 0.82rem;
     color: var(--text-secondary);
     line-height: 1.5;
     flex: 1;
     margin-bottom: 12px;
-    /* Clamp to 3 lines */
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  .card-meta {
+  :global(.card-meta) {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     font-size: 0.72rem;
   }
 
-  .card-author {
-    color: var(--text-muted);
-  }
+  :global(.card-author) { color: var(--text-muted); }
+  :global(.card-heat) { color: var(--warm-bright); font-style: italic; }
 
-  .card-heat {
-    color: var(--warm-bright);
-    font-style: italic;
-  }
-
-  .card-scope {
+  :global(.card-tag) {
     color: var(--accent-bright);
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.65rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--surface-accent-soft);
   }
 
-  .card-tier {
+  :global(.card-tier) {
     font-family: var(--font-mono);
     font-size: 0.65rem;
     font-weight: 600;
@@ -439,33 +500,24 @@ const typeConfig = {
     border-radius: 4px;
   }
 
-  .tier-core {
+  :global(.tier-core) {
     background: rgba(124, 178, 212, 0.2);
     color: var(--accent-bright);
   }
 
-  .tier-official {
+  :global(.tier-official) {
     background: rgba(168, 232, 168, 0.2);
     color: rgb(168, 232, 168);
   }
 
-  .tier-community {
+  :global(.tier-community) {
     background: rgba(168, 232, 168, 0.15);
     color: rgb(140, 200, 140);
   }
 
-  .tier-experimental {
+  :global(.tier-experimental) {
     background: rgba(232, 168, 124, 0.2);
     color: rgb(232, 168, 124);
-  }
-
-  .card-cmd {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: var(--surface-accent-soft);
-    color: var(--accent-bright);
   }
 
   /* Contribute */
@@ -510,7 +562,9 @@ const typeConfig = {
 
   @media (max-width: 480px) {
     .container { padding: 24px 16px; }
-    .card-grid { grid-template-columns: 1fr; }
-    .section-header { flex-wrap: wrap; }
+    :global(.card-grid) { grid-template-columns: 1fr; }
+    :global(.section-header) { flex-wrap: wrap; }
+    .evolution-flow { flex-direction: column; align-items: center; }
+    .evo-arrow { transform: rotate(90deg); }
   }
 </style>

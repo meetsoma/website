@@ -15,23 +15,30 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [Unreleased]
 
 ### Added
-- **`/rest` command** — disable cache keepalive + exhale in one motion. For end-of-session use.
-- **`/keepalive` command** — toggle cache keepalive on/off/status.
-- **`/status` command** — show session stats (context %, cache, keepalive, turns, uptime).
-- **Cache keepalive system** — auto-ping keeps prompt cache warm between turns. ◷ indicator in footer.
-- **10 focused audit scripts** — PII, drift, commands, stale terms, roadmap, docs sync, stale content, overlap, tests, settings, website.
-- **Test coverage** — 161/161 passing across 9 test suites.
+- **`/rest` command** — disable cache keepalive + exhale in one motion. For when you're done for the night. No pings fire after you walk away.
+- **`/keepalive` command** — toggle cache keepalive on/off/status. Prevents expensive prompt re-caching during idle periods.
+- **Cache keepalive system** — 300s TTL, 45s threshold, 30s cooldown. Auto-ping on idle. ◷ cache TTL display in footer.
+- **10 focused audit scripts** — `scripts/audits/` with PII, drift, command consistency, stale terms, roadmap claims, docs sync, stale content, overlap, tests, settings checks. Orchestrated by `soma-audit.sh`.
+- **Test coverage** — added discovery, identity, preload, utils tests. 161/161 passing across 9 test suites.
 - **Configurable boot sequence** — `settings.boot.steps` controls what loads on session start.
-- **Git context on boot** — recent commits and changed files injected automatically.
-- **Configurable context warnings** — `settings.context` controls all thresholds.
+- **Git context on boot** — new `git-context` boot step injects recent commits and changed files.
+- **Configurable context warnings** — `settings.context` controls notification, warning, and auto-exhale thresholds.
+- **Configurable preload staleness** — `settings.preload.staleAfterHours`.
+- **Heat system docs** — standalone `docs/heat-system.md`.
+- **breath-cycle ships on init** — `soma init` scaffolds `protocols/breath-cycle.md` + `_template.md`.
 
 ### Changed
-- Extension ownership refactor — `soma-boot.ts` owns lifecycle, `soma-statusline.ts` owns rendering.
-- Install flow simplified — `soma init` copies bundled extensions, no symlinks needed.
+- **Extension ownership refactor** — `soma-boot.ts` owns all lifecycle (context warnings, flush detection, auto-continue, commands). `soma-statusline.ts` owns only rendering + cache keepalive. Cross-extension signal via `globalThis.__somaKeepalive`.
+- Boot extension refactored from monolithic function to step-based pipeline.
+- Configuration docs expanded — boot, git-context, context warnings, preload settings with examples.
+- All docs cross-linked: heat-system ↔ configuration ↔ protocols ↔ muscles ↔ commands.
 
 ### Fixed
-- PII scrubbed from all git history across 4 repos.
-- CLI stripped to distribution shell — agent is source of truth.
+- **PII scrubbed from all git history** — 4 repos force-pushed clean via git-filter-repo. Zero personal names/emails in any commit.
+- **CLI stripped to distribution only** — removed 15 duplicated files (docs, scripts, protocols). Agent is source of truth; CLI gets only runtime files.
+- **Missing init templates in CLI** — `soma init` from npm now correctly scaffolds protocols.
+- **Stale references cleaned** — continuation-prompt→preload-next, somas-daddy removed, draft protocols archived, STATE.md updated.
+- **Blog accuracy** — `/rest` in breath cycle section, `/pulse` removed (not implemented), roadmap claims validated.
 
 ---
 

@@ -9,10 +9,14 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/preact": "4",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
+    "@nanostores/preact": "^1.0.0",
     "@vercel/analytics": "^1.6.1",
-    "astro": "^5.17.1"
+    "astro": "^5.17.1",
+    "nanostores": "^1.1.1",
+    "preact": "^10.29.0"
   },
   "devDependencies": {
     "pagefind": "^1.4.0"

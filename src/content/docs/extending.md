@@ -5,6 +5,7 @@ section: "Extending"
 order: 5
 ---
 
+
 <!-- tldr -->
 Built on Pi — inherits full extension system. Skills: markdown instructions in `.soma/skills/` or `~/.soma/agent/skills/`. Extensions: TypeScript hooks into agent lifecycle (before_agent_start, tool_result, session_shutdown). Built-in extensions: soma-boot (identity + protocols + muscles), soma-header (branded σῶμα header), soma-statusline (context/cost/git footer).
 <!-- /tldr -->

@@ -1,6 +1,6 @@
 ---
 title: "Configuration"
-description: "Settings: heat thresholds, boot steps, git context, context warnings, muscle budgets."
+description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior."
 section: "Reference"
 order: 6
 ---
@@ -92,7 +92,7 @@ Settings files can exist at any level in the Soma chain:
 | `maxBreadcrumbsInPrompt` | `10` | Maximum warm protocols shown as breadcrumbs |
 | `maxFullProtocolsInPrompt` | `3` | Maximum hot protocols loaded in full |
 
-See [Heat System](/docs/heat-system) for the full explanation.
+See [Heat System](heat-system.md) for the full explanation.
 
 ### Muscles
 
@@ -104,7 +104,7 @@ See [Heat System](/docs/heat-system) for the full explanation.
 | `fullThreshold` | `5` | Heat needed to load a muscle in full |
 | `digestThreshold` | `1` | Heat needed to load a muscle as digest |
 
-See [Muscles](/docs/muscles) for writing muscles and the digest system.
+See [Muscles](muscles.md) for writing muscles and the digest system.
 
 ### Heat Tracking
 

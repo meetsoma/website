@@ -1,10 +1,14 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import preact from '@astrojs/preact';
 
 export default defineConfig({
   site: 'https://soma.gravicity.ai',
   output: 'static',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap(),
+    preact({ compat: true }),
+  ],
   build: {
     assets: 'assets'
   },

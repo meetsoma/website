@@ -8,6 +8,9 @@ dist/
 .worktrees/
 .env*.local
 
+# Agent internal state (local-only git tracking)
+.soma/
+
 # Design artifacts
 logos/iterations/
 logos/preview.html
