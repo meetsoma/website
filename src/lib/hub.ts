@@ -8,7 +8,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const COMMUNITY_ROOT = path.resolve(__dirname, '../../../community');
+
+// Look for community data in two places:
+// 1. website/community/ (copied for Vercel deploy)
+// 2. ../community/ (sibling repo for local dev)
+const localCopy = path.resolve(__dirname, '../../community');
+const siblingRepo = path.resolve(__dirname, '../../../community');
+const COMMUNITY_ROOT = fs.existsSync(path.join(localCopy, 'protocols'))
+  ? localCopy
+  : siblingRepo;
 
 interface HubItem {
   slug: string;
