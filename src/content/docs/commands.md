@@ -32,7 +32,11 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 | Command | Description |
 |---------|-------------|
 | `/soma` | Show Soma status — loaded identity, protocol heat states, muscle states, context usage. |
+| `/soma init` | Create a `.soma/` directory in the current project. |
 | `/preload` | Show the current preload content (what will carry to next session). |
+| `/status` | Show session stats — context usage, turn count, uptime. |
+| `/keepalive` | Toggle cache keepalive. Subcommands: `on`, `off`, `status`. When enabled, sends periodic pings to prevent cache eviction during idle periods. |
+| `/auto-continue` | Inject the last continuation prompt into a new session. Used after FLUSH COMPLETE. |
 
 ## Context Warnings
 

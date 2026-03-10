@@ -7,3 +7,8 @@ dist/
 .vercel
 .worktrees/
 .env*.local
+
+# Design artifacts
+logos/iterations/
+logos/preview.html
+preview-*.html

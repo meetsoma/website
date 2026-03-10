@@ -35,7 +35,7 @@ Community assets are loaded into agent context across many users' machines. They
 | **Org-specific URLs** | `mycompany.slack.com`, internal dashboards | Project memory |
 | **Hardcoded repos** | `meetsoma/soma-agent` (unless it's an example) | Replace with `your-org/your-repo` |
 | **Test counts/data** | "192 tests passing" | Stale immediately — use generic process |
-| **Internal decisions** | "We chose React because Curtis likes it" | Project STATE.md |
+| **Internal decisions** | "We chose React because the lead prefers it" | Project STATE.md |
 
 ### What SHOULD be in community assets
 
