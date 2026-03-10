@@ -5,8 +5,9 @@ section: "Reference"
 order: 7
 ---
 
+
 <!-- tldr -->
-`/inhale` — start fresh. `/breathe` — save + auto-continue. `/exhale` — save + stop (alias: `/flush`). `/pin <name>` — bump heat +5. `/kill <name>` — drop heat to 0. `/soma` — show status. CLI: `soma` (fresh), `soma -c` (continue). Auto-exhale at 85% context. Warnings at 50/70/80%.
+`/inhale` — start fresh. `/breathe` — save + auto-continue. `/exhale` — save + stop (alias: `/flush`). `/pin <name>` — bump heat +5. `/kill <name>` — drop heat to 0. `/soma` — show status. CLI: `soma` (fresh), `soma -c` (continue). Context warnings and auto-exhale thresholds are configurable in `settings.json`.
 <!-- /tldr -->
 
 Soma registers slash commands that control the breath cycle, heat system, and session management.
@@ -35,14 +36,15 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 
 ## Context Warnings
 
-Soma monitors context usage and warns at thresholds:
+Soma monitors context usage and warns at configurable thresholds:
 
-| Usage | Behavior |
-|-------|----------|
-| 50% | Gentle note: "Context halfway" |
-| 70% | Reminder to plan an exhale |
-| 80% | Strong suggestion to exhale soon |
-| 85% | Auto-exhale triggers — state saves, session rotates |
+| Setting | Default | Behavior |
+|---------|---------|----------|
+| `context.notifyAt` | 50% | Gentle note: "Context halfway" |
+| `context.urgentAt` | 80% | Strong suggestion to exhale soon (injected into prompt) |
+| `context.autoExhaleAt` | 85% | Auto-exhale triggers — state saves, session rotates |
+
+Override in `settings.json` — see [Configuration](/docs/configuration#context-warnings).
 
 ## CLI Flags
 
@@ -52,11 +54,30 @@ Soma monitors context usage and warns at thresholds:
 | `soma -c` | Continue — loads everything above + last session's preload |
 | `soma -r` | Resume — pick from previous sessions to restore |
 
+## Scripts
+
+Standalone bash tools in `scripts/` — usable outside the agent session.
+
+| Script | Description |
+|--------|-------------|
+| `soma-search.sh` | Query soma memory by type, status, tags, domain. Modes: `--brief`, `--deep` (TL;DR extraction), `--missing-tldr`. |
+| `soma-scan.sh` | Frontmatter scanner — audit protocols, muscles, plans for staleness and status. |
+| `soma-snapshot.sh` | Rolling zip snapshots of project directories. |
+| `soma-tldr.sh` | Generate or update TL;DR / digest sections in markdown files. |
+| `frontmatter-date-hook.sh` | Git pre-commit hook — auto-updates `updated:` field in modified `.md` files. |
+
+```bash
+# Examples
+scripts/soma-search.sh --type protocol --deep
+scripts/soma-scan.sh --stale
+scripts/soma-snapshot.sh . "pre-refactor"
+```
+
 ## The Breath Cycle
 
 Commands map to Soma's breath metaphor:
 
-1. **Inhale** — session starts, context loads (identity → protocols → muscles → preload if `-c`)
+1. **Inhale** — session starts, boot steps run in order (identity → preload → protocols → muscles → scripts → git-context). Configurable in [Configuration](/docs/configuration#boot-sequence).
 2. **Work** — the session. Heat shifts based on what you use.
 3. **Breathe** — context filling up? `/breathe` saves state and continues seamlessly.
 4. **Exhale** — done for now? `/exhale` saves state and ends the session.

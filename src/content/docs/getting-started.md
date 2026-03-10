@@ -5,6 +5,7 @@ section: "First Steps"
 order: 1
 ---
 
+
 <!-- tldr -->
 `npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma -c` to continue with last session's context. `/breathe` saves + continues, `/exhale` saves + stops, `/pin` keeps protocols hot, `/kill` drops them cold.
 <!-- /tldr -->
@@ -32,7 +33,7 @@ On first run, Soma will ask to create a `.soma/` directory. Say yes. She'll writ
 soma
 ```
 
-Starts fresh. Loads identity, hot protocols, and active muscles. No replay of previous session context.
+Starts fresh. Runs the [boot sequence](/docs/configuration#boot-sequence): identity, protocols, muscles, scripts, git context. No replay of previous session context.
 
 ### Resume Session
 
@@ -42,7 +43,7 @@ soma --continue
 soma -c
 ```
 
-Resumes the last session. Loads identity + preload (what happened, what's next).
+Resumes the last session. Runs all boot steps including preload (what happened, what's next).
 
 ### Select a Session
 
@@ -98,3 +99,4 @@ Templates ship. Instances don't.
 - **Let identity grow** — don't pre-write it. Let Soma discover who she becomes through your work.
 - **Trust the breath** — don't worry about context limits. Soma flushes and continues automatically.
 - **Read muscles** — check `.soma/memory/muscles/` to see what patterns Soma has learned.
+- **Tune settings** — everything is configurable: boot steps, heat thresholds, context warnings. See [Configuration](/docs/configuration).

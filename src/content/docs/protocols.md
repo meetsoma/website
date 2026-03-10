@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 3
 ---
 
+
 <!-- tldr -->
 Behavioral rules in `.soma/protocols/` as markdown with YAML frontmatter. Loaded by heat: hot (≥8) = full body, warm (≥3) = breadcrumb, cold = name only. Heat rises on use (+1 auto-detect), decays per session if unused. Domain scoping via `applies-to` field. Write your own: add `name`, `heat-default`, `breadcrumb`, `applies-to` frontmatter. Configure thresholds in `settings.json`.
 <!-- /tldr -->
@@ -42,11 +43,11 @@ Every protocol has a temperature that determines how it loads:
 | Session end (used protocol) | No change |
 | Session end (pinned protocol) | No change |
 
-Heat state is stored in `.soma/.protocol-state.json` and persists across sessions.
+Heat state is stored in `.soma/.protocol-state.json` and persists across sessions. For the full deep-dive, see [Heat System](/docs/heat-system).
 
 ### Thresholds
 
-Default thresholds can be overridden in `settings.json`:
+Default thresholds can be overridden in `settings.json` — see [Configuration](/docs/configuration#protocols-heat-thresholds):
 
 ```json
 {
