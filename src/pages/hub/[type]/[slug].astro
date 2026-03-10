@@ -55,10 +55,16 @@ const ghUrl = item.type === 'template'
       <h1 class="title">{item.name}</h1>
       {item.breadcrumb && <p class="breadcrumb">{item.breadcrumb}</p>}
       <div class="meta-row">
+        {item.tier && <span class={`tier-badge tier-${item.tier}`}>{item.tier}</span>}
         <span class="meta-item">by {item.author}</span>
         {item.version && <span class="meta-item">v{item.version}</span>}
         {item.heatDefault && <span class="meta-item heat">heat: {item.heatDefault}</span>}
       </div>
+      {item.tags && item.tags.length > 0 && (
+        <div class="tag-row">
+          {(item.tags as string[]).map(t => <span class="tag-pill">{t}</span>)}
+        </div>
+      )}
     </header>
 
     <!-- Install -->
@@ -175,6 +181,52 @@ const ghUrl = item.type === 'template'
   }
 
   .meta-item.heat { color: var(--warm-bright); }
+
+  .tier-badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .tier-core {
+    background: rgba(124, 178, 212, 0.2);
+    color: var(--accent-bright);
+  }
+
+  .tier-official {
+    background: rgba(168, 232, 168, 0.2);
+    color: rgb(168, 232, 168);
+  }
+
+  .tier-community {
+    background: rgba(168, 232, 168, 0.15);
+    color: rgb(140, 200, 140);
+  }
+
+  .tier-experimental {
+    background: rgba(232, 168, 124, 0.2);
+    color: rgb(232, 168, 124);
+  }
+
+  .tag-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .tag-pill {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+  }
 
   /* Install */
   .install-section {

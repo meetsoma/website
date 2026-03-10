@@ -50,7 +50,7 @@ const typeConfig = {
         <li><strong>soma install</strong> — install protocols, muscles, skills from the hub via CLI</li>
         <li><strong>Shareable templates</strong> — bootstrap a full agent setup from a template manifest</li>
         <li><strong>AI content screening</strong> — Haiku-powered review of community submissions</li>
-        <li><strong>Tier badges</strong> — core, official, community, experimental markers</li>
+        <li><strong>Tier filtering</strong> — filter hub by core, official, community, experimental</li>
       </ul>
       <p class="roadmap-note">Target: v0.4.0 · <a href="/roadmap">Full roadmap →</a></p>
     </div>
@@ -75,6 +75,7 @@ const typeConfig = {
               </div>
               <p class="card-desc">{p.breadcrumb || p.description}</p>
               <div class="card-meta">
+                {p.tier && <span class={`card-tier tier-${p.tier}`}>{p.tier}</span>}
                 <span class="card-author">{p.author}</span>
                 {p.heatDefault && <span class="card-heat">{p.heatDefault}</span>}
                 {p.appliesTo && <span class="card-scope">{(p.appliesTo as string[]).join(', ')}</span>}
@@ -426,6 +427,36 @@ const typeConfig = {
     color: var(--accent-bright);
     font-family: var(--font-mono);
     font-size: 0.68rem;
+  }
+
+  .card-tier {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .tier-core {
+    background: rgba(124, 178, 212, 0.2);
+    color: var(--accent-bright);
+  }
+
+  .tier-official {
+    background: rgba(168, 232, 168, 0.2);
+    color: rgb(168, 232, 168);
+  }
+
+  .tier-community {
+    background: rgba(168, 232, 168, 0.15);
+    color: rgb(140, 200, 140);
+  }
+
+  .tier-experimental {
+    background: rgba(232, 168, 124, 0.2);
+    color: rgb(232, 168, 124);
   }
 
   .card-cmd {

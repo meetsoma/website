@@ -1,0 +1,34 @@
+{
+  "name": "architect",
+  "description": "Structure-focused agent for engineering teams — code review, standards enforcement, documentation-first",
+  "author": "meetsoma",
+  "version": "1.0.0",
+  "tier": "official",
+  "requires": {
+    "protocols": ["breath-cycle", "frontmatter-standard", "git-identity", "heat-tracking"],
+    "muscles": [],
+    "skills": []
+  },
+  "settings": {
+    "protocols": {
+      "warmThreshold": 2,
+      "hotThreshold": 5,
+      "maxHeat": 15,
+      "decayRate": 1,
+      "maxBreadcrumbsInPrompt": 12,
+      "maxFullProtocolsInPrompt": 4
+    },
+    "muscles": {
+      "tokenBudget": 3000,
+      "maxFull": 3,
+      "maxDigest": 10,
+      "fullThreshold": 4,
+      "digestThreshold": 1
+    },
+    "heat": {
+      "autoDetect": true,
+      "autoDetectBump": 1,
+      "pinBump": 5
+    }
+  }
+}

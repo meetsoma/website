@@ -28,6 +28,8 @@ interface HubItem {
   breadcrumb?: string;
   heatDefault?: string;
   appliesTo?: string[];
+  tier?: 'core' | 'official' | 'community' | 'experimental';
+  tags?: string[];
   topic?: string[];
   keywords?: string[];
   body: string;
@@ -69,6 +71,7 @@ function loadDir(type: HubItem['type'], dir: string): HubItem[] {
 
     let content: string;
     let slug: string;
+    let manifest: Record<string, any> | null = null;
 
     if (stat.isFile() && entry.endsWith('.md')) {
       content = fs.readFileSync(fullPath, 'utf-8');
@@ -80,13 +83,21 @@ function loadDir(type: HubItem['type'], dir: string): HubItem[] {
       if (!target) continue;
       content = fs.readFileSync(target, 'utf-8');
       slug = entry;
+
+      // Load template.json manifest if present (enriches item later)
+      const manifestPath = path.join(fullPath, 'template.json');
+      if (fs.existsSync(manifestPath)) {
+        try {
+          manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+        } catch {}
+      }
     } else {
       continue;
     }
 
     const { meta, body } = parseFrontmatter(content);
 
-    items.push({
+    const item: HubItem = {
       slug,
       name: (meta.name || slug).replace(/-/g, ' '),
       type,
@@ -96,10 +107,22 @@ function loadDir(type: HubItem['type'], dir: string): HubItem[] {
       breadcrumb: meta.breadcrumb,
       heatDefault: meta['heat-default'],
       appliesTo: Array.isArray(meta['applies-to']) ? meta['applies-to'] : undefined,
+      tier: meta.tier || undefined,
+      tags: Array.isArray(meta.tags) ? meta.tags : undefined,
       topic: Array.isArray(meta.topic) ? meta.topic : undefined,
       keywords: Array.isArray(meta.keywords) ? meta.keywords : undefined,
       body,
-    });
+    };
+
+    // Enrich with template.json manifest data if available
+    if (typeof manifest === 'object' && manifest !== null) {
+      if (manifest.description) item.description = manifest.description;
+      if (manifest.author) item.author = manifest.author;
+      if (manifest.version) item.version = manifest.version;
+      if (manifest.tier) item.tier = manifest.tier;
+    }
+
+    items.push(item);
   }
 
   return items.sort((a, b) => a.name.localeCompare(b.name));

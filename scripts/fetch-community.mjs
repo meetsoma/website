@@ -72,10 +72,10 @@ async function fetchDir(dirName) {
     if (entry.type === 'file' && entry.name.endsWith('.md')) {
       files.push({ path: entry.path, localPath: path.join(localDir, entry.name) });
     } else if (entry.type === 'dir') {
-      // Check for README.md or SKILL.md inside subdir
+      // Download all files inside subdirs (templates have .md, .json files)
       const subEntries = await fetchTree(entry.path);
       for (const sub of subEntries) {
-        if (sub.type === 'file' && sub.name.endsWith('.md')) {
+        if (sub.type === 'file') {
           const subLocalDir = path.join(localDir, entry.name);
           files.push({ path: sub.path, localPath: path.join(subLocalDir, sub.name) });
         }
