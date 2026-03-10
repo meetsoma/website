@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ecosystem Icons Preview</title>
+<style>
+  :root {
+    --accent-bright: #7cb2d4;
+    --surface-card: #0f1923;
+    --surface-card-strong: #131f2b;
+    --border-subtle: rgba(124,178,212,0.12);
+    --text-muted: rgba(228,234,244,0.55);
+    --font-display: 'Clash Display', system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a1018;
+    color: #e4eaf4;
+    font-family: 'Satoshi', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    gap: 40px;
+  }
+  h2 { font-family: var(--font-display); font-size: 1.6rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 900px;
+    width: 100%;
+  }
+  .eco-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 28px 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card-strong);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .eco-card:hover {
+    border-color: var(--accent-bright);
+    transform: translateY(-2px);
+  }
+  .eco-icon { line-height: 1; }
+  .eco-icon svg { transition: transform 0.25s; }
+  .eco-card:hover .eco-icon svg { transform: scale(1.15); }
+  .eco-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+  .eco-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Size comparison strip */
+  .sizes {
+    display: flex;
+    gap: 32px;
+    align-items: flex-end;
+  }
+  .size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .size-label { font-size: 0.7rem; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<h2>Ecosystem Icons — Current Draft</h2>
+
+<div class="grid">
+  <!-- Agent -->
+  <div class="eco-card">
+    <span class="eco-icon">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <circle cx="22" cy="28" r="16" fill="var(--accent-bright)"/>
+        <circle cx="37" cy="14" r="7" fill="var(--accent-bright)"/>
+        <circle cx="17" cy="26" r="3.5" fill="var(--surface-card)"/>
+        <circle cx="27" cy="26" r="3.5" fill="var(--surface-card)"/>
+        <circle cx="18.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+        <circle cx="28.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+      </svg>
+    </span>
+    <span class="eco-name">agent</span>
+    <span class="eco-desc">Extensions, skills & protocols</span>
+  </div>
+
+  <!-- npm -->
+  <div class="eco-card">
+    <span class="eco-icon">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <rect x="4" y="12" width="40" height="24" rx="3" fill="#CB3837"/>
+        <rect x="10" y="18" width="8" height="12" fill="white"/>
+        <rect x="13" y="18" width="3" height="9" fill="#CB3837"/>
+        <rect x="21" y="18" width="8" height="12" fill="white"/>
+        <rect x="24" y="18" width="3" height="9" fill="#CB3837"/>
+        <rect x="32" y="18" width="8" height="9" fill="white"/>
+        <rect x="35" y="18" width="3" height="6" fill="#CB3837"/>
+      </svg>
+    </span>
+    <span class="eco-name">npm</span>
+    <span class="eco-desc">meetsoma — install & run</span>
+  </div>
+
+  <!-- Blog -->
+  <div class="eco-card">
+    <span class="eco-icon">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <path d="M36 8L14 30l-2 8 8-2L42 14a4 4 0 00-6-6z" stroke="var(--accent-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M32 12l4 4" stroke="var(--accent-bright)" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M12 38h24" stroke="var(--accent-bright)" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+      </svg>
+    </span>
+    <span class="eco-name">blog</span>
+    <span class="eco-desc">Souls & Symlinks</span>
+  </div>
+
+  <!-- GitHub -->
+  <div class="eco-card">
+    <span class="eco-icon">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+        <path d="M24 4C12.954 4 4 12.954 4 24c0 8.837 5.731 16.329 13.682 18.976.999.184 1.364-.434 1.364-.964 0-.476-.018-2.05-.026-3.72-5.567 1.209-6.74-2.364-6.74-2.364-.91-2.313-2.222-2.929-2.222-2.929-1.815-1.242.138-1.217.138-1.217 2.009.141 3.065 2.063 3.065 2.063 1.784 3.058 4.681 2.174 5.822 1.662.181-1.293.698-2.175 1.27-2.675-4.443-.505-9.114-2.221-9.114-9.888 0-2.184.78-3.97 2.058-5.369-.206-.505-.892-2.54.196-5.293 0 0 1.679-.538 5.499 2.05A19.128 19.128 0 0124 13.2c1.7.008 3.411.23 5.009.673 3.818-2.588 5.494-2.05 5.494-2.05 1.09 2.753.405 4.788.198 5.293 1.281 1.399 2.055 3.185 2.055 5.369 0 7.687-4.677 9.378-9.132 9.872.718.619 1.357 1.839 1.357 3.706 0 2.676-.024 4.833-.024 5.49 0 .534.36 1.156 1.374.96C38.275 40.323 44 32.834 44 24 44 12.954 35.046 4 24 4z" fill="var(--accent-bright)"/>
+      </svg>
+    </span>
+    <span class="eco-name">github</span>
+    <span class="eco-desc">meetsoma org</span>
+  </div>
+</div>
+
+<p class="label">Size comparison — Soma mascot icon</p>
+<div class="sizes">
+  <div class="size-item">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+      <circle cx="22" cy="28" r="16" fill="var(--accent-bright)"/>
+      <circle cx="37" cy="14" r="7" fill="var(--accent-bright)"/>
+      <circle cx="17" cy="26" r="3.5" fill="var(--surface-card)"/>
+      <circle cx="27" cy="26" r="3.5" fill="var(--surface-card)"/>
+      <circle cx="18.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+      <circle cx="28.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+    </svg>
+    <span class="size-label">64px</span>
+  </div>
+  <div class="size-item">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+      <circle cx="22" cy="28" r="16" fill="var(--accent-bright)"/>
+      <circle cx="37" cy="14" r="7" fill="var(--accent-bright)"/>
+      <circle cx="17" cy="26" r="3.5" fill="var(--surface-card)"/>
+      <circle cx="27" cy="26" r="3.5" fill="var(--surface-card)"/>
+      <circle cx="18.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+      <circle cx="28.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+    </svg>
+    <span class="size-label">40px</span>
+  </div>
+  <div class="size-item">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+      <circle cx="22" cy="28" r="16" fill="var(--accent-bright)"/>
+      <circle cx="37" cy="14" r="7" fill="var(--accent-bright)"/>
+      <circle cx="17" cy="26" r="3.5" fill="var(--surface-card)"/>
+      <circle cx="27" cy="26" r="3.5" fill="var(--surface-card)"/>
+      <circle cx="18.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+      <circle cx="28.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+    </svg>
+    <span class="size-label">24px</span>
+  </div>
+  <div class="size-item">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+      <circle cx="22" cy="28" r="16" fill="var(--accent-bright)"/>
+      <circle cx="37" cy="14" r="7" fill="var(--accent-bright)"/>
+      <circle cx="17" cy="26" r="3.5" fill="var(--surface-card)"/>
+      <circle cx="27" cy="26" r="3.5" fill="var(--surface-card)"/>
+      <circle cx="18.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+      <circle cx="28.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
+    </svg>
+    <span class="size-label">16px</span>
+  </div>
+</div>
+
+<p class="label">Old icons (Unicode characters)</p>
+<div class="grid">
+  <div class="eco-card">
+    <span class="eco-icon" style="font-size:2.125rem;color:var(--accent-bright)">⟐</span>
+    <span class="eco-name">agent</span>
+    <span class="eco-desc">Extensions, skills & protocols</span>
+  </div>
+  <div class="eco-card">
+    <span class="eco-icon" style="font-size:2.125rem;color:var(--accent-bright)">▸</span>
+    <span class="eco-name">npm</span>
+    <span class="eco-desc">meetsoma — install & run</span>
+  </div>
+  <div class="eco-card">
+    <span class="eco-icon" style="font-size:2.125rem;color:var(--accent-bright)">◉</span>
+    <span class="eco-name">blog</span>
+    <span class="eco-desc">Dev log</span>
+  </div>
+  <div class="eco-card">
+    <span class="eco-icon" style="font-size:2.125rem;color:var(--accent-bright)">◈</span>
+    <span class="eco-name">github</span>
+    <span class="eco-desc">meetsoma org</span>
+  </div>
+</div>
+
+</body>
+</html>

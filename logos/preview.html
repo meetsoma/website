@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecosystem Icons — Concepts</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 2rem;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark { background: #0a1018; color: #e4eaf4; }
+  body.light { background: #f0f2f5; color: #1a1a2e; }
+  .header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 2rem;
+  }
+  h1 { font-size: 1.5rem; font-weight: 600; }
+  h2 { font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; opacity: 0.7; }
+  .toggle {
+    padding: 0.5rem 1rem; border: 1px solid currentColor; border-radius: 6px;
+    background: transparent; color: inherit; cursor: pointer; font-size: 0.875rem;
+  }
+
+  .set-row {
+    display: grid; grid-template-columns: 120px 1fr; gap: 1rem;
+    align-items: center; margin-bottom: 1.5rem;
+  }
+  .set-label {
+    font-weight: 600; font-size: 1rem;
+    padding: 0.5rem; text-align: right;
+  }
+  .set-label small { display: block; font-weight: 400; font-size: 0.75rem; opacity: 0.6; margin-top: 4px; }
+
+  .cards {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  }
+  .eco-card {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 24px 16px; border-radius: 14px;
+    transition: border-color 0.2s, transform 0.2s; cursor: default;
+  }
+  body.dark .eco-card {
+    border: 1px solid rgba(124,178,212,0.12);
+    background: #131f2b;
+  }
+  body.light .eco-card {
+    border: 1px solid rgba(0,0,0,0.08);
+    background: white;
+  }
+  .eco-card:hover { transform: translateY(-2px); }
+  body.dark .eco-card:hover { border-color: rgba(124,178,212,0.4); }
+  body.light .eco-card:hover { border-color: rgba(0,0,0,0.2); }
+
+  .eco-icon { line-height: 1; }
+  .eco-icon svg { width: 40px; height: 40px; }
+  .eco-name { font-weight: 600; font-size: 1rem; }
+  .eco-desc { font-size: 0.8rem; opacity: 0.5; text-align: center; }
+
+  /* Size strip */
+  .size-strip { 
+    display: flex; gap: 2rem; flex-wrap: wrap; align-items: end;
+    margin: 1rem 0 2rem; padding: 1rem;
+    border-radius: 12px;
+  }
+  body.dark .size-strip { background: #131f2b; }
+  body.light .size-strip { background: white; }
+  .size-group { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .size-group .label { font-size: 0.7rem; font-weight: 600; opacity: 0.6; }
+  .size-row { display: flex; gap: 12px; align-items: end; }
+  .size-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .size-item span { font-size: 0.65rem; opacity: 0.4; }
+
+  /* Old comparison */
+  .old-icons { display: flex; gap: 2rem; margin-top: 1rem; }
+  .old-icon { font-size: 2rem; opacity: 0.5; }
+  .old-label { font-size: 0.7rem; opacity: 0.4; text-align: center; }
+</style>
+</head>
+<body class="dark">
+<div class="header">
+  <h1>Ecosystem Icons — 3 Concepts</h1>
+  <button class="toggle" onclick="document.body.classList.toggle('dark');document.body.classList.toggle('light');this.textContent=document.body.classList.contains('dark')?'☀️ Light':'🌙 Dark'">☀️ Light</button>
+</div>
+
+<p style="opacity:0.6;margin-bottom:2rem;font-size:0.9rem;">Pick a set or mix-and-match. Each row is one complete concept for all 4 ecosystem cards.</p>
+
+<!-- SET A -->
+<div class="set-row">
+  <div class="set-label">Set A<small>Flat mono, cutout eyes</small></div>
+  <div class="cards">
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="22" cy="28" r="16" fill="#7cb2d4"/><circle cx="37" cy="14" r="7" fill="#7cb2d4"/><circle cx="17" cy="26" r="3.5" fill="var(--bg,#0f1923)"/><circle cx="27" cy="26" r="3.5" fill="var(--bg,#0f1923)"/><circle cx="18.2" cy="25.5" r="1.6" fill="#7cb2d4"/><circle cx="28.2" cy="25.5" r="1.6" fill="#7cb2d4"/></svg>
+      </span>
+      <span class="eco-name">agent</span>
+      <span class="eco-desc">Extensions, skills & protocols</span>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="12" width="40" height="24" rx="2" fill="#CB3837"/><path d="M12 18v12h6v-9h3v9h3V18H12zm15 0v12h6v-9h3v6h3V18H27z" fill="white"/></svg>
+      </span>
+      <span class="eco-name">npm</span>
+      <span class="eco-desc">meetsoma — install & run</span>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><rect x="6" y="8" width="36" height="32" rx="4" fill="none" stroke="#7cb2d4" stroke-width="2.5"/><line x1="6" y1="16" x2="42" y2="16" stroke="#7cb2d4" stroke-width="2.5"/><circle cx="12" cy="12" r="1.5" fill="#7cb2d4" opacity="0.5"/><circle cx="17" cy="12" r="1.5" fill="#7cb2d4" opacity="0.5"/><circle cx="22" cy="12" r="1.5" fill="#7cb2d4" opacity="0.5"/><line x1="12" y1="23" x2="28" y2="23" stroke="#7cb2d4" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="12" y1="29" x2="34" y2="29" stroke="#7cb2d4" stroke-width="2" stroke-linecap="round" opacity="0.4"/><line x1="12" y1="35" x2="22" y2="35" stroke="#7cb2d4" stroke-width="2" stroke-linecap="round" opacity="0.3"/></svg>
+      </span>
+      <span class="eco-name">blog</span>
+      <span class="eco-desc">Dev log</span>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><path d="M24 4C12.954 4 4 12.954 4 24c0 8.837 5.731 16.329 13.682 18.976.999.184 1.364-.434 1.364-.964 0-.476-.018-2.05-.026-3.72-5.567 1.209-6.74-2.364-6.74-2.364-.91-2.313-2.222-2.929-2.222-2.929-1.815-1.242.138-1.217.138-1.217 2.009.141 3.065 2.063 3.065 2.063 1.784 3.058 4.681 2.174 5.822 1.662.181-1.293.698-2.175 1.27-2.675-4.443-.505-9.114-2.221-9.114-9.888 0-2.184.78-3.97 2.058-5.369-.206-.505-.892-2.54.196-5.293 0 0 1.679-.538 5.499 2.05A19.128 19.128 0 0124 13.2c1.7.008 3.411.23 5.009.673 3.818-2.588 5.494-2.05 5.494-2.05 1.09 2.753.405 4.788.198 5.293 1.281 1.399 2.055 3.185 2.055 5.369 0 7.687-4.677 9.378-9.132 9.872.718.619 1.357 1.839 1.357 3.706 0 2.676-.024 4.833-.024 5.49 0 .534.36 1.156 1.374.96C38.275 40.323 44 32.834 44 24 44 12.954 35.046 4 24 4z" fill="#7cb2d4"/></svg>
+      </span>
+      <span class="eco-name">github</span>
+      <span class="eco-desc">meetsoma org</span>
+    </div>
+  </div>
+</div>
+
+<!-- SET B -->
+<div class="set-row">
+  <div class="set-label">Set B<small>Two-tone, white eyes, book blog</small></div>
+  <div class="cards">
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="22" cy="28" r="16" fill="#5a8eb4"/><circle cx="37" cy="14" r="7" fill="#8ec4e8"/><circle cx="17" cy="26" r="3.8" fill="white"/><circle cx="18.5" cy="25.2" r="1.8" fill="#12202e"/><circle cx="27" cy="26" r="3.8" fill="white"/><circle cx="28.5" cy="25.2" r="1.8" fill="#12202e"/></svg>
+      </span>
+      <span class="eco-name">agent</span>
+      <span class="eco-desc">Extensions, skills & protocols</span>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="12" width="40" height="24" rx="2" fill="#CB3837"/><rect x="10" y="18" width="7" height="12" fill="white"/><rect x="13" y="18" width="2.5" height="9" fill="#CB3837"/><rect x="20" y="18" width="8" height="12" fill="white"/><rect x="23" y="18" width="2.5" height="9" fill="#CB3837"/><rect x="31" y="18" width="7" height="12" fill="white"/><rect x="34" y="18" width="2.5" height="9" fill="#CB3837"/></svg>
+      </span>
+      <span class="eco-name">npm</span>
+      <span class="eco-desc">meetsoma — install & run</span>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><path d="M24 12C20 10 14 9 8 10v26c6-1 12 0 16 2 4-2 10-3 16-2V10c-6-1-12 0-16 2z" fill="none" stroke="#7cb2d4" stroke-width="2.5" stroke-linejoin="round"/><line x1="24" y1="12" x2="24" y2="38" stroke="#7cb2d4" stroke-width="2" opacity="0.4"/><line x1="12" y1="17" x2="20" y2="18" stroke="#7cb2d4" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/><line x1="12" y1="22" x2="20" y2="23" stroke="#7cb2d4" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><line x1="12" y1="27" x2="18" y2="28" stroke="#7cb2d4" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/><line x1="28" y1="18" x2="36" y2="17" stroke="#7cb2d4" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/><line x1="28" y1="23" x2="36" y2="22" stroke="#7cb2d4" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg>
+      </span>
+      <span class="eco-name">blog</span>
+      <span class="eco-desc">Dev log</span>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><path d="M24 4C12.954 4 4 12.954 4 24c0 8.837 5.731 16.329 13.682 18.976.999.184 1.364-.434 1.364-.964 0-.476-.018-2.05-.026-3.72-5.567 1.209-6.74-2.364-6.74-2.364-.91-2.313-2.222-2.929-2.222-2.929-1.815-1.242.138-1.217.138-1.217 2.009.141 3.065 2.063 3.065 2.063 1.784 3.058 4.681 2.174 5.822 1.662.181-1.293.698-2.175 1.27-2.675-4.443-.505-9.114-2.221-9.114-9.888 0-2.184.78-3.97 2.058-5.369-.206-.505-.892-2.54.196-5.293 0 0 1.679-.538 5.499 2.05A19.128 19.128 0 0124 13.2c1.7.008 3.411.23 5.009.673 3.818-2.588 5.494-2.05 5.494-2.05 1.09 2.753.405 4.788.198 5.293 1.281 1.399 2.055 3.185 2.055 5.369 0 7.687-4.677 9.378-9.132 9.872.718.619 1.357 1.839 1.357 3.706 0 2.676-.024 4.833-.024 5.49 0 .534.36 1.156 1.374.96C38.275 40.323 44 32.834 44 24 44 12.954 35.046 4 24 4z" fill="white" opacity="0.9"/></svg>
+      </span>
+      <span class="eco-name">github</span>
+      <span class="eco-desc">meetsoma org</span>
+    </div>
+  </div>
+</div>
+
+<!-- SET C -->
+<div class="set-row">
+  <div class="set-label">Set C<small>Bold fill, smile, doc+pencil, circle bg</small></div>
+  <div class="cards">
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="23" cy="27" r="17" fill="#7cb2d4"/><circle cx="38" cy="13" r="7.5" fill="#a0d0ec"/><circle cx="18" cy="25" r="4" fill="white"/><circle cx="19.5" cy="24" r="2" fill="#12202e"/><circle cx="20.2" cy="23.2" r="0.8" fill="white"/><circle cx="28" cy="25" r="4" fill="white"/><circle cx="29.5" cy="24" r="2" fill="#12202e"/><circle cx="30.2" cy="23.2" r="0.8" fill="white"/><path d="M20 31q3 3 6 0" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg>
+      </span>
+      <span class="eco-name">agent</span>
+      <span class="eco-desc">Extensions, skills & protocols</span>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><rect x="3" y="11" width="42" height="26" rx="3" fill="#CB3837"/><path d="M11 17v12h7v-9h4v9h3V17H11zm17 0v15h7v-12h4v9h3V17H28z" fill="white"/></svg>
+      </span>
+      <span class="eco-name">npm</span>
+      <span class="eco-desc">meetsoma — install & run</span>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="24" height="34" rx="2" fill="none" stroke="#7cb2d4" stroke-width="2.5"/><path d="M28 6v6h6" fill="none" stroke="#7cb2d4" stroke-width="2.5" stroke-linejoin="round"/><line x1="15" y1="18" x2="29" y2="18" stroke="#7cb2d4" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="15" y1="24" x2="27" y2="24" stroke="#7cb2d4" stroke-width="2" stroke-linecap="round" opacity="0.45"/><line x1="15" y1="30" x2="23" y2="30" stroke="#7cb2d4" stroke-width="2" stroke-linecap="round" opacity="0.3"/><line x1="34" y1="30" x2="40" y2="42" stroke="#7cb2d4" stroke-width="2.5" stroke-linecap="round"/><line x1="33" y1="32" x2="36" y2="31" stroke="#7cb2d4" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </span>
+      <span class="eco-name">blog</span>
+      <span class="eco-desc">Dev log</span>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" fill="rgba(124,178,212,0.1)"/><path d="M24 4C12.954 4 4 12.954 4 24c0 8.837 5.731 16.329 13.682 18.976.999.184 1.364-.434 1.364-.964 0-.476-.018-2.05-.026-3.72-5.567 1.209-6.74-2.364-6.74-2.364-.91-2.313-2.222-2.929-2.222-2.929-1.815-1.242.138-1.217.138-1.217 2.009.141 3.065 2.063 3.065 2.063 1.784 3.058 4.681 2.174 5.822 1.662.181-1.293.698-2.175 1.27-2.675-4.443-.505-9.114-2.221-9.114-9.888 0-2.184.78-3.97 2.058-5.369-.206-.505-.892-2.54.196-5.293 0 0 1.679-.538 5.499 2.05A19.128 19.128 0 0124 13.2c1.7.008 3.411.23 5.009.673 3.818-2.588 5.494-2.05 5.494-2.05 1.09 2.753.405 4.788.198 5.293 1.281 1.399 2.055 3.185 2.055 5.369 0 7.687-4.677 9.378-9.132 9.872.718.619 1.357 1.839 1.357 3.706 0 2.676-.024 4.833-.024 5.49 0 .534.36 1.156 1.374.96C38.275 40.323 44 32.834 44 24 44 12.954 35.046 4 24 4z" fill="#7cb2d4"/></svg>
+      </span>
+      <span class="eco-name">github</span>
+      <span class="eco-desc">meetsoma org</span>
+    </div>
+  </div>
+</div>
+
+<!-- Size check -->
+<h2>Mascot Icon — Size Check</h2>
+<div class="size-strip">
+  <div class="size-group">
+    <div class="label">A — cutout</div>
+    <div class="size-row">
+      <div class="size-item"><svg viewBox="0 0 48 48" fill="none" width="48" height="48"><circle cx="22" cy="28" r="16" fill="#7cb2d4"/><circle cx="37" cy="14" r="7" fill="#7cb2d4"/><circle cx="17" cy="26" r="3.5" fill="var(--bg,#0f1923)"/><circle cx="27" cy="26" r="3.5" fill="var(--bg,#0f1923)"/><circle cx="18.2" cy="25.5" r="1.6" fill="#7cb2d4"/><circle cx="28.2" cy="25.5" r="1.6" fill="#7cb2d4"/></svg><span>48</span></div>
+      <div class="size-item"><svg viewBox="0 0 48 48" fill="none" width="32" height="32"><circle cx="22" cy="28" r="16" fill="#7cb2d4"/><circle cx="37" cy="14" r="7" fill="#7cb2d4"/><circle cx="17" cy="26" r="3.5" fill="var(--bg,#0f1923)"/><circle cx="27" cy="26" r="3.5" fill="var(--bg,#0f1923)"/><circle cx="18.2" cy="25.5" r="1.6" fill="#7cb2d4"/><circle cx="28.2" cy="25.5" r="1.6" fill="#7cb2d4"/></svg><span>32</span></div>
+      <div class="size-item"><svg viewBox="0 0 48 48" fill="none" width="16" height="16"><circle cx="22" cy="28" r="16" fill="#7cb2d4"/><circle cx="37" cy="14" r="7" fill="#7cb2d4"/><circle cx="17" cy="26" r="3.5" fill="var(--bg,#0f1923)"/><circle cx="27" cy="26" r="3.5" fill="var(--bg,#0f1923)"/><circle cx="18.2" cy="25.5" r="1.6" fill="#7cb2d4"/><circle cx="28.2" cy="25.5" r="1.6" fill="#7cb2d4"/></svg><span>16</span></div>
+    </div>
+  </div>
+  <div class="size-group">
+    <div class="label">B — white eyes</div>
+    <div class="size-row">
+      <div class="size-item"><svg viewBox="0 0 48 48" fill="none" width="48" height="48"><circle cx="22" cy="28" r="16" fill="#5a8eb4"/><circle cx="37" cy="14" r="7" fill="#8ec4e8"/><circle cx="17" cy="26" r="3.8" fill="white"/><circle cx="18.5" cy="25.2" r="1.8" fill="#12202e"/><circle cx="27" cy="26" r="3.8" fill="white"/><circle cx="28.5" cy="25.2" r="1.8" fill="#12202e"/></svg><span>48</span></div>
+      <div class="size-item"><svg viewBox="0 0 48 48" fill="none" width="32" height="32"><circle cx="22" cy="28" r="16" fill="#5a8eb4"/><circle cx="37" cy="14" r="7" fill="#8ec4e8"/><circle cx="17" cy="26" r="3.8" fill="white"/><circle cx="18.5" cy="25.2" r="1.8" fill="#12202e"/><circle cx="27" cy="26" r="3.8" fill="white"/><circle cx="28.5" cy="25.2" r="1.8" fill="#12202e"/></svg><span>32</span></div>
+      <div class="size-item"><svg viewBox="0 0 48 48" fill="none" width="16" height="16"><circle cx="22" cy="28" r="16" fill="#5a8eb4"/><circle cx="37" cy="14" r="7" fill="#8ec4e8"/><circle cx="17" cy="26" r="3.8" fill="white"/><circle cx="18.5" cy="25.2" r="1.8" fill="#12202e"/><circle cx="27" cy="26" r="3.8" fill="white"/><circle cx="28.5" cy="25.2" r="1.8" fill="#12202e"/></svg><span>16</span></div>
+    </div>
+  </div>
+  <div class="size-group">
+    <div class="label">C — bold, smile, catchlight</div>
+    <div class="size-row">
+      <div class="size-item"><svg viewBox="0 0 48 48" fill="none" width="48" height="48"><circle cx="23" cy="27" r="17" fill="#7cb2d4"/><circle cx="38" cy="13" r="7.5" fill="#a0d0ec"/><circle cx="18" cy="25" r="4" fill="white"/><circle cx="19.5" cy="24" r="2" fill="#12202e"/><circle cx="20.2" cy="23.2" r="0.8" fill="white"/><circle cx="28" cy="25" r="4" fill="white"/><circle cx="29.5" cy="24" r="2" fill="#12202e"/><circle cx="30.2" cy="23.2" r="0.8" fill="white"/><path d="M20 31q3 3 6 0" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg><span>48</span></div>
+      <div class="size-item"><svg viewBox="0 0 48 48" fill="none" width="32" height="32"><circle cx="23" cy="27" r="17" fill="#7cb2d4"/><circle cx="38" cy="13" r="7.5" fill="#a0d0ec"/><circle cx="18" cy="25" r="4" fill="white"/><circle cx="19.5" cy="24" r="2" fill="#12202e"/><circle cx="20.2" cy="23.2" r="0.8" fill="white"/><circle cx="28" cy="25" r="4" fill="white"/><circle cx="29.5" cy="24" r="2" fill="#12202e"/><circle cx="30.2" cy="23.2" r="0.8" fill="white"/><path d="M20 31q3 3 6 0" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg><span>32</span></div>
+      <div class="size-item"><svg viewBox="0 0 48 48" fill="none" width="16" height="16"><circle cx="23" cy="27" r="17" fill="#7cb2d4"/><circle cx="38" cy="13" r="7.5" fill="#a0d0ec"/><circle cx="18" cy="25" r="4" fill="white"/><circle cx="19.5" cy="24" r="2" fill="#12202e"/><circle cx="20.2" cy="23.2" r="0.8" fill="white"/><circle cx="28" cy="25" r="4" fill="white"/><circle cx="29.5" cy="24" r="2" fill="#12202e"/><circle cx="30.2" cy="23.2" r="0.8" fill="white"/><path d="M20 31q3 3 6 0" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg><span>16</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Old for reference -->
+<h2>Old (Unicode characters)</h2>
+<div class="cards" style="max-width:600px;">
+  <div class="eco-card" style="opacity:0.5">
+    <span style="font-size:2rem">⟐</span>
+    <span class="eco-name">agent</span>
+  </div>
+  <div class="eco-card" style="opacity:0.5">
+    <span style="font-size:2rem">▸</span>
+    <span class="eco-name">npm</span>
+  </div>
+  <div class="eco-card" style="opacity:0.5">
+    <span style="font-size:2rem">◉</span>
+    <span class="eco-name">blog</span>
+  </div>
+  <div class="eco-card" style="opacity:0.5">
+    <span style="font-size:2rem">◈</span>
+    <span class="eco-name">github</span>
+  </div>
+</div>
+
+<script>
+  // Handle cutout eye color for light/dark mode
+  document.querySelector('.toggle').addEventListener('click', () => {
+    const isDark = document.body.classList.contains('dark');
+    document.documentElement.style.setProperty('--bg', isDark ? '#0f1923' : '#f0f2f5');
+  });
+</script>
+</body>
+</html>

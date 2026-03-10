@@ -1,0 +1,20 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Get the first doc by order to show as landing
+const allDocs = (await getCollection('docs'))
+  .filter(doc => !doc.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const firstDoc = allDocs[0];
+const { Content } = await firstDoc.render();
+---
+
+<DocsLayout
+  title={firstDoc.data.title}
+  description={firstDoc.data.description}
+  currentSlug={firstDoc.slug}
+>
+  <Content />
+</DocsLayout>

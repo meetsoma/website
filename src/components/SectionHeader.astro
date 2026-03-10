@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  link?: { href: string; text: string };
+}
+
+const { title, subtitle, link } = Astro.props;
+---
+
+<div class="section-header">
+  <h2 class="section-title">
+    <span class="accent">σ</span> {title}
+  </h2>
+  {subtitle && <p class="section-subtitle">{subtitle}</p>}
+  {link && <a href={link.href} class="section-link">{link.text}</a>}
+</div>
+
+<style>
+  .section-header {
+    margin-bottom: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .accent {
+    color: var(--accent-bright);
+    font-weight: 700;
+    margin-right: 2px;
+  }
+
+  .section-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  .section-link {
+    margin-left: auto;
+    color: var(--accent-bright);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .section-link:hover {
+    color: var(--moon-bright);
+  }
+</style>
