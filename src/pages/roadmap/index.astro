@@ -126,7 +126,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
             <div class="timeline-body">
               <div class="timeline-head">
                 <span class="version">{release.version}</span>
-                <span class="label">{release.label}</span>
+                <h3 class="label">{release.label}</h3>
                 <span class="date">{release.date}</span>
               </div>
               <ul class="timeline-items">
@@ -147,7 +147,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
           <div class="feature-card" style={`animation-delay: ${i * 0.08}s`}>
             <div class="feature-head">
               <span class="feature-icon"><Icon name={feature.icon as any} size={20} /></span>
-              <span class="feature-name">{feature.name}</span>
+              <h3 class="feature-name">{feature.name}</h3>
               <span class="feature-status">{feature.status}</span>
             </div>
             <p class="feature-desc">{feature.description}</p>
@@ -297,6 +297,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     font-size: var(--text-lg);
     font-weight: 600;
     color: var(--text-primary);
+    margin: 0;
   }
 
   .date {
@@ -365,6 +366,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     font-weight: 600;
     color: var(--text-primary);
     flex: 1;
+    margin: 0;
   }
 
   .feature-status {

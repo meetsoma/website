@@ -94,7 +94,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
         </p>
         <div class="layer-details">
           <div class="detail-col">
-            <h4>What they do</h4>
+            <h3>What they do</h3>
             <ul>
               <li>Boot sequences — load identity, preload memory</li>
               <li>Custom headers and statuslines</li>
@@ -104,12 +104,12 @@ import Icon from '../../components/icons/SomaIcons.astro';
             </ul>
           </div>
           <div class="detail-col">
-            <h4>Where they live</h4>
+            <h3>Where they live</h3>
             <ul>
               <li><code>.soma/extensions/</code> — project-level</li>
               <li><code>~/.soma/extensions/</code> — global</li>
             </ul>
-            <h4 class="mt">Soma ships with</h4>
+            <h3 class="mt">Soma ships with</h3>
             <ul>
               <li><code>soma-boot.ts</code> — identity + preload + commands</li>
               <li><code>soma-header.ts</code> — branded σῶμα header</li>
@@ -134,7 +134,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
         </p>
         <div class="layer-details">
           <div class="detail-col">
-            <h4>What they contain</h4>
+            <h3>What they contain</h3>
             <ul>
               <li>Task-specific instructions and best practices</li>
               <li>Tool usage patterns and examples</li>
@@ -143,12 +143,12 @@ import Icon from '../../components/icons/SomaIcons.astro';
             </ul>
           </div>
           <div class="detail-col">
-            <h4>Where they live</h4>
+            <h3>Where they live</h3>
             <ul>
               <li><code>~/.soma/skills/</code> — global skills</li>
               <li><code>.soma/skills/</code> — project-specific</li>
             </ul>
-            <h4 class="mt">Examples</h4>
+            <h3 class="mt">Examples</h3>
             <ul>
               <li><code>logo-creator</code> — AI logo generation workflow</li>
               <li><code>favicon-gen</code> — favicon from any source</li>
@@ -173,7 +173,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
         </p>
         <div class="layer-details">
           <div class="detail-col">
-            <h4>What they do</h4>
+            <h3>What they do</h3>
             <ul>
               <li>Encode workflows discovered through repeated use</li>
               <li>Load automatically when context matches their topic</li>
@@ -182,7 +182,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
             </ul>
           </div>
           <div class="detail-col">
-            <h4>Built-in muscles</h4>
+            <h3>Built-in muscles</h3>
             <ul>
               <li><code>blog-writing</code> — voice, accuracy, pre-publish checks</li>
               <li><code>test-hygiene</code> — catch stale tests after changes</li>
@@ -208,7 +208,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
         </p>
         <div class="layer-details">
           <div class="detail-col">
-            <h4>How they work</h4>
+            <h3>How they work</h3>
             <ul>
               <li>Drop a <code>.md</code> file into <code>.soma/protocols/</code></li>
               <li>Agent discovers it on next boot</li>
@@ -218,12 +218,12 @@ import Icon from '../../components/icons/SomaIcons.astro';
             </ul>
           </div>
           <div class="detail-col">
-            <h4>Where they live</h4>
+            <h3>Where they live</h3>
             <ul>
               <li><code>~/.soma/protocols/</code> — global defaults</li>
               <li><code>.soma/protocols/</code> — project-specific</li>
             </ul>
-            <h4 class="mt">Core protocols</h4>
+            <h3 class="mt">Core protocols</h3>
             <ul>
               <li><code>breath-cycle</code> — session lifecycle (inhale/hold/exhale)</li>
               <li><code>frontmatter-standard</code> — document metadata rules</li>
@@ -577,7 +577,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
     gap: var(--space-2xl);
   }
 
-  .detail-col h4 {
+  .detail-col h3 {
     font-family: var(--font-display);
     font-size: var(--text-md);
     font-weight: 600;
