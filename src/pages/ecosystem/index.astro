@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/icons/SomaIcons.astro';
 ---
 
 <Layout
@@ -9,8 +10,6 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
   description="How Soma's four layers work together — extensions, skills, muscles, and protocols."
   canonicalUrl="https://soma.gravicity.ai/ecosystem"
 >
-  <div class="stars"></div>
-
   <main class="container">
     <Breadcrumbs items={[
       { label: 'Ecosystem', href: '/ecosystem' },
@@ -24,52 +23,56 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
       </p>
     </header>
 
-    <!-- Architecture Diagram -->
+    <!-- Orbital Architecture Diagram -->
     <section class="diagram-section">
-      <div class="diagram">
-        <div class="diagram-row">
-          <div class="diagram-node node-you">
-            <span class="node-label">you</span>
-          </div>
-          <div class="diagram-arrow">→</div>
-          <div class="diagram-node node-cli">
-            <span class="node-icon">▸</span>
-            <span class="node-label">soma cli</span>
-            <span class="node-sub">npx soma</span>
-          </div>
-          <div class="diagram-arrow">→</div>
-          <div class="diagram-node node-pi">
-            <span class="node-label">pi</span>
-            <span class="node-sub">coding agent</span>
-          </div>
+      <div class="orbit-diagram" aria-label="Soma ecosystem orbital diagram">
+        <!-- Orbital ring -->
+        <div class="orbit-ring"></div>
+        <div class="orbit-ring orbit-ring-inner"></div>
+
+        <!-- Center: Soma -->
+        <div class="orbit-center">
+          <img src="/media/soma-logo-animated.svg" alt="" width="55" height="55" class="orbit-logo" />
+          <span class="orbit-center-label">soma</span>
         </div>
-        <div class="diagram-branch">
-          <div class="branch-line"></div>
-          <div class="branch-items">
-            <div class="diagram-node node-ext">
-              <span class="node-icon">⟐</span>
-              <span class="node-label">extensions</span>
-            </div>
-            <div class="diagram-node node-skill">
-              <span class="node-icon">◈</span>
-              <span class="node-label">skills</span>
-            </div>
-            <div class="diagram-node node-muscle">
-              <span class="node-icon">◎</span>
-              <span class="node-label">muscles</span>
-            </div>
-            <div class="diagram-node node-protocol">
-              <span class="node-icon">🧬</span>
-              <span class="node-label">protocols</span>
-            </div>
-          </div>
+
+        <!-- Inner orbit: you + pi + memory -->
+        <div class="orbit-node orbit-you">
+          <span class="orbit-node-icon"><Icon name="you" size={21} /></span>
+          <span class="orbit-node-label">you</span>
         </div>
-        <div class="diagram-row diagram-bottom">
-          <div class="diagram-node node-memory">
-            <span class="node-icon">⟡</span>
-            <span class="node-label">memory</span>
-            <span class="node-sub">preloads · muscles · identity</span>
-          </div>
+
+        <div class="orbit-node orbit-pi">
+          <span class="orbit-node-icon"><Icon name="pi" size={21} /></span>
+          <span class="orbit-node-label">pi</span>
+          <span class="orbit-node-sub">runtime</span>
+        </div>
+
+        <div class="orbit-node orbit-memory">
+          <span class="orbit-node-icon"><Icon name="memory" size={21} /></span>
+          <span class="orbit-node-label">memory</span>
+          <span class="orbit-node-sub">.soma/</span>
+        </div>
+
+        <!-- Outer orbit: the four layers -->
+        <div class="orbit-node orbit-layer orbit-ext">
+          <span class="orbit-node-icon"><Icon name="extensions" size={24} /></span>
+          <span class="orbit-node-label">extensions</span>
+        </div>
+
+        <div class="orbit-node orbit-layer orbit-skill">
+          <span class="orbit-node-icon"><Icon name="skills" size={24} /></span>
+          <span class="orbit-node-label">skills</span>
+        </div>
+
+        <div class="orbit-node orbit-layer orbit-muscle">
+          <span class="orbit-node-icon"><Icon name="muscles" size={24} /></span>
+          <span class="orbit-node-label">muscles</span>
+        </div>
+
+        <div class="orbit-node orbit-layer orbit-protocol">
+          <span class="orbit-node-icon"><Icon name="protocols" size={24} /></span>
+          <span class="orbit-node-label">protocols</span>
         </div>
       </div>
     </section>
@@ -78,7 +81,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
     <section class="layers-detail">
       <div class="layer-detail" id="extensions">
         <div class="layer-header">
-          <span class="layer-glyph">⟐</span>
+          <span class="layer-glyph"><Icon name="extensions" size={34} /></span>
           <div>
             <h2 class="layer-title">Extensions</h2>
             <p class="layer-kind">system hooks · TypeScript</p>
@@ -118,7 +121,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
       <div class="layer-detail" id="skills">
         <div class="layer-header">
-          <span class="layer-glyph">◈</span>
+          <span class="layer-glyph"><Icon name="skills" size={34} /></span>
           <div>
             <h2 class="layer-title">Skills</h2>
             <p class="layer-kind">knowledge sets · Markdown</p>
@@ -157,7 +160,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
       <div class="layer-detail" id="muscles">
         <div class="layer-header">
-          <span class="layer-glyph">◎</span>
+          <span class="layer-glyph"><Icon name="muscles" size={34} /></span>
           <div>
             <h2 class="layer-title">Muscles</h2>
             <p class="layer-kind">learned patterns · heat-tracked · Markdown</p>
@@ -192,7 +195,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
       <div class="layer-detail" id="protocols">
         <div class="layer-header">
-          <span class="layer-glyph">🧬</span>
+          <span class="layer-glyph"><Icon name="protocols" size={34} /></span>
           <div>
             <h2 class="layer-title">Protocols</h2>
             <p class="layer-kind">behavioral rules · adaptive · Markdown</p>
@@ -340,145 +343,201 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 </Layout>
 
 <style>
-  .stars {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-image:
-      radial-gradient(1.5px 1.5px at 20px 30px, rgba(228,234,244,0.6), transparent),
-      radial-gradient(1px 1px at 150px 100px, rgba(124,178,212,0.5), transparent);
-    background-size: 400px 180px;
-    animation: twinkle 10s ease-in-out infinite alternate;
-  }
-
-  @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 0.6; } }
+  /* ═══════════════════════════════════════════════════════
+     Ecosystem — Fibonacci Design System
+     ═══════════════════════════════════════════════════════
+     TYPE: f-xs=0.813rem  f-sm=0.875rem  f-base=1rem  f-md=1.125rem  f-lg=1.313rem  f-xl=1.625rem  f-2xl=2.625rem
+     SPACING: 8, 13, 21, 34, 55, 89
+     LINE-HEIGHT: headings=1.2  body=1.618(φ)
+  ═══════════════════════════════════════════════════════ */
 
   .container {
     position: relative; z-index: 1;
-    max-width: 860px;
+    max-width: 890px;
     margin: 0 auto;
-    padding: 40px 24px;
+    padding: 55px 21px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
 
-  .back-link {
-    display: inline-block; margin-bottom: 20px;
-    color: var(--text-muted); text-decoration: none; font-size: 0.9rem;
-    transition: color 0.2s;
-  }
-  .back-link:hover { color: var(--accent-bright); }
-
-  .header { text-align: center; margin-bottom: 48px; }
+  .header { text-align: center; margin-bottom: 55px; }
 
   .title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 6vw, 2.8rem);
+    font-size: clamp(2rem, 6vw, 2.625rem);
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 13px;
+    line-height: 1.2;
   }
 
   .subtitle {
     color: var(--text-secondary);
-    font-size: 1.05rem;
+    font-size: 1.125rem;
     max-width: 560px;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.618;
   }
 
-  /* Diagram */
-  .diagram-section { margin-bottom: 56px; }
+  /* ── Orbital Diagram ── */
+  .diagram-section { margin-bottom: 55px; }
 
-  .diagram {
-    padding: 32px;
-    border-radius: 16px;
+  .orbit-diagram {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1;
+    margin: 0 auto;
+  }
+
+  /* Orbital rings */
+  .orbit-ring {
+    position: absolute;
+    border-radius: 50%;
     border: 1px solid var(--border-subtle);
-    background: var(--surface-card);
+    /* Outer ring — the four layers orbit here */
+    inset: 0;
+  }
+
+  .orbit-ring-inner {
+    /* Inner ring — you, pi, memory */
+    inset: 22%;
+    border-style: dashed;
+    border-color: rgba(104, 152, 190, 0.15);
+  }
+
+  /* Center node */
+  .orbit-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 5px;
+    z-index: 2;
   }
 
-  .diagram-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
+  .orbit-logo {
+    filter: drop-shadow(0 0 21px var(--logo-glow));
+    animation: float 5s ease-in-out infinite;
   }
 
-  .diagram-arrow {
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    font-family: var(--font-mono);
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
   }
 
-  .diagram-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    padding: 14px 20px;
-    border-radius: 12px;
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-elevated);
-    min-width: 100px;
-  }
-
-  .node-icon {
-    font-size: 1.2rem;
-    color: var(--accent-bright);
-  }
-
-  .node-label {
+  .orbit-center-label {
     font-family: var(--font-display);
+    font-size: 1.125rem;
     font-weight: 600;
-    font-size: 0.9rem;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
   }
 
-  .node-sub {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--text-muted);
-  }
-
-  .node-cli { border-color: var(--border-accent); }
-  .node-protocol { border-color: rgba(168, 232, 168, 0.25); }
-  .node-protocol .node-icon { font-size: 1rem; }
-  .node-memory { border-color: rgba(232, 168, 124, 0.25); }
-  .node-memory .node-icon { color: var(--warm-bright); }
-
-  .diagram-branch {
+  /* Orbit nodes — shared */
+  .orbit-node {
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 3px;
+    transform: translate(-50%, -50%);
+    z-index: 3;
   }
 
-  .branch-line {
-    width: 1px;
-    height: 16px;
-    background: var(--border-subtle);
+  .orbit-node-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card-strong);
+    font-size: 1.125rem;
+    color: var(--accent-bright);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
   }
 
-  .branch-items {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
+  .orbit-node:hover .orbit-node-icon {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 21px var(--shadow-accent-soft);
+    transform: scale(1.12);
   }
 
-  /* Layer Details */
+  .orbit-node-label {
+    font-family: var(--font-display);
+    font-size: 0.813rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  .orbit-node-sub {
+    font-family: var(--font-mono);
+    font-size: 0.688rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* Inner orbit positions (33% from center) */
+  .orbit-you     { top: 28%; left: 28%; }
+  .orbit-pi      { top: 28%; left: 72%; }
+  .orbit-memory   { top: 76%; left: 50%; }
+  .orbit-memory .orbit-node-icon { color: var(--warm-bright); border-color: rgba(232, 168, 124, 0.25); }
+
+  /* Outer orbit positions — cardinal + diagonal spread */
+  .orbit-ext      { top: 3%;  left: 50%; }
+  .orbit-skill    { top: 50%; left: 97%; }
+  .orbit-muscle   { top: 97%; left: 50%; }
+  .orbit-protocol { top: 50%; left: 3%;  }
+
+  /* Layer nodes slightly larger */
+  .orbit-layer .orbit-node-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.313rem;
+  }
+
+  .orbit-layer .orbit-node-label {
+    font-size: 0.875rem;
+  }
+
+  /* Subtle slow rotation for the outer ring */
+  @keyframes orbitSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Connection lines — SVG would be better but CSS pseudo-elements work */
+  .orbit-diagram::before {
+    content: '';
+    position: absolute;
+    inset: 11%;
+    border-radius: 50%;
+    border: 1px solid rgba(104, 152, 190, 0.08);
+    z-index: 1;
+    animation: orbitPulse 8s ease-in-out infinite;
+  }
+
+  @keyframes orbitPulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.02); }
+  }
+
+  /* ── Layer Details ── */
   .layers-detail {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    margin-bottom: 56px;
+    gap: 34px;
+    margin-bottom: 55px;
   }
 
   .layer-detail {
-    padding: 32px;
-    border-radius: 16px;
+    padding: 34px;
+    border-radius: 13px;
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
   }
@@ -486,51 +545,54 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
   .layer-header {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 13px;
+    margin-bottom: 13px;
   }
 
   .layer-glyph {
-    font-size: 2rem;
+    font-size: 2.125rem;
     color: var(--accent-bright);
     line-height: 1;
   }
 
   .layer-title {
     font-family: var(--font-display);
-    font-size: 1.4rem;
+    font-size: 1.313rem;
     font-weight: 600;
+    line-height: 1.2;
   }
 
   .layer-kind {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.813rem;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
   }
 
   .layer-body {
     color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 24px;
+    font-size: 1rem;
+    line-height: 1.618;
+    margin-bottom: 21px;
   }
 
   .layer-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: 34px;
   }
 
   .detail-col h4 {
     font-family: var(--font-display);
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: var(--text-primary);
+    line-height: 1.2;
   }
 
-  .detail-col .mt { margin-top: 20px; }
+  .detail-col .mt { margin-top: 21px; }
 
   .detail-col ul {
     list-style: none;
@@ -538,11 +600,12 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
   }
 
   .detail-col li {
-    font-size: 0.88rem;
+    font-size: 0.875rem;
     color: var(--text-secondary);
-    padding: 4px 0;
-    padding-left: 16px;
+    padding: 5px 0;
+    padding-left: 13px;
     position: relative;
+    line-height: 1.618;
   }
 
   .detail-col li::before {
@@ -555,38 +618,45 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
   .detail-col code {
     font-family: var(--font-mono);
-    font-size: 0.82rem;
-    padding: 1px 5px;
-    border-radius: 4px;
+    font-size: 0.813rem;
+    padding: 2px 8px;
+    border-radius: 5px;
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
 
   .coming-soon {
-    margin-top: 12px;
-    font-size: 0.82rem;
+    margin-top: 13px;
+    font-size: 0.875rem;
     color: var(--warm-bright);
     font-style: italic;
   }
 
-  /* Templates */
-  .templates { margin-bottom: 56px; }
+  .coming-soon a {
+    color: var(--warm-bright);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── Templates ── */
+  .templates { margin-bottom: 55px; }
 
   .templates-intro {
     color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 24px;
+    font-size: 1rem;
+    line-height: 1.618;
+    margin-bottom: 21px;
     text-align: center;
-    max-width: 600px;
+    max-width: 610px;
     margin-left: auto;
     margin-right: auto;
   }
 
   .templates-intro code {
     font-family: var(--font-mono);
-    font-size: 0.85rem;
-    padding: 1px 5px;
-    border-radius: 4px;
+    font-size: 0.875rem;
+    padding: 2px 8px;
+    border-radius: 5px;
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
@@ -594,50 +664,59 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
   .templates-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 13px;
   }
 
   .template-card {
-    padding: 24px;
-    border-radius: 16px;
+    padding: 21px;
+    border-radius: 13px;
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-align: center;
+    transition: all 0.25s ease;
   }
 
-  .template-icon { font-size: 1.8rem; margin-bottom: 8px; }
+  .template-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 21px var(--shadow-accent-soft);
+  }
+
+  .template-icon { font-size: 1.625rem; margin-bottom: 8px; }
 
   .template-name {
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 600;
     margin-bottom: 8px;
+    line-height: 1.2;
   }
 
   .template-desc {
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 12px;
+    line-height: 1.618;
+    margin-bottom: 13px;
   }
 
   .template-cmd {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 6px;
+    font-size: 0.813rem;
+    padding: 5px 13px;
+    border-radius: 8px;
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
 
-  /* Community */
-  .community { margin-bottom: 56px; }
+  /* ── Community ── */
+  .community { margin-bottom: 55px; }
 
   .community-intro {
     color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 24px;
+    font-size: 1rem;
+    line-height: 1.618;
+    margin-bottom: 21px;
     text-align: center;
     max-width: 560px;
     margin-left: auto;
@@ -647,17 +726,17 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
   .community-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 13px;
+    margin-bottom: 21px;
   }
 
   .stat-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 24px 16px;
-    border-radius: 16px;
+    gap: 5px;
+    padding: 21px 13px;
+    border-radius: 13px;
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-align: center;
@@ -665,7 +744,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
   .stat-number {
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size: 2.125rem;
     font-weight: 700;
     color: var(--accent-bright);
     line-height: 1;
@@ -673,13 +752,13 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
   .stat-label {
     font-family: var(--font-display);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
   }
 
   .stat-detail {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.813rem;
     color: var(--text-muted);
     line-height: 1.4;
   }
@@ -691,8 +770,8 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
   .install-cmd {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.85rem;
-    padding: 10px 20px;
+    font-size: 0.875rem;
+    padding: 13px 21px;
     border-radius: 8px;
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
@@ -704,18 +783,18 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
     background: linear-gradient(135deg, var(--surface-card), var(--surface-accent-soft));
   }
 
-  /* Repos */
-  .repos { margin-bottom: 56px; }
+  /* ── Repos ── */
+  .repos { margin-bottom: 55px; }
 
   .repos-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 13px;
   }
 
   .repo-card {
-    padding: 24px;
-    border-radius: 16px;
+    padding: 21px;
+    border-radius: 13px;
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-decoration: none;
@@ -725,44 +804,49 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
   .repo-card:hover {
     border-color: var(--border-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px var(--shadow-accent-soft);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 21px var(--shadow-accent-soft);
   }
 
   .repo-card h3 {
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
     margin-bottom: 8px;
     color: var(--accent-bright);
   }
 
   .repo-card p {
-    font-size: 0.88rem;
+    font-size: 0.875rem;
     color: var(--text-secondary);
-    line-height: 1.4;
+    line-height: 1.618;
   }
 
   .repo-card code {
     font-family: var(--font-mono);
-    font-size: 0.82rem;
-    padding: 1px 5px;
-    border-radius: 4px;
+    font-size: 0.813rem;
+    padding: 2px 8px;
+    border-radius: 5px;
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
-
-  .sep { color: var(--text-muted); }
 
   @media (max-width: 768px) {
     .layer-details { grid-template-columns: 1fr; }
     .repos-grid { grid-template-columns: 1fr; }
     .community-stats { grid-template-columns: 1fr; }
     .templates-grid { grid-template-columns: 1fr; }
+    .orbit-diagram { max-width: 340px; }
+    .orbit-layer .orbit-node-icon { width: 42px; height: 42px; font-size: 1.125rem; }
+    .orbit-node-label { font-size: 0.688rem; }
   }
 
   @media (max-width: 480px) {
-    .container { padding: 24px 16px; }
-    .diagram { padding: 20px; }
+    .container { padding: 34px 13px; }
+    .orbit-diagram { max-width: 280px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit-logo { animation: none !important; }
   }
 </style>

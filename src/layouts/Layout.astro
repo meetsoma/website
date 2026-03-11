@@ -1,6 +1,8 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Starfield from '../components/Starfield.astro';
 
 interface Props {
   title: string;
@@ -85,8 +87,14 @@ const schemaData = jsonLd || defaultJsonLd;
       (() => {
         const saved = localStorage.getItem('soma-theme');
         const theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+        document.documentElement.classList.add('no-transition');
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.documentElement.classList.remove('no-transition');
+          });
+        });
       })();
     </script>
 
@@ -206,7 +214,11 @@ const schemaData = jsonLd || defaultJsonLd;
         padding: 0;
       }
 
-      html { scroll-behavior: smooth; }
+      html {
+        scroll-behavior: smooth;
+        /* Slow theme crossfade — let eyes adjust */
+        transition: background-color 0.8s ease, color 0.6s ease;
+      }
 
       body {
         font-family: var(--font-body);
@@ -216,6 +228,24 @@ const schemaData = jsonLd || defaultJsonLd;
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        transition: background-color 0.8s ease, color 0.6s ease;
+      }
+
+      /* Theme transition on all surfaces */
+      *:not(script):not(style) {
+        transition:
+          background-color 0.6s ease,
+          border-color 0.5s ease,
+          color 0.5s ease,
+          box-shadow 0.5s ease;
+      }
+
+      /* Disable transition on first load (prevent flash) */
+      html.no-transition,
+      html.no-transition *,
+      html.no-transition *::before,
+      html.no-transition *::after {
+        transition: none !important;
       }
 
       ::selection {
@@ -223,9 +253,88 @@ const schemaData = jsonLd || defaultJsonLd;
         color: var(--bg-deep);
       }
 
-      /* Starfield — subtle, not overwhelming */
-      html[data-theme='light'] .stars { opacity: 0.2; }
-      html[data-theme='light'] .nebula { opacity: 0.4; }
+      /* ── Noise overlay ── */
+      .noise-overlay {
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.04;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      html[data-theme='light'] .noise-overlay { opacity: 0.02; }
+
+      /* ── Glow orbs ── */
+      .glow-orbs {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .glow-orb {
+        position: absolute;
+        border-radius: 50%;
+        mix-blend-mode: screen;
+      }
+
+      .glow-orb-1 {
+        top: -10%;
+        left: 10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(104, 152, 190, 0.12) 0%, transparent 70%);
+        animation: orbDrift1 25s ease-in-out infinite;
+      }
+
+      .glow-orb-2 {
+        bottom: -5%;
+        right: 5%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(124, 178, 212, 0.10) 0%, transparent 70%);
+        animation: orbDrift2 30s ease-in-out infinite;
+      }
+
+      .glow-orb-3 {
+        top: 40%;
+        right: 25%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(232, 168, 124, 0.07) 0%, transparent 70%);
+        animation: orbDrift3 35s ease-in-out infinite;
+      }
+
+      @keyframes orbDrift1 {
+        0%, 100% { transform: translate(0, 0); }
+        33% { transform: translate(40px, 30px); }
+        66% { transform: translate(-20px, 50px); }
+      }
+
+      @keyframes orbDrift2 {
+        0%, 100% { transform: translate(0, 0); }
+        33% { transform: translate(-30px, -40px); }
+        66% { transform: translate(25px, -20px); }
+      }
+
+      @keyframes orbDrift3 {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(-35px, 25px); }
+      }
+
+      html[data-theme='light'] .glow-orbs { opacity: 0.3; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .glow-orb { animation: none !important; }
+      }
+
+      /* Content offset for fixed nav */
+      .site-content {
+        padding-top: 55px;
+      }
 
       /* Theme toggle */
       .theme-toggle {
@@ -266,10 +375,22 @@ const schemaData = jsonLd || defaultJsonLd;
     </style>
   </head>
   <body>
+    <!-- Atmospheric layers -->
+    <Starfield />
+    <div class="noise-overlay"></div>
+    <div class="glow-orbs" aria-hidden="true">
+      <div class="glow-orb glow-orb-1"></div>
+      <div class="glow-orb glow-orb-2"></div>
+      <div class="glow-orb glow-orb-3"></div>
+    </div>
+
+    <Nav />
     <button class="theme-toggle" type="button" aria-label="Switch color theme">
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
-    <slot />
+    <div class="site-content">
+      <slot />
+    </div>
     <Footer />
 
     <script is:inline>

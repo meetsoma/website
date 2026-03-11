@@ -1,0 +1,177 @@
+---
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/docs', label: 'Docs' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/ecosystem', label: 'Ecosystem' },
+  { href: '/hub', label: 'Hub' },
+  { href: '/roadmap', label: 'Roadmap' },
+];
+
+function isActive(href: string, current: string): boolean {
+  if (href === '/') return current === '/';
+  return current.startsWith(href);
+}
+---
+
+<header class="site-nav-wrapper">
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="/" class="nav-brand" aria-label="Soma home">
+      <span class="nav-sigma">σ</span>
+    </a>
+    <div class="nav-links">
+      {links.map(link => (
+        <a
+          href={link.href}
+          class:list={['nav-link', { active: isActive(link.href, currentPath) }]}
+          aria-current={isActive(link.href, currentPath) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+    <div class="nav-external">
+      <a href="https://github.com/meetsoma" target="_blank" rel="noopener" class="nav-icon-link" aria-label="GitHub">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+        </svg>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-nav-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    background: rgba(6, 8, 14, 0.65);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background-color 0.6s ease, border-color 0.5s ease;
+  }
+
+  :global(html[data-theme='light']) .site-nav-wrapper {
+    background: rgba(244, 246, 249, 0.75);
+  }
+
+  .site-nav {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 21px;
+    height: 55px;
+  }
+
+  /* ── Brand mark ── */
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-right: 13px;
+    flex-shrink: 0;
+  }
+
+  .nav-sigma {
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 600;
+    color: var(--accent-bright);
+    line-height: 1;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
+
+  .nav-brand:hover .nav-sigma {
+    color: var(--moon-bright);
+    text-shadow: 0 0 21px var(--moon-glow);
+  }
+
+  /* ── Links ── */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex: 1;
+  }
+
+  .nav-link {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 5px 13px;
+    border-radius: 8px;
+    transition: color 0.15s ease, background-color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+    background: var(--surface-interactive);
+  }
+
+  .nav-link.active {
+    color: var(--accent-bright);
+    background: var(--surface-accent-soft);
+  }
+
+  /* ── External icons ── */
+  .nav-external {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    margin-right: 55px; /* space for theme toggle */
+  }
+
+  .nav-icon-link {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    transition: color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .nav-icon-link:hover {
+    color: var(--text-primary);
+    background: var(--surface-interactive);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 640px) {
+    .site-nav {
+      padding: 0 13px;
+      height: 48px;
+    }
+
+    .nav-link {
+      font-size: 0.813rem;
+      padding: 4px 8px;
+    }
+
+    .nav-links {
+      gap: 1px;
+    }
+
+    .nav-external {
+      margin-right: 45px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .nav-link {
+      font-size: 0.75rem;
+      padding: 4px 5px;
+    }
+  }
+</style>

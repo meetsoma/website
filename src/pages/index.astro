@@ -8,9 +8,6 @@ const recentPosts = posts.slice(0, 3);
 ---
 
 <Layout title="Soma — An AI agent that grows with you">
-  <div class="stars"></div>
-  <div class="nebula"></div>
-
   <main class="container">
     <!-- Hero -->
     <header class="hero">
@@ -343,39 +340,6 @@ const recentPosts = posts.slice(0, 3);
      Body:     1.618 (φ)
      Loose:    1.8
   ═══════════════════════════════════════════════════════ */
-
-  /* Background layers */
-  .stars {
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(1.5px 1.5px at 20px 30px, rgba(228,234,244,0.6), transparent),
-      radial-gradient(1px 1px at 80px 60px, rgba(228,234,244,0.4), transparent),
-      radial-gradient(1.5px 1.5px at 150px 100px, rgba(124,178,212,0.5), transparent),
-      radial-gradient(1px 1px at 220px 40px, rgba(228,234,244,0.3), transparent),
-      radial-gradient(1.5px 1.5px at 300px 80px, rgba(232,168,124,0.3), transparent),
-      radial-gradient(1px 1px at 360px 130px, rgba(228,234,244,0.5), transparent);
-    background-size: 400px 180px;
-    animation: twinkle 10s ease-in-out infinite alternate;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .nebula {
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 50% at 15% 20%, rgba(104, 152, 190, 0.08), transparent 50%),
-      radial-gradient(ellipse 50% 50% at 85% 30%, rgba(124, 178, 212, 0.06), transparent 50%),
-      radial-gradient(ellipse 80% 60% at 50% 85%, rgba(232, 168, 124, 0.04), transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  @keyframes twinkle {
-    0% { opacity: 0.3; }
-    100% { opacity: 0.6; }
-  }
 
   .container {
     position: relative;

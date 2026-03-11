@@ -1,0 +1,149 @@
+---
+/**
+ * Starfield — Canvas-based drifting stars
+ * Soft, slow movement. Breathing night sky, not hyperspace.
+ * Stars drift upward and slightly right, with gentle twinkling.
+ */
+---
+
+<canvas id="starfield-canvas" class="starfield"></canvas>
+
+<style>
+  .starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  html[data-theme='light'] .starfield {
+    opacity: 0.15;
+  }
+</style>
+
+<script>
+  function initStarfield() {
+    const canvas = document.getElementById('starfield-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let w = 0, h = 0;
+    let stars: { x: number; y: number; r: number; alpha: number; drift: number; twinkleSpeed: number; twinklePhase: number; color: [number, number, number] }[] = [];
+    let animId: number;
+
+    const STAR_DENSITY = 0.00018; // stars per pixel² — visible but not crowded
+    const DRIFT_SPEED = 0.06;     // px/frame base — gentle drift
+
+    const COLORS: [number, number, number][] = [
+      [228, 234, 244],  // text-primary (white-blue)
+      [124, 178, 212],  // moon-bright (blue)
+      [104, 152, 190],  // accent-bright (deeper blue)
+      [232, 168, 124],  // warm-bright (amber) — rare
+    ];
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      createStars();
+    }
+
+    function createStars() {
+      const count = Math.floor(w * h * STAR_DENSITY);
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        // 80% white-blue, 15% blue, 4% deeper blue, 1% warm
+        const roll = Math.random();
+        const colorIdx = roll < 0.80 ? 0 : roll < 0.95 ? 1 : roll < 0.99 ? 2 : 3;
+
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.2 + 0.3,  // 0.3–1.5px radius
+          alpha: Math.random() * 0.6 + 0.15,
+          drift: (Math.random() * 0.5 + 0.5) * DRIFT_SPEED,
+          twinkleSpeed: Math.random() * 0.008 + 0.003,
+          twinklePhase: Math.random() * Math.PI * 2,
+          color: COLORS[colorIdx],
+        });
+      }
+    }
+
+    let time = 0;
+    function draw() {
+      ctx!.clearRect(0, 0, w, h);
+      time++;
+
+      for (const s of stars) {
+        // Drift: slow upward + slight rightward
+        s.y -= s.drift;
+        s.x += s.drift * 0.3;
+
+        // Wrap around
+        if (s.y < -5) { s.y = h + 5; s.x = Math.random() * w; }
+        if (s.x > w + 5) { s.x = -5; }
+
+        // Twinkle
+        const twinkle = Math.sin(time * s.twinkleSpeed + s.twinklePhase);
+        const alpha = s.alpha + twinkle * 0.2;
+        if (alpha <= 0) continue;
+
+        const [r, g, b] = s.color;
+        ctx!.beginPath();
+        ctx!.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(${r},${g},${b},${Math.min(alpha, 0.8)})`;
+        ctx!.fill();
+      }
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    // Pause when tab hidden
+    function handleVisibility() {
+      if (document.hidden) {
+        cancelAnimationFrame(animId);
+      } else {
+        animId = requestAnimationFrame(draw);
+      }
+    }
+
+    // Reduce motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+      resize();
+      // Draw once, no animation
+      time = 42; // offset for variety
+      ctx!.clearRect(0, 0, w, h);
+      for (const s of stars) {
+        const [r, g, b] = s.color;
+        ctx!.beginPath();
+        ctx!.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(${r},${g},${b},${s.alpha})`;
+        ctx!.fill();
+      }
+      return;
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', handleVisibility);
+    animId = requestAnimationFrame(draw);
+
+    // Cleanup on Astro view transitions
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    });
+  }
+
+  // Init on load and on Astro page transitions
+  initStarfield();
+  document.addEventListener('astro:after-swap', initStarfield);
+</script>
