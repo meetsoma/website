@@ -13,14 +13,15 @@ import {
   type HubType,
   type HubTier,
 } from '../../stores/hub';
+import { iconSvg } from '../../lib/icons';
 
-const types: { value: HubType; label: string; glyph: string }[] = [
-  { value: 'all', label: 'All', glyph: '⊛' },
-  { value: 'protocol', label: 'Protocols', glyph: '🧬' },
-  { value: 'muscle', label: 'Muscles', glyph: '◎' },
-  { value: 'skill', label: 'Skills', glyph: '◈' },
-  { value: 'template', label: 'Templates', glyph: '⟐' },
-  { value: 'script', label: 'Scripts', glyph: '⚙' },
+const types: { value: HubType; label: string; icon: string }[] = [
+  { value: 'all', label: 'All', icon: 'all' },
+  { value: 'protocol', label: 'Protocols', icon: 'protocols' },
+  { value: 'muscle', label: 'Muscles', icon: 'muscles' },
+  { value: 'skill', label: 'Skills', icon: 'skills' },
+  { value: 'template', label: 'Templates', icon: 'templates' },
+  { value: 'script', label: 'Scripts', icon: 'scripts' },
 ];
 
 const tiers: { value: HubTier; label: string }[] = [
@@ -49,7 +50,7 @@ export default function HubFilters() {
               onClick={() => $typeFilter.set(t.value)}
               data-type={t.value}
             >
-              <span class="pill-glyph">{t.glyph}</span>
+              <span class="pill-glyph" dangerouslySetInnerHTML={{ __html: iconSvg[t.icon] || '' }} />
               {t.label}
             </button>
           ))}

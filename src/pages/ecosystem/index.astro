@@ -245,7 +245,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
       </p>
       <div class="templates-grid">
         <div class="template-card">
-          <div class="template-icon">🛠️</div>
+          <div class="template-icon"><Icon name="wrench" size={24} /></div>
           <h3 class="template-name">DevOps Agent</h3>
           <p class="template-desc">
             Deployment protocols, CI/CD skills, infra muscles. Pre-heated for 
@@ -254,7 +254,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
           <code class="template-cmd">soma init --template devops</code>
         </div>
         <div class="template-card">
-          <div class="template-icon">✍️</div>
+          <div class="template-icon"><Icon name="pen-line" size={24} /></div>
           <h3 class="template-name">Content Writer</h3>
           <p class="template-desc">
             SEO protocols, blog-writing muscle, tone-of-voice identity. 
@@ -263,7 +263,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
           <code class="template-cmd">soma init --template writer</code>
         </div>
         <div class="template-card">
-          <div class="template-icon">📐</div>
+          <div class="template-icon"><Icon name="ruler" size={24} /></div>
           <h3 class="template-name">Architect</h3>
           <p class="template-desc">
             Frontmatter standards, code review protocols, test-hygiene muscle.
@@ -272,7 +272,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
           <code class="template-cmd">soma init --template architect</code>
         </div>
         <div class="template-card">
-          <div class="template-icon">🧪</div>
+          <div class="template-icon"><Icon name="flask" size={24} /></div>
           <h3 class="template-name">Roll Your Own</h3>
           <p class="template-desc">
             Export your current setup as a template. Share your agent's 
@@ -676,7 +676,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
     box-shadow: 0 8px 21px var(--shadow-accent-soft);
   }
 
-  .template-icon { font-size: var(--text-2xl); margin-bottom: var(--space-md); }
+  .template-icon { color: var(--accent-bright); margin-bottom: var(--space-md); display: flex; justify-content: center; }
 
   .template-name {
     font-family: var(--font-display);

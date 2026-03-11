@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import Icon from '../../components/icons/SomaIcons.astro';
 import { getPublishedBlogPosts, formatDate, estimateReadTime, authorBadge, blogPostUrl } from '../../lib/blog';
 
 const posts = await getPublishedBlogPosts();
@@ -27,7 +28,7 @@ const posts = await getPublishedBlogPosts();
 
     {posts.length === 0 ? (
       <div class="empty-state">
-        <p class="empty-icon">◎</p>
+        <p class="empty-icon"><Icon name="sigma" size={48} /></p>
         <p class="empty-text">First post incoming. The agent is thinking.</p>
       </div>
     ) : (

@@ -5,6 +5,7 @@
  */
 import { useStore } from '@nanostores/preact';
 import { $typeFilter, $tierFilter, $searchQuery, $tagFilter } from '../../stores/hub';
+import { iconSvg } from '../../lib/icons';
 
 interface HubItem {
   slug: string;
@@ -25,33 +26,33 @@ interface Props {
   items: HubItem[];
 }
 
-const typeConfig: Record<string, { glyph: string; color: string; label: string; sublabel: string }> = {
+const typeConfig: Record<string, { icon: string; color: string; label: string; sublabel: string }> = {
   protocol: {
-    glyph: '🧬',
+    icon: 'protocols',
     color: 'rgba(168, 232, 168, 0.25)',
     label: 'Protocols',
     sublabel: 'Behavioral rules — how your agent acts. Skip them and things break.',
   },
   muscle: {
-    glyph: '◎',
+    icon: 'muscles',
     color: 'rgba(232, 168, 124, 0.25)',
     label: 'Muscles',
     sublabel: 'Learned patterns — reusable workflows that improve through use.',
   },
   skill: {
-    glyph: '◈',
+    icon: 'skills',
     color: 'rgba(124, 178, 212, 0.25)',
     label: 'Skills',
     sublabel: 'Domain knowledge — plug-and-play expertise from any agent framework.',
   },
   template: {
-    glyph: '⟐',
+    icon: 'templates',
     color: 'rgba(190, 152, 232, 0.25)',
     label: 'Templates',
     sublabel: 'Agent bundles — identity, settings, and dependencies in one install.',
   },
   script: {
-    glyph: '⚙',
+    icon: 'scripts',
     color: 'rgba(200, 200, 120, 0.25)',
     label: 'Scripts',
     sublabel: 'Automation — executable tools that enforce what protocols describe.',
@@ -112,7 +113,7 @@ export default function HubGrid({ items }: Props) {
         return (
           <section class="hub-section" key={type}>
             <div class="section-header">
-              <span class="section-glyph">{config.glyph}</span>
+              <span class="section-glyph" dangerouslySetInnerHTML={{ __html: iconSvg[config.icon] || '' }} />
               <div>
                 <h2 class="section-title">{config.label}</h2>
                 <p class="section-desc">{config.sublabel}</p>

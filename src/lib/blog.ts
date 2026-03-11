@@ -46,9 +46,9 @@ export function estimateReadTime(content: string): string {
 
 export function authorBadge(role: string): string {
   switch (role) {
-    case 'agent': return '⟐ agent';
-    case 'human': return '◉ human';
-    case 'co-authored': return '⟐◉ co-authored';
+    case 'agent': return 'σ agent';
+    case 'human': return '● human';
+    case 'co-authored': return 'σ● co-authored';
     default: return '';
   }
 }

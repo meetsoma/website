@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import Icon from '../../components/icons/SomaIcons.astro';
 import { getCollection } from 'astro:content';
 import { docUrl } from '../../lib/blog';
 
@@ -17,21 +18,21 @@ for (const doc of allDocs) {
   sections.get(section)!.push(doc);
 }
 
-const sectionMeta: Record<string, { glyph: string; desc: string }> = {
+const sectionMeta: Record<string, { icon: string; desc: string }> = {
   'First Steps': {
-    glyph: '▸',
+    icon: 'arrow-right',
     desc: 'Install Soma and run your first session.',
   },
   'Core Concepts': {
-    glyph: 'σ',
+    icon: 'sigma',
     desc: 'How Soma thinks — breath cycle, identity, heat, memory, workspaces.',
   },
   'Reference': {
-    glyph: '⟐',
+    icon: 'settings',
     desc: 'Commands, configuration, scripts, and the full changelog.',
   },
   'Extending': {
-    glyph: '◈',
+    icon: 'extensions',
     desc: 'Build your own skills, extensions, and tools.',
   },
 };
@@ -57,28 +58,28 @@ const sectionMeta: Record<string, { glyph: string; desc: string }> = {
     <!-- Quick links -->
     <div class="quick-links">
       <a href="/docs/getting-started" class="quick-link primary">
-        <span class="ql-glyph">▸</span>
+        <span class="ql-glyph"><Icon name="arrow-right" size={20} /></span>
         <span class="ql-text">
           <strong>Get Started</strong>
           <span>Install and first session</span>
         </span>
       </a>
       <a href="/docs/how-it-works" class="quick-link">
-        <span class="ql-glyph">σ</span>
+        <span class="ql-glyph"><Icon name="sigma" size={20} /></span>
         <span class="ql-text">
           <strong>How It Works</strong>
           <span>The breath cycle</span>
         </span>
       </a>
       <a href="/docs/configuration" class="quick-link">
-        <span class="ql-glyph">⟐</span>
+        <span class="ql-glyph"><Icon name="settings" size={20} /></span>
         <span class="ql-text">
           <strong>Configuration</strong>
           <span>All settings</span>
         </span>
       </a>
       <a href="/docs/workspaces" class="quick-link">
-        <span class="ql-glyph">⊕</span>
+        <span class="ql-glyph"><Icon name="layers" size={20} /></span>
         <span class="ql-text">
           <strong>Workspaces</strong>
           <span>Monorepo patterns</span>
@@ -88,11 +89,11 @@ const sectionMeta: Record<string, { glyph: string; desc: string }> = {
 
     <!-- Section cards -->
     {[...sections.entries()].map(([sectionName, docs]) => {
-      const meta = sectionMeta[sectionName] || { glyph: '·', desc: '' };
+      const meta = sectionMeta[sectionName] || { icon: 'circle-dot', desc: '' };
       return (
         <section class="doc-section">
           <div class="section-header">
-            <span class="section-glyph">{meta.glyph}</span>
+            <span class="section-glyph"><Icon name={meta.icon as any} size={24} /></span>
             <div>
               <h2 class="section-name">{sectionName}</h2>
               {meta.desc && <p class="section-desc">{meta.desc}</p>}
@@ -176,11 +177,12 @@ const sectionMeta: Record<string, { glyph: string; desc: string }> = {
   }
 
   .ql-glyph {
-    font-size: var(--text-xl);
     color: var(--accent-bright);
     flex-shrink: 0;
     width: var(--space-2xl);
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .ql-text {
@@ -215,11 +217,10 @@ const sectionMeta: Record<string, { glyph: string; desc: string }> = {
   }
 
   .section-glyph {
-    font-size: var(--text-2xl);
     color: var(--accent-bright);
-    font-weight: 700;
-    line-height: var(--leading-tight);
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
   }
 
   .section-name {

@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import Icon from '../../components/icons/SomaIcons.astro';
 
 const timeline = [
   {
@@ -59,40 +60,40 @@ const timeline = [
   },
 ];
 
-const upcoming = [
+const upcoming: { name: string; icon: string; description: string; status: string }[] = [
   {
     name: 'Rituals',
-    icon: '🔮',
+    icon: 'wand',
     description: 'Multi-step workflows — YAML-defined, composable sequences. /introspect (self-audit), custom rituals triggered by context. Muscles that crystallize into automated routines.',
     status: 'In Design',
   },
   {
     name: 'Dynamic System Prompts',
-    icon: '🧠',
+    icon: 'brain',
     description: 'System prompts that evolve over time — assembled from identity, hot protocols, session delta, and checkpoint diffs. No more static prompts.',
     status: 'In Design',
   },
   {
     name: 'AI Content Screening',
-    icon: '🛡',
+    icon: 'shield',
     description: 'Haiku-powered review of community submissions — injection scanning, quality scoring, automatic tier classification for hub contributions.',
     status: 'Planned',
   },
   {
     name: 'soma publish',
-    icon: '📤',
+    icon: 'upload',
     description: 'Publish protocols, muscles, and skills from your .soma/ directly to the community hub. Creates a PR with proper frontmatter and tier tagging.',
     status: 'Planned',
   },
   {
     name: 'Vault Sync',
-    icon: '🔗',
+    icon: 'link',
     description: 'Auto-discover and symlink .soma/ directories across a workspace. Parent .soma sees all children — unified view for multi-project ecosystems.',
     status: 'Exploring',
   },
   {
     name: 'Voice Extension',
-    icon: '⟐',
+    icon: 'mic',
     description: 'TTS integration — /voice command for spoken responses. Agent finds its literal voice.',
     status: 'Exploring',
   },
@@ -145,7 +146,7 @@ const upcoming = [
         {upcoming.map((feature, i) => (
           <div class="feature-card" style={`animation-delay: ${i * 0.08}s`}>
             <div class="feature-head">
-              <span class="feature-icon">{feature.icon}</span>
+              <span class="feature-icon"><Icon name={feature.icon as any} size={20} /></span>
               <span class="feature-name">{feature.name}</span>
               <span class="feature-status">{feature.status}</span>
             </div>
@@ -353,7 +354,9 @@ const upcoming = [
   }
 
   .feature-icon {
-    font-size: var(--text-lg);
+    display: flex;
+    align-items: center;
+    color: var(--accent-bright);
   }
 
   .feature-name {
