@@ -1,11 +1,15 @@
 /**
  * HubGrid — Preact island that renders filtered hub cards.
  * Receives all items as props (static data from Astro build),
- * filters reactively based on nanostore state.
+ * then fetches hub-index.json for live updates (new content between deploys).
+ * Filters reactively based on nanostore state.
  */
 import { useStore } from '@nanostores/preact';
+import { useState, useEffect } from 'preact/hooks';
 import { $typeFilter, $tierFilter, $searchQuery, $tagFilter } from '../../stores/hub';
 import { iconSvg } from '../../lib/icons';
+
+const HUB_INDEX_URL = 'https://raw.githubusercontent.com/meetsoma/community/main/hub-index.json';
 
 interface HubItem {
   slug: string;
@@ -59,14 +63,44 @@ const typeConfig: Record<string, { icon: string; color: string; label: string; s
   },
 };
 
+/** Merge static props with live index — live wins on slug+type collision (newer version). */
+function mergeItems(staticItems: HubItem[], liveItems: HubItem[]): HubItem[] {
+  const map = new Map<string, HubItem>();
+  for (const item of staticItems) {
+    map.set(`${item.type}:${item.slug}`, item);
+  }
+  for (const item of liveItems) {
+    const key = `${item.type}:${item.slug}`;
+    const existing = map.get(key);
+    // Live wins if new item or newer version
+    if (!existing || item.version > existing.version) {
+      map.set(key, item);
+    }
+  }
+  return Array.from(map.values());
+}
+
 export default function HubGrid({ items }: Props) {
+  const [liveItems, setLiveItems] = useState<HubItem[]>([]);
   const typeFilter = useStore($typeFilter);
   const tierFilter = useStore($tierFilter);
   const searchQuery = useStore($searchQuery);
   const tagFilter = useStore($tagFilter);
 
+  // Fetch live index on mount (non-blocking — static items render immediately)
+  useEffect(() => {
+    fetch(HUB_INDEX_URL)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.items?.length) setLiveItems(data.items);
+      })
+      .catch(() => {}); // Silent fail — static items are enough
+  }, []);
+
+  const allItems = liveItems.length > 0 ? mergeItems(items, liveItems) : items;
+
   // Filter items
-  const filtered = items.filter(item => {
+  const filtered = allItems.filter(item => {
     if (typeFilter !== 'all' && item.type !== typeFilter) return false;
     if (tierFilter !== 'all' && item.tier !== tierFilter) return false;
     if (searchQuery) {
