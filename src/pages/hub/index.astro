@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/icons/SomaIcons.astro';
 import HubFilters from '../../components/islands/HubFilters';
 import HubGrid from '../../components/islands/HubGrid';
 import { getProtocols, getMuscles, getSkills, getTemplates } from '../../lib/hub';
@@ -67,7 +68,7 @@ const total = allItems.length;
         </div>
         <span class="evo-arrow">→</span>
         <div class="evo-step">
-          <span class="evo-glyph">🧬</span>
+          <span class="evo-glyph"><Icon name="protocols" size={21} /></span>
           <strong>Protocols</strong>
           <span class="evo-desc">Behavioral rules — crystallized patterns that enforce consistency</span>
         </div>

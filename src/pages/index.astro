@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import Icon from '../components/icons/SomaIcons.astro';
 import { getPublishedBlogPosts, blogPostUrl } from '../lib/blog';
 
 const posts = await getPublishedBlogPosts();
@@ -155,7 +156,7 @@ const recentPosts = posts.slice(0, 3);
         </a>
 
         <a href="/ecosystem#protocols" class="layer-card">
-          <div class="layer-icon">🧬</div>
+          <div class="layer-icon"><Icon name="protocols" size={34} /></div>
           <h3 class="layer-name">Protocols</h3>
           <p class="layer-type">behavioral rules</p>
           <p class="layer-desc">

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import Icon from '../../../components/icons/SomaIcons.astro';
 import { getAllItems, getVersionHistory, type HubItem, type VersionEntry, renderMarkdown } from '../../../lib/hub';
 
 export async function getStaticPaths() {
@@ -26,11 +27,11 @@ const typeLabels: Record<string, string> = {
   template: 'Template',
 };
 
-const typeGlyphs: Record<string, string> = {
-  protocol: '🧬',
-  muscle: '◎',
-  skill: '◈',
-  template: '⟐',
+const typeIconNames: Record<string, string> = {
+  protocol: 'protocols',
+  muscle: 'muscles',
+  skill: 'skills',
+  template: 'extensions',
 };
 
 const installCmd = item.type === 'template'
@@ -57,7 +58,7 @@ const ghUrl = item.type === 'template'
     ]} />
 
     <header class="header">
-      <span class="type-badge">{typeGlyphs[item.type]} {typeLabels[item.type]}</span>
+      <span class="type-badge"><Icon name={typeIconNames[item.type] as any} size={16} /> {typeLabels[item.type]}</span>
       <h1 class="title">{item.name}</h1>
       {item.breadcrumb && <p class="breadcrumb">{item.breadcrumb}</p>}
       <div class="meta-row">
