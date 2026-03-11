@@ -29,7 +29,7 @@ interface HubItem {
   breadcrumb?: string;
   heatDefault?: string;
   appliesTo?: string[];
-  tier?: 'core' | 'official' | 'community' | 'experimental';
+  tier?: 'core' | 'official' | 'community' | 'pro';
   tags?: string[];
   topic?: string[];
   keywords?: string[];
