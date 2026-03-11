@@ -475,12 +475,20 @@ const total = allItems.length;
   :global(.card-meta) {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-md);
     font-size: var(--badge-text);
   }
 
   :global(.card-author) { color: var(--text-muted); }
   :global(.card-heat) { color: var(--warm-bright); font-style: italic; }
+
+  :global(.card-tags) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
 
   :global(.card-tag) {
     color: var(--accent-bright);
