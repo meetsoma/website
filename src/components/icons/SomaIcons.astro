@@ -1,8 +1,19 @@
 ---
 /**
- * Soma Icon Set — Custom SVG icons for the four layers + utility icons.
+ * Soma Icon Set — SVG icons for the four layers + utility icons.
  * Uses currentColor for theme compatibility. Designed at 24x24 viewBox.
- * Follows Soma brand: soft curves, orbital motifs, minimal strokes.
+ *
+ * Core four (Lucide-based, stroke-style):
+ *   extensions → plug     | system hooks, plugins
+ *   skills     → book-open| knowledge, learned expertise
+ *   muscles    → zap      | fast reflex, learned patterns
+ *   protocols  → dna      | behavioral DNA, rules
+ *   memory     → atom     | persistent state, orbital
+ *
+ * Utility (custom):
+ *   sigma, terminal, you, pi
+ *
+ * Source audit: browser-tools/examples/icon-audit-soma-2026-03-11.html
  */
 
 interface Props {
@@ -14,59 +25,65 @@ interface Props {
 const { name, size = 24, class: className = '' } = Astro.props;
 ---
 
-{/* Extensions — interlocking hooks (system hooks) */}
+{/* Extensions — plug (system hooks, plugins) */}
 {name === 'extensions' && (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
-    <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="3" y="8" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
-    <path d="M12 12v4m-2-2h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={className} aria-hidden="true">
+    <path d="M12 22v-5"/>
+    <path d="M15 8V2"/>
+    <path d="M17 8a1 1 0 0 1 1 1v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1z"/>
+    <path d="M9 8V2"/>
   </svg>
 )}
 
-{/* Skills — open book / knowledge */}
+{/* Skills — book-open (knowledge, learned expertise) */}
 {name === 'skills' && (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
-    <path d="M12 7c-2.8-2-5.3-2-8-1v11c2.7-1 5.2-1 8 1m0-11c2.8-2 5.3-2 8-1v11c-2.7-1-5.2-1-8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={className} aria-hidden="true">
+    <path d="M12 7v14"/>
+    <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
   </svg>
 )}
 
-{/* Muscles — strength / circular target (learned pattern) */}
+{/* Muscles — zap (fast reflex, learned patterns) */}
 {name === 'muscles' && (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
-    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
-    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/>
-    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={className} aria-hidden="true">
+    <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
   </svg>
 )}
 
-{/* Protocols — helix / behavioral DNA */}
+{/* Protocols — dna (behavioral DNA, rules) */}
 {name === 'protocols' && (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
-    <path d="M8 4c0 3 8 5 8 8s-8 5-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M16 4c0 3-8 5-8 8s8 5 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="7" y1="8" x2="17" y2="8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-    <line x1="7" y1="12" x2="17" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-    <line x1="7" y1="16" x2="17" y2="16" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={className} aria-hidden="true">
+    <path d="m10 16 1.5 1.5"/>
+    <path d="m14 8-1.5-1.5"/>
+    <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/>
+    <path d="m16.5 10.5 1 1"/>
+    <path d="m17 6-2.891-2.891"/>
+    <path d="M2 15c6.667-6 13.333 0 20-6"/>
+    <path d="m20 9 .891.891"/>
+    <path d="M3.109 14.109 4 15"/>
+    <path d="m6.5 12.5 1 1"/>
+    <path d="m7 18 2.891 2.891"/>
+    <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/>
   </svg>
 )}
 
-{/* Memory — sparkle / persistent state */}
+{/* Memory — atom (persistent state, orbital motif) */}
 {name === 'memory' && (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
-    <path d="M12 2v4m0 12v4M2 12h4m12 0h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M5.6 5.6l2.8 2.8m7.2 7.2l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={className} aria-hidden="true">
+    <circle cx="12" cy="12" r="1"/>
+    <path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"/>
+    <path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"/>
   </svg>
 )}
 
-{/* Sigma — the Soma mark */}
+{/* Sigma — the Soma mark (custom) */}
 {name === 'sigma' && (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
     <path d="M18 5H7l5 7-5 7h11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
 )}
 
-{/* Terminal — command prompt */}
+{/* Terminal — command prompt (custom) */}
 {name === 'terminal' && (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
     <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
@@ -75,7 +92,7 @@ const { name, size = 24, class: className = '' } = Astro.props;
   </svg>
 )}
 
-{/* You — user/person */}
+{/* You — user/person (custom) */}
 {name === 'you' && (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
     <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/>
@@ -83,7 +100,7 @@ const { name, size = 24, class: className = '' } = Astro.props;
   </svg>
 )}
 
-{/* Pi — the runtime framework */}
+{/* Pi — the runtime framework (custom) */}
 {name === 'pi' && (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
     <path d="M6 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -95,11 +112,17 @@ const { name, size = 24, class: className = '' } = Astro.props;
 
 {/* DNA — alias for protocols (backward compat) */}
 {name === 'dna' && (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" class={className} aria-hidden="true">
-    <path d="M8 4c0 3 8 5 8 8s-8 5-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M16 4c0 3-8 5-8 8s8 5 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="7" y1="8" x2="17" y2="8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-    <line x1="7" y1="12" x2="17" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-    <line x1="7" y1="16" x2="17" y2="16" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={className} aria-hidden="true">
+    <path d="m10 16 1.5 1.5"/>
+    <path d="m14 8-1.5-1.5"/>
+    <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/>
+    <path d="m16.5 10.5 1 1"/>
+    <path d="m17 6-2.891-2.891"/>
+    <path d="M2 15c6.667-6 13.333 0 20-6"/>
+    <path d="m20 9 .891.891"/>
+    <path d="M3.109 14.109 4 15"/>
+    <path d="m6.5 12.5 1 1"/>
+    <path d="m7 18 2.891 2.891"/>
+    <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/>
   </svg>
 )}
