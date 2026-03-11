@@ -346,7 +346,7 @@ const recentPosts = posts.slice(0, 3);
     z-index: 1;
     max-width: 890px;              /* ~55 * φ^4 */
     margin: 0 auto;
-    padding: 55px 21px 34px;       /* fib: 55, 21, 34 */
+    padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -355,32 +355,32 @@ const recentPosts = posts.slice(0, 3);
   /* ── Hero ── */
   .hero {
     text-align: center;
-    margin-bottom: 55px;           /* fib */
-    padding-top: 34px;             /* fib */
+    margin-bottom: var(--space-3xl);
+    padding-top: var(--space-2xl);
     animation: fadeUp 0.8s ease-out;
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(21px); }
+    from { opacity: 0; transform: translateY(var(--space-xl)); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .hero-icon {
     width: 144px;                  /* fib */
     height: 144px;
-    margin: 0 auto 34px;          /* fib */
+    margin: 0 auto var(--space-2xl);
     animation: float 5s ease-in-out infinite;
   }
 
   .hero-icon img {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 0 21px var(--logo-glow));
+    filter: drop-shadow(0 0 var(--space-xl) var(--logo-glow));
     transition: filter 0.3s;
   }
 
   .hero-icon:hover img {
-    filter: drop-shadow(0 0 34px var(--logo-glow-hover));
+    filter: drop-shadow(0 0 var(--space-2xl) var(--logo-glow-hover));
   }
 
   @keyframes float {
@@ -392,13 +392,13 @@ const recentPosts = posts.slice(0, 3);
     position: relative;
     display: inline-flex;
     align-items: flex-start;
-    gap: 8px;                      /* fib */
+    gap: var(--space-md);
     font-family: var(--font-display);
     font-size: clamp(3.5rem, 12vw, 5.5rem);
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1;
-    margin-bottom: 13px;           /* fib */
+    line-height: var(--leading-none);
+    margin-bottom: var(--space-lg);
   }
 
   .title-main {
@@ -413,14 +413,14 @@ const recentPosts = posts.slice(0, 3);
   .beta-badge {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.813rem;           /* f-xs */
+    font-size: var(--text-sm);
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--bg-deep);
     background: linear-gradient(135deg, var(--accent-bright) 0%, rgba(124, 178, 212, 0.8) 100%);
-    padding: 4px 10px;
-    border-radius: 8px;            /* fib */
+    padding: var(--radius-sm) var(--space-md);
+    border-radius: var(--radius-md);
     margin-top: 0.15em;
     -webkit-text-fill-color: var(--bg-deep);
     animation: badgeBob 3s ease-in-out infinite;
@@ -439,20 +439,20 @@ const recentPosts = posts.slice(0, 3);
 
   .tagline {
     font-family: var(--font-display);
-    font-size: 1.125rem;           /* f-md */
+    font-size: var(--text-lg);
     font-weight: 500;
     color: var(--accent-bright);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 21px;           /* fib */
+    margin-bottom: var(--space-xl);
   }
 
   .description {
-    font-size: 1.125rem;           /* f-md */
+    font-size: var(--text-lg);
     color: var(--text-secondary);
     max-width: 610px;
     margin: 0 auto;
-    line-height: 1.618;            /* φ */
+    line-height: var(--leading-relaxed);
   }
 
   .description a {
@@ -468,17 +468,17 @@ const recentPosts = posts.slice(0, 3);
   .recent-posts {
     display: flex;
     flex-direction: column;
-    gap: 8px;                      /* fib */
-    margin-bottom: 55px;           /* fib */
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
     animation: fadeUp 0.8s ease-out 0.1s both;
   }
 
   .recent-post-card {
     display: flex;
     align-items: center;
-    gap: 13px;                     /* fib */
-    padding: 13px 21px;           /* fib */
-    border-radius: 13px;          /* fib */
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-decoration: none;
@@ -489,31 +489,31 @@ const recentPosts = posts.slice(0, 3);
   .recent-post-card:hover {
     border-color: var(--border-accent);
     transform: translateY(-2px);
-    box-shadow: 0 8px 21px var(--shadow-accent-soft);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
   }
 
   .recent-post-badge {
     font-family: var(--font-display);
-    font-size: 0.72rem;
+    font-size: var(--text-xs);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--bg-deep);
     background: var(--accent-bright);
-    padding: 3px 8px;
-    border-radius: 6px;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-md);
     flex-shrink: 0;
   }
 
   .recent-post-title {
     flex: 1;
-    font-size: 1rem;
+    font-size: var(--text-md);
     font-weight: 500;
   }
 
   .recent-post-arrow {
     color: var(--text-muted);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     transition: transform 0.2s;
     flex-shrink: 0;
   }
@@ -522,12 +522,12 @@ const recentPosts = posts.slice(0, 3);
 
   /* ── Quick Start ── */
   .quickstart {
-    margin-bottom: 55px;           /* fib */
+    margin-bottom: var(--space-3xl);
     animation: fadeUp 0.8s ease-out 0.2s both;
   }
 
   .code-block {
-    border-radius: 13px;           /* fib */
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card-strong);
     overflow: hidden;
@@ -536,8 +536,8 @@ const recentPosts = posts.slice(0, 3);
   .code-header {
     display: flex;
     align-items: center;
-    gap: 8px;                      /* fib */
-    padding: 13px 21px;           /* fib */
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-xl);
     border-bottom: 1px solid var(--border-subtle);
   }
 
@@ -549,23 +549,23 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .code-label {
-    margin-left: 8px;             /* fib */
+    margin-left: var(--space-md);
     font-family: var(--font-mono);
-    font-size: 0.813rem;          /* f-xs */
+    font-size: var(--text-sm);
     color: var(--text-muted);
   }
 
   .code-body {
-    padding: 21px;                /* fib */
+    padding: var(--space-xl);
     font-family: var(--font-mono);
-    font-size: 0.938rem;          /* ~15px, between base and sm */
+    font-size: var(--text-base);
     line-height: 2;
   }
 
   .code-line {
     display: flex;
     align-items: center;
-    gap: 8px;                     /* fib */
+    gap: var(--space-md);
   }
 
   .code-prompt {
@@ -586,8 +586,8 @@ const recentPosts = posts.slice(0, 3);
     border: none;
     color: var(--text-muted);
     cursor: pointer;
-    padding: 5px;
-    border-radius: 8px;           /* fib */
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
     transition: color 0.2s, background 0.2s;
     display: flex;
     align-items: center;
@@ -602,20 +602,20 @@ const recentPosts = posts.slice(0, 3);
 
   /* ── Four Layers ── */
   .layers {
-    margin-bottom: 55px;           /* fib */
+    margin-bottom: var(--space-3xl);
     animation: fadeUp 0.8s ease-out 0.3s both;
   }
 
   .layers-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 21px;                    /* fib */
+    gap: var(--space-xl);
   }
 
   .layer-card {
     display: block;
-    padding: 34px 21px;           /* fib: 34 vertical, 21 horizontal */
-    border-radius: 13px;          /* fib */
+    padding: var(--space-2xl) var(--space-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     backdrop-filter: blur(8px);
@@ -627,51 +627,51 @@ const recentPosts = posts.slice(0, 3);
   .layer-card:hover {
     border-color: var(--border-accent);
     transform: translateY(-5px);
-    box-shadow: 0 13px 34px var(--shadow-accent-soft);
+    box-shadow: 0 var(--space-lg) var(--space-2xl) var(--shadow-accent-soft);
   }
 
   .layer-icon {
-    font-size: 2.125rem;           /* bumped — visible at distance */
+    font-size: var(--text-3xl);
     color: var(--accent-bright);
-    margin-bottom: 13px;           /* fib */
-    line-height: 1;
+    margin-bottom: var(--space-lg);
+    line-height: var(--leading-none);
   }
 
   .layer-name {
     font-family: var(--font-display);
-    font-size: 1.313rem;          /* f-lg (21px) */
+    font-size: var(--text-xl);
     font-weight: 600;
-    margin-bottom: 3px;
-    line-height: 1.2;
+    margin-bottom: var(--space-xs);
+    line-height: var(--leading-tight);
   }
 
   .layer-type {
     font-family: var(--font-mono);
-    font-size: 0.813rem;          /* f-xs (13px) — was 0.72 */
+    font-size: var(--text-sm);
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 13px;          /* fib */
+    margin-bottom: var(--space-lg);
   }
 
   .layer-desc {
-    font-size: 1rem;               /* f-base — was 0.9 */
+    font-size: var(--text-md);
     color: var(--text-secondary);
-    line-height: 1.618;           /* φ */
-    margin-bottom: 13px;          /* fib */
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
   }
 
   .layer-examples {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;                     /* fib */
+    gap: var(--space-md);
   }
 
   .layer-examples code {
     font-family: var(--font-mono);
-    font-size: 0.813rem;          /* f-xs — was 0.72 */
-    padding: 3px 8px;
-    border-radius: 8px;           /* fib */
+    font-size: var(--text-sm);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-md);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
     border: 1px solid rgba(104, 152, 190, 0.15);
@@ -679,19 +679,19 @@ const recentPosts = posts.slice(0, 3);
 
   /* ── Features ── */
   .features {
-    margin-bottom: 55px;           /* fib */
+    margin-bottom: var(--space-3xl);
     animation: fadeUp 0.8s ease-out 0.4s both;
   }
 
   .features-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 21px;                    /* fib */
+    gap: var(--space-xl);
   }
 
   .feature-card {
-    padding: 34px 21px;           /* fib: 34 vertical, 21 horizontal */
-    border-radius: 13px;          /* fib */
+    padding: var(--space-2xl) var(--space-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     transition: all 0.25s ease;
@@ -700,51 +700,51 @@ const recentPosts = posts.slice(0, 3);
   .feature-card:hover {
     border-color: var(--border-accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 21px var(--shadow-accent-soft);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
   }
 
   .feature-title {
     font-family: var(--font-display);
-    font-size: 1.188rem;          /* ~19px, between base and lg */
+    font-size: var(--text-xl);
     font-weight: 600;
-    margin-bottom: 8px;           /* fib */
-    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-tight);
   }
 
   .feature-desc {
-    font-size: 1rem;               /* f-base — was 0.9 */
+    font-size: var(--text-md);
     color: var(--text-secondary);
-    line-height: 1.618;           /* φ */
+    line-height: var(--leading-relaxed);
   }
 
   .feature-desc code {
     font-family: var(--font-mono);
-    font-size: 0.875rem;          /* f-sm — was 0.82 */
-    padding: 2px 8px;
-    border-radius: 5px;
+    font-size: var(--text-base);
+    padding: 2px var(--space-md);
+    border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
 
   /* ── Ecosystem ── */
   .ecosystem {
-    margin-bottom: 55px;           /* fib */
+    margin-bottom: var(--space-3xl);
     animation: fadeUp 0.8s ease-out 0.5s both;
   }
 
   .ecosystem-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 13px;                    /* fib */
+    gap: var(--space-lg);
   }
 
   .eco-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;                     /* fib */
-    padding: 34px 13px;           /* fib: generous vertical */
-    border-radius: 13px;          /* fib */
+    gap: var(--space-md);
+    padding: var(--space-2xl) var(--space-lg);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-decoration: none;
@@ -755,14 +755,14 @@ const recentPosts = posts.slice(0, 3);
   .eco-card:hover {
     border-color: var(--border-accent);
     transform: translateY(-5px);
-    box-shadow: 0 13px 34px var(--shadow-accent-soft);
+    box-shadow: 0 var(--space-lg) var(--space-2xl) var(--shadow-accent-soft);
   }
 
   .eco-icon {
-    font-size: 2.125rem;           /* matched to layer-icon — was 1.4 */
+    font-size: var(--text-3xl);
     color: var(--accent-bright);
     transition: transform 0.25s;
-    line-height: 1;
+    line-height: var(--leading-none);
   }
 
   .eco-card:hover .eco-icon { transform: scale(1.15); }
@@ -770,49 +770,49 @@ const recentPosts = posts.slice(0, 3);
   .eco-name {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 1.125rem;          /* f-md — was 1rem */
-    line-height: 1.2;
+    font-size: var(--text-lg);
+    line-height: var(--leading-tight);
   }
 
   .eco-desc {
-    font-size: 0.875rem;          /* f-sm — was 0.78 */
+    font-size: var(--text-base);
     color: var(--text-muted);
     text-align: center;
-    line-height: 1.4;
+    line-height: var(--leading-normal);
   }
 
   /* ── CTA ── */
   .cta-section {
-    margin-bottom: 55px;           /* fib */
+    margin-bottom: var(--space-3xl);
     animation: fadeUp 0.8s ease-out 0.6s both;
   }
 
   .cta-content {
     text-align: center;
-    padding: 55px 34px;           /* fib */
-    border-radius: 21px;          /* fib */
+    padding: var(--space-3xl) var(--space-2xl);
+    border-radius: var(--radius-xl);
     border: 1px solid var(--border-subtle);
     background: linear-gradient(135deg, rgba(104,152,190,0.06) 0%, var(--surface-card-strong) 50%, rgba(232,168,124,0.04) 100%);
   }
 
   .cta-title {
     font-family: var(--font-display);
-    font-size: 1.625rem;          /* f-xl (26px) */
+    font-size: var(--text-2xl);
     font-weight: 600;
-    margin-bottom: 8px;           /* fib */
-    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-tight);
   }
 
   .cta-desc {
-    font-size: 1.125rem;          /* f-md */
+    font-size: var(--text-lg);
     color: var(--text-secondary);
-    margin-bottom: 34px;          /* fib */
-    line-height: 1.618;           /* φ */
+    margin-bottom: var(--space-2xl);
+    line-height: var(--leading-relaxed);
   }
 
   .cta-buttons {
     display: flex;
-    gap: 13px;                    /* fib */
+    gap: var(--space-lg);
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -820,33 +820,33 @@ const recentPosts = posts.slice(0, 3);
   .cta-primary {
     display: inline-flex;
     align-items: center;
-    padding: 13px 34px;           /* fib */
-    border-radius: 13px;          /* fib */
+    padding: var(--space-lg) var(--space-2xl);
+    border-radius: var(--radius-lg);
     background: linear-gradient(135deg, var(--accent-bright) 0%, var(--accent-dark) 100%);
     color: white;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 1rem;               /* f-base */
+    font-size: var(--text-md);
     text-decoration: none;
     transition: all 0.25s ease;
   }
 
   .cta-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 21px var(--shadow-accent-mid);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-mid);
   }
 
   .cta-secondary {
     display: inline-flex;
     align-items: center;
-    padding: 13px 34px;           /* fib */
-    border-radius: 13px;          /* fib */
+    padding: var(--space-lg) var(--space-2xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     color: var(--text-primary);
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 1rem;               /* f-base */
+    font-size: var(--text-md);
     text-decoration: none;
     transition: all 0.25s ease;
   }
@@ -854,7 +854,7 @@ const recentPosts = posts.slice(0, 3);
   .cta-secondary:hover {
     border-color: var(--border-accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 21px var(--shadow-accent-soft);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
   }
 
   .sep { color: var(--text-muted); }
@@ -867,7 +867,7 @@ const recentPosts = posts.slice(0, 3);
   }
 
   @media (max-width: 480px) {
-    .container { padding: 34px 13px; }
+    .container { padding: var(--space-2xl) var(--space-lg); }
     .ecosystem-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>

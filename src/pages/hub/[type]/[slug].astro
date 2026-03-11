@@ -170,20 +170,20 @@ const ghUrl = item.type === 'template'
     position: relative; z-index: 1;
     max-width: 760px;
     margin: 0 auto;
-    padding: 40px 24px;
+    padding: var(--space-2xl) var(--space-xl);
     min-height: 100vh;
   }
 
-  .header { margin-bottom: 32px; }
+  .header { margin-bottom: var(--space-2xl); }
 
   .type-badge {
     display: inline-block;
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     font-family: var(--font-mono);
     color: var(--accent-bright);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-md);
   }
 
   .title {
@@ -191,25 +191,25 @@ const ghUrl = item.type === 'template'
     font-size: clamp(1.8rem, 5vw, 2.4rem);
     font-weight: 700;
     text-transform: capitalize;
-    margin-bottom: 12px;
+    margin-bottom: var(--space-lg);
   }
 
   .breadcrumb {
     color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 12px;
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
   }
 
   .meta-row {
     display: flex;
-    gap: 16px;
+    gap: var(--space-lg);
     flex-wrap: wrap;
   }
 
   .meta-item {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: var(--text-xs);
     color: var(--text-muted);
   }
 
@@ -217,12 +217,12 @@ const ghUrl = item.type === 'template'
 
   .tier-badge {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: var(--text-xs);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    padding: 2px 8px;
-    border-radius: 4px;
+    padding: 2px var(--space-md);
+    border-radius: var(--radius-sm);
   }
 
   .tier-core {
@@ -247,50 +247,50 @@ const ghUrl = item.type === 'template'
 
   .tag-row {
     display: flex;
-    gap: 6px;
+    gap: var(--space-sm);
     flex-wrap: wrap;
-    margin-top: 8px;
+    margin-top: var(--space-md);
   }
 
   .tag-pill {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border-radius: 4px;
+    font-size: var(--text-xs);
+    padding: 2px var(--space-md);
+    border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
 
   /* Install */
   .install-section {
-    padding: 24px;
-    border-radius: 12px;
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
-    margin-bottom: 24px;
+    margin-bottom: var(--space-xl);
   }
 
   .install-section h2 {
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: var(--text-md);
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: var(--space-lg);
   }
 
   .install-cmd {
     display: block;
     font-family: var(--font-mono);
-    font-size: 0.88rem;
-    padding: 12px 16px;
-    border-radius: 8px;
+    font-size: var(--text-base);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
     background: var(--bg-elevated);
     color: var(--accent-bright);
-    margin-bottom: 8px;
+    margin-bottom: var(--space-md);
     overflow-x: auto;
   }
 
   .install-alt {
-    font-size: 0.78rem;
+    font-size: var(--text-xs);
     color: var(--text-muted);
   }
 
@@ -305,33 +305,33 @@ const ghUrl = item.type === 'template'
   .tags-section {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 32px;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
   }
 
   .tag-group {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-md);
     flex-wrap: wrap;
   }
 
   .tag-label {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--text-xs);
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     min-width: 80px;
   }
 
-  .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tags { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
 
   .tag {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    padding: 2px 8px;
-    border-radius: 4px;
+    font-size: var(--text-xs);
+    padding: 2px var(--space-md);
+    border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
@@ -345,15 +345,15 @@ const ghUrl = item.type === 'template'
   .version-selector {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--space-md);
     margin-bottom: 20px;
-    padding-bottom: 16px;
+    padding-bottom: var(--space-lg);
     border-bottom: 1px solid var(--border-subtle);
   }
 
   .version-selector label {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -361,9 +361,9 @@ const ghUrl = item.type === 'template'
 
   .version-selector select {
     font-family: var(--font-mono);
-    font-size: 0.82rem;
-    padding: 6px 12px;
-    border-radius: 6px;
+    font-size: var(--text-sm);
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
     border: 1px solid var(--border-subtle);
     background: var(--bg-elevated);
     color: var(--text-primary);
@@ -382,19 +382,19 @@ const ghUrl = item.type === 'template'
 
   /* Body */
   .body-section {
-    padding: 32px;
-    border-radius: 12px;
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
-    margin-bottom: 24px;
+    margin-bottom: var(--space-xl);
   }
 
   .body-section :global(h2) {
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: var(--text-xl);
     font-weight: 600;
-    margin: 24px 0 12px;
-    padding-top: 16px;
+    margin: var(--space-xl) 0 var(--space-lg);
+    padding-top: var(--space-lg);
     border-top: 1px solid var(--border-subtle);
   }
 
@@ -406,44 +406,44 @@ const ghUrl = item.type === 'template'
 
   .body-section :global(h3) {
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: var(--text-md);
     font-weight: 600;
-    margin: 16px 0 8px;
+    margin: var(--space-lg) 0 var(--space-md);
   }
 
   .body-section :global(p) {
     color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 12px;
-    font-size: 0.92rem;
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
+    font-size: var(--text-base);
   }
 
   .body-section :global(ul), .body-section :global(ol) {
     color: var(--text-secondary);
     padding-left: 20px;
-    margin-bottom: 12px;
-    font-size: 0.92rem;
+    margin-bottom: var(--space-lg);
+    font-size: var(--text-base);
   }
 
-  .body-section :global(li) { margin-bottom: 4px; line-height: 1.6; }
+  .body-section :global(li) { margin-bottom: var(--space-sm); line-height: var(--leading-relaxed); }
 
   .body-section :global(code) {
     font-family: var(--font-mono);
-    font-size: 0.82rem;
-    padding: 1px 5px;
-    border-radius: 4px;
+    font-size: var(--text-sm);
+    padding: 1px var(--space-sm);
+    border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
 
   .body-section :global(pre) {
     background: var(--bg-elevated);
-    padding: 16px;
-    border-radius: 8px;
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
     overflow-x: auto;
-    margin-bottom: 16px;
-    font-size: 0.82rem;
-    line-height: 1.5;
+    margin-bottom: var(--space-lg);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
   }
 
   .body-section :global(pre code) {
@@ -455,21 +455,21 @@ const ghUrl = item.type === 'template'
   .body-section :global(table) {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 16px;
-    font-size: 0.85rem;
+    margin-bottom: var(--space-lg);
+    font-size: var(--text-sm);
   }
 
   .body-section :global(th) {
     text-align: left;
-    padding: 8px;
+    padding: var(--space-md);
     border-bottom: 1px solid var(--border-subtle);
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 0.82rem;
+    font-size: var(--text-sm);
   }
 
   .body-section :global(td) {
-    padding: 8px;
+    padding: var(--space-md);
     border-bottom: 1px solid var(--border-subtle);
     color: var(--text-secondary);
   }
@@ -481,7 +481,7 @@ const ghUrl = item.type === 'template'
   .body-section :global(blockquote) {
     border-left: 3px solid var(--accent-bright);
     padding-left: 16px;
-    margin: 12px 0;
+    margin: var(--space-lg) 0;
     color: var(--text-secondary);
     font-style: italic;
   }
@@ -489,11 +489,11 @@ const ghUrl = item.type === 'template'
   /* Source */
   .source-section {
     text-align: center;
-    margin-bottom: 48px;
+    margin-bottom: var(--space-3xl);
   }
 
   .source-link {
-    font-size: 0.88rem;
+    font-size: var(--text-base);
     color: var(--accent-bright);
     text-decoration: none;
   }
@@ -501,7 +501,7 @@ const ghUrl = item.type === 'template'
   .source-link:hover { text-decoration: underline; }
 
   @media (max-width: 480px) {
-    .container { padding: 24px 16px; }
-    .body-section { padding: 20px; }
+    .container { padding: var(--space-xl) var(--space-lg); }
+    .body-section { padding: var(--space-xl); }
   }
 </style>

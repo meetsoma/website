@@ -127,42 +127,42 @@ const sectionMeta: Record<string, { glyph: string; desc: string }> = {
     position: relative; z-index: 1;
     max-width: 890px;              /* ~55 * φ^4 — matches landing page */
     margin: 0 auto;
-    padding: 55px 21px 55px;       /* fib: 55, 21, 55 */
+    padding: var(--space-3xl) var(--space-xl) var(--space-3xl);
     min-height: 100vh;
   }
 
   .header {
-    margin-bottom: 34px;           /* fib */
+    margin-bottom: var(--space-2xl);
   }
 
   .title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 2.625rem); /* f-2xl */
+    font-size: clamp(2rem, 5vw, 2.625rem);
     font-weight: 700;
-    margin-bottom: 8px;            /* fib */
-    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-tight);
   }
 
   .subtitle {
     color: var(--text-secondary);
-    font-size: 1.125rem;          /* f-md */
-    line-height: 1.618;           /* φ */
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
   }
 
   /* ── Quick links ── */
   .quick-links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 13px;                    /* fib */
-    margin-bottom: 55px;          /* fib */
+    gap: var(--space-lg);
+    margin-bottom: var(--space-3xl);
   }
 
   .quick-link {
     display: flex;
     align-items: center;
-    gap: 13px;                    /* fib */
-    padding: 13px 21px;           /* fib */
-    border-radius: 13px;          /* fib */
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-decoration: none;
@@ -173,7 +173,7 @@ const sectionMeta: Record<string, { glyph: string; desc: string }> = {
   .quick-link:hover {
     border-color: var(--border-accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 21px var(--shadow-accent-soft);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
   }
 
   .quick-link.primary {
@@ -182,75 +182,75 @@ const sectionMeta: Record<string, { glyph: string; desc: string }> = {
   }
 
   .ql-glyph {
-    font-size: 1.313rem;          /* f-lg */
+    font-size: var(--text-xl);
     color: var(--accent-bright);
     flex-shrink: 0;
-    width: 34px;                  /* fib */
+    width: var(--space-2xl);
     text-align: center;
   }
 
   .ql-text {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: var(--space-xs);
   }
 
   .ql-text strong {
     font-family: var(--font-display);
-    font-size: 1rem;              /* f-base — was 0.92 */
+    font-size: var(--text-md);
     font-weight: 600;
-    line-height: 1.2;
+    line-height: var(--leading-tight);
   }
 
   .ql-text span:last-child {
-    font-size: 0.875rem;          /* f-sm — was 0.78 */
+    font-size: var(--text-base);
     color: var(--text-muted);
-    line-height: 1.4;
+    line-height: var(--leading-normal);
   }
 
   /* ── Section cards ── */
   .doc-section {
-    margin-bottom: 55px;          /* fib */
+    margin-bottom: var(--space-3xl);
   }
 
   .section-header {
     display: flex;
     align-items: flex-start;
-    gap: 13px;                    /* fib */
-    margin-bottom: 21px;          /* fib */
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
   }
 
   .section-glyph {
-    font-size: 1.625rem;          /* f-xl */
+    font-size: var(--text-2xl);
     color: var(--accent-bright);
     font-weight: 700;
-    line-height: 1.2;
+    line-height: var(--leading-tight);
     flex-shrink: 0;
   }
 
   .section-name {
     font-family: var(--font-display);
-    font-size: 1.313rem;          /* f-lg — was 1.2 */
+    font-size: var(--text-xl);
     font-weight: 600;
-    margin-bottom: 3px;
-    line-height: 1.2;
+    margin-bottom: var(--space-xs);
+    line-height: var(--leading-tight);
   }
 
   .section-desc {
-    font-size: 1rem;              /* f-base — was 0.85 */
+    font-size: var(--text-md);
     color: var(--text-muted);
-    line-height: 1.618;           /* φ */
+    line-height: var(--leading-relaxed);
   }
 
   .doc-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 13px;                    /* fib */
+    gap: var(--space-lg);
   }
 
   .doc-card {
-    padding: 21px;                /* fib */
-    border-radius: 13px;          /* fib */
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-decoration: none;
@@ -261,22 +261,22 @@ const sectionMeta: Record<string, { glyph: string; desc: string }> = {
   .doc-card:hover {
     border-color: var(--border-accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 21px var(--shadow-accent-soft);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
   }
 
   .doc-title {
     font-family: var(--font-display);
-    font-size: 1.125rem;          /* f-md — was 0.95 */
+    font-size: var(--text-lg);
     font-weight: 600;
-    margin-bottom: 8px;           /* fib */
+    margin-bottom: var(--space-md);
     color: var(--accent-bright);
-    line-height: 1.2;
+    line-height: var(--leading-tight);
   }
 
   .doc-desc {
-    font-size: 0.875rem;          /* f-sm — was 0.8 */
+    font-size: var(--text-base);
     color: var(--text-secondary);
-    line-height: 1.618;           /* φ */
+    line-height: var(--leading-relaxed);
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -284,7 +284,7 @@ const sectionMeta: Record<string, { glyph: string; desc: string }> = {
   }
 
   @media (max-width: 480px) {
-    .container { padding: 34px 13px; }
+    .container { padding: var(--space-2xl) var(--space-lg); }
     .quick-links { grid-template-columns: 1fr; }
     .doc-grid { grid-template-columns: 1fr; }
   }

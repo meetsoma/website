@@ -100,6 +100,42 @@ const schemaData = jsonLd || defaultJsonLd;
 
     <style is:global>
       :root {
+        /* ── Design System Tokens ── */
+
+        /* Spacing — Fibonacci scale (px) */
+        --space-xs: 0.188rem;   /* 3px */
+        --space-sm: 0.313rem;   /* 5px */
+        --space-md: 0.5rem;     /* 8px */
+        --space-lg: 0.813rem;   /* 13px */
+        --space-xl: 1.313rem;   /* 21px */
+        --space-2xl: 2.125rem;  /* 34px */
+        --space-3xl: 3.438rem;  /* 55px */
+        --space-4xl: 5.563rem;  /* 89px */
+
+        /* Typography — 8-step scale */
+        --text-xs: 0.7rem;     /* labels, captions */
+        --text-sm: 0.813rem;   /* secondary text */
+        --text-base: 0.875rem; /* body default */
+        --text-md: 1rem;       /* body emphasis */
+        --text-lg: 1.125rem;   /* subheadings */
+        --text-xl: 1.25rem;    /* section heads */
+        --text-2xl: 1.5rem;    /* page subheads */
+        --text-3xl: 2.25rem;   /* page titles */
+
+        /* Line-heights */
+        --leading-none: 1;
+        --leading-tight: 1.2;
+        --leading-normal: 1.4;
+        --leading-relaxed: 1.618;
+        --leading-loose: 1.8;
+
+        /* Border-radii */
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-lg: 13px;
+        --radius-xl: 21px;
+        --radius-full: 9999px;
+
         /* Soma deep space palette */
         --bg-deep: #06080e;
         --bg-surface: #0b1018;
@@ -224,7 +260,7 @@ const schemaData = jsonLd || defaultJsonLd;
         font-family: var(--font-body);
         background: var(--bg-deep);
         color: var(--text-primary);
-        line-height: 1.6;
+        line-height: var(--leading-relaxed);
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;

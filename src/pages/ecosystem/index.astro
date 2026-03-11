@@ -355,32 +355,32 @@ import Icon from '../../components/icons/SomaIcons.astro';
     position: relative; z-index: 1;
     max-width: 890px;
     margin: 0 auto;
-    padding: 55px 21px;
+    padding: var(--space-3xl) 21px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
 
-  .header { text-align: center; margin-bottom: 55px; }
+  .header { text-align: center; margin-bottom: var(--space-3xl); }
 
   .title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 6vw, 2.625rem);
     font-weight: 700;
-    margin-bottom: 13px;
-    line-height: 1.2;
+    margin-bottom: var(--space-lg);
+    line-height: var(--leading-tight);
   }
 
   .subtitle {
     color: var(--text-secondary);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     max-width: 560px;
     margin: 0 auto;
-    line-height: 1.618;
+    line-height: var(--leading-relaxed);
   }
 
   /* ── Orbital Diagram ── */
-  .diagram-section { margin-bottom: 55px; }
+  .diagram-section { margin-bottom: var(--space-3xl); }
 
   .orbit-diagram {
     position: relative;
@@ -393,7 +393,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
   /* Orbital rings */
   .orbit-ring {
     position: absolute;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     border: 1px solid var(--border-subtle);
     /* Outer ring — the four layers orbit here */
     inset: 0;
@@ -414,7 +414,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: var(--space-sm);
     z-index: 2;
   }
 
@@ -430,7 +430,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
   .orbit-center-label {
     font-family: var(--font-display);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     font-weight: 600;
     color: var(--text-primary);
     letter-spacing: 0.05em;
@@ -442,7 +442,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: var(--space-xs);
     transform: translate(-50%, -50%);
     z-index: 3;
   }
@@ -452,10 +452,10 @@ import Icon from '../../components/icons/SomaIcons.astro';
     height: 42px;
     display: grid;
     place-items: center;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card-strong);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     color: var(--accent-bright);
     backdrop-filter: blur(8px);
     transition: all 0.3s ease;
@@ -469,7 +469,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
   .orbit-node-label {
     font-family: var(--font-display);
-    font-size: 0.813rem;
+    font-size: var(--text-sm);
     font-weight: 600;
     color: var(--text-primary);
     white-space: nowrap;
@@ -477,7 +477,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
   .orbit-node-sub {
     font-family: var(--font-mono);
-    font-size: 0.688rem;
+    font-size: var(--text-xs);
     color: var(--text-muted);
     white-space: nowrap;
   }
@@ -498,11 +498,11 @@ import Icon from '../../components/icons/SomaIcons.astro';
   .orbit-layer .orbit-node-icon {
     width: 50px;
     height: 50px;
-    font-size: 1.313rem;
+    font-size: var(--text-xl);
   }
 
   .orbit-layer .orbit-node-label {
-    font-size: 0.875rem;
+    font-size: var(--text-base);
   }
 
   /* Subtle slow rotation for the outer ring */
@@ -516,7 +516,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
     content: '';
     position: absolute;
     inset: 11%;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     border: 1px solid rgba(104, 152, 190, 0.08);
     z-index: 1;
     animation: orbitPulse 8s ease-in-out infinite;
@@ -531,13 +531,13 @@ import Icon from '../../components/icons/SomaIcons.astro';
   .layers-detail {
     display: flex;
     flex-direction: column;
-    gap: 34px;
-    margin-bottom: 55px;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-3xl);
   }
 
   .layer-detail {
-    padding: 34px;
-    border-radius: 13px;
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
   }
@@ -545,26 +545,26 @@ import Icon from '../../components/icons/SomaIcons.astro';
   .layer-header {
     display: flex;
     align-items: center;
-    gap: 13px;
-    margin-bottom: 13px;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
   }
 
   .layer-glyph {
-    font-size: 2.125rem;
+    font-size: var(--text-3xl);
     color: var(--accent-bright);
-    line-height: 1;
+    line-height: var(--leading-none);
   }
 
   .layer-title {
     font-family: var(--font-display);
-    font-size: 1.313rem;
+    font-size: var(--text-xl);
     font-weight: 600;
-    line-height: 1.2;
+    line-height: var(--leading-tight);
   }
 
   .layer-kind {
     font-family: var(--font-mono);
-    font-size: 0.813rem;
+    font-size: var(--text-sm);
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -572,27 +572,27 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
   .layer-body {
     color: var(--text-secondary);
-    font-size: 1rem;
-    line-height: 1.618;
-    margin-bottom: 21px;
+    font-size: var(--text-md);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-xl);
   }
 
   .layer-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 34px;
+    gap: var(--space-2xl);
   }
 
   .detail-col h4 {
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: var(--text-md);
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-md);
     color: var(--text-primary);
-    line-height: 1.2;
+    line-height: var(--leading-tight);
   }
 
-  .detail-col .mt { margin-top: 21px; }
+  .detail-col .mt { margin-top: var(--space-xl); }
 
   .detail-col ul {
     list-style: none;
@@ -600,12 +600,12 @@ import Icon from '../../components/icons/SomaIcons.astro';
   }
 
   .detail-col li {
-    font-size: 0.875rem;
+    font-size: var(--text-base);
     color: var(--text-secondary);
-    padding: 5px 0;
+    padding: var(--space-sm) 0;
     padding-left: 13px;
     position: relative;
-    line-height: 1.618;
+    line-height: var(--leading-relaxed);
   }
 
   .detail-col li::before {
@@ -618,16 +618,16 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
   .detail-col code {
     font-family: var(--font-mono);
-    font-size: 0.813rem;
-    padding: 2px 8px;
-    border-radius: 5px;
+    font-size: var(--text-sm);
+    padding: 2px var(--space-md);
+    border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
 
   .coming-soon {
-    margin-top: 13px;
-    font-size: 0.875rem;
+    margin-top: var(--space-lg);
+    font-size: var(--text-base);
     color: var(--warm-bright);
     font-style: italic;
   }
@@ -639,13 +639,13 @@ import Icon from '../../components/icons/SomaIcons.astro';
   }
 
   /* ── Templates ── */
-  .templates { margin-bottom: 55px; }
+  .templates { margin-bottom: var(--space-3xl); }
 
   .templates-intro {
     color: var(--text-secondary);
-    font-size: 1rem;
-    line-height: 1.618;
-    margin-bottom: 21px;
+    font-size: var(--text-md);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-xl);
     text-align: center;
     max-width: 610px;
     margin-left: auto;
@@ -654,9 +654,9 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
   .templates-intro code {
     font-family: var(--font-mono);
-    font-size: 0.875rem;
-    padding: 2px 8px;
-    border-radius: 5px;
+    font-size: var(--text-base);
+    padding: 2px var(--space-md);
+    border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
@@ -664,12 +664,12 @@ import Icon from '../../components/icons/SomaIcons.astro';
   .templates-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 13px;
+    gap: var(--space-lg);
   }
 
   .template-card {
-    padding: 21px;
-    border-radius: 13px;
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-align: center;
@@ -682,41 +682,41 @@ import Icon from '../../components/icons/SomaIcons.astro';
     box-shadow: 0 8px 21px var(--shadow-accent-soft);
   }
 
-  .template-icon { font-size: 1.625rem; margin-bottom: 8px; }
+  .template-icon { font-size: var(--text-2xl); margin-bottom: var(--space-md); }
 
   .template-name {
     font-family: var(--font-display);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-tight);
   }
 
   .template-desc {
-    font-size: 0.875rem;
+    font-size: var(--text-base);
     color: var(--text-secondary);
-    line-height: 1.618;
-    margin-bottom: 13px;
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
   }
 
   .template-cmd {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.813rem;
-    padding: 5px 13px;
-    border-radius: 8px;
+    font-size: var(--text-sm);
+    padding: var(--space-sm) 13px;
+    border-radius: var(--radius-md);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
 
   /* ── Community ── */
-  .community { margin-bottom: 55px; }
+  .community { margin-bottom: var(--space-3xl); }
 
   .community-intro {
     color: var(--text-secondary);
-    font-size: 1rem;
-    line-height: 1.618;
-    margin-bottom: 21px;
+    font-size: var(--text-md);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-xl);
     text-align: center;
     max-width: 560px;
     margin-left: auto;
@@ -726,17 +726,17 @@ import Icon from '../../components/icons/SomaIcons.astro';
   .community-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 13px;
-    margin-bottom: 21px;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
   }
 
   .stat-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
-    padding: 21px 13px;
-    border-radius: 13px;
+    gap: var(--space-sm);
+    padding: var(--space-xl) 13px;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-align: center;
@@ -744,23 +744,23 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
   .stat-number {
     font-family: var(--font-display);
-    font-size: 2.125rem;
+    font-size: var(--text-3xl);
     font-weight: 700;
     color: var(--accent-bright);
-    line-height: 1;
+    line-height: var(--leading-none);
   }
 
   .stat-label {
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: var(--text-md);
     font-weight: 600;
   }
 
   .stat-detail {
     font-family: var(--font-mono);
-    font-size: 0.813rem;
+    font-size: var(--text-sm);
     color: var(--text-muted);
-    line-height: 1.4;
+    line-height: var(--leading-normal);
   }
 
   .community-cta {
@@ -770,12 +770,12 @@ import Icon from '../../components/icons/SomaIcons.astro';
   .install-cmd {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.875rem;
-    padding: 13px 21px;
-    border-radius: 8px;
+    font-size: var(--text-base);
+    padding: var(--space-lg) 21px;
+    border-radius: var(--radius-md);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
-    margin-bottom: 8px;
+    margin-bottom: var(--space-md);
   }
 
   .repo-card-featured {
@@ -784,17 +784,17 @@ import Icon from '../../components/icons/SomaIcons.astro';
   }
 
   /* ── Repos ── */
-  .repos { margin-bottom: 55px; }
+  .repos { margin-bottom: var(--space-3xl); }
 
   .repos-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 13px;
+    gap: var(--space-lg);
   }
 
   .repo-card {
-    padding: 21px;
-    border-radius: 13px;
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-decoration: none;
@@ -810,23 +810,23 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
   .repo-card h3 {
     font-family: var(--font-mono);
-    font-size: 0.875rem;
+    font-size: var(--text-base);
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-md);
     color: var(--accent-bright);
   }
 
   .repo-card p {
-    font-size: 0.875rem;
+    font-size: var(--text-base);
     color: var(--text-secondary);
-    line-height: 1.618;
+    line-height: var(--leading-relaxed);
   }
 
   .repo-card code {
     font-family: var(--font-mono);
-    font-size: 0.813rem;
-    padding: 2px 8px;
-    border-radius: 5px;
+    font-size: var(--text-sm);
+    padding: 2px var(--space-md);
+    border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
@@ -837,12 +837,12 @@ import Icon from '../../components/icons/SomaIcons.astro';
     .community-stats { grid-template-columns: 1fr; }
     .templates-grid { grid-template-columns: 1fr; }
     .orbit-diagram { max-width: 340px; }
-    .orbit-layer .orbit-node-icon { width: 42px; height: 42px; font-size: 1.125rem; }
-    .orbit-node-label { font-size: 0.688rem; }
+    .orbit-layer .orbit-node-icon { width: 42px; height: 42px; font-size: var(--text-lg); }
+    .orbit-node-label { font-size: var(--text-xs); }
   }
 
   @media (max-width: 480px) {
-    .container { padding: 34px 13px; }
+    .container { padding: var(--space-2xl) 13px; }
     .orbit-diagram { max-width: 280px; }
   }
 

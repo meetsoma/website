@@ -68,8 +68,8 @@ function isActive(href: string, current: string): boolean {
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 0 21px;
+    gap: var(--space-md);
+    padding: 0 var(--space-xl);
     height: 55px;
   }
 
@@ -78,40 +78,40 @@ function isActive(href: string, current: string): boolean {
     display: flex;
     align-items: center;
     text-decoration: none;
-    margin-right: 13px;
+    margin-right: var(--space-lg);
     flex-shrink: 0;
   }
 
   .nav-sigma {
     font-family: var(--font-display);
-    font-size: 1.625rem;
+    font-size: var(--text-2xl);
     font-weight: 600;
     color: var(--accent-bright);
-    line-height: 1;
+    line-height: var(--leading-none);
     transition: color 0.2s ease, text-shadow 0.2s ease;
   }
 
   .nav-brand:hover .nav-sigma {
     color: var(--moon-bright);
-    text-shadow: 0 0 21px var(--moon-glow);
+    text-shadow: 0 0 var(--space-xl) var(--moon-glow);
   }
 
   /* ── Links ── */
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: var(--space-xs);
     flex: 1;
   }
 
   .nav-link {
     font-family: var(--font-body);
-    font-size: 0.875rem;
+    font-size: var(--text-base);
     font-weight: 500;
     color: var(--text-secondary);
     text-decoration: none;
-    padding: 5px 13px;
-    border-radius: 8px;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
     transition: color 0.15s ease, background-color 0.15s ease;
     white-space: nowrap;
   }
@@ -130,16 +130,16 @@ function isActive(href: string, current: string): boolean {
   .nav-external {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: var(--space-sm);
     margin-left: auto;
   }
 
   .nav-icon-link {
     display: grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
+    width: var(--space-2xl);
+    height: var(--space-2xl);
+    border-radius: var(--radius-md);
     color: var(--text-secondary);
     transition: color 0.15s ease, background-color 0.15s ease;
   }
@@ -153,9 +153,9 @@ function isActive(href: string, current: string): boolean {
   .theme-toggle {
     display: grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
+    width: var(--space-2xl);
+    height: var(--space-2xl);
+    border-radius: var(--radius-md);
     border: 1px solid var(--border-subtle);
     background: transparent;
     cursor: pointer;
@@ -169,8 +169,8 @@ function isActive(href: string, current: string): boolean {
   }
 
   .theme-toggle-icon {
-    font-size: 0.95rem;
-    line-height: 1;
+    font-size: var(--text-base);
+    line-height: var(--leading-none);
     color: var(--text-secondary);
     transition: color 0.15s ease;
   }
@@ -182,13 +182,13 @@ function isActive(href: string, current: string): boolean {
   /* ── Mobile ── */
   @media (max-width: 640px) {
     .site-nav {
-      padding: 0 13px;
+      padding: 0 var(--space-lg);
       height: 48px;
     }
 
     .nav-link {
-      font-size: 0.813rem;
-      padding: 4px 8px;
+      font-size: var(--text-sm);
+      padding: var(--radius-sm) var(--space-md);
     }
 
     .nav-links {
@@ -196,14 +196,14 @@ function isActive(href: string, current: string): boolean {
     }
 
     .nav-external {
-      gap: 3px;
+      gap: var(--space-xs);
     }
   }
 
   @media (max-width: 480px) {
     .nav-link {
-      font-size: 0.75rem;
-      padding: 4px 5px;
+      font-size: var(--text-xs);
+      padding: var(--radius-sm) var(--space-sm);
     }
   }
 </style>

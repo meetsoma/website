@@ -18,38 +18,38 @@ const { title, subtitle, link } = Astro.props;
 
 <style>
   .section-header {
-    margin-bottom: 34px;          /* fib */
+    margin-bottom: var(--space-2xl);
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 13px;                    /* fib */
+    gap: var(--space-lg);
   }
 
   .section-title {
     font-family: var(--font-display);
-    font-size: 1.625rem;          /* f-xl (26px) */
+    font-size: var(--text-2xl);
     font-weight: 600;
     color: var(--text-primary);
-    line-height: 1.2;
+    line-height: var(--leading-tight);
   }
 
   .accent {
     color: var(--accent-bright);
     font-weight: 700;
-    margin-right: 3px;
+    margin-right: var(--space-xs);
   }
 
   .section-subtitle {
     color: var(--text-secondary);
-    font-size: 1rem;              /* f-base — was 0.95 */
-    line-height: 1.618;
+    font-size: var(--text-md);
+    line-height: var(--leading-relaxed);
   }
 
   .section-link {
     margin-left: auto;
     color: var(--accent-bright);
     text-decoration: none;
-    font-size: 1rem;              /* f-base — was 0.9 */
+    font-size: var(--text-md);
     transition: color 0.2s;
   }
 

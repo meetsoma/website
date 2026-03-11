@@ -30,7 +30,7 @@ const year = new Date().getFullYear();
     position: relative;
     z-index: 1;
     border-top: 1px solid var(--border-subtle);
-    padding: 32px 24px;
+    padding: var(--space-2xl) var(--space-xl);
     text-align: center;
   }
 
@@ -43,9 +43,9 @@ const year = new Date().getFullYear();
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 4px;
-    margin-bottom: 16px;
-    font-size: 0.88rem;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    font-size: var(--text-base);
   }
 
   .footer-nav a {
@@ -64,7 +64,7 @@ const year = new Date().getFullYear();
   }
 
   .footer-copy {
-    font-size: 0.78rem;
+    font-size: var(--text-xs);
     color: var(--text-muted);
   }
 

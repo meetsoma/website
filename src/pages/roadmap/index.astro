@@ -203,14 +203,14 @@ const upcoming = [
     z-index: 1;
     max-width: 890px;
     margin: 0 auto;
-    padding: 55px 21px 34px;
+    padding: var(--space-3xl) 21px 34px;
     min-height: 100vh;
   }
 
   /* ── Hero ── */
   .hero {
     text-align: center;
-    margin-bottom: 55px;
+    margin-bottom: var(--space-3xl);
     animation: fadeUp 0.8s ease-out;
   }
 
@@ -223,7 +223,7 @@ const upcoming = [
     font-family: var(--font-display);
     font-size: clamp(2.625rem, 8vw, 4.25rem);
     font-weight: 700;
-    margin: 8px 0;
+    margin: var(--space-md) 0;
     background: linear-gradient(135deg, var(--hero-title-start) 0%, var(--hero-title-end) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -232,16 +232,16 @@ const upcoming = [
 
   .subtitle {
     font-family: var(--font-body);
-    font-size: 1.15rem;
+    font-size: var(--text-lg);
     color: var(--text-secondary);
     max-width: 34rem;
-    margin: 8px auto 0;
-    line-height: 1.618;
+    margin: var(--space-md) auto 0;
+    line-height: var(--leading-relaxed);
   }
 
   /* ── Sections ── */
   .section {
-    margin-bottom: 55px;
+    margin-bottom: var(--space-3xl);
   }
 
   /* ── Timeline ── */
@@ -266,7 +266,7 @@ const upcoming = [
 
   .timeline-entry {
     position: relative;
-    margin-bottom: 34px;
+    margin-bottom: var(--space-2xl);
     animation: fadeUp 0.6s ease-out both;
   }
 
@@ -274,35 +274,35 @@ const upcoming = [
     position: absolute;
     left: -29px;
     top: 3px;
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     color: var(--accent-bright);
   }
 
   .timeline-head {
     display: flex;
     align-items: baseline;
-    gap: 8px;
+    gap: var(--space-md);
     flex-wrap: wrap;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-md);
   }
 
   .version {
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: var(--text-base);
     color: var(--accent-bright);
     font-weight: 600;
   }
 
   .label {
     font-family: var(--font-display);
-    font-size: 1.15rem;
+    font-size: var(--text-lg);
     font-weight: 600;
     color: var(--text-primary);
   }
 
   .date {
     font-family: var(--font-body);
-    font-size: 0.813rem;
+    font-size: var(--text-sm);
     color: var(--text-muted);
   }
 
@@ -314,10 +314,10 @@ const upcoming = [
 
   .timeline-items li {
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     color: var(--text-secondary);
-    line-height: 1.618;
-    padding: 3px 0;
+    line-height: var(--leading-relaxed);
+    padding: var(--space-xs) 0;
   }
 
   .timeline-items li::before {
@@ -328,12 +328,12 @@ const upcoming = [
   /* ── Upcoming Grid ── */
   .upcoming-grid {
     display: grid;
-    gap: 13px;
+    gap: var(--space-lg);
   }
 
   .feature-card {
-    padding: 21px;
-    border-radius: 13px;
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     backdrop-filter: blur(8px);
@@ -350,17 +350,17 @@ const upcoming = [
   .feature-head {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
   }
 
   .feature-icon {
-    font-size: 1.15rem;
+    font-size: var(--text-lg);
   }
 
   .feature-name {
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: var(--text-md);
     font-weight: 600;
     color: var(--text-primary);
     flex: 1;
@@ -368,53 +368,53 @@ const upcoming = [
 
   .feature-status {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--text-xs);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-muted);
-    padding: 3px 8px;
-    border-radius: 8px;
+    padding: var(--space-xs) 8px;
+    border-radius: var(--radius-md);
     background: var(--surface-interactive);
   }
 
   .feature-desc {
     font-family: var(--font-body);
-    font-size: 0.92rem;
+    font-size: var(--text-base);
     color: var(--text-secondary);
-    line-height: 1.618;
+    line-height: var(--leading-relaxed);
     margin: 0;
   }
 
   /* ── Voting Teaser ── */
   .voting-teaser {
-    margin-top: 34px;
-    padding: 21px;
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
     background: var(--surface-accent-soft);
     border: 1px solid var(--border-accent);
-    border-radius: 13px;
+    border-radius: var(--radius-lg);
     text-align: center;
   }
 
   .voting-teaser p {
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     color: var(--text-secondary);
-    line-height: 1.618;
+    line-height: var(--leading-relaxed);
     margin: 0;
   }
 
   .voting-teaser code {
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     color: var(--accent-bright);
     background: var(--surface-interactive);
-    padding: 2px 8px;
-    border-radius: 5px;
+    padding: 2px var(--space-md);
+    border-radius: var(--radius-sm);
   }
 
   @media (max-width: 640px) {
     .container {
-      padding: 34px 13px 21px;
+      padding: var(--space-2xl) 13px 21px;
     }
 
     .timeline {
@@ -427,7 +427,7 @@ const upcoming = [
 
     .timeline-head {
       flex-direction: column;
-      gap: 3px;
+      gap: var(--space-xs);
     }
   }
 </style>
