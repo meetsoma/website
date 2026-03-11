@@ -135,7 +135,6 @@ export default function HubGrid({ items }: Props) {
                   <p class="card-desc">{item.breadcrumb || item.description}</p>
                   <div class="card-meta">
                     {item.tier && <span class={`card-tier tier-${item.tier}`}>{item.tier}</span>}
-                    <span class="card-author">{item.author}</span>
                     {item.heatDefault && <span class="card-heat">{item.heatDefault}</span>}
                   </div>
                   {item.tags && item.tags.length > 0 && (
@@ -145,6 +144,7 @@ export default function HubGrid({ items }: Props) {
                       ))}
                     </div>
                   )}
+                  <span class="card-author">{item.author}</span>
                 </a>
               ))}
             </div>

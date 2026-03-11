@@ -480,7 +480,11 @@ const total = allItems.length;
     font-size: var(--badge-text);
   }
 
-  :global(.card-author) { color: var(--text-muted); }
+  :global(.card-author) {
+    color: var(--text-muted);
+    font-size: var(--badge-text);
+    margin-top: var(--space-sm);
+  }
   :global(.card-heat) { color: var(--warm-bright); font-style: italic; }
 
   :global(.card-tags) {
