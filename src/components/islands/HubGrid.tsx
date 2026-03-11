@@ -137,9 +137,9 @@ export default function HubGrid({ items }: Props) {
                     {item.tier && <span class={`card-tier tier-${item.tier}`}>{item.tier}</span>}
                     {item.heatDefault && <span class="card-heat">{item.heatDefault}</span>}
                   </div>
-                  {item.tags && item.tags.length > 0 && (
+                  {((item.tags && item.tags.length > 0) || (item.topic && item.topic.length > 0)) && (
                     <div class="card-tags">
-                      {item.tags.slice(0, 3).map(tag => (
+                      {(item.tags || item.topic || []).slice(0, 3).map(tag => (
                         <span class="card-tag" key={tag}>{tag}</span>
                       ))}
                     </div>
