@@ -396,13 +396,11 @@ const schemaData = jsonLd || defaultJsonLd;
         const key = 'soma-theme';
         const root = document.documentElement;
         const toggle = document.querySelector('.theme-toggle');
-        const icon = document.querySelector('.theme-toggle-icon');
-        if (!toggle || !icon) return;
+        if (!toggle) return;
 
         const apply = (theme, save = true) => {
           root.dataset.theme = theme;
           root.style.colorScheme = theme;
-          icon.textContent = theme === 'dark' ? '☀' : '☾';
           toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
           if (save) localStorage.setItem(key, theme);
         };
@@ -410,17 +408,12 @@ const schemaData = jsonLd || defaultJsonLd;
         // Remove old listener (view transitions re-run this)
         const newToggle = toggle.cloneNode(true);
         toggle.parentNode.replaceChild(newToggle, toggle);
-        const newIcon = newToggle.querySelector('.theme-toggle-icon');
 
         newToggle.addEventListener('click', () => {
-          const current = root.dataset.theme;
-          apply(current === 'light' ? 'dark' : 'light');
-          // Re-grab icon ref after clone
-          const i = newToggle.querySelector('.theme-toggle-icon');
-          if (i) i.textContent = root.dataset.theme === 'dark' ? '☀' : '☾';
+          apply(root.dataset.theme === 'light' ? 'dark' : 'light');
         });
 
-        // Set icon from current theme (read from localStorage or DOM)
+        // Apply saved or default theme
         const saved = localStorage.getItem(key);
         const theme = saved === 'light' || saved === 'dark' ? saved : (root.dataset.theme || 'dark');
         apply(theme, false);
