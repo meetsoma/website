@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 5.5
 ---
 
+# Muscles
 
 <!-- tldr -->
 Learned patterns in `.soma/memory/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = digest only, cold = name listed. Digest blocks between `<!-- digest:start -->` / `<!-- digest:end -->` markers. Write digests — they're what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
@@ -19,16 +20,6 @@ Muscles start as observations. When Soma notices a pattern across sessions — a
 A muscle is a markdown file with frontmatter:
 
 ```markdown
----
-type: muscle
-status: active
-topic: [deployment, vercel, astro]
-keywords: [deploy, build, preview, production]
-created: 2026-03-09
-updated: 2026-03-09
-heat: 3
-loads: 0
----
 
 # Deployment — Muscle
 
@@ -135,7 +126,7 @@ Set `heat: 3` or higher so it loads on next boot. Heat will decay naturally if t
 └── social-preview-gen.md   ← learned from OG image work
 ```
 
-Project-level only. Muscles don't inherit from parent `.soma/` directories (yet — see `memory.flowUp` in [configuration](/docs/configuration)).
+By default, muscles **inherit from parent `.soma/` directories** when `inherit.muscles` is `true` (the default). Parent muscles are discovered alongside project muscles and compete for the same token budget based on heat. To disable, set `inherit.muscles: false` in [settings.json](/docs/configuration#inheritance).
 
 ## Heat Commands
 

@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 2.5
 ---
 
+# Identity
 
 <!-- tldr -->
 `.soma/identity.md` — discovered by Soma through use, not configured. Layered: project (primary) → parent (context) → global (baseline). Gitignored by default (personal). Edit to refine, don't over-specify. Identity is *who*, protocols are *how*.
@@ -102,6 +103,23 @@ Each project gets its own Soma. Different projects, different identities:
 ```
 
 Same `soma` CLI, same global identity underneath, different project personalities on top.
+
+## Persona
+
+You can give Soma a custom name, emoji, or icon via the `persona` setting in `settings.json`:
+
+```json
+{
+  "persona": {
+    "name": "Atlas",
+    "emoji": "🗺️"
+  }
+}
+```
+
+When set, the persona name appears in the identity section of the system prompt. This is cosmetic — it doesn't change behavior, just how Soma identifies herself. Useful for teams where each developer's Soma has a distinct name, or for multi-project setups where different projects have different agent personas.
+
+Persona inherits from parent → global unless overridden at the project level.
 
 ## Tips
 

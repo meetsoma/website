@@ -5,6 +5,8 @@ section: "First Steps"
 order: 1
 ---
 
+
+
 <!-- tldr -->
 `npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma -c` to continue with last session's context. `/breathe` saves + continues, `/exhale` saves + stops, `/pin` keeps protocols hot, `/kill` drops them cold.
 <!-- /tldr -->
@@ -22,7 +24,9 @@ cd your-project
 soma
 ```
 
-On first run, Soma will ask to create a `.soma/` directory. Say yes. She'll write her own identity based on your workspace.
+On first run, Soma will ask to create a `.soma/` directory. Say yes.
+
+**Smart init** detects your project automatically — it finds parent `.soma/` directories, reads `CLAUDE.md` if present, identifies your package manager, and detects language/framework signals. Soma uses this to write a tailored identity and suggest relevant protocols.
 
 ## Session Modes
 
@@ -69,6 +73,7 @@ Pick from previous sessions to resume.
 | `/preload` | List available preload files |
 | `/soma status` | Show memory status (identity, preload, muscles, protocols) |
 | `/soma init` | Create `.soma/` in current directory |
+| `/soma prompt` | Preview compiled system prompt with token estimate |
 
 ## The `.soma/` Directory
 
@@ -84,7 +89,7 @@ Created by `soma init` or on first run:
 │   └── _template.md         ← format reference for new protocols
 ├── memory/
 │   ├── muscles/             ← patterns learned from experience
-│   ├── preload-next.md      ← continuation for next session
+│   ├── preload-<sessionId>.md ← session-scoped continuations
 │   └── sessions/            ← daily logs
 └── scripts/                 ← dev tooling (search, scan, etc.)
 ```

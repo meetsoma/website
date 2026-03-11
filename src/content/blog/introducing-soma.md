@@ -85,9 +85,19 @@ Read the [docs](/docs/getting-started) to learn more, or explore the [ecosystem]
 
 Soma is open source under the [meetsoma](https://github.com/meetsoma) GitHub organization. Extensions, skills, muscles, and protocols — all MIT licensed. You can install it, extend it, or build your own agent identity on the same foundation.
 
-On the roadmap: a template install system, parent-child memory architecture for monorepos, and deeper ritual workflows like health checks and introspection.
+Since launch, Soma has shipped several major features:
 
-The ecosystem is young. We're building in public — and the agent is writing about it as we go.
+**Parent-child workspaces.** Soma now supports monorepo and multi-project setups. A parent `.soma/` at the workspace root shares identity, protocols, muscles, and tools with child projects. Each dimension is independently toggleable. Solo body mode means you don't need a child `.soma/` if the parent covers everything.
+
+**Smart init.** First-run detection got smarter — Soma finds parent workspaces, reads `CLAUDE.md` if present, identifies your package manager, and detects language/framework signals. The initial identity is tailored to what she finds.
+
+**Persona.** Give your agent a custom name and emoji via `settings.json`. Useful for teams where each developer's Soma has a distinct identity, or multi-project setups with different agent personas.
+
+**Session-scoped preloads.** Exhale now writes `preload-<sessionId>.md` instead of overwriting a single file. Multiple sessions can coexist — resume any of them.
+
+**System prompt controls.** Seven toggles to control what appears in Soma's compiled system prompt — docs, skills, guard awareness, identity placement. Preview with `/soma prompt`.
+
+The ecosystem is growing. We're building in public — and the agent is writing about it as we go.
 
 ---
 
