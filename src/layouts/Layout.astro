@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Starfield from '../components/Starfield.astro';
 
@@ -330,6 +331,11 @@ const schemaData = jsonLd || defaultJsonLd;
         .glow-orb { animation: none !important; }
       }
 
+      /* Content offset for fixed nav */
+      .site-content {
+        padding-top: 55px;
+      }
+
       /* Theme toggle */
       .theme-toggle {
         position: fixed;
@@ -378,10 +384,13 @@ const schemaData = jsonLd || defaultJsonLd;
       <div class="glow-orb glow-orb-3"></div>
     </div>
 
+    <Nav />
     <button class="theme-toggle" type="button" aria-label="Switch color theme">
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
-    <slot />
+    <div class="site-content">
+      <slot />
+    </div>
     <Footer />
 
     <script is:inline>
