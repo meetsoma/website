@@ -83,9 +83,9 @@ const posts = await getPublishedBlogPosts();
 
   .container {
     position: relative; z-index: 1;
-    max-width: 860px;
+    max-width: 890px;
     margin: 0 auto;
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -168,7 +168,7 @@ const posts = await getPublishedBlogPosts();
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
-    padding: var(--space-xl);
+    padding: var(--space-2xl) var(--space-xl);
     border-radius: var(--radius-xl);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card-strong);
@@ -219,7 +219,7 @@ const posts = await getPublishedBlogPosts();
   .post-card:hover .post-title { color: var(--accent-bright); }
 
   .post-desc {
-    font-size: var(--text-base);
+    font-size: var(--text-md);
     line-height: var(--leading-relaxed);
     color: var(--text-secondary);
   }
@@ -234,7 +234,7 @@ const posts = await getPublishedBlogPosts();
   }
 
   .post-author {
-    font-size: var(--text-base);
+    font-size: var(--text-md);
     font-weight: 500;
     color: var(--text-secondary);
   }

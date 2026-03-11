@@ -202,7 +202,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     z-index: 1;
     max-width: 890px;
     margin: 0 auto;
-    padding: var(--space-3xl) 21px 34px;
+    padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
     min-height: 100vh;
   }
 
@@ -246,7 +246,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   /* ── Timeline ── */
   .timeline {
     position: relative;
-    padding-left: 34px;
+    padding-left: var(--space-2xl);
   }
 
   .timeline::before {
@@ -313,7 +313,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
 
   .timeline-items li {
     font-family: var(--font-body);
-    font-size: var(--text-base);
+    font-size: var(--text-md);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
     padding: var(--space-xs) 0;
@@ -380,7 +380,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
 
   .feature-desc {
     font-family: var(--font-body);
-    font-size: var(--text-base);
+    font-size: var(--text-md);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
     margin: 0;
@@ -398,7 +398,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
 
   .voting-teaser p {
     font-family: var(--font-body);
-    font-size: var(--text-base);
+    font-size: var(--text-md);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
     margin: 0;
@@ -419,7 +419,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     }
 
     .timeline {
-      padding-left: 21px;
+      padding-left: var(--space-xl);
     }
 
     .timeline-dot {
