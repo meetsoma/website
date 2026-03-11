@@ -14,9 +14,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // 2. ../community/ (sibling repo for local dev)
 const localCopy = path.resolve(__dirname, '../../community');
 const siblingRepo = path.resolve(__dirname, '../../../community');
-const COMMUNITY_ROOT = fs.existsSync(path.join(localCopy, 'protocols'))
-  ? localCopy
-  : siblingRepo;
+// Check for actual content files, not just empty dirs (fetch script creates empty dirs on rate-limit)
+const localHasContent = fs.existsSync(path.join(localCopy, 'protocols'))
+  && fs.readdirSync(path.join(localCopy, 'protocols')).some(f => f.endsWith('.md'));
+const COMMUNITY_ROOT = localHasContent ? localCopy : siblingRepo;
 
 interface HubItem {
   slug: string;
