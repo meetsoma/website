@@ -5,9 +5,9 @@ status: active
 heat-default: warm
 applies-to: [always]
 breadcrumb: "Community assets must never contain private data. No emails, paths, secrets, tokens, user-specific references. Private data belongs in USER.md, .env, .soma/secrets/, project memory. Muscles encode patterns, not personal context."
-author: meetsoma
-license: MIT
-version: 1.0.0
+author: Curtis Mercier
+license: CC BY 4.0
+version: 1.1.0
 tier: core
 tags: [safety, privacy, sharing]
 created: 2026-03-09
