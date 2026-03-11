@@ -122,6 +122,16 @@ const schemaData = jsonLd || defaultJsonLd;
         --text-2xl: 1.5rem;    /* page subheads */
         --text-3xl: 2.25rem;   /* page titles */
 
+        /* Semantic aliases — change these to adjust all body/card/section text */
+        --body-text: var(--text-md);        /* descriptions, paragraphs, card body */
+        --body-secondary: var(--text-base); /* secondary body, less prominent */
+        --label-text: var(--text-sm);       /* metadata, dates, author names */
+        --badge-text: var(--text-xs);       /* tags, tier badges, version numbers */
+        --card-pad-y: var(--space-2xl);     /* vertical card padding */
+        --card-pad-x: var(--space-xl);      /* horizontal card padding */
+        --section-gap: var(--space-3xl);    /* gap between major sections */
+        --grid-gap: var(--space-xl);        /* gap between grid cards */
+
         /* Line-heights */
         --leading-none: 1;
         --leading-tight: 1.2;
