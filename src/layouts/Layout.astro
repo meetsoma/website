@@ -336,42 +336,7 @@ const schemaData = jsonLd || defaultJsonLd;
         padding-top: 55px;
       }
 
-      /* Theme toggle */
-      .theme-toggle {
-        position: fixed;
-        top: 16px;
-        right: 16px;
-        z-index: 999;
-        width: 40px;
-        height: 40px;
-        display: grid;
-        place-items: center;
-        border-radius: 999px;
-        border: 1px solid var(--border-subtle);
-        background: var(--surface-card-strong);
-        cursor: pointer;
-        backdrop-filter: blur(10px);
-        transition: all 0.2s ease;
-        padding: 0;
-      }
-
-      .theme-toggle:hover {
-        border-color: var(--border-accent);
-        transform: translateY(-1px);
-        box-shadow: 0 10px 24px var(--shadow-accent-soft);
-      }
-
-      .theme-toggle-icon {
-        font-size: 1.05rem;
-        line-height: 1;
-        color: var(--text-secondary);
-        transition: transform 0.2s ease, color 0.2s ease;
-      }
-
-      .theme-toggle:hover .theme-toggle-icon {
-        color: var(--text-primary);
-        transform: rotate(10deg) scale(1.04);
-      }
+      /* Theme toggle styles are in Nav.astro */
     </style>
   </head>
   <body>
@@ -385,16 +350,13 @@ const schemaData = jsonLd || defaultJsonLd;
     </div>
 
     <Nav />
-    <button class="theme-toggle" type="button" aria-label="Switch color theme">
-      <span class="theme-toggle-icon" aria-hidden="true"></span>
-    </button>
     <div class="site-content">
       <slot />
     </div>
     <Footer />
 
     <script is:inline>
-      (() => {
+      function initThemeToggle() {
         const key = 'soma-theme';
         const root = document.documentElement;
         const toggle = document.querySelector('.theme-toggle');
@@ -409,12 +371,29 @@ const schemaData = jsonLd || defaultJsonLd;
           if (save) localStorage.setItem(key, theme);
         };
 
-        toggle.addEventListener('click', () => {
-          apply(root.dataset.theme === 'light' ? 'dark' : 'light');
+        // Remove old listener (view transitions re-run this)
+        const newToggle = toggle.cloneNode(true);
+        toggle.parentNode.replaceChild(newToggle, toggle);
+        const newIcon = newToggle.querySelector('.theme-toggle-icon');
+
+        newToggle.addEventListener('click', () => {
+          const current = root.dataset.theme;
+          apply(current === 'light' ? 'dark' : 'light');
+          // Re-grab icon ref after clone
+          const i = newToggle.querySelector('.theme-toggle-icon');
+          if (i) i.textContent = root.dataset.theme === 'dark' ? '☀' : '☾';
         });
 
-        apply(root.dataset.theme === 'light' ? 'light' : 'dark', false);
-      })();
+        // Set icon from current theme (read from localStorage or DOM)
+        const saved = localStorage.getItem(key);
+        const theme = saved === 'light' || saved === 'dark' ? saved : (root.dataset.theme || 'dark');
+        apply(theme, false);
+      }
+
+      // Run on initial load
+      initThemeToggle();
+      // Run on Astro view transitions
+      document.addEventListener('astro:page-load', initThemeToggle);
     </script>
   </body>
 </html>
