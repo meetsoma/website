@@ -216,7 +216,7 @@ const recentPosts = posts.slice(0, 3);
           <h3 class="feature-title">Smart Init</h3>
           <p class="feature-desc">
             First run detects your stack — parent workspaces, CLAUDE.md, package manager,
-            languages, frameworks. Soma tailors herself to what she finds.
+            languages, frameworks. Soma tailors itself to what it finds.
           </p>
         </div>
         <div class="feature-card">
@@ -378,6 +378,8 @@ const recentPosts = posts.slice(0, 3);
     letter-spacing: -0.03em;
     line-height: var(--leading-none);
     margin-bottom: var(--space-lg);
+    /* Offset to optically center "Soma" — badge adds visual weight to the right */
+    transform: translateX(-1.5%);
   }
 
   .title-main {

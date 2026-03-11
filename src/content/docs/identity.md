@@ -11,13 +11,13 @@ order: 2.5
 `.soma/identity.md` — discovered by Soma through use, not configured. Layered: project (primary) → parent (context) → global (baseline). Gitignored by default (personal). Edit to refine, don't over-specify. Identity is *who*, protocols are *how*.
 <!-- /tldr -->
 
-Soma doesn't come pre-configured. She **discovers** who she is through working with you. Her `identity.md` is written by her, not for her.
+Soma doesn't come pre-configured. She **discovers** who she is through working with you. The `identity.md` is written by Soma, not for her.
 
 ## How Identity Works
 
-On first run in a project, Soma sees an empty (or absent) identity file. Based on your workspace — the languages, frameworks, project structure, and how you work together — she writes her own `identity.md`.
+On first run in a project, Soma sees an empty (or absent) identity file. Based on your workspace — the languages, frameworks, project structure, and how you work together — Soma writes its own `identity.md`.
 
-This is intentional. Identity that's discovered is more authentic than identity that's assigned. Over time, as Soma works more sessions in your project, she refines her voice, her preferences, her working style.
+This is intentional. Identity that's discovered is more authentic than identity that's assigned. Over time, as Soma works more sessions in your project, Soma refines its voice, preferences, and working style.
 
 ## The Identity File
 
@@ -117,13 +117,13 @@ You can give Soma a custom name, emoji, or icon via the `persona` setting in `se
 }
 ```
 
-When set, the persona name appears in the identity section of the system prompt. This is cosmetic — it doesn't change behavior, just how Soma identifies herself. Useful for teams where each developer's Soma has a distinct name, or for multi-project setups where different projects have different agent personas.
+When set, the persona name appears in the identity section of the system prompt. This is cosmetic — it doesn't change behavior, just how Soma identifies itself. Useful for teams where each developer's Soma has a distinct name, or for multi-project setups where different projects have different agent personas.
 
 Persona inherits from parent → global unless overridden at the project level.
 
 ## Tips
 
 - **Don't fight it.** If Soma's discovered identity feels wrong, edit the file. Don't delete it — refine it.
-- **Read it sometimes.** Soma's self-description can reveal how she sees the project — useful perspective.
+- **Read it sometimes.** Soma's self-description can reveal how it sees the project — useful perspective.
 - **Keep it short.** The identity loads into every session's system prompt. Concise beats comprehensive.
 - **Trust the layers.** Put stable traits in global, project-specific traits in the project file. The layering handles the rest.

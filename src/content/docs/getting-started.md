@@ -36,7 +36,7 @@ On first run, Soma will ask to create a `.soma/` directory. Say yes.
 | **Language/framework** | Scans for `tsconfig.json`, `Cargo.toml`, `go.mod`, `pyproject.toml`, etc. | Tailors identity and suggests relevant protocols |
 | **Monorepo signals** | Detects `pnpm-workspace.yaml`, multiple `package.json`, etc. | Suggests parent-child setup |
 
-The detected context shapes Soma's initial identity and the protocols she recommends installing. You can always edit `identity.md` afterward.
+The detected context shapes Soma's initial identity and the protocols Soma recommends installing. You can always edit `identity.md` afterward.
 
 ## Session Modes
 

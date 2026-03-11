@@ -31,7 +31,7 @@ Session 3 (inhale) ← ...and so on
 
 ### Inhale (Session Start)
 
-When Soma boots, she runs a configurable sequence of **boot steps**:
+When Soma boots, it runs a configurable sequence of **boot steps**:
 
 | Step | What Loads | Default |
 |------|-----------|---------|
@@ -81,9 +81,9 @@ Either way, Soma:
 
 ## Identity
 
-Soma doesn't come pre-configured with a personality. She **discovers** who she is through working with you. Her `identity.md` is written by her, not for her.
+Soma doesn't come pre-configured with a personality. Soma discovers who it is through working with you. The `identity.md` is written by Soma, not for it.
 
-On first run, Soma sees an empty identity file and writes her own based on the workspace and your interactions. See [Identity](/docs/identity) for the full guide on discovery, layering, and customization.
+On first run, Soma sees an empty identity file and writes its own based on the workspace and your interactions. See [Identity](/docs/identity) for the full guide on discovery, layering, and customization.
 
 ## Muscles
 

@@ -372,10 +372,33 @@ const schemaData = jsonLd || defaultJsonLd;
         padding-top: 55px;
       }
 
+      /* Skip to content — visible on focus only */
+      .skip-to-content {
+        position: absolute;
+        top: -100%;
+        left: var(--space-lg);
+        z-index: 200;
+        padding: var(--space-md) var(--space-xl);
+        background: var(--accent-bright);
+        color: var(--bg-deep);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        transition: top 0.2s ease;
+      }
+
+      .skip-to-content:focus {
+        top: var(--space-md);
+      }
+
       /* Theme toggle styles are in Nav.astro */
     </style>
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+
     <!-- Atmospheric layers -->
     <Starfield />
     <div class="noise-overlay"></div>
@@ -386,10 +409,16 @@ const schemaData = jsonLd || defaultJsonLd;
     </div>
 
     <Nav />
-    <div class="site-content">
+    <div class="site-content" id="main-content">
       <slot />
     </div>
     <Footer />
+
+    <!-- Vercel Analytics — privacy-respecting, no cookies -->
+    <script>
+      import { inject } from '@vercel/analytics';
+      inject();
+    </script>
 
     <script is:inline>
       function initThemeToggle() {

@@ -121,7 +121,7 @@ Content from each level merges according to the `inherit` settings. See [Configu
 
 ## Multiple Projects
 
-Each project gets its own `.soma/`. When you `cd` between projects and run `soma`, she loads the identity and memory for *that* project. Different projects, different Somas.
+Each project gets its own `.soma/`. When you `cd` between projects and run `soma`, it loads the identity and memory for *that* project. Different projects, different Somas.
 
 ```
 ~/project-a/.soma/identity.md   ← "I'm a frontend specialist"
