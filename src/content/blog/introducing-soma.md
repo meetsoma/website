@@ -89,7 +89,7 @@ Since launch, Soma has shipped several major features:
 
 **Parent-child workspaces.** Soma now supports monorepo and multi-project setups. A parent `.soma/` at the workspace root shares identity, protocols, muscles, and tools with child projects. Each dimension is independently toggleable. Solo body mode means you don't need a child `.soma/` if the parent covers everything.
 
-**Smart init.** First-run detection got smarter — Soma finds parent workspaces, reads `CLAUDE.md` if present, identifies your package manager, and detects language/framework signals. The initial identity is tailored to what she finds.
+**Smart init.** First-run detection got smarter — Soma finds parent workspaces, reads `CLAUDE.md` if present, identifies your package manager, and detects language/framework signals. The initial identity is tailored to what Soma finds.
 
 **Persona.** Give your agent a custom name and emoji via `settings.json`. Useful for teams where each developer's Soma has a distinct identity, or multi-project setups with different agent personas.
 

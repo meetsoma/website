@@ -338,7 +338,7 @@ const recentPosts = posts.slice(0, 3);
   /* ── Hero ── */
   .hero {
     text-align: center;
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
     padding-top: var(--space-2xl);
     animation: fadeUp 0.8s ease-out;
   }
@@ -398,7 +398,7 @@ const recentPosts = posts.slice(0, 3);
   .beta-badge {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -454,7 +454,7 @@ const recentPosts = posts.slice(0, 3);
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
     animation: fadeUp 0.8s ease-out 0.1s both;
   }
 
@@ -479,7 +479,7 @@ const recentPosts = posts.slice(0, 3);
 
   .recent-post-badge {
     font-family: var(--font-display);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -492,7 +492,7 @@ const recentPosts = posts.slice(0, 3);
 
   .recent-post-title {
     flex: 1;
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     font-weight: 500;
   }
 
@@ -507,7 +507,7 @@ const recentPosts = posts.slice(0, 3);
 
   /* ── Quick Start ── */
   .quickstart {
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
     animation: fadeUp 0.8s ease-out 0.2s both;
   }
 
@@ -536,14 +536,14 @@ const recentPosts = posts.slice(0, 3);
   .code-label {
     margin-left: var(--space-md);
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     color: var(--text-muted);
   }
 
   .code-body {
     padding: var(--space-xl);
     font-family: var(--font-mono);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     line-height: 2;
   }
 
@@ -587,19 +587,19 @@ const recentPosts = posts.slice(0, 3);
 
   /* ── Four Layers ── */
   .layers {
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
     animation: fadeUp 0.8s ease-out 0.3s both;
   }
 
   .layers-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-xl);
+    gap: var(--grid-gap);
   }
 
   .layer-card {
     display: block;
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
@@ -632,7 +632,7 @@ const recentPosts = posts.slice(0, 3);
 
   .layer-type {
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -640,7 +640,7 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .layer-desc {
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
     margin-bottom: var(--space-lg);
@@ -654,7 +654,7 @@ const recentPosts = posts.slice(0, 3);
 
   .layer-examples code {
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-md);
     background: var(--surface-accent-soft);
@@ -664,18 +664,18 @@ const recentPosts = posts.slice(0, 3);
 
   /* ── Features ── */
   .features {
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
     animation: fadeUp 0.8s ease-out 0.4s both;
   }
 
   .features-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-xl);
+    gap: var(--grid-gap);
   }
 
   .feature-card {
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
@@ -697,14 +697,14 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .feature-desc {
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
   }
 
   .feature-desc code {
     font-family: var(--font-mono);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     padding: 2px var(--space-md);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
@@ -713,7 +713,7 @@ const recentPosts = posts.slice(0, 3);
 
   /* ── Ecosystem ── */
   .ecosystem {
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
     animation: fadeUp 0.8s ease-out 0.5s both;
   }
 
@@ -760,7 +760,7 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .eco-desc {
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     color: var(--text-muted);
     text-align: center;
     line-height: var(--leading-normal);
@@ -768,7 +768,7 @@ const recentPosts = posts.slice(0, 3);
 
   /* ── CTA ── */
   .cta-section {
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
     animation: fadeUp 0.8s ease-out 0.6s both;
   }
 
@@ -811,7 +811,7 @@ const recentPosts = posts.slice(0, 3);
     color: white;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     text-decoration: none;
     transition: all 0.25s ease;
   }
@@ -831,7 +831,7 @@ const recentPosts = posts.slice(0, 3);
     color: var(--text-primary);
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     text-decoration: none;
     transition: all 0.25s ease;
   }

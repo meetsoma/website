@@ -148,8 +148,8 @@ const sectionMeta: Record<string, { icon: string; desc: string }> = {
   .quick-links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: var(--space-xl);
-    margin-bottom: var(--space-3xl);
+    gap: var(--grid-gap);
+    margin-bottom: var(--section-gap);
   }
 
   .quick-link {
@@ -193,20 +193,20 @@ const sectionMeta: Record<string, { icon: string; desc: string }> = {
 
   .ql-text strong {
     font-family: var(--font-display);
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     font-weight: 600;
     line-height: var(--leading-tight);
   }
 
   .ql-text span:last-child {
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     color: var(--text-muted);
     line-height: var(--leading-normal);
   }
 
   /* ── Section cards ── */
   .doc-section {
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
   }
 
   .section-header {
@@ -232,7 +232,7 @@ const sectionMeta: Record<string, { icon: string; desc: string }> = {
   }
 
   .section-desc {
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     color: var(--text-muted);
     line-height: var(--leading-relaxed);
   }
@@ -240,11 +240,11 @@ const sectionMeta: Record<string, { icon: string; desc: string }> = {
   .doc-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: var(--space-xl);
+    gap: var(--grid-gap);
   }
 
   .doc-card {
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
@@ -269,7 +269,7 @@ const sectionMeta: Record<string, { icon: string; desc: string }> = {
   }
 
   .doc-desc {
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
     display: -webkit-box;

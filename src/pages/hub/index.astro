@@ -125,7 +125,7 @@ const total = allItems.length;
     min-height: 100vh;
   }
 
-  .header { text-align: center; margin-bottom: var(--space-3xl); }
+  .header { text-align: center; margin-bottom: var(--section-gap); }
 
   .title {
     font-family: var(--font-display);
@@ -136,7 +136,7 @@ const total = allItems.length;
 
   .subtitle {
     color: var(--text-secondary);
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     max-width: 600px;
     margin: 0 auto;
     line-height: var(--leading-relaxed);
@@ -146,7 +146,7 @@ const total = allItems.length;
   .install-banner {
     text-align: center;
     margin-bottom: var(--space-2xl);
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
@@ -155,7 +155,7 @@ const total = allItems.length;
   .install-banner code {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     padding: var(--space-md) 16px;
     border-radius: var(--radius-md);
     background: var(--surface-accent-soft);
@@ -164,7 +164,7 @@ const total = allItems.length;
 
   .install-note {
     margin-top: var(--space-md);
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     color: var(--text-muted);
   }
 
@@ -177,8 +177,8 @@ const total = allItems.length;
 
   /* Evolution banner */
   .evolution-banner {
-    margin-bottom: var(--space-3xl);
-    padding: var(--space-2xl) var(--space-xl);
+    margin-bottom: var(--section-gap);
+    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
@@ -186,7 +186,7 @@ const total = allItems.length;
 
   .evolution-banner h2 {
     font-family: var(--font-display);
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     font-weight: 600;
     margin-bottom: var(--space-lg);
     text-align: center;
@@ -218,12 +218,12 @@ const total = allItems.length;
 
   .evo-step strong {
     font-family: var(--font-display);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     font-weight: 600;
   }
 
   .evo-desc {
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     color: var(--text-muted);
     line-height: var(--leading-normal);
   }
@@ -236,7 +236,7 @@ const total = allItems.length;
   }
 
   .evo-note {
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     color: var(--text-secondary);
     text-align: center;
     line-height: var(--leading-normal);
@@ -273,7 +273,7 @@ const total = allItems.length;
     background: var(--surface-card);
     color: var(--text-secondary);
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     cursor: pointer;
     transition: all 0.15s ease;
   }
@@ -291,7 +291,7 @@ const total = allItems.length;
   }
 
   :global(.pill-glyph) {
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     line-height: var(--leading-none);
   }
 
@@ -309,7 +309,7 @@ const total = allItems.length;
     background: var(--surface-card);
     color: var(--text-primary);
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     cursor: pointer;
   }
 
@@ -327,7 +327,7 @@ const total = allItems.length;
     background: var(--surface-card);
     color: var(--text-primary);
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
   }
 
   :global(.search-input::placeholder) {
@@ -360,7 +360,7 @@ const total = allItems.length;
     background: transparent;
     color: var(--text-muted);
     font-family: var(--font-body);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     cursor: pointer;
     transition: all 0.15s ease;
   }
@@ -375,10 +375,10 @@ const total = allItems.length;
     text-align: center;
     padding: var(--space-3xl) var(--space-xl);
     color: var(--text-muted);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
   }
 
-  :global(.hub-section) { margin-bottom: var(--space-3xl); }
+  :global(.hub-section) { margin-bottom: var(--section-gap); }
 
   :global(.section-header) {
     display: flex;
@@ -401,14 +401,14 @@ const total = allItems.length;
   }
 
   :global(.section-desc) {
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     color: var(--text-muted);
   }
 
   :global(.section-count) {
     margin-left: auto;
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     color: var(--text-muted);
     background: var(--surface-interactive);
     padding: var(--space-sm) var(--space-md);
@@ -418,13 +418,13 @@ const total = allItems.length;
   :global(.card-grid) {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: var(--space-xl);
+    gap: var(--grid-gap);
   }
 
   :global(.hub-card) {
     display: flex;
     flex-direction: column;
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
@@ -449,19 +449,19 @@ const total = allItems.length;
 
   :global(.card-name) {
     font-family: var(--font-display);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     font-weight: 600;
     text-transform: capitalize;
   }
 
   :global(.card-version) {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     color: var(--text-muted);
   }
 
   :global(.card-desc) {
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     color: var(--text-secondary);
     line-height: var(--leading-normal);
     flex: 1;
@@ -476,7 +476,7 @@ const total = allItems.length;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
   }
 
   :global(.card-author) { color: var(--text-muted); }
@@ -485,7 +485,7 @@ const total = allItems.length;
   :global(.card-tag) {
     color: var(--accent-bright);
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     padding: 1px var(--space-sm);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
@@ -493,7 +493,7 @@ const total = allItems.length;
 
   :global(.card-tier) {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -524,11 +524,11 @@ const total = allItems.length;
   /* Contribute */
   .contribute {
     text-align: center;
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-xl);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
   }
 
   .contribute h2 {
@@ -540,7 +540,7 @@ const total = allItems.length;
 
   .contribute p {
     color: var(--text-secondary);
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     margin-bottom: var(--space-lg);
   }
 
@@ -551,7 +551,7 @@ const total = allItems.length;
     background: var(--accent-bright);
     color: var(--bg-deep);
     font-weight: 600;
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     text-decoration: none;
     transition: all 0.2s;
   }

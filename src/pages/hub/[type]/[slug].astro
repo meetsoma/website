@@ -87,6 +87,7 @@ const ghUrl = item.type === 'template'
     <!-- Tags -->
     {(item.appliesTo || item.topic || item.keywords) && (
       <section class="tags-section">
+        <h2 class="sr-only">Tags</h2>
         {item.appliesTo && (
           <div class="tag-group">
             <span class="tag-label">Applies to</span>
@@ -116,6 +117,7 @@ const ghUrl = item.type === 'template'
 
     <!-- Body -->
     <section class="body-section">
+      <h2>Details</h2>
       {hasVersions && (
         <div class="version-selector">
           <label for="version-select">Version</label>
@@ -171,7 +173,7 @@ const ghUrl = item.type === 'template'
     position: relative; z-index: 1;
     max-width: 760px;
     margin: 0 auto;
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
     min-height: 100vh;
   }
 
@@ -179,7 +181,7 @@ const ghUrl = item.type === 'template'
 
   .type-badge {
     display: inline-block;
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     font-family: var(--font-mono);
     color: var(--accent-bright);
     text-transform: uppercase;
@@ -197,7 +199,7 @@ const ghUrl = item.type === 'template'
 
   .breadcrumb {
     color: var(--text-secondary);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     line-height: var(--leading-relaxed);
     margin-bottom: var(--space-lg);
   }
@@ -210,7 +212,7 @@ const ghUrl = item.type === 'template'
 
   .meta-item {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     color: var(--text-muted);
   }
 
@@ -218,7 +220,7 @@ const ghUrl = item.type === 'template'
 
   .tier-badge {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -255,7 +257,7 @@ const ghUrl = item.type === 'template'
 
   .tag-pill {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     padding: 2px var(--space-md);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
@@ -273,7 +275,7 @@ const ghUrl = item.type === 'template'
 
   .install-section h2 {
     font-family: var(--font-display);
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     font-weight: 600;
     margin-bottom: var(--space-lg);
   }
@@ -281,7 +283,7 @@ const ghUrl = item.type === 'template'
   .install-cmd {
     display: block;
     font-family: var(--font-mono);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     padding: var(--space-lg);
     border-radius: var(--radius-md);
     background: var(--bg-elevated);
@@ -291,7 +293,7 @@ const ghUrl = item.type === 'template'
   }
 
   .install-alt {
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     color: var(--text-muted);
   }
 
@@ -319,7 +321,7 @@ const ghUrl = item.type === 'template'
 
   .tag-label {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -330,7 +332,7 @@ const ghUrl = item.type === 'template'
 
   .tag {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     padding: 2px var(--space-md);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
@@ -354,7 +356,7 @@ const ghUrl = item.type === 'template'
 
   .version-selector label {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--badge-text);
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -362,7 +364,7 @@ const ghUrl = item.type === 'template'
 
   .version-selector select {
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     padding: var(--space-sm) var(--space-lg);
     border-radius: var(--radius-md);
     border: 1px solid var(--border-subtle);
@@ -407,7 +409,7 @@ const ghUrl = item.type === 'template'
 
   .body-section :global(h3) {
     font-family: var(--font-display);
-    font-size: var(--text-md);
+    font-size: var(--body-text);
     font-weight: 600;
     margin: var(--space-lg) 0 var(--space-md);
   }
@@ -416,21 +418,21 @@ const ghUrl = item.type === 'template'
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
     margin-bottom: var(--space-lg);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
   }
 
   .body-section :global(ul), .body-section :global(ol) {
     color: var(--text-secondary);
     padding-left: 20px;
     margin-bottom: var(--space-lg);
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
   }
 
   .body-section :global(li) { margin-bottom: var(--space-sm); line-height: var(--leading-relaxed); }
 
   .body-section :global(code) {
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     padding: 1px var(--space-sm);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
@@ -443,7 +445,7 @@ const ghUrl = item.type === 'template'
     border-radius: var(--radius-md);
     overflow-x: auto;
     margin-bottom: var(--space-lg);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
     line-height: var(--leading-normal);
   }
 
@@ -457,7 +459,7 @@ const ghUrl = item.type === 'template'
     width: 100%;
     border-collapse: collapse;
     margin-bottom: var(--space-lg);
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
   }
 
   .body-section :global(th) {
@@ -466,7 +468,7 @@ const ghUrl = item.type === 'template'
     border-bottom: 1px solid var(--border-subtle);
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: var(--text-sm);
+    font-size: var(--label-text);
   }
 
   .body-section :global(td) {
@@ -490,11 +492,11 @@ const ghUrl = item.type === 'template'
   /* Source */
   .source-section {
     text-align: center;
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--section-gap);
   }
 
   .source-link {
-    font-size: var(--text-base);
+    font-size: var(--body-secondary);
     color: var(--accent-bright);
     text-decoration: none;
   }

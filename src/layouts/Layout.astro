@@ -392,7 +392,7 @@ const schemaData = jsonLd || defaultJsonLd;
         background: var(--accent-bright);
         color: var(--bg-deep);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--label-text);
         font-weight: 600;
         border-radius: var(--radius-md);
         text-decoration: none;
@@ -401,6 +401,18 @@ const schemaData = jsonLd || defaultJsonLd;
 
       .skip-to-content:focus {
         top: var(--space-md);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
 
       /* Theme toggle styles are in Nav.astro */
