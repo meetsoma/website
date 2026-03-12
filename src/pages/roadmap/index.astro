@@ -6,18 +6,19 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
 const timeline = [
   {
-    version: 'v0.3.x',
-    label: 'Hub & Distribution',
+    version: 'v0.4.0',
+    label: 'AMPS & Distribution',
     date: 'Mar 2026',
     items: [
-      '/install — fetch protocols, muscles, skills, templates from the Soma Hub',
-      '/list local and /list remote — browse installed and available content',
-      'Template manifests — install a full agent config with dependencies',
-      'Hub website — tier badges, version history, interactive filtering',
-      'Session checkpoints — two-track version control (.soma + project code)',
-      'Audit system — 11 scripts: PII, drift, stale terms, docs sync, commands, frontmatter',
-      'meetsoma/core — maintained engine fork with automated upstream sync',
-      'Automated publish pipeline — GitHub Actions for build → npm → tag',
+      'AMPS content types — Automations, Muscles, Protocols, Skills. The four layers of agent memory.',
+      'Compiled system prompt — dynamic assembly from hot protocols + muscle digests. Your agent\'s frontal cortex.',
+      'Distribution scope — bundled (ships with Soma) vs hub (install on demand). Only 4 essential protocols bundled.',
+      'SomaHub live loading — hub-index.json, CI auto-rebuild, Vercel deploy hook. New content appears without redeploy.',
+      'Trust infrastructure — MAINTAINERS.json, 6 CI checks, CODEOWNERS, auto-merge for trusted contributors.',
+      'Protocol graduation — heat decay floor, frontmatter enforcement, preload validation, git identity hook.',
+      'Content CLI — /install, /list, soma init --template with dependency resolution.',
+      'depends-on — cross-type dependency declarations in frontmatter.',
+      'Release automation — scope-aware sync, versioned releases, changelog management.',
     ]
   },
   {
@@ -25,11 +26,12 @@ const timeline = [
     label: 'Session Intelligence',
     date: 'Mar 2026',
     items: [
-      '/rest command — disable keepalive + exhale for end of session',
+      '/rest — disable keepalive + exhale for end of session',
       'Cache keepalive — auto-ping keeps prompt cache warm between turns',
-      '/keepalive and /status commands — session observability',
-      'PII scrub — git-filter-repo rewrote all 4 repo histories, zero personal data',
-      'Install flow simplified — soma init copies bundled extensions, no symlinks',
+      '/keepalive and /status — session observability',
+      '11 audit scripts — PII, drift, stale terms, scope, cross-reference, docs sync, and more',
+      'Configurable boot sequence, context warnings, preload staleness',
+      'Git context on boot — recent commits and changed files injected',
     ]
   },
   {
@@ -41,9 +43,8 @@ const timeline = [
       'Heat system — adaptive protocol/muscle loading with decay',
       'Muscles — pattern memory with digest blocks and load tracking',
       'Applies-to — protocol domain scoping by project signals',
-      '/breathe command — exhale + auto-continue into fresh session',
+      '/breathe — exhale + auto-continue into fresh session',
       'Parent-child memory — .soma chain resolution (project → workspace → global)',
-      'Scripts: search, scan, snapshot, TL;DR, date hook',
     ]
   },
   {
@@ -52,7 +53,7 @@ const timeline = [
     date: 'Mar 2026',
     items: [
       'Protocol architecture — four-layer plugin model',
-      'Extensions: soma-boot, soma-header, soma-statusline',
+      'Extensions: soma-boot, soma-header, soma-statusline, soma-guard',
       'Identity discovery — layered from project → parent → global',
       'Agent templates — shareable soma configurations',
       'npm packages: meetsoma (public CLI)',
@@ -62,39 +63,39 @@ const timeline = [
 
 const upcoming: { name: string; icon: string; description: string; status: string }[] = [
   {
-    name: 'Rituals',
-    icon: 'wand',
-    description: 'Multi-step workflows — YAML-defined, composable sequences. /introspect (self-audit), custom rituals triggered by context. Muscles that crystallize into automated routines.',
-    status: 'In Design',
+    name: '/share Command',
+    icon: 'protocols',
+    description: 'Publish protocols, muscles, automations, and skills from your .soma/ directly to the community hub. Validates, strips private data, opens a PR. Trusted contributors auto-merge.',
+    status: 'In Progress',
   },
   {
-    name: 'Dynamic System Prompts',
-    icon: 'brain',
-    description: 'System prompts that evolve over time — assembled from identity, hot protocols, session delta, and checkpoint diffs. No more static prompts.',
-    status: 'In Design',
+    name: 'Hub Automations',
+    icon: 'extensions',
+    description: 'Shareable executable workflows — hooks, rituals, and enforcement scripts installed via /install automation. The fourth AMPS layer.',
+    status: 'In Progress',
   },
   {
     name: 'AI Content Screening',
-    icon: 'shield',
+    icon: 'skills',
     description: 'Haiku-powered review of community submissions — injection scanning, quality scoring, automatic tier classification for hub contributions.',
     status: 'Planned',
   },
   {
-    name: 'soma publish',
-    icon: 'upload',
-    description: 'Publish protocols, muscles, and skills from your .soma/ directly to the community hub. Creates a PR with proper frontmatter and tier tagging.',
+    name: 'Prompt Metabolism',
+    icon: 'muscles',
+    description: 'Full prompt replacement — Soma compiles the entire system prompt from identity, protocols, muscles, and session context. The static prompt disappears entirely.',
+    status: 'Planned',
+  },
+  {
+    name: 'depends-on Resolution',
+    icon: 'extensions',
+    description: 'Install commands resolve dependency chains automatically. Missing deps prompt --with-deps. Circular dependencies caught at validation.',
     status: 'Planned',
   },
   {
     name: 'Vault Sync',
-    icon: 'link',
-    description: 'Auto-discover and symlink .soma/ directories across a workspace. Parent .soma sees all children — unified view for multi-project ecosystems.',
-    status: 'Exploring',
-  },
-  {
-    name: 'Voice Extension',
-    icon: 'mic',
-    description: 'TTS integration — /voice command for spoken responses. Agent finds its literal voice.',
+    icon: 'memory',
+    description: 'Auto-discover and link .soma/ directories across a workspace. Parent .soma sees all children — unified view for multi-project ecosystems.',
     status: 'Exploring',
   },
 ];
