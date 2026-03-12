@@ -29,7 +29,7 @@ const tiers: { value: HubTier; label: string }[] = [
   { value: 'core', label: 'Core' },
   { value: 'official', label: 'Official' },
   { value: 'community', label: 'Community' },
-  { value: 'experimental', label: 'Experimental' },
+  { value: 'pro', label: 'Pro' },
 ];
 
 export default function HubFilters() {
