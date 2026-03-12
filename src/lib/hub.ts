@@ -22,7 +22,7 @@ const COMMUNITY_ROOT = localHasContent ? localCopy : siblingRepo;
 interface HubItem {
   slug: string;
   name: string;
-  type: 'protocol' | 'muscle' | 'skill' | 'template';
+  type: 'protocol' | 'muscle' | 'skill' | 'template' | 'automation';
   description: string;
   author: string;
   version: string;
@@ -155,12 +155,17 @@ export function getTemplates(): HubItem[] {
   return loadDir('template', 'templates');
 }
 
+export function getAutomations(): HubItem[] {
+  return loadDir('automation', 'automations');
+}
+
 export function getAllItems(): HubItem[] {
   return [
     ...getProtocols(),
     ...getMuscles(),
     ...getSkills(),
     ...getTemplates(),
+    ...getAutomations(),
   ];
 }
 
@@ -175,6 +180,7 @@ export async function getVersionHistory(item: HubItem): Promise<VersionEntry[]> 
   const typeDir = item.type === 'protocol' ? 'protocols'
     : item.type === 'muscle' ? 'muscles'
     : item.type === 'skill' ? 'skills'
+    : item.type === 'automation' ? 'automations'
     : 'templates';
 
   const filePath = item.type === 'template'

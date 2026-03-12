@@ -21,7 +21,7 @@ const types: { value: HubType; label: string; icon: string }[] = [
   { value: 'muscle', label: 'Muscles', icon: 'muscles' },
   { value: 'skill', label: 'Skills', icon: 'skills' },
   { value: 'template', label: 'Templates', icon: 'templates' },
-  { value: 'script', label: 'Scripts', icon: 'scripts' },
+  { value: 'automation', label: 'Automations', icon: 'automations' },
 ];
 
 const tiers: { value: HubTier; label: string }[] = [

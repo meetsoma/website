@@ -4,12 +4,13 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import HubFilters from '../../components/islands/HubFilters';
 import HubGrid from '../../components/islands/HubGrid';
-import { getProtocols, getMuscles, getSkills, getTemplates } from '../../lib/hub';
+import { getProtocols, getMuscles, getSkills, getTemplates, getAutomations } from '../../lib/hub';
 
 const protocols = getProtocols();
 const muscles = getMuscles();
 const skills = getSkills();
 const templates = getTemplates();
+const automations = getAutomations();
 
 // Serialize for Preact islands
 const allItems = [
@@ -17,6 +18,7 @@ const allItems = [
   ...muscles.map(m => ({ ...m, body: undefined })),
   ...skills.map(s => ({ ...s, body: undefined })),
   ...templates.map(t => ({ ...t, body: undefined })),
+  ...automations.map(a => ({ ...a, body: undefined })),
 ];
 
 const total = allItems.length;
@@ -24,7 +26,7 @@ const total = allItems.length;
 
 <Layout
   title="Hub — Soma"
-  description="Browse and install community protocols, muscles, skills, and templates for Soma agents."
+  description="Browse and install community AMPS — Automations, Muscles, Protocols, Skills — and templates for Soma agents."
   canonicalUrl="https://soma.gravicity.ai/hub"
 >
   <div class="stars"></div>
@@ -37,8 +39,9 @@ const total = allItems.length;
     <header class="header">
       <h1 class="title">SomaHub</h1>
       <p class="subtitle">
-        {total} community resources for Soma agents. Protocols enforce behavior.
-        Muscles learn from repetition. Skills bring expertise. Templates bundle it all.
+        {total} community AMPS for Soma agents. Skills bring expertise.
+        Muscles learn from repetition. Protocols enforce behavior.
+        Automations run without thinking. Templates bundle it all.
       </p>
     </header>
 
@@ -53,7 +56,7 @@ const total = allItems.length;
 
     <!-- How they work together -->
     <div class="evolution-banner">
-      <h2>How Soma content evolves</h2>
+      <h2>How AMPS evolve</h2>
       <div class="evolution-flow">
         <div class="evo-step">
           <span class="evo-glyph"><Icon name="skills" size={21} /></span>
@@ -75,8 +78,8 @@ const total = allItems.length;
         <span class="evo-arrow">→</span>
         <div class="evo-step">
           <span class="evo-glyph"><Icon name="extensions" size={21} /></span>
-          <strong>Scripts</strong>
-          <span class="evo-desc">Automation — protocols become executable, running without thinking</span>
+          <strong>Automations</strong>
+          <span class="evo-desc">Executable — protocols become workflows that run without thinking</span>
         </div>
       </div>
       <p class="evo-note">

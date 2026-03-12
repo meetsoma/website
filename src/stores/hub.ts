@@ -4,7 +4,7 @@
  */
 import { atom, computed } from 'nanostores';
 
-export type HubType = 'all' | 'protocol' | 'muscle' | 'skill' | 'template' | 'script';
+export type HubType = 'all' | 'protocol' | 'muscle' | 'skill' | 'template' | 'automation';
 export type HubTier = 'all' | 'core' | 'official' | 'community' | 'experimental';
 
 /** Active type filter */

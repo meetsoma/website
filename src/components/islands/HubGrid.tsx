@@ -55,11 +55,11 @@ const typeConfig: Record<string, { icon: string; color: string; label: string; s
     label: 'Templates',
     sublabel: 'Agent bundles — identity, settings, and dependencies in one install.',
   },
-  script: {
-    icon: 'scripts',
+  automation: {
+    icon: 'automations',
     color: 'rgba(200, 200, 120, 0.25)',
-    label: 'Scripts',
-    sublabel: 'Automation — executable tools that enforce what protocols describe.',
+    label: 'Automations',
+    sublabel: 'Executable workflows — rituals and hooks that run without thinking.',
   },
 };
 
@@ -128,7 +128,7 @@ export default function HubGrid({ items }: Props) {
     grouped[item.type].push(item);
   }
 
-  const typeOrder = ['protocol', 'muscle', 'skill', 'template', 'script'];
+  const typeOrder = ['protocol', 'muscle', 'skill', 'template', 'automation'];
   const sortedTypes = typeOrder.filter(t => grouped[t]?.length);
 
   if (filtered.length === 0) {
