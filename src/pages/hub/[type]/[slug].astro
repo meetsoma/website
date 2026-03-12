@@ -121,15 +121,43 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
       <a href={ghUrl} target="_blank" rel="noopener" class="stat stat-link"><span class="stat-label">Source</span><span class="stat-value">GitHub ↗</span></a>
     </div>
 
-    <!-- Install -->
-    <section class="install-section">
-      <h2>Install</h2>
-      <code class="install-cmd">{installCmd}</code>
-      <p class="install-alt">
-        Or copy manually from 
-        <a href={ghUrl} target="_blank" rel="noopener">GitHub →</a>
-      </p>
-    </section>
+    <!-- Install Tabs -->
+    {isTemplate ? (
+      <section class="install-section">
+        <div class="install-tabs" role="tablist">
+          <button class="install-tab active" role="tab" data-tab="init">Init</button>
+          <button class="install-tab" role="tab" data-tab="add">Add</button>
+          <button class="install-tab" role="tab" data-tab="fork">Fork</button>
+        </div>
+        <div class="install-panel active" data-panel="init">
+          <code class="install-cmd">soma init --template {item.slug}</code>
+          <p class="install-hint">New project — scaffolds .soma/ with this template's identity, protocols, and settings.</p>
+        </div>
+        <div class="install-panel" data-panel="add">
+          <code class="install-cmd">/install template {item.slug}</code>
+          <p class="install-hint">Existing project — adds this template's protocols and settings to your current .soma/.</p>
+        </div>
+        <div class="install-panel" data-panel="fork">
+          <code class="install-cmd">soma fork template {item.slug}</code>
+          <p class="install-hint">Copies to <code class="inline-code">~/.soma/templates/{item.slug}/</code> for customization. Your fork resolves first on future inits.</p>
+        </div>
+      </section>
+    ) : (
+      <section class="install-section">
+        <div class="install-tabs" role="tablist">
+          <button class="install-tab active" role="tab" data-tab="install">Install</button>
+          <button class="install-tab" role="tab" data-tab="manual">Manual</button>
+        </div>
+        <div class="install-panel active" data-panel="install">
+          <code class="install-cmd">{installCmd}</code>
+          <p class="install-hint">Run in a Soma session to add to your project.</p>
+        </div>
+        <div class="install-panel" data-panel="manual">
+          <code class="install-cmd">curl -sO {`https://raw.githubusercontent.com/meetsoma/community/main/${item.type}s/${item.slug}.md`}</code>
+          <p class="install-hint">Download and copy to <code class="inline-code">.soma/{item.type}s/{item.slug}.md</code> — or <a href={ghUrl} target="_blank" rel="noopener">view on GitHub ↗</a></p>
+        </div>
+      </section>
+    )}
 
     <!-- Tags -->
     {(item.appliesTo || item.topic || item.keywords) && (
@@ -256,16 +284,28 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
       </a>
     </section>
 
-    {hasVersions && (
-      <script>
-        document.getElementById('version-select')?.addEventListener('change', (e) => {
-          const selected = (e.target as HTMLSelectElement).value;
-          document.querySelectorAll('.version-content').forEach(el => {
-            (el as HTMLElement).style.display = el.getAttribute('data-version') === selected ? '' : 'none';
-          });
+    <script>
+      // Install tab switching
+      document.querySelectorAll('.install-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const target = tab.getAttribute('data-tab');
+          const section = tab.closest('.install-section');
+          if (!section || !target) return;
+          section.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
+          section.querySelectorAll('.install-panel').forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          section.querySelector(`[data-panel="${target}"]`)?.classList.add('active');
         });
-      </script>
-    )}
+      });
+
+      // Version selector
+      document.getElementById('version-select')?.addEventListener('change', (e) => {
+        const selected = (e.target as HTMLSelectElement).value;
+        document.querySelectorAll('.version-content').forEach(el => {
+          (el as HTMLElement).style.display = el.getAttribute('data-version') === selected ? '' : 'none';
+        });
+      });
+    </script>
 
   </main>
 </Layout>
@@ -440,11 +480,45 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     margin-bottom: var(--space-xl);
   }
 
-  .install-section h2 {
-    font-family: var(--font-display);
-    font-size: var(--body-text);
-    font-weight: 600;
+  .install-tabs {
+    display: flex;
+    gap: var(--space-sm);
     margin-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: var(--space-md);
+  }
+
+  .install-tab {
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-sm);
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .install-tab:hover {
+    color: var(--text-primary);
+    background: var(--surface-interactive);
+  }
+
+  .install-tab.active {
+    color: var(--accent-bright);
+    background: var(--surface-accent-soft);
+  }
+
+  .install-panel {
+    display: none;
+  }
+
+  .install-panel.active {
+    display: block;
   }
 
   .install-cmd {
@@ -459,17 +533,27 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     overflow-x: auto;
   }
 
-  .install-alt {
+  .install-hint {
     font-size: var(--label-text);
     color: var(--text-muted);
+    line-height: var(--leading-relaxed);
   }
 
-  .install-alt a {
+  .install-hint a {
     color: var(--accent-bright);
     text-decoration: none;
   }
 
-  .install-alt a:hover { text-decoration: underline; }
+  .install-hint a:hover { text-decoration: underline; }
+
+  .inline-code {
+    font-family: var(--font-mono);
+    font-size: var(--badge-text);
+    padding: 1px var(--space-sm);
+    border-radius: var(--radius-sm);
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+  }
 
   /* Tags */
   .tags-section {
