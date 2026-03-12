@@ -131,6 +131,59 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
       </p>
     </section>
 
+    <!-- Tags -->
+    {(item.appliesTo || item.topic || item.keywords) && (
+      <section class="tags-section">
+        <h2 class="sr-only">Tags</h2>
+        {item.appliesTo && (
+          <div class="tag-group">
+            <span class="tag-label">Applies to</span>
+            <div class="tags">
+              {(item.appliesTo as string[]).map(t => <span class="tag">{t}</span>)}
+            </div>
+          </div>
+        )}
+        {item.topic && (
+          <div class="tag-group">
+            <span class="tag-label">Topics</span>
+            <div class="tags">
+              {(item.topic as string[]).map(t => <span class="tag">{t}</span>)}
+            </div>
+          </div>
+        )}
+        {item.keywords && (
+          <div class="tag-group">
+            <span class="tag-label">Keywords</span>
+            <div class="tags">
+              {(item.keywords as string[]).map(t => <span class="tag tag-dim">{t}</span>)}
+            </div>
+          </div>
+        )}
+      </section>
+    )}
+
+    <!-- Body -->
+    <section class="body-section">
+      <h2>Details</h2>
+      {hasVersions && (
+        <div class="version-selector">
+          <label for="version-select">Version</label>
+          <select id="version-select">
+            <option value="current" selected>v{item.version} (latest)</option>
+            {versions.map(v => (
+              <option value={v.sha}>v{v.version} — {v.date}</option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      <div class="markdown-body version-content" data-version="current" set:html={renderMarkdown(item.body)} />
+
+      {versions.map(v => (
+        <div class="markdown-body version-content" data-version={v.sha} style="display:none" set:html={renderMarkdown(v.body)} />
+      ))}
+    </section>
+
     <!-- Template Includes -->
     {isTemplate && (templateData!.required.length > 0 || templateData!.coreProtocols.length > 0) && (
       <section class="includes-section">
@@ -195,59 +248,6 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
         )}
       </section>
     )}
-
-    <!-- Tags -->
-    {(item.appliesTo || item.topic || item.keywords) && (
-      <section class="tags-section">
-        <h2 class="sr-only">Tags</h2>
-        {item.appliesTo && (
-          <div class="tag-group">
-            <span class="tag-label">Applies to</span>
-            <div class="tags">
-              {(item.appliesTo as string[]).map(t => <span class="tag">{t}</span>)}
-            </div>
-          </div>
-        )}
-        {item.topic && (
-          <div class="tag-group">
-            <span class="tag-label">Topics</span>
-            <div class="tags">
-              {(item.topic as string[]).map(t => <span class="tag">{t}</span>)}
-            </div>
-          </div>
-        )}
-        {item.keywords && (
-          <div class="tag-group">
-            <span class="tag-label">Keywords</span>
-            <div class="tags">
-              {(item.keywords as string[]).map(t => <span class="tag tag-dim">{t}</span>)}
-            </div>
-          </div>
-        )}
-      </section>
-    )}
-
-    <!-- Body -->
-    <section class="body-section">
-      <h2>Details</h2>
-      {hasVersions && (
-        <div class="version-selector">
-          <label for="version-select">Version</label>
-          <select id="version-select">
-            <option value="current" selected>v{item.version} (latest)</option>
-            {versions.map(v => (
-              <option value={v.sha}>v{v.version} — {v.date}</option>
-            ))}
-          </select>
-        </div>
-      )}
-
-      <div class="markdown-body version-content" data-version="current" set:html={renderMarkdown(item.body)} />
-
-      {versions.map(v => (
-        <div class="markdown-body version-content" data-version={v.sha} style="display:none" set:html={renderMarkdown(v.body)} />
-      ))}
-    </section>
 
     <!-- Source -->
     <section class="source-section">
