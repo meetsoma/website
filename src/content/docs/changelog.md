@@ -42,7 +42,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **`/keepalive` command** — toggle cache keepalive on/off/status.
 - **Cache keepalive system** — 300s TTL, 45s threshold, 30s cooldown. Auto-ping on idle. ◷ cache TTL display in footer.
 - **10 audit scripts** — PII, drift, stale terms, cross-reference, roadmap claims, docs sync, stale content, overlap, tests, settings. Orchestrated by `soma-audit.sh`.
-- **Test coverage** — discovery, identity, preload, utils. 161/161 passing across 9 suites.
 - **Configurable boot sequence** — `settings.boot.steps` controls what loads on session start.
 - **Git context on boot** — `git-context` boot step injects recent commits and changed files.
 - **Configurable context warnings** — `settings.context` thresholds for notification, warning, auto-exhale.

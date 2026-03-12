@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 3
 ---
 
+# Protocols
 
 <!-- tldr -->
 Behavioral rules in `.soma/protocols/` as markdown with YAML frontmatter. Loaded by heat: hot (≥8) = full body, warm (≥3) = breadcrumb, cold = name only. Heat rises on use (+1 auto-detect), decays per session if unused. Domain scoping via `applies-to` field. Write your own: add `name`, `heat-default`, `breadcrumb`, `applies-to` frontmatter. Configure thresholds in `settings.json`.
@@ -92,16 +93,6 @@ cp .soma/protocols/_template.md .soma/protocols/my-protocol.md
 ### 2. Edit the frontmatter
 
 ```yaml
----
-type: protocol
-name: my-protocol
-status: active
-updated: 2026-03-09
-heat-default: warm
-applies-to: [typescript]
-breadcrumb: "One sentence that captures what this protocol enforces. This is ALL the agent sees when warm."
----
-```
 
 **Required frontmatter fields:**
 

@@ -6,7 +6,6 @@ order: 2
 ---
 
 
-
 <!-- tldr -->
 Sessions are breaths: inhale (configurable boot steps: identity, preload, protocols, muscles, scripts, git-context) → work → breathe or exhale (save state, decay heat, write preload). Git context loads recent commits/diffs automatically. Heat system loads hot content fully, warm as breadcrumbs, cold stays dormant. Context warnings and preload staleness are configurable. All thresholds in `settings.json`.
 <!-- /tldr -->
@@ -31,7 +30,7 @@ Session 3 (inhale) ← ...and so on
 
 ### Inhale (Session Start)
 
-When Soma boots, it runs a configurable sequence of **boot steps**:
+When Soma boots, she runs a configurable sequence of **boot steps**:
 
 | Step | What Loads | Default |
 |------|-----------|---------|
@@ -71,7 +70,7 @@ Set `"enabled": false` to disable. See [Configuration](/docs/configuration#git-c
 When context fills up, Soma automatically breathes — saving state and continuing into a fresh session. You can also trigger this manually:
 
 - **`/breathe`** — save state + auto-continue (seamless rotation)
-- **`/exhale`** — save state + stop (alias: `/flush`)
+- **`/exhale`** — save state + stop
 - **`/rest`** — disable keepalive + exhale (for when you're done for the night)
 
 Either way, Soma:
@@ -81,9 +80,9 @@ Either way, Soma:
 
 ## Identity
 
-Soma doesn't come pre-configured with a personality. Soma discovers who it is through working with you. The `identity.md` is written by Soma, not for it.
+Soma doesn't come pre-configured with a personality. She **discovers** who she is through working with you. Her `identity.md` is written by her, not for her.
 
-On first run, Soma sees an empty identity file and writes its own based on the workspace and your interactions. See [Identity](/docs/identity) for the full guide on discovery, layering, and customization.
+On first run, Soma sees an empty identity file and writes her own based on the workspace and your interactions. See [Identity](/docs/identity) for the full guide on discovery, layering, and customization.
 
 ## Muscles
 

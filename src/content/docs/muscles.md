@@ -15,12 +15,11 @@ Muscles are **learned patterns** — reusable knowledge that Soma builds from ex
 
 ## How Muscles Form
 
-Muscles start as observations. When Soma notices a pattern across sessions — a deployment process, a code style, an API workflow — Soma writes it down as a muscle file in `.soma/memory/muscles/`.
+Muscles start as observations. When Soma notices a pattern across sessions — a deployment process, a code style, an API workflow — she writes it down as a muscle file in `.soma/memory/muscles/`.
 
 A muscle is a markdown file with frontmatter:
 
 ```markdown
-
 # Deployment — Muscle
 
 > Learned patterns for deploying Astro sites to Vercel.
