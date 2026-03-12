@@ -51,6 +51,14 @@ const typeIconNames: Record<string, string> = {
   automation: 'extensions',
 };
 
+const typeAccentColors: Record<string, string> = {
+  protocol: 'rgba(168, 232, 168, 0.25)',
+  muscle: 'rgba(232, 168, 124, 0.25)',
+  skill: 'rgba(124, 178, 212, 0.25)',
+  template: 'rgba(190, 152, 232, 0.25)',
+  automation: 'rgba(200, 200, 120, 0.25)',
+};
+
 const installCmd = item.type === 'template'
   ? `soma init --template ${item.slug}`
   : `/install ${item.type} ${item.slug}`;
@@ -107,29 +115,31 @@ const ghUrl = item.type === 'template'
         <h2>What's Included</h2>
         
         {templateData!.required.length > 0 && (
-          <div class="includes-grid">
+          <div class="inc-grid">
             {templateData!.required.map(req => (
-              <a href={`/hub/${req.type}/${req.slug}`} class="include-card" data-expanded="false">
-                <div class="include-card-header">
-                  <span class="include-type-icon"><Icon name={typeIconNames[req.type] as any} size={14} /></span>
-                  <span class="include-name">{req.name}</span>
-                  <span class={`include-tier tier-${req.tier || 'community'}`}>{req.tier || 'community'}</span>
+              <a href={`/hub/${req.type}/${req.slug}`} class="inc-card" style={`--card-accent: ${typeAccentColors[req.type] || typeAccentColors.protocol}`}>
+                <div class="inc-top">
+                  <h3 class="inc-name">{req.name}</h3>
+                  {req.version && <span class="inc-version">v{req.version}</span>}
                 </div>
-                {req.breadcrumb && (
-                  <p class="include-desc">{req.breadcrumb}</p>
-                )}
+                <p class="inc-desc">{req.breadcrumb || req.description}</p>
+                <div class="inc-meta">
+                  {req.tier && <span class={`inc-tier tier-${req.tier}`}>{req.tier}</span>}
+                  {req.heatDefault && <span class="inc-heat">{req.heatDefault}</span>}
+                </div>
                 {req.tags && req.tags.length > 0 && (
-                  <div class="include-tags">
-                    {(req.tags as string[]).slice(0, 4).map(t => <span class="include-tag">{t}</span>)}
+                  <div class="inc-tags">
+                    {(req.tags as string[]).slice(0, 3).map(t => <span class="inc-tag">{t}</span>)}
                   </div>
                 )}
+                <span class="inc-author">{req.author}</span>
               </a>
             ))}
           </div>
         )}
 
         {templateData!.missing.length > 0 && (
-          <p class="include-missing">
+          <p class="inc-missing">
             ⚠ Not found in hub: {templateData!.missing.join(', ')}
           </p>
         )}
@@ -138,17 +148,24 @@ const ghUrl = item.type === 'template'
           <div class="core-section">
             <h3 class="core-heading">Ships with Soma</h3>
             <p class="core-subtext">These core protocols are always available — no install needed.</p>
-            <div class="includes-grid includes-grid-core">
+            <div class="inc-grid inc-grid-core">
               {templateData!.coreProtocols.map(cp => (
-                <a href={`/hub/${cp.type}/${cp.slug}`} class="include-card include-card-core">
-                  <div class="include-card-header">
-                    <span class="include-type-icon"><Icon name="protocols" size={14} /></span>
-                    <span class="include-name">{cp.name}</span>
-                    <span class="include-tier tier-core">core</span>
+                <a href={`/hub/${cp.type}/${cp.slug}`} class="inc-card inc-card-core" style="--card-accent: rgba(124, 178, 212, 0.25)">
+                  <div class="inc-top">
+                    <h3 class="inc-name">{cp.name}</h3>
+                    {cp.version && <span class="inc-version">v{cp.version}</span>}
                   </div>
-                  {cp.breadcrumb && (
-                    <p class="include-desc">{cp.breadcrumb}</p>
+                  <p class="inc-desc">{cp.breadcrumb || cp.description}</p>
+                  <div class="inc-meta">
+                    <span class="inc-tier tier-core">core</span>
+                    {cp.heatDefault && <span class="inc-heat">{cp.heatDefault}</span>}
+                  </div>
+                  {cp.tags && cp.tags.length > 0 && (
+                    <div class="inc-tags">
+                      {(cp.tags as string[]).slice(0, 3).map(t => <span class="inc-tag">{t}</span>)}
+                    </div>
                   )}
+                  <span class="inc-author">{cp.author}</span>
                 </a>
               ))}
             </div>
@@ -576,9 +593,9 @@ const ghUrl = item.type === 'template'
 
   .source-link:hover { text-decoration: underline; }
 
-  /* Template Includes */
+  /* Template Includes — required items match hub card format */
   .includes-section {
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-2xl);
   }
 
   .includes-section h2 {
@@ -588,96 +605,114 @@ const ghUrl = item.type === 'template'
     margin-bottom: var(--space-xl);
   }
 
-  .includes-grid {
+  .inc-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: var(--space-lg);
+    gap: var(--grid-gap);
     margin-bottom: var(--space-xl);
   }
 
-  .include-card {
+  /* Required cards — same structure as hub-card */
+  .inc-card {
     display: flex;
     flex-direction: column;
-    padding: var(--space-lg) var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     text-decoration: none;
     color: var(--text-primary);
     transition: all 0.2s ease;
-    cursor: pointer;
+    border-left: 3px solid var(--card-accent, var(--border-subtle));
   }
 
-  .include-card:hover {
+  .inc-card:hover {
     border-color: var(--border-accent);
     transform: translateY(-2px);
     box-shadow: 0 8px 24px var(--shadow-accent-soft);
   }
 
-  .include-card-header {
+  .inc-top {
     display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    margin-bottom: var(--space-sm);
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-md);
   }
 
-  .include-type-icon {
-    color: var(--accent-bright);
-    display: flex;
-    align-items: center;
-  }
-
-  .include-name {
+  .inc-name {
     font-family: var(--font-display);
     font-size: var(--body-secondary);
     font-weight: 600;
     text-transform: capitalize;
-    flex: 1;
   }
 
-  .include-tier {
+  .inc-version {
     font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 1px var(--space-sm);
-    border-radius: var(--radius-sm);
+    font-size: var(--badge-text);
+    color: var(--text-muted);
   }
 
-  .include-desc {
-    font-size: var(--label-text);
+  .inc-desc {
+    font-size: var(--body-text);
     color: var(--text-secondary);
-    line-height: var(--leading-relaxed);
-    margin: var(--space-sm) 0;
+    line-height: var(--leading-normal);
+    flex: 1;
+    margin-bottom: var(--space-lg);
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  .include-tags {
+  .inc-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-xs, 4px);
+    align-items: center;
+    gap: var(--space-md);
+    font-size: var(--badge-text);
+  }
+
+  .inc-tier {
+    font-family: var(--font-mono);
+    font-size: var(--badge-text);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .inc-heat { color: var(--warm-bright); font-style: italic; }
+
+  .inc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
     margin-top: var(--space-sm);
   }
 
-  .include-tag {
+  .inc-tag {
+    color: var(--accent-bright);
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: var(--badge-text);
     padding: 1px var(--space-sm);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
-    color: var(--accent-bright);
   }
 
-  .include-missing {
+  .inc-author {
+    color: var(--text-muted);
+    font-size: var(--badge-text);
+    margin-top: var(--space-sm);
+  }
+
+  .inc-missing {
     font-size: var(--label-text);
     color: var(--warm-bright);
     margin-bottom: var(--space-lg);
   }
 
+  /* Core section — compact variant */
   .core-section {
     border-top: 1px solid var(--border-subtle);
     padding-top: var(--space-xl);
@@ -697,19 +732,31 @@ const ghUrl = item.type === 'template'
     margin-bottom: var(--space-lg);
   }
 
-  .includes-grid-core .include-card {
+  .inc-grid-core {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .inc-card-core {
+    padding: var(--space-lg) var(--card-pad-x);
     background: transparent;
     border-color: var(--border-subtle);
+    border-left-width: 2px;
     opacity: 0.8;
   }
 
-  .includes-grid-core .include-card:hover {
+  .inc-card-core:hover {
     opacity: 1;
     background: var(--surface-card);
   }
 
-  .include-card-core .include-desc {
+  .inc-card-core .inc-desc {
+    font-size: var(--label-text);
     -webkit-line-clamp: 2;
+    margin-bottom: var(--space-md);
+  }
+
+  .inc-card-core .inc-name {
+    font-size: var(--label-text);
   }
 
   @media (max-width: 480px) {
