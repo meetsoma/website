@@ -6,7 +6,6 @@ order: 1
 ---
 
 
-
 <!-- tldr -->
 `npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma -c` to continue with last session's context. `/breathe` saves + continues, `/exhale` saves + stops, `/pin` keeps protocols hot, `/kill` drops them cold.
 <!-- /tldr -->
@@ -36,7 +35,7 @@ On first run, Soma will ask to create a `.soma/` directory. Say yes.
 | **Language/framework** | Scans for `tsconfig.json`, `Cargo.toml`, `go.mod`, `pyproject.toml`, etc. | Tailors identity and suggests relevant protocols |
 | **Monorepo signals** | Detects `pnpm-workspace.yaml`, multiple `package.json`, etc. | Suggests parent-child setup |
 
-The detected context shapes Soma's initial identity and the protocols Soma recommends installing. You can always edit `identity.md` afterward.
+The detected context shapes Soma's initial identity and the protocols she recommends installing. You can always edit `identity.md` afterward.
 
 ## Session Modes
 
@@ -73,7 +72,7 @@ Pick from previous sessions to resume.
 | Command | What it does |
 |---------|-------------|
 | `/breathe` | Save state + auto-continue into fresh session |
-| `/exhale` | Save state, write preload, session ends (alias: `/flush`) |
+| `/exhale` | Save state, write preload, session ends |
 | `/rest` | Disable keepalive + exhale — for when you're done for the night |
 | `/inhale` | Start fresh — shows preload status, suggests `soma -c` |
 | `/pin <name>` | Pin a protocol/muscle to hot (stays loaded) |

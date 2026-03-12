@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 3.5
 ---
 
+# Heat System
 
 > TL;DR: Everything in Soma has a temperature. Hot content loads fully into the agent's prompt. Warm content loads as a one-line reminder. Cold content is listed but not loaded. Heat rises when things get used, decays when they don't. The agent naturally learns what matters.
 
@@ -125,7 +126,7 @@ All thresholds are configurable in `settings.json`. Only set what you want to ch
 }
 ```
 
-See [Configuration](/docs/configuration) for the full settings reference.
+See [Configuration](configuration.md) for the full settings reference.
 
 ## First Boot
 
@@ -149,6 +150,6 @@ The result: **the agent's prompt reflects what you actually do, not what you onc
 
 ## Related
 
-- [Configuration](/docs/configuration) — all heat thresholds, boot steps, context warnings
-- [Protocols](/docs/protocols) — writing protocols, domain scoping, frontmatter
-- [Muscles](/docs/muscles) — writing muscles, digest system, token budget
+- [Configuration](configuration.md) — all heat thresholds, boot steps, context warnings
+- [Protocols](protocols.md) — writing protocols, domain scoping, frontmatter
+- [Muscles](muscles.md) — writing muscles, digest system, token budget
