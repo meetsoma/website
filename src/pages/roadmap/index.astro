@@ -6,6 +6,23 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
 const timeline = [
   {
+    version: 'v0.5.0',
+    label: 'Stabilization & Prompt Intelligence',
+    date: 'Mar 2026',
+    items: [
+      'Full prompt replacement — Soma compiles the entire system prompt from identity, protocols, muscles, tools, and context. Pi\'s default prompt replaced when detected.',
+      'Identity in system prompt — persistent across turns, not just boot message. Token-cache friendly.',
+      'Command cleanup — 19 → 15 commands. /flush removed, /preload and /debug folded into /soma subcommands.',
+      'System-core.md rewrite — day-one user focused. Commands table, "How to Work" section, actionable not descriptive.',
+      'Session switch fix — identity and prompt cache properly rebuilt on /breathe and /auto-continue.',
+      'Context warnings — fire reliably at 50/70/80/85%. Auto-exhale at 85%.',
+      'Auto-commit — .soma/ state committed on every exhale/breathe. Toggle with /auto-commit.',
+      '/soma prompt diagnostic — preview compiled prompt sections, identity status, heat levels, context %.',
+      'Audit improvements — 11 scripts, reduced false positives, proper test counting (255 tests).',
+      'Multi-repo sync pipeline — sync-to-cli.sh, website doc sync with frontmatter preservation.',
+    ]
+  },
+  {
     version: 'v0.4.0',
     label: 'AMPS & Distribution',
     date: 'Mar 2026',
@@ -78,12 +95,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     name: 'AI Content Screening',
     icon: 'skills',
     description: 'Haiku-powered review of community submissions — injection scanning, quality scoring, automatic tier classification for hub contributions.',
-    status: 'Planned',
-  },
-  {
-    name: 'Prompt Metabolism',
-    icon: 'muscles',
-    description: 'Full prompt replacement — Soma compiles the entire system prompt from identity, protocols, muscles, and session context. The static prompt disappears entirely.',
     status: 'Planned',
   },
   {
