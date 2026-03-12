@@ -2,23 +2,38 @@
 import Layout from '../../../layouts/Layout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import Icon from '../../../components/icons/SomaIcons.astro';
-import { getAllItems, getVersionHistory, type HubItem, type VersionEntry, renderMarkdown } from '../../../lib/hub';
+import { getAllItems, getVersionHistory, resolveTemplateRequires, getCoreProtocols, type HubItem, type VersionEntry, renderMarkdown } from '../../../lib/hub';
 
 export async function getStaticPaths() {
   const items = getAllItems();
   const paths = [];
   for (const item of items) {
     const versions = await getVersionHistory(item);
+    // For templates, resolve their requirements
+    const templateData = item.type === 'template'
+      ? { ...resolveTemplateRequires(item), coreProtocols: getCoreProtocols() }
+      : null;
     paths.push({
       params: { type: item.type, slug: item.slug },
-      props: { item, versions },
+      props: { item, versions, templateData },
     });
   }
   return paths;
 }
 
-const { item, versions } = Astro.props as { item: HubItem; versions: VersionEntry[] };
+interface TemplateData {
+  required: HubItem[];
+  missing: string[];
+  coreProtocols: HubItem[];
+}
+
+const { item, versions, templateData } = Astro.props as {
+  item: HubItem;
+  versions: VersionEntry[];
+  templateData: TemplateData | null;
+};
 const hasVersions = versions.length > 0;
+const isTemplate = item.type === 'template' && templateData !== null;
 
 const typeLabels: Record<string, string> = {
   protocol: 'Protocol',
@@ -85,6 +100,62 @@ const ghUrl = item.type === 'template'
         <a href={ghUrl} target="_blank" rel="noopener">GitHub →</a>
       </p>
     </section>
+
+    <!-- Template Includes -->
+    {isTemplate && (templateData!.required.length > 0 || templateData!.coreProtocols.length > 0) && (
+      <section class="includes-section">
+        <h2>What's Included</h2>
+        
+        {templateData!.required.length > 0 && (
+          <div class="includes-grid">
+            {templateData!.required.map(req => (
+              <a href={`/hub/${req.type}/${req.slug}`} class="include-card" data-expanded="false">
+                <div class="include-card-header">
+                  <span class="include-type-icon"><Icon name={typeIconNames[req.type] as any} size={14} /></span>
+                  <span class="include-name">{req.name}</span>
+                  <span class={`include-tier tier-${req.tier || 'community'}`}>{req.tier || 'community'}</span>
+                </div>
+                {req.breadcrumb && (
+                  <p class="include-desc">{req.breadcrumb}</p>
+                )}
+                {req.tags && req.tags.length > 0 && (
+                  <div class="include-tags">
+                    {(req.tags as string[]).slice(0, 4).map(t => <span class="include-tag">{t}</span>)}
+                  </div>
+                )}
+              </a>
+            ))}
+          </div>
+        )}
+
+        {templateData!.missing.length > 0 && (
+          <p class="include-missing">
+            ⚠ Not found in hub: {templateData!.missing.join(', ')}
+          </p>
+        )}
+
+        {templateData!.coreProtocols.length > 0 && (
+          <div class="core-section">
+            <h3 class="core-heading">Ships with Soma</h3>
+            <p class="core-subtext">These core protocols are always available — no install needed.</p>
+            <div class="includes-grid includes-grid-core">
+              {templateData!.coreProtocols.map(cp => (
+                <a href={`/hub/${cp.type}/${cp.slug}`} class="include-card include-card-core">
+                  <div class="include-card-header">
+                    <span class="include-type-icon"><Icon name="protocols" size={14} /></span>
+                    <span class="include-name">{cp.name}</span>
+                    <span class="include-tier tier-core">core</span>
+                  </div>
+                  {cp.breadcrumb && (
+                    <p class="include-desc">{cp.breadcrumb}</p>
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+    )}
 
     <!-- Tags -->
     {(item.appliesTo || item.topic || item.keywords) && (
@@ -505,8 +576,145 @@ const ghUrl = item.type === 'template'
 
   .source-link:hover { text-decoration: underline; }
 
+  /* Template Includes */
+  .includes-section {
+    margin-bottom: var(--space-xl);
+  }
+
+  .includes-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-xl);
+  }
+
+  .includes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .include-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .include-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-accent-soft);
+  }
+
+  .include-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+  }
+
+  .include-type-icon {
+    color: var(--accent-bright);
+    display: flex;
+    align-items: center;
+  }
+
+  .include-name {
+    font-family: var(--font-display);
+    font-size: var(--body-secondary);
+    font-weight: 600;
+    text-transform: capitalize;
+    flex: 1;
+  }
+
+  .include-tier {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1px var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .include-desc {
+    font-size: var(--label-text);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: var(--space-sm) 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .include-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs, 4px);
+    margin-top: var(--space-sm);
+  }
+
+  .include-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 1px var(--space-sm);
+    border-radius: var(--radius-sm);
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
+  }
+
+  .include-missing {
+    font-size: var(--label-text);
+    color: var(--warm-bright);
+    margin-bottom: var(--space-lg);
+  }
+
+  .core-section {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: var(--space-xl);
+  }
+
+  .core-heading {
+    font-family: var(--font-display);
+    font-size: var(--body-text);
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .core-subtext {
+    font-size: var(--label-text);
+    color: var(--text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .includes-grid-core .include-card {
+    background: transparent;
+    border-color: var(--border-subtle);
+    opacity: 0.8;
+  }
+
+  .includes-grid-core .include-card:hover {
+    opacity: 1;
+    background: var(--surface-card);
+  }
+
+  .include-card-core .include-desc {
+    -webkit-line-clamp: 2;
+  }
+
   @media (max-width: 480px) {
     .container { padding: var(--space-xl) var(--space-lg); }
     .body-section { padding: var(--space-xl); }
+    .includes-grid { grid-template-columns: 1fr; }
   }
 </style>

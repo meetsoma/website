@@ -36,6 +36,8 @@ interface HubItem {
   body: string;
   /** Version history from git commits (populated at build time) */
   versions?: VersionEntry[];
+  /** Template manifest — requires, settings, etc. */
+  manifest?: Record<string, any>;
 }
 
 interface VersionEntry {
@@ -131,6 +133,7 @@ function loadDir(type: HubItem['type'], dir: string): HubItem[] {
       if (manifest.author) item.author = manifest.author;
       if (manifest.version) item.version = manifest.version;
       if (manifest.tier) item.tier = manifest.tier;
+      item.manifest = manifest;
     }
 
     items.push(item);
@@ -157,6 +160,46 @@ export function getTemplates(): HubItem[] {
 
 export function getAutomations(): HubItem[] {
   return loadDir('automation', 'automations');
+}
+
+/**
+ * Get the bundled core protocols that ship with every Soma install.
+ * These don't need to be in `requires` — they're always present.
+ */
+export function getCoreProtocols(): HubItem[] {
+  return getProtocols().filter(p => p.tier === 'core');
+}
+
+/**
+ * Resolve a template's `requires` slugs to full HubItem objects.
+ * Returns { required: HubItem[], missing: string[] }
+ */
+export function resolveTemplateRequires(item: HubItem): { required: HubItem[]; missing: string[] } {
+  if (!item.manifest?.requires) return { required: [], missing: [] };
+
+  const allItems = getAllItems();
+  const itemMap = new Map(allItems.map(i => [`${i.type}:${i.slug}`, i]));
+
+  const required: HubItem[] = [];
+  const missing: string[] = [];
+
+  const requires = item.manifest.requires as Record<string, string[]>;
+  for (const [type, slugs] of Object.entries(requires)) {
+    if (!Array.isArray(slugs)) continue;
+    // Singularize the type key (protocols → protocol)
+    const singularType = type.replace(/s$/, '');
+    for (const slug of slugs) {
+      const key = `${singularType}:${slug}`;
+      const found = itemMap.get(key);
+      if (found) {
+        required.push(found);
+      } else {
+        missing.push(`${singularType}/${slug}`);
+      }
+    }
+  }
+
+  return { required, missing };
 }
 
 export function getAllItems(): HubItem[] {
