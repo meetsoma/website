@@ -4,8 +4,8 @@
  */
 import { atom, computed } from 'nanostores';
 
-export type HubType = 'all' | 'protocol' | 'muscle' | 'skill' | 'template' | 'script';
-export type HubTier = 'all' | 'core' | 'official' | 'community' | 'experimental';
+export type HubType = 'all' | 'protocol' | 'muscle' | 'skill' | 'template' | 'automation';
+export type HubTier = 'all' | 'core' | 'official' | 'community' | 'pro';
 
 /** Active type filter */
 export const $typeFilter = atom<HubType>('all');
