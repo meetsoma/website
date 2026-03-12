@@ -66,6 +66,15 @@ const installCmd = item.type === 'template'
 const ghUrl = item.type === 'template'
   ? `https://github.com/meetsoma/community/tree/main/templates/${item.slug}`
   : `https://github.com/meetsoma/community/blob/main/${item.type}s/${item.slug}.md`;
+
+// Template stats
+const requiredCount = isTemplate ? templateData!.required.length : 0;
+const coreCount = isTemplate ? templateData!.coreProtocols.length : 0;
+
+// Future stats — placeholders for when we have real data
+const installs = item.manifest?.stats?.installs ?? null as number | null;
+const likes = item.manifest?.stats?.likes ?? null as number | null;
+const compat = item.manifest?.stats?.compat ?? null as number | null;
 ---
 
 <Layout
@@ -98,6 +107,19 @@ const ghUrl = item.type === 'template'
         </div>
       )}
     </header>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      {item.tier && <div class="stat"><span class="stat-label">Tier</span><span class={`stat-value tier-badge tier-${item.tier}`}>{item.tier}</span></div>}
+      {item.version && <div class="stat"><span class="stat-label">Version</span><span class="stat-value">{item.version}</span></div>}
+      {item.heatDefault && <div class="stat"><span class="stat-label">Heat</span><span class="stat-value stat-heat">{item.heatDefault}</span></div>}
+      <div class="stat"><span class="stat-label">Author</span><span class="stat-value">{item.author}</span></div>
+      {isTemplate && <div class="stat"><span class="stat-label">Includes</span><span class="stat-value">{requiredCount} + {coreCount} core</span></div>}
+      {installs !== null && <div class="stat"><span class="stat-label">Installs</span><span class="stat-value">{installs.toLocaleString()}</span></div>}
+      {likes !== null && <div class="stat"><span class="stat-label">Likes</span><span class="stat-value">♥ {likes}</span></div>}
+      {compat !== null && <div class="stat"><span class="stat-label">Compat</span><span class={`stat-value ${compat >= 90 ? 'stat-good' : compat >= 70 ? 'stat-warn' : 'stat-bad'}`}>{compat}%</span></div>}
+      <a href={ghUrl} target="_blank" rel="noopener" class="stat stat-link"><span class="stat-label">Source</span><span class="stat-value">GitHub ↗</span></a>
+    </div>
 
     <!-- Install -->
     <section class="install-section">
@@ -353,6 +375,61 @@ const ghUrl = item.type === 'template'
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
   }
+
+  /* Stats Bar */
+  .stats-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    margin-bottom: var(--space-xl);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-right: var(--space-xl);
+    border-right: 1px solid var(--border-subtle);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .stat:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: var(--badge-text);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: var(--body-secondary);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .stat-heat { color: var(--warm-bright); }
+  .stat-good { color: rgb(168, 232, 168); }
+  .stat-warn { color: var(--warm-bright); }
+  .stat-bad { color: rgb(232, 120, 120); }
+
+  .stat-link {
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .stat-link:hover { opacity: 0.7; }
+  .stat-link .stat-value { color: var(--accent-bright); }
 
   /* Install */
   .install-section {
