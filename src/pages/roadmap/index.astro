@@ -20,6 +20,10 @@ const timeline = [
       '/soma prompt diagnostic — preview compiled prompt sections, identity status, heat levels, context %.',
       'Audit improvements — 11 scripts, reduced false positives, proper test counting (255 tests).',
       'Multi-repo sync pipeline — sync-to-cli.sh, website doc sync with frontmatter preservation.',
+      'Auto-breathe — proactive context management. Wraps up at configurable %, auto-rotates before 85%. /auto-breathe command for runtime toggle.',
+      'Learning protocols — correction-capture + detection-triggers bundled. Agent learns from corrections automatically.',
+      'soma-compat.sh — compatibility scoring (0-100) for protocol/muscle overlap, redundancy, and directive conflicts.',
+      'soma-update-check.sh — compare local protocol versions against hub, --update to pull latest.',
     ]
   },
   {
@@ -82,26 +86,26 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Auto-Breathe',
     icon: 'protocols',
-    description: 'Proactive context management — agent wraps up at configurable thresholds, auto-rotates sessions when context gets high. Safety net at 85% always on. Opt-in via settings.',
-    status: 'Built — shipping next release',
+    description: 'Proactive context management — agent wraps up at configurable thresholds, auto-rotates sessions when context gets high. Safety net at 85% always on. /auto-breathe command for runtime toggle.',
+    status: 'Shipped',
   },
   {
     name: 'Learning Protocols',
     icon: 'muscles',
     description: 'correction-capture + detection-triggers — the agent recognizes when you correct it, logs the pattern, and escalates to a muscle or protocol if it keeps happening.',
-    status: 'Built — shipping next release',
+    status: 'Shipped',
   },
   {
     name: 'Protocol Update Check',
     icon: 'extensions',
     description: 'Detect when your local protocols are outdated vs the hub. Version comparison against hub-index.json with --update to pull latest.',
-    status: 'Built — shipping next release',
+    status: 'Shipped',
   },
   {
     name: 'Compatibility Scoring',
     icon: 'skills',
     description: 'Detect overlap, redundancy, and conflicting directives across your installed protocols and muscles. Scores your stack 0-100.',
-    status: 'Built — shipping next release',
+    status: 'Shipped',
   },
   {
     name: 'Template Detail Pages',
