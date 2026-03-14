@@ -5,6 +5,7 @@ section: "Reference"
 order: 9
 ---
 
+# Scripts
 
 <!-- tldr -->
 Standalone bash tools that ship with Soma — run from the command line, no agent session needed. `soma-compat.sh` checks for content conflicts. `soma-update-check.sh` finds outdated protocols/muscles. `soma-snapshot.sh` creates project snapshots. `validate-content.sh` validates content before PRs.

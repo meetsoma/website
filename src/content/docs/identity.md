@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 2.5
 ---
 
+# Identity
 
 <!-- tldr -->
 `.soma/identity.md` — discovered by Soma through use, not configured. Layered: project (primary) → parent (context) → global (baseline). Gitignored by default (personal). Edit to refine, don't over-specify. Identity is *who*, protocols are *how*.

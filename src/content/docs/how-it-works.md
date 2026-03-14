@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 2
 ---
 
+
 <!-- tldr -->
 Sessions are breaths: inhale (configurable boot steps: identity, preload, protocols, muscles, scripts, git-context) → work → breathe or exhale (save state, decay heat, write preload). Git context loads recent commits/diffs automatically. Heat system loads hot content fully, warm as breadcrumbs, cold stays dormant. Context warnings and preload staleness are configurable. All thresholds in `settings.json`.
 <!-- /tldr -->
@@ -149,6 +150,8 @@ For proactive sessions, enable **auto-breathe** (`/auto-breathe on` or `settings
 2. **Rotate** at `rotateAt` (default 70%) — write preload, countdown starts
 3. **Grace period** — countdown of `graceTurns` turns (default 2). If you send a message, the countdown **pauses** and the agent addresses your concern. Then the countdown restarts. You're never cut off mid-thought.
 4. **Rotation** — when the countdown reaches 0, session rotates seamlessly
+
+Rotation uses the **capability router** (`soma-route.ts`) when a slash command has run in the session — this calls `newSession()` directly for a seamless transition. If no command has run, the CLI handles rotation via process restart (transparent to the user).
 
 Rotation uses the **capability router** (`soma-route.ts`) when a slash command has run in the session — this calls `newSession()` directly for a seamless transition. If no command has run, the CLI handles rotation via process restart (transparent to the user).
 

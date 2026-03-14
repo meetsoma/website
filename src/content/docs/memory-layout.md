@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 4
 ---
 
+# Memory Layout
 
 <!-- tldr -->
 Two levels: project (`.soma/` in repo) and user (`~/.soma/agent/`). Project has: identity.md, STATE.md, protocols/, muscles/, automations/, scripts/, memory/ (preloads, sessions), settings.json. User has: global settings, extensions (soma-boot, soma-header, soma-statusline), global skills. Identity + memory are gitignored (personal). STATE.md + skills are tracked (shareable).

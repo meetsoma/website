@@ -5,6 +5,7 @@ section: "Reference"
 order: 6
 ---
 
+# Configuration
 
 <!-- tldr -->
 `settings.json` at any level in the soma chain (project → parent → global). Project overrides parent overrides global. Controls: heat thresholds, muscle budgets, boot steps (including git-context), context warning thresholds, preload staleness, auto-detection, parent-child inheritance, persona, system prompt toggles, guard rules. Only set what you want to change — defaults fill the rest.
@@ -182,6 +183,21 @@ Protects core Soma files and git identity from accidental modification.
 | `coreFiles` | `"warn"` | Protection for identity.md, STATE.md, protocols/, settings.json. Options: `"allow"` (no guard), `"warn"` (notify on write), `"block"` (require confirmation) |
 | `bashCommands` | `"warn"` | Dangerous bash command guard (rm -rf, git push --force, etc.). `"allow"` = no prompts (power user), `"warn"` = confirm first, `"block"` = prevent entirely |
 | `gitIdentity` | `null` | Expected git identity. `null` = hook checks email is set. Object = validates specific email/name. |
+| `toolGates` | `{}` | Tool→muscle gating. Require reading a muscle before using certain bash commands. Keys are command substrings, values are `{ muscle, mode }`. |
+
+**Example: tool→muscle gating:**
+```json
+{
+  "guard": {
+    "toolGates": {
+      "git push": { "muscle": "ship-cycle", "mode": "warn" },
+      "npm publish": { "muscle": "release-pipeline", "mode": "block" }
+    }
+  }
+}
+```
+
+When the agent runs `git push` without having read the `ship-cycle` muscle this session, it gets a notification (warn) or is blocked (block). Once the muscle file is read, the gate opens silently.
 
 **Example: strict guard with enforced git identity:**
 ```json
