@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 8
 ---
 
-# Workspaces
 
 <!-- tldr -->
 Soma supports parent-child `.soma/` directories for monorepos and multi-project setups. Parent provides shared identity, protocols, muscles, tools — child inherits by default, overrides what it needs. Solo body mode: when only a parent exists, child projects use it directly. All inheritance is toggleable per-dimension via `inherit` settings. Smart init detects parent workspaces automatically on first run.

@@ -90,8 +90,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
     <!-- AMPS Detail Sections -->
     <section class="layers-detail">
-      <h2 class="amps-section-title">AMPS — The Content System</h2>
-      <p class="amps-section-sub">The content layers you create. Everything under <code>.soma/amps/</code>.</p>
+      <SectionHeader title="AMPS — The Content System" subtitle="The content layers you create. Everything under .soma/amps/." />
 
       <div class="layer-detail" id="automations">
         <div class="layer-header">
@@ -244,8 +243,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
         </div>
       </div>
 
-      <h2 class="amps-section-title system-title">System Layers</h2>
-      <p class="amps-section-sub">Runtime infrastructure inherited from <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>.</p>
+      <SectionHeader title="System Layers" subtitle="Runtime infrastructure inherited from Pi." />
 
       <div class="layer-detail" id="extensions">
         <div class="layer-header">
@@ -631,32 +629,6 @@ import Icon from '../../components/icons/SomaIcons.astro';
     flex-direction: column;
     gap: var(--space-2xl);
     margin-bottom: var(--section-gap);
-  }
-
-  .amps-section-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    font-weight: 600;
-    color: var(--accent-bright);
-    margin-bottom: 0;
-    line-height: var(--leading-tight);
-  }
-  .amps-section-title.system-title {
-    color: var(--text-muted);
-    margin-top: var(--space-2xl);
-  }
-  .amps-section-sub {
-    font-size: var(--body-text);
-    color: var(--text-secondary);
-    margin-bottom: var(--space-lg);
-  }
-  .amps-section-sub code {
-    font-family: var(--font-mono);
-    font-size: var(--label-text);
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-md);
-    background: var(--surface-accent-soft);
-    color: var(--accent-bright);
   }
 
   .layer-detail {

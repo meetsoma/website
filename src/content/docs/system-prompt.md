@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 7
 ---
 
-# System Prompt
 
 <!-- tldr -->
 Soma compiles a layered system prompt from: static core → identity → protocols/muscles (behavioral) → docs → guard awareness → CLAUDE.md note → skills. Each section is toggleable via `systemPrompt` settings. Preview with `/soma prompt`. Token budget defaults to 4000 (currently well within range). Identity placement, docs inclusion, and guard awareness are all configurable.

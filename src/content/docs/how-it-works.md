@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 2
 ---
 
-
 <!-- tldr -->
 Sessions are breaths: inhale (configurable boot steps: identity, preload, protocols, muscles, scripts, git-context) → work → breathe or exhale (save state, decay heat, write preload). Git context loads recent commits/diffs automatically. Heat system loads hot content fully, warm as breadcrumbs, cold stays dormant. Context warnings and preload staleness are configurable. All thresholds in `settings.json`.
 <!-- /tldr -->
@@ -38,7 +37,7 @@ When Soma boots, she runs a configurable sequence of **boot steps**:
 | `preload` | Last session's state (on `--continue` only) | ✅ On |
 | `protocols` | Behavioral rules, sorted by heat tier | ✅ On |
 | `muscles` | Learned patterns, within token budget | ✅ On |
-| `scripts` | Available `.soma/scripts/` with descriptions | ✅ On |
+| `scripts` | Available `.soma/amps/scripts/` with descriptions | ✅ On |
 | `git-context` | Recent commits and changed files from git | ✅ On |
 
 The boot sequence is configurable in `settings.json` — remove steps you don't want, reorder to change priority. See [Configuration](/docs/configuration#boot-sequence).
@@ -97,7 +96,7 @@ Muscles live in `.soma/amps/muscles/` and grow organically. Like protocols, they
 
 ## Protocols
 
-Protocols are behavioral rules that guide Soma's actions: how to format files, how to attribute git commits, when to exhale. They live in `.soma/protocols/` as markdown files with frontmatter.
+Protocols are behavioral rules that guide Soma's actions: how to format files, how to attribute git commits, when to exhale. They live in `.soma/amps/protocols/` as markdown files with frontmatter.
 
 ### Heat System
 

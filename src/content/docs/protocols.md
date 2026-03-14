@@ -5,13 +5,12 @@ section: "Core Concepts"
 order: 3
 ---
 
-# Protocols
 
 <!-- tldr -->
-Behavioral rules in `.soma/protocols/` as markdown with YAML frontmatter. Loaded by heat: hot (≥8) = full body, warm (≥3) = breadcrumb, cold = name only. Heat rises on use (+1 auto-detect), decays per session if unused. Domain scoping via `applies-to` field. Write your own: add `name`, `heat-default`, `breadcrumb`, `applies-to` frontmatter. Configure thresholds in `settings.json`.
+Behavioral rules in `.soma/amps/protocols/` as markdown with YAML frontmatter. Loaded by heat: hot (≥8) = full body, warm (≥3) = breadcrumb, cold = name only. Heat rises on use (+1 auto-detect), decays per session if unused. Domain scoping via `applies-to` field. Write your own: add `name`, `heat-default`, `breadcrumb`, `applies-to` frontmatter. Configure thresholds in `settings.json`.
 <!-- /tldr -->
 
-Protocols are behavioral rules that guide Soma's actions. They live in `.soma/protocols/` as markdown files with YAML frontmatter.
+Protocols are behavioral rules that guide Soma's actions. They live in `.soma/amps/protocols/` as markdown files with YAML frontmatter.
 
 ## Built-in Protocols
 
@@ -87,12 +86,22 @@ A protocol with `applies-to: [git, typescript]` loads only in projects that have
 ### 1. Create the file
 
 ```bash
-cp .soma/protocols/_template.md .soma/protocols/my-protocol.md
+cp .soma/amps/protocols/_template.md .soma/amps/protocols/my-protocol.md
 ```
 
 ### 2. Edit the frontmatter
 
 ```yaml
+---
+type: protocol
+name: my-protocol
+status: active
+updated: 2026-03-09
+heat-default: warm
+applies-to: [typescript]
+breadcrumb: "One sentence that captures what this protocol enforces. This is ALL the agent sees when warm."
+---
+```
 
 **Required frontmatter fields:**
 
@@ -148,11 +157,11 @@ Write the breadcrumb to be self-contained — it's the only thing loaded at warm
 Protocols resolve from project → parent → global, with project protocols shadowing same-named parent/global ones:
 
 ```
-CWD/.soma/protocols/       ← project (highest priority)
+CWD/.soma/amps/protocols/       ← project (highest priority)
   ↓
-../.soma/protocols/         ← parent (if exists)
+../.soma/amps/protocols/         ← parent (if exists)
   ↓
-~/.soma/protocols/          ← global (lowest priority)
+~/.soma/amps/protocols/          ← global (lowest priority)
 ```
 
 If both project and global define `git-identity.md`, the project version wins.
@@ -161,7 +170,7 @@ If both project and global define `git-identity.md`, the project version wins.
 
 | File | Purpose |
 |------|---------|
-| `.soma/protocols/*.md` | Protocol definitions |
-| `.soma/protocols/_template.md` | Template for new protocols |
+| `.soma/amps/protocols/*.md` | Protocol definitions |
+| `.soma/amps/protocols/_template.md` | Template for new protocols |
 | `.soma/.protocol-state.json` | Heat state (auto-managed, don't edit) |
 | `.soma/settings.json` | Override heat thresholds |

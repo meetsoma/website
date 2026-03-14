@@ -5,7 +5,6 @@ section: "Reference"
 order: 7
 ---
 
-# Commands
 
 <!-- tldr -->
 `/inhale` — load preload into current session. `/breathe` — save + auto-continue. `/exhale` — save + stop. `/rest` — disable keepalive + exhale (going to bed). `/pin <name>` — bump heat +5. `/kill <name>` — drop heat to 0. `/install <type> <name>` — install from hub. `/list local|remote` — browse content. `/soma` — status + management (subcommands: `init`, `prompt`, `preload`, `debug`). `/scratch <note>` — quick notes to scratchpad. `/auto-breathe on|off` — toggle proactive context rotation. `/auto-commit on|off` — toggle .soma/ auto-commit. `/route` — show extension capability router status. CLI: `soma` (fresh), `soma -c` (continue).

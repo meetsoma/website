@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 5.5
 ---
 
-# Muscles
 
 <!-- tldr -->
 Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = digest only, cold = name listed. Digest blocks between `<!-- digest:start -->` / `<!-- digest:end -->` markers. Write digests — they're what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
@@ -20,6 +19,17 @@ Muscles start as observations. When Soma notices a pattern across sessions — a
 A muscle is a markdown file with frontmatter:
 
 ```markdown
+---
+type: muscle
+status: active
+topic: [deployment, vercel, astro]
+keywords: [deploy, build, preview, production]
+created: 2026-03-09
+updated: 2026-03-09
+heat: 3
+loads: 0
+---
+
 # Deployment — Muscle
 
 > Learned patterns for deploying Astro sites to Vercel.
