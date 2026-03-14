@@ -113,10 +113,10 @@ const schemaData = jsonLd || defaultJsonLd;
         --space-4xl: 5.563rem;  /* 89px */
 
         /* Typography — 8-step scale */
-        --text-xs: 0.7rem;     /* labels, captions */
-        --text-sm: 0.813rem;   /* secondary text */
-        --text-base: 0.875rem; /* body default */
-        --text-md: 1rem;       /* body emphasis */
+        --text-xs: 0.7rem;     /* badges, tags */
+        --text-sm: 0.813rem;   /* labels, metadata */
+        --text-base: 0.875rem; /* secondary body */
+        --text-md: 0.938rem;   /* body default (was 1rem — touch smaller) */
         --text-lg: 1.125rem;   /* subheadings */
         --text-xl: 1.25rem;    /* section heads */
         --text-2xl: 1.5rem;    /* page subheads */
@@ -127,6 +127,14 @@ const schemaData = jsonLd || defaultJsonLd;
         --body-secondary: var(--text-base); /* secondary body, less prominent */
         --label-text: var(--text-sm);       /* metadata, dates, author names */
         --badge-text: var(--text-xs);       /* tags, tier badges, version numbers */
+
+        /* List-specific */
+        --list-text: var(--text-base);      /* list items — slightly smaller than body */
+        --list-leading: var(--leading-normal); /* tighter line-height for lists */
+
+        /* Content widths */
+        --content-narrow: 560px;            /* subtitle, intro text — readable line length */
+        --content-wide: 610px;              /* description blocks — slightly wider */
         --card-pad-y: var(--space-2xl);     /* vertical card padding */
         --card-pad-x: var(--space-xl);      /* horizontal card padding */
         --section-gap: var(--space-3xl);    /* gap between major sections */

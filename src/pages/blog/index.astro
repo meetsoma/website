@@ -115,7 +115,7 @@ const posts = await getPublishedBlogPosts();
 
   .title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 6vw, 3rem);
+    font-size: clamp(2rem, 6vw, 2.625rem);
     font-weight: 700;
     margin-bottom: var(--space-lg);
     background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-bright) 100%);
@@ -126,8 +126,8 @@ const posts = await getPublishedBlogPosts();
 
   .subtitle {
     color: var(--text-secondary);
-    font-size: var(--body-text);
-    max-width: 560px;
+    font-size: var(--text-lg);
+    max-width: var(--content-narrow);
     margin: 0 auto;
     line-height: var(--leading-relaxed);
   }
