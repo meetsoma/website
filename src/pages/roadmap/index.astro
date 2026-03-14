@@ -3,84 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
-
-const timeline = [
-  {
-    version: 'v0.5.0',
-    label: 'Stabilization & Prompt Intelligence',
-    date: 'Mar 2026',
-    items: [
-      'Full prompt replacement — Soma compiles the entire system prompt from identity, protocols, muscles, tools, and context. Pi\'s default prompt replaced when detected.',
-      'Identity in system prompt — persistent across turns, not just boot message. Token-cache friendly.',
-      'Command cleanup — 19 → 15 commands. /flush removed, /preload and /debug folded into /soma subcommands.',
-      'System-core.md rewrite — day-one user focused. Commands table, "How to Work" section, actionable not descriptive.',
-      'Session switch fix — identity and prompt cache properly rebuilt on /breathe and /auto-continue.',
-      'Context warnings — fire reliably at 50/70/80/85%. Auto-exhale at 85%.',
-      'Auto-commit — .soma/ state committed on every exhale/breathe. Toggle with /auto-commit.',
-      '/soma prompt diagnostic — preview compiled prompt sections, identity status, heat levels, context %.',
-      'Audit improvements — 11 scripts, reduced false positives, proper test counting (255 tests).',
-      'Multi-repo sync pipeline — sync-to-cli.sh, website doc sync with frontmatter preservation.',
-      'Auto-breathe — proactive context management. Wraps up at configurable %, auto-rotates before 85%. /auto-breathe command for runtime toggle.',
-      'Learning protocols — correction-capture + detection-triggers bundled. Agent learns from corrections automatically.',
-      'soma-compat.sh — compatibility scoring (0-100) for protocol/muscle overlap, redundancy, and directive conflicts.',
-      'soma-update-check.sh — compare local protocol versions against hub, --update to pull latest.',
-    ]
-  },
-  {
-    version: 'v0.4.0',
-    label: 'AMPS & Distribution',
-    date: 'Mar 2026',
-    items: [
-      'AMPS content types — Automations, Muscles, Protocols, Skills. The four layers of agent memory.',
-      'Compiled system prompt — dynamic assembly from hot protocols + muscle digests. Your agent\'s frontal cortex.',
-      'Distribution scope — bundled (ships with Soma) vs hub (install on demand). Only 4 essential protocols bundled.',
-      'SomaHub live loading — hub-index.json, CI auto-rebuild, Vercel deploy hook. New content appears without redeploy.',
-      'Trust infrastructure — MAINTAINERS.json, 6 CI checks, CODEOWNERS, auto-merge for trusted contributors.',
-      'Protocol graduation — heat decay floor, frontmatter enforcement, preload validation, git identity hook.',
-      'Content CLI — /install, /list, soma init --template with dependency resolution.',
-      'depends-on — cross-type dependency declarations in frontmatter.',
-      'Release automation — scope-aware sync, versioned releases, changelog management.',
-    ]
-  },
-  {
-    version: 'v0.3.0',
-    label: 'Session Intelligence',
-    date: 'Mar 2026',
-    items: [
-      '/rest — disable keepalive + exhale for end of session',
-      'Cache keepalive — auto-ping keeps prompt cache warm between turns',
-      '/keepalive and /status — session observability',
-      '11 audit scripts — PII, drift, stale terms, scope, cross-reference, docs sync, and more',
-      'Configurable boot sequence, context warnings, preload staleness',
-      'Git context on boot — recent commits and changed files injected',
-    ]
-  },
-  {
-    version: 'v0.2.0',
-    label: 'The Engine',
-    date: 'Mar 2026',
-    items: [
-      '9 core modules: boot, protocols, heat, muscles, search, settings, init, applies-to, exhale',
-      'Heat system — adaptive protocol/muscle loading with decay',
-      'Muscles — pattern memory with digest blocks and load tracking',
-      'Applies-to — protocol domain scoping by project signals',
-      '/breathe — exhale + auto-continue into fresh session',
-      'Parent-child memory — .soma chain resolution (project → workspace → global)',
-    ]
-  },
-  {
-    version: 'v0.1.0',
-    label: 'First Breath',
-    date: 'Mar 2026',
-    items: [
-      'Protocol architecture — four-layer plugin model',
-      'Extensions: soma-boot, soma-header, soma-statusline, soma-guard',
-      'Identity discovery — layered from project → parent → global',
-      'Agent templates — shareable soma configurations',
-      'npm packages: meetsoma (public CLI)',
-    ]
-  },
-];
+import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 
 const upcoming: { name: string; icon: string; description: string; status: string }[] = [
   {
@@ -165,25 +88,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
 
     <section class="section">
       <SectionHeader title="Shipped" />
-      <div class="timeline">
-        {timeline.map((release, i) => (
-          <div class="timeline-entry" style={`animation-delay: ${i * 0.1}s`}>
-            <div class="timeline-dot">◉</div>
-            <div class="timeline-body">
-              <div class="timeline-head">
-                <span class="version">{release.version}</span>
-                <h3 class="label">{release.label}</h3>
-                <span class="date">{release.date}</span>
-              </div>
-              <ul class="timeline-items">
-                {release.items.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
-      </div>
+      <RoadmapTimeline client:load />
     </section>
 
     <section class="section">
@@ -289,88 +194,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     margin-bottom: var(--section-gap);
   }
 
-  /* ── Timeline ── */
-  .timeline {
-    position: relative;
-    padding-left: var(--space-2xl);
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 8px;
-    top: 5px;
-    bottom: 5px;
-    width: 2px;
-    background: linear-gradient(
-      to bottom,
-      var(--border-accent),
-      var(--border-subtle)
-    );
-  }
-
-  .timeline-entry {
-    position: relative;
-    margin-bottom: var(--space-2xl);
-    animation: fadeUp 0.6s ease-out both;
-  }
-
-  .timeline-dot {
-    position: absolute;
-    left: -29px;
-    top: 3px;
-    font-size: var(--label-text);
-    color: var(--accent-bright);
-  }
-
-  .timeline-head {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-md);
-    flex-wrap: wrap;
-    margin-bottom: var(--space-md);
-  }
-
-  .version {
-    font-family: var(--font-mono);
-    font-size: var(--body-secondary);
-    color: var(--accent-bright);
-    font-weight: 600;
-  }
-
-  .label {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0;
-  }
-
-  .date {
-    font-family: var(--font-body);
-    font-size: var(--label-text);
-    color: var(--text-muted);
-  }
-
-  .timeline-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .timeline-items li {
-    font-family: var(--font-body);
-    font-size: var(--body-text);
-    color: var(--text-secondary);
-    line-height: var(--leading-relaxed);
-    padding: var(--space-xs) 0;
-  }
-
-  .timeline-items li::before {
-    content: '· ';
-    color: var(--text-muted);
-  }
-
   /* ── Upcoming Grid ── */
   .upcoming-grid {
     display: grid;
@@ -465,7 +288,101 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     .container {
       padding: var(--space-2xl) 13px 21px;
     }
+  }
+</style>
 
+<style is:global>
+  /* ── Timeline (global for Preact island) ── */
+  .timeline {
+    position: relative;
+    padding-left: var(--space-2xl);
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 5px;
+    bottom: 5px;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      var(--border-accent),
+      var(--border-subtle)
+    );
+  }
+
+  .timeline-entry {
+    position: relative;
+    margin-bottom: var(--space-2xl);
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -29px;
+    top: 3px;
+    font-size: var(--label-text);
+    color: var(--accent-bright);
+  }
+
+  .timeline-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
+  }
+
+  .timeline .version {
+    font-family: var(--font-mono);
+    font-size: var(--body-secondary);
+    color: var(--accent-bright);
+    font-weight: 600;
+  }
+
+  .timeline .label {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .timeline .date {
+    font-family: var(--font-body);
+    font-size: var(--label-text);
+    color: var(--text-muted);
+  }
+
+  .timeline-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .timeline-items li {
+    font-family: var(--font-body);
+    font-size: var(--body-text);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    padding: var(--space-xs) 0;
+  }
+
+  .timeline-items li::before {
+    content: '· ';
+    color: var(--text-muted);
+  }
+
+  .timeline-loading,
+  .timeline-error {
+    text-align: center;
+    padding: var(--space-2xl);
+    color: var(--text-muted);
+    font-family: var(--font-body);
+  }
+
+  @media (max-width: 640px) {
     .timeline {
       padding-left: var(--space-xl);
     }

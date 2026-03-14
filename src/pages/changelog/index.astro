@@ -1,0 +1,201 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import ChangelogIsland from '../../components/islands/ChangelogIsland.tsx';
+---
+
+<Layout
+  title="Changelog — Soma"
+  description="What shipped, what changed, what got fixed. Full version history for the Soma agent."
+  canonicalUrl="https://soma.gravicity.ai/changelog"
+>
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <main class="container">
+    <header class="hero">
+      <Breadcrumbs items={[{ label: 'Changelog', href: '/changelog' }]} />
+      <h1 class="title">Changelog</h1>
+      <p class="subtitle">
+        What shipped, what changed, what got fixed.
+      </p>
+    </header>
+
+    <section class="section">
+      <ChangelogIsland client:load />
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .stars {
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, rgba(228,234,244,0.6), transparent),
+      radial-gradient(1px 1px at 80px 60px, rgba(228,234,244,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 150px 100px, rgba(124,178,212,0.5), transparent),
+      radial-gradient(1px 1px at 300px 80px, rgba(232,168,124,0.3), transparent);
+    background-size: 400px 180px;
+    animation: twinkle 10s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .nebula {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 15% 20%, rgba(104, 152, 190, 0.08), transparent 50%),
+      radial-gradient(ellipse 50% 50% at 85% 30%, rgba(124, 178, 212, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.6; }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 890px;
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
+    min-height: 100vh;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(21px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: clamp(2.625rem, 8vw, 4.25rem);
+    font-weight: 700;
+    margin: var(--space-md) 0;
+    background: linear-gradient(135deg, var(--hero-title-start) 0%, var(--hero-title-end) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 34rem;
+    margin: var(--space-md) auto 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  .section {
+    margin-bottom: var(--section-gap);
+  }
+
+  @media (max-width: 640px) {
+    .container {
+      padding: var(--space-2xl) 13px 21px;
+    }
+  }
+</style>
+
+<style is:global>
+  /* ── Changelog Island Styles ── */
+  .changelog-loading,
+  .changelog-error {
+    text-align: center;
+    padding: var(--space-2xl);
+    color: var(--text-muted);
+    font-family: var(--font-body);
+  }
+
+  .changelog-error {
+    color: var(--accent-warm, #e8a87c);
+  }
+
+  .changelog-version {
+    margin-bottom: var(--space-3xl);
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .version-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .version-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--accent-bright);
+  }
+
+  .version-date {
+    font-family: var(--font-body);
+    font-size: var(--label-text);
+    color: var(--text-muted);
+  }
+
+  .changelog-section {
+    margin-bottom: var(--space-xl);
+  }
+
+  .section-label {
+    font-family: var(--font-display);
+    font-size: var(--body-text);
+    font-weight: 600;
+    margin: 0 0 var(--space-md) 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .section-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .section-items li {
+    font-family: var(--font-body);
+    font-size: var(--body-text);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    padding: var(--space-xs) 0;
+  }
+
+  .section-items li::before {
+    content: '· ';
+    color: var(--text-muted);
+  }
+
+  .section-items code {
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    color: var(--accent-bright);
+    background: var(--surface-interactive);
+    padding: 1px 5px;
+    border-radius: var(--radius-sm);
+  }
+
+  .changelog-meta {
+    font-family: var(--font-body);
+    font-size: var(--label-text);
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: var(--space-2xl);
+  }
+</style>
