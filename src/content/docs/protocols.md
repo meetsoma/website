@@ -96,7 +96,7 @@ cp .soma/protocols/_template.md .soma/protocols/my-protocol.md
 type: protocol
 name: my-protocol
 status: active
-updated: 2026-03-14
+updated: 2026-03-09
 heat-default: warm
 applies-to: [typescript]
 breadcrumb: "One sentence that captures what this protocol enforces. This is ALL the agent sees when warm."

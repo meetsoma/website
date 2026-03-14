@@ -25,7 +25,7 @@ status: active
 topic: [deployment, vercel, astro]
 keywords: [deploy, build, preview, production]
 created: 2026-03-09
-updated: 2026-03-14
+updated: 2026-03-09
 heat: 3
 loads: 0
 ---
