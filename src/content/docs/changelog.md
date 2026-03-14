@@ -41,6 +41,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Config-first script extensions** — `settings.scripts.extensions` controls which file types are discovered. No more hardcoded lists.
 
 ### Fixed
+- **add TL;DRs to 4 self-awareness protocols + create soma-search/scan scripts**
 - **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
@@ -78,6 +79,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **CI improvements** — PR check and release workflows now run all 10 test suites. Release uses full `sync-from-agent.sh` instead of hardcoded doc list.
 
 ### Fixed
+- **add TL;DRs to 4 self-awareness protocols + create soma-search/scan scripts**
 - **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
@@ -123,6 +125,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **CLAUDE.md awareness, not adoption** — system prompt notes existence but doesn't inject content.
 
 ### Fixed
+- **add TL;DRs to 4 self-awareness protocols + create soma-search/scan scripts**
 - **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
@@ -163,6 +166,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Distribution scope** — bundled protocols slimmed from all to 4 (breath-cycle, heat-tracking, session-checkpoints, pattern-evolution). Hub protocols install via templates.
 
 ### Fixed
+- **add TL;DRs to 4 self-awareness protocols + create soma-search/scan scripts**
 - **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
@@ -192,6 +196,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **9 core modules** — discovery, identity, protocols, muscles, settings, init, preload, utils, index.
 
 ### Fixed
+- **add TL;DRs to 4 self-awareness protocols + create soma-search/scan scripts**
 - **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
