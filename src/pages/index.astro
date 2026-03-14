@@ -10,7 +10,7 @@ const recentPosts = posts.slice(0, 3);
 
 <Layout
   title="Soma — An AI agent that grows with you"
-  description="An AI coding agent with persistent memory, evolving identity, and a plugin ecosystem of protocols, muscles, skills, and extensions. Built on Pi. Open source."
+  description="An AI coding agent with persistent memory, evolving identity, and the AMPS content system — automations, muscles, protocols, and scripts. Built on Pi. Open source."
   canonicalUrl="https://soma.gravicity.ai"
 >
   <main class="container">
@@ -29,7 +29,7 @@ const recentPosts = posts.slice(0, 3);
 
       <p class="description">
         Memory that persists across sessions. Identity that evolves through use.<br/>
-        Built on <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>. Extended with skills, extensions, and protocols. Yours to shape.
+        Built on <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>. Extended with automations, muscles, protocols, and scripts. Yours to shape.
       </p>
     </header>
 
@@ -110,41 +110,25 @@ const recentPosts = posts.slice(0, 3);
       });
     </script>
 
-    <!-- The Four Layers -->
+    <!-- AMPS — The Content System -->
     <section class="layers">
-      <SectionHeader title="The Ecosystem" subtitle="Four layers that grow with you" />
+      <SectionHeader title="The AMPS Ecosystem" subtitle="Automations · Muscles · Protocols · Scripts" />
       <div class="layers-grid">
-        <a href="/ecosystem#extensions" class="layer-card">
-          <div class="layer-icon"><Icon name="extensions" size={34} /></div>
-          <h3 class="layer-name">Extensions</h3>
-          <p class="layer-type">system hooks</p>
+        <a href="/ecosystem#automations" class="layer-card">
+          <div class="layer-icon"><Icon name="automations" size={34} /></div>
+          <h3 class="layer-name">Automations</h3>
+          <p class="layer-type">triggered actions</p>
           <p class="layer-desc">
-            TypeScript plugins that hook into the agent lifecycle. Boot sequences,
-            branded UI, auto-flush memory, context warnings. The nervous system.
+            Step-by-step flows that fire on triggers — session start, post-commit,
+            pre-deploy. Procedural and heat-tracked. The reflexes.
           </p>
           <div class="layer-examples">
-            <code>soma-boot.ts</code>
-            <code>soma-header.ts</code>
-            <code>soma-statusline.ts</code>
+            <code>session-start</code>
+            <code>post-commit</code>
           </div>
         </a>
 
-        <a href="/ecosystem#skills" class="layer-card">
-          <div class="layer-icon"><Icon name="skills" size={34} /></div>
-          <h3 class="layer-name">Skills</h3>
-          <p class="layer-type">knowledge sets</p>
-          <p class="layer-desc">
-            Markdown instruction files the agent loads on demand. Domain expertise,
-            best practices, task-specific knowledge. The learned memory.
-          </p>
-          <div class="layer-examples">
-            <code>logo-creator</code>
-            <code>favicon-gen</code>
-            <code>remotion</code>
-          </div>
-        </a>
-
-        <a href="/docs/muscles" class="layer-card">
+        <a href="/ecosystem#muscles" class="layer-card">
           <div class="layer-icon"><Icon name="muscles" size={34} /></div>
           <h3 class="layer-name">Muscles</h3>
           <p class="layer-type">learned patterns</p>
@@ -172,6 +156,33 @@ const recentPosts = posts.slice(0, 3);
             <code>frontmatter</code>
             <code>heat-tracking</code>
           </div>
+        </a>
+
+        <a href="/ecosystem#scripts" class="layer-card">
+          <div class="layer-icon"><Icon name="scripts" size={34} /></div>
+          <h3 class="layer-name">Scripts</h3>
+          <p class="layer-type">developer tools</p>
+          <p class="layer-desc">
+            Reusable bash tools the agent builds and runs. Health checks, deployment
+            helpers, verification suites. Discovered at boot, listed in context.
+          </p>
+          <div class="layer-examples">
+            <code>soma-verify.sh</code>
+            <code>soma-ship.sh</code>
+          </div>
+        </a>
+      </div>
+
+      <div class="system-layers">
+        <a href="/ecosystem#extensions" class="system-card">
+          <span class="system-icon"><Icon name="extensions" size={20} /></span>
+          <span class="system-name">Extensions</span>
+          <span class="system-type">TypeScript runtime hooks</span>
+        </a>
+        <a href="/ecosystem#skills" class="system-card">
+          <span class="system-icon"><Icon name="skills" size={20} /></span>
+          <span class="system-name">Skills</span>
+          <span class="system-type">Pi-native knowledge sets</span>
         </a>
       </div>
     </section>
@@ -233,7 +244,7 @@ const recentPosts = posts.slice(0, 3);
         <div class="feature-card">
           <h3 class="feature-title">Open Source</h3>
           <p class="feature-desc">
-            Extensions, skills, muscles, protocols — all MIT licensed.
+            AMPS, extensions, skills — all MIT licensed.
             Build your own agent identity on the same foundation.
           </p>
         </div>
@@ -585,7 +596,7 @@ const recentPosts = posts.slice(0, 3);
 
   .copy-btn svg { width: 18px; height: 18px; }
 
-  /* ── Four Layers ── */
+  /* ── AMPS Layers ── */
   .layers {
     margin-bottom: var(--section-gap);
     animation: fadeUp 0.8s ease-out 0.3s both;
@@ -595,6 +606,51 @@ const recentPosts = posts.slice(0, 3);
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--grid-gap);
+  }
+
+  .system-layers {
+    display: flex;
+    gap: var(--grid-gap);
+    margin-top: var(--space-lg);
+  }
+
+  .system-card {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    backdrop-filter: blur(8px);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.25s ease;
+    opacity: 0.7;
+  }
+
+  .system-card:hover {
+    border-color: var(--border-accent);
+    opacity: 1;
+  }
+
+  .system-icon {
+    color: var(--text-muted);
+    line-height: 1;
+  }
+
+  .system-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-base);
+  }
+
+  .system-type {
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    color: var(--text-muted);
+    margin-left: auto;
   }
 
   .layer-card {
@@ -847,6 +903,7 @@ const recentPosts = posts.slice(0, 3);
   /* ── Responsive ── */
   @media (max-width: 768px) {
     .layers-grid { grid-template-columns: 1fr; }
+    .system-layers { flex-direction: column; }
     .features-grid { grid-template-columns: 1fr; }
     .ecosystem-grid { grid-template-columns: repeat(2, 1fr); }
   }

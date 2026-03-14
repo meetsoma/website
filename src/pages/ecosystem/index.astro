@@ -7,7 +7,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
 <Layout
   title="Ecosystem — Soma"
-  description="How Soma's four layers work together — extensions, skills, muscles, and protocols."
+  description="The AMPS content system — automations, muscles, protocols, and scripts — plus extensions and skills."
   canonicalUrl="https://soma.gravicity.ai/ecosystem"
 >
   <main class="container">
@@ -18,8 +18,9 @@ import Icon from '../../components/icons/SomaIcons.astro';
     <header class="header">
       <h1 class="title">The Soma Ecosystem</h1>
       <p class="subtitle">
-        Extensions, skills, muscles, and protocols — four layers that give an AI agent 
-        persistent memory, evolving identity, learned patterns, and adaptive behavior.
+        <strong>AMPS</strong> — automations, muscles, protocols, and scripts — the content system 
+        that gives an AI agent learned patterns, adaptive behavior, and persistent memory.
+        Plus extensions and skills for runtime hooks and domain expertise.
       </p>
     </header>
 
@@ -54,105 +55,77 @@ import Icon from '../../components/icons/SomaIcons.astro';
           <span class="orbit-node-sub">.soma/</span>
         </div>
 
-        <!-- Outer orbit: the four layers -->
-        <div class="orbit-node orbit-layer orbit-ext">
-          <span class="orbit-node-icon"><Icon name="extensions" size={24} /></span>
-          <span class="orbit-node-label">extensions</span>
+        <!-- Outer orbit: AMPS (4) + system (2) -->
+        <div class="orbit-node orbit-layer orbit-amps orbit-auto">
+          <span class="orbit-node-icon"><Icon name="automations" size={24} /></span>
+          <span class="orbit-node-label">automations</span>
         </div>
 
-        <div class="orbit-node orbit-layer orbit-skill">
-          <span class="orbit-node-icon"><Icon name="skills" size={24} /></span>
-          <span class="orbit-node-label">skills</span>
-        </div>
-
-        <div class="orbit-node orbit-layer orbit-muscle">
+        <div class="orbit-node orbit-layer orbit-amps orbit-muscle">
           <span class="orbit-node-icon"><Icon name="muscles" size={24} /></span>
           <span class="orbit-node-label">muscles</span>
         </div>
 
-        <div class="orbit-node orbit-layer orbit-protocol">
+        <div class="orbit-node orbit-layer orbit-amps orbit-protocol">
           <span class="orbit-node-icon"><Icon name="protocols" size={24} /></span>
           <span class="orbit-node-label">protocols</span>
+        </div>
+
+        <div class="orbit-node orbit-layer orbit-amps orbit-script">
+          <span class="orbit-node-icon"><Icon name="scripts" size={24} /></span>
+          <span class="orbit-node-label">scripts</span>
+        </div>
+
+        <div class="orbit-node orbit-layer orbit-sys orbit-ext">
+          <span class="orbit-node-icon"><Icon name="extensions" size={24} /></span>
+          <span class="orbit-node-label">extensions</span>
+        </div>
+
+        <div class="orbit-node orbit-layer orbit-sys orbit-skill">
+          <span class="orbit-node-icon"><Icon name="skills" size={24} /></span>
+          <span class="orbit-node-label">skills</span>
         </div>
       </div>
     </section>
 
-    <!-- Three Layers Detail -->
+    <!-- AMPS Detail Sections -->
     <section class="layers-detail">
-      <div class="layer-detail" id="extensions">
+      <h2 class="amps-section-title">AMPS — The Content System</h2>
+      <p class="amps-section-sub">The content layers you create. Everything under <code>.soma/amps/</code>.</p>
+
+      <div class="layer-detail" id="automations">
         <div class="layer-header">
-          <span class="layer-glyph"><Icon name="extensions" size={34} /></span>
+          <span class="layer-glyph"><Icon name="automations" size={34} /></span>
           <div>
-            <h2 class="layer-title">Extensions</h2>
-            <p class="layer-kind">system hooks · TypeScript</p>
+            <h2 class="layer-title">Automations</h2>
+            <p class="layer-kind">triggered actions · heat-tracked · Markdown</p>
           </div>
         </div>
         <p class="layer-body">
-          Extensions are TypeScript files that hook into pi's lifecycle. They run at boot, 
-          render custom UI, intercept events, and manage background processes. They're the 
-          lowest level of customization — full access to the agent runtime.
+          Step-by-step procedural flows that fire on triggers — session start, post-commit,
+          pre-deploy. Like protocols but action-oriented: "do this sequence" rather than
+          "behave like this." Heat-tracked so frequent automations stay loaded.
         </p>
         <div class="layer-details">
           <div class="detail-col">
             <h3>What they do</h3>
             <ul>
-              <li>Boot sequences — load identity, preload memory</li>
-              <li>Custom headers and statuslines</li>
-              <li>Auto-flush memory to disk</li>
-              <li>Context usage warnings</li>
-              <li>Slash commands (<code>/exhale</code>, <code>/breathe</code>, <code>/rest</code>, <code>/soma</code>)</li>
+              <li>Run specific steps on session start</li>
+              <li>Post-commit verification sequences</li>
+              <li>Pre-deploy checklists</li>
+              <li>Heat up with use, fade when unused</li>
             </ul>
           </div>
           <div class="detail-col">
             <h3>Where they live</h3>
             <ul>
-              <li><code>.soma/extensions/</code> — project-level</li>
-              <li><code>~/.soma/extensions/</code> — global</li>
-            </ul>
-            <h3 class="mt">Soma ships with</h3>
-            <ul>
-              <li><code>soma-boot.ts</code> — identity + preload + commands</li>
-              <li><code>soma-header.ts</code> — branded σῶμα header</li>
-              <li><code>soma-statusline.ts</code> — footer + auto-flush</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="layer-detail" id="skills">
-        <div class="layer-header">
-          <span class="layer-glyph"><Icon name="skills" size={34} /></span>
-          <div>
-            <h2 class="layer-title">Skills</h2>
-            <p class="layer-kind">knowledge sets · Markdown</p>
-          </div>
-        </div>
-        <p class="layer-body">
-          Skills are markdown files that give the agent domain expertise. When the agent 
-          encounters a task that matches a skill, it loads the instructions and follows them. 
-          Low barrier to create — just write markdown.
-        </p>
-        <div class="layer-details">
-          <div class="detail-col">
-            <h3>What they contain</h3>
-            <ul>
-              <li>Task-specific instructions and best practices</li>
-              <li>Tool usage patterns and examples</li>
-              <li>Decision frameworks and checklists</li>
-              <li>Reference material the agent can cite</li>
-            </ul>
-          </div>
-          <div class="detail-col">
-            <h3>Where they live</h3>
-            <ul>
-              <li><code>~/.soma/skills/</code> — global skills</li>
-              <li><code>.soma/skills/</code> — project-specific</li>
+              <li><code>.soma/amps/automations/</code> — project</li>
+              <li><code>~/.soma/amps/automations/</code> — global</li>
             </ul>
             <h3 class="mt">Examples</h3>
             <ul>
-              <li><code>logo-creator</code> — AI logo generation workflow</li>
-              <li><code>favicon-gen</code> — favicon from any source</li>
-              <li><code>remotion-best-practices</code> — video in React</li>
+              <li><code>session-start</code> — boot-time workspace setup</li>
+              <li><code>post-commit</code> — verify after each commit</li>
             </ul>
           </div>
         </div>
@@ -167,7 +140,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
           </div>
         </div>
         <p class="layer-body">
-          Muscles are patterns learned from experience — reusable knowledge that Soma 
+          Patterns learned from experience — reusable knowledge that Soma 
           builds across sessions. Each muscle has a heat score and a digest block for 
           token-efficient loading. They're the muscle memory.
         </p>
@@ -209,7 +182,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
           <div class="detail-col">
             <h3>How they work</h3>
             <ul>
-              <li>Drop a <code>.md</code> file into <code>.soma/protocols/</code></li>
+              <li>Drop a <code>.md</code> file into <code>.soma/amps/protocols/</code></li>
               <li>Agent discovers it on next boot</li>
               <li>Used protocols "heat up" — always loaded</li>
               <li>Unused protocols "cool down" — fade out</li>
@@ -219,8 +192,8 @@ import Icon from '../../components/icons/SomaIcons.astro';
           <div class="detail-col">
             <h3>Where they live</h3>
             <ul>
-              <li><code>~/.soma/protocols/</code> — global defaults</li>
-              <li><code>.soma/protocols/</code> — project-specific</li>
+              <li><code>.soma/amps/protocols/</code> — project-specific</li>
+              <li><code>~/.soma/amps/protocols/</code> — global defaults</li>
             </ul>
             <h3 class="mt">Core protocols</h3>
             <ul>
@@ -229,6 +202,126 @@ import Icon from '../../components/icons/SomaIcons.astro';
               <li><code>heat-tracking</code> — adaptive loading by usage</li>
             </ul>
             <p class="coming-soon">Heat system ships with Soma. Protocols heat up automatically as you use them.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-detail" id="scripts">
+        <div class="layer-header">
+          <span class="layer-glyph"><Icon name="scripts" size={34} /></span>
+          <div>
+            <h2 class="layer-title">Scripts</h2>
+            <p class="layer-kind">developer tools · Shell</p>
+          </div>
+        </div>
+        <p class="layer-body">
+          Reusable bash tools the agent builds for itself — and for you. Health checks,
+          deployment helpers, verification suites. Discovered at boot and listed in context
+          so the agent knows what tools are available.
+        </p>
+        <div class="layer-details">
+          <div class="detail-col">
+            <h3>What they do</h3>
+            <ul>
+              <li>Ecosystem health checks and verification</li>
+              <li>Ship cycles — test, commit, push, deploy</li>
+              <li>Content auditing and copy truth-checking</li>
+              <li>Refactoring safety nets</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h3>Where they live</h3>
+            <ul>
+              <li><code>.soma/amps/scripts/</code> — project tools</li>
+            </ul>
+            <h3 class="mt">Examples</h3>
+            <ul>
+              <li><code>soma-verify.sh</code> — health checks across repos</li>
+              <li><code>soma-ship.sh</code> — dev-first ship cycle</li>
+              <li><code>soma-query.sh</code> — search + explore</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="amps-section-title system-title">System Layers</h2>
+      <p class="amps-section-sub">Runtime infrastructure inherited from <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>.</p>
+
+      <div class="layer-detail" id="extensions">
+        <div class="layer-header">
+          <span class="layer-glyph"><Icon name="extensions" size={34} /></span>
+          <div>
+            <h2 class="layer-title">Extensions</h2>
+            <p class="layer-kind">system hooks · TypeScript</p>
+          </div>
+        </div>
+        <p class="layer-body">
+          Extensions are TypeScript files that hook into Pi's lifecycle. They run at boot, 
+          render custom UI, intercept events, and manage background processes. They're the 
+          lowest level of customization — full access to the agent runtime.
+        </p>
+        <div class="layer-details">
+          <div class="detail-col">
+            <h3>What they do</h3>
+            <ul>
+              <li>Boot sequences — load identity, preload memory</li>
+              <li>Custom headers and statuslines</li>
+              <li>Auto-flush memory to disk</li>
+              <li>Context usage warnings</li>
+              <li>Slash commands (<code>/exhale</code>, <code>/breathe</code>, <code>/rest</code>, <code>/soma</code>)</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h3>Where they live</h3>
+            <ul>
+              <li><code>.soma/extensions/</code> — project-level</li>
+              <li><code>~/.soma/extensions/</code> — global</li>
+            </ul>
+            <h3 class="mt">Soma ships with</h3>
+            <ul>
+              <li><code>soma-boot.ts</code> — identity + preload + commands</li>
+              <li><code>soma-header.ts</code> — branded σῶμα header</li>
+              <li><code>soma-statusline.ts</code> — footer + auto-flush</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-detail" id="skills">
+        <div class="layer-header">
+          <span class="layer-glyph"><Icon name="skills" size={34} /></span>
+          <div>
+            <h2 class="layer-title">Skills</h2>
+            <p class="layer-kind">knowledge sets · Markdown</p>
+          </div>
+        </div>
+        <p class="layer-body">
+          Skills are markdown files that give the agent domain expertise. When the agent 
+          encounters a task that matches a skill, it loads the instructions and follows them. 
+          Inherited from Pi's native skill system — just write markdown.
+        </p>
+        <div class="layer-details">
+          <div class="detail-col">
+            <h3>What they contain</h3>
+            <ul>
+              <li>Task-specific instructions and best practices</li>
+              <li>Tool usage patterns and examples</li>
+              <li>Decision frameworks and checklists</li>
+              <li>Reference material the agent can cite</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h3>Where they live</h3>
+            <ul>
+              <li><code>.soma/skills/</code> — project-specific</li>
+              <li><code>~/.soma/skills/</code> — global skills</li>
+            </ul>
+            <h3 class="mt">Examples</h3>
+            <ul>
+              <li><code>logo-creator</code> — AI logo generation workflow</li>
+              <li><code>favicon-gen</code> — favicon from any source</li>
+              <li><code>remotion-best-practices</code> — video in React</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -321,11 +414,11 @@ import Icon from '../../components/icons/SomaIcons.astro';
       <div class="repos-grid">
         <a href="https://github.com/meetsoma/soma-agent" target="_blank" rel="noopener" class="repo-card">
           <h3>meetsoma/soma-agent</h3>
-          <p>Extensions, skills, muscles, protocols, and documentation. The core.</p>
+          <p>AMPS content, extensions, skills, and documentation. The core.</p>
         </a>
         <a href="https://github.com/meetsoma/community" target="_blank" rel="noopener" class="repo-card repo-card-featured">
           <h3>meetsoma/community</h3>
-          <p>Shared protocols, muscles, skills, and templates. Fork it, contribute, browse.</p>
+          <p>Shared AMPS content and templates. Fork it, contribute, browse.</p>
         </a>
         <a href="https://github.com/meetsoma/cli" target="_blank" rel="noopener" class="repo-card">
           <h3>meetsoma/cli</h3>
@@ -388,7 +481,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
     position: absolute;
     border-radius: var(--radius-full);
     border: 1px solid var(--border-subtle);
-    /* Outer ring — the four layers orbit here */
+    /* Outer ring — AMPS + system layers orbit here */
     inset: 0;
   }
 
@@ -481,11 +574,23 @@ import Icon from '../../components/icons/SomaIcons.astro';
   .orbit-memory   { top: 76%; left: 50%; }
   .orbit-memory .orbit-node-icon { color: var(--warm-bright); border-color: rgba(232, 168, 124, 0.25); }
 
-  /* Outer orbit positions — cardinal + diagonal spread */
-  .orbit-ext      { top: 3%;  left: 50%; }
-  .orbit-skill    { top: 50%; left: 97%; }
-  .orbit-muscle   { top: 97%; left: 50%; }
-  .orbit-protocol { top: 50%; left: 3%;  }
+  /* Outer orbit positions — hexagonal spread for 6 nodes */
+  .orbit-auto     { top: 3%;  left: 50%; }
+  .orbit-muscle   { top: 25%; left: 93%; }
+  .orbit-protocol { top: 75%; left: 93%; }
+  .orbit-script   { top: 97%; left: 50%; }
+  .orbit-ext      { top: 75%; left: 7%;  }
+  .orbit-skill    { top: 25%; left: 7%;  }
+
+  /* AMPS nodes get accent, system nodes get muted */
+  .orbit-amps .orbit-node-icon {
+    color: var(--accent-bright);
+    border-color: rgba(104, 152, 190, 0.25);
+  }
+  .orbit-sys .orbit-node-icon {
+    color: var(--text-muted);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
 
   /* Layer nodes slightly larger */
   .orbit-layer .orbit-node-icon {
@@ -526,6 +631,32 @@ import Icon from '../../components/icons/SomaIcons.astro';
     flex-direction: column;
     gap: var(--space-2xl);
     margin-bottom: var(--section-gap);
+  }
+
+  .amps-section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 600;
+    color: var(--accent-bright);
+    margin-bottom: 0;
+    line-height: var(--leading-tight);
+  }
+  .amps-section-title.system-title {
+    color: var(--text-muted);
+    margin-top: var(--space-2xl);
+  }
+  .amps-section-sub {
+    font-size: var(--body-text);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+  }
+  .amps-section-sub code {
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--surface-accent-soft);
+    color: var(--accent-bright);
   }
 
   .layer-detail {

@@ -1,13 +1,17 @@
 ---
 /**
- * Soma Icon Set — SVG icons for the four layers + utility icons.
+ * Soma Icon Set — SVG icons for the AMPS layers + system + utility icons.
  * Uses currentColor for theme compatibility. Designed at 24x24 viewBox.
  *
- * Core four (Lucide-based, stroke-style):
+ * AMPS layers (Lucide-based, stroke-style):
+ *   automations → refresh-cw | triggered actions, reflexes
+ *   muscles     → zap        | fast reflex, learned patterns
+ *   protocols   → dna        | behavioral DNA, rules
+ *   scripts     → terminal   | developer tools, CLI
+ *
+ * System layers:
  *   extensions → plug     | system hooks, plugins
  *   skills     → book-open| knowledge, learned expertise
- *   muscles    → zap      | fast reflex, learned patterns
- *   protocols  → dna      | behavioral DNA, rules
  *   memory     → atom     | persistent state, orbital
  *
  * Utility (custom):
@@ -23,7 +27,8 @@
  */
 
 interface Props {
-  name: 'extensions' | 'skills' | 'muscles' | 'protocols' | 'memory' | 'sigma' | 'terminal' | 'you' | 'pi' | 'dna'
+  name: 'extensions' | 'skills' | 'muscles' | 'protocols' | 'automations' | 'scripts'
+    | 'memory' | 'sigma' | 'terminal' | 'you' | 'pi' | 'dna'
     | 'wand' | 'brain' | 'shield' | 'upload' | 'link' | 'mic'
     | 'wrench' | 'pen-line' | 'ruler' | 'flask'
     | 'arrow-right' | 'settings' | 'layers' | 'circle-dot' | 'search';
@@ -73,6 +78,24 @@ const { name, size = 24, class: className = '' } = Astro.props;
     <path d="m6.5 12.5 1 1"/>
     <path d="m7 18 2.891 2.891"/>
     <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/>
+  </svg>
+)}
+
+{/* Automations — refresh-cw (triggered actions, reflexes) */}
+{name === 'automations' && (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={className} aria-hidden="true">
+    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+    <path d="M21 3v5h-5"/>
+    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+    <path d="M8 16H3v5"/>
+  </svg>
+)}
+
+{/* Scripts — terminal (developer tools, CLI) */}
+{name === 'scripts' && (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={className} aria-hidden="true">
+    <polyline points="4 17 10 11 4 5"/>
+    <line x1="12" x2="20" y1="19" y2="19"/>
   </svg>
 )}
 
