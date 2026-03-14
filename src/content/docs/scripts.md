@@ -5,7 +5,6 @@ section: "Reference"
 order: 9
 ---
 
-# Scripts & Audits
 
 <!-- tldr -->
 Standalone bash tools in `.soma/scripts/` — usable outside agent sessions. `soma-audit.sh` runs ecosystem health checks (PII, drift, stale content, doc freshness, etc.). `soma-search.sh` queries memory by type/status/tags. `soma-scan.sh` scans sessions and extractions. All work from the command line without starting a Soma session.

@@ -2,10 +2,9 @@
 title: "Changelog"
 description: "What shipped, what changed, version history."
 section: "Reference"
-order: 8
+order: 10
 ---
 
-# Changelog
 
 All notable changes to the Soma agent are documented here.
 

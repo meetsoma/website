@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 3.5
 ---
 
-# Heat System
 
 > TL;DR: Everything in Soma has a temperature. Hot content loads fully into the agent's prompt. Warm content loads as a one-line reminder. Cold content is listed but not loaded. Heat rises when things get used, decays when they don't. The agent naturally learns what matters.
 
