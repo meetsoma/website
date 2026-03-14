@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import Icon from '../components/icons/SomaIcons.astro';
+import TemplateCarousel from '../components/islands/TemplateCarousel.tsx';
 import { getPublishedBlogPosts, blogPostUrl } from '../lib/blog';
 
 const posts = await getPublishedBlogPosts();
@@ -69,7 +70,7 @@ const recentPosts = posts.slice(0, 3);
             </button>
           </div>
           <div class="code-line">
-            <span class="code-comment"># Start a session</span>
+            <span class="code-comment"># Start a session — Soma learns who you are</span>
           </div>
           <div class="code-line">
             <span class="code-prompt">$</span>
@@ -110,22 +111,45 @@ const recentPosts = posts.slice(0, 3);
       });
     </script>
 
+    <!-- The Breath — visual storytelling -->
+    <section class="breath">
+      <SectionHeader title="The Breath Cycle" subtitle="Every session has three phases" />
+      <div class="breath-track">
+        <div class="breath-phase">
+          <div class="breath-dot inhale-dot"></div>
+          <div class="breath-line"></div>
+          <h3 class="breath-name">Inhale</h3>
+          <p class="breath-desc">Identity loads. Memory restores. Protocols activate. The agent wakes up knowing who it is.</p>
+        </div>
+        <div class="breath-phase">
+          <div class="breath-dot hold-dot"></div>
+          <div class="breath-line"></div>
+          <h3 class="breath-name">Hold</h3>
+          <p class="breath-desc">Work. The agent tracks patterns, heats up what's used, cools what isn't. Context is managed automatically.</p>
+        </div>
+        <div class="breath-phase">
+          <div class="breath-dot exhale-dot"></div>
+          <h3 class="breath-name">Exhale</h3>
+          <p class="breath-desc">Session state saves. Preloads write. Muscles crystallize. Nothing learned is lost.</p>
+        </div>
+      </div>
+      <div class="breath-ambient">
+        <div class="breath-circle"></div>
+      </div>
+    </section>
+
     <!-- AMPS — The Content System -->
     <section class="layers">
-      <SectionHeader title="The AMPS Ecosystem" subtitle="Automations · Muscles · Protocols · Scripts" />
+      <SectionHeader title="The AMPS System" subtitle="Four layers. One agent." link={{ href: "/ecosystem", text: "Explore →" }} />
       <div class="layers-grid">
         <a href="/ecosystem#automations" class="layer-card">
           <div class="layer-icon"><Icon name="automations" size={34} /></div>
           <h3 class="layer-name">Automations</h3>
           <p class="layer-type">triggered actions</p>
           <p class="layer-desc">
-            Step-by-step flows that fire on triggers — session start, post-commit,
-            pre-deploy. Procedural and heat-tracked. The reflexes.
+            Flows that fire on triggers — session start, post-commit,
+            pre-deploy. The reflexes.
           </p>
-          <div class="layer-examples">
-            <code>session-start</code>
-            <code>post-commit</code>
-          </div>
         </a>
 
         <a href="/ecosystem#muscles" class="layer-card">
@@ -134,13 +158,8 @@ const recentPosts = posts.slice(0, 3);
           <p class="layer-type">learned patterns</p>
           <p class="layer-desc">
             Patterns learned from experience — deployment workflows, code conventions,
-            API recipes. Heat-tracked and token-budgeted. The muscle memory.
+            API recipes. The muscle memory.
           </p>
-          <div class="layer-examples">
-            <code>test-hygiene</code>
-            <code>icon-audit</code>
-            <code>micro-exhale</code>
-          </div>
         </a>
 
         <a href="/ecosystem#protocols" class="layer-card">
@@ -148,14 +167,9 @@ const recentPosts = posts.slice(0, 3);
           <h3 class="layer-name">Protocols</h3>
           <p class="layer-type">behavioral rules</p>
           <p class="layer-desc">
-            Drop-in behavioral rules that shape how the agent thinks and operates.
-            Used protocols heat up and stay loaded. Unused ones fade. The value system.
+            Rules that shape how the agent thinks. Used ones heat up.
+            Unused ones fade. The value system.
           </p>
-          <div class="layer-examples">
-            <code>breath-cycle</code>
-            <code>frontmatter</code>
-            <code>heat-tracking</code>
-          </div>
         </a>
 
         <a href="/ecosystem#scripts" class="layer-card">
@@ -163,13 +177,9 @@ const recentPosts = posts.slice(0, 3);
           <h3 class="layer-name">Scripts</h3>
           <p class="layer-type">developer tools</p>
           <p class="layer-desc">
-            Reusable bash tools the agent builds and runs. Health checks, deployment
-            helpers, verification suites. Discovered at boot, listed in context.
+            Bash tools the agent builds and runs. Health checks, deployment
+            helpers, verification suites. The toolkit.
           </p>
-          <div class="layer-examples">
-            <code>soma-verify.sh</code>
-            <code>soma-ship.sh</code>
-          </div>
         </a>
       </div>
 
@@ -187,144 +197,72 @@ const recentPosts = posts.slice(0, 3);
       </div>
     </section>
 
-    <!-- What Makes Soma Different -->
+    <!-- Meet the Agents — Template Carousel -->
+    <section class="templates">
+      <SectionHeader title="Meet the Agents" subtitle="Every template is a personality" link={{ href: "/hub", text: "Browse hub →" }} />
+      <TemplateCarousel client:visible />
+    </section>
+
+    <!-- Why Soma — condensed from 8 to 4 -->
     <section class="features">
-      <SectionHeader title="What Makes Soma Different" />
+      <SectionHeader title="Why Soma" />
       <div class="features-grid">
         <div class="feature-card">
-          <h3 class="feature-title">Persistent Memory</h3>
+          <h3 class="feature-title">Memory Persists</h3>
           <p class="feature-desc">
-            Sessions end. Memory doesn't. Soma flushes what it learns to disk —
-            preloads, muscles, context — and picks it back up next time.
+            Sessions end. Memory doesn't. Preloads, muscles, identity — flushed to disk
+            and picked back up next time. <code>soma -c</code> to continue.
           </p>
         </div>
         <div class="feature-card">
-          <h3 class="feature-title">Evolving Identity</h3>
+          <h3 class="feature-title">Identity Evolves</h3>
           <p class="feature-desc">
-            Not pre-configured. Soma's identity file grows through use —
-            voice, preferences, working patterns, all discovered, not assigned.
+            Not pre-configured. Soma's identity grows through use —
+            voice, preferences, working patterns. Discovered, not assigned.
           </p>
         </div>
         <div class="feature-card">
-          <h3 class="feature-title">Session Continuity</h3>
-          <p class="feature-desc">
-            <code>soma -c</code> loads identity plus the last session's preload.
-            The agent knows where you left off and what's next.
-          </p>
-        </div>
-        <div class="feature-card">
-          <h3 class="feature-title">Adaptive Protocols</h3>
+          <h3 class="feature-title">Protocols Adapt</h3>
           <p class="feature-desc">
             Behavioral rules that heat up when used and fade when they don't.
-            Hot protocols load full context. Cold ones stay available but silent.
-            The agent's value system tunes itself.
+            The agent's value system tunes itself to how you work.
           </p>
         </div>
         <div class="feature-card">
-          <h3 class="feature-title">Workspace Inheritance</h3>
+          <h3 class="feature-title">Open &amp; Extensible</h3>
           <p class="feature-desc">
-            Parent-child <code>.soma/</code> directories for monorepos. Shared identity,
-            protocols, and muscles flow down. Each project overrides what it needs.
-          </p>
-        </div>
-        <div class="feature-card">
-          <h3 class="feature-title">Smart Init</h3>
-          <p class="feature-desc">
-            First run detects your stack — parent workspaces, CLAUDE.md, package manager,
-            languages, frameworks. Soma tailors itself to what it finds.
-          </p>
-        </div>
-        <div class="feature-card">
-          <h3 class="feature-title">Built on Pi</h3>
-          <p class="feature-desc">
-            Soma extends pi's coding agent with custom extensions.
-            Everything pi can do, Soma can do — with memory on top.
-          </p>
-        </div>
-        <div class="feature-card">
-          <h3 class="feature-title">Open Source</h3>
-          <p class="feature-desc">
-            AMPS, extensions, skills — all MIT licensed.
-            Build your own agent identity on the same foundation.
+            Built on <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>. MIT licensed.
+            Extensions, skills, protocols — all swappable.
+            Works alongside CLAUDE.md and existing setups.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Ecosystem Map -->
-    <section class="ecosystem">
-      <SectionHeader title="The Soma Ecosystem" link={{ href: "/ecosystem", text: "Learn more →" }} />
-      <div class="ecosystem-grid">
-        <a href="https://github.com/meetsoma/soma-agent" target="_blank" rel="noopener" class="eco-card">
-          <span class="eco-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-              <!-- Soma mascot silhouette — planet + moon, flat icon style -->
-              <circle cx="22" cy="28" r="16" fill="var(--accent-bright)"/>
-              <circle cx="37" cy="14" r="7" fill="var(--accent-bright)"/>
-              <!-- Eyes cutout -->
-              <circle cx="17" cy="26" r="3.5" fill="var(--surface-card)"/>
-              <circle cx="27" cy="26" r="3.5" fill="var(--surface-card)"/>
-              <!-- Pupils -->
-              <circle cx="18.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
-              <circle cx="28.2" cy="25.5" r="1.6" fill="var(--accent-bright)"/>
-            </svg>
-          </span>
-          <span class="eco-name">agent</span>
-          <span class="eco-desc">Extensions, skills & protocols</span>
-        </a>
-        <a href="https://www.npmjs.com/package/meetsoma" target="_blank" rel="noopener" class="eco-card">
-          <span class="eco-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-              <!-- npm logo — flat -->
-              <rect x="4" y="12" width="40" height="24" rx="3" fill="#CB3837"/>
-              <rect x="10" y="18" width="8" height="12" fill="white"/>
-              <rect x="13" y="18" width="3" height="9" fill="#CB3837"/>
-              <rect x="21" y="18" width="8" height="12" fill="white"/>
-              <rect x="24" y="18" width="3" height="9" fill="#CB3837"/>
-              <rect x="32" y="18" width="8" height="9" fill="white"/>
-              <rect x="35" y="18" width="3" height="6" fill="#CB3837"/>
-            </svg>
-          </span>
-          <span class="eco-name">npm</span>
-          <span class="eco-desc">npm i -g meetsoma</span>
-        </a>
-        <a href="/blog" class="eco-card">
-          <span class="eco-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-              <!-- Blog / writing icon — quill pen -->
-              <path d="M36 8L14 30l-2 8 8-2L42 14a4 4 0 00-6-6z" stroke="var(--accent-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M32 12l4 4" stroke="var(--accent-bright)" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M12 38h24" stroke="var(--accent-bright)" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
-            </svg>
-          </span>
-          <span class="eco-name">blog</span>
-          <span class="eco-desc">Souls & Symlinks</span>
-        </a>
-        <a href="https://github.com/meetsoma" target="_blank" rel="noopener" class="eco-card">
-          <span class="eco-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-              <!-- GitHub mark — simplified octocat silhouette -->
-              <path d="M24 4C12.954 4 4 12.954 4 24c0 8.837 5.731 16.329 13.682 18.976.999.184 1.364-.434 1.364-.964 0-.476-.018-2.05-.026-3.72-5.567 1.209-6.74-2.364-6.74-2.364-.91-2.313-2.222-2.929-2.222-2.929-1.815-1.242.138-1.217.138-1.217 2.009.141 3.065 2.063 3.065 2.063 1.784 3.058 4.681 2.174 5.822 1.662.181-1.293.698-2.175 1.27-2.675-4.443-.505-9.114-2.221-9.114-9.888 0-2.184.78-3.97 2.058-5.369-.206-.505-.892-2.54.196-5.293 0 0 1.679-.538 5.499 2.05A19.128 19.128 0 0124 13.2c1.7.008 3.411.23 5.009.673 3.818-2.588 5.494-2.05 5.494-2.05 1.09 2.753.405 4.788.198 5.293 1.281 1.399 2.055 3.185 2.055 5.369 0 7.687-4.677 9.378-9.132 9.872.718.619 1.357 1.839 1.357 3.706 0 2.676-.024 4.833-.024 5.49 0 .534.36 1.156 1.374.96C38.275 40.323 44 32.834 44 24 44 12.954 35.046 4 24 4z" fill="var(--accent-bright)"/>
-            </svg>
-          </span>
-          <span class="eco-name">github</span>
-          <span class="eco-desc">meetsoma — source & community</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- CTA -->
+    <!-- CTA with ecosystem links -->
     <section class="cta-section">
       <div class="cta-content">
         <h2 class="cta-title">Start growing</h2>
         <p class="cta-desc">Install Soma. Start a session. Let the memory build.</p>
         <div class="cta-buttons">
-          <a href="https://github.com/meetsoma/agent" target="_blank" rel="noopener" class="cta-primary">
+          <a href="https://github.com/meetsoma/soma-agent" target="_blank" rel="noopener" class="cta-primary">
             View on GitHub →
           </a>
           <a href="/docs" class="cta-secondary">
             Read the docs
           </a>
+        </div>
+        <div class="cta-links">
+          <a href="https://www.npmjs.com/package/meetsoma" target="_blank" rel="noopener" class="cta-link">
+            <svg viewBox="0 0 48 48" fill="none" width="20" height="20"><rect x="4" y="12" width="40" height="24" rx="3" fill="currentColor" opacity="0.6"/><rect x="10" y="18" width="8" height="12" fill="var(--bg-deep)"/><rect x="13" y="18" width="3" height="9" fill="currentColor" opacity="0.6"/></svg>
+            npm
+          </a>
+          <span class="cta-sep">·</span>
+          <a href="/blog" class="cta-link">Blog</a>
+          <span class="cta-sep">·</span>
+          <a href="/hub" class="cta-link">Hub</a>
+          <span class="cta-sep">·</span>
+          <a href="https://github.com/meetsoma" target="_blank" rel="noopener" class="cta-link">GitHub</a>
         </div>
       </div>
     </section>
@@ -338,7 +276,7 @@ const recentPosts = posts.slice(0, 3);
   .container {
     position: relative;
     z-index: 1;
-    max-width: 890px;              /* ~55 * φ^4 */
+    max-width: 890px;
     margin: 0 auto;
     padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
     min-height: 100vh;
@@ -360,7 +298,7 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .hero-icon {
-    width: 144px;                  /* fib */
+    width: 144px;
     height: 144px;
     margin: 0 auto var(--space-2xl);
     animation: float 5s ease-in-out infinite;
@@ -393,7 +331,6 @@ const recentPosts = posts.slice(0, 3);
     letter-spacing: -0.03em;
     line-height: var(--leading-none);
     margin-bottom: var(--space-lg);
-    /* Offset to optically center "Soma" — badge adds visual weight to the right */
     transform: translateX(-1.5%);
   }
 
@@ -596,6 +533,102 @@ const recentPosts = posts.slice(0, 3);
 
   .copy-btn svg { width: 18px; height: 18px; }
 
+  /* ── Breath Cycle ── */
+  .breath {
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out 0.3s both;
+    position: relative;
+  }
+
+  .breath-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .breath-phase {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-lg);
+    position: relative;
+  }
+
+  .breath-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto var(--space-lg);
+    position: relative;
+    z-index: 2;
+  }
+
+  .inhale-dot {
+    background: var(--accent-bright);
+    box-shadow: 0 0 20px var(--moon-glow);
+    animation: breathPulse 4s ease-in-out infinite;
+  }
+
+  .hold-dot {
+    background: var(--warm-bright);
+    box-shadow: 0 0 20px var(--warm-glow);
+    animation: breathPulse 4s ease-in-out 1.33s infinite;
+  }
+
+  .exhale-dot {
+    background: var(--moon-bright);
+    box-shadow: 0 0 20px var(--moon-glow);
+    animation: breathPulse 4s ease-in-out 2.66s infinite;
+  }
+
+  @keyframes breathPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.4); opacity: 1; }
+  }
+
+  .breath-line {
+    position: absolute;
+    top: calc(var(--space-2xl) + 8px);
+    left: calc(50% + 16px);
+    right: calc(-50% + 16px);
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-accent), var(--border-subtle));
+    z-index: 1;
+  }
+
+  .breath-name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-tight);
+  }
+
+  .breath-desc {
+    font-size: var(--body-secondary);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .breath-ambient {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-xl);
+  }
+
+  .breath-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid var(--border-accent);
+    animation: breathe 4s ease-in-out infinite;
+    opacity: 0.3;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.8); opacity: 0.15; }
+    50% { transform: scale(1.2); opacity: 0.4; }
+  }
+
   /* ── AMPS Layers ── */
   .layers {
     margin-bottom: var(--section-gap);
@@ -699,29 +732,18 @@ const recentPosts = posts.slice(0, 3);
     font-size: var(--body-text);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
-    margin-bottom: var(--space-lg);
   }
 
-  .layer-examples {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-md);
-  }
-
-  .layer-examples code {
-    font-family: var(--font-mono);
-    font-size: var(--label-text);
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-md);
-    background: var(--surface-accent-soft);
-    color: var(--accent-bright);
-    border: 1px solid rgba(104, 152, 190, 0.15);
+  /* ── Templates Carousel ── */
+  .templates {
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out 0.4s both;
   }
 
   /* ── Features ── */
   .features {
     margin-bottom: var(--section-gap);
-    animation: fadeUp 0.8s ease-out 0.4s both;
+    animation: fadeUp 0.8s ease-out 0.5s both;
   }
 
   .features-grid {
@@ -767,60 +789,14 @@ const recentPosts = posts.slice(0, 3);
     color: var(--accent-bright);
   }
 
-  /* ── Ecosystem ── */
-  .ecosystem {
-    margin-bottom: var(--section-gap);
-    animation: fadeUp 0.8s ease-out 0.5s both;
-  }
-
-  .ecosystem-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-lg);
-  }
-
-  .eco-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-md);
-    padding: var(--space-2xl) var(--space-lg);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
-    background: var(--surface-card);
-    text-decoration: none;
-    color: var(--text-primary);
-    transition: all 0.25s ease;
-  }
-
-  .eco-card:hover {
-    border-color: var(--border-accent);
-    transform: translateY(-5px);
-    box-shadow: 0 var(--space-lg) var(--space-2xl) var(--shadow-accent-soft);
-  }
-
-  .eco-icon {
-    font-size: var(--text-3xl);
+  .feature-desc a {
     color: var(--accent-bright);
-    transition: transform 0.25s;
-    line-height: var(--leading-none);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-accent);
+    transition: color 0.2s;
   }
 
-  .eco-card:hover .eco-icon { transform: scale(1.15); }
-
-  .eco-name {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: var(--text-lg);
-    line-height: var(--leading-tight);
-  }
-
-  .eco-desc {
-    font-size: var(--body-secondary);
-    color: var(--text-muted);
-    text-align: center;
-    line-height: var(--leading-normal);
-  }
+  .feature-desc a:hover { color: var(--moon-bright); }
 
   /* ── CTA ── */
   .cta-section {
@@ -856,6 +832,7 @@ const recentPosts = posts.slice(0, 3);
     gap: var(--space-lg);
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
   }
 
   .cta-primary {
@@ -898,18 +875,43 @@ const recentPosts = posts.slice(0, 3);
     box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
   }
 
-  .sep { color: var(--text-muted); }
+  .cta-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+    margin-top: var(--space-xl);
+  }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: var(--body-secondary);
+    transition: color 0.2s;
+  }
+
+  .cta-link:hover { color: var(--accent-bright); }
+
+  .cta-sep {
+    color: var(--text-muted);
+    opacity: 0.4;
+  }
 
   /* ── Responsive ── */
   @media (max-width: 768px) {
     .layers-grid { grid-template-columns: 1fr; }
     .system-layers { flex-direction: column; }
     .features-grid { grid-template-columns: 1fr; }
-    .ecosystem-grid { grid-template-columns: repeat(2, 1fr); }
+    .breath-track { grid-template-columns: 1fr; }
+    .breath-line { display: none; }
   }
 
   @media (max-width: 480px) {
     .container { padding: var(--space-2xl) var(--space-lg); }
-    .ecosystem-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>

@@ -5,36 +5,48 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 
-const upcoming: { name: string; icon: string; description: string; status: string }[] = [
+const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string }[] = [
+  {
+    name: 'Content Dependencies',
+    icon: 'protocols',
+    description: 'Install a muscle and its required protocols auto-resolve. requires/enhances/conflicts frontmatter for all AMPS content. Dependency graph on hub pages.',
+    status: 'In Progress',
+    statusColor: 'var(--warm-bright)',
+  },
+  {
+    name: 'AMPS Automations v2',
+    icon: 'automations',
+    description: 'Trigger-based flows that chain actions — session start, post-commit, pre-deploy. Spawns tuned agents for end-to-end workflows.',
+    status: 'In Progress',
+    statusColor: 'var(--warm-bright)',
+  },
   {
     name: '/share Command',
-    icon: 'protocols',
-    description: 'Publish protocols, muscles, and skills from your .soma/ directly to the community hub. Validates, strips private data, opens a PR.',
+    icon: 'scripts',
+    description: 'Publish protocols, muscles, and skills from your .soma/ directly to the community hub. Validates, strips private data, opens a PR — auto-merges for trusted contributors.',
     status: 'Planned',
-  },
-  {
-    name: 'AMPS Automations',
-    icon: 'extensions',
-    description: 'Step-by-step procedural flows that can spawn tuned agents for end-to-end workflows. The fifth AMPS layer — shipped foundation, building out triggers and chaining.',
-    status: 'In Progress',
-  },
-  {
-    name: 'AI Content Screening',
-    icon: 'skills',
-    description: 'Haiku-powered review of community submissions — injection scanning, quality scoring, automatic tier classification.',
-    status: 'Planned',
-  },
-  {
-    name: 'Bundle Builder',
-    icon: 'templates',
-    description: 'Multi-select on the hub — pick protocols, muscles, extensions. Generate a soma-bundle.json. One command spawns a fully configured agent.',
-    status: 'Exploring',
+    statusColor: 'var(--accent-bright)',
   },
   {
     name: 'Framework Compatibility',
     icon: 'extensions',
-    description: 'Extensions that read CLAUDE.md, AGENTS.md, .cursorrules and layer Soma memory on top. Drop Soma into any project and it just works.',
+    description: 'Extensions that read CLAUDE.md, AGENTS.md, .cursorrules — layer Soma memory on top of any existing setup. Drop in and it just works.',
+    status: 'Planned',
+    statusColor: 'var(--accent-bright)',
+  },
+  {
+    name: 'Bundle Builder',
+    icon: 'templates',
+    description: 'Multi-select on the hub — pick protocols, muscles, extensions. Generate a soma-bundle.json. One command spawns a fully configured agent anywhere.',
     status: 'Exploring',
+    statusColor: 'var(--text-muted)',
+  },
+  {
+    name: 'AI Content Screening',
+    icon: 'skills',
+    description: 'Haiku-powered review of community submissions — injection scanning, quality scoring, automatic tier classification. The hub moderates itself.',
+    status: 'Exploring',
+    statusColor: 'var(--text-muted)',
   },
 ];
 ---
@@ -44,9 +56,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   description="Where Soma has been and where it's going. Timeline of shipped features and what's next."
   canonicalUrl="https://soma.gravicity.ai/roadmap"
 >
-  <div class="stars"></div>
-  <div class="nebula"></div>
-
   <main class="container">
     <header class="hero">
       <Breadcrumbs items={[{ label: 'Roadmap', href: '/roadmap' }]} />
@@ -56,68 +65,42 @@ const upcoming: { name: string; icon: string; description: string; status: strin
       </p>
     </header>
 
-    <section class="section">
-      <SectionHeader title="Shipped" />
-      <RoadmapTimeline client:load />
-    </section>
-
+    <!-- What's Next -->
     <section class="section">
       <SectionHeader title="What's Next" />
       <div class="upcoming-grid">
         {upcoming.map((feature, i) => (
           <div class="feature-card" style={`animation-delay: ${i * 0.08}s`}>
             <div class="feature-head">
-              <span class="feature-icon"><Icon name={feature.icon as any} size={20} /></span>
+              <span class="feature-icon"><Icon name={feature.icon as any} size={22} /></span>
               <h3 class="feature-name">{feature.name}</h3>
-              <span class="feature-status">{feature.status}</span>
+              <span class="feature-status" style={`color: ${feature.statusColor}; border-color: ${feature.statusColor}`}>
+                {feature.status}
+              </span>
             </div>
             <p class="feature-desc">{feature.description}</p>
           </div>
         ))}
       </div>
-
-      <div class="voting-teaser">
-        <p>
-          <strong>Feature voting coming soon.</strong> Run <code>soma vote &lt;feature&gt;</code> to 
-          shape what ships next. Requires soma installed — your agent identity is your ballot.
-        </p>
-      </div>
     </section>
+
+    <!-- Shipped Timeline -->
+    <section class="section">
+      <SectionHeader title="Shipped" />
+      <RoadmapTimeline client:load />
+    </section>
+
+    <!-- Voting Teaser -->
+    <div class="voting-teaser">
+      <p>
+        <strong>Feature voting coming soon.</strong> Run <code>soma vote &lt;feature&gt;</code> to 
+        shape what ships next.
+      </p>
+    </div>
   </main>
 </Layout>
 
 <style>
-  /* Design tokens: see Layout.astro :root */
-
-  .stars {
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(1.5px 1.5px at 20px 30px, rgba(228,234,244,0.6), transparent),
-      radial-gradient(1px 1px at 80px 60px, rgba(228,234,244,0.4), transparent),
-      radial-gradient(1.5px 1.5px at 150px 100px, rgba(124,178,212,0.5), transparent),
-      radial-gradient(1px 1px at 300px 80px, rgba(232,168,124,0.3), transparent);
-    background-size: 400px 180px;
-    animation: twinkle 10s ease-in-out infinite alternate;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .nebula {
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 50% at 15% 20%, rgba(104, 152, 190, 0.08), transparent 50%),
-      radial-gradient(ellipse 50% 50% at 85% 30%, rgba(124, 178, 212, 0.06), transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  @keyframes twinkle {
-    0% { opacity: 0.3; }
-    100% { opacity: 0.6; }
-  }
-
   .container {
     position: relative;
     z-index: 1;
@@ -141,7 +124,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
 
   .title {
     font-family: var(--font-display);
-    font-size: clamp(2.625rem, 8vw, 4.25rem);
+    font-size: clamp(2rem, 6vw, 2.625rem);
     font-weight: 700;
     margin: var(--space-md) 0;
     background: linear-gradient(135deg, var(--hero-title-start) 0%, var(--hero-title-end) 100%);
@@ -159,7 +142,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     line-height: var(--leading-relaxed);
   }
 
-  /* ── Sections ── */
   .section {
     margin-bottom: var(--section-gap);
   }
@@ -167,11 +149,12 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   /* ── Upcoming Grid ── */
   .upcoming-grid {
     display: grid;
-    gap: var(--space-lg);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--grid-gap);
   }
 
   .feature-card {
-    padding: var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
@@ -190,7 +173,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     display: flex;
     align-items: center;
     gap: var(--space-md);
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
   }
 
   .feature-icon {
@@ -206,6 +189,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     color: var(--text-primary);
     flex: 1;
     margin: 0;
+    line-height: var(--leading-tight);
   }
 
   .feature-status {
@@ -213,10 +197,11 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     font-size: var(--badge-text);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--text-muted);
-    padding: var(--space-xs) 8px;
-    border-radius: var(--radius-md);
-    background: var(--surface-interactive);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    border: 1px solid;
+    background: transparent;
+    flex-shrink: 0;
   }
 
   .feature-desc {
@@ -229,7 +214,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
 
   /* ── Voting Teaser ── */
   .voting-teaser {
-    margin-top: var(--space-2xl);
+    margin-bottom: var(--section-gap);
     padding: var(--space-xl);
     background: var(--surface-accent-soft);
     border: 1px solid var(--border-accent);
@@ -254,15 +239,17 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     border-radius: var(--radius-sm);
   }
 
+  @media (max-width: 768px) {
+    .upcoming-grid { grid-template-columns: 1fr; }
+  }
+
   @media (max-width: 640px) {
-    .container {
-      padding: var(--space-2xl) 13px 21px;
-    }
+    .container { padding: var(--space-2xl) var(--space-lg) var(--space-xl); }
   }
 </style>
 
 <style is:global>
-  /* ── Timeline (global for Preact island) ── */
+  /* ── Timeline ── */
   .timeline {
     position: relative;
     padding-left: var(--space-2xl);
@@ -275,73 +262,119 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     top: 5px;
     bottom: 5px;
     width: 2px;
-    background: linear-gradient(
-      to bottom,
-      var(--border-accent),
-      var(--border-subtle)
-    );
+    background: linear-gradient(to bottom, var(--border-accent), var(--border-subtle));
   }
 
   .timeline-entry {
     position: relative;
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-3xl);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    transition: all 0.25s ease;
     animation: fadeUp 0.6s ease-out both;
+  }
+
+  .timeline-entry:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 8px 24px var(--shadow-accent-soft);
+  }
+
+  .timeline-entry:first-child {
+    border-color: var(--border-accent);
   }
 
   .timeline-dot {
     position: absolute;
-    left: -29px;
-    top: 3px;
-    font-size: var(--label-text);
+    left: calc(-1 * var(--space-2xl) - 4px);
+    top: var(--space-xl);
+    font-size: var(--body-text);
     color: var(--accent-bright);
+    line-height: 1;
+  }
+
+  .timeline-entry:first-child .timeline-dot {
+    filter: drop-shadow(0 0 6px var(--moon-glow));
   }
 
   .timeline-head {
     display: flex;
     align-items: baseline;
-    gap: var(--space-md);
+    gap: var(--space-lg);
     flex-wrap: wrap;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
   }
 
   .timeline .version {
     font-family: var(--font-mono);
-    font-size: var(--body-secondary);
+    font-size: var(--text-lg);
     color: var(--accent-bright);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .timeline .label {
     font-family: var(--font-display);
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
     font-weight: 600;
     color: var(--text-primary);
     margin: 0;
+    line-height: var(--leading-tight);
   }
 
   .timeline .date {
-    font-family: var(--font-body);
+    font-family: var(--font-mono);
     font-size: var(--label-text);
     color: var(--text-muted);
+    margin-left: auto;
   }
 
   .timeline-items {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    gap: var(--space-sm);
   }
 
   .timeline-items li {
     font-family: var(--font-body);
-    font-size: var(--list-text);
+    font-size: var(--body-text);
     color: var(--text-secondary);
-    line-height: var(--list-leading);
+    line-height: var(--leading-relaxed);
     padding: var(--space-xs) 0;
+    padding-left: var(--space-xl);
+    position: relative;
   }
 
   .timeline-items li::before {
-    content: '· ';
-    color: var(--text-muted);
+    content: '';
+    position: absolute;
+    left: var(--space-md);
+    top: 0.7em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent-bright);
+    opacity: 0.5;
+  }
+
+  .timeline-entry.latest {
+    border-color: var(--border-accent);
+    background: linear-gradient(135deg, var(--surface-card) 0%, rgba(104, 152, 190, 0.04) 100%);
+  }
+
+  .latest-badge {
+    font-family: var(--font-mono);
+    font-size: var(--badge-text);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--bg-deep);
+    background: var(--accent-bright);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    line-height: 1;
   }
 
   .timeline-loading,
@@ -353,17 +386,10 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   }
 
   @media (max-width: 640px) {
-    .timeline {
-      padding-left: var(--space-xl);
-    }
-
-    .timeline-dot {
-      left: -17px;
-    }
-
-    .timeline-head {
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
+    .timeline { padding-left: var(--space-xl); }
+    .timeline-dot { left: calc(-1 * var(--space-xl) - 4px); }
+    .timeline-entry { padding: var(--space-lg); }
+    .timeline-head { flex-direction: column; gap: var(--space-xs); }
+    .timeline .date { margin-left: 0; }
   }
 </style>

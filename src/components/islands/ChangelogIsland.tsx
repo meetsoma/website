@@ -1,8 +1,7 @@
 /**
  * ChangelogIsland — Preact island that fetches /data/changelog.json
- * and renders a full changelog with Added/Changed/Fixed sections.
+ * and renders a full changelog with version cards.
  * 
- * No Astro rebuild needed — JSON is served as a static file.
  * Updated by soma-changelog-json.sh --sync during releases.
  */
 import { useState, useEffect } from 'preact/hooks';
@@ -20,10 +19,20 @@ interface ChangelogData {
 }
 
 const sectionConfig: Record<string, { label: string; color: string }> = {
-  added: { label: 'Added', color: 'var(--accent-green, #a8e8a8)' },
-  changed: { label: 'Changed', color: 'var(--accent-bright, #7cb2d4)' },
-  fixed: { label: 'Fixed', color: 'var(--accent-warm, #e8a87c)' },
-  born: { label: 'Born', color: 'var(--accent-bright, #7cb2d4)' },
+  added: { label: 'Added', color: '#a8e8a8' },
+  changed: { label: 'Changed', color: 'var(--accent-bright)' },
+  fixed: { label: 'Fixed', color: 'var(--warm-bright)' },
+  born: { label: 'Born', color: 'var(--accent-bright)' },
+};
+
+// Editorial labels per version
+const versionLabels: Record<string, string> = {
+  '0.5.1': 'AMPS Distribution & Templates',
+  '0.5.0': 'Stabilization & Prompt Intelligence',
+  '0.4.0': 'AMPS & Distribution',
+  '0.3.0': 'Session Intelligence',
+  '0.2.0': 'The Engine',
+  '0.1.0': 'First Breath',
 };
 
 function stripMarkdownBold(text: string): string {
@@ -31,7 +40,6 @@ function stripMarkdownBold(text: string): string {
 }
 
 function renderEntry(text: string): any {
-  // Strip bold markers, render backtick code spans
   const clean = stripMarkdownBold(text);
   const parts = clean.split(/(`[^`]+`)/g);
   return parts.map((part, i) => {
@@ -57,52 +65,69 @@ export default function ChangelogIsland() {
   }, []);
 
   if (error) {
-    return (
-      <div class="changelog-error">
-        <p>Failed to load changelog: {error}</p>
-      </div>
-    );
+    return <div class="changelog-error"><p>Failed to load changelog: {error}</p></div>;
   }
 
   if (!data) {
-    return (
-      <div class="changelog-loading">
-        <p>Loading changelog...</p>
-      </div>
-    );
+    return <div class="changelog-loading"><p>Loading changelog...</p></div>;
   }
 
   return (
     <div class="changelog">
-      {data.versions.map((version, vi) => (
-        <div class="changelog-version" key={version.version} style={`animation-delay: ${vi * 0.08}s`}>
-          <div class="version-header">
-            <span class="version-tag">
-              {version.version === 'Unreleased' ? '🔮 Unreleased' : `v${version.version}`}
-            </span>
-            {version.date && <span class="version-date">{version.date}</span>}
-          </div>
+      {data.versions.map((version, vi) => {
+        const isLatest = vi === 0 && version.version !== 'Unreleased';
+        const isUnreleased = version.version === 'Unreleased';
+        const label = versionLabels[version.version] || '';
+        const sections = Object.entries(version.entries);
+        const totalEntries = sections.reduce((sum, [, items]) => sum + items.length, 0);
 
-          {Object.entries(version.entries).map(([section, items]) => {
-            const config = sectionConfig[section] || { label: section, color: 'var(--text-muted)' };
-            return (
-              <div class="changelog-section" key={section}>
-                <h3 class="section-label" style={`color: ${config.color}`}>
-                  {config.label}
-                </h3>
-                <ul class="section-items">
-                  {(items as string[]).map((item, i) => (
-                    <li key={i}>{renderEntry(item)}</li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
-      ))}
+        return (
+          <div class="changelog-version" key={version.version} style={`animation-delay: ${vi * 0.08}s`}>
+            <div class="version-header">
+              <span class="version-tag">
+                {isUnreleased ? '🔮 Unreleased' : `v${version.version}`}
+              </span>
+              {label && <span class="version-label">{label}</span>}
+              {isLatest && <span class="version-latest">latest</span>}
+              {version.date && <span class="version-date">{version.date}</span>}
+            </div>
+
+            {/* Stats bar */}
+            <div class="version-stats">
+              {sections.map(([section, items]) => {
+                const config = sectionConfig[section] || { label: section, color: 'var(--text-muted)' };
+                return (
+                  <div class="stat" key={section}>
+                    <span class="stat-dot" style={`background: ${config.color}`} />
+                    <span class="stat-count">{items.length}</span>
+                    <span class="stat-label">{config.label.toLowerCase()}</span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {sections.map(([section, items]) => {
+              const config = sectionConfig[section] || { label: section, color: 'var(--text-muted)' };
+              return (
+                <div class="changelog-section" key={section}>
+                  <h3 class="section-label" style={`color: ${config.color}`}>
+                    <span class="section-dot" style={`background: ${config.color}`} />
+                    {config.label}
+                  </h3>
+                  <ul class={`section-items section-${section}`}>
+                    {(items as string[]).map((item, i) => (
+                      <li key={i}>{renderEntry(item)}</li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
 
       <p class="changelog-meta">
-        Generated from {data.source} · Last updated {new Date(data.generated).toLocaleDateString()}
+        Generated from {data.source} · {new Date(data.generated).toLocaleDateString()}
       </p>
     </div>
   );

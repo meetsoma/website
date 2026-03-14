@@ -10,9 +10,6 @@ import ChangelogIsland from '../../components/islands/ChangelogIsland.tsx';
   description="What shipped, what changed, what got fixed. Full version history for the Soma agent."
   canonicalUrl="https://soma.gravicity.ai/changelog"
 >
-  <div class="stars"></div>
-  <div class="nebula"></div>
-
   <main class="container">
     <header class="hero">
       <Breadcrumbs items={[{ label: 'Changelog', href: '/changelog' }]} />
@@ -29,35 +26,6 @@ import ChangelogIsland from '../../components/islands/ChangelogIsland.tsx';
 </Layout>
 
 <style>
-  .stars {
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(1.5px 1.5px at 20px 30px, rgba(228,234,244,0.6), transparent),
-      radial-gradient(1px 1px at 80px 60px, rgba(228,234,244,0.4), transparent),
-      radial-gradient(1.5px 1.5px at 150px 100px, rgba(124,178,212,0.5), transparent),
-      radial-gradient(1px 1px at 300px 80px, rgba(232,168,124,0.3), transparent);
-    background-size: 400px 180px;
-    animation: twinkle 10s ease-in-out infinite alternate;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .nebula {
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 50% at 15% 20%, rgba(104, 152, 190, 0.08), transparent 50%),
-      radial-gradient(ellipse 50% 50% at 85% 30%, rgba(124, 178, 212, 0.06), transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  @keyframes twinkle {
-    0% { opacity: 0.3; }
-    100% { opacity: 0.6; }
-  }
-
   .container {
     position: relative;
     z-index: 1;
@@ -80,7 +48,7 @@ import ChangelogIsland from '../../components/islands/ChangelogIsland.tsx';
 
   .title {
     font-family: var(--font-display);
-    font-size: clamp(2.625rem, 8vw, 4.25rem);
+    font-size: clamp(2rem, 6vw, 2.625rem);
     font-weight: 700;
     margin: var(--space-md) 0;
     background: linear-gradient(135deg, var(--hero-title-start) 0%, var(--hero-title-end) 100%);
@@ -103,14 +71,12 @@ import ChangelogIsland from '../../components/islands/ChangelogIsland.tsx';
   }
 
   @media (max-width: 640px) {
-    .container {
-      padding: var(--space-2xl) 13px 21px;
-    }
+    .container { padding: var(--space-2xl) var(--space-lg) var(--space-xl); }
   }
 </style>
 
 <style is:global>
-  /* ── Changelog Island Styles ── */
+  /* ── Changelog ── */
   .changelog-loading,
   .changelog-error {
     text-align: center;
@@ -119,34 +85,98 @@ import ChangelogIsland from '../../components/islands/ChangelogIsland.tsx';
     font-family: var(--font-body);
   }
 
-  .changelog-error {
-    color: var(--accent-warm, #e8a87c);
-  }
+  .changelog-error { color: var(--warm-bright); }
 
   .changelog-version {
     margin-bottom: var(--space-3xl);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    transition: all 0.25s ease;
     animation: fadeUp 0.6s ease-out both;
+  }
+
+  .changelog-version:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 8px 24px var(--shadow-accent-soft);
+  }
+
+  .changelog-version:first-child {
+    border-color: var(--border-accent);
+    background: linear-gradient(135deg, var(--surface-card) 0%, rgba(104, 152, 190, 0.04) 100%);
   }
 
   .version-header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-lg);
-    margin-bottom: var(--space-lg);
-    padding-bottom: var(--space-md);
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-lg);
     border-bottom: 1px solid var(--border-subtle);
   }
 
   .version-tag {
     font-family: var(--font-mono);
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
     font-weight: 700;
     color: var(--accent-bright);
   }
 
+  .version-label {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+  }
+
   .version-date {
-    font-family: var(--font-body);
+    font-family: var(--font-mono);
     font-size: var(--label-text);
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  .version-latest {
+    font-family: var(--font-mono);
+    font-size: var(--badge-text);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--bg-deep);
+    background: var(--accent-bright);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: 9999px;
+  }
+
+  .version-stats {
+    display: flex;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xl);
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+  }
+
+  .stat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-count {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .stat-label {
     color: var(--text-muted);
   }
 
@@ -154,33 +184,60 @@ import ChangelogIsland from '../../components/islands/ChangelogIsland.tsx';
     margin-bottom: var(--space-xl);
   }
 
+  .changelog-section:last-child {
+    margin-bottom: 0;
+  }
+
   .section-label {
     font-family: var(--font-display);
     font-size: var(--body-text);
     font-weight: 600;
-    margin: 0 0 var(--space-md) 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    margin: 0 0 var(--space-lg) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .section-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
 
   .section-items {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    gap: var(--space-sm);
   }
 
   .section-items li {
     font-family: var(--font-body);
-    font-size: var(--list-text);
+    font-size: var(--body-text);
     color: var(--text-secondary);
-    line-height: var(--list-leading);
+    line-height: var(--leading-relaxed);
     padding: var(--space-xs) 0;
+    padding-left: var(--space-xl);
+    position: relative;
   }
 
   .section-items li::before {
-    content: '· ';
-    color: var(--text-muted);
+    content: '';
+    position: absolute;
+    left: var(--space-md);
+    top: 0.75em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    opacity: 0.4;
   }
+
+  .section-added li::before { background: #a8e8a8; }
+  .section-changed li::before { background: var(--accent-bright); }
+  .section-fixed li::before { background: var(--warm-bright); }
+  .section-born li::before { background: var(--accent-bright); }
 
   .section-items code {
     font-family: var(--font-mono);
@@ -192,10 +249,18 @@ import ChangelogIsland from '../../components/islands/ChangelogIsland.tsx';
   }
 
   .changelog-meta {
-    font-family: var(--font-body);
+    font-family: var(--font-mono);
     font-size: var(--label-text);
     color: var(--text-muted);
     text-align: center;
-    margin-top: var(--space-2xl);
+    margin-top: var(--space-xl);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 640px) {
+    .changelog-version { padding: var(--space-xl); }
+    .version-header { flex-wrap: wrap; }
+    .version-date { margin-left: 0; }
+    .version-stats { flex-wrap: wrap; gap: var(--space-lg); }
   }
 </style>
