@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-14T16:22:49Z",
+  "generated": "2026-03-14T16:50:26Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -13,7 +13,17 @@
           "Session log and preload paths surfaced in boot message (#d934799)",
           "Resume boot diffing — `soma -c` skips redundant preload injection (#de39fd1)",
           "Restart-required detection — signal file, cmux notification, and statusline indicator when core/extension files change (#9f2a103, #f845894, #926fd4a, #18eba69)",
-          "`soma-changelog.sh` — generate categorized changelog entries from conventional commits"
+          "`soma-changelog.sh` — generate categorized changelog entries from conventional commits with `[cl:tag]` consolidation",
+          "`soma-changelog-json.sh` — parse CHANGELOG.md into JSON for website consumption",
+          "ChangelogIsland.tsx + RoadmapTimeline.tsx — Preact islands for `/changelog/` and `/roadmap/` pages",
+          "`soma-threads.sh` — chain-of-thought tracing tool for blog seeds across session logs",
+          "`soma-verify.sh self-analysis` — muscle health, cross-location divergence, orphan detection",
+          "Protocol TL;DR extraction — `protocolSummary()` prefers `## TL;DR` body section over breadcrumb (#83ec9ee)",
+          "Combined session ID format (`sNN-<hex>`) — sequential for human scanning, hex for collision safety (#e7c4057, #618cd9f)",
+          "`commit-msg` git hook — validates conventional commit format + `[cl:tag]` syntax",
+          "`guard.toolGates` setting — require reading muscles before dangerous bash commands (#1c6b725)",
+          "`breathe.graceTurns` setting — configurable auto-breathe grace period, replaces hardcoded 6-turn limit (#c9ab5a8)",
+          "Session log nudge with template at breathe trigger point (#eb8acc8)"
         ],
         "changed": [
           "Auto-breathe rotation now writes `.rotate-signal` and calls `ctx.shutdown()` immediately when preload already exists — no more waiting for `turn_end` that may not fire (#378a1b1)",
@@ -21,7 +31,10 @@
           "Self-awareness protocols consolidated — 5 redundant protocols became configuration guides (#b70ca44)",
           "`/scratch` extracted to standalone `soma-scratch.ts` extension (#932f446)",
           "Shared helpers extracted to `utils.ts` — deduplication across core modules (#2dbea9a, #3d8467e)",
-          "Unified rotation through `/inhale`, removed `/auto-continue` (#7b7ba52)"
+          "Unified rotation through `/inhale`, removed `/auto-continue` (#7b7ba52)",
+          "Changelog pipeline switched to Ghostty-style commit-driven entries (#ec27a11)",
+          "`pattern-evolution` protocol updated with identity maturation layer; `working-style` with tool-awareness (#5e4219d)",
+          "Dev hooks generated locally by `soma-dev.sh`, not committed to repo (#efc6ed4)"
         ]
       }
     },
