@@ -2,7 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import Icon from '../../../components/icons/SomaIcons.astro';
-import { getAllItems, getVersionHistory, resolveTemplateRequires, getCoreProtocols, type HubItem, type VersionEntry, renderMarkdown } from '../../../lib/hub';
+import { getAllItems, getVersionHistory, resolveTemplateRequires, getCoreProtocols, type HubItem, type VersionEntry, type ForkedFrom, type Contributor, renderMarkdown } from '../../../lib/hub';
 
 export async function getStaticPaths() {
   const items = getAllItems();
@@ -34,6 +34,9 @@ const { item, versions, templateData } = Astro.props as {
 };
 const hasVersions = versions.length > 0;
 const isTemplate = item.type === 'template' && templateData !== null;
+const hasForkedFrom = !!item.forkedFrom;
+const hasForks = item.forks && item.forks.length > 0;
+const hasContributors = item.contributors && item.contributors.length > 0;
 
 const typeLabels: Record<string, string> = {
   protocol: 'Protocol',
@@ -107,6 +110,14 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
         </div>
       )}
     </header>
+
+    <!-- Fork Lineage Banner -->
+    {hasForkedFrom && (
+      <div class="fork-banner">
+        <span class="fork-icon">⑂</span>
+        <span>Forked from <a href={`/hub/${item.forkedFrom!.type}/${item.forkedFrom!.slug}`}>{item.forkedFrom!.slug}</a> by {item.forkedFrom!.author} (v{item.forkedFrom!.version})</span>
+      </div>
+    )}
 
     <!-- Stats Bar -->
     <div class="stats-bar">
@@ -274,6 +285,38 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
             </div>
           </div>
         )}
+      </section>
+    )}
+
+    <!-- Contributors -->
+    {hasContributors && (
+      <section class="contributors-section">
+        <h2>Contributors</h2>
+        <div class="contributors-list">
+          {item.contributors!.map(c => (
+            <div class="contributor-row">
+              <span class="contributor-name">{c.name}</span>
+              {c.version && <span class="contributor-version">v{c.version}</span>}
+              {c.contribution && <span class="contributor-desc">{c.contribution}</span>}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Forks -->
+    {hasForks && (
+      <section class="forks-section">
+        <h2>Community Forks</h2>
+        <p class="forks-subtext">Other versions created by the community, based on this {typeLabels[item.type].toLowerCase()}.</p>
+        <div class="forks-list">
+          {item.forks!.map(f => (
+            <a href={`/hub/${f.type}/${f.slug}`} class="fork-card">
+              <span class="fork-card-name">{f.slug}</span>
+              <span class="fork-card-meta">by {f.author} · v{f.version}</span>
+            </a>
+          ))}
+        </div>
       </section>
     )}
 
@@ -918,6 +961,134 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
 
   .inc-card-core .inc-name {
     font-size: var(--label-text);
+  }
+
+  /* Fork Banner */
+  .fork-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    background: rgba(190, 152, 232, 0.1);
+    border: 1px solid rgba(190, 152, 232, 0.25);
+    margin-bottom: var(--space-xl);
+    font-size: var(--body-secondary);
+    color: var(--text-secondary);
+  }
+
+  .fork-icon {
+    font-size: 1.2em;
+    color: rgb(190, 152, 232);
+  }
+
+  .fork-banner a {
+    color: var(--accent-bright);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .fork-banner a:hover { text-decoration: underline; }
+
+  /* Contributors */
+  .contributors-section {
+    margin-bottom: var(--space-xl);
+  }
+
+  .contributors-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-lg);
+  }
+
+  .contributors-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .contributor-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+  }
+
+  .contributor-name {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: var(--body-secondary);
+  }
+
+  .contributor-version {
+    font-family: var(--font-mono);
+    font-size: var(--badge-text);
+    color: var(--text-muted);
+  }
+
+  .contributor-desc {
+    font-size: var(--label-text);
+    color: var(--text-secondary);
+    flex: 1;
+  }
+
+  /* Forks */
+  .forks-section {
+    margin-bottom: var(--space-xl);
+  }
+
+  .forks-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+  }
+
+  .forks-subtext {
+    font-size: var(--label-text);
+    color: var(--text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .forks-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .fork-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.15s ease;
+  }
+
+  .fork-card:hover {
+    border-color: var(--border-accent);
+    transform: translateX(4px);
+  }
+
+  .fork-card-name {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: var(--body-secondary);
+    color: var(--accent-bright);
+  }
+
+  .fork-card-meta {
+    font-size: var(--badge-text);
+    color: var(--text-muted);
   }
 
   @media (max-width: 480px) {

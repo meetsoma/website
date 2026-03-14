@@ -19,6 +19,19 @@ const localHasContent = fs.existsSync(path.join(localCopy, 'protocols'))
   && fs.readdirSync(path.join(localCopy, 'protocols')).some(f => f.endsWith('.md'));
 const COMMUNITY_ROOT = localHasContent ? localCopy : siblingRepo;
 
+interface ForkedFrom {
+  slug: string;
+  type: string;
+  author: string;
+  version: string;
+}
+
+interface Contributor {
+  name: string;
+  version: string;
+  contribution: string;
+}
+
 interface HubItem {
   slug: string;
   name: string;
@@ -38,6 +51,12 @@ interface HubItem {
   versions?: VersionEntry[];
   /** Template manifest — requires, settings, etc. */
   manifest?: Record<string, any>;
+  /** Fork lineage — links to the original item this was forked from */
+  forkedFrom?: ForkedFrom;
+  /** Contributors who submitted accepted PRs to this item */
+  contributors?: Contributor[];
+  /** Items that forked from this one (populated at build time) */
+  forks?: { slug: string; type: string; author: string; version: string }[];
 }
 
 interface VersionEntry {
@@ -136,6 +155,50 @@ function loadDir(type: HubItem['type'], dir: string): HubItem[] {
       item.manifest = manifest;
     }
 
+    // Parse forked-from block (multi-line YAML object)
+    const forkedMatch = content.match(/^forked-from:\s*\n((?:\s+\w[\w-]*:.*\n?)+)/m);
+    if (forkedMatch) {
+      const forkedLines = forkedMatch[1].split('\n').filter(l => l.trim());
+      const forked: Record<string, string> = {};
+      for (const line of forkedLines) {
+        const kv = line.match(/^\s+(\w[\w-]*):\s*(.+)$/);
+        if (kv) forked[kv[1]] = kv[2].trim().replace(/^["']|["']$/g, '');
+      }
+      if (forked.slug) {
+        item.forkedFrom = {
+          slug: forked.slug,
+          type: forked.type || item.type,
+          author: forked.author || 'Unknown',
+          version: forked.version || '0.0.0',
+        };
+      }
+    }
+
+    // Parse contributors block (YAML array of objects)
+    const contribMatch = content.match(/^contributors:\s*\n((?:\s+-\s+.*\n(?:\s+\w[\w-]*:.*\n?)*)+)/m);
+    if (contribMatch) {
+      const contributors: Contributor[] = [];
+      const entries = contribMatch[1].split(/\n\s+-\s+/).filter(e => e.trim());
+      for (const entry of entries) {
+        const lines = entry.split('\n').map(l => l.trim()).filter(l => l);
+        const obj: Record<string, string> = {};
+        for (const line of lines) {
+          const kv = line.match(/^(\w[\w-]*):\s*(.+)$/);
+          if (kv) obj[kv[1]] = kv[2].trim().replace(/^["']|["']$/g, '');
+        }
+        if (obj.name) {
+          contributors.push({
+            name: obj.name,
+            version: obj.version || '',
+            contribution: obj.contribution || '',
+          });
+        }
+      }
+      if (contributors.length > 0) {
+        item.contributors = contributors;
+      }
+    }
+
     items.push(item);
   }
 
@@ -203,13 +266,33 @@ export function resolveTemplateRequires(item: HubItem): { required: HubItem[]; m
 }
 
 export function getAllItems(): HubItem[] {
-  return [
+  const items = [
     ...getProtocols(),
     ...getMuscles(),
     ...getSkills(),
     ...getTemplates(),
     ...getAutomations(),
   ];
+
+  // Populate reverse fork references
+  for (const item of items) {
+    if (item.forkedFrom) {
+      const original = items.find(
+        i => i.slug === item.forkedFrom!.slug && i.type === item.forkedFrom!.type
+      );
+      if (original) {
+        if (!original.forks) original.forks = [];
+        original.forks.push({
+          slug: item.slug,
+          type: item.type,
+          author: item.author,
+          version: item.version,
+        });
+      }
+    }
+  }
+
+  return items;
 }
 
 /**
@@ -442,4 +525,4 @@ export function renderMarkdown(md: string): string {
   return html.join('\n');
 }
 
-export type { HubItem, VersionEntry };
+export type { HubItem, VersionEntry, ForkedFrom, Contributor };
