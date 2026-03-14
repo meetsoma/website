@@ -1,0 +1,110 @@
+/* OrbitalPhysics — Interactive orbital diagram styles */
+
+/* Center logo float animation */
+.orbital-center-float {
+  animation: orbital-float 5s ease-in-out infinite;
+}
+
+@keyframes orbital-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Pulse ring animation */
+.orbital-pulse-ring {
+  animation: orbital-pulse 8s ease-in-out infinite;
+}
+
+@keyframes orbital-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* Node hover */
+.orbital-node:hover .orbital-node-icon {
+  border-color: var(--border-accent) !important;
+  box-shadow: 0 0 21px var(--shadow-accent-soft) !important;
+  transform: scale(1.08);
+}
+
+.orbital-node .orbital-node-icon {
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.orbital-node-active .orbital-node-icon {
+  transform: scale(1.12) !important;
+}
+
+/* Info card */
+.orbital-info-card {
+  background: var(--surface-card-strong);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg, 12px);
+  padding: 16px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 21px var(--shadow-accent-soft);
+}
+
+.orbital-info-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--accent-bright);
+}
+
+.orbital-info-header span {
+  font-family: var(--font-display, system-ui);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.orbital-info-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 10px 0;
+}
+
+.orbital-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.orbital-info-list li {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  padding: 3px 0 3px 14px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.orbital-info-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--accent-bright);
+  font-weight: bold;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .orbital-center-float { animation: none !important; }
+  .orbital-pulse-ring { animation: none !important; }
+  .orbital-node .orbital-node-icon { transition: none !important; }
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .orbital-info-card {
+    padding: 12px;
+  }
+  .orbital-info-desc {
+    font-size: 0.78rem;
+  }
+  .orbital-info-list li {
+    font-size: 0.74rem;
+  }
+}

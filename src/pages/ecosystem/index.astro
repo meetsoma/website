@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
+import OrbitalPhysics from '../../components/islands/OrbitalPhysics.tsx';
+import CommunityStats from '../../components/islands/CommunityStats.tsx';
 ---
 
 <Layout
@@ -24,68 +26,9 @@ import Icon from '../../components/icons/SomaIcons.astro';
       </p>
     </header>
 
-    <!-- Orbital Architecture Diagram -->
+    <!-- Interactive Orbital Diagram -->
     <section class="diagram-section">
-      <div class="orbit-diagram" aria-label="Soma ecosystem orbital diagram">
-        <!-- Orbital ring -->
-        <div class="orbit-ring"></div>
-        <div class="orbit-ring orbit-ring-inner"></div>
-
-        <!-- Center: Soma -->
-        <div class="orbit-center">
-          <img src="/media/soma-logo-animated.svg" alt="" width="55" height="55" class="orbit-logo" />
-          <span class="orbit-center-label">soma</span>
-        </div>
-
-        <!-- Inner orbit: you + pi + memory -->
-        <div class="orbit-node orbit-you">
-          <span class="orbit-node-icon"><Icon name="you" size={21} /></span>
-          <span class="orbit-node-label">you</span>
-        </div>
-
-        <div class="orbit-node orbit-pi">
-          <span class="orbit-node-icon"><Icon name="pi" size={21} /></span>
-          <span class="orbit-node-label">pi</span>
-          <span class="orbit-node-sub">runtime</span>
-        </div>
-
-        <div class="orbit-node orbit-memory">
-          <span class="orbit-node-icon"><Icon name="memory" size={21} /></span>
-          <span class="orbit-node-label">memory</span>
-          <span class="orbit-node-sub">.soma/</span>
-        </div>
-
-        <!-- Outer orbit: AMPS (4) + system (2) -->
-        <div class="orbit-node orbit-layer orbit-amps orbit-auto">
-          <span class="orbit-node-icon"><Icon name="automations" size={24} /></span>
-          <span class="orbit-node-label">automations</span>
-        </div>
-
-        <div class="orbit-node orbit-layer orbit-amps orbit-muscle">
-          <span class="orbit-node-icon"><Icon name="muscles" size={24} /></span>
-          <span class="orbit-node-label">muscles</span>
-        </div>
-
-        <div class="orbit-node orbit-layer orbit-amps orbit-protocol">
-          <span class="orbit-node-icon"><Icon name="protocols" size={24} /></span>
-          <span class="orbit-node-label">protocols</span>
-        </div>
-
-        <div class="orbit-node orbit-layer orbit-amps orbit-script">
-          <span class="orbit-node-icon"><Icon name="scripts" size={24} /></span>
-          <span class="orbit-node-label">scripts</span>
-        </div>
-
-        <div class="orbit-node orbit-layer orbit-sys orbit-ext">
-          <span class="orbit-node-icon"><Icon name="extensions" size={24} /></span>
-          <span class="orbit-node-label">extensions</span>
-        </div>
-
-        <div class="orbit-node orbit-layer orbit-sys orbit-skill">
-          <span class="orbit-node-icon"><Icon name="skills" size={24} /></span>
-          <span class="orbit-node-label">skills</span>
-        </div>
-      </div>
+      <OrbitalPhysics client:load />
     </section>
 
     <!-- AMPS Detail Sections -->
@@ -383,23 +326,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
         Share your agent's protocols, muscles, and skills with others. Import what works.
         The community repo is the library — fork it, contribute back, or just browse.
       </p>
-      <div class="community-stats">
-        <div class="stat-card">
-          <span class="stat-number">14</span>
-          <span class="stat-label">Protocols</span>
-          <span class="stat-detail">breath-cycle · workflow · correction-capture · detection-triggers · task-tracking · and 9 more</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">3</span>
-          <span class="stat-label">Muscles</span>
-          <span class="stat-detail">test-hygiene · icon-audit · micro-exhale</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">4</span>
-          <span class="stat-label">Templates</span>
-          <span class="stat-detail">devops · writer · architect · default</span>
-        </div>
-      </div>
+      <CommunityStats client:load />
       <div class="community-cta">
         <code class="install-cmd">/install protocol workflow</code>
         <p class="coming-soon">Install community content directly from Soma. Browse the <a href="/hub">Hub</a> or the <a href="https://github.com/meetsoma/community" target="_blank" rel="noopener">community repo</a>.</p>
@@ -445,7 +372,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
     flex-direction: column;
   }
 
-  .header { text-align: center; margin-bottom: var(--section-gap); }
+  .header { text-align: center; margin-bottom: calc(var(--section-gap) - 20px); }
 
   .title {
     font-family: var(--font-display);
@@ -465,163 +392,6 @@ import Icon from '../../components/icons/SomaIcons.astro';
 
   /* ── Orbital Diagram ── */
   .diagram-section { margin-bottom: var(--section-gap); }
-
-  .orbit-diagram {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    aspect-ratio: 1;
-    margin: 0 auto;
-  }
-
-  /* Orbital rings */
-  .orbit-ring {
-    position: absolute;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--border-subtle);
-    /* Outer ring — AMPS + system layers orbit here */
-    inset: 0;
-  }
-
-  .orbit-ring-inner {
-    /* Inner ring — you, pi, memory */
-    inset: 22%;
-    border-style: dashed;
-    border-color: rgba(104, 152, 190, 0.15);
-  }
-
-  /* Center node */
-  .orbit-center {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-sm);
-    z-index: 2;
-  }
-
-  .orbit-logo {
-    filter: drop-shadow(0 0 21px var(--logo-glow));
-    animation: float 5s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
-  .orbit-center-label {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 600;
-    color: var(--text-primary);
-    letter-spacing: 0.05em;
-  }
-
-  /* Orbit nodes — shared */
-  .orbit-node {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-xs);
-    transform: translate(-50%, -50%);
-    z-index: 3;
-  }
-
-  .orbit-node-icon {
-    width: 42px;
-    height: 42px;
-    display: grid;
-    place-items: center;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--border-subtle);
-    background: var(--surface-card-strong);
-    font-size: var(--text-lg);
-    color: var(--accent-bright);
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-  }
-
-  .orbit-node:hover .orbit-node-icon {
-    border-color: var(--border-accent);
-    box-shadow: 0 0 21px var(--shadow-accent-soft);
-    transform: scale(1.12);
-  }
-
-  .orbit-node-label {
-    font-family: var(--font-display);
-    font-size: var(--label-text);
-    font-weight: 600;
-    color: var(--text-primary);
-    white-space: nowrap;
-  }
-
-  .orbit-node-sub {
-    font-family: var(--font-mono);
-    font-size: var(--badge-text);
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-
-  /* Inner orbit positions (33% from center) */
-  .orbit-you     { top: 28%; left: 28%; }
-  .orbit-pi      { top: 28%; left: 72%; }
-  .orbit-memory   { top: 76%; left: 50%; }
-  .orbit-memory .orbit-node-icon { color: var(--warm-bright); border-color: rgba(232, 168, 124, 0.25); }
-
-  /* Outer orbit positions — hexagonal spread for 6 nodes */
-  .orbit-auto     { top: 3%;  left: 50%; }
-  .orbit-muscle   { top: 25%; left: 93%; }
-  .orbit-protocol { top: 75%; left: 93%; }
-  .orbit-script   { top: 97%; left: 50%; }
-  .orbit-ext      { top: 75%; left: 7%;  }
-  .orbit-skill    { top: 25%; left: 7%;  }
-
-  /* AMPS nodes get accent, system nodes get muted */
-  .orbit-amps .orbit-node-icon {
-    color: var(--accent-bright);
-    border-color: rgba(104, 152, 190, 0.25);
-  }
-  .orbit-sys .orbit-node-icon {
-    color: var(--text-muted);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  /* Layer nodes slightly larger */
-  .orbit-layer .orbit-node-icon {
-    width: 50px;
-    height: 50px;
-    font-size: var(--text-xl);
-  }
-
-  .orbit-layer .orbit-node-label {
-    font-size: var(--body-secondary);
-  }
-
-  /* Subtle slow rotation for the outer ring */
-  @keyframes orbitSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  /* Connection lines — SVG would be better but CSS pseudo-elements work */
-  .orbit-diagram::before {
-    content: '';
-    position: absolute;
-    inset: 11%;
-    border-radius: var(--radius-full);
-    border: 1px solid rgba(104, 152, 190, 0.08);
-    z-index: 1;
-    animation: orbitPulse 8s ease-in-out infinite;
-  }
-
-  @keyframes orbitPulse {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.02); }
-  }
 
   /* ── Layer Details ── */
   .layers-detail {
@@ -820,46 +590,6 @@ import Icon from '../../components/icons/SomaIcons.astro';
     margin-right: auto;
   }
 
-  .community-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-lg);
-    margin-bottom: var(--space-xl);
-  }
-
-  .stat-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-xl) var(--space-lg);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
-    background: var(--surface-card);
-    text-align: center;
-  }
-
-  .stat-number {
-    font-family: var(--font-display);
-    font-size: var(--text-3xl);
-    font-weight: 700;
-    color: var(--accent-bright);
-    line-height: var(--leading-none);
-  }
-
-  .stat-label {
-    font-family: var(--font-display);
-    font-size: var(--body-text);
-    font-weight: 600;
-  }
-
-  .stat-detail {
-    font-family: var(--font-mono);
-    font-size: var(--label-text);
-    color: var(--text-muted);
-    line-height: var(--leading-normal);
-  }
-
   .community-cta {
     text-align: center;
   }
@@ -931,19 +661,11 @@ import Icon from '../../components/icons/SomaIcons.astro';
   @media (max-width: 768px) {
     .layer-details { grid-template-columns: 1fr; }
     .repos-grid { grid-template-columns: 1fr; }
-    .community-stats { grid-template-columns: 1fr; }
+
     .templates-grid { grid-template-columns: 1fr; }
-    .orbit-diagram { max-width: 340px; }
-    .orbit-layer .orbit-node-icon { width: 42px; height: 42px; font-size: var(--text-lg); }
-    .orbit-node-label { font-size: var(--badge-text); }
   }
 
   @media (max-width: 480px) {
     .container { padding: var(--space-2xl) var(--space-lg); }
-    .orbit-diagram { max-width: 280px; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .orbit-logo { animation: none !important; }
   }
 </style>
