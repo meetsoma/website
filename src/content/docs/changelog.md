@@ -15,6 +15,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [Unreleased]
 
 ### Added
+- **countdown grace period before rotation**
+- **resume boot diffing — skip redundant injection on soma -c**
 - **CLI-based rotation fallback via .rotate-signal**
 - **soma-route.ts — capability router for inter-extension communication**
 - **identity layer in pattern-evolution, tool-awareness in working-style**
@@ -39,6 +41,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Config-first script extensions** — `settings.scripts.extensions` controls which file types are discovered. No more hardcoded lists.
 
 ### Fixed
+- **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
 - **stop shipping dev-only scripts to users**
@@ -55,6 +58,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.0] — 2026-03-12
 
 ### Added
+- **countdown grace period before rotation**
+- **resume boot diffing — skip redundant injection on soma -c**
 - **CLI-based rotation fallback via .rotate-signal**
 - **soma-route.ts — capability router for inter-extension communication**
 - **identity layer in pattern-evolution, tool-awareness in working-style**
@@ -73,6 +78,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **CI improvements** — PR check and release workflows now run all 10 test suites. Release uses full `sync-from-agent.sh` instead of hardcoded doc list.
 
 ### Fixed
+- **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
 - **stop shipping dev-only scripts to users**
@@ -91,6 +97,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.4.0] — 2026-03-11
 
 ### Added
+- **countdown grace period before rotation**
+- **resume boot diffing — skip redundant injection on soma -c**
 - **CLI-based rotation fallback via .rotate-signal**
 - **soma-route.ts — capability router for inter-extension communication**
 - **identity layer in pattern-evolution, tool-awareness in working-style**
@@ -115,6 +123,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **CLAUDE.md awareness, not adoption** — system prompt notes existence but doesn't inject content.
 
 ### Fixed
+- **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
 - **stop shipping dev-only scripts to users**
@@ -128,6 +137,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.3.0] — 2026-03-10
 
 ### Added
+- **countdown grace period before rotation**
+- **resume boot diffing — skip redundant injection on soma -c**
 - **CLI-based rotation fallback via .rotate-signal**
 - **soma-route.ts — capability router for inter-extension communication**
 - **identity layer in pattern-evolution, tool-awareness in working-style**
@@ -152,6 +163,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Distribution scope** — bundled protocols slimmed from all to 4 (breath-cycle, heat-tracking, session-checkpoints, pattern-evolution). Hub protocols install via templates.
 
 ### Fixed
+- **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
 - **stop shipping dev-only scripts to users**
@@ -164,6 +176,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.2.0] — 2026-03-09
 
 ### Added
+- **countdown grace period before rotation**
+- **resume boot diffing — skip redundant injection on soma -c**
 - **CLI-based rotation fallback via .rotate-signal**
 - **soma-route.ts — capability router for inter-extension communication**
 - **identity layer in pattern-evolution, tool-awareness in working-style**
@@ -178,6 +192,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **9 core modules** — discovery, identity, protocols, muscles, settings, init, preload, utils, index.
 
 ### Fixed
+- **dynamic muscle read + script execution detection**
 - **soma-route.ts import path — use pi-coding-agent not claude-code**
 - **sync-to-cli path after _dev/ move**
 - **stop shipping dev-only scripts to users**
