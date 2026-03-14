@@ -7,45 +7,15 @@ import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 
 const upcoming: { name: string; icon: string; description: string; status: string }[] = [
   {
-    name: 'Auto-Breathe',
-    icon: 'protocols',
-    description: 'Proactive context management — agent wraps up at configurable thresholds, auto-rotates sessions when context gets high. Safety net at 85% always on. /auto-breathe command for runtime toggle.',
-    status: 'Shipped',
-  },
-  {
-    name: 'Learning Protocols',
-    icon: 'muscles',
-    description: 'correction-capture + detection-triggers — the agent recognizes when you correct it, logs the pattern, and escalates to a muscle or protocol if it keeps happening.',
-    status: 'Shipped',
-  },
-  {
-    name: 'Protocol Update Check',
-    icon: 'extensions',
-    description: 'Detect when your local protocols are outdated vs the hub. Version comparison against hub-index.json with --update to pull latest.',
-    status: 'Shipped',
-  },
-  {
-    name: 'Compatibility Scoring',
-    icon: 'skills',
-    description: 'Detect overlap, redundancy, and conflicting directives across your installed protocols and muscles. Scores your stack 0-100.',
-    status: 'Shipped',
-  },
-  {
-    name: 'Template Detail Pages',
-    icon: 'templates',
-    description: 'Template pages show what you get — included protocols as hub-style cards, core protocols section, stats bar with version/tier/heat/installs.',
-    status: 'Shipped',
-  },
-  {
     name: '/share Command',
     icon: 'protocols',
     description: 'Publish protocols, muscles, and skills from your .soma/ directly to the community hub. Validates, strips private data, opens a PR.',
     status: 'Planned',
   },
   {
-    name: 'soma install Wiring',
+    name: 'AMPS Automations',
     icon: 'extensions',
-    description: 'Wire the existing install code to the CLI — soma install protocol git-identity pulls from the hub into your local .soma/.',
+    description: 'Step-by-step procedural flows that can spawn tuned agents for end-to-end workflows. The fifth AMPS layer — shipped foundation, building out triggers and chaining.',
     status: 'In Progress',
   },
   {
@@ -57,7 +27,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Bundle Builder',
     icon: 'templates',
-    description: 'Multi-select on the hub — pick protocols, skills, extensions. Generate a soma-bundle.json. One command spawns a fully configured agent.',
+    description: 'Multi-select on the hub — pick protocols, muscles, extensions. Generate a soma-bundle.json. One command spawns a fully configured agent.',
     status: 'Exploring',
   },
   {
