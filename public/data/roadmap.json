@@ -1,7 +1,37 @@
 {
-  "generated": "2026-03-15T00:04:11Z",
+  "generated": "2026-03-15T12:30:42Z",
   "source": "CHANGELOG.md",
   "timeline": [
+    {
+      "version": "0.5.2",
+      "date": "2026-03-15",
+      "features": {
+        "added": [
+          "`/scan-logs` command — search previous tool calls + results across sessions (#31a7e17)",
+          "`/scrape` command + `scrape:build` router capability — intelligent doc discovery (#c950f2b)",
+          "Boot session warnings injection — tool usage stats from previous session (#0cda314)",
+          "Boot last conversation context — inject last N messages on fresh boot (#f1d7f3d)",
+          "Periodic auto-commit for crash resilience (#c6caccc)",
+          "`graceTurns` setting — configurable grace period before auto-breathe rotation (#c9ab5a8)",
+          "Guard v2: tool→muscle gating — require reading muscles before dangerous commands (#1c6b725)",
+          "Protocol TL;DR extraction — `protocolSummary()` prefers `## TL;DR` body section (#83ec9ee)",
+          "Scratch lifecycle: session IDs, date sections, note management, auto-inject (#fd0bda2, #0d364f2)",
+          "Combined session ID format (`sNN-<hex>`) — sequential for order, hex for uniqueness (#e7c4057)",
+          "Statusline session ID display (#d474cbf)",
+          "Polyglot script discovery — .sh, .py, .ts, .js, .mjs (#1acb8c2)",
+          "Session log nudge with template at trigger point (#eb8acc8)",
+          "Identity layer in pattern-evolution, tool-awareness in working-style (#5e4219d)",
+          "Post-commit auto-changelog + pre-push docs-drift nudge hooks (#cc2ef55)"
+        ],
+        "changed": [
+          "System prompt trimmed ~19% — remove duplication and stale content (#de9c517)",
+          "Self-awareness protocols rewritten — 5 redundant protocols → configuration guides (#b70ca44)",
+          "Config-first script extensions via `settings.scripts.extensions` (#dadb78e)",
+          "Unified rotation through `/inhale`, removed `/auto-continue` (#7b7ba52)",
+          "Migrated `globalThis.__somaKeepalive` to router (#e919481)"
+        ]
+      }
+    },
     {
       "version": "0.5.1",
       "date": "2026-03-14",
