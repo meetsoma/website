@@ -1,65 +1,155 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import { ViewTransitions } from 'astro:transitions';
 import SomaVerse from '../../components/islands/SomaVerse.tsx';
+import VerseNav from '../../components/islands/VerseNav.tsx';
+
+const title = "SomaVerse — Explore the Bodies";
+const description = "An infinite procedural space of Soma bodies. Each one unique. Some legendary.";
+const canonicalUrl = "https://soma.gravicity.ai/verse";
 ---
 
-<Layout
-  title="SomaVerse — Explore the Bodies"
-  description="An infinite procedural space of Soma bodies. Each one unique. Some legendary."
-  canonicalUrl="https://soma.gravicity.ai/verse"
->
-  <main class="verse-page">
-    <header class="verse-header">
-      <h1 class="verse-title">SomaVerse</h1>
-      <p class="verse-subtitle">
-        Every soma is unique — generated from a genome seed. Drift through space. 
-        Find the legendaries.
-      </p>
-    </header>
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={canonicalUrl} />
 
-    <div class="verse-container">
-      <SomaVerse client:load />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content="https://soma.gravicity.ai/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+
+    <title>{title}</title>
+    <ViewTransitions />
+
+    <script is:inline>
+      (() => {
+        const saved = localStorage.getItem('soma-theme');
+        const theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+        document.documentElement.classList.add('no-transition');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.documentElement.classList.remove('no-transition');
+          });
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <SomaVerse client:load fullPage={true} />
+    <VerseNav client:load />
+
+    <div class="verse-hint">
+      steer to explore · scroll to zoom · hover to identify · 🔊 enable soma radio
     </div>
-  </main>
-</Layout>
 
-<style>
-  .verse-page {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: var(--space-2xl) var(--space-xl) var(--space-3xl);
-    min-height: 100vh;
+    <script>
+      import { inject } from '@vercel/analytics';
+      inject();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* ── Verse page: full immersion ── */
+  :root {
+    --font-display: 'Clash Display', system-ui, sans-serif;
+    --font-body: 'Satoshi', system-ui, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+
+    --accent-bright: #6898be;
+    --moon-bright: #7cb2d4;
+    --moon-glow: rgba(124, 178, 212, 0.4);
+    --text-primary: #e4eaf4;
+    --text-secondary: #8494aa;
   }
 
-  .verse-header {
-    text-align: center;
-    margin-bottom: var(--space-xl);
+  html[data-theme='light'] {
+    --accent-bright: #2e6094;
+    --moon-bright: #3878a0;
+    --moon-glow: rgba(46, 96, 148, 0.2);
+    --text-primary: #0a0f1a;
+    --text-secondary: #2a3648;
   }
 
-  .verse-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 6vw, 2.625rem);
-    font-weight: 700;
-    margin-bottom: var(--space-md);
-    line-height: var(--leading-tight);
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
-  .verse-subtitle {
-    color: var(--text-secondary);
-    font-size: var(--text-lg);
-    max-width: var(--content-narrow);
-    margin: 0 auto;
-    line-height: var(--leading-relaxed);
-  }
-
-  .verse-container {
-    border-radius: var(--radius-lg);
+  html, body {
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+    background: #050810;
   }
 
-  @media (max-width: 768px) {
-    .verse-page {
-      padding: var(--space-xl) var(--space-lg);
-    }
+  body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html.no-transition,
+  html.no-transition *,
+  html.no-transition *::before,
+  html.no-transition *::after {
+    transition: none !important;
+  }
+
+  /* Theme icon visibility */
+  .verse-theme-sun { display: none; }
+  .verse-theme-moon { display: none; }
+  html[data-theme='dark'] .verse-theme-sun { display: block; }
+  html[data-theme='light'] .verse-theme-moon { display: block; }
+  html:not([data-theme]) .verse-theme-sun { display: block; }
+
+  /* Menu animation */
+  @keyframes verseMenuIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Soma Radio pulse */
+  @keyframes somaRadioPulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  /* Bottom hint — fades out after a few seconds */
+  .verse-hint {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: rgba(132, 148, 170, 0.35);
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 50;
+    animation: hintFade 6s ease-in-out forwards;
+  }
+
+  @keyframes hintFade {
+    0%, 60% { opacity: 1; }
+    100% { opacity: 0; }
   }
 </style>
