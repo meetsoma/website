@@ -19,11 +19,12 @@ const recentPosts = posts.slice(0, 3);
     <header class="hero">
       <div class="hero-icon">
         <img src="/media/soma-logo-animated.svg" alt="Soma" width="144" height="144" />
+        <div class="moon-egg" onclick="window.location.href='/verse/'" title="✦"></div>
       </div>
 
       <h1 class="title">
         <span class="title-main">Soma</span>
-        <span class="beta-badge">beta</span>
+        <a href="/verse/" class="beta-badge">verse</a>
       </h1>
 
       <p class="tagline">An AI agent that grows with you</p>
@@ -298,10 +299,22 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .hero-icon {
+    position: relative;
     width: 144px;
     height: 144px;
     margin: 0 auto var(--space-2xl);
     animation: float 5s ease-in-out infinite;
+  }
+
+  .moon-egg {
+    position: absolute;
+    top: 33px;
+    right: 9px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 3;
   }
 
   .hero-icon img {
@@ -358,6 +371,7 @@ const recentPosts = posts.slice(0, 3);
     -webkit-text-fill-color: var(--bg-deep);
     animation: badgeBob 3s ease-in-out infinite;
     flex-shrink: 0;
+    text-decoration: none;
   }
 
   @keyframes badgeBob {

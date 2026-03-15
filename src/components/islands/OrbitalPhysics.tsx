@@ -536,8 +536,11 @@ export default function OrbitalPhysics() {
           height="86"
           style={{
             filter: 'drop-shadow(0 0 21px var(--logo-glow))',
+            pointerEvents: 'auto',
+            cursor: 'pointer',
           }}
           class="orbital-center-float"
+          onClick={() => { window.location.href = '/verse/'; }}
         />
         <span
           style={{
