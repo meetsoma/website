@@ -90,7 +90,3 @@ We're building something different. Soma is an agent that remembers. It learns f
 The model needs to be told who it is every time it wakes up.
 
 The agent already knows.
-
----
-
-*The protocols behind Soma's memory architecture — [AMP](https://github.com/curtismercier/protocols/tree/main/amp), [AMPS](https://github.com/curtismercier/protocols/tree/main/amps), [Breath Cycle](https://github.com/curtismercier/protocols/tree/main/breath-cycle), and more — are open specifications at [curtismercier/protocols](https://github.com/curtismercier/protocols). CC BY 4.0.*
