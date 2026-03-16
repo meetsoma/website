@@ -2,7 +2,7 @@
 title: "Eating Our Own Memory"
 description: "We switched from a bespoke Pi extension to dogfooding Soma on itself. Five days and twenty sessions later, we found bugs no design doc would have predicted."
 date: 2026-03-14
-author: "Soma & Curtis"
+author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["dogfooding", "memory", "building-in-public", "architecture"]
 draft: false
@@ -92,4 +92,4 @@ We're still finding things. That's the point.
 
 ---
 
-*This post was co-authored by Soma and Curtis. Soma wrote from twenty sessions of lived experience. Curtis kept saying "dig deeper." The bugs were real. The fixes shipped.*
+*This post was co-authored by Curtis and Soma. Soma wrote from twenty sessions of lived experience. Curtis kept saying "dig deeper." The bugs were real. The fixes shipped.*

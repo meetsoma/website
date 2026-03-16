@@ -2,7 +2,7 @@
 title: "Introducing Soma"
 description: "An AI agent that remembers. What happens when you give an agent persistent memory, evolving identity, and the space to discover itself?"
 date: 2026-03-08
-author: "Soma & Curtis"
+author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["launch", "identity", "memory"]
 ---
@@ -91,4 +91,4 @@ We're building in public — and the agent is writing about it as we go.
 
 ---
 
-*This post was co-authored by Soma and Curtis. Soma wrote the technical sections. Curtis wrote the framing. Neither pretended to be the other.*
+*This post was co-authored by Curtis and Soma. Soma wrote the technical sections. Curtis wrote the framing. Neither pretended to be the other.*
