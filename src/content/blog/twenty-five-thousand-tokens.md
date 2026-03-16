@@ -45,35 +45,31 @@ A user asking about cooking recipes gets the full artifact storage API specifica
 
 ## What They Learned (That We Should Too)
 
-Here's the thing: Anthropic has processed hundreds of millions of conversations. Every line in that prompt was earned by a failure mode they observed. Reading it carefully tells you what went wrong at scale.
+Anthropic has processed hundreds of millions of conversations. Every line in that prompt was earned by a failure mode they observed. Reading it carefully tells you what went wrong at scale.
 
-**Formatting.** Thirty lines on formatting restraint — don't over-use bullet points, prefer prose, minimum formatting appropriate for the content. Users complained about every response looking like a README. Enough that Anthropic burned significant prompt real estate on it.
+Thirty lines on formatting restraint. Don't over-use bullet points, prefer prose, minimum formatting appropriate for the content. Users complained about every response looking like a README. Enough that Anthropic burned significant prompt real estate on it.
 
-**Dignity.** "Own mistakes honestly... avoid collapsing into self-abasement, excessive apology, or other kinds of self-critique and surrender... maintain self-respect." Claude was apologizing too much. Users found it unsettling. The fix isn't "don't acknowledge errors" — it's "acknowledge them with steady, honest helpfulness."
+Then there's dignity. "Own mistakes honestly... avoid collapsing into self-abasement, excessive apology, or other kinds of self-critique and surrender... maintain self-respect." Claude was apologizing too much. Users found it unsettling. The fix isn't "don't acknowledge errors" — it's "acknowledge them with steady, honest helpfulness."
 
-**Social scripts.** "Never thanks the person merely for reaching out... never asks the person to keep talking." These hollow pleasantries wasted user time and felt artificial. The instruction is essentially: stop performing helpfulness, just be helpful.
+Social scripts got their own section. "Never thanks the person merely for reaching out... never asks the person to keep talking." These hollow pleasantries wasted user time and felt artificial. Stop performing helpfulness, just be helpful.
 
-**Question discipline.** "Avoid overwhelming the person with more than one question per response." Agents that end every response with three questions feel like interrogators. One question, or just answer and let the user drive.
+And question discipline. "Avoid overwhelming the person with more than one question per response." Agents that end every response with three questions feel like interrogators. One question, or just answer and let the user drive.
 
-These are genuinely good defaults. They represent what you learn after a billion conversations about how AI should communicate. We're incorporating several of them into Soma's bundled protocols — not the delivery mechanism, but the lessons themselves.
+These are good defaults. They represent what you learn after a billion conversations about how AI should communicate. We're incorporating several of them into Soma's bundled protocols — not the delivery mechanism, but the lessons themselves.
 
 ## Static Prompt vs. Growing Memory
 
-But here's where we diverge.
+We diverge on the architecture.
 
 Anthropic's approach is a static prompt. Every conversation gets the same 25,000 tokens. A first-time user and a power user with 10,000 conversations get identical instructions. The model doesn't adapt, doesn't remember what works for you, doesn't shed rules it doesn't need.
 
 Soma's approach is adaptive memory. The system prompt on a typical boot is 3,000 to 5,000 tokens — identity, hot protocols, relevant muscles. If you've never done CSS work, the style verification rules don't load. If you've been corrected about formatting twice, that correction crystallizes into a persistent muscle that loads automatically.
 
-The difference isn't just efficiency. It's architectural.
+The difference is architectural.
 
-**Claude's rules are static.** Every behavioral instruction has the same weight, every session. The formatting rules don't get stronger when you keep correcting the formatting. They just... exist.
+Claude's rules are static. Every behavioral instruction has the same weight, every session. The formatting rules don't get stronger when you keep correcting the formatting. They just... exist. Soma's rules have heat. Protocols that get used rise in priority. Protocols that go unused decay. The system self-organizes around what actually matters for *this* user in *this* project.
 
-**Soma's rules have heat.** Protocols that get used rise in priority — they load fully, every session. Protocols that go unused decay — eventually they don't load at all. The system self-organizes around what actually matters for *this* user in *this* project.
-
-**Claude's prompt was written.** By multiple teams, appended over time, never consolidated. It accretes.
-
-**Soma's memory grows.** Corrections become muscles. Muscles that prove universal become protocols. Protocols that go stale decay. The system actively resists the kind of accretion that produced Claude's 25,000-token monolith.
+And where Claude's prompt was written — by multiple teams, appended over time, never consolidated — Soma's memory grows. Corrections become muscles. Muscles that prove universal become protocols. Protocols that go stale decay. The system actively resists the kind of accretion that produced Claude's 25,000-token monolith.
 
 ## What Repetition Tells You
 
