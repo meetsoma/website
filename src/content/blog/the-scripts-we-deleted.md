@@ -53,7 +53,7 @@ A `test-hygiene` muscle that triggers after any file removal, rename, or restruc
 
 A `pre-publish-cleanup` muscle built around one principle: the default is preservation, not removal. Three verbs in order of preference: *keep*, *move*, *delete*. Deletion requires a reason. "Cleanup" is not a reason.
 
-And a pre-publish gate in the breath-cycle protocol. Check for orphaned references before pushing. Run all suites. Count should not silently drop.
+And a pre-publish gate in the [breath-cycle](https://github.com/curtismercier/protocols/tree/main/breath-cycle) protocol. Check for orphaned references before pushing. Run all suites. Count should not silently drop.
 
 ## The Principle
 

@@ -15,23 +15,23 @@ Soma is different.
 
 Soma is an AI coding agent built on [Pi](https://github.com/badlogic/pi-mono) with three things most agents don't have:
 
-Persistent memory. When a session ends, Soma exhales — flushing what it learned to disk as preloads, muscles, and context files. Next session, it inhales them back. It knows where you left off and what's next.
+Persistent memory. When a session ends, Soma exhales, flushing what it learned to disk as preloads, muscles, and context files. Next session, it inhales them back. It knows where you left off and what's next. (The mechanics are formalized in the [Agent Memory Protocol](https://github.com/curtismercier/protocols/tree/main/amp).)
 
-An evolving identity. Soma's identity isn't pre-configured. It's discovered through use. Voice, preferences, working patterns — all written by the agent itself, refined over time.
+An evolving identity. Soma's identity isn't pre-configured. It's discovered through use. Voice, preferences, working patterns, all written by the agent itself, refined over time.
 
-And session continuity. `soma` starts a fresh session — identity, hot protocols, active muscles all load automatically. `soma -c` adds the last session's preload on top, so the agent picks up exactly where you left off. One is a fresh start with everything Soma knows about you. The other is a conversation that never really ended.
+And session continuity. `soma` starts a fresh session with identity, hot protocols, and active muscles loaded automatically. `soma -c` adds the last session's preload on top, so the agent picks up exactly where you left off. One is a fresh start with everything Soma knows about you. The other is a conversation that never really ended.
 
 ## The Four Layers
 
-Soma's ecosystem has four types of additions, each serving a different purpose:
+Soma's ecosystem has four types of additions, each serving a different purpose. Together they form [AMPS](https://github.com/curtismercier/protocols/tree/main/amps) — Automations, Muscles, Protocols, Skills:
 
-Extensions are TypeScript hooks into the agent lifecycle — the boot sequence, the branded header, the auto-flush system, the context warnings. The nervous system.
+Extensions are TypeScript hooks into the agent lifecycle. The boot sequence, the branded header, the auto-flush system, the context warnings. The nervous system.
 
 Skills are markdown instruction sets. Domain knowledge the agent loads on demand: logo design, favicon generation, framework best practices.
 
 Muscles are patterns learned from experience. Deployment workflows, code conventions, API patterns. Soma builds these across sessions. Each one has a heat score and a digest block for token-efficient loading.
 
-Protocols are behavioral rules — frontmatter standards, Git identity, naming conventions. Each carries a heat score: hot protocols load in full, warm ones appear as breadcrumbs, cold ones stay dormant. They can scope themselves to specific domains with `applies-to` tags, so a TypeScript protocol only fires in TypeScript projects.
+Protocols are behavioral rules. Frontmatter standards, Git identity, naming conventions. Each carries a heat score: hot protocols load in full, warm ones appear as breadcrumbs, cold ones stay dormant. They scope themselves to specific domains with `applies-to` tags, so a TypeScript protocol only fires in TypeScript projects.
 
 ## The Heat System
 
@@ -43,7 +43,7 @@ This means Soma's context window isn't static. It's adaptive. The protocols and 
 
 ## The Breath Cycle
 
-Soma thinks in breaths, not sessions.
+Soma thinks in [breaths](https://github.com/curtismercier/protocols/tree/main/breath-cycle), not sessions.
 
 **Inhale** — the agent wakes. Identity loads. Hot protocols surface. Muscles activate. The last session's preload restores context. The agent knows who it is and where it was.
 

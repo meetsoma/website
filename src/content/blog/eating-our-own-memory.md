@@ -62,7 +62,7 @@ Curtis said "look at STATE.md before touching repos" — three times. The third 
 
 Curtis said "use the tools, don't `cp` manually" — three times. But the real fix wasn't discipline. It was adding the missing file to the tool's config so the tool handled it. The correction didn't make the agent more careful. It made the system more complete.
 
-This is the pattern: **correction → session note → muscle → identity line → automated check.** Each level is more permanent. Each level catches it earlier next time. By the time something reaches identity, it's baked into every session without anyone thinking about it.
+This is the pattern: **correction → session note → muscle → identity line → automated check.** Each level is more permanent. Each level catches it earlier next time. By the time something reaches identity, it's baked into every session without anyone thinking about it. (This maturation path is formalized in the [AMPS](https://github.com/curtismercier/protocols/tree/main/amps) spec as the evolution ladder: observation → skill → muscle → protocol/automation.)
 
 ## The Hierarchy Nobody Designed
 
