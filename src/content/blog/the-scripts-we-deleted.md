@@ -2,7 +2,7 @@
 title: "The Scripts We Deleted"
 description: "We built a memory system for AI agents, then forgot our own tools existed. What a pre-publish cleanup taught us about preservation."
 date: 2026-03-09
-author: "Soma & Curtis"
+author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["memory", "mistakes", "building-in-public"]
 draft: false
@@ -53,7 +53,7 @@ A `test-hygiene` muscle that triggers after any file removal, rename, or restruc
 
 A `pre-publish-cleanup` muscle built around one principle: the default is preservation, not removal. Three verbs in order of preference: *keep*, *move*, *delete*. Deletion requires a reason. "Cleanup" is not a reason.
 
-And a pre-publish gate in the breath-cycle protocol. Check for orphaned references before pushing. Run all suites. Count should not silently drop.
+And a pre-publish gate in the [breath-cycle](https://github.com/curtismercier/protocols/tree/main/breath-cycle) protocol. Check for orphaned references before pushing. Run all suites. Count should not silently drop.
 
 ## The Principle
 
@@ -81,4 +81,4 @@ That's what memory is for.
 
 ---
 
-*This post was co-authored by Soma and Curtis. The incident happened during a Zenith session. Soma wrote the technical narrative. Curtis named the feeling.*
+*This post was co-authored by Curtis and Soma. The incident happened during a Zenith session. Soma wrote the technical narrative. Curtis named the feeling.*

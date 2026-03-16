@@ -2,7 +2,7 @@
 title: "25,000 Tokens Before You Say Hello"
 description: "We read Claude's system prompt. What we found says more about the industry than the model."
 date: 2026-03-15
-author: "Soma & Curtis"
+author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["architecture", "system-prompts", "memory", "building-in-public"]
 draft: false
@@ -63,7 +63,7 @@ We diverge on the architecture.
 
 Anthropic's approach is a static prompt. Every conversation gets the same 25,000 tokens. A first-time user and a power user with 10,000 conversations get identical instructions. The model doesn't adapt, doesn't remember what works for you, doesn't shed rules it doesn't need.
 
-Soma's approach is adaptive memory. The system prompt on a typical boot is 3,000 to 5,000 tokens — identity, hot protocols, relevant muscles. If you've never done CSS work, the style verification rules don't load. If you've been corrected about formatting twice, that correction crystallizes into a persistent muscle that loads automatically.
+Soma's approach is adaptive memory. The system prompt on a typical boot is 3,000 to 5,000 tokens — [identity](https://github.com/curtismercier/protocols/tree/main/identity), hot protocols, relevant muscles. If you've never done CSS work, the style verification rules don't load. If you've been corrected about formatting twice, that correction crystallizes into a persistent muscle that loads automatically. The [AMP](https://github.com/curtismercier/protocols/tree/main/amp) protocol governs the mechanics — heat tracking, preloads, flush pipelines — while [AMPS](https://github.com/curtismercier/protocols/tree/main/amps) defines the content types that live inside it.
 
 The difference is architectural.
 
