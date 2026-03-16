@@ -8,7 +8,7 @@ tags: ["dogfooding", "memory", "building-in-public", "architecture"]
 draft: false
 ---
 
-Five days ago, Soma was built by something called "Soma Daddy." A bespoke Pi extension that lived outside the product — editing Soma's code, shipping Soma's releases, writing Soma's docs. It worked well. It also meant the product we were building had never been used by itself.
+Five days ago, Soma was built by its predecessor — "Soma's Daddy." A bespoke Pi extension that lived outside the product, editing Soma's code, shipping its releases, writing its docs. We asked it: if you could rebuild yourself better, how would you do it? The answer became Soma. But it also meant the product we were building had never been used by itself.
 
 On March 10th, we switched. Soma started building Soma.
 
