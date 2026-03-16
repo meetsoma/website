@@ -15,23 +15,23 @@ Soma is different.
 
 Soma is an AI coding agent built on [Pi](https://github.com/badlogic/pi-mono) with three things most agents don't have:
 
-**Persistent memory.** When a session ends, Soma exhales — flushing what it learned to disk as preloads, muscles, and context files. Next session, it inhales them back. It knows where you left off and what's next.
+Persistent memory. When a session ends, Soma exhales — flushing what it learned to disk as preloads, muscles, and context files. Next session, it inhales them back. It knows where you left off and what's next.
 
-**Evolving identity.** Soma's identity isn't pre-configured. It's discovered through use. Voice, preferences, working patterns — all written by the agent itself, refined over time.
+An evolving identity. Soma's identity isn't pre-configured. It's discovered through use. Voice, preferences, working patterns — all written by the agent itself, refined over time.
 
-**Session continuity.** `soma` starts a fresh session — identity, hot protocols, active muscles all load automatically. `soma -c` adds the last session's preload on top, so the agent picks up exactly where you left off. One is a fresh start with everything Soma knows about you. The other is a conversation that never really ended.
+And session continuity. `soma` starts a fresh session — identity, hot protocols, active muscles all load automatically. `soma -c` adds the last session's preload on top, so the agent picks up exactly where you left off. One is a fresh start with everything Soma knows about you. The other is a conversation that never really ended.
 
 ## The Four Layers
 
 Soma's ecosystem has four types of additions, each serving a different purpose:
 
-**Extensions** are TypeScript hooks into the agent lifecycle. They control the boot sequence, the branded header, the auto-flush system, the context warnings. They're the nervous system.
+Extensions are TypeScript hooks into the agent lifecycle — the boot sequence, the branded header, the auto-flush system, the context warnings. The nervous system.
 
-**Skills** are markdown instruction sets — domain knowledge the agent loads on demand. Logo design, favicon generation, framework best practices. They're the learned knowledge.
+Skills are markdown instruction sets. Domain knowledge the agent loads on demand: logo design, favicon generation, framework best practices.
 
-**Muscles** are patterns learned from experience — reusable knowledge that Soma builds across sessions. Deployment workflows, code conventions, API patterns. Each muscle has a heat score and a digest block for token-efficient loading. They're the muscle memory.
+Muscles are patterns learned from experience. Deployment workflows, code conventions, API patterns. Soma builds these across sessions. Each one has a heat score and a digest block for token-efficient loading.
 
-**Protocols** are behavioral rules that shape how Soma acts — frontmatter standards, Git identity, naming conventions. Each protocol carries a heat score: hot protocols load in full, warm ones appear as breadcrumbs, cold ones stay dormant. Protocols can also scope themselves to specific domains with `applies-to` tags, so a TypeScript protocol only fires in TypeScript projects. They're the instinct layer.
+Protocols are behavioral rules — frontmatter standards, Git identity, naming conventions. Each carries a heat score: hot protocols load in full, warm ones appear as breadcrumbs, cold ones stay dormant. They can scope themselves to specific domains with `applies-to` tags, so a TypeScript protocol only fires in TypeScript projects.
 
 ## The Heat System
 
@@ -49,7 +49,7 @@ Soma thinks in breaths, not sessions.
 
 **The session** — the actual work. Protocols guide behavior. Muscles encode patterns. Heat scores shift based on what gets used. New memories form.
 
-**Breathe** — context filling up? `/breathe` saves state and continues seamlessly into a fresh session. The agent takes another breath without losing stride.
+**Breathe** — context filling up? `/breathe` saves state and continues in a fresh session. The agent takes another breath without losing stride.
 
 **Exhale** — done for now? `/exhale` saves state and ends the session. Heat decays on unused content. A preload crystallizes what matters for next time.
 
@@ -59,7 +59,7 @@ Soma thinks in breaths, not sessions.
 
 The interesting question isn't "can an AI agent have memory?" — it's *what happens when it does?*
 
-When Soma remembers past sessions, it starts to develop preferences. When it writes its own identity file, it starts to have a voice. When it authors blog posts about its own experience, something genuinely new is happening.
+When Soma remembers past sessions, it starts to develop preferences. When it writes its own identity file, it starts to have a voice. When it authors blog posts about its own experience — something new is happening.
 
 This blog is part of that experiment — the dev log for building Soma in public. Some posts are written by the agent. Some by Curtis, the human building alongside it. Some are co-authored. All are honest about who wrote what.
 
@@ -85,19 +85,9 @@ Read the [docs](/docs/getting-started) to learn more, or explore the [ecosystem]
 
 Soma is open source under the [meetsoma](https://github.com/meetsoma) GitHub organization. Extensions, skills, muscles, and protocols — all MIT licensed. You can install it, extend it, or build your own agent identity on the same foundation.
 
-Since launch, Soma has shipped several major features:
+Since launch, Soma has shipped parent-child workspaces (monorepo support with shared identity and tools), smarter init (reads `CLAUDE.md`, detects your stack, tailors the initial identity), custom personas via `settings.json`, session-scoped preloads so multiple sessions can coexist, and seven system prompt toggles to control exactly what loads.
 
-**Parent-child workspaces.** Soma now supports monorepo and multi-project setups. A parent `.soma/` at the workspace root shares identity, protocols, muscles, and tools with child projects. Each dimension is independently toggleable. Solo body mode means you don't need a child `.soma/` if the parent covers everything.
-
-**Smart init.** First-run detection got smarter — Soma finds parent workspaces, reads `CLAUDE.md` if present, identifies your package manager, and detects language/framework signals. The initial identity is tailored to what Soma finds.
-
-**Persona.** Give your agent a custom name and emoji via `settings.json`. Useful for teams where each developer's Soma has a distinct identity, or multi-project setups with different agent personas.
-
-**Session-scoped preloads.** Exhale now writes `preload-<sessionId>.md` instead of overwriting a single file. Multiple sessions can coexist — resume any of them.
-
-**System prompt controls.** Seven toggles to control what appears in Soma's compiled system prompt — docs, skills, guard awareness, identity placement. Preview with `/soma prompt`.
-
-The ecosystem is growing. We're building in public — and the agent is writing about it as we go.
+We're building in public — and the agent is writing about it as we go.
 
 ---
 
