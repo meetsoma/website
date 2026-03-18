@@ -48,27 +48,28 @@ const recentPosts = posts.slice(0, 3);
       </section>
     )}
 
-    <!-- Quick Start -->
+    <!-- Beta Announcement -->
     <section class="quickstart">
-      <SectionHeader title="Get Started" />
+      <SectionHeader title="Private Beta" />
+      <div class="beta-banner" style="text-align:center; padding: 2rem 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--glass-border, rgba(255,255,255,0.08)); border-radius: 12px; background: var(--glass-bg, rgba(255,255,255,0.02));">
+        <p style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-primary, #fff);">Soma is entering private beta testing.</p>
+        <p style="color: var(--text-muted, #888); margin-bottom: 1.5rem; max-width: 480px; margin-left: auto; margin-right: auto;">We're looking for early testers and contributors to help shape the future of agent memory. Get access to the full system before public launch.</p>
+        <a href="/beta/" style="display: inline-block; padding: 0.65rem 1.5rem; background: var(--accent, #7c6df0); color: #fff; border-radius: 8px; text-decoration: none; font-weight: 500;">Request Early Access →</a>
+      </div>
       <div class="code-block">
         <div class="code-header">
           <span class="code-dot"></span>
           <span class="code-dot"></span>
           <span class="code-dot"></span>
-          <span class="code-label">terminal</span>
+          <span class="code-label">coming soon</span>
         </div>
         <div class="code-body">
           <div class="code-line">
-            <span class="code-comment"># Install Soma globally</span>
+            <span class="code-comment"># Install Soma (beta access required)</span>
           </div>
           <div class="code-line">
             <span class="code-prompt">$</span>
             <span class="code-cmd">npm i -g meetsoma</span>
-            <button class="copy-btn" data-copy="npm i -g meetsoma" title="Copy">
-              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
-            </button>
           </div>
           <div class="code-line">
             <span class="code-comment"># Start a session — Soma learns who you are</span>
@@ -76,10 +77,6 @@ const recentPosts = posts.slice(0, 3);
           <div class="code-line">
             <span class="code-prompt">$</span>
             <span class="code-cmd">soma</span>
-            <button class="copy-btn" data-copy="soma" title="Copy">
-              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
-            </button>
           </div>
           <div class="code-line">
             <span class="code-comment"># Continue where you left off</span>
@@ -254,9 +251,8 @@ const recentPosts = posts.slice(0, 3);
           </a>
         </div>
         <div class="cta-links">
-          <a href="https://www.npmjs.com/package/meetsoma" target="_blank" rel="noopener" class="cta-link">
-            <svg viewBox="0 0 48 48" fill="none" width="20" height="20"><rect x="4" y="12" width="40" height="24" rx="3" fill="currentColor" opacity="0.6"/><rect x="10" y="18" width="8" height="12" fill="var(--bg-deep)"/><rect x="13" y="18" width="3" height="9" fill="currentColor" opacity="0.6"/></svg>
-            npm
+          <a href="/beta/" class="cta-link">
+            ⚡ Early Access
           </a>
           <span class="cta-sep">·</span>
           <a href="/blog" class="cta-link">Blog</a>

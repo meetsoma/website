@@ -1,0 +1,180 @@
+---
+layout: ../../layouts/Layout.astro
+title: "Beta Access — Soma"
+description: "Request early access to Soma — the AI agent that grows with you."
+---
+
+<style>
+  .beta-page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+  .beta-page h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  .beta-page .subtitle {
+    color: var(--text-muted, #888);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+  .beta-page .description {
+    text-align: left;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .beta-page .description p {
+    margin-bottom: 1rem;
+  }
+  .beta-form {
+    text-align: left;
+    background: var(--glass-bg, rgba(255,255,255,0.03));
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .beta-form h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .form-field {
+    margin-bottom: 1.25rem;
+  }
+  .form-field label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted, #888);
+    margin-bottom: 0.4rem;
+  }
+  .form-field input, .form-field select, .form-field textarea {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    background: var(--input-bg, rgba(255,255,255,0.05));
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.12));
+    border-radius: 6px;
+    color: var(--text-primary, #fff);
+    font-size: 0.95rem;
+    font-family: inherit;
+  }
+  .form-field textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+    outline: none;
+    border-color: var(--accent, #7c6df0);
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--accent, #7c6df0);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .submit-btn:hover {
+    opacity: 0.9;
+  }
+  .beta-tiers {
+    text-align: left;
+    margin-top: 2rem;
+  }
+  .beta-tiers h3 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .tier {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+  .tier-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .tier-name {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .tier-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted, #888);
+  }
+</style>
+
+<div class="beta-page">
+  <h1>Private Beta</h1>
+  <p class="subtitle">Early access to Soma — the AI agent that grows with you</p>
+
+  <div class="description">
+    <p>
+      We're building an AI coding agent with real memory — identity that evolves,
+      patterns that crystallize through use, and tools the agent builds for itself.
+      Not RAG. Not vector search. Actual memory that changes how the agent works.
+    </p>
+    <p>
+      Soma is entering private beta. We want thoughtful early users who'll push the system,
+      find the edges, and help shape what this becomes.
+    </p>
+  </div>
+
+  <div class="beta-form">
+    <h2>Request Access</h2>
+    <form action="https://formspree.io/f/PLACEHOLDER" method="POST">
+      <div class="form-field">
+        <label for="github">GitHub Username *</label>
+        <input type="text" id="github" name="github" required placeholder="your-username" />
+      </div>
+      <div class="form-field">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required placeholder="you@example.com" />
+      </div>
+      <div class="form-field">
+        <label for="interest">What interests you about Soma?</label>
+        <select id="interest" name="interest">
+          <option value="">Select...</option>
+          <option value="memory">Agent memory across sessions</option>
+          <option value="protocols">Protocol and muscle system</option>
+          <option value="tools">Self-building tools (scripts, MAPs)</option>
+          <option value="multi-agent">Multi-agent orchestration</option>
+          <option value="contribute">Contributing to the project</option>
+          <option value="other">Something else</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="context">What are you building? (optional)</label>
+        <textarea id="context" name="context" placeholder="Brief description of your project or use case..."></textarea>
+      </div>
+      <input type="hidden" name="_subject" value="Soma Beta Access Request" />
+      <button type="submit" class="submit-btn">Request Early Access</button>
+    </form>
+  </div>
+
+  <div class="beta-tiers">
+    <h3>Access Tiers</h3>
+    <div class="tier">
+      <span class="tier-icon">⚡</span>
+      <div>
+        <div class="tier-name">Beta Tester</div>
+        <div class="tier-desc">Compiled CLI + all protocols + scripts + documentation. Use Soma in your projects. Provide feedback.</div>
+      </div>
+    </div>
+    <div class="tier">
+      <span class="tier-icon">🔧</span>
+      <div>
+        <div class="tier-name">Contributor</div>
+        <div class="tier-desc">Full source access + dev tools + direct line to the team. Help build the future of agent memory.</div>
+      </div>
+    </div>
+  </div>
+</div>
