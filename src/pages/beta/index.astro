@@ -130,7 +130,7 @@ description: "Request early access to Soma — the AI agent that grows with you.
 
   <div class="beta-form">
     <h2>Request Access</h2>
-    <form action="https://formspree.io/f/PLACEHOLDER" method="POST">
+    <form id="beta-form" onsubmit="return handleSubmit(event)">
       <div class="form-field">
         <label for="github">GitHub Username *</label>
         <input type="text" id="github" name="github" required placeholder="your-username" />
@@ -155,9 +155,49 @@ description: "Request early access to Soma — the AI agent that grows with you.
         <label for="context">What are you building? (optional)</label>
         <textarea id="context" name="context" placeholder="Brief description of your project or use case..."></textarea>
       </div>
-      <input type="hidden" name="_subject" value="Soma Beta Access Request" />
-      <button type="submit" class="submit-btn">Request Early Access</button>
+      <button type="submit" class="submit-btn" id="submit-btn">Request Early Access</button>
+      <p id="form-status" style="margin-top: 1rem; text-align: center; display: none;"></p>
     </form>
+    <script>
+      async function handleSubmit(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        const status = document.getElementById('form-status');
+        const form = document.getElementById('beta-form');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+        status.style.display = 'none';
+        try {
+          const res = await fetch('/api/beta-signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              github: form.github.value,
+              email: form.email.value,
+              interest: form.interest.value,
+              context: form.context.value,
+            }),
+          });
+          const data = await res.json();
+          status.style.display = 'block';
+          if (data.success) {
+            status.textContent = '✓ ' + data.message;
+            status.style.color = '#4ade80';
+            form.reset();
+          } else {
+            status.textContent = '✗ ' + (data.error || 'Something went wrong');
+            status.style.color = '#f87171';
+          }
+        } catch (err) {
+          status.style.display = 'block';
+          status.textContent = '✗ Network error. Please try again.';
+          status.style.color = '#f87171';
+        }
+        btn.disabled = false;
+        btn.textContent = 'Request Early Access';
+        return false;
+      }
+    </script>
   </div>
 
   <div class="beta-tiers">
