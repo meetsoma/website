@@ -62,7 +62,7 @@ This isn't a feature. It's the accumulation of every correction, every pattern, 
 
 You can't copy a relationship. You can copy the code that enables it. You can copy the architecture that supports it. But the 47 sessions of learning, the specific corrections, the particular preferences — those belong to the pair.
 
-That's the real moat. Not the license. Not the obfuscation. The relationship.
+That's the real moat. Not the licence. Not the obfuscation. The relationship.
 
 ## Why we went source-available
 

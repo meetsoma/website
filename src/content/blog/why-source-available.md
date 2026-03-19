@@ -10,7 +10,7 @@ draft: true
 
 We just made every Soma repository private and pulled the npm package.
 
-This wasn't an easy decision. We believe in open source. Soma's protocol specs will always be open. The ideas — memory that persists, identity that evolves, AMPS as a behavioral system — those belong to the community.
+This wasn't an easy decision. We believe in open source. Soma's protocol specs will always be open. The ideas — memory that persists, identity that evolves, AMPS as a behavioural system — those belong to the community.
 
 But the implementation? That's different.
 
