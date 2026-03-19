@@ -1,9 +1,11 @@
 ---
-layout: ../../layouts/Layout.astro
-title: "Beta Access — Soma"
-description: "Request early access to Soma — the AI agent that grows with you."
+import Layout from '../../layouts/Layout.astro';
+
+const title = "Beta Access — Soma";
+const description = "Request early access to Soma — the AI agent that grows with you.";
 ---
 
+<Layout title={title} description={description}>
 <style>
   .beta-page {
     max-width: 640px;
@@ -218,3 +220,4 @@ description: "Request early access to Soma — the AI agent that grows with you.
     </div>
   </div>
 </div>
+</Layout>
