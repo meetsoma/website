@@ -70,7 +70,7 @@ We didn't plan the priority order of identity → protocols → muscles. We disc
 
 Early on, they felt equal — three types of memory, three ways to store knowledge. Five days in, the hierarchy was obvious:
 
-A one-line identity edit shapes every future session. It's always loaded. When we added "tests match shipped code, not planned features" to identity, behavior changed immediately — across all work, not just testing.
+A one-line identity edit shapes every future session. It's always loaded. When we added "tests match shipped code, not planned features" to identity, behaviour changed immediately — across all work, not just testing.
 
 A muscle might not load. It depends on heat, on the task, on context budget. A protocol might be cold. But identity is bedrock.
 

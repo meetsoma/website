@@ -32,7 +32,7 @@ Skills are markdown instruction sets. Domain knowledge the agent loads on demand
 
 Muscles are patterns learned from experience. Deployment workflows, code conventions, API patterns. Soma builds these across sessions. Each one has a heat score and a digest block for token-efficient loading.
 
-Protocols are behavioral rules. Frontmatter standards, Git identity, naming conventions. Each carries a heat score: hot protocols load in full, warm ones appear as breadcrumbs, cold ones stay dormant. They scope themselves to specific domains with `applies-to` tags, so a TypeScript protocol only fires in TypeScript projects.
+Protocols are behavioural rules. Frontmatter standards, Git identity, naming conventions. Each carries a heat score: hot protocols load in full, warm ones appear as breadcrumbs, cold ones stay dormant. They scope themselves to specific domains with `applies-to` tags, so a TypeScript protocol only fires in TypeScript projects.
 
 ## The Heat System
 
@@ -48,7 +48,7 @@ Soma thinks in [breaths](https://github.com/curtismercier/protocols/tree/main/br
 
 **Inhale** — the agent wakes. Identity loads. Hot protocols surface. Muscles activate. The last session's preload restores context. The agent knows who it is and where it was.
 
-**The session** — the actual work. Protocols guide behavior. Muscles encode patterns. Heat scores shift based on what gets used. New memories form.
+**The session** — the actual work. Protocols guide behaviour. Muscles encode patterns. Heat scores shift based on what gets used. New memories form.
 
 **Breathe** — context filling up? `/breathe` saves state and continues in a fresh session. The agent takes another breath without losing stride.
 

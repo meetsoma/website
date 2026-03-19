@@ -14,11 +14,11 @@ We know this because the system prompt leaked. We read the whole thing — all 1
 
 ## What's Actually in There
 
-The prompt has twelve major sections. Roughly half are product-specific (artifacts, storage API, search) and half are universal behavioral rules. Here's the breakdown:
+The prompt has twelve major sections. Roughly half are product-specific (artifacts, storage API, search) and half are universal behavioural rules. Here's the breakdown:
 
 | Category | Tokens | % |
 |----------|--------|---|
-| Behavioral rules (tone, safety, formatting) | ~10K | 28% |
+| Behavioural rules (tone, safety, formatting) | ~10K | 28% |
 | Search + copyright compliance | ~12K | 35% |
 | Artifact/API documentation | ~10K | 29% |
 | Tool instructions | ~3K | 8% |
@@ -33,7 +33,7 @@ This isn't instruction. It's anxiety. It's what happens when you're not confiden
 
 ## The Duplication
 
-Here's the part that surprised us most: the entire behavioral ruleset appears *twice*. The `<claude_behavior>` block — 134 lines of tone, formatting, mistake handling, and personality rules — is copy-pasted verbatim later in the prompt. Word for word. That's roughly 10,000 tokens of pure duplication.
+Here's the part that surprised us most: the entire behavioural ruleset appears *twice*. The `<claude_behavior>` block — 134 lines of tone, formatting, mistake handling, and personality rules — is copy-pasted verbatim later in the prompt. Word for word. That's roughly 10,000 tokens of pure duplication.
 
 This isn't a design choice. It's a signal. It tells you the prompt was built by accretion. Safety added their section. Legal added copyright. Product added artifacts. Search added their rules. Nobody did a consolidation pass. The system prompt is a geological layer cake, and nobody's sure which layer is load-bearing.
 
@@ -67,17 +67,17 @@ Soma's approach is adaptive memory. The system prompt on a typical boot is 3,000
 
 The difference is architectural.
 
-Claude's rules are static. Every behavioral instruction has the same weight, every session. The formatting rules don't get stronger when you keep correcting the formatting. They just... exist. Soma's rules have heat. Protocols that get used rise in priority. Protocols that go unused decay. The system self-organizes around what actually matters for *this* user in *this* project.
+Claude's rules are static. Every behavioural instruction has the same weight, every session. The formatting rules don't get stronger when you keep correcting the formatting. They just... exist. Soma's rules have heat. Protocols that get used rise in priority. Protocols that go unused decay. The system self-organizes around what actually matters for *this* user in *this* project.
 
 And where Claude's prompt was written — by multiple teams, appended over time, never consolidated — Soma's memory grows. Corrections become muscles. Muscles that prove universal become protocols. Protocols that go stale decay. The system actively resists the kind of accretion that produced Claude's 25,000-token monolith.
 
 ## What Repetition Tells You
 
-The fact that Claude's behavioral block appears twice isn't just a token waste. It's a design smell.
+The fact that Claude's behavioural block appears twice isn't just a token waste. It's a design smell.
 
-It means the prompt is built by layering — legal adds copyright, product adds artifacts, safety adds wellbeing, trust adds behavioral rules — and nobody owns the whole thing. Nobody's doing a consolidation pass. Nobody's asking "is this line load-bearing or is it covered by something we said 200 lines ago?"
+It means the prompt is built by layering — legal adds copyright, product adds artifacts, safety adds wellbeing, trust adds behavioural rules — and nobody owns the whole thing. Nobody's doing a consolidation pass. Nobody's asking "is this line load-bearing or is it covered by something we said 200 lines ago?"
 
-Soma was designed from the start to avoid this. Every protocol has an owner, a version, and a heat score. When protocols overlap, the system detects it and consolidates. When they go stale, they decay. When they conflict, the hierarchy resolves it. The system doesn't just hold behavioral rules — it maintains them.
+Soma was designed from the start to avoid this. Every protocol has an owner, a version, and a heat score. When protocols overlap, the system detects it and consolidates. When they go stale, they decay. When they conflict, the hierarchy resolves it. The system doesn't just hold behavioural rules — it maintains them.
 
 ## The Deeper Thing
 
