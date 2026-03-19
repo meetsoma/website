@@ -1,0 +1,43 @@
+{
+  "name": "maintainer",
+  "description": "Codebase steward — test hygiene, doc maintenance, dependency health, technical debt tracking",
+  "author": "meetsoma",
+  "version": "1.0.0",
+  "tier": "official",
+  "requires": {
+    "protocols": ["tool-discipline", "quality-standards", "working-style", "pre-flight", "frontmatter-standard", "task-tracking"],
+    "muscles": ["test-hygiene", "doc-hygiene", "safe-file-ops", "incremental-refactor", "task-tooling"],
+    "skills": [],
+    "automations": []
+  },
+  "settings": {
+    "protocols": {
+      "warmThreshold": 2,
+      "hotThreshold": 6,
+      "maxHeat": 15,
+      "decayRate": 1,
+      "maxBreadcrumbsInPrompt": 10,
+      "maxFullProtocolsInPrompt": 4
+    },
+    "muscles": {
+      "tokenBudget": 3500,
+      "maxFull": 3,
+      "maxDigest": 10,
+      "fullThreshold": 3,
+      "digestThreshold": 1
+    },
+    "heat": {
+      "autoDetect": true,
+      "autoDetectBump": 1,
+      "pinBump": 5
+    }
+  },
+  "heatPresets": {
+    "test-hygiene": 8,
+    "doc-hygiene": 8,
+    "safe-file-ops": 5,
+    "incremental-refactor": 5,
+    "task-tooling": 5
+  },
+  "notes": "test-hygiene and doc-hygiene start hot — maintenance is about keeping things clean, not building new. Lower hot threshold (6) so protocols activate faster for stewardship work. task-tracking bundled because maintenance needs a kanban to track technical debt items."
+}

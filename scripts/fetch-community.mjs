@@ -41,10 +41,17 @@ async function fetchRaw(filePath) {
 
 async function fetchTree(dirPath) {
   try {
-    const contents = await fetchJson(`${API_BASE}/contents/${dirPath}?ref=${BRANCH}`);
+    const res = await fetch(`${API_BASE}/contents/${dirPath}?ref=${BRANCH}`, {
+      headers: { 'Accept': 'application/vnd.github+json' }
+    });
+    if (res.status === 404 || res.status === 403) {
+      // Private repo or not found — preserve local copy
+      return null;
+    }
+    const contents = await res.json();
     return Array.isArray(contents) ? contents : [];
   } catch {
-    return [];
+    return null; // Network error — preserve local copy
   }
 }
 
@@ -52,16 +59,16 @@ async function fetchDir(dirName) {
   const localDir = path.join(COMMUNITY_DIR, dirName);
   const entries = await fetchTree(dirName);
 
-  if (entries.length === 0) {
-    // Empty dir on remote — ensure local dir exists but is empty
+  if (entries === null) {
+    // Repo private or unreachable — preserve existing local copy
     fs.mkdirSync(localDir, { recursive: true });
-    // Clear any stale files
-    if (fs.existsSync(localDir)) {
-      for (const f of fs.readdirSync(localDir)) {
-        const fp = path.join(localDir, f);
-        fs.rmSync(fp, { recursive: true, force: true });
-      }
-    }
+    const existing = fs.existsSync(localDir) ? fs.readdirSync(localDir).length : 0;
+    return existing;
+  }
+
+  if (entries.length === 0) {
+    // Genuinely empty on remote — ensure dir exists
+    fs.mkdirSync(localDir, { recursive: true });
     return 0;
   }
 

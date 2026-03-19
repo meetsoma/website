@@ -1,0 +1,14 @@
+{
+  "name": "core",
+  "description": "Default Soma setup — breath cycle, heat tracking, learning protocols, and clean memory structure. What every agent starts with.",
+  "author": "meetsoma",
+  "version": "2.0.0",
+  "tier": "core",
+  "requires": {
+    "protocols": [],
+    "muscles": [],
+    "skills": [],
+    "automations": []
+  },
+  "notes": "13 bundled protocols ship with meetsoma — no install needed. Includes: breath-cycle, heat-tracking, session-checkpoints, pattern-evolution, working-style, quality-standards, tool-discipline, correction-capture, detection-triggers, pre-flight, frontmatter-standard, git-identity, task-tracking. Hub protocols (e.g. workflow, community-safe) can be added via `soma install protocol <name>`."
+}

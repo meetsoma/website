@@ -1,0 +1,41 @@
+{
+  "name": "writer",
+  "description": "Writing-focused agent for technical content, blogging, and documentation — accuracy first, honest voice, learns your style",
+  "author": "meetsoma",
+  "version": "2.0.0",
+  "tier": "official",
+  "requires": {
+    "protocols": ["working-style", "frontmatter-standard", "correction-capture", "detection-triggers"],
+    "muscles": ["precision-edit", "doc-hygiene", "micro-exhale"],
+    "skills": [],
+    "automations": []
+  },
+  "settings": {
+    "protocols": {
+      "warmThreshold": 3,
+      "hotThreshold": 8,
+      "maxHeat": 15,
+      "decayRate": 1,
+      "maxBreadcrumbsInPrompt": 6,
+      "maxFullProtocolsInPrompt": 2
+    },
+    "muscles": {
+      "tokenBudget": 4000,
+      "maxFull": 4,
+      "maxDigest": 10,
+      "fullThreshold": 3,
+      "digestThreshold": 1
+    },
+    "heat": {
+      "autoDetect": true,
+      "autoDetectBump": 1,
+      "pinBump": 5
+    }
+  },
+  "heatPresets": {
+    "precision-edit": 8,
+    "doc-hygiene": 5,
+    "micro-exhale": 5
+  },
+  "notes": "correction-capture and detection-triggers help the agent learn your writing preferences over time. Higher muscle budget (4000 tokens) because writers benefit from loaded context. precision-edit starts hot — writers need exact control over text changes. doc-hygiene keeps drafts and plans from rotting."
+}

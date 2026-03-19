@@ -1,0 +1,41 @@
+{
+  "name": "devops",
+  "description": "Ops-focused agent for deployment, CI/CD, and infrastructure — verify before deploy, maintain tooling, automate everything",
+  "author": "meetsoma",
+  "version": "2.0.0",
+  "tier": "official",
+  "requires": {
+    "protocols": ["git-identity", "tool-discipline", "quality-standards", "working-style", "pre-flight"],
+    "muscles": ["safe-file-ops", "task-tooling", "test-hygiene"],
+    "skills": [],
+    "automations": []
+  },
+  "settings": {
+    "protocols": {
+      "warmThreshold": 3,
+      "hotThreshold": 8,
+      "maxHeat": 15,
+      "decayRate": 1,
+      "maxBreadcrumbsInPrompt": 8,
+      "maxFullProtocolsInPrompt": 3
+    },
+    "muscles": {
+      "tokenBudget": 2000,
+      "maxFull": 2,
+      "maxDigest": 6,
+      "fullThreshold": 5,
+      "digestThreshold": 1
+    },
+    "heat": {
+      "autoDetect": true,
+      "autoDetectBump": 2,
+      "pinBump": 5
+    }
+  },
+  "heatPresets": {
+    "safe-file-ops": 8,
+    "task-tooling": 5,
+    "test-hygiene": 5
+  },
+  "notes": "working-style v1.1.0 includes 'verify after ship' and 'maintain the tools' — critical for ops. pre-flight catches before you deploy something that already exists. Higher auto-detect bump (2) because ops patterns are high-signal. safe-file-ops starts hot — ops can't afford accidental deletes or overwrites."
+}

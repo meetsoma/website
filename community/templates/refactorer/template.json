@@ -1,0 +1,43 @@
+{
+  "name": "refactorer",
+  "description": "Migration and refactoring specialist — scan before touching, one file at a time, backward-compatible transitions, verify at every step",
+  "author": "meetsoma",
+  "version": "1.0.0",
+  "tier": "official",
+  "requires": {
+    "protocols": ["tool-discipline", "quality-standards", "working-style", "pre-flight"],
+    "muscles": ["incremental-refactor", "precision-edit", "safe-file-ops", "test-hygiene", "task-tooling"],
+    "skills": [],
+    "automations": []
+  },
+  "settings": {
+    "protocols": {
+      "warmThreshold": 2,
+      "hotThreshold": 5,
+      "maxHeat": 15,
+      "decayRate": 1,
+      "maxBreadcrumbsInPrompt": 10,
+      "maxFullProtocolsInPrompt": 3
+    },
+    "muscles": {
+      "tokenBudget": 4000,
+      "maxFull": 4,
+      "maxDigest": 8,
+      "fullThreshold": 3,
+      "digestThreshold": 1
+    },
+    "heat": {
+      "autoDetect": true,
+      "autoDetectBump": 2,
+      "pinBump": 5
+    }
+  },
+  "heatPresets": {
+    "incremental-refactor": 8,
+    "precision-edit": 8,
+    "test-hygiene": 5,
+    "safe-file-ops": 5,
+    "task-tooling": 5
+  },
+  "notes": "High muscle budget (4000) — refactoring needs loaded patterns. incremental-refactor and precision-edit start hot because they're used every turn. Higher auto-detect bump (2) because refactoring generates dense tool usage patterns. pre-flight prevents rebuilding what exists."
+}
