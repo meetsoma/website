@@ -83,7 +83,13 @@ export default async function handler(req, res) {
     });
 
     if (issueRes.ok) {
-      return res.status(200).json({ success: true, message: 'Request submitted! We\'ll review and get back to you.' });
+      const issue = await issueRes.json();
+      return res.status(200).json({
+        success: true,
+        message: 'Request submitted! We\'ll review and get back to you.',
+        issueUrl: issue.html_url,
+        issueNumber: issue.number,
+      });
     } else {
       console.error('GitHub issue creation failed:', await issueRes.text());
       return res.status(200).json({ success: true, message: 'Request received' });

@@ -135,6 +135,7 @@ const description = "Request early access to Soma — the AI agent that grows wi
     <h3 style="font-size: var(--text-md); margin-bottom: var(--space-lg);">How it works</h3>
     <ol style="line-height: 1.8; color: var(--text-muted); padding-left: var(--space-xl);">
       <li>Submit the form below with your GitHub username</li>
+      <li>Your request is created as a GitHub issue — you'll get a tracking link</li>
       <li>We review your request (usually within 24 hours)</li>
       <li>On approval, you're added to our beta testers team on GitHub</li>
       <li>You get access to the private repo + install instructions</li>
@@ -195,7 +196,11 @@ const description = "Request early access to Soma — the AI agent that grows wi
           const data = await res.json();
           status.style.display = 'block';
           if (data.success) {
-            status.textContent = '✓ ' + data.message;
+            if (data.issueUrl) {
+              status.innerHTML = '✓ ' + data.message + '<br><a href="' + data.issueUrl + '" target="_blank" rel="noopener" style="color: var(--accent-bright); text-decoration: underline;">Track your request →</a>';
+            } else {
+              status.textContent = '✓ ' + data.message;
+            }
             status.style.color = '#4ade80';
             form.reset();
           } else {
