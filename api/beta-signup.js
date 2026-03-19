@@ -23,9 +23,12 @@ export default async function handler(req, res) {
     // Generate install token from GitHub App
     const appId = process.env.GITHUB_APP_ID;
     const installId = process.env.GITHUB_INSTALL_ID;
-    // PEM stored as env var may have escaped newlines — restore them
+    // PEM: try base64-encoded first (reliable for multiline), fallback to raw with newline fix
+    const pemB64 = process.env.GITHUB_APP_PEM_B64;
     const rawPem = process.env.GITHUB_APP_PEM;
-    const privateKey = rawPem ? rawPem.replace(/\\n/g, '\n') : null;
+    const privateKey = pemB64
+      ? Buffer.from(pemB64, 'base64').toString('utf-8')
+      : rawPem ? rawPem.replace(/\\n/g, '\n') : null;
 
     if (!appId || !installId || !privateKey) {
       console.log('Beta signup (fallback — missing env vars):', {
