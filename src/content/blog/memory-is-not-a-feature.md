@@ -46,7 +46,7 @@ No one configured "load the ship-cycle muscle at boot." The agent used it enough
 
 We called Soma "σῶμα" — Greek for "body" — because we wanted the vocabulary to shape the thinking.
 
-Muscles are things you build through practice. Protocols are habits that govern behavior. The breath cycle is sessions — inhale (load context), hold (work), exhale (save state). Heat is metabolism — the system burns through what it uses and lets unused things cool.
+Muscles are things you build through practice. Protocols are habits that govern behaviour. The breath cycle is sessions — inhale (load context), hold (work), exhale (save state). Heat is metabolism — the system burns through what it uses and lets unused things cool.
 
 When you talk about an agent in body language, you naturally think about growth, practice, habit, fatigue, and recovery. When you talk about it in database language, you think about storage, retrieval, indexing, and queries.
 
