@@ -28,7 +28,7 @@ What's new in Soma. Full implementation details available to beta testers.
 
 ### Other Changes
 
-- License changed to BSL 1.1 — view the code, use it personally, contribute. Converts to MIT on 2029-03-18.
+- License changed to BSL 1.1 — view the code, use it personally, contribute. Converts to MIT on 2027-09-18.
 - The npm package is now a lightweight launcher (~37KB, zero dependencies).
 
 ---
