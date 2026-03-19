@@ -1,91 +1,79 @@
 {
-  "generated": "2026-03-19T07:40:46Z",
-  "source": "website changelog (trimmed)",
+  "generated": "2026-03-19T07:44:43Z",
+  "source": "CHANGELOG.md",
   "versions": [
     {
       "version": "0.6.0",
       "date": "2026-03-19",
-      "sections": [
-        {
-          "title": "Highlights",
-          "items": []
-        },
-        {
-          "title": "New Commands",
-          "items": [
-            "`soma` \u2014 Welcome experience with rotating daily concepts and interactive Q&A",
-            "`soma init` \u2014 Install the Soma runtime (beta access required)",
-            "`soma about` \u2014 Learn how Soma works",
-            "`soma doctor` \u2014 Health check for your installation",
-            "`soma update` \u2014 Check for new versions",
-            "`soma status` \u2014 See your installation state"
-          ]
-        },
-        {
-          "title": "Other Changes",
-          "items": [
-            "License changed to BSL 1.1 \u2014 view the code, use it personally, contribute. Converts to MIT on 2029-03-18.",
-            "The npm package is now a lightweight launcher (~37KB, zero dependencies)."
-          ]
-        }
-      ]
+      "entries": {
+        "added": [
+          "`soma` \u2014 Welcome experience with rotating daily concepts and interactive Q&A",
+          "`soma init` \u2014 Install the Soma runtime (beta access required)",
+          "`soma about` \u2014 Learn how Soma works",
+          "`soma doctor` \u2014 Health check for your installation",
+          "`soma update` \u2014 Check for new versions",
+          "`soma status` \u2014 See your installation state"
+        ],
+        "changed": [
+          "License changed to BSL 1.1 \u2014 view the code, use it personally, contribute. Converts to MIT on 2029-03-18.",
+          "The npm package is now a lightweight launcher (~37KB, zero dependencies)."
+        ]
+      }
     },
     {
       "version": "0.5.0",
       "date": "2026-03-12",
-      "sections": [
-        {
-          "title": "Highlights",
-          "items": []
-        },
-        {
-          "title": "New Commands",
-          "items": [
-            "`soma focus <keyword>` \u2014 Start a focused session",
-            "`soma --map <name>` \u2014 Load a workflow template",
-            "`/auto-breathe` \u2014 Toggle automatic context management",
-            "`/pin` and `/kill` \u2014 Control what stays loaded and what fades",
-            "`/scratch` \u2014 Quick notes that persist across sessions",
-            "15 in-session commands total"
-          ]
-        },
-        {
-          "title": "Architecture",
-          "items": [
-            "Self-growing memory with heat-based attention management",
-            "Protocols, muscles, scripts, and automations (AMPS)",
-            "Layered identity system (project \u2192 parent \u2192 global)",
-            "Recursive content discovery with subdirectory support"
-          ]
-        }
-      ]
+      "entries": {
+        "added": [
+          "`soma focus <keyword>` \u2014 Start a focused session",
+          "`soma --map <name>` \u2014 Load a workflow template",
+          "`/auto-breathe` \u2014 Toggle automatic context management",
+          "`/pin` and `/kill` \u2014 Control what stays loaded and what fades",
+          "`/scratch` \u2014 Quick notes that persist across sessions",
+          "15 in-session commands total",
+          "Self-growing memory with heat-based attention management",
+          "Protocols, muscles, scripts, and automations (AMPS)",
+          "Layered identity system (project \u2192 parent \u2192 global)",
+          "Recursive content discovery with subdirectory support"
+        ]
+      }
     },
     {
       "version": "0.3.0",
       "date": "2026-03-10",
-      "sections": [],
-      "items": [
-        "Auto-init on first run \u2014 Soma creates `.soma/` and detects your project automatically.",
-        "Session continuation \u2014 `/inhale` loads your last session's preload. `/breathe` saves and continues.",
-        "Context warnings at 50%, 70%, 80%. Auto-exhale at 85%."
-      ]
+      "entries": {
+        "added": [
+          "Auto-init on first run \u2014 Soma creates `.soma/` and detects your project automatically.",
+          "Session continuation \u2014 `/inhale` loads your last session's preload. `/breathe` saves and continues.",
+          "Context warnings at 50%, 70%, 80%. Auto-exhale at 85%."
+        ]
+      }
     },
     {
       "version": "0.2.1",
       "date": "2026-03-09",
-      "sections": [],
-      "items": [
-        "Built-in protocols and scripts ship with the package.",
-        "Heat system tracks what matters and fades what doesn't."
-      ]
+      "entries": {
+        "added": [
+          "Built-in protocols and scripts ship with the package.",
+          "Heat system tracks what matters and fades what doesn't."
+        ]
+      }
     },
     {
       "version": "0.1.0",
       "date": "2026-03-08",
-      "sections": [],
-      "items": [
-        "First release. `npm i -g meetsoma`."
-      ]
+      "entries": {
+        "added": [
+          "First release. `npm i -g meetsoma`."
+        ]
+      }
     }
-  ]
+  ],
+  "labels": {
+    "0.6.0": "Private Beta & Voice",
+    "0.5.0": "Auto-Breathe & Focus",
+    "0.3.0": "Session Intelligence",
+    "0.2.1": "Core Agent",
+    "0.1.0": "First Breath"
+  }
 }
