@@ -8,57 +8,58 @@ const description = "Request early access to Soma — the AI agent that grows wi
 <Layout title={title} description={description}>
 <style>
   .beta-page {
-    max-width: 640px;
+    max-width: var(--content-wide, 610px);
     margin: 0 auto;
-    padding: 4rem 1.5rem;
+    padding: var(--space-4xl) var(--space-xl);
     text-align: center;
   }
   .beta-page h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-md);
   }
   .beta-page .subtitle {
-    color: var(--text-muted, #888);
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
+    color: var(--text-muted);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-2xl);
   }
   .beta-page .description {
     text-align: left;
     line-height: 1.7;
-    margin-bottom: 2rem;
+    font-size: var(--body-text);
+    margin-bottom: var(--space-2xl);
   }
   .beta-page .description p {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-lg);
   }
   .beta-form {
     text-align: left;
-    background: var(--glass-bg, rgba(255,255,255,0.03));
-    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 2rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--space-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
   }
   .beta-form h2 {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-xl);
   }
   .form-field {
-    margin-bottom: 1.25rem;
+    margin-bottom: var(--space-xl);
   }
   .form-field label {
     display: block;
-    font-size: 0.85rem;
-    color: var(--text-muted, #888);
-    margin-bottom: 0.4rem;
+    font-size: var(--label-text);
+    color: var(--text-muted);
+    margin-bottom: var(--space-sm);
   }
   .form-field input, .form-field select, .form-field textarea {
     width: 100%;
-    padding: 0.6rem 0.8rem;
-    background: var(--input-bg, rgba(255,255,255,0.05));
-    border: 1px solid var(--glass-border, rgba(255,255,255,0.12));
-    border-radius: 6px;
-    color: var(--text-primary, #fff);
-    font-size: 0.95rem;
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--space-md);
+    color: var(--text-primary);
+    font-size: var(--body-text);
     font-family: inherit;
   }
   .form-field textarea {
@@ -67,50 +68,50 @@ const description = "Request early access to Soma — the AI agent that grows wi
   }
   .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
     outline: none;
-    border-color: var(--accent, #7c6df0);
+    border-color: var(--accent-bright);
   }
   .submit-btn {
     width: 100%;
-    padding: 0.75rem;
-    background: var(--accent, #7c6df0);
-    color: #fff;
+    padding: var(--space-lg);
+    background: var(--accent-mid);
+    color: var(--text-primary);
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: var(--space-md);
+    font-size: var(--body-text);
     cursor: pointer;
     font-family: inherit;
     transition: opacity 0.2s;
   }
   .submit-btn:hover {
-    opacity: 0.9;
+    opacity: 0.85;
   }
   .beta-tiers {
     text-align: left;
-    margin-top: 2rem;
+    margin-top: var(--space-2xl);
   }
   .beta-tiers h3 {
-    font-size: 1rem;
-    margin-bottom: 0.75rem;
+    font-size: var(--text-md);
+    margin-bottom: var(--space-lg);
   }
   .tier {
     display: flex;
-    gap: 1rem;
-    padding: 1rem;
-    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--space-md);
+    margin-bottom: var(--space-lg);
   }
   .tier-icon {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
     flex-shrink: 0;
   }
   .tier-name {
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    margin-bottom: var(--space-xs);
   }
   .tier-desc {
-    font-size: 0.85rem;
-    color: var(--text-muted, #888);
+    font-size: var(--body-secondary);
+    color: var(--text-muted);
   }
 </style>
 
@@ -130,9 +131,9 @@ const description = "Request early access to Soma — the AI agent that grows wi
     </p>
   </div>
 
-  <div class="how-it-works" style="text-align: left; margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--glass-border, rgba(255,255,255,0.08)); border-radius: 10px;">
-    <h3 style="font-size: 1rem; margin-bottom: 1rem;">How it works</h3>
-    <ol style="line-height: 1.8; color: var(--text-muted, #aaa); padding-left: 1.25rem;">
+  <div class="how-it-works" style="text-align: left; margin-bottom: var(--space-2xl); padding: var(--space-xl); border: 1px solid var(--border-subtle); border-radius: var(--space-lg); background: var(--bg-surface);">
+    <h3 style="font-size: var(--text-md); margin-bottom: var(--space-lg);">How it works</h3>
+    <ol style="line-height: 1.8; color: var(--text-muted); padding-left: var(--space-xl);">
       <li>Submit the form below with your GitHub username</li>
       <li>We review your request (usually within 24 hours)</li>
       <li>On approval, you're added to our beta testers team on GitHub</li>

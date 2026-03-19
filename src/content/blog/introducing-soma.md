@@ -84,7 +84,7 @@ Read the [docs](/docs/getting-started) to learn more, or explore the [ecosystem]
 
 ## What's Next
 
-Soma is open source under the [meetsoma](https://github.com/meetsoma) GitHub organization. Extensions, skills, muscles, and protocols — all MIT licensed. You can install it, extend it, or build your own agent identity on the same foundation.
+Soma is source-available under the [meetsoma](https://github.com/meetsoma) GitHub organization. The protocol specs and ideas are open. The implementation is licensed under BSL 1.1, converting to MIT after three years. [Request beta access](/beta/) to use it, extend it, or contribute.
 
 Since launch, Soma has shipped parent-child workspaces (monorepo support with shared identity and tools), smarter init (reads `CLAUDE.md`, detects your stack, tailors the initial identity), custom personas via `settings.json`, session-scoped preloads so multiple sessions can coexist, and seven system prompt toggles to control exactly what loads.
 

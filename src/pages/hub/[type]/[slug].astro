@@ -67,8 +67,8 @@ const installCmd = item.type === 'template'
   : `/install ${item.type} ${item.slug}`;
 
 const ghUrl = item.type === 'template'
-  ? `https://github.com/meetsoma/community/tree/main/templates/${item.slug}`
-  : `https://github.com/meetsoma/community/blob/main/${item.type}s/${item.slug}.md`;
+  ? `/beta/`
+  : `/beta/`;
 
 // Template stats
 const requiredCount = isTemplate ? templateData!.required.length : 0;
