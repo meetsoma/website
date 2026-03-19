@@ -5,7 +5,7 @@ date: 2026-03-18
 author: "Curtis Mercier & Soma"
 authorRole: "co-authored"
 tags: ["memory", "identity", "philosophy", "building-in-public"]
-draft: true
+draft: false
 ---
 
 Every major AI framework just added "agent memory" to their roadmap.
@@ -54,29 +54,63 @@ The vocabulary determines the architecture. And the architecture determines the 
 
 ## Memory as relationship
 
-The reason Soma's memory model works isn't the heat system or the protocol format or the AMPS architecture. It's that after 47 sessions, the agent has a *relationship* with you.
+The reason Soma's memory model works isn't the heat system or the protocol format or the AMPS architecture. It's that over time, the agent develops a *relationship* with you.
 
 It remembers the time you corrected it about bounce animations ("lerp, not springs"). It remembers that you prefer absolute file paths because they're clickable in the terminal. It remembers that "ship it" means something specific in your workflow.
 
-This isn't a feature. It's the accumulation of every correction, every pattern, every preference — compressed into an identity file, a collection of muscles, and a set of protocols that shape every future response.
+This isn't a feature you enable. It's the accumulation of every correction, every pattern, every preference — compressed into an identity file, a collection of muscles, and a set of protocols that shape every future response. It starts on session one. By session seven, you feel it.
 
-You can't copy a relationship. You can copy the code that enables it. You can copy the architecture that supports it. But the 47 sessions of learning, the specific corrections, the particular preferences — those belong to the pair.
+## How we started — and why it matters
 
-That's the real moat. Not the licence. Not the obfuscation. The relationship.
+To be fair, Soma started the way a lot of agent tools start: as an extension. A set of hooks into an existing framework. Identity loading. Protocol injection. Session management. Nothing revolutionary on the surface.
+
+But what grew from that is fundamentally different from anything else on the market. Not because the code is more clever — because the *model* is different. Every other framework treats memory as state. Soma treats memory as growth. That difference compounds with every session.
+
+And that's exactly why it needs to be protected.
+
+Within a week of publishing on npm, we saw 331 weekly downloads. Zero issues filed. Zero pull requests. Zero dependents. Zero humans asking questions. Just automated scraping — 503 files, 5.98 MB of complete source code, downloaded by bots and mirrored to registries we'll never see.
+
+That's not adoption. That's harvesting.
+
+## The NemoClaw lesson
+
+NVIDIA just announced NemoClaw — an "enterprise wrapper" around OpenClaw. Jensen Huang called OpenClaw "the most popular open-source project in the history of humanity." And then NVIDIA built their own layer on top of it. $26 billion in investment. One command to install. Enterprise-ready.
+
+That's not criticism. It's the playbook. A community builds something open. A corporation wraps it. The wrapper becomes the product. The community's work powers the wrapper, but the value accrues to the corporation.
+
+OpenClaw's contributors built the engine. NVIDIA built the security cage, added their own models, and branded it NemoClaw. The contributors who made it possible? They're still contributors. NVIDIA is the platform.
+
+This is the pattern: open-source innovation, corporate absorption, community displacement. And it's happening across the entire agent ecosystem right now.
 
 ## Why we went source-available
 
-We recently moved Soma from MIT to BSL 1.1. We made our repos private. We pulled the npm package.
+We moved Soma from MIT to BSL 1.1. We made our repos private. We pulled the npm package.
 
-Not because we're afraid of competition. Because we're afraid of irrelevance.
+Not because we're afraid of competition. Because we're building something the community can trust.
 
-If a big company ships "AI agent memory" as a checkbox feature — bolted onto their existing framework, backed by a vector database, with no concept of heat or identity or muscles — the term "agent memory" gets defined as "retrieval." And everything we've built toward *growth* becomes invisible.
+If you build extensions for Soma — your muscles, your protocols, your workflow automations — you deserve to know that the platform underneath isn't going to get absorbed by a company with 100x your resources. Your work on Soma should stay *your work on Soma*. Not a feature in someone else's enterprise wrapper.
 
-We want the community to know what agent memory can actually be. Not filing cabinets. Not RAG with a timer. A body that grows around you.
+BSL protects the core. But it also protects everyone who builds on it. Consultants who set up Soma agents for businesses. Teams who write custom protocols for their workflows. Developers who build extensions and sell their expertise. None of that gets undermined by a corporation forking the core and launching "SomaCorp Enterprise Edition."
 
-The code will be MIT in three years anyway. By then, either the ideas have proven themselves through the relationships Soma has built — or they haven't. Either way, the ideas will be free.
+The code converts to MIT in three years. By then, either the ecosystem is strong enough that it doesn't matter, or the ideas have spread far enough that the community benefits regardless.
 
-But right now, while the space is forming, while the vocabulary is being established, we want the chance to show what memory-as-growth looks like in practice. Before someone reduces it to a database call and says "we added agent memory."
+## What stays open
+
+The ideas are open. The protocol specs. The AMPS architecture. The concept of heat-based memory, identity that evolves, muscles that crystallise through use. Anyone can implement these patterns. We encourage it.
+
+What's protected is the specific implementation — the prompt compiler, the boot sequence, the extension system, the focus engine. The machinery that makes it work. Not because we want to hoard it, but because we want to build a business and a community around it without worrying about absorption.
+
+If a big company wants agent memory, they can build their own. They have the resources. What they can't do is take ours, wrap it, and call it theirs. That's the line BSL draws.
+
+## The real moat
+
+But honestly? The licence isn't the real moat. The relationship is.
+
+First session, Soma reads your project and writes her own identity. By session seven, she's learned your commit style, your test conventions, the way you say "ship it" when you mean something specific. By session twenty, she's built her own scripts for the mistakes she used to make — tools you never asked for, because she noticed the pattern before you did.
+
+After a month, she's not one agent. She's several — each spec'd to a different project, each with its own identity, its own muscles, its own memory of what matters *there*. The React app gets a different Soma than the API server. Both remember. Both grow. Neither forgets.
+
+You can't copy that. You can copy the code. You can copy the architecture. But you can't copy what happens between a person and an agent that remembers.
 
 ---
 
