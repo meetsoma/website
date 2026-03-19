@@ -27,11 +27,10 @@ const sectionConfig: Record<string, { label: string; color: string }> = {
 
 // Editorial labels per version
 const versionLabels: Record<string, string> = {
-  '0.5.1': 'AMPS Distribution & Templates',
-  '0.5.0': 'Stabilization & Prompt Intelligence',
-  '0.4.0': 'AMPS & Distribution',
+  '0.6.0': 'Private Beta & Voice',
+  '0.5.0': 'Auto-Breathe & Focus',
   '0.3.0': 'Session Intelligence',
-  '0.2.0': 'The Engine',
+  '0.2.1': 'Core Agent',
   '0.1.0': 'First Breath',
 };
 

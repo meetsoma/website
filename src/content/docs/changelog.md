@@ -13,11 +13,9 @@ What's new in Soma. Full implementation details available to beta testers.
 
 ### Highlights
 
-**Soma speaks.** Run `soma` and it talks to you — a different voice each time. Press `?` to ask about memory, heat, protocols, or anything else. Every answer is unique. No AI involved.
-
-**No compaction. Ever.** Other agents compress your conversation when context fills up. You wait. Quality degrades. Soma doesn't do that. It breathes — writes a surgical briefing with full context, then starts a fresh session at full capacity.
-
-**Private beta.** Soma is now distributed as a lightweight launcher on npm. The runtime installs separately for verified beta testers.
+- **Soma speaks** — Run `soma` and it talks to you — a different voice each time. Press `?` to ask about memory, heat, or anything else. Every answer is unique. No AI involved.
+- **No compaction. Ever.** — Other agents compress your conversation when context fills up. Soma doesn't. It breathes — writes a surgical briefing with full context, then starts fresh at full capacity.
+- **Private beta** — Soma is now a lightweight launcher on npm. The runtime installs separately for verified beta testers.
 
 ### New Commands
 
@@ -39,11 +37,9 @@ What's new in Soma. Full implementation details available to beta testers.
 
 ### Highlights
 
-**Auto-breathe.** Soma manages its own context now. When context gets tight, it wraps up, writes a preload, and rotates into a fresh session — automatically. No manual `/breathe` needed.
-
-**Focus targeting.** `soma focus <keyword>` primes the boot sequence for a specific topic. Relevant protocols and muscles load hotter. Irrelevant ones stay cold.
-
-**MAP system.** Workflow templates that tell the agent which tools to use, which protocols to follow, and in what order. Plans drive behaviour, not just context.
+- **Auto-breathe** — Soma manages its own context. When context gets tight, it wraps up, writes a preload, and rotates into a fresh session — automatically.
+- **Focus targeting** — `soma focus <keyword>` primes the boot sequence for a specific topic. Relevant content loads hotter. Irrelevant content stays cold.
+- **MAP system** — Workflow templates that tell the agent which tools to use, which protocols to follow, and in what order.
 
 ### New Commands
 

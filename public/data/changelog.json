@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-19T07:44:43Z",
+  "generated": "2026-03-19T07:48:18Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
@@ -7,6 +7,9 @@
       "date": "2026-03-19",
       "entries": {
         "added": [
+          "**Soma speaks** \u2014 Run `soma` and it talks to you \u2014 a different voice each time. Press `?` to ask about memory, heat, or anything else. Every answer is unique. No AI involved.",
+          "**No compaction. Ever.** \u2014 Other agents compress your conversation when context fills up. Soma doesn't. It breathes \u2014 writes a surgical briefing with full context, then starts fresh at full capacity.",
+          "**Private beta** \u2014 Soma is now a lightweight launcher on npm. The runtime installs separately for verified beta testers.",
           "`soma` \u2014 Welcome experience with rotating daily concepts and interactive Q&A",
           "`soma init` \u2014 Install the Soma runtime (beta access required)",
           "`soma about` \u2014 Learn how Soma works",
@@ -25,6 +28,9 @@
       "date": "2026-03-12",
       "entries": {
         "added": [
+          "**Auto-breathe** \u2014 Soma manages its own context. When context gets tight, it wraps up, writes a preload, and rotates into a fresh session \u2014 automatically.",
+          "**Focus targeting** \u2014 `soma focus <keyword>` primes the boot sequence for a specific topic. Relevant content loads hotter. Irrelevant content stays cold.",
+          "**MAP system** \u2014 Workflow templates that tell the agent which tools to use, which protocols to follow, and in what order.",
           "`soma focus <keyword>` \u2014 Start a focused session",
           "`soma --map <name>` \u2014 Load a workflow template",
           "`/auto-breathe` \u2014 Toggle automatic context management",
@@ -68,12 +74,5 @@
         ]
       }
     }
-  ],
-  "labels": {
-    "0.6.0": "Private Beta & Voice",
-    "0.5.0": "Auto-Breathe & Focus",
-    "0.3.0": "Session Intelligence",
-    "0.2.1": "Core Agent",
-    "0.1.0": "First Breath"
-  }
+  ]
 }
