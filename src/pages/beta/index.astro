@@ -148,7 +148,10 @@ const description = "Request early access to Soma — the AI agent that grows wi
     <form id="beta-form" onsubmit="return handleSubmit(event)">
       <div class="form-field">
         <label for="github">GitHub Username *</label>
-        <input type="text" id="github" name="github" required placeholder="your-username" />
+        <div style="position: relative;">
+          <input type="text" id="github" name="github" required placeholder="your-username" autocomplete="off" />
+          <span id="gh-check" style="position: absolute; right: var(--space-lg); top: 50%; transform: translateY(-50%); font-size: var(--text-sm);"></span>
+        </div>
       </div>
       <div class="form-field">
         <label for="email">Email *</label>
@@ -174,11 +177,61 @@ const description = "Request early access to Soma — the AI agent that grows wi
       <p id="form-status" style="margin-top: 1rem; text-align: center; display: none;"></p>
     </form>
     <script>
+      // GitHub username validation — debounced, checks API
+      let ghTimer = null;
+      let ghValid = false;
+      const ghInput = document.getElementById('github');
+      const ghCheck = document.getElementById('gh-check');
+
+      ghInput.addEventListener('input', () => {
+        clearTimeout(ghTimer);
+        const val = ghInput.value.trim();
+        ghValid = false;
+
+        if (!val) {
+          ghCheck.textContent = '';
+          return;
+        }
+        if (!/^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/.test(val)) {
+          ghCheck.textContent = '✗';
+          ghCheck.style.color = '#f87171';
+          return;
+        }
+
+        ghCheck.textContent = '...';
+        ghCheck.style.color = 'var(--text-muted)';
+
+        ghTimer = setTimeout(async () => {
+          try {
+            const res = await fetch(`https://api.github.com/users/${val}`);
+            if (res.ok) {
+              const data = await res.json();
+              ghCheck.innerHTML = `<img src="${data.avatar_url}" width="20" height="20" style="border-radius:50%;vertical-align:middle;margin-right:4px" /> ✓`;
+              ghCheck.style.color = '#4ade80';
+              ghValid = true;
+            } else {
+              ghCheck.textContent = '✗ not found';
+              ghCheck.style.color = '#f87171';
+            }
+          } catch {
+            ghCheck.textContent = '';
+          }
+        }, 400);
+      });
+
       async function handleSubmit(e) {
         e.preventDefault();
         const btn = document.getElementById('submit-btn');
         const status = document.getElementById('form-status');
         const form = document.getElementById('beta-form');
+
+        if (!ghValid) {
+          status.style.display = 'block';
+          status.textContent = '✗ Please enter a valid GitHub username';
+          status.style.color = '#f87171';
+          return false;
+        }
+
         btn.disabled = true;
         btn.textContent = 'Submitting...';
         status.style.display = 'none';
