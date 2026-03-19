@@ -60,7 +60,7 @@ export default async function handler(req, res) {
     const { token } = await tokenRes.json();
 
     // Create issue in a private repo for tracking
-    const issueRes = await fetch('https://api.github.com/repos/meetsoma/soma-pro/issues', {
+    const issueRes = await fetch('https://api.github.com/repos/meetsoma/soma-agent/issues', {
       method: 'POST',
       headers: {
         'Authorization': `token ${token}`,
