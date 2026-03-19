@@ -201,21 +201,19 @@ const description = "Request early access to Soma — the AI agent that grows wi
         ghCheck.textContent = '...';
         ghCheck.style.color = 'var(--text-muted)';
 
-        ghTimer = setTimeout(async () => {
-          try {
-            const res = await fetch(`https://api.github.com/users/${val}`);
-            if (res.ok) {
-              const data = await res.json();
-              ghCheck.innerHTML = `<img src="${data.avatar_url}" width="20" height="20" style="border-radius:50%;vertical-align:middle;margin-right:4px" /> ✓`;
-              ghCheck.style.color = '#4ade80';
-              ghValid = true;
-            } else {
-              ghCheck.textContent = '✗ not found';
-              ghCheck.style.color = '#f87171';
-            }
-          } catch {
-            ghCheck.textContent = '';
-          }
+        ghTimer = setTimeout(() => {
+          // No API calls — just load the avatar image. If it loads, user exists.
+          const img = new Image();
+          img.onload = () => {
+            ghCheck.innerHTML = `<img src="${img.src}" width="20" height="20" style="border-radius:50%;vertical-align:middle;margin-right:4px" /> ✓`;
+            ghCheck.style.color = '#4ade80';
+            ghValid = true;
+          };
+          img.onerror = () => {
+            ghCheck.textContent = '✗ not found';
+            ghCheck.style.color = '#f87171';
+          };
+          img.src = `https://github.com/${val}.png?size=40`;
         }, 400);
       });
 
