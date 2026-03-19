@@ -23,16 +23,28 @@ export default async function handler(req, res) {
     // Generate install token from GitHub App
     const appId = process.env.GITHUB_APP_ID;
     const installId = process.env.GITHUB_INSTALL_ID;
-    const privateKey = process.env.GITHUB_APP_PEM;
+    // PEM stored as env var may have escaped newlines — restore them
+    const rawPem = process.env.GITHUB_APP_PEM;
+    const privateKey = rawPem ? rawPem.replace(/\\n/g, '\n') : null;
 
     if (!appId || !installId || !privateKey) {
-      // Fallback: just log it
-      console.log('Beta signup:', { github, email, interest, context, timestamp: new Date().toISOString() });
-      return res.status(200).json({ success: true, message: 'Request received' });
+      console.log('Beta signup (fallback — missing env vars):', {
+        github, email, interest, context,
+        timestamp: new Date().toISOString(),
+        env: { hasAppId: !!appId, hasInstallId: !!installId, hasPem: !!rawPem, pemLen: rawPem?.length }
+      });
+      return res.status(200).json({ success: true, message: 'Request received — we\'ll follow up by email.' });
     }
 
     // JWT for GitHub App auth
-    const jwt = await createJWT(appId, privateKey);
+    let jwt;
+    try {
+      jwt = await createJWT(appId, privateKey);
+    } catch (jwtErr) {
+      console.error('JWT creation failed:', jwtErr.message);
+      console.log('Beta signup (JWT fail):', { github, email, timestamp: new Date().toISOString() });
+      return res.status(200).json({ success: true, message: 'Request received — we\'ll follow up by email.' });
+    }
     
     // Get installation token
     const tokenRes = await fetch(`https://api.github.com/app/installations/${installId}/access_tokens`, {
