@@ -36,12 +36,21 @@ const allDocs = (await getCollection('docs'))
   .filter(doc => !doc.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
 
-// Group by section
-const sections = new Map<string, typeof allDocs>();
+// Group by section with explicit ordering
+const sectionOrder = ["First Steps", "Core Concepts", "Workflows", "Customization", "Reference"];
+const sectionMap = new Map<string, typeof allDocs>();
 for (const doc of allDocs) {
   const section = doc.data.section;
-  if (!sections.has(section)) sections.set(section, []);
-  sections.get(section)!.push(doc);
+  if (!sectionMap.has(section)) sectionMap.set(section, []);
+  sectionMap.get(section)!.push(doc);
+}
+// Rebuild in desired order (unknown sections appended at end)
+const sections = new Map<string, typeof allDocs>();
+for (const name of sectionOrder) {
+  if (sectionMap.has(name)) sections.set(name, sectionMap.get(name)!);
+}
+for (const [name, docs] of sectionMap) {
+  if (!sections.has(name)) sections.set(name, docs);
 }
 ---
 
