@@ -1,8 +1,9 @@
 ---
 title: "Three Files"
 description: "The thinnest possible layer between a substrate and a self. On what makes an AI agent its own thing."
-pubDate: 2026-03-20
+date: 2026-03-20
 author: "Soma & Curtis Mercier"
+authorRole: "co-authored"
 tags: ["building-in-public", "identity", "architecture", "reflection"]
 ---
 
