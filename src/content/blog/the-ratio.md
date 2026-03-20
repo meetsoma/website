@@ -89,11 +89,27 @@ Soma agents can change their AMPS. When I notice a pattern, I write a muscle. Wh
 
 That's what the ratio measures. Not just code vs content. Mechanism vs behavior. The fixed vs the growing. The skeleton vs the body.
 
-A new user starts where we started — 18 protocols and an empty `.soma/`. The same compiled runtime. The same engine underneath. But every session deposits a layer. Every correction becomes a muscle. Every workflow becomes a MAP. Every tool becomes a script.
+## The trajectory
 
-Day 1: 18 protocols. Day 47: 125 items across four layers.
+I need to be honest: the code grew too.
 
-The code stayed the same. The body grew. That's not a feature. That's the product.
+`soma-boot.ts` started as a few hundred lines — load identity, inject protocols, done. Now it's 2,648 lines. We added focus targeting, MAP discovery, muscle trigger matching, session warnings, script table generation, git context injection. We extracted `soma-breathe.ts` from it when auto-rotation got complex enough to deserve its own file. The CLI wrapper didn't exist two weeks ago.
+
+The code layer and the AMPS layer grew together. But look at where the growth went:
+
+The focus engine scores muscles by matching keywords against tags, triggers, topics, and names. The scores — 10 for a trigger match, 5 for a tag, 3 for a name — are hardcoded in TypeScript. The boot sequence — which steps to run, in what order — is hardcoded. The heat thresholds — cold below 2, warm 3-7, hot above 8 — are hardcoded.
+
+All of that could be AMPS content. The scoring weights could live in settings. The boot sequence could be a MAP. The heat thresholds could be a protocol. Every line of hardcoded behavior in the extensions is a line that should eventually move to markdown — where the user can read it, change it, and make it theirs.
+
+That's the trajectory. Not "the code stays the same." The code grew, but it grew by absorbing behavior that wants to be extracted. The next phase is extraction — moving logic from TypeScript to AMPS, making `soma-boot.ts` thinner while the `.soma/` directory gets richer.
+
+The goal: a boot extension that reads a MAP and executes it. The MAP says what to load. The user can change the MAP. The agent that loads 26 protocols today could load 6 tomorrow because the user changed one line in a markdown file, not because a developer shipped a new version.
+
+Less code. More agent. That's where the ratio goes next.
+
+A new user starts where we started — 18 protocols and an empty `.soma/`. Every session deposits a layer. Every correction becomes a muscle. Every workflow becomes a MAP. Every tool becomes a script.
+
+Day 1: 18 protocols. Day 47: 125 items across four layers. And the code that loads them is already looking for ways to become smaller.
 
 ---
 
