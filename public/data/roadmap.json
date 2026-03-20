@@ -3,6 +3,27 @@
   "source": "CHANGELOG.md",
   "timeline": [
     {
+      "version": "Next",
+      "date": "",
+      "features": {
+        "added": [
+          "Heat visibility command. See what's hot across all AMPS layers in one view.",
+          "Muscle heat bumps on natural use, not just focus matching.",
+          "Collapsible docs sidebar with section icons.",
+          "AMPS overview page. The four layers explained as one system.",
+          "Migration guide from CLAUDE.md, .cursorrules, and other agent configs.",
+          "Troubleshooting page with common issues and fixes.",
+          "Community hub scripts and MAP pages (in progress)."
+        ],
+        "changed": [
+          "Heat system: decay runs more reliably, dual storage documented as known gap.",
+          "Heat thresholds moving from hardcoded TypeScript to configurable settings.",
+          "Boot sequence extraction \u2014 moving hardcoded behavior from extensions into AMPS content.",
+          "Docs reorganised: 5 sections (First Steps, Core Concepts, Workflows, Customization, Reference), 27 pages."
+        ]
+      }
+    },
+    {
       "version": "0.6.0",
       "date": "2026-03-20",
       "features": {

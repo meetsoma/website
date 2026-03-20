@@ -1,6 +1,6 @@
 ---
-title: "Protocols & Heat"
-description: "Behavioral rules, heat system, domain scoping, writing your own."
+title: "Protocols"
+description: "Behavioral rules that shape how the agent works. Loaded by heat, scoped by domain."
 section: "Core Concepts"
 order: 3
 ---
@@ -36,65 +36,13 @@ Soma ships with 16 protocols, scaffolded on `soma init`:
 | `tool-discipline` | warm | Scripts first, then raw commands. Build tools for yourself. |
 | `working-style` | warm | Read before write. Verify before claiming. |
 
-## Heat System
+## Heat
 
-Every protocol has a temperature that determines how it loads:
+Every protocol has a temperature. Hot (8+) loads the full body. Warm (3-7) loads just the breadcrumb. Cold (0-2) shows the name but nothing else.
 
-| Temperature | Heat Range | What Loads |
-|------------|-----------|-----------|
-| 🔥 Hot | 8+ | Full protocol body in system prompt |
-| 🟡 Warm | 3–7 | Breadcrumb only (1–2 sentence reminder) |
-| ❄️ Cold | 0–2 | Name listed, content not loaded |
+Heat rises when a protocol gets used (auto-detected from tool results) and decays by 1 each session if unused. `/pin` locks something hot. `/kill` drops it to zero.
 
-### How Heat Changes
-
-| Event | Heat Change |
-|-------|------------|
-| Protocol referenced explicitly | +2 |
-| Protocol applied in action (auto-detected) | +1 |
-| `/pin <name>` | Set to hot + pinned (no decay) |
-| `/kill <name>` | Set to 0 + unpinned |
-| Session end (unused protocol) | -1 (decay) |
-| Session end (used protocol) | No change |
-| Session end (pinned protocol) | No change |
-
-Heat state is stored in `.soma/.protocol-state.json` and persists across sessions. For the full deep-dive, see [Heat System](heat-system.md).
-
-### Thresholds
-
-Default thresholds can be overridden in `settings.json` — see [Configuration](configuration.md#protocols-heat-thresholds):
-
-```json
-{
-  "protocols": {
-    "warmThreshold": 3,
-    "hotThreshold": 8,
-    "maxHeat": 15,
-    "decayRate": 1,
-    "maxBreadcrumbsInPrompt": 10,
-    "maxFullProtocolsInPrompt": 3
-  }
-}
-```
-
-#***REMOVED*** Scoping (applies-to)
-
-Protocols declare which projects they're relevant to via the `applies-to` frontmatter field. At boot, Soma detects **project signals** by scanning for marker files:
-
-| Signal | Detected By |
-|--------|------------|
-| `always` | Always matches (meta-protocols) |
-| `git` | `.git/` directory exists |
-| `typescript` | `tsconfig.json` or `tsconfig.base.json` |
-| `javascript` | `package.json` (also set by typescript) |
-| `python` | `pyproject.toml`, `requirements.txt`, `setup.py`, `Pipfile` |
-| `rust` | `Cargo.toml` |
-| `go` | `go.mod` |
-| `frontend` | Framework configs (`next.config.*`, `vite.config.*`, etc.) or `src/components/` |
-| `docs` | `docs/` directory |
-| `multi-repo` | 2+ child directories with `.git/` |
-
-A protocol with `applies-to: [git, typescript]` loads only in projects that have at least one of those signals. A protocol with no `applies-to` field (or `applies-to: [always]`) loads everywhere.
+Protocol heat is stored in `.soma/state.json`. For thresholds, configuration, known gaps, and how heat works across all [AMPS](/docs/amps) layers, see [Heat System](/docs/heat-system).
 
 ## Writing Your Own Protocol
 
@@ -187,5 +135,5 @@ If both project and global define `git-identity.md`, the project version wins.
 |------|---------|
 | `.soma/amps/protocols/*.md` | Protocol definitions |
 | `.soma/amps/protocols/_template.md` | Template for new protocols |
-| `.soma/.protocol-state.json` | Heat state (auto-managed, don't edit) |
+| `.soma/state.json` | Heat state (auto-managed, don't edit) |
 | `.soma/settings.json` | Override heat thresholds |
