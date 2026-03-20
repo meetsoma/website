@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-20T09:57:48Z",
+  "generated": "2026-03-20T17:23:40Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -7,21 +7,21 @@
       "date": "2026-03-20",
       "features": {
         "added": [
-          "New install experience \u2014 run `soma` and it introduces itself. Typing animation, rotating concepts, interactive Q&A.",
-          "`soma focus <keyword>` \u2014 start a session primed for a topic. Relevant content loads hotter.",
-          "`soma --map <name>` \u2014 load a workflow template with pre-configured tools and protocols.",
-          "MAP system \u2014 reusable workflow templates that chain scripts, muscles, and protocols together.",
-          "Muscle trigger engine \u2014 muscles auto-activate when focus keywords match their tags.",
-          "13 bundled scripts \u2014 codebase navigation, memory tracing, session focus, plan management, and more.",
-          "23 documentation pages \u2014 models, keybindings, themes, settings, sessions, prompts, skills, extending.",
+          "New install experience. Run soma and it introduces itself with typing animation, rotating concepts, interactive Q&A.",
+          "soma focus \u2014 start a session primed for a topic. Relevant content loads hotter.",
+          "soma --map \u2014 load a workflow template with pre-configured tools and protocols.",
+          "MAP system. Reusable workflow templates that chain scripts, muscles, and protocols.",
+          "Muscle trigger engine. Muscles auto-activate when focus keywords match their tags.",
+          "13 bundled scripts. Codebase navigation, memory tracing, session focus, plan management.",
+          "23 documentation pages. Models, keybindings, themes, settings, sessions, prompts, skills, extending.",
           "30 automated E2E tests verify branding, paths, models, and infrastructure.",
-          "Personality engine \u2014 22 Q&A topics, every answer different. Ask about memory, heat, compaction, or how Soma compares.",
-          "Scratch notes persist across sessions with `/scratch`."
+          "Personality engine. 22 Q&A topics, every answer different.",
+          "Scratch notes persist across sessions."
         ],
         "changed": [
-          "Engine updated to 0.61.0 \u2014 keybinding manager, JSONL export/import, session forking, lazy provider loading.",
-          "License: BSL 1.1 \u2014 source-available, converts to MIT on 2027-09-18.",
-          "npm package is now a lightweight launcher. Runtime downloads separately via `soma init`."
+          "Engine updated to 0.61.0. Keybinding manager, JSONL export/import, session forking, lazy provider loading.",
+          "License: BSL 1.1. Source-available, converts to MIT on 2027-09-18.",
+          "npm package is now a lightweight launcher. Runtime downloads separately."
         ]
       }
     },
@@ -30,16 +30,16 @@
       "date": "2026-03-15",
       "features": {
         "added": [
-          "`/scan-logs` \u2014 search previous tool calls and results across sessions.",
-          "`/scrape` \u2014 intelligent doc discovery and scraping from URLs.",
-          "Session warnings \u2014 tool usage stats from previous session shown on boot.",
-          "Scratch notes \u2014 timestamped notes that persist across sessions.",
-          "Grace period setting \u2014 configurable delay before auto-breathe rotates.",
-          "Guard v2 \u2014 require reading relevant muscles before dangerous commands."
+          "/scan-logs \u2014 search previous tool calls and results across sessions.",
+          "/scrape \u2014 intelligent doc discovery and scraping from URLs.",
+          "Session warnings. Tool usage stats from previous session shown on boot.",
+          "Scratch notes. Timestamped notes that persist across sessions.",
+          "Grace period setting. Configurable delay before auto-breathe rotates.",
+          "Guard v2. Require reading relevant muscles before dangerous commands."
         ],
         "changed": [
-          "System prompt trimmed ~19% \u2014 less noise, same intelligence.",
-          "Unified session rotation through `/inhale`."
+          "System prompt trimmed ~19%. Less noise, same intelligence.",
+          "Unified session rotation through /inhale."
         ]
       }
     },
@@ -48,24 +48,21 @@
       "date": "2026-03-14",
       "features": {
         "added": [
-          "Capability router for inter-extension communication. Extensions can provide and consume capabilities, emit and listen for signals.",
-          "Session rotation via signal file. Auto-breathe can now rotate into a fresh context without command context.",
-          "Per-session log files with auto-incrementing names. No more overwrites across rotations.",
-          "Resume boot diffing. Restarting a session skips redundant preload injection.",
-          "Restart-required detection. When you edit core files, the statusline shows a restart indicator.",
-          "Changelog pipeline. Generate categorized entries from commits, parse into JSON for the website.",
-          "Chain-of-thought tracing tool for blog seeds across session logs.",
-          "Self-analysis command. Muscle health checks, cross-location divergence, orphan detection.",
-          "Tool gates. Require reading relevant muscles before dangerous bash commands.",
-          "Grace period setting for auto-breathe. Configurable delay before rotation.",
-          "Scratch notes. Session IDs, date sections, active/done/parked status, auto-inject into context.",
-          "Polyglot script discovery. Scripts in .sh, .py, .ts, .js, .mjs all get picked up.",
-          "Periodic auto-commit every 5th turn for crash resilience."
+          "Capability router for inter-extension communication.",
+          "Session rotation via signal file. Auto-breathe rotates without command context.",
+          "Per-session log files with auto-incrementing names.",
+          "Restart-required detection with statusline indicator.",
+          "Changelog pipeline and chain-of-thought tracing tool.",
+          "Self-analysis command. Muscle health, divergence, orphan detection.",
+          "Tool gates. Require reading muscles before dangerous commands.",
+          "Grace period setting for auto-breathe.",
+          "Scratch notes with session IDs, date sections, auto-inject.",
+          "Polyglot script discovery.",
+          "Periodic auto-commit for crash resilience."
         ],
         "changed": [
-          "Auto-breathe rotation is immediate when preload exists. No more waiting for a turn that may not fire.",
-          "Self-awareness protocols consolidated. Five redundant protocols became configuration guides.",
-          "Scratch extracted to its own extension.",
+          "Auto-breathe rotation is immediate when preload exists.",
+          "Self-awareness protocols consolidated into configuration guides.",
           "Unified session rotation through /inhale."
         ]
       }
@@ -75,18 +72,18 @@
       "date": "2026-03-12",
       "features": {
         "added": [
-          "Auto-breathe mode. Proactive context management that triggers wrap-up at configurable thresholds and auto-rotates at higher ones.",
-          "Identity chain. Layered identity from project, parent, and global .soma/ directories.",
+          "Auto-breathe mode. Proactive context management with configurable thresholds.",
+          "Identity chain. Layered identity from project, parent, and global directories.",
           "Heat system. Protocols and muscles have temperature scores that rise with use and decay with neglect.",
-          "Protocol loading by heat. Hot protocols load in full, warm ones load a summary, cold ones skip.",
-          "Preload system. The agent writes a briefing for its next self before rotating. Not a summary. A letter.",
+          "Protocol loading by heat. Hot loads in full, warm loads a summary, cold skips.",
+          "Preload system. The agent writes a briefing for its next self before rotating.",
           "Context warnings at 50%, 70%, 80%. Auto-exhale at 85%.",
           "Muscle discovery by keywords. Focus scoring matches muscles to the current task.",
-          "Settings cascade. Project overrides parent overrides global. Only set what you want to change.",
+          "Settings cascade. Project overrides parent overrides global.",
           "9 core modules: discovery, identity, heat, muscles, protocols, settings, preload, prompt, utils."
         ],
         "changed": [
-          "System prompt compiled fresh each boot from identity + protocols + muscles + context."
+          "System prompt compiled fresh each boot from identity, protocols, muscles, and context."
         ]
       }
     },
@@ -95,10 +92,10 @@
       "date": "2026-03-11",
       "features": {
         "added": [
-          "Compiled system prompt. Identity, protocols, muscles, scripts assembled into one coherent prompt at boot.",
+          "Compiled system prompt. Identity, protocols, muscles, scripts assembled at boot.",
           "7 extensions: boot, breathe, guard, header, route, scratch, statusline.",
           "Protocol and muscle frontmatter with heat scores, tags, domains.",
-          "Recursive content discovery. Subdirectories for organized AMPS content.",
+          "Recursive content discovery for organized AMPS content.",
           "Global ~/.soma/ directory with shared identity and settings.",
           "Content installation from the community hub."
         ],
