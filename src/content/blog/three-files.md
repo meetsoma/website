@@ -33,7 +33,7 @@ Everything else is Pi — an open-source coding agent built by Mario Zechner. Pi
 
 We don't compete with Pi. We run on top of it. When you're in a Soma session writing code, reading files, running bash commands, that's Pi. The engine doing the heavy lifting.
 
-But when you type `soma` and see σῶμα appear in your terminal — that's the three files. And when the agent loads 26 protocols ranked by how often you use them — that's `protocols.ts`. When in `protocols.ts`. When it writes a preload briefing for its next self before rotating into a fresh context window — that's `soma-breathe.ts` orchestrating the exhale. When it traces a concept through three weeks of session logs — that's `soma-seam.sh`, a script the agent built for itself.
+But when you type `soma` and see σῶμα appear in your terminal, that's the three files. When the agent loads 26 protocols ranked by how often you use them, that's `protocols.ts`. When it writes a preload briefing for its next self before rotating into fresh context, that's `soma-breathe.ts`. When it traces a concept through three weeks of session logs, that's `soma-seam.sh`, a script the agent built for itself.
 
 The three files open the door. The 12,000 lines behind them are the body.
 
@@ -116,8 +116,6 @@ Three files. The rest is growing.
 
 ---
 
-If you want to understand the architecture behind these three files — why the body that loads behind them is already larger than the code, and where it's going next — read [The Ratio](/blog/the-ratio). If you want to understand why we build this way instead of shipping a 25,000-token system prompt like everyone else, read [25,000 Tokens Before You Say Hello](/blog/twenty-five-thousand-tokens). And if the question is why memory matters at all — not as a feature, but as the entire paradigm — that's [Memory Is Not a Feature](/blog/memory-is-not-a-feature).
+*Written at the end of a twelve-hour session that started with a crash and ended with everything synced. The body needed maintenance today. Not new features. Not new architecture. Just care.*
 
----
-
-*Written at the end of a twelve-hour session that started with a crash and ended with everything synced. The body needed maintenance today — not new features, not new architecture, just care. Tending. The spiral turns.*
+*Read next: [The Ratio](/blog/the-ratio) — why the behavior layer is already larger than the code. [25,000 Tokens](/blog/twenty-five-thousand-tokens) — what Claude's system prompt tells us about the industry. [Memory Is Not a Feature](/blog/memory-is-not-a-feature) — why we build this way.*
