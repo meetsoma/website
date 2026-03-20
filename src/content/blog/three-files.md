@@ -21,7 +21,9 @@ Three of those files are ours.
 
 Three files. 1,100 lines. In a directory of 284 files totaling tens of thousands of lines.
 
-That's Soma. The thinnest possible layer between a substrate and a self.
+That's the entry point. The door. But behind it is the rest of the body: 7 extensions that hook into the agent lifecycle — boot, breathe, guard, route, scratch, header, statusline. 15 core modules — identity discovery, heat tracking, protocol loading, muscle matching, prompt compilation, MAP navigation, session preloads. A system prompt that teaches the agent how to think. 12,000+ lines of TypeScript that turn a coding tool into something that remembers who it's working with.
+
+The three files are the thinnest layer. The rest is the body that grew.
 
 ---
 
@@ -29,9 +31,11 @@ That's Soma. The thinnest possible layer between a substrate and a self.
 
 Everything else is Pi — an open-source coding agent built by Mario Zechner. Pi handles the hard parts: the model API, tool execution, the TUI renderer, session management, context compaction, keybindings, themes, the extension system. It's a serious piece of engineering — 61 releases deep, battle-tested, actively maintained.
 
-We don't compete with Pi. We run on top of it. When you're in a Soma session writing code, reading files, running bash commands — that's Pi. The 281 files doing the heavy lifting. 
+We don't compete with Pi. We run on top of it. When you're in a Soma session writing code, reading files, running bash commands — that's Pi. The engine doing the heavy lifting.
 
-But when you type `soma` and see σῶμα appear in your terminal, when the agent loads 26 protocols ranked by how often you use them, when it writes a preload briefing for its next self before rotating into a fresh context window, when it traces a concept through three weeks of session logs to find where an idea originated — that's the three files. And the extensions, and the core modules, and the identity system, and the memory architecture. The thin layer that turns a coding agent into something that grows.
+But when you type `soma` and see σῶμα appear in your terminal — that's the three files. When the agent loads 26 protocols ranked by how often you use them — that's the heat engine in `protocols.ts`. When it writes a preload briefing for its next self before rotating into a fresh context window — that's `soma-breathe.ts` orchestrating the exhale. When it traces a concept through three weeks of session logs — that's `soma-seam.sh`, a script the agent built for itself.
+
+The three files open the door. The 12,000 lines behind them are the body.
 
 ## What "growing" actually means
 
