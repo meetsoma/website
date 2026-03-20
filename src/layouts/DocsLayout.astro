@@ -2,9 +2,18 @@
 import Layout from './Layout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Search from '../components/Search.astro';
+import Icon from '../components/icons/SomaIcons.astro';
 import TableOfContents from '../components/islands/TableOfContents';
 import { getCollection } from 'astro:content';
 import { docUrl } from '../lib/blog';
+
+const sectionIcons: Record<string, string> = {
+  "First Steps": "arrow-right",
+  "Core Concepts": "brain",
+  "Workflows": "automations",
+  "Customization": "settings",
+  "Reference": "layers",
+};
 
 interface Props {
   title: string;
@@ -52,6 +61,9 @@ for (const name of sectionOrder) {
 for (const [name, docs] of sectionMap) {
   if (!sections.has(name)) sections.set(name, docs);
 }
+
+// Find which section the current page belongs to
+const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === currentSlug)?.data.section || "";
 ---
 
 <Layout title={`${title} — Soma Docs`} description={description} jsonLd={docJsonLd} canonicalUrl={`https://soma.gravicity.ai/docs/${currentSlug}`}>
@@ -68,23 +80,33 @@ for (const [name, docs] of sectionMap) {
       <Search />
 
       <nav class="sidebar-nav">
-        {[...sections.entries()].map(([sectionName, docs]) => (
-          <div class="nav-section">
-            <h3 class="nav-section-title">{sectionName}</h3>
-            <ul class="nav-list">
-              {docs.map(doc => (
-                <li>
-                  <a
-                    href={docUrl(doc)}
-                    class:list={['nav-link', { active: doc.id.replace(/\.mdx?$/, '') === currentSlug }]}
-                  >
-                    {doc.data.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {[...sections.entries()].map(([sectionName, docs]) => {
+          const isFirstSteps = sectionName === "First Steps";
+          const isActive = sectionName === currentSection;
+          const isOpen = isFirstSteps || isActive;
+          const iconName = sectionIcons[sectionName] || "circle-dot";
+          return (
+            <details class="nav-section" open={isOpen}>
+              <summary class:list={["nav-section-title", { "section-active": isActive }]}>
+                <Icon name={iconName as any} size={14} />
+                <span>{sectionName}</span>
+                <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </summary>
+              <ul class="nav-list">
+                {docs.map(doc => (
+                  <li>
+                    <a
+                      href={docUrl(doc)}
+                      class:list={['nav-link', { active: doc.id.replace(/\.mdx?$/, '') === currentSlug }]}
+                    >
+                      {doc.data.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          );
+        })}
       </nav>
 
       <div class="sidebar-footer">
@@ -223,7 +245,14 @@ for (const [name, docs] of sectionMap) {
 
   .sidebar-nav { flex: 1; }
 
-  .nav-section { margin-bottom: var(--space-xl); }
+  .nav-section {
+    margin-bottom: var(--space-sm);
+    border: none;
+  }
+
+  .nav-section[open] {
+    margin-bottom: var(--space-lg);
+  }
 
   .nav-section-title {
     font-family: var(--font-display);
@@ -232,8 +261,45 @@ for (const [name, docs] of sectionMap) {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-muted);
-    margin-bottom: var(--space-md);
-    padding: 0 var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    border-radius: var(--radius-md);
+    transition: color 0.15s ease, background 0.15s ease;
+    list-style: none;
+    user-select: none;
+  }
+
+  .nav-section-title::-webkit-details-marker { display: none; }
+
+  .nav-section-title:hover {
+    color: var(--text-primary);
+    background: var(--surface-interactive);
+  }
+
+  .nav-section-title.section-active {
+    color: var(--accent-bright);
+  }
+
+  .nav-section-title span { flex: 1; }
+
+  .nav-section-title .chevron {
+    opacity: 0.4;
+    transition: transform 0.2s ease, opacity 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .nav-section[open] > .nav-section-title .chevron {
+    transform: rotate(180deg);
+    opacity: 0.6;
+  }
+
+  .nav-section-title:hover .chevron { opacity: 0.8; }
+
+  .nav-list {
+    padding-top: var(--space-xs);
   }
 
   .nav-list {
