@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-20T01:05:59Z",
+  "generated": "2026-03-20T02:57:38Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
@@ -7,30 +7,27 @@
       "date": "2026-03-19",
       "entries": {
         "added": [
-          "**Soma speaks** \u2014 Run `soma` and it talks to you. A different voice each time. Press `?` to ask about memory, heat, protocols, or anything else. Every answer is unique. No AI involved.",
-          "**No compaction. Ever.** \u2014 Other agents compress your conversation when context fills up. Soma doesn't. It breathes \u2014 writes a surgical briefing with full context, then starts fresh at full capacity.",
-          "**Open install** \u2014 Soma is now a lightweight launcher on npm. The runtime downloads automatically on first run.",
-          "`soma` \u2014 Welcome experience with rotating daily concepts and interactive Q&A",
-          "`soma init` \u2014 Install the Soma runtime",
-          "`soma about` \u2014 Learn how Soma works (identity, protocols, muscles, breath cycle, scripts)",
-          "`soma doctor` \u2014 Health check for your installation",
-          "`soma update` \u2014 Check for new versions (CLI and core)",
-          "`soma status` \u2014 Show installation state, version, and core info",
-          "Typing animation \u2014 responses type out character by character with natural rhythm",
-          "22 Q&A topics covering concepts, practical questions, and meta-awareness",
-          "Smart command detection \u2014 post-install commands show helpful messages when runtime isn't installed"
+          "**New install experience** \u2014 `npm i -g meetsoma` installs a lightweight launcher. Run `soma` and it introduces itself \u2014 rotating concepts, interactive Q&A, typing animation. The runtime downloads automatically when you're ready.",
+          "**Source-available** \u2014 Soma is now distributed under BSL 1.1. The compiled runtime is public. Source code available to registered contributors.",
+          "`soma` \u2014 Welcome experience with rotating daily concepts and interactive Q&A. Press `?` to ask about memory, heat, protocols, or how Soma compares to other tools. Every answer is different.",
+          "`soma init` \u2014 Downloads and installs the Soma runtime. Checks for git, handles updates.",
+          "`soma about` \u2014 How Soma works \u2014 identity, protocols, muscles, breath cycle, scripts",
+          "`soma doctor` \u2014 Health check (Node.js, runtime, extensions, API key, git)",
+          "`soma update` \u2014 Check for CLI and runtime updates",
+          "`soma status` \u2014 Installation state, version, core info",
+          "Typing animation \u2014 responses type out with natural rhythm (pace drift, sentence pauses)",
+          "22 Q&A topics covering concepts, practical how-to, and meta-awareness",
+          "Smart command detection \u2014 `soma focus` before install shows \"requires runtime\"",
+          "Focus heat scoring fixed \u2014 `score \u00d7 2` reaches HOT tier correctly",
+          "MAP prompt-config merging for focused sessions",
+          "User extensions in `.soma/extensions/` now discovered alongside compiled runtime",
+          "Engine updated to 0.60.0"
         ],
         "changed": [
           "License: BSL 1.1 \u2014 view the code, use it personally, contribute. Converts to MIT on 2027-09-18.",
-          "npm package is now a lightweight launcher (~24KB, zero dependencies)",
-          "Runtime distributed separately as compiled package",
-          "Pi engine updated to 0.60.0"
-        ],
-        "fixed": [
-          "Muscle frontmatter validation enforced across all 33 active muscles",
-          "Protocol frontmatter integrity checks (merged line detection)",
-          "Focus heat scoring: `score \u00d7 2` reaches HOT tier correctly",
-          "MAP prompt-config merging for focused sessions"
+          "npm package: lightweight launcher (~24KB, zero dependencies). Runtime separate.",
+          "33 active muscles: all now have `triggers` and `applies-to` fields",
+          "Protocol frontmatter integrity enforced (merged line detection)"
         ]
       }
     },
