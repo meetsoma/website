@@ -9,38 +9,55 @@ What's new in Soma. Full implementation details available to registered users.
 
 ---
 
-## [0.6.0] — 2026-03-19
+## [0.6.0] — 2026-03-20
 
 ### Highlights
 
 - **New install experience** — `npm i -g meetsoma` installs a lightweight launcher. Run `soma` and it introduces itself — rotating concepts, interactive Q&A, typing animation. The runtime downloads automatically when you're ready.
+- **23 documentation pages** — Models & providers, keybindings, themes, settings, sessions, prompt templates, skills, terminal setup, extending, and more. Full parity with the underlying engine docs.
 - **Source-available** — Soma is now distributed under BSL 1.1. The compiled runtime is public. Source code available to registered contributors.
+- **Engine updated to 0.61.0** — keybinding manager, JSONL export/import, session forking, lazy provider loading, bash elapsed time.
 
 ### CLI (the launcher — before the agent starts)
 
-- `soma` — Welcome experience with rotating daily concepts and interactive Q&A. Press `?` to ask about memory, heat, protocols, or how Soma compares to other tools. Every answer is different.
-- `soma init` — Downloads and installs the Soma runtime. Checks for git, handles updates.
+- `soma` — Welcome experience with rotating daily concepts and interactive Q&A. Press `?` to ask about memory, heat, protocols, muscles, or how Soma compares to other tools. Every answer is different.
+- `soma init` — Downloads and installs the Soma runtime. No auth needed.
 - `soma about` — How Soma works — identity, protocols, muscles, breath cycle, scripts
+- `soma focus <keyword>` — Start a focused session primed for a specific topic
+- `soma --map <name>` — Load a workflow template
 - `soma doctor` — Health check (Node.js, runtime, extensions, API key, git)
 - `soma update` — Check for CLI and runtime updates
 - `soma status` — Installation state, version, core info
 - Typing animation — responses type out with natural rhythm (pace drift, sentence pauses)
 - 22 Q&A topics covering concepts, practical how-to, and meta-awareness
-- Smart command detection — `soma focus` before install shows "requires runtime"
 
 ### Agent (the session — after .soma/ exists)
 
-- Focus heat scoring fixed — `score × 2` reaches HOT tier correctly
+- Focus heat scoring — `score × 2` reaches HOT tier correctly
 - MAP prompt-config merging for focused sessions
-- User extensions in `.soma/extensions/` now discovered alongside compiled runtime
-- Engine updated to 0.60.0
+- User extensions in `.soma/extensions/` discovered alongside compiled runtime
+- Auto-breathe — context management, preload generation, session rotation
+- Scratch notes — `/scratch` for quick persistent notes across sessions
+- 15 in-session commands — `/auto-breathe`, `/pin`, `/kill`, `/scratch`, and more
+- 30 automated E2E sandbox tests verify branding, paths, infrastructure, and models
+
+### Documentation
+
+- Models & Providers — 17+ providers, API key storage, custom providers (Ollama, LM Studio, OpenRouter)
+- Keybindings — defaults and customisation via keybindings.json
+- Themes — built-in dark/light and custom project themes
+- Settings — engine settings reference
+- Terminal Setup — terminal recommendations and tmux
+- Sessions — session tree, fork, compaction, branch summarisation
+- Prompt Templates — prompts/ directory format
+- Skills — SKILL.md format and skill authoring
+- Extending — custom model providers
 
 ### Changed
 
 - License: BSL 1.1 — view the code, use it personally, contribute. Converts to MIT on 2027-09-18.
 - npm package: lightweight launcher (~24KB, zero dependencies). Runtime separate.
-- 33 active muscles: all now have `triggers` and `applies-to` fields
-- Protocol frontmatter integrity enforced (merged line detection)
+- Project paths resolve to `.soma/` (not `.pi/`) with correct piConfig delegation.
 
 ---
 
