@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-19T07:48:18Z",
+  "generated": "2026-03-20T00:38:23Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
@@ -9,16 +9,16 @@
         "added": [
           "**Soma speaks** \u2014 Run `soma` and it talks to you \u2014 a different voice each time. Press `?` to ask about memory, heat, or anything else. Every answer is unique. No AI involved.",
           "**No compaction. Ever.** \u2014 Other agents compress your conversation when context fills up. Soma doesn't. It breathes \u2014 writes a surgical briefing with full context, then starts fresh at full capacity.",
-          "**Private beta** \u2014 Soma is now a lightweight launcher on npm. The runtime installs separately for verified beta testers.",
+          "**Open install** \u2014 Soma is now a lightweight launcher on npm. The runtime downloads automatically on first run.",
           "`soma` \u2014 Welcome experience with rotating daily concepts and interactive Q&A",
-          "`soma init` \u2014 Install the Soma runtime (beta access required)",
+          "`soma init` \u2014 Install the Soma runtime",
           "`soma about` \u2014 Learn how Soma works",
           "`soma doctor` \u2014 Health check for your installation",
           "`soma update` \u2014 Check for new versions",
           "`soma status` \u2014 See your installation state"
         ],
         "changed": [
-          "License changed to BSL 1.1 \u2014 view the code, use it personally, contribute. Converts to MIT on 2029-03-18.",
+          "License changed to BSL 1.1 \u2014 view the code, use it personally, contribute. Converts to MIT on 2027-09-18.",
           "The npm package is now a lightweight launcher (~37KB, zero dependencies)."
         ]
       }
