@@ -7,19 +7,36 @@
       "date": "",
       "features": {
         "added": [
-          "Heat visibility command. See what's hot across all AMPS layers in one view.",
+          "Heat visibility command. See what's hot across all AMPS layers.",
           "Muscle heat bumps on natural use, not just focus matching.",
-          "Collapsible docs sidebar with section icons.",
-          "AMPS overview page. The four layers explained as one system.",
-          "Migration guide from CLAUDE.md, .cursorrules, and other agent configs.",
-          "Troubleshooting page with common issues and fixes.",
-          "Community hub scripts and MAP pages (in progress)."
+          "Soma Dev Kit \u2014 extension SDK, protocol authoring, MAP templates, hub publishing.",
+          "Community hub scripts and MAP pages.",
+          "Tutorial guides: writing your first protocol, your first muscle."
         ],
         "changed": [
-          "Heat system: decay runs more reliably, dual storage documented as known gap.",
-          "Heat thresholds moving from hardcoded TypeScript to configurable settings.",
-          "Boot sequence extraction \u2014 moving hardcoded behavior from extensions into AMPS content.",
-          "Docs reorganised: 5 sections (First Steps, Core Concepts, Workflows, Customization, Reference), 27 pages."
+          "Boot sequence extraction \u2014 moving hardcoded behavior into user-editable MAPs.",
+          "Heat thresholds moving from TypeScript to configurable settings."
+        ]
+      }
+    },
+    {
+      "version": "0.6.3",
+      "date": "2026-03-20",
+      "features": {
+        "added": [
+          "Published to npm. npm install -g meetsoma is live.",
+          "27 documentation pages across 5 organised sections.",
+          "AMPS overview page. Migration guide from CLAUDE.md and .cursorrules. Troubleshooting page.",
+          "Collapsible docs sidebar with section icons.",
+          "Source access page redesigned with tier cards, Dev Kit teaser, Known Gaps.",
+          "3 solo blog posts: Three Files, The Ratio, The Operating System.",
+          "Known Gaps sections across docs and website.",
+          "Roadmap curated with user-facing language."
+        ],
+        "changed": [
+          "Engine updated to Pi 0.61.1. Keybinding stability, session path fixes.",
+          "Heat system docs corrected. .protocol-state.json references fixed across all surfaces.",
+          "@gravicity.ai/soma removed from npm."
         ]
       }
     },

@@ -9,6 +9,30 @@ What's new in Soma. Full implementation details available to registered users.
 
 ---
 
+## [0.6.3] — 2026-03-20
+
+### Highlights
+
+- **Published to npm.** `npm install -g meetsoma` is live. 24KB thin launcher — the runtime downloads on first run.
+- **Engine updated to 0.61.1** — keybinding stability, session path fixes, suspend/resume resilience.
+- **27 documentation pages** across 5 sections. New: AMPS overview, migration guide, troubleshooting.
+- **Source access page** redesigned with tier cards, Dev Kit teaser, and Known Gaps.
+
+### Docs & Website
+
+- Collapsible sidebar with section icons and auto-expand on active page.
+- 3 new pages: AMPS (four layers as one system), Migrating (from CLAUDE.md/.cursorrules), Troubleshooting.
+- Docs reorganised: First Steps → Core Concepts → Workflows → Customization → Reference.
+- Roadmap curated with user-facing language. "On the Horizon" feature cards.
+- 3 solo blog posts: Three Files, The Ratio, The Operating System.
+- Known Gaps sections across docs — honest about heat system limitations and planned fixes.
+
+### Fixed
+
+- CLI crash on Pi 0.61.0 (`getEditorKeybindings` renamed upstream). Dist synced safely.
+- Heat system docs corrected across all surfaces.
+- `@gravicity.ai/soma` removed from npm (was shipping full source).
+
 ## [0.6.0] — 2026-03-20
 
 ### Highlights

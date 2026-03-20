@@ -23,7 +23,8 @@ interface RoadmapData {
 
 // Editorial labels — curated per release
 const versionLabels: Record<string, string> = {
-  'Next': 'In Progress',
+  'Next': 'On the Horizon',
+  '0.6.3': 'npm Publish, 27 Docs & Source Access',
   '0.6.0': 'Open Install, Voice & 23 Docs',
   '0.5.2': 'Scratch, Scanning & Session Warnings',
   '0.5.1': 'Router, Auto-Breathe & Dev Tools',
@@ -65,7 +66,7 @@ export default function RoadmapTimeline() {
     return <div class="timeline-loading"><p>Loading roadmap...</p></div>;
   }
 
-  const shipped = data.timeline.filter(v => v.version !== 'Unreleased');
+  const shipped = data.timeline.filter(v => v.version !== 'Unreleased' && v.version !== 'Next');
 
   return (
     <div class="timeline">
@@ -85,7 +86,7 @@ export default function RoadmapTimeline() {
             key={release.version}
             style={`animation-delay: ${i * 0.1}s`}
           >
-            <div class="timeline-dot">{isLatest ? '◉' : '○'}</div>
+            <div class="timeline-dot" />
             <div class="timeline-body">
               <div class="timeline-head">
                 <span class="version">v{release.version}</span>

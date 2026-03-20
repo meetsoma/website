@@ -61,13 +61,13 @@ const upcoming: { name: string; icon: string; description: string; status: strin
       <Breadcrumbs items={[{ label: 'Roadmap', href: '/roadmap' }]} />
       <h1 class="title">Roadmap</h1>
       <p class="subtitle">
-        Where Soma has been. Where it's going.
+        Where it's going. Where it's been.
       </p>
     </header>
 
-    <!-- What's Next -->
+    <!-- On the Horizon -->
     <section class="section">
-      <SectionHeader title="What's Next" />
+      <SectionHeader title="On the Horizon" />
       <div class="upcoming-grid">
         {upcoming.map((feature, i) => (
           <div class="feature-card" style={`animation-delay: ${i * 0.08}s`}>
@@ -287,15 +287,17 @@ const upcoming: { name: string; icon: string; description: string; status: strin
 
   .timeline-dot {
     position: absolute;
-    left: calc(-1 * var(--space-2xl) - 4px);
-    top: var(--space-xl);
-    font-size: var(--body-text);
-    color: var(--accent-bright);
-    line-height: 1;
+    left: calc(-1 * var(--space-2xl) - 3px);
+    top: calc(var(--space-xl) + 4px);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-bright);
+    border: 2px solid var(--bg-deep);
   }
 
   .timeline-entry:first-child .timeline-dot {
-    filter: drop-shadow(0 0 6px var(--moon-glow));
+    box-shadow: 0 0 8px var(--accent-bright);
   }
 
   .timeline-head {
