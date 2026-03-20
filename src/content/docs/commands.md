@@ -1,13 +1,14 @@
 ---
 title: "Commands"
-description: "Slash commands, CLI flags, context warnings, the breath cycle."
-section: "Reference"
-order: 7
+description: "All slash commands, CLI flags, and keyboard shortcuts."
+section: "First Steps"
+order: 1.8
 ---
 
+# Commands
 
 <!-- tldr -->
-`/inhale` — load preload into current session. `/breathe` — save + auto-continue. `/exhale` — save + stop. `/rest` — disable keepalive + exhale (going to bed). `/pin <name>` — bump heat +5. `/kill <name>` — drop heat to 0. `/install <type> <name>` — install from hub. `/list local|remote` — browse content. `/soma` — status + management (subcommands: `init`, `prompt`, `preload`, `debug`). `/scratch <note>` — quick notes to scratchpad. `/auto-breathe on|off` — toggle proactive context rotation. `/auto-commit on|off` — toggle .soma/ auto-commit. `/route` — show extension capability router status. CLI: `soma` (fresh), `soma inhale` (continue).
+CLI: `soma` (fresh, no preload), `soma inhale` (fresh + preload), `soma -c` (continue), `soma -r` (resume picker). Session: `/inhale` — reset + load preload. `/breathe` — save + rotate. `/exhale` — save + stop. `/rest` — disable keepalive + exhale. `/pin <name>` — bump heat +5. `/kill <name>` — drop to 0. `/soma` — status + management.
 <!-- /tldr -->
 
 Soma registers slash commands that control the breath cycle, heat system, and session management.
@@ -16,8 +17,8 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 
 | Command | Description |
 |---------|-------------|
-| `/inhale` | Start a fresh session. Shows preload status and suggests `soma inhale` to continue with context. |
-| `/breathe` | Save state and auto-continue into a fresh session. Seamless rotation — exhale + inhale in one motion. |
+| `/inhale` | Start a fresh session. Shows preload status and suggests `soma -c` to continue with context. |
+| `/breathe` | Save state and rotate into a fresh session. Seamless rotation — exhale + inhale in one motion. |
 | `/exhale` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Session ends. |
 | `/rest` | Going to bed? Disables cache keepalive, then exhales. No pings will fire after you walk away. |
 
@@ -68,6 +69,9 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 | `/scratch <note>` | Append a quick note to `.soma/scratchpad.md`. The agent doesn't see it — it's your private notepad. |
 | `/scratch read` | Show the scratchpad contents to the agent. |
 | `/scratch clear` | Empty the scratchpad. |
+| `/code <subcommand> [args]` | Fast codebase navigator — wraps `soma-code.sh`. Subcommands: `find`, `lines`, `map`, `refs`, `replace`, `structure`, `physics`, `events`, `css-vars`, `config`. |
+| `/scrape <name\|topic> [--discover]` | Scrape docs for a tool, library, or topic. Providers: `github`, `npm`, `mdn`, `css`, `skills`. |
+| `/scan-logs [count] [--send]` | Scan conversation logs. Use `/scan-logs tools <pattern>` to search tool call history. `--send` injects results into the conversation. |
 
 ## Toggle Commands
 
@@ -89,30 +93,63 @@ Soma monitors context usage and warns at configurable thresholds:
 
 Override in `settings.json` — see [Configuration](configuration.md#context-warnings).
 
-## CLI Flags
+## Model Commands
 
-| Flag | Description |
-|------|-------------|
-| `soma` | Fresh session — loads identity, hot protocols, active muscles |
-| `soma inhale` | Continue — loads everything above + last session's preload |
-| `soma -r` | Resume — pick from previous sessions to restore |
+| Command | Description |
+|---------|-------------|
+| `/model` | Open model selector — fuzzy search across all available models. |
+| `/login` | Authenticate with a subscription provider (Claude Pro, ChatGPT, Copilot, Gemini CLI). |
+| `/logout` | Clear OAuth credentials for a provider. |
+| **Ctrl+P** | Cycle through available models (or models set by `--models`). |
+
+See [Models & Providers](/docs/models) for full setup, including custom providers (Ollama, LM Studio), API key configuration, and `models.json`.
+
+## CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `soma` | Fresh session — no preload. Clean slate with identity, hot protocols, active muscles. |
+| `soma inhale` | Fresh session with preload from last session. Use when continuing a project across sessions. |
+| `soma -c` | Continue previous session — full history preserved. |
+| `soma -r` | Resume — pick from previous sessions to restore. |
+| `soma --help` | Show formatted help (uses gum when available). |
+| `soma --map <name>` | Boot with a specific MAP loaded — applies prompt-config overrides, loads targeted preload and MAP body. |
+| `soma --model <pattern>` | Start with a specific model (e.g. `sonnet`, `gpt-4o`, `openai/gpt-4o`, `sonnet:high`). |
+| `soma --provider <name>` | Set the default provider for this session. |
+| `soma --models <list>` | Limit Ctrl+P cycling to these models (comma-separated). |
+| `soma --list-models [search]` | List available models with optional fuzzy search. |
+
+## Pre-Session Tools
+
+Run these **before** starting a session:
+
+| Command | Description |
+|---------|-------------|
+| `soma-focus.sh <keyword>` | Prime the next boot for a topic — traces keyword through memory, boosts relevant muscles/MAPs. |
+| `soma-focus.sh show` | Show current focus state. |
+| `soma-focus.sh clear` | Remove focus. |
+
+```bash
+# Example: focus then start
+soma-focus.sh authentication    # trace + boost auth-related content
+soma                            # boots primed for auth work
+```
 
 ## Scripts
 
-Soma ships standalone bash scripts in the agent's `scripts/` directory. These run outside the agent session — useful for auditing, snapshotting, and pre-commit hooks.
+Soma ships standalone bash scripts in `.soma/amps/scripts/`. They run outside the agent session and are also used by the agent during sessions. See [Scripts](/docs/scripts) for the full reference.
 
-| Script | Description |
+Key scripts:
+
+| Script | What it does |
 |--------|-------------|
-| `soma-audit.sh` | Ecosystem health check — runs focused audits (PII, drift, stale content, docs sync, command consistency). `--list` to see audits, or name specific audits to run. |
-| `soma-snapshot.sh` | Rolling zip snapshots of project directories. |
-| `frontmatter-date-hook.sh` | Git pre-commit hook — auto-updates `updated:` field in modified `.md` files. |
-
-```bash
-# Examples
-scripts/soma-audit.sh --list         # see available audits
-scripts/soma-audit.sh drift pii      # run specific audits
-scripts/soma-snapshot.sh . "pre-refactor"
-```
+| `soma-code.sh` | Codebase navigator: map, find, refs, replace, structure |
+| `soma-seam.sh` | Trace concepts through memory, code, sessions |
+| `soma-query.sh` | Unified search: find, list, sessions, related, impact |
+| `soma-reflect.sh` | Session log pattern mining |
+| `soma-plans.sh` | Plan lifecycle management |
+| `soma-scrape.sh` | Doc discovery + scraping (requires gh, curl, jq) |
+| `soma-snapshot.sh` | Rolling zip snapshots |
 
 ## The Breath Cycle
 

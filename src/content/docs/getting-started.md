@@ -5,8 +5,9 @@ section: "First Steps"
 order: 1
 ---
 
+
 <!-- tldr -->
-`npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma inhale` to continue with last session's context. `/breathe` saves + continues, `/exhale` saves + stops, `/pin` keeps protocols hot, `/kill` drops them cold.
+`npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma -c` to continue with last session's context. `/breathe` saves + continues, `/exhale` saves + stops, `/pin` keeps protocols hot, `/kill` drops them cold.
 <!-- /tldr -->
 
 ## Install
@@ -14,6 +15,23 @@ order: 1
 ```bash
 npm install -g meetsoma
 ```
+
+## Set Up a Provider
+
+Soma needs an AI provider to work. The fastest option:
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...
+```
+
+Add this to your shell profile (`~/.zshrc` or `~/.bashrc`) to persist it.
+
+**Other providers:** Soma supports 17+ providers including OpenAI, Google Gemini, Ollama, GitHub Copilot, and more. See [Models & Providers](/docs/models) for the full setup guide.
+
+**No API key?** Free options exist:
+- Use `/login` with **Google Gemini CLI** or **Google Antigravity** (free with any Google account)
+- Use **GitHub Copilot** if you have a subscription
+- Run local models via **Ollama** (free, no API key needed — see [Custom Providers](/docs/models#custom-providers-ollama-lm-studio-etc))
 
 ## First Run
 
@@ -51,7 +69,7 @@ Starts fresh. Runs the [boot sequence](/docs/configuration#boot-sequence): ident
 ```bash
 soma --continue
 # or
-soma inhale
+soma -c
 ```
 
 Resumes the last session. Runs all boot steps including preload (what happened, what's next).
@@ -70,10 +88,10 @@ Pick from previous sessions to resume.
 
 | Command | What it does |
 |---------|-------------|
-| `/breathe` | Save state + auto-continue into fresh session |
+| `/breathe` | Save state + rotate into fresh session |
 | `/exhale` | Save state, write preload, session ends |
 | `/rest` | Disable keepalive + exhale — for when you're done for the night |
-| `/inhale` | Start fresh — shows preload status, suggests `soma inhale` |
+| `/inhale` | Start fresh — shows preload status, suggests `soma -c` |
 | `/pin <name>` | Pin a protocol/muscle to hot (stays loaded) |
 | `/kill <name>` | Kill a protocol/muscle (drops to cold) |
 | `/keepalive` | Toggle cache keepalive on/off (or check status) |
@@ -90,30 +108,57 @@ Created by `soma init` or on first run:
 ```
 .soma/
 ├── identity.md              ← who Soma becomes (discovered through use)
-├── STATE.md                 ← project architecture truth
 ├── settings.json            ← configurable thresholds (optional)
-├── protocols/               ← behavioral rules (heat-tracked)
-│   ├── breath-cycle.md      ← ships by default (the meta-protocol)
-│   └── _template.md         ← format reference for new protocols
-├── memory/
-│   ├── muscles/             ← patterns learned from experience
-│   ├── preload-next-*.md      ← session-scoped continuations
-│   └── sessions/            ← per-session logs
-└── scripts/                 ← dev tooling (search, scan, etc.)
+├── state.json               ← heat state (auto-managed)
+│
+├── amps/                    ← the AMPS content system
+│   ├── automations/         ← triggered actions (heat-tracked)
+│   ├── muscles/             ← learned patterns (heat-tracked)
+│   ├── protocols/           ← behavioral rules (heat-tracked)
+│   │   ├── breath-cycle.md  ← ships by default (16 protocols included)
+│   │   └── _template.md     ← format reference for new protocols
+│   └── scripts/             ← developer tools (9 scripts seeded on init)
+│       ├── soma-code.sh     ← codebase navigator
+│       ├── soma-seam.sh     ← memory tracing
+│       └── ...              ← see /docs/scripts for full list
+│
+├── memory/                  ← temporal state
+│   ├── preloads/            ← session continuations
+│   └── sessions/            ← per-session work logs
+│
+├── projects/                ← per-project specs, plans, notes
+│
+└── skills/                  ← knowledge sets (Pi-native SKILL.md format)
 ```
 
 ### What's Private vs Public
 
 If you're using Soma in a public repo:
 
-- **Ships with repo:** `.soma/STATE.md`, `.soma/skills/`
-- **Gitignored (private):** `.soma/identity.md`, `.soma/memory/`, `.soma/sessions/`
+- **Ships with repo:** `.soma/amps/protocols/`, `.soma/amps/scripts/`, `.soma/skills/`
+- **Gitignored (private):** `.soma/identity.md`, `.soma/memory/`, `.soma/amps/muscles/`, `.soma/amps/automations/`
 
 Templates ship. Instances don't.
+
+## Switching Models
+
+Press **Ctrl+P** during a session to cycle models, or use `/model` to pick from a searchable list.
+
+From the command line:
+
+```bash
+soma --model gpt-4o              # start with a specific model
+soma --model sonnet:high         # with thinking level
+soma --models sonnet,haiku,gpt-4o  # limit cycling to these
+soma --list-models               # see all available
+```
+
+See [Models & Providers](/docs/models) for the full guide — including custom providers, Ollama setup, OAuth login, and API key management.
 
 ## Tips
 
 - **Let identity grow** — don't pre-write it. Let Soma discover who she becomes through your work.
 - **Trust the breath** — don't worry about context limits. Soma flushes and continues automatically.
 - **Read muscles** — check `.soma/amps/muscles/` to see what patterns Soma has learned.
+- **Switch models freely** — use `/model` or `Ctrl+P` mid-session. See [Models & Providers](/docs/models).
 - **Tune settings** — everything is configurable: boot steps, heat thresholds, context warnings. See [Configuration](/docs/configuration).
