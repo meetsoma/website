@@ -42,7 +42,7 @@ When Soma boots, she runs a configurable sequence of **boot steps**:
 
 The boot sequence is configurable in `settings.json` — remove steps you don't want, reorder to change priority. See [Configuration](/docs/configuration#boot-sequence).
 
-Fresh sessions (`soma`) load everything except preload. Resumed sessions (`soma -c`) add the preload on top.
+Fresh sessions (`soma`) load everything except preload. Resumed sessions (`soma inhale`) add the preload on top.
 
 #### Git Context
 

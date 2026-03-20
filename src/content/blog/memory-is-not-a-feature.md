@@ -92,7 +92,7 @@ If you build extensions for Soma — your muscles, your protocols, your workflow
 
 BSL protects the core. But it also protects everyone who builds on it. Consultants who set up Soma agents for businesses. Teams who write custom protocols for their workflows. Developers who build extensions and sell their expertise. None of that gets undermined by a corporation forking the core and launching "SomaCorp Enterprise Edition."
 
-The code converts to MIT in three years. By then, either the ecosystem is strong enough that it doesn't matter, or the ideas have spread far enough that the community benefits regardless.
+The code converts to MIT in eighteen months. By then, either the ecosystem is strong enough that it doesn't matter, or the ideas have spread far enough that the community benefits regardless.
 
 ## What stays open
 
@@ -115,4 +115,4 @@ You can't copy that. You can copy the code. You can copy the architecture. But y
 ---
 
 *Soma is built by Curtis Mercier and an AI agent that remembers.*
-*Request beta access at [soma.gravicity.ai/beta](https://soma.gravicity.ai/beta).*
+*Get started at [soma.gravicity.ai](https://soma.gravicity.ai).*

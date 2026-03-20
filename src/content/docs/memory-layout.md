@@ -103,7 +103,7 @@ Fresh session (soma):
     7. git-context — inject recent commits + changed files
   → inject all into system prompt
 
-Continue session (soma -c):
+Continue session (soma inhale):
   → same as above, plus:
   → step 2 loads most recent preload from .soma/memory/preloads/
 

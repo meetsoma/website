@@ -34,7 +34,7 @@ Soma is now **source-available** under the [Business Source License 1.1](https:/
 - You can **contribute** — we actively want contributors
 - You **cannot** copy it into a competing product or host it as a service
 
-**After three years** (2029), the code converts to MIT automatically. This is the same license used by HashiCorp (Terraform), Sentry, and CockroachDB.
+**After eighteen months** (2027), the code converts to MIT automatically. This is the same license used by HashiCorp (Terraform), Sentry, and CockroachDB.
 
 ## Why BSL, not MIT?
 
@@ -51,14 +51,14 @@ BSL says: "Use it, learn from it, build with it — just don't compete with it."
 
 ## What's coming
 
-We're building toward a **private beta** launch:
+We're building toward a **open beta** launch:
 
 1. Compiled CLI — no raw source in the distribution
 2. Verified installs — GitHub account verification
 3. Contributor access — apply for full source + dev tools
 4. Beta tester access — compiled package for early users
 
-If you want to be part of shaping what agent memory becomes, [request early access](https://soma.gravicity.ai/beta).
+If you want to be part of shaping what agent memory becomes, [get started](https://soma.gravicity.ai).
 
 ## The competition question
 
@@ -66,15 +66,15 @@ We're not afraid of competition. We're afraid of irrelevance.
 
 When a big company ships "AI agent memory" as a feature, we want the community to know where the ideas came from. BSL gives us that — the code is visible, the history is clear, and the license ensures we get to build the business around our own work.
 
-Three years from now, it's all MIT anyway. By then, either Soma is established enough that it doesn't matter, or the ideas have spread far enough that the community benefits regardless.
+Eighteen months from now, it's all MIT anyway. By then, either Soma is established enough that it doesn't matter, or the ideas have spread far enough that the community benefits regardless.
 
 ## To the 331 downloaders
 
-If you were actually using Soma — we're sorry for the disruption. Request beta access and we'll get you set up immediately.
+If you were actually using Soma — we're sorry for the disruption. Visit soma.gravicity.ai and we'll get you set up immediately.
 
 If you were mirroring our npm package to a private registry in another country — well, you got v0.1.0. Good luck with that.
 
 ---
 
 *Soma is built by Curtis Mercier and an AI agent that remembers.*
-*[Request beta access →](https://soma.gravicity.ai/beta)*
+*[Get started →](https://soma.gravicity.ai)*

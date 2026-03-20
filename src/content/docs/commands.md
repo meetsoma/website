@@ -7,7 +7,7 @@ order: 7
 
 
 <!-- tldr -->
-`/inhale` — load preload into current session. `/breathe` — save + auto-continue. `/exhale` — save + stop. `/rest` — disable keepalive + exhale (going to bed). `/pin <name>` — bump heat +5. `/kill <name>` — drop heat to 0. `/install <type> <name>` — install from hub. `/list local|remote` — browse content. `/soma` — status + management (subcommands: `init`, `prompt`, `preload`, `debug`). `/scratch <note>` — quick notes to scratchpad. `/auto-breathe on|off` — toggle proactive context rotation. `/auto-commit on|off` — toggle .soma/ auto-commit. `/route` — show extension capability router status. CLI: `soma` (fresh), `soma -c` (continue).
+`/inhale` — load preload into current session. `/breathe` — save + auto-continue. `/exhale` — save + stop. `/rest` — disable keepalive + exhale (going to bed). `/pin <name>` — bump heat +5. `/kill <name>` — drop heat to 0. `/install <type> <name>` — install from hub. `/list local|remote` — browse content. `/soma` — status + management (subcommands: `init`, `prompt`, `preload`, `debug`). `/scratch <note>` — quick notes to scratchpad. `/auto-breathe on|off` — toggle proactive context rotation. `/auto-commit on|off` — toggle .soma/ auto-commit. `/route` — show extension capability router status. CLI: `soma` (fresh), `soma inhale` (continue).
 <!-- /tldr -->
 
 Soma registers slash commands that control the breath cycle, heat system, and session management.
@@ -16,7 +16,7 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 
 | Command | Description |
 |---------|-------------|
-| `/inhale` | Start a fresh session. Shows preload status and suggests `soma -c` to continue with context. |
+| `/inhale` | Start a fresh session. Shows preload status and suggests `soma inhale` to continue with context. |
 | `/breathe` | Save state and auto-continue into a fresh session. Seamless rotation — exhale + inhale in one motion. |
 | `/exhale` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Session ends. |
 | `/rest` | Going to bed? Disables cache keepalive, then exhales. No pings will fire after you walk away. |
@@ -94,7 +94,7 @@ Override in `settings.json` — see [Configuration](configuration.md#context-war
 | Flag | Description |
 |------|-------------|
 | `soma` | Fresh session — loads identity, hot protocols, active muscles |
-| `soma -c` | Continue — loads everything above + last session's preload |
+| `soma inhale` | Continue — loads everything above + last session's preload |
 | `soma -r` | Resume — pick from previous sessions to restore |
 
 ## Scripts

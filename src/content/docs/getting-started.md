@@ -6,7 +6,7 @@ order: 1
 ---
 
 <!-- tldr -->
-`npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma -c` to continue with last session's context. `/breathe` saves + continues, `/exhale` saves + stops, `/pin` keeps protocols hot, `/kill` drops them cold.
+`npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma inhale` to continue with last session's context. `/breathe` saves + continues, `/exhale` saves + stops, `/pin` keeps protocols hot, `/kill` drops them cold.
 <!-- /tldr -->
 
 ## Install
@@ -51,7 +51,7 @@ Starts fresh. Runs the [boot sequence](/docs/configuration#boot-sequence): ident
 ```bash
 soma --continue
 # or
-soma -c
+soma inhale
 ```
 
 Resumes the last session. Runs all boot steps including preload (what happened, what's next).
@@ -73,7 +73,7 @@ Pick from previous sessions to resume.
 | `/breathe` | Save state + auto-continue into fresh session |
 | `/exhale` | Save state, write preload, session ends |
 | `/rest` | Disable keepalive + exhale — for when you're done for the night |
-| `/inhale` | Start fresh — shows preload status, suggests `soma -c` |
+| `/inhale` | Start fresh — shows preload status, suggests `soma inhale` |
 | `/pin <name>` | Pin a protocol/muscle to hot (stays loaded) |
 | `/kill <name>` | Kill a protocol/muscle (drops to cold) |
 | `/keepalive` | Toggle cache keepalive on/off (or check status) |
