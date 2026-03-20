@@ -1,3 +1,10 @@
+---
+title: "Commands"
+description: "All slash commands, CLI flags, and keyboard shortcuts."
+section: "First Steps"
+order: 1.8
+---
+
 # Commands
 
 <!-- tldr -->

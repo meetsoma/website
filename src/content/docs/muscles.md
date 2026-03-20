@@ -1,3 +1,10 @@
+---
+title: "Muscles"
+description: "Learned patterns, digest system, heat tiers, writing your own."
+section: "Core Concepts"
+order: 5.5
+---
+
 # Muscles
 
 <!-- tldr -->

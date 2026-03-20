@@ -1,3 +1,10 @@
+---
+title: "Memory Layout"
+description: "Project vs user level storage, git strategy, data flow."
+section: "Core Concepts"
+order: 4
+---
+
 # Memory Layout
 
 <!-- tldr -->

@@ -1,3 +1,10 @@
+---
+title: "Identity"
+description: "Discovery, layering, customization, project vs global."
+section: "Core Concepts"
+order: 2.5
+---
+
 # Identity
 
 <!-- tldr -->
