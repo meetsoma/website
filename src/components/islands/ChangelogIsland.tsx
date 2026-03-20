@@ -27,7 +27,7 @@ const sectionConfig: Record<string, { label: string; color: string }> = {
 
 // Editorial labels per version
 const versionLabels: Record<string, string> = {
-  '0.6.0': 'Private Beta & Voice',
+  '0.6.0': 'Voice & Open Install',
   '0.5.0': 'Auto-Breathe & Focus',
   '0.3.0': 'Session Intelligence',
   '0.2.1': 'Core Agent',

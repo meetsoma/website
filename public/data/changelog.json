@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-20T00:38:23Z",
+  "generated": "2026-03-20T01:05:59Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
@@ -7,19 +7,30 @@
       "date": "2026-03-19",
       "entries": {
         "added": [
-          "**Soma speaks** \u2014 Run `soma` and it talks to you \u2014 a different voice each time. Press `?` to ask about memory, heat, or anything else. Every answer is unique. No AI involved.",
+          "**Soma speaks** \u2014 Run `soma` and it talks to you. A different voice each time. Press `?` to ask about memory, heat, protocols, or anything else. Every answer is unique. No AI involved.",
           "**No compaction. Ever.** \u2014 Other agents compress your conversation when context fills up. Soma doesn't. It breathes \u2014 writes a surgical briefing with full context, then starts fresh at full capacity.",
           "**Open install** \u2014 Soma is now a lightweight launcher on npm. The runtime downloads automatically on first run.",
           "`soma` \u2014 Welcome experience with rotating daily concepts and interactive Q&A",
           "`soma init` \u2014 Install the Soma runtime",
-          "`soma about` \u2014 Learn how Soma works",
+          "`soma about` \u2014 Learn how Soma works (identity, protocols, muscles, breath cycle, scripts)",
           "`soma doctor` \u2014 Health check for your installation",
-          "`soma update` \u2014 Check for new versions",
-          "`soma status` \u2014 See your installation state"
+          "`soma update` \u2014 Check for new versions (CLI and core)",
+          "`soma status` \u2014 Show installation state, version, and core info",
+          "Typing animation \u2014 responses type out character by character with natural rhythm",
+          "22 Q&A topics covering concepts, practical questions, and meta-awareness",
+          "Smart command detection \u2014 post-install commands show helpful messages when runtime isn't installed"
         ],
         "changed": [
-          "License changed to BSL 1.1 \u2014 view the code, use it personally, contribute. Converts to MIT on 2027-09-18.",
-          "The npm package is now a lightweight launcher (~37KB, zero dependencies)."
+          "License: BSL 1.1 \u2014 view the code, use it personally, contribute. Converts to MIT on 2027-09-18.",
+          "npm package is now a lightweight launcher (~24KB, zero dependencies)",
+          "Runtime distributed separately as compiled package",
+          "Pi engine updated to 0.60.0"
+        ],
+        "fixed": [
+          "Muscle frontmatter validation enforced across all 33 active muscles",
+          "Protocol frontmatter integrity checks (merged line detection)",
+          "Focus heat scoring: `score \u00d7 2` reaches HOT tier correctly",
+          "MAP prompt-config merging for focused sessions"
         ]
       }
     },
@@ -37,10 +48,20 @@
           "`/pin` and `/kill` \u2014 Control what stays loaded and what fades",
           "`/scratch` \u2014 Quick notes that persist across sessions",
           "15 in-session commands total",
+          "10 bundled scripts (code navigation, search, reflection, plans)",
+          "16 bundled protocols with heat tracking",
+          "Recursive content discovery (subdirectory support for AMPS layers)",
+          "Global `~/.soma/` directory with shared identity and settings",
           "Self-growing memory with heat-based attention management",
           "Protocols, muscles, scripts, and automations (AMPS)",
           "Layered identity system (project \u2192 parent \u2192 global)",
-          "Recursive content discovery with subdirectory support"
+          "Focus engine with scored keyword matching"
+        ],
+        "fixed": [
+          "Auto-breathe race condition \u2014 deferred messaging via pending queue",
+          "System prompt dropped after turn 1 \u2014 cached prompt compilation",
+          "Identity lost after session rotation \u2014 chain rebuild on session switch",
+          "Context warnings never fired \u2014 graceful handling of undefined usage on turn 1"
         ]
       }
     },
@@ -49,9 +70,15 @@
       "date": "2026-03-10",
       "entries": {
         "added": [
-          "Auto-init on first run \u2014 Soma creates `.soma/` and detects your project automatically.",
-          "Session continuation \u2014 `/inhale` loads your last session's preload. `/breathe` saves and continues.",
-          "Context warnings at 50%, 70%, 80%. Auto-exhale at 85%."
+          "Auto-init on first `soma` run \u2014 creates `.soma/`, detects project stack",
+          "`/inhale` \u2014 load your last session's preload into the current conversation",
+          "`/breathe` \u2014 save state and rotate into a fresh session with preload",
+          "Context warnings at 50%, 70%, 80%. Auto-exhale at 85%",
+          "Extension scaffolding during init"
+        ],
+        "fixed": [
+          "`/breathe` crash \u2014 `ctx.newSession` not available in event handlers",
+          "Session rotation unified through `/inhale`"
         ]
       }
     },
@@ -60,8 +87,9 @@
       "date": "2026-03-09",
       "entries": {
         "added": [
-          "Built-in protocols and scripts ship with the package.",
-          "Heat system tracks what matters and fades what doesn't."
+          "9 core modules bundled (discovery, identity, heat, muscles, protocols, settings, preload, prompt, utils)",
+          "Built-in protocols and scripts ship with the package",
+          "Heat system tracks what matters and fades what doesn't"
         ]
       }
     },
@@ -70,7 +98,8 @@
       "date": "2026-03-08",
       "entries": {
         "added": [
-          "First release. `npm i -g meetsoma`."
+          "First release. `npm i -g meetsoma`.",
+          "Identity, memory, muscles, protocols, heat system."
         ]
       }
     }
