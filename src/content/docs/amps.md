@@ -80,3 +80,69 @@ The compiled runtime doesn't change. The `.soma/` directory grows around it.
 ├── memory/            ← sessions, preloads, ideas
 └── settings.json      ← configuration
 ```
+
+## Organising Your AMPS
+
+As your `.soma/` grows, you'll want structure. Every AMPS layer supports the same conventions:
+
+### Subdirectories
+
+Put related content into subdirectories. The agent discovers them automatically (up to 2 levels deep).
+
+```
+.soma/amps/muscles/
+├── css-theme-engine.md     ← general muscle
+├── vanilla-js-craft.md     ← general muscle
+├── ui/                     ← project-scoped subdirectory
+│   ├── physics-ui.md
+│   └── window-manager.md
+└── server/
+    └── rust-dev.md
+```
+
+This keeps your root clean while grouping related content. The agent sees all of them in its boot table.
+
+### Special Prefixes
+
+Two prefixes have special meaning:
+
+| Prefix | Effect | Use for |
+|--------|--------|---------|
+| `_` | **Invisible to the agent.** Not loaded at boot, not listed in the boot table. | Staging, archives, reference copies |
+| `.` | **Hidden.** Same as underscore. | System files |
+
+Anything else (including `internal/`, `ui/`, `custom/`) is **visible** — the agent discovers and loads content from these subdirectories normally.
+
+### Recommended Layout
+
+As your AMPS content grows, consider this organisation:
+
+```
+.soma/amps/protocols/
+├── *.md                ← your active protocols (agent loads these)
+├── internal/           ← workspace-specific (agent loads, but don't share)
+└── _archive/           ← retired protocols (invisible to agent)
+
+.soma/amps/muscles/
+├── *.md                ← your active muscles
+├── ui/                 ← domain-scoped (still loaded)
+├── internal/           ← workspace-specific
+└── _archive/           ← retired muscles
+
+.soma/amps/scripts/
+├── *.sh                ← your active scripts
+├── internal/           ← workspace-specific dev tools
+└── _archive/           ← retired scripts
+```
+
+**Key insight:** `internal/` is just a naming convention — the agent still loads content from it. Use it for things you don't want to accidentally share or publish. The `_archive/` prefix actually hides content from the agent, which is what you want for retired items.
+
+### What Happens at Scale
+
+After a few weeks of use, a typical `.soma/amps/` directory might have 20-50 items. After months, 100+. The organisation conventions keep it manageable:
+
+- **Root level:** Your most-used, general-purpose content. The agent loads these by [heat](/docs/heat-system) — hot items in full, warm items as summaries, cold items just listed.
+- **Subdirectories:** Project-specific or domain-specific content. Keeps the root clean while the agent still discovers everything.
+- **`_archive/`:** Content you've outgrown. The muscle about a framework you stopped using. The protocol from your old deploy flow. Still there if you need it, invisible to the agent.
+
+The heat system handles relevance (what loads). The directory structure handles organisation (what lives where). Together they keep a growing `.soma/` usable without manual curation.
