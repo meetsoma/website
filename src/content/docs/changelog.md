@@ -34,7 +34,7 @@ What's new in Soma. Full implementation details available to registered users.
 - License: BSL 1.1 — view the code, use it personally, contribute. Converts to MIT on 2027-09-18.
 - npm package is now a lightweight launcher (~24KB, zero dependencies)
 - Runtime distributed separately as compiled package
-- Pi engine updated to 0.60.0
+- Engine updated to 0.60.0 (improved session handling, bash executor, Bun support)
 
 ### Fixed
 
