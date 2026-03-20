@@ -1,8 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
-const title = "Beta Access — Soma";
-const description = "Request early access to Soma — the AI agent that grows with you.";
+const title = "Source Access — Soma";
+const description = "Soma is free to use. Register for source access to read the code, run the tests, and contribute.";
 ---
 
 <Layout title={title} description={description}>
@@ -116,30 +116,28 @@ const description = "Request early access to Soma — the AI agent that grows wi
 </style>
 
 <div class="beta-page">
-  <h1>Private Beta</h1>
-  <p class="subtitle">Early access to Soma — the AI agent that grows with you</p>
+  <h1>Source Access</h1>
+  <p class="subtitle">Use Soma free. Read the source. Help build what's next.</p>
 
   <div class="description">
     <p>
-      We're building an AI coding agent with real memory — identity that evolves,
-      patterns that crystallize through use, and tools the agent builds for itself.
-      Not RAG. Not vector search. Actual memory that changes how the agent works.
+      Soma is free to use. Run <code>npm install -g meetsoma</code> and you're in — no account needed, no gate. The compiled runtime is public.
     </p>
     <p>
-      Soma is entering private beta. We want thoughtful early users who'll push the system,
-      find the edges, and help shape what this becomes.
+      Source access is for people who want to go deeper — read the TypeScript, understand the architecture, contribute. Register below and we'll add you to the GitHub org.
     </p>
   </div>
 
   <div class="how-it-works" style="text-align: left; margin-bottom: var(--space-2xl); padding: var(--space-xl); border: 1px solid var(--border-subtle); border-radius: var(--space-lg); background: var(--bg-surface);">
+    <h3 style="font-size: var(--text-md); margin-bottom: var(--space-lg);">Already using Soma?</h3>
+    <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">You don't need source access to use Soma. <code>npm install -g meetsoma</code> gives you everything — the CLI, the runtime, all 18 protocols, 13 scripts. Source access is for reading and contributing to the code.</p>
     <h3 style="font-size: var(--text-md); margin-bottom: var(--space-lg);">How it works</h3>
     <ol style="line-height: 1.8; color: var(--text-muted); padding-left: var(--space-xl);">
       <li>Submit the form below with your GitHub username</li>
       <li>Your request is created as a GitHub issue — you'll get a tracking link</li>
       <li>We review your request (usually within 24 hours)</li>
-      <li>On approval, you're added to our beta testers team on GitHub</li>
-      <li>You get access to the private repo + install instructions</li>
-      <li>Install, use, break things, tell us what happened</li>
+      <li>On approval, you're added to the meetsoma GitHub org</li>
+      <li>You get read access to the source repos</li>
     </ol>
   </div>
 
@@ -275,24 +273,24 @@ const description = "Request early access to Soma — the AI agent that grows wi
   <div class="beta-tiers">
     <h3>Access Tiers</h3>
     <div class="tier">
-      <span class="tier-icon" style="color: var(--accent-bright); font-weight: 700;">β</span>
+      <span class="tier-icon" style="color: var(--accent-bright); font-weight: 700;">σ</span>
       <div>
-        <div class="tier-name">Beta Tester</div>
-        <div class="tier-desc">Compiled CLI + all protocols + scripts + documentation. Use Soma in your projects. Provide feedback.</div>
+        <div class="tier-name">User</div>
+        <div class="tier-desc">No registration needed. <code>npm install -g meetsoma</code> — compiled runtime, all protocols, scripts, documentation. Free.</div>
       </div>
     </div>
     <div class="tier">
       <span class="tier-icon" style="color: var(--accent-bright); font-weight: 700;">δ</span>
       <div>
         <div class="tier-name">Contributor</div>
-        <div class="tier-desc">Full source access + dev tools + direct line to the team. Help build the future of agent memory.</div>
+        <div class="tier-desc">Full source access. Read the TypeScript, run the tests, submit PRs. Register below.</div>
       </div>
     </div>
     <div class="tier">
-      <span class="tier-icon" style="color: var(--accent-bright); font-weight: 700;">σ</span>
+      <span class="tier-icon" style="color: var(--accent-bright); font-weight: 700;">★</span>
       <div>
-        <div class="tier-name">Early Sponsor</div>
-        <div class="tier-desc">Priority support + roadmap input + white-label rights. Build your business on Soma with confidence. Your logo on our site.</div>
+        <div class="tier-name">Sponsor</div>
+        <div class="tier-desc">Priority support + roadmap input + white-label licensing. Build your business on Soma. <a href="mailto:curtis@meetsoma.com" style="color: var(--accent-bright);">Get in touch</a>.</div>
       </div>
     </div>
   </div>
