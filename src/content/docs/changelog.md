@@ -13,35 +13,34 @@ What's new in Soma. Full implementation details available to registered users.
 
 ### Highlights
 
-- **Soma speaks** — Run `soma` and it talks to you. A different voice each time. Press `?` to ask about memory, heat, protocols, or anything else. Every answer is unique. No AI involved.
-- **No compaction. Ever.** — Other agents compress your conversation when context fills up. Soma doesn't. It breathes — writes a surgical briefing with full context, then starts fresh at full capacity.
-- **Open install** — Soma is now a lightweight launcher on npm. The runtime downloads automatically on first run.
+- **New install experience** — `npm i -g meetsoma` installs a lightweight launcher. Run `soma` and it introduces itself — rotating concepts, interactive Q&A, typing animation. The runtime downloads automatically when you're ready.
+- **Source-available** — Soma is now distributed under BSL 1.1. The compiled runtime is public. Source code available to registered contributors.
 
-### Added
+### CLI (the launcher — before the agent starts)
 
-- `soma` — Welcome experience with rotating daily concepts and interactive Q&A
-- `soma init` — Install the Soma runtime
-- `soma about` — Learn how Soma works (identity, protocols, muscles, breath cycle, scripts)
-- `soma doctor` — Health check for your installation
-- `soma update` — Check for new versions (CLI and core)
-- `soma status` — Show installation state, version, and core info
-- Typing animation — responses type out character by character with natural rhythm
-- 22 Q&A topics covering concepts, practical questions, and meta-awareness
-- Smart command detection — post-install commands show helpful messages when runtime isn't installed
+- `soma` — Welcome experience with rotating daily concepts and interactive Q&A. Press `?` to ask about memory, heat, protocols, or how Soma compares to other tools. Every answer is different.
+- `soma init` — Downloads and installs the Soma runtime. Checks for git, handles updates.
+- `soma about` — How Soma works — identity, protocols, muscles, breath cycle, scripts
+- `soma doctor` — Health check (Node.js, runtime, extensions, API key, git)
+- `soma update` — Check for CLI and runtime updates
+- `soma status` — Installation state, version, core info
+- Typing animation — responses type out with natural rhythm (pace drift, sentence pauses)
+- 22 Q&A topics covering concepts, practical how-to, and meta-awareness
+- Smart command detection — `soma focus` before install shows "requires runtime"
+
+### Agent (the session — after .soma/ exists)
+
+- Focus heat scoring fixed — `score × 2` reaches HOT tier correctly
+- MAP prompt-config merging for focused sessions
+- User extensions in `.soma/extensions/` now discovered alongside compiled runtime
+- Engine updated to 0.60.0
 
 ### Changed
 
 - License: BSL 1.1 — view the code, use it personally, contribute. Converts to MIT on 2027-09-18.
-- npm package is now a lightweight launcher (~24KB, zero dependencies)
-- Runtime distributed separately as compiled package
-- Engine updated to 0.60.0 (improved session handling, bash executor, Bun support)
-
-### Fixed
-
-- Muscle frontmatter validation enforced across all 33 active muscles
-- Protocol frontmatter integrity checks (merged line detection)
-- Focus heat scoring: `score × 2` reaches HOT tier correctly
-- MAP prompt-config merging for focused sessions
+- npm package: lightweight launcher (~24KB, zero dependencies). Runtime separate.
+- 33 active muscles: all now have `triggers` and `applies-to` fields
+- Protocol frontmatter integrity enforced (merged line detection)
 
 ---
 
