@@ -1,298 +1,465 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Icon from '../../components/icons/SomaIcons.astro';
 
 const title = "Source Access — Soma";
 const description = "Soma is free to use. Register for source access to read the code, run the tests, and contribute.";
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} canonicalUrl="https://soma.gravicity.ai/beta">
+  <main class="container">
+    <header class="hero">
+      <Breadcrumbs items={[{ label: 'Source Access', href: '/beta' }]} />
+      <h1 class="title">Source Access</h1>
+      <p class="subtitle">Use Soma free. Read the source. Help build what's next.</p>
+    </header>
+
+    <!-- Install CTA -->
+    <section class="section">
+      <div class="install-card">
+        <div class="install-left">
+          <h2>Start using Soma now</h2>
+          <p>No registration needed. The compiled runtime is free and open.</p>
+        </div>
+        <div class="install-right">
+          <code>npm install -g meetsoma</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why register -->
+    <section class="section">
+      <SectionHeader title="Why register?" />
+      <p class="section-desc">
+        You don't need source access to use Soma. <code>npm install -g meetsoma</code> gives you everything — the CLI, the runtime, all protocols, all scripts. Source access is for reading the TypeScript, running the tests, and contributing to the project.
+      </p>
+    </section>
+
+    <!-- Tiers -->
+    <section class="section">
+      <SectionHeader title="Access Tiers" />
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-head">
+            <span class="tier-icon"><Icon name="sigma" size={22} /></span>
+            <h3 class="tier-name">User</h3>
+            <span class="tier-badge free">Free</span>
+          </div>
+          <p class="tier-desc">Compiled runtime, 18 protocols, 13 scripts, full documentation. No registration. Just install and go.</p>
+        </div>
+        <div class="tier-card">
+          <div class="tier-head">
+            <span class="tier-icon"><Icon name="extensions" size={22} /></span>
+            <h3 class="tier-name">Contributor</h3>
+            <span class="tier-badge contributor">Register</span>
+          </div>
+          <p class="tier-desc">Full source access. Read the TypeScript, run the tests, submit PRs. Fill out the form below.</p>
+        </div>
+        <div class="tier-card">
+          <div class="tier-head">
+            <span class="tier-icon"><Icon name="shield" size={22} /></span>
+            <h3 class="tier-name">Sponsor</h3>
+            <span class="tier-badge sponsor">Contact</span>
+          </div>
+          <p class="tier-desc">Priority support, roadmap input, white-label licensing. <a href="mailto:curtis@meetsoma.com">Get in touch</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <section class="section">
+      <SectionHeader title="Request Source Access" />
+      <div class="form-card">
+        <form id="beta-form" onsubmit="return handleSubmit(event)">
+          <div class="form-field">
+            <label for="github">GitHub Username *</label>
+            <div style="position: relative;">
+              <input type="text" id="github" name="github" required placeholder="your-username" autocomplete="off" />
+              <span id="gh-check" style="position: absolute; right: var(--space-lg); top: 50%; transform: translateY(-50%); font-size: var(--text-sm);"></span>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="you@example.com" />
+          </div>
+          <div class="form-field">
+            <label for="interest">What interests you about Soma?</label>
+            <select id="interest" name="interest">
+              <option value="">Select...</option>
+              <option value="memory">Agent memory across sessions</option>
+              <option value="protocols">Protocol and muscle system</option>
+              <option value="tools">Self-building tools (scripts, MAPs)</option>
+              <option value="contribute">Contributing to the project</option>
+              <option value="sponsor">Sponsorship or partnership</option>
+              <option value="whitelabel">White-labelling for my business</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="context">What are you building? (optional)</label>
+            <textarea id="context" name="context" placeholder="Brief description of your project or use case..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn" id="submit-btn">Request Source Access</button>
+          <p id="form-status" style="margin-top: var(--space-lg); text-align: center; display: none;"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section">
+      <SectionHeader title="How it works" />
+      <ol class="steps-list">
+        <li>Submit the form with your GitHub username</li>
+        <li>Your request is created as a GitHub issue — you'll get a tracking link</li>
+        <li>We review your request (usually within 24 hours)</li>
+        <li>On approval, you're added to the meetsoma GitHub org</li>
+        <li>You get read access to the source repos</li>
+      </ol>
+    </section>
+  </main>
+</Layout>
+
 <style>
-  .beta-page {
-    max-width: var(--content-wide, 610px);
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 890px;
     margin: 0 auto;
-    padding: var(--space-4xl) var(--space-xl);
+    padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
+    min-height: 100vh;
+  }
+
+  .hero {
     text-align: center;
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out;
   }
-  .beta-page h1 {
-    font-size: var(--text-3xl);
-    margin-bottom: var(--space-md);
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(21px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  .beta-page .subtitle {
-    color: var(--text-muted);
+
+  .title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 2.625rem);
+    font-weight: 700;
+    margin: var(--space-md) 0;
+    background: linear-gradient(135deg, var(--hero-title-start) 0%, var(--hero-title-end) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-family: var(--font-body);
     font-size: var(--text-lg);
-    margin-bottom: var(--space-2xl);
+    color: var(--text-secondary);
+    max-width: 34rem;
+    margin: var(--space-md) auto 0;
+    line-height: var(--leading-relaxed);
   }
-  .beta-page .description {
-    text-align: left;
-    line-height: 1.7;
+
+  .section {
+    margin-bottom: var(--section-gap);
+  }
+
+  .section-desc {
+    font-family: var(--font-body);
     font-size: var(--body-text);
-    margin-bottom: var(--space-2xl);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 38rem;
   }
-  .beta-page .description p {
+
+  .section-desc code {
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    color: var(--accent-bright);
+    background: var(--surface-interactive);
+    padding: 2px var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  /* ── Install CTA ── */
+  .install-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-accent);
+    background: linear-gradient(135deg, var(--surface-card) 0%, rgba(104, 152, 190, 0.04) 100%);
+  }
+
+  .install-left h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .install-left p {
+    font-size: var(--body-secondary);
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .install-right code {
+    font-family: var(--font-mono);
+    font-size: var(--body-text);
+    color: var(--accent-bright);
+    background: var(--surface-interactive);
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+  }
+
+  /* ── Tier Grid ── */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+  }
+
+  .tier-card {
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    transition: all 0.25s ease;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .tier-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 13px 34px var(--shadow-accent-soft);
+  }
+
+  .tier-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
     margin-bottom: var(--space-lg);
   }
-  .beta-form {
-    text-align: left;
-    background: var(--bg-elevated);
+
+  .tier-icon {
+    display: flex;
+    align-items: center;
+    color: var(--accent-bright);
+  }
+
+  .tier-name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+    margin: 0;
+  }
+
+  .tier-badge {
+    font-family: var(--font-mono);
+    font-size: var(--badge-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    border: 1px solid;
+  }
+
+  .tier-badge.free { color: var(--success); border-color: var(--success); }
+  .tier-badge.contributor { color: var(--accent-bright); border-color: var(--accent-bright); }
+  .tier-badge.sponsor { color: var(--warm-bright); border-color: var(--warm-bright); }
+
+  .tier-desc {
+    font-size: var(--body-secondary);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  .tier-desc a {
+    color: var(--accent-bright);
+    text-decoration: none;
+  }
+
+  .tier-desc a:hover { text-decoration: underline; }
+
+  /* ── Form ── */
+  .form-card {
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--space-lg);
-    padding: var(--space-2xl);
-    margin-bottom: var(--space-2xl);
+    background: var(--surface-card);
   }
-  .beta-form h2 {
-    font-size: var(--text-xl);
-    margin-bottom: var(--space-xl);
-  }
+
   .form-field {
     margin-bottom: var(--space-xl);
   }
+
   .form-field label {
     display: block;
+    font-family: var(--font-body);
     font-size: var(--label-text);
     color: var(--text-muted);
     margin-bottom: var(--space-sm);
   }
-  .form-field input, .form-field select, .form-field textarea {
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
     width: 100%;
     padding: var(--space-md) var(--space-lg);
-    background: var(--bg-surface);
+    background: var(--surface-interactive);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--space-md);
+    border-radius: var(--radius-md);
     color: var(--text-primary);
     font-size: var(--body-text);
     font-family: inherit;
+    transition: border-color 0.15s ease;
   }
+
   .form-field textarea {
     min-height: 80px;
     resize: vertical;
   }
-  .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
     outline: none;
     border-color: var(--accent-bright);
   }
+
   .submit-btn {
     width: 100%;
     padding: var(--space-lg);
     background: var(--accent-mid);
     color: var(--text-primary);
     border: none;
-    border-radius: var(--space-md);
+    border-radius: var(--radius-md);
     font-size: var(--body-text);
+    font-family: var(--font-display);
+    font-weight: 600;
     cursor: pointer;
-    font-family: inherit;
     transition: opacity 0.2s;
   }
-  .submit-btn:hover {
-    opacity: 0.85;
+
+  .submit-btn:hover { opacity: 0.85; }
+
+  /* ── Steps ── */
+  .steps-list {
+    padding-left: var(--space-xl);
+    color: var(--text-secondary);
+    line-height: 2;
+    font-size: var(--body-text);
   }
-  .beta-tiers {
-    text-align: left;
-    margin-top: var(--space-2xl);
-  }
-  .beta-tiers h3 {
-    font-size: var(--text-md);
-    margin-bottom: var(--space-lg);
-  }
-  .tier {
-    display: flex;
-    gap: var(--space-lg);
-    padding: var(--space-lg);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--space-md);
-    margin-bottom: var(--space-lg);
-  }
-  .tier-icon {
-    font-size: var(--text-2xl);
-    flex-shrink: 0;
-  }
-  .tier-name {
+
+  .steps-list li::marker {
+    color: var(--accent-bright);
     font-weight: 600;
-    margin-bottom: var(--space-xs);
   }
-  .tier-desc {
-    font-size: var(--body-secondary);
-    color: var(--text-muted);
+
+  @media (max-width: 768px) {
+    .tier-grid { grid-template-columns: 1fr; }
+    .install-card { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: var(--space-2xl) var(--space-lg) var(--space-xl); }
   }
 </style>
 
-<div class="beta-page">
-  <h1>Source Access</h1>
-  <p class="subtitle">Use Soma free. Read the source. Help build what's next.</p>
+<script>
+  // GitHub username validation
+  let ghTimer = null;
+  let ghValid = false;
+  const ghInput = document.getElementById('github');
+  const ghCheck = document.getElementById('gh-check');
 
-  <div class="description">
-    <p>
-      Soma is free to use. Run <code>npm install -g meetsoma</code> and you're in — no account needed, no gate. The compiled runtime is public.
-    </p>
-    <p>
-      Source access is for people who want to go deeper — read the TypeScript, understand the architecture, contribute. Register below and we'll add you to the GitHub org.
-    </p>
-  </div>
+  ghInput.addEventListener('input', () => {
+    clearTimeout(ghTimer);
+    const val = ghInput.value.trim();
+    ghValid = false;
 
-  <div class="how-it-works" style="text-align: left; margin-bottom: var(--space-2xl); padding: var(--space-xl); border: 1px solid var(--border-subtle); border-radius: var(--space-lg); background: var(--bg-surface);">
-    <h3 style="font-size: var(--text-md); margin-bottom: var(--space-lg);">Already using Soma?</h3>
-    <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">You don't need source access to use Soma. <code>npm install -g meetsoma</code> gives you everything — the CLI, the runtime, all 18 protocols, 13 scripts. Source access is for reading and contributing to the code.</p>
-    <h3 style="font-size: var(--text-md); margin-bottom: var(--space-lg);">How it works</h3>
-    <ol style="line-height: 1.8; color: var(--text-muted); padding-left: var(--space-xl);">
-      <li>Submit the form below with your GitHub username</li>
-      <li>Your request is created as a GitHub issue — you'll get a tracking link</li>
-      <li>We review your request (usually within 24 hours)</li>
-      <li>On approval, you're added to the meetsoma GitHub org</li>
-      <li>You get read access to the source repos</li>
-    </ol>
-  </div>
+    if (!val) { ghCheck.textContent = ''; return; }
+    if (!/^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/.test(val)) {
+      ghCheck.textContent = '✗';
+      ghCheck.style.color = '#f87171';
+      return;
+    }
 
-  <div class="beta-form">
-    <h2>Request Access</h2>
-    <form id="beta-form" onsubmit="return handleSubmit(event)">
-      <div class="form-field">
-        <label for="github">GitHub Username *</label>
-        <div style="position: relative;">
-          <input type="text" id="github" name="github" required placeholder="your-username" autocomplete="off" />
-          <span id="gh-check" style="position: absolute; right: var(--space-lg); top: 50%; transform: translateY(-50%); font-size: var(--text-sm);"></span>
-        </div>
-      </div>
-      <div class="form-field">
-        <label for="email">Email *</label>
-        <input type="email" id="email" name="email" required placeholder="you@example.com" />
-      </div>
-      <div class="form-field">
-        <label for="interest">What interests you about Soma?</label>
-        <select id="interest" name="interest">
-          <option value="">Select...</option>
-          <option value="memory">Agent memory across sessions</option>
-          <option value="protocols">Protocol and muscle system</option>
-          <option value="tools">Self-building tools (scripts, MAPs)</option>
-          <option value="multi-agent">Multi-agent orchestration</option>
-          <option value="contribute">Contributing to the project</option>
-          <option value="sponsor">Sponsorship or partnership</option>
-          <option value="whitelabel">White-labelling for my business</option>
-          <option value="other">Something else</option>
-        </select>
-      </div>
-      <div class="form-field">
-        <label for="context">What are you building? (optional)</label>
-        <textarea id="context" name="context" placeholder="Brief description of your project or use case..."></textarea>
-      </div>
-      <button type="submit" class="submit-btn" id="submit-btn">Request Early Access</button>
-      <p id="form-status" style="margin-top: 1rem; text-align: center; display: none;"></p>
-    </form>
-    <script>
-      // GitHub username validation — debounced, checks API
-      let ghTimer = null;
-      let ghValid = false;
-      const ghInput = document.getElementById('github');
-      const ghCheck = document.getElementById('gh-check');
+    ghCheck.textContent = '...';
+    ghCheck.style.color = 'var(--text-muted)';
 
-      ghInput.addEventListener('input', () => {
-        clearTimeout(ghTimer);
-        const val = ghInput.value.trim();
-        ghValid = false;
+    ghTimer = setTimeout(() => {
+      const img = new Image();
+      img.onload = () => {
+        ghCheck.innerHTML = `<img src="${img.src}" width="20" height="20" style="border-radius:50%;vertical-align:middle;margin-right:4px" /> ✓`;
+        ghCheck.style.color = '#4ade80';
+        ghValid = true;
+      };
+      img.onerror = () => {
+        ghCheck.textContent = '✗ not found';
+        ghCheck.style.color = '#f87171';
+      };
+      img.src = `https://github.com/${val}.png?size=40`;
+    }, 400);
+  });
 
-        if (!val) {
-          ghCheck.textContent = '';
-          return;
-        }
-        if (!/^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/.test(val)) {
-          ghCheck.textContent = '✗';
-          ghCheck.style.color = '#f87171';
-          return;
-        }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    const status = document.getElementById('form-status');
+    const form = document.getElementById('beta-form');
 
-        ghCheck.textContent = '...';
-        ghCheck.style.color = 'var(--text-muted)';
+    if (!ghValid) {
+      status.style.display = 'block';
+      status.textContent = '✗ Please enter a valid GitHub username';
+      status.style.color = '#f87171';
+      return false;
+    }
 
-        ghTimer = setTimeout(() => {
-          // No API calls — just load the avatar image. If it loads, user exists.
-          const img = new Image();
-          img.onload = () => {
-            ghCheck.innerHTML = `<img src="${img.src}" width="20" height="20" style="border-radius:50%;vertical-align:middle;margin-right:4px" /> ✓`;
-            ghCheck.style.color = '#4ade80';
-            ghValid = true;
-          };
-          img.onerror = () => {
-            ghCheck.textContent = '✗ not found';
-            ghCheck.style.color = '#f87171';
-          };
-          img.src = `https://github.com/${val}.png?size=40`;
-        }, 400);
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+    status.style.display = 'none';
+    try {
+      const res = await fetch('/api/beta-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          github: form.github.value,
+          email: form.email.value,
+          interest: form.interest.value,
+          context: form.context.value,
+        }),
       });
-
-      async function handleSubmit(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submit-btn');
-        const status = document.getElementById('form-status');
-        const form = document.getElementById('beta-form');
-
-        if (!ghValid) {
-          status.style.display = 'block';
-          status.textContent = '✗ Please enter a valid GitHub username';
-          status.style.color = '#f87171';
-          return false;
-        }
-
-        btn.disabled = true;
-        btn.textContent = 'Submitting...';
-        status.style.display = 'none';
-        try {
-          const res = await fetch('/api/beta-signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              github: form.github.value,
-              email: form.email.value,
-              interest: form.interest.value,
-              context: form.context.value,
-            }),
-          });
-          const data = await res.json();
-          status.style.display = 'block';
-          if (data.success) {
-            if (data.issueUrl) {
-              status.innerHTML = '✓ ' + data.message + '<br><a href="' + data.issueUrl + '" target="_blank" rel="noopener" style="color: var(--accent-bright); text-decoration: underline;">Track your request →</a>';
-            } else {
-              status.textContent = '✓ ' + data.message;
-            }
-            status.style.color = '#4ade80';
-            form.reset();
-          } else {
-            status.textContent = '✗ ' + (data.error || 'Something went wrong');
-            status.style.color = '#f87171';
-          }
-        } catch (err) {
-          status.style.display = 'block';
-          status.textContent = '✗ Network error. Please try again.';
-          status.style.color = '#f87171';
-        }
-        btn.disabled = false;
-        btn.textContent = 'Request Early Access';
-        return false;
+      const data = await res.json();
+      status.style.display = 'block';
+      if (data.success) {
+        status.innerHTML = data.issueUrl
+          ? '✓ ' + data.message + '<br><a href="' + data.issueUrl + '" target="_blank" rel="noopener" style="color: var(--accent-bright); text-decoration: underline;">Track your request →</a>'
+          : '✓ ' + data.message;
+        status.style.color = '#4ade80';
+        form.reset();
+      } else {
+        status.textContent = '✗ ' + (data.error || 'Something went wrong');
+        status.style.color = '#f87171';
       }
-    </script>
-  </div>
-
-  <div class="beta-tiers">
-    <h3>Access Tiers</h3>
-    <div class="tier">
-      <span class="tier-icon" style="color: var(--accent-bright); font-weight: 700;">σ</span>
-      <div>
-        <div class="tier-name">User</div>
-        <div class="tier-desc">No registration needed. <code>npm install -g meetsoma</code> — compiled runtime, all protocols, scripts, documentation. Free.</div>
-      </div>
-    </div>
-    <div class="tier">
-      <span class="tier-icon" style="color: var(--accent-bright); font-weight: 700;">δ</span>
-      <div>
-        <div class="tier-name">Contributor</div>
-        <div class="tier-desc">Full source access. Read the TypeScript, run the tests, submit PRs. Register below.</div>
-      </div>
-    </div>
-    <div class="tier">
-      <span class="tier-icon" style="color: var(--accent-bright); font-weight: 700;">★</span>
-      <div>
-        <div class="tier-name">Sponsor</div>
-        <div class="tier-desc">Priority support + roadmap input + white-label licensing. Build your business on Soma. <a href="mailto:curtis@meetsoma.com" style="color: var(--accent-bright);">Get in touch</a>.</div>
-      </div>
-    </div>
-  </div>
-</div>
+    } catch {
+      status.style.display = 'block';
+      status.textContent = '✗ Network error. Please try again.';
+      status.style.color = '#f87171';
+    }
+    btn.disabled = false;
+    btn.textContent = 'Request Source Access';
+    return false;
+  }
+</script>
 </Layout>
