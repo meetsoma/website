@@ -1,10 +1,4 @@
----
-title: "Protocols & Heat"
-description: "Behavioral rules, heat system, domain scoping, writing your own."
-section: "Core Concepts"
-order: 3
----
-
+# Protocols
 
 <!-- tldr -->
 Behavioral rules in `.soma/amps/protocols/` as markdown with YAML frontmatter. Loaded by heat: hot (≥8) = full body, warm (≥3) = breadcrumb, cold = name only. Heat rises on use (+1 auto-detect), decays per session if unused. Domain scoping via `applies-to` field. Write your own: add `name`, `heat-default`, `breadcrumb`, `applies-to` frontmatter. Configure thresholds in `settings.json`.
@@ -14,12 +8,26 @@ Protocols are behavioral rules that guide Soma's actions. They live in `.soma/am
 
 ## Built-in Protocols
 
-| Protocol | Default Heat | Applies To | What It Does |
-|----------|-------------|-----------|-------------|
-| `breath-cycle` | hot | always | Sessions have phases: inhale, hold, exhale. Never skip exhale. |
-| `frontmatter-standard` | warm | always | All `.md` files get YAML frontmatter with type, status, dates. |
-| `git-identity` | warm | git | Commits use the correct name/email for the repo context. |
-| `heat-tracking` | hot | always | Protocols and muscles have temperature that rises on use and decays. |
+Soma ships with 16 protocols, scaffolded on `soma init`:
+
+| Protocol | Default Heat | What It Does |
+|----------|-------------|-------------|
+| `breath-cycle` | hot | Sessions have phases: inhale, hold, exhale. Never skip exhale. |
+| `correction-capture` | warm | When corrected: acknowledge, don't justify. Second time → muscle. |
+| `detection-triggers` | warm | When to capture patterns, preferences, and knowledge gaps. |
+| `frontmatter-standard` | warm | All `.md` files get YAML frontmatter with type, status, dates. |
+| `git-identity` | warm | Commits use the correct name/email for the repo context. |
+| `heat-tracking` | hot | Protocols and muscles have temperature that rises on use and decays. |
+| `maps` | warm | Check for MAPs before tasks. Build MAPs after repeated processes. |
+| `pattern-evolution` | warm | Skills → Muscles → Protocols → Automations. Born from friction. |
+| `plan-hygiene` | warm | Plans rot. Track status, remaining, budget ≤12 active. |
+| `pre-flight` | warm | Check what exists before building. Prevent duplication. |
+| `quality-standards` | warm | Clean commits, close the loop, tests match shipped code. |
+| `response-style` | warm | Voice, length, emoji, format preferences. |
+| `session-checkpoints` | warm | Session logs capture what happened AND what was noticed. |
+| `task-tracking` | warm | One board. Move cards in real time. Verify on exhale. |
+| `tool-discipline` | warm | Scripts first, then raw commands. Build tools for yourself. |
+| `working-style` | warm | Read before write. Verify before claiming. |
 
 ## Heat System
 

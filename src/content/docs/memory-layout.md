@@ -1,10 +1,4 @@
----
-title: "Memory Layout"
-description: "Project vs user level storage, git strategy, data flow."
-section: "Core Concepts"
-order: 4
----
-
+# Memory Layout
 
 <!-- tldr -->
 Core structure: `.soma/` has five parts — `amps/` (Automations, Muscles, Protocols, Scripts), `memory/` (sessions, preloads), `projects/` (per-project context), `skills/` (Pi-native knowledge sets), and root files (identity.md, settings.json, state.json). AMPS is the content system — what Soma learns and how it behaves. Memory is temporal state. Skills route through Pi's native discovery. Projects hold per-project specs and notes. User-level `~/.soma/agent/` holds global settings and runtime.
@@ -24,16 +18,19 @@ Lives in your project root.
 │
 ├── amps/                    ← the AMPS content system
 │   ├── automations/         ← triggered actions (heat-tracked)
+│   │   └── maps/            ← MAPs — workflow templates (usage-tracked)
 │   ├── muscles/             ← learned patterns (heat-tracked)
 │   ├── protocols/           ← behavioral rules (heat-tracked)
-│   └── scripts/             ← developer tools
+│   └── scripts/             ← developer tools (usage-tracked via state.json)
 │
 ├── memory/                  ← temporal state
 │   ├── preloads/            ← session continuations
 │   └── sessions/            ← per-session work logs
 │
+├── knowledge/               ← scraped docs (from soma-scrape.sh)
 ├── projects/                ← per-project specs, plans, notes
 │
+├── .boot-target             ← focus/MAP targeting signal (consumed on boot)
 └── skills/                  ← knowledge sets (Pi-native SKILL.md format)
 ```
 
@@ -42,6 +39,19 @@ Extensions (`.soma/extensions/`) are optional — advanced TypeScript runtime ho
 ### AMPS — The Content System
 
 **A**utomations, **M**uscles, **P**rotocols, **S**cripts — four layers that give Soma learned behavior. All live under `amps/`, all are heat-tracked (except scripts), all discovered at boot. See [How It Works](/docs/how-it-works) for the boot sequence.
+
+Discovery is recursive — you can organize content into subdirectories:
+
+```
+amps/muscles/
+├── my-muscle.md           ← discovered
+├── ui/
+│   └── glass-theme.md     ← discovered (subdirectory)
+└── _archive/
+    └── old-muscle.md      ← NOT discovered (underscore prefix)
+```
+
+Directories starting with `_` or `.` are skipped. Max depth: 2 levels.
 
 | Layer | What | Format | Heat-tracked |
 |-------|------|--------|-------------|
@@ -103,7 +113,7 @@ Fresh session (soma):
     7. git-context — inject recent commits + changed files
   → inject all into system prompt
 
-Continue session (soma inhale):
+Continue session (soma -c):
   → same as above, plus:
   → step 2 loads most recent preload from .soma/memory/preloads/
 
@@ -111,7 +121,7 @@ Breathe (/breathe or auto at configurable threshold):
   → agent writes preload to .soma/memory/preloads/preload-next-<date>-<id>.md
   → save protocol + muscle heat state (with decay for unused)
   → agent commits work
-  → auto-continues into fresh session
+  → rotates into fresh session
 
 Exhale (/exhale):
   → same save as breathe, but session ends

@@ -1,10 +1,4 @@
----
-title: "Configuration"
-description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior."
-section: "Reference"
-order: 6
----
-
+# Configuration
 
 <!-- tldr -->
 `settings.json` at any level in the soma chain (project → parent → global). Project overrides parent overrides global. Controls: heat thresholds, muscle budgets, boot steps (including git-context), context warning thresholds, preload staleness, auto-detection, parent-child inheritance, persona, system prompt toggles, guard rules. Only set what you want to change — defaults fill the rest.
@@ -68,6 +62,7 @@ Settings files can exist at any level in the Soma chain:
     "tokenBudget": 2000,
     "maxFull": 2,
     "maxDigest": 8,
+    "maxLoaded": 10,
     "fullThreshold": 5,
     "digestThreshold": 1
   },
@@ -75,6 +70,7 @@ Settings files can exist at any level in the Soma chain:
     "tokenBudget": 1500,
     "maxFull": 1,
     "maxDigest": 3,
+    "maxLoaded": 5,
     "fullThreshold": 5,
     "digestThreshold": 1
   },
@@ -97,7 +93,7 @@ Settings files can exist at any level in the Soma chain:
     "auto": false,
     "triggerAt": 50,
     "rotateAt": 70,
-    "graceTurns": 2
+    "graceSeconds": 30
   },
   "context": {
     "notifyAt": 50,
@@ -274,10 +270,11 @@ See [Heat System](heat-system.md) for the full explanation.
 | `tokenBudget` | `2000` | Total estimated tokens for all loaded muscles |
 | `maxFull` | `2` | Maximum muscles loaded with full body text |
 | `maxDigest` | `8` | Maximum muscles loaded with digest/TL;DR only |
+| `maxLoaded` | `10` | Maximum total muscles loaded (hot + warm combined). `0` = unlimited |
 | `fullThreshold` | `5` | Heat needed to load a muscle in full |
 | `digestThreshold` | `1` | Heat needed to load a muscle as digest |
 
-**Why adjust:** If your agent frequently says "I don't remember how to do X" for things you've written muscles about, increase `tokenBudget` or `maxFull`. If boot messages are too long, decrease them. The digest system (via `<!-- digest:start -->` markers) is the best compromise — compact summaries that give the agent enough to know when to read the full muscle.
+**Why adjust:** If your agent frequently says "I don't remember how to do X" for things you've written muscles about, increase `tokenBudget` or `maxFull`. If boot messages are too long, decrease `maxLoaded` to cap total loaded muscles — unloaded muscles appear as a summary with guidance to `ls .soma/amps/muscles/` and `/pin <name>`. The digest system (via `<!-- digest:start -->` markers) is the best compromise — compact summaries that give the agent enough to know when to read the full muscle.
 
 See [Muscles](muscles.md) for writing muscles and the digest system.
 
@@ -288,6 +285,7 @@ See [Muscles](muscles.md) for writing muscles and the digest system.
 | `tokenBudget` | `1500` | Total estimated tokens for all loaded automations |
 | `maxFull` | `1` | Maximum automations loaded with full body text |
 | `maxDigest` | `3` | Maximum automations loaded with digest only |
+| `maxLoaded` | `5` | Maximum total automations loaded (hot + warm combined). `0` = unlimited |
 | `fullThreshold` | `5` | Heat needed to load an automation in full |
 | `digestThreshold` | `1` | Heat needed to load an automation as digest |
 
@@ -396,7 +394,7 @@ Proactive context management. Instead of waiting until context is critical, auto
 | `auto` | `false` | Enable auto-breathe mode |
 | `triggerAt` | `50` | Context % to send a gentle notice (agent keeps working, just stays aware) |
 | `rotateAt` | `70` | Context % to write preload and start countdown to rotation |
-| `graceTurns` | `2` | Turns to wait after preload before rotating — user messages reset the countdown |
+| `graceSeconds` | `30` | Seconds to wait for preload before timing out — time-based, not turn-based |
 
 **How the phases work:**
 
@@ -404,13 +402,13 @@ Proactive context management. Instead of waiting until context is critical, auto
 |-------|-----------|-------------|
 | Notice | `triggerAt` (50%) | Gentle heads-up. Agent keeps working. "Consider updating logs as you go." |
 | Rotate | `rotateAt` (70%) | Firm wrap-up. Agent writes preload, countdown starts. |
-| Grace period | (after preload) | Countdown of `graceTurns` turns. User messages pause and reset the countdown. Agent addresses the user, then countdown restarts. |
+| Grace period | (after rotate) | `graceSeconds` (default 30s) timer. Agent writes session log + preload within this window. If preload detected, rotation happens immediately. |
 | Rotation | (countdown = 0) | Session rotates to fresh context with preload auto-injected. |
 | Emergency | 85% (always on) | Safety net. Fires regardless of auto-breathe setting. "Stop all work, preload NOW." |
 
 The key insight: the notice at 50% is *not* a shutdown signal. It's awareness. The agent should keep working on its current task — it just knows rotation is ahead and can start logging work incrementally.
 
-**The grace period:** After the preload is written, rotation doesn't happen instantly. Instead, a countdown starts (`graceTurns`, default 2). If you send a message during the countdown, it **pauses** — the agent addresses your concern, then the countdown restarts. This means you're never cut off mid-thought. You can keep working while aware the session is about to rotate.
+**The grace period:** After rotation is triggered, the agent has `graceSeconds` (default 30) to write a preload. This is time-based, not turn-based — the agent can make as many tool calls as needed within the window. As soon as the preload file is detected, rotation happens immediately. If the timer expires without a preload, breathe times out and the user can retry with `/breathe`.
 
 **Why enable auto-breathe:** Without it, sessions run until the 85% emergency — which is too late for a clean handoff. Auto-breathe produces better preloads because the agent has time to write them thoughtfully instead of in a panic.
 
@@ -628,4 +626,47 @@ Weekly sessions, big context, late warnings:
     }
   }
 }
+```
+
+### Custom Content Paths
+
+If you use a different directory layout (e.g., `protocols/` instead of `amps/protocols/`):
+
+```json
+{
+  "paths": {
+    "muscles": "amps/muscles",
+    "protocols": "amps/protocols",
+    "scripts": "amps/scripts",
+    "automations": "amps/automations",
+    "preloads": "memory/preloads",
+    "identity": "identity.md"
+  }
+}
+```
+
+All paths are relative to the `.soma/` root. Change these if you're migrating from an older layout or prefer a different structure.
+
+### Script Discovery
+
+Configure which file extensions are discovered as scripts:
+
+```json
+{
+  "scripts": {
+    "extensions": [".sh", ".py", ".ts", ".js", ".mjs"]
+  }
+}
+```
+
+## Global Config (~/.soma/)
+
+Soma creates a global workspace at `~/.soma/` on first boot. This provides:
+
+- **Global identity** — your name and preferences across all projects
+- **Global scripts** — tools available everywhere (bundled scripts are seeded here)
+- **Global protocols** — rules that apply to all projects
+- **Global muscles** — personal patterns you've learned
+
+Project-level `.soma/` inherits from `~/.soma/` automatically (controlled by `inherit` settings). Override any global setting at the project level.
 ```

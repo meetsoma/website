@@ -1,10 +1,4 @@
----
-title: "Muscles"
-description: "Learned patterns, digest system, heat tiers, writing your own."
-section: "Core Concepts"
-order: 5.5
----
-
+# Muscles
 
 <!-- tldr -->
 Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = digest only, cold = name listed. Digest blocks between `<!-- digest:start -->` / `<!-- digest:end -->` markers. Write digests — they're what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
@@ -54,8 +48,11 @@ loads: 0
 |-------|------|-------------|
 | `type` | `"muscle"` | Always `muscle` |
 | `status` | `active \| dormant \| retired` | Controls discovery. Only `active` muscles load. |
+| `tags` | `string[]` | Searchable tags (used by focus matching) |
 | `topic` | `string[]` | What this muscle covers (broad categories) |
-| `keywords` | `string[]` | Finer search terms for lookup |
+| `keywords` | `string[]` | Finer search terms for lookup and focus matching |
+| `triggers` | `string[] \| object[]` | Focus triggers — keywords that auto-activate this muscle (see [Focus](/docs/focus)) |
+| `tools` | `string[]` | Scripts this muscle relates to |
 | `heat` | `number` | Current heat level — determines loading tier |
 | `loads` | `number` | How many times loaded at boot (tracked automatically) |
 | `created` | `date` | When the muscle first formed |

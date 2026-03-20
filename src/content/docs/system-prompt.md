@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 7
 ---
 
+# System Prompt
 
 <!-- tldr -->
 Soma compiles a layered system prompt from: static core → identity → protocols/muscles (behavioral) → docs → guard awareness → CLAUDE.md note → skills. Each section is toggleable via `systemPrompt` settings. Preview with `/soma prompt`. Token budget defaults to 4000 (currently well within range). Identity placement, docs inclusion, and guard awareness are all configurable.
@@ -23,8 +24,12 @@ Soma's system prompt is **compiled** at boot from multiple sources. The assembly
 | 5 | Soma docs | Documentation references | `includeSomaDocs` |
 | 6 | Pi docs | Pi framework documentation | `includePiDocs` |
 | 7 | Guard awareness | File protection rules from `guard` settings | `includeGuardAwareness` |
-| 8 | CLAUDE.md note | Awareness marker (if file exists in project root) | `includeContextAwareness` |
-| 9 | Skills | Pi skills block | `includeSkills` |
+| 8 | Automations | Hot = full body, warm = digest (heat-tracked) | No |
+| 9 | Scripts | Available scripts table with usage counts | No |
+| 10 | Git context | Recent commits and changes | `boot.gitContext.enabled` |
+| 11 | CLAUDE.md note | Awareness marker (if file exists in project root) | `includeContextAwareness` |
+| 12 | Skills | Pi skills block | `includeSkills` |
+| 13 | Focus/MAP | Focus context, related MAPs (when `.boot-target` exists) | Via `soma-focus.sh` |
 
 Protocols and muscles are always included (they're the core of Soma's memory) — their loading is controlled by the heat system and token budgets, not by system prompt toggles.
 
@@ -91,9 +96,25 @@ By default, identity loads into the system prompt between the static core and be
 
 Setting `identityInSystemPrompt: false` moves identity to a user message instead. This can be useful if you want identity to be more conversational and less "baked in," but most users should leave this at the default.
 
+## Focus & MAP Overrides
+
+When a `.boot-target` file exists (from `soma-focus.sh` or `soma --map`), additional content is injected:
+
+- **Heat overrides** — muscles and protocols get boosted or suppressed for this session
+- **Force-includes** — specific content loads regardless of heat
+- **Focus preload** — latest preload mentioning the focus keyword
+- **MAP bodies** — up to 3 related MAPs injected as navigation context
+- **Supplementary identity** — focus context appended to identity
+
+These overrides affect the compilation of sections 3-4 (protocols and muscles). They don't replace the base system — they augment it.
+
+See [Focus](/docs/focus) and [MAPs](/docs/maps) for details.
+
 ## Related
 
 - [Configuration](/docs/configuration#system-prompt) — all toggle settings
 - [How It Works](/docs/how-it-works#the-compiled-system-prompt) — overview of the assembly process
 - [Identity](/docs/identity) — how identity is layered and loaded
+- [Focus](/docs/focus) — seam-traced boot priming
+- [MAPs](/docs/maps) — workflow templates with prompt-config overrides
 - [Heat System](/docs/heat-system) — how protocol/muscle loading is determined

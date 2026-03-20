@@ -23,6 +23,8 @@ interface RoadmapData {
 
 // Editorial labels — curated per release
 const versionLabels: Record<string, string> = {
+  '0.6.0': 'Open Install, Voice & 23 Docs',
+  '0.5.2': 'Scratch, Scanning & Session Warnings',
   '0.5.1': 'Router, Auto-Breathe & Dev Tools',
   '0.5.0': 'Stabilization & Prompt Intelligence',
   '0.4.0': 'AMPS & Distribution',

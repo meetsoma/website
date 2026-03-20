@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 8
 ---
 
+# Workspaces
 
 <!-- tldr -->
 Soma supports parent-child `.soma/` directories for monorepos and multi-project setups. Parent provides shared identity, protocols, muscles, tools — child inherits by default, overrides what it needs. Solo body mode: when only a parent exists, child projects use it directly. All inheritance is toggleable per-dimension via `inherit` settings. Smart init detects parent workspaces automatically on first run.
@@ -22,22 +23,28 @@ Place a `.soma/` at the workspace root for shared knowledge. Child projects inhe
 ~/work/monorepo/
 ├── .soma/                          ← parent
 │   ├── identity.md                 ← "We use pnpm, conventional commits, TypeScript"
-│   ├── protocols/
-│   │   ├── git-identity.md         ← shared: use work email
-│   │   └── code-review.md          ← shared: review checklist
-│   └── settings.json               ← shared thresholds
+│   ├── settings.json               ← shared thresholds
+│   └── amps/
+│       ├── protocols/
+│       │   ├── git-identity.md     ← shared: use work email
+│       │   └── code-review.md      ← shared: review checklist
+│       ├── muscles/                ← shared learned patterns
+│       ├── automations/            ← shared triggers
+│       └── scripts/                ← shared dev tools
 │
 ├── apps/web/
 │   └── .soma/                      ← child
 │       ├── identity.md             ← "I'm a Next.js frontend"
-│       └── protocols/
-│           └── testing.md          ← project-specific: Playwright tests
+│       └── amps/
+│           └── protocols/
+│               └── testing.md      ← project-specific: Playwright tests
 │
 ├── apps/api/
 │   └── .soma/                      ← child
 │       ├── identity.md             ← "I'm a Hono API service"
-│       └── protocols/
-│           └── api-versioning.md   ← project-specific
+│       └── amps/
+│           └── protocols/
+│               └── api-versioning.md ← project-specific
 │
 └── packages/shared/                ← no .soma/ — uses parent directly
 ```
@@ -135,14 +142,16 @@ Parent holds your personal preferences (gitignored). The project `.soma/` is min
 ~/oss/
 ├── .soma/                    ← gitignored, personal
 │   ├── identity.md           ← your voice, your style
-│   └── protocols/
-│       └── git-identity.md   ← your email
+│   └── amps/
+│       └── protocols/
+│           └── git-identity.md ← your email
 │
 └── cool-project/
     └── .soma/                ← tracked in repo
         ├── STATE.md          ← project architecture
-        └── protocols/
-            └── contributing.md ← project rules
+        └── amps/
+            └── protocols/
+                └── contributing.md ← project rules
 ```
 
 ### Multiple Clients
@@ -166,6 +175,20 @@ When you run `soma init` or first-run `soma`, smart init detects:
 - Whether `CLAUDE.md` exists (acknowledges it, no conflict)
 
 This context shapes the initial identity and suggested protocols.
+
+### Orphan Mode
+
+```bash
+soma init --orphan    # or -o
+```
+
+Creates a standalone `.soma/` that does **not** inherit from any parent, even if one exists above. Useful when a sub-project has completely different conventions and shouldn't pick up the parent's identity, protocols, or muscles.
+
+Combine with templates:
+
+```bash
+soma init --orphan --template architect
+```
 
 ## Tips
 

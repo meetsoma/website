@@ -1,10 +1,4 @@
----
-title: "Heat System"
-description: "How Soma decides what to load — temperature-based relevance that adapts through use."
-section: "Core Concepts"
-order: 3.5
----
-
+# Heat System
 
 > TL;DR: Everything in Soma has a temperature. Hot content loads fully into the agent's prompt. Warm content loads as a one-line reminder. Cold content is listed but not loaded. Heat rises when things get used, decays when they don't. The agent naturally learns what matters.
 
@@ -139,11 +133,42 @@ On first boot (no `.protocol-state.json` exists), heat is seeded from each proto
 
 After first boot, heat evolves through use and decay. The `heat-default` is just the starting point.
 
+## Programmatic Tracking
+
+Heat and usage are tracked automatically — no manual updates needed:
+
+| Content | What's tracked | Where stored | Mechanism |
+|---------|---------------|-------------|-----------|
+| Protocols | Heat events (applied, referenced, pinned) | `.protocol-state.json` | `recordHeatEvent()` on tool_result |
+| Muscles | Loads count, heat | Frontmatter (`loads:`, `heat:`) | `trackMuscleLoads()` at boot, `bumpMuscleHeat()` on use |
+| MAPs | Run count, last run date | Frontmatter (`runs:`, `last-run:`) | `trackMapRun()` on .boot-target load |
+| Scripts | Usage count, last used date | `state.json` (`scripts.{name}`) | Auto-detect on `tool_result` (bash command regex) |
+
+### Focus Overrides
+
+The [Focus](/docs/focus) system and [MAPs](/docs/maps) can temporarily override heat for a session:
+
+```yaml
+# In a MAP's prompt-config:
+prompt-config:
+  heat:
+    muscles:
+      ship-cycle: 10       # force hot for this session
+    protocols:
+      workflow: 10
+  force-include:
+    muscles: [pre-flight-check]  # load even if cold
+```
+
+These overrides don't change the persisted heat — they apply only to the session's system prompt compilation.
+
 ## The Big Picture
 
 Heat solves a fundamental problem: agents have limited context windows, but users accumulate knowledge over time. Without heat, you'd either load everything (wasting tokens on irrelevant content) or manually curate what loads (nobody does this).
 
 With heat, the system self-organizes. Protocols you use daily stay hot and fully loaded. Muscles you haven't touched in a week cool down to digests, then to just names. If you need them again, one use warms them back up.
+
+Context thresholds are percentages of the model's window — they scale automatically from 200K to 1M+ context models.
 
 The result: **the agent's prompt reflects what you actually do, not what you once configured.**
 
@@ -152,3 +177,5 @@ The result: **the agent's prompt reflects what you actually do, not what you onc
 - [Configuration](configuration.md) — all heat thresholds, boot steps, context warnings
 - [Protocols](protocols.md) — writing protocols, domain scoping, frontmatter
 - [Muscles](muscles.md) — writing muscles, digest system, token budget
+- [MAPs](maps.md) — workflow templates with prompt-config overrides
+- [Focus](focus.md) — seam-traced boot priming with heat overrides

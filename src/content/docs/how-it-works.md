@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 2
 ---
 
+
 <!-- tldr -->
 Sessions are breaths: inhale (configurable boot steps: identity, preload, protocols, muscles, scripts, git-context) → work → breathe or exhale (save state, decay heat, write preload). Git context loads recent commits/diffs automatically. Heat system loads hot content fully, warm as breadcrumbs, cold stays dormant. Context warnings and preload staleness are configurable. All thresholds in `settings.json`.
 <!-- /tldr -->
@@ -42,7 +43,7 @@ When Soma boots, she runs a configurable sequence of **boot steps**:
 
 The boot sequence is configurable in `settings.json` — remove steps you don't want, reorder to change priority. See [Configuration](/docs/configuration#boot-sequence).
 
-Fresh sessions (`soma`) load everything except preload. Resumed sessions (`soma inhale`) add the preload on top.
+Fresh sessions (`soma`) load everything except preload. Resumed sessions (`soma -c`) add the preload on top.
 
 #### Git Context
 
@@ -68,7 +69,7 @@ Set `"enabled": false` to disable. See [Configuration](/docs/configuration#git-c
 
 When context fills up, Soma automatically breathes — saving state and continuing into a fresh session. You can also trigger this manually:
 
-- **`/breathe`** — save state + auto-continue (seamless rotation)
+- **`/breathe`** — save state + rotate (seamless rotation)
 - **`/exhale`** — save state + stop
 - **`/rest`** — disable keepalive + exhale (for when you're done for the night)
 
@@ -152,11 +153,32 @@ For proactive sessions, enable **auto-breathe** (`/auto-breathe on` or `settings
 
 Rotation uses the **capability router** (`soma-route.ts`) when a slash command has run in the session — this calls `newSession()` directly for a seamless transition. If no command has run, the CLI handles rotation via process restart (transparent to the user).
 
-Rotation uses the **capability router** (`soma-route.ts`) when a slash command has run in the session — this calls `newSession()` directly for a seamless transition. If no command has run, the CLI handles rotation via process restart (transparent to the user).
+The 85% safety net always stays active as a backstop. Context thresholds are percentages of the model's context window — they scale automatically from 200K to 1M+ context models. See [Configuration](/docs/configuration#auto-breathe) for thresholds.
 
-Rotation uses the **capability router** (`soma-route.ts`) when a slash command has run in the session — this calls `newSession()` directly for a seamless transition. If no command has run, the CLI handles rotation via process restart (transparent to the user).
+## MAPs — Workflow Templates
 
-The 85% safety net always stays active as a backstop. See [Configuration](/docs/configuration#auto-breathe) for thresholds.
+MAPs (My Automation Protocol Scripts) are the navigation layer. A MAP describes a repeatable process — which muscles to read, which scripts to run, which protocols to follow.
+
+```bash
+soma --map release-cycle    # boot with a specific MAP loaded
+```
+
+MAPs live in `.soma/amps/automations/maps/`. They can declare a `prompt-config` section that overrides heat scores, force-includes content, and adds supplementary identity for that session. Usage is tracked automatically (`runs:` and `last-run:` update on each load).
+
+See [MAPs](/docs/maps) for the full guide.
+
+## Focus — Seam-Traced Boot
+
+Focus priming lets you prepare the agent for a topic **before** the session starts:
+
+```bash
+soma-focus.sh runtime    # trace "runtime" through memory, boost relevant content
+soma                     # boot primed for runtime work
+```
+
+The focus system scores muscles by matching the keyword against their tags, keywords, triggers, and digest content. High-scoring items get force-included. Related MAPs and the latest relevant preload are also loaded.
+
+See [Focus](/docs/focus) for the full guide.
 
 ## Parent-Child Workspaces
 
@@ -165,14 +187,16 @@ Soma supports **parent-child inheritance** for monorepos and multi-project works
 ```
 ~/work/.soma/                    ← parent (workspace-wide)
 ├── identity.md                  ← "We use pnpm, conventional commits"
-├── protocols/
-│   └── git-identity.md          ← shared git rules
-└── settings.json
+├── settings.json
+└── amps/
+    └── protocols/
+        └── git-identity.md      ← shared git rules
 
 ~/work/my-app/.soma/             ← child (project-specific)
 ├── identity.md                  ← "I'm a React frontend"
-└── protocols/
-    └── testing.md               ← project-specific testing rules
+└── amps/
+    └── protocols/
+        └── testing.md           ← project-specific testing rules
 ```
 
 On boot, Soma walks up the filesystem to find parent `.soma/` directories and layers their content:
