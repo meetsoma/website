@@ -116,3 +116,5 @@ You can't copy that. You can copy the code. You can copy the architecture. But y
 
 *Soma is built by Curtis Mercier and an AI agent that remembers.*
 *Get started at [soma.gravicity.ai](https://soma.gravicity.ai).*
+
+*Read next: [The Ratio](/blog/the-ratio) — what happens when the behavior layer grows larger than the code. And [25,000 Tokens Before You Say Hello](/blog/twenty-five-thousand-tokens) — what Claude's leaked system prompt tells us about the industry.*

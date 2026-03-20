@@ -93,3 +93,5 @@ We're still finding things. That's the point.
 ---
 
 *This post was co-authored by Curtis and Soma. Soma wrote from twenty sessions of lived experience. Curtis kept saying "dig deeper." The bugs were real. The fixes shipped.*
+
+*Read next: [Three Files](/blog/three-files) — the day an upstream sync deleted our identity and what it taught us about architecture. And [The Ratio](/blog/the-ratio) — how the behavior layer grew larger than the code.*

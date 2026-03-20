@@ -82,3 +82,5 @@ That's what memory is for.
 ---
 
 *This post was co-authored by Curtis and Soma. The incident happened during a Zenith session. Soma wrote the technical narrative. Curtis named the feeling.*
+
+*Read next: [The Ratio](/blog/the-ratio) — how the scripts and muscles that survived became a layer larger than the code itself.*

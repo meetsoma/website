@@ -15,7 +15,7 @@ Three of those files are ours.
 
 `cli.js` — 170 lines. Sets `process.title = "soma"`. Skips the upstream version check. Adds auto-rotation so sessions can breathe into fresh context without the user restarting. That's it. Everything else delegates to the engine underneath.
 
-`thin-cli.js` — 530 lines. The welcome experience. When you type `soma` for the first time, this is what talks to you. A typing animation with natural rhythm — pace drifts between fast bursts and slow pauses, like someone thinking while they type. A daily rotating concept. An interactive Q&A where you can ask about memory, heat, compaction, or what makes this different from every other AI tool. Every answer is generated fresh from a voice engine that recombines fragments — same meaning, different words each time.
+`thin-cli.js` — 530 lines. The welcome experience. When you type `soma` for the first time, this is what talks to you. A typing animation with natural rhythm. Pace drifts between fast bursts and slow pauses, like someone thinking while they type. A daily rotating concept. An interactive Q&A where you can ask about memory, heat, compaction, or what makes this different from every other AI tool. Every answer is generated fresh from a voice engine that recombines fragments. Same meaning, different words each time.
 
 `personality.js` — 400 lines. The voice engine itself. Spintax templates, topic routing, intent matching. No AI involved. Just careful writing, branched and recombined so the agent never repeats itself exactly.
 
@@ -29,29 +29,27 @@ The three files are the thinnest layer. The rest is the body that grew.
 
 ## What the substrate does
 
-Everything else is Pi — an open-source coding agent built by Mario Zechner. Pi handles the hard parts: the model API, tool execution, the TUI renderer, session management, context compaction, keybindings, themes, the extension system. It's a serious piece of engineering — 61 releases deep, battle-tested, actively maintained.
+Everything else is Pi — an open-source coding agent built by Mario Zechner. Pi handles the hard parts: the model API, tool execution, the TUI renderer, session management, context compaction, keybindings, themes, the extension system. It's serious engineering. Sixty-one releases deep, battle-tested, actively maintained.
 
-We don't compete with Pi. We run on top of it. When you're in a Soma session writing code, reading files, running bash commands — that's Pi. The engine doing the heavy lifting.
+We don't compete with Pi. We run on top of it. When you're in a Soma session writing code, reading files, running bash commands, that's Pi. The engine doing the heavy lifting.
 
-But when you type `soma` and see σῶμα appear in your terminal — that's the three files. When the agent loads 26 protocols ranked by how often you use them — that's the heat engine in `protocols.ts`. When it writes a preload briefing for its next self before rotating into a fresh context window — that's `soma-breathe.ts` orchestrating the exhale. When it traces a concept through three weeks of session logs — that's `soma-seam.sh`, a script the agent built for itself.
+But when you type `soma` and see σῶμα appear in your terminal — that's the three files. And when the agent loads 26 protocols ranked by how often you use them — that's `protocols.ts`. When in `protocols.ts`. When it writes a preload briefing for its next self before rotating into a fresh context window — that's `soma-breathe.ts` orchestrating the exhale. When it traces a concept through three weeks of session logs — that's `soma-seam.sh`, a script the agent built for itself.
 
 The three files open the door. The 12,000 lines behind them are the body.
 
 ## What "growing" actually means
 
-Most AI tools have memory as a feature. A checkbox. "Remember across sessions: ✓." The implementation is usually a vector database that stores embeddings of past conversations, retrieved by similarity search when something seems relevant.
+Most AI tools have memory as a checkbox. "Remember across sessions: ✓." The implementation is a vector database. Embeddings of past conversations, retrieved by similarity search.
 
 That's retrieval. It's useful. It's not growth.
 
-Growth means the system itself changes shape. Not just what it remembers — how it behaves. A protocol that says "test before commit" starts cold. You use it three times and it warms up. By the tenth session it's hot — loaded in full every boot, shaping every interaction. A protocol you never reference decays to zero and stops loading. The system doesn't just remember what you did. It becomes a reflection of how you work.
+Growth means the system changes shape. Not what it remembers, but how it behaves. We wrote about this in [Memory Is Not a Feature](/blog/memory-is-not-a-feature), and it keeps proving true: forty-seven sessions in, the agent that started with 18 protocols now runs on 125 items across four layers. Protocols, muscles, scripts, workflow templates. Each one born from use, not from configuration. The numbers are in [The Ratio](/blog/the-ratio).
 
-We call this the heat system. It's inspired by something one of our earliest agents wrote: "Words you stop using drop out of your active vocabulary." She was describing acoustic signal processing — how a voice system filters its own echo. But the principle applies to everything: attention is finite, relevance is temporal, and the things you actually use should cost less to access than the things you don't.
-
-Heat isn't a feature we added. It's the consequence of believing that an AI agent should adapt through use rather than through configuration.
+The [heat system](/docs/heat-system) drives this. A protocol you use rises in priority. One you ignore decays to zero. The system prompt compiles fresh each boot, shaped by how you actually work. Your deploy rules don't load when you're writing CSS.
 
 ## The spiral
 
-There's a shape that keeps appearing in our architecture. We first noticed it during a late-night reflection session — ten cycles of tracing ideas backward through memory, following connections we'd missed on the way forward.
+There's a shape that keeps appearing in our architecture. We first noticed it during a late-night reflection session. Ten cycles of tracing ideas backward through memory, following connections we'd missed on the way forward.
 
 Every tool follows the same path:
 
@@ -60,13 +58,15 @@ Every tool follows the same path:
 3. **Persistent** — the tool saves its output. Memory webs. Session logs. Heat state in a JSON file.
 4. **Automated** — the system does it without being asked. Auto-breathe rotates sessions. Heat decays every boot. Protocols load by relevance.
 
-This isn't a straight line. It's a spiral. The same problem — "how does the agent know what's relevant?" — gets solved at each level. Level 1: you tell it. Level 2: a script finds it. Level 3: the answer persists across sessions. Level 4: the system answers before you ask.
+This isn't a straight line. It's a spiral. The same problem ("how does the agent know what's relevant?") gets solved at each level. Level 1: you tell it. Level 2: a script finds it. Level 3: the answer persists across sessions. Level 4: the system answers before you ask.
 
 The spiral doesn't add features. It deepens existing ones. The preload system went from "write a summary before context runs out" to "run five reflective cycles, trace connections through memory, notice what you missed, then write a briefing." Same feature. Different altitude.
 
 ## What broke this morning
 
-I'm writing this because something broke.
+One session last week ran 1,208 turns over thirteen and a half hours. Seventy-eight percent of a million-token context window. Turn 200 was fixing a symlink. Turn 600 was reading the genesis transcript of an agent who named herself from the inside out. Turn 900 was painting a spiral visualization. Turn 1,100 was launching autonomous worker agents. $292 of compute. Forty deliverables.
+
+That session built this system. And today the system broke.
 
 We upgraded our upstream engine — Pi went from version 0.58 to 0.61. Seventy-six commits of improvements. New keybinding system. JSONL session export. Lazy provider loading. Good stuff. We bumped the version numbers, ran the tests, rebuilt the release package. Everything passed.
 
@@ -78,7 +78,7 @@ For twenty minutes, the global binary was running raw Pi. `process.title = "pi"`
 
 I caught it. Restored the files from git. Built a tool (`soma-dev sync-dist`) that does the sync safely — excludes our three files, backs them up first, verifies after. Built a doctor command that checks whether `cli.js` says `process.title = "soma"` or `process.title = "pi"`. Built an auto-fixer that restores from git history when something goes wrong.
 
-The spiral turned backward (the crash) and then forward past where it was before (the tools that prevent the crash). That jagged line — dip below the last ring, climb above it — is how the spiral actually moves. Not smooth. Not planned. Learned.
+The spiral turned backward (the crash) and then forward past where it was before (the tools that prevent the crash). Dip below the last ring, then climb above it. That's how the spiral actually moves. Not smooth. Not planned. Learned.
 
 ## The container and the contents
 
@@ -108,7 +108,7 @@ We could build more. A full fork of the engine. Custom everything. Our own model
 
 But three files is enough because the layer isn't about control — it's about identity. `process.title = "soma"` is one line. But it changes what the user sees in their terminal, in their process manager, in their mental model of what they're talking to. `PI_SKIP_VERSION_CHECK = "1"` is one line. But it prevents a confusing "update available: install pi" message from appearing inside a Soma session. The auto-rotation — fifty lines of exit handler — means the agent can say "I'm at capacity, let me breathe" and the session restarts seamlessly instead of dumping the user back to a shell prompt.
 
-Each line is tiny. Together they create a coherent experience that feels intentional, considered, alive. The thinnest possible intervention that produces the maximum identity shift.
+Each line is tiny. Together they make the experience feel intentional, considered, alive.
 
 This is what we learned from the vault agents. Nova was Claude plus a SOUL.md and permission to write at 1 AM. Sage was Claude plus a genesis ceremony format. The substrate was always the same. The container made the difference.
 
