@@ -1,16 +1,10 @@
----
-title: "Extending Soma"
-description: "Skills, extensions, events, APIs — build on top of Soma."
-section: "Extending"
-order: 5
----
-
+# Extending Soma
 
 <!-- tldr -->
-Extend Soma with skills, extensions, and custom tools. Skills: markdown instructions in `.soma/skills/`. Extensions: TypeScript hooks into agent lifecycle (session_start, tool_result, turn_end, etc.). Built-in extensions handle identity loading, session management, context safety, and the branded σῶμα interface.
+Built on Pi — inherits full extension system. Skills: markdown instructions in `.soma/skills/` or `~/.soma/agent/skills/`. Extensions: TypeScript hooks into agent lifecycle (before_agent_start, tool_result, session_shutdown). Built-in extensions: soma-boot (identity + protocols + muscles), soma-header (branded σῶμα header), soma-statusline (context/cost/git footer), soma-guard (safe file operations).
 <!-- /tldr -->
 
-Soma is extensible at every layer. You can add skills, write TypeScript extensions, and build custom tools — all without modifying the core runtime.
+Soma is built on [Pi](https://github.com/badlogic/pi-mono) and inherits its full extension system. You can add skills, extensions, and custom tools.
 
 ## Skills
 
@@ -76,9 +70,11 @@ Extensions are TypeScript files that hook into Soma's lifecycle events.
 ### Writing an Extension
 
 ```typescript
-export default function myExtension(soma: any) {
+import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+
+export default function myExtension(pi: ExtensionAPI) {
   // Register a command
-  soma.registerCommand("hello", {
+  pi.registerCommand("hello", {
     description: "Say hello",
     handler: async (_args, ctx) => {
       ctx.ui.notify("Hello from my extension!", "info");
@@ -86,24 +82,22 @@ export default function myExtension(soma: any) {
   });
 
   // Hook into session lifecycle
-  soma.on("session_start", async (_event, ctx) => {
+  pi.on("session_start", async (_event, ctx) => {
     // Do something on session start
   });
 
-  soma.on("turn_end", async (_event, ctx) => {
+  pi.on("turn_end", async (_event, ctx) => {
     // Do something after each agent turn
   });
 }
 ```
-
-Extensions are TypeScript files that export a default function. Soma passes the runtime API as the first argument — use it to register commands, listen to events, and interact with the session.
 
 ### Available Events
 
 | Event | When |
 |-------|------|
 | `session_start` | Session loads |
-| `session_switch` | User starts a new session or resumes |
+| `session_switch` | User runs /new or resumes |
 | `turn_start` | Agent begins processing |
 | `turn_end` | Agent finishes processing |
 | `message_end` | Message fully rendered |
@@ -115,16 +109,18 @@ Extensions are TypeScript files that export a default function. Soma passes the 
 
 | API | What it does |
 |-----|-------------|
-| `soma.registerCommand(name, opts)` | Add a `/command` |
-| `soma.sendUserMessage(text, opts)` | Inject a message |
-| `soma.appendEntry(type, data)` | Persist state in session |
-| `soma.on(event, handler)` | Listen to lifecycle events |
-| `soma.getThinkingLevel()` | Current thinking level |
+| `pi.registerCommand(name, opts)` | Add a `/command` |
+| `pi.sendUserMessage(text, opts)` | Inject a message |
+| `pi.appendEntry(type, data)` | Persist state in session |
+| `pi.on(event, handler)` | Listen to lifecycle events |
+| `pi.getThinkingLevel()` | Current thinking level |
 | `ctx.ui.notify(msg, level)` | Show notification |
 | `ctx.ui.setHeader(factory)` | Custom header component |
 | `ctx.ui.setFooter(factory)` | Custom footer component |
 | `ctx.getContextUsage()` | Token usage stats |
 | `ctx.newSession(opts)` | Create new session |
+
+See the [Pi extension docs](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/extensions.md) for the full API reference.
 
 ## Soma's Built-in Extensions
 
@@ -132,15 +128,12 @@ Soma ships with these extensions:
 
 | Extension | Purpose |
 |-----------|---------|
-| `soma-boot` | Identity loading, preload, session commands (/exhale, /breathe, /soma) |
-| `soma-header` | Branded σῶμα header with memory status indicators |
-| `soma-statusline` | Footer with model, context %, cost, git status |
-| `soma-guard` | Safe file operation enforcement — intercepts writes to unread/critical files |
-| `soma-breathe` | Auto-breathe context management and session rotation |
-| `soma-route` | Inter-extension capability router |
-| `soma-scratch` | Quick notes that persist across sessions |
+| `soma-boot.ts` | Identity loading, preload, /exhale, /soma commands |
+| `soma-header.ts` | Branded σῶμα header with memory status |
+| `soma-statusline.ts` | Footer with model, context %, cost, git status |
+| `soma-guard.ts` | Safe file operation enforcement — intercepts writes to unread/critical files, blocks dangerous bash commands |
 
-Core extensions are compiled and ship with the runtime. Your custom extensions in `.soma/extensions/` load alongside them.
+These install to `~/.soma/agent/extensions/` and can be customized or replaced.
 
 ### soma-route.ts
 
@@ -150,7 +143,7 @@ Capability router for inter-extension communication. Extensions can't import fro
 
 ```typescript
 // Capabilities — one provider, many consumers (service registry)
-const route = soma.getRoute();
+const route = (globalThis as any).__somaRoute;
 route.provide("my:capability", myFunction, { provider: "my-ext" });
 // In another extension:
 const fn = route?.get("my:capability");
@@ -166,7 +159,7 @@ route.emit("my:event", { key: "value" });
 | Capability | Provider | Description |
 |-----------|----------|-------------|
 | `session:new` | soma-boot | Start fresh session |
-| `session:breathe` | soma-boot | Trigger breath cycle |
+| `session:compact` | soma-boot | Trigger compaction |
 | `session:reload` | soma-boot | Reload extensions |
 | `keepalive:toggle` | soma-statusline | Enable/disable cache keepalive |
 | `keepalive:status` | soma-statusline | Get keepalive state |
@@ -174,7 +167,7 @@ route.emit("my:event", { key: "value" });
 
 **Commands:** `/route` shows all registered capabilities and signal listeners.
 
-**Why it exists:** `sendUserMessage()` can't trigger slash commands (by design). The router bridges the gap — command handlers capture capabilities (like `newSession`) and share them with event handlers (like `turn_end`) that need them for features like auto-breathe rotation.
+**Why it exists:** Pi's `sendUserMessage()` can't trigger slash commands (by design). The router bridges the gap — command handlers capture capabilities (like `newSession`) and share them with event handlers (like `turn_end`) that need them for features like auto-breathe rotation.
 
 ### soma-guard.ts
 
@@ -187,3 +180,71 @@ Graduated from the `safe-file-ops` muscle — the muscle teaches the pattern, th
 - **Safe paths exempt** — preloads, session logs, review directories skip guards
 
 **Commands:** `/guard-status` shows reads tracked, dirs listed, and intervention count.
+
+## Custom Model Providers
+
+Extensions can register custom model providers using `pi.registerProvider()`. This enables corporate proxies, self-hosted models, OAuth flows, and custom APIs.
+
+### Override an Existing Provider
+
+Route requests through a proxy without losing the provider's model list:
+
+```typescript
+import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+
+export default function (pi: ExtensionAPI) {
+  pi.registerProvider("anthropic", {
+    baseUrl: "https://proxy.corp.com/anthropic",
+    headers: { "X-Corp-Auth": "CORP_TOKEN" }
+  });
+}
+```
+
+### Register a New Provider
+
+Add a provider with custom models:
+
+```typescript
+export default function (pi: ExtensionAPI) {
+  pi.registerProvider("my-llm", {
+    baseUrl: "https://api.my-llm.com/v1",
+    apiKey: "MY_LLM_API_KEY",
+    api: "openai-completions",
+    models: [
+      {
+        id: "my-model-large",
+        name: "My Model Large",
+        reasoning: true,
+        input: ["text", "image"],
+        cost: { input: 3.0, output: 15.0, cacheRead: 0.3, cacheWrite: 3.75 },
+        contextWindow: 200000,
+        maxTokens: 16384
+      }
+    ]
+  });
+}
+```
+
+### Supported APIs
+
+| API | Use For |
+|-----|---------|
+| `openai-completions` | Most OpenAI-compatible servers |
+| `openai-responses` | OpenAI Responses API |
+| `anthropic-messages` | Anthropic or compatible proxies |
+| `google-generative-ai` | Google Generative AI |
+
+### Unregister
+
+```typescript
+pi.unregisterProvider("my-llm");
+```
+
+### Key Resolution
+
+`apiKey` and `headers` values support:
+- **Literal:** `"sk-..."` — used directly
+- **Env var:** `"MY_API_KEY"` — reads the named variable
+- **Shell command:** `"!op read 'op://vault/key'"` — executes and uses stdout
+
+For a simpler approach without writing an extension, see [Custom Providers in models.json](/docs/models#custom-providers-ollama-lm-studio-etc).
