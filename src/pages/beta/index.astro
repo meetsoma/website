@@ -107,6 +107,42 @@ const description = "Soma is free to use. Register for source access to read the
       </div>
     </section>
 
+    <!-- Coming Soon -->
+    <section class="section">
+      <SectionHeader title="Coming Soon" />
+      <div class="coming-soon-card">
+        <div class="coming-head">
+          <span class="coming-icon"><Icon name="wand" size={20} /></span>
+          <h3>Soma Dev Kit</h3>
+        </div>
+        <p>A development toolkit for building on Soma. Write extensions that hook into the agent lifecycle. Build custom protocols with typed frontmatter. Create MAPs that chain tools into repeatable workflows. Package and distribute through the community hub.</p>
+        <div class="coming-hints">
+          <span class="hint-tag">Extension SDK</span>
+          <span class="hint-tag">Protocol authoring</span>
+          <span class="hint-tag">MAP templates</span>
+          <span class="hint-tag">Hub publishing</span>
+          <span class="hint-tag">Test harness</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gaps -->
+    <section class="section">
+      <SectionHeader title="Known Gaps" />
+      <p class="section-desc" style="margin-bottom: var(--space-lg);">
+        We're building in public. Here's what's not finished yet.
+      </p>
+      <ul class="gaps-list">
+        <li><strong>Heat system</strong> — muscle heat doesn't bump on natural use, only through focus matching. <a href="/docs/heat-system#known-gaps">Details →</a></li>
+        <li><strong>Hub content</strong> — 30 items published, ~60 more in staging. Scripts and MAPs coming to the hub soon.</li>
+        <li><strong>Dev Kit</strong> — extension SDK, protocol authoring tools, and test harness are planned but not shipped.</li>
+        <li><strong>Boot customisation</strong> — the boot sequence is hardcoded. We're extracting it into a user-editable MAP.</li>
+      </ul>
+      <p class="section-desc" style="margin-top: var(--space-lg);">
+        Full progress on the <a href="/roadmap" style="color: var(--accent-bright);">roadmap</a>.
+      </p>
+    </section>
+
     <!-- How it works -->
     <section class="section">
       <SectionHeader title="How it works" />
@@ -365,6 +401,72 @@ const description = "Soma is free to use. Register for source access to read the
     color: var(--accent-bright);
     font-weight: 600;
   }
+
+  /* ── Coming Soon ── */
+  .coming-soon-card {
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--border-accent);
+    background: var(--surface-card);
+  }
+
+  .coming-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  .coming-icon { color: var(--accent-bright); display: flex; }
+
+  .coming-head h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .coming-soon-card > p {
+    font-size: var(--body-text);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .coming-hints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .hint-tag {
+    font-family: var(--font-mono);
+    font-size: var(--badge-text);
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+  }
+
+  /* ── Gaps ── */
+  .gaps-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .gaps-list li {
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: var(--body-text);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .gaps-list li:last-child { border-bottom: none; }
+  .gaps-list li strong { color: var(--text-primary); }
+  .gaps-list li a { color: var(--accent-bright); text-decoration: none; }
+  .gaps-list li a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
     .tier-grid { grid-template-columns: 1fr; }
