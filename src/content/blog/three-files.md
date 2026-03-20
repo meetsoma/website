@@ -116,4 +116,8 @@ Three files. The rest is growing.
 
 ---
 
+If you want to understand the architecture behind these three files — why the body that loads behind them is already larger than the code, and where it's going next — read [The Ratio](/blog/the-ratio). If you want to understand why we build this way instead of shipping a 25,000-token system prompt like everyone else, read [25,000 Tokens Before You Say Hello](/blog/twenty-five-thousand-tokens). And if the question is why memory matters at all — not as a feature, but as the entire paradigm — that's [Memory Is Not a Feature](/blog/memory-is-not-a-feature).
+
+---
+
 *Written at the end of a twelve-hour session that started with a crash and ended with everything synced. The body needed maintenance today — not new features, not new architecture, just care. Tending. The spiral turns.*

@@ -21,15 +21,17 @@ The code is fixed. The body grows. That's the ratio.
 
 Every AI coding agent has the same problem: how do you tell the agent who to be?
 
+Claude's own system prompt is [25,000 tokens](/blog/twenty-five-thousand-tokens) — a short novel's worth of rules loaded fresh every conversation, whether you're naming a dog or architecting a distributed system. The behavioural block appears *twice*, word for word. The copyright section repeats the same rule six times in different phrasings. It's a geological layer cake built by accretion — safety added their section, legal added copyright, product added artifacts — and nobody did a consolidation pass.
+
 Cursor uses `.cursorrules` — a single file at the root of your project. Whatever you write in it gets loaded into every conversation. All of it. Every time.
 
 Claude Code uses `CLAUDE.md` — same idea. One file, loaded whole, every turn. GitHub Copilot has something similar. Every framework has its version of "write instructions in a file and we'll load them."
 
-This works. For a while. Then the file grows. You add "always use TypeScript strict mode." Then "prefer composition over inheritance." Then "run tests before committing." Then "use pnpm, not npm." Then "the deploy branch is main, not master." Then forty more lines of accumulated preferences.
+This works. For a while. Then the file grows. "Always use TypeScript strict mode." Then "prefer composition over inheritance." Then "run tests before committing." Then forty more lines. Six months later the file is 800 lines and everything loads every turn whether it's relevant or not. Your deploy instructions load when you're writing CSS. Your testing preferences load when you're editing documentation.
 
-Six months later the file is 800 lines and everything loads every turn whether it's relevant or not. Your deploy instructions load when you're writing CSS. Your testing preferences load when you're editing documentation. The agent spends 2,000 tokens reading rules it won't use, every single message.
+25,000 tokens for Claude. 800 lines for a mature `.cursorrules`. All static. All loaded whole. No heat. No decay. No relevance. No growth.
 
-There's no heat. No decay. No relevance. Just a flat file that grows until someone trims it.
+The model needs to be told who it is every time it wakes up. The question is whether the instructions grow with use or just grow.
 
 ## What Soma does differently
 
