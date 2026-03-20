@@ -1,8 +1,8 @@
 ---
 title: "Skills"
 description: "Install and create skills — self-contained capability packages loaded on demand."
-section: "Extending"
-order: 5.3
+section: "Customization"
+order: 3
 ---
 
 <!-- tldr -->

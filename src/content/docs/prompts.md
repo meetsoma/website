@@ -1,8 +1,8 @@
 ---
 title: "Prompt Templates"
 description: "Create reusable prompt templates that expand with /name in the editor."
-section: "Extending"
-order: 5.2
+section: "Workflows"
+order: 4
 ---
 
 <!-- tldr -->

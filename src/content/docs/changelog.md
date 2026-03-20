@@ -2,7 +2,7 @@
 title: "Changelog"
 description: "What shipped, what changed, version history."
 section: "Reference"
-order: 10
+order: 7
 ---
 
 What's new in Soma. Full implementation details available to registered users.

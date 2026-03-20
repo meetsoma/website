@@ -2,7 +2,7 @@
 title: "Muscles"
 description: "Learned patterns, digest system, heat tiers, writing your own."
 section: "Core Concepts"
-order: 5.5
+order: 3.5
 ---
 
 # Muscles

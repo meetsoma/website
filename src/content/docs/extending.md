@@ -2,7 +2,7 @@
 title: "Extending"
 description: "Skills, extensions, and custom tools — build on top of Soma."
 section: "Reference"
-order: 8
+order: 4
 ---
 
 # Extending Soma

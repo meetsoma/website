@@ -1,8 +1,8 @@
 ---
 title: "Sessions"
 description: "Session management — tree navigation, forking, compaction, and branch summarization."
-section: "Core Concepts"
-order: 3.2
+section: "Workflows"
+order: 3
 ---
 
 <!-- tldr -->

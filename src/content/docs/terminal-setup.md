@@ -2,7 +2,7 @@
 title: "Terminal Setup"
 description: "Recommended terminal configuration for the best Soma experience."
 section: "Reference"
-order: 6.5
+order: 3
 ---
 
 <!-- tldr -->

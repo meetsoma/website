@@ -1,8 +1,8 @@
 ---
 title: "Workspaces"
 description: "Parent-child inheritance, monorepo patterns, solo body mode."
-section: "Core Concepts"
-order: 8
+section: "Reference"
+order: 6
 ---
 
 # Workspaces

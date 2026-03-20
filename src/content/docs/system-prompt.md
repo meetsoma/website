@@ -1,8 +1,8 @@
 ---
 title: "System Prompt"
 description: "How Soma's compiled system prompt is assembled, configured, and previewed."
-section: "Core Concepts"
-order: 7
+section: "Reference"
+order: 5
 ---
 
 # System Prompt

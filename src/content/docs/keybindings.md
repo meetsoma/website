@@ -2,7 +2,7 @@
 title: "Keybindings"
 description: "Keyboard shortcuts and how to customize them."
 section: "Reference"
-order: 6.2
+order: 2
 ---
 
 <!-- tldr -->

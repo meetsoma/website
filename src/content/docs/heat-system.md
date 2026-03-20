@@ -2,7 +2,7 @@
 title: "Heat System"
 description: "How Soma decides what to load — temperature-based relevance that adapts through use."
 section: "Core Concepts"
-order: 3.5
+order: 4
 ---
 
 # Heat System

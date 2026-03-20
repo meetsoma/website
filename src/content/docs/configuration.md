@@ -1,8 +1,8 @@
 ---
 title: "Configuration"
 description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior."
-section: "Reference"
-order: 6
+section: "Customization"
+order: 1
 ---
 
 # Configuration

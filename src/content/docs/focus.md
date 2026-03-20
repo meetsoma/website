@@ -1,8 +1,8 @@
 ---
 title: "Focus"
 description: "Seam-traced boot priming — focus the agent on a topic before the session starts."
-section: "Guide"
-order: 11
+section: "Workflows"
+order: 1
 ---
 
 # Focus — Seam-Traced Boot

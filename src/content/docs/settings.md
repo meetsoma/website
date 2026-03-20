@@ -1,8 +1,8 @@
 ---
 title: "Engine Settings"
 description: "All runtime settings — models, compaction, UI, retry, shell, and more."
-section: "Reference"
-order: 6.3
+section: "Customization"
+order: 2
 ---
 
 <!-- tldr -->

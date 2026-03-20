@@ -2,7 +2,7 @@
 title: "Scripts"
 description: "Standalone tools that ship with Soma — codebase navigation, memory tracing, session focus, doc scraping, and more."
 section: "Reference"
-order: 9
+order: 1
 ---
 
 # Scripts
