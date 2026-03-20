@@ -48,38 +48,25 @@
       "date": "2026-03-14",
       "features": {
         "added": [
-          "Capability router for inter-extension communication (`soma-route.ts`) \u2014 provides/gets capabilities, emits/listens signals. Replaces `globalThis` hacks (#94576f3, #e919481)",
-          "CLI-based session rotation via `.rotate-signal` file \u2014 auto-breathe can now rotate without command context (#2da3155)",
-          "Per-session log files with auto-incrementing names (`YYYY-MM-DD-sNN.md`) \u2014 prevents overwrites across rotations (#d776dd6)",
-          "Session log and preload paths surfaced in boot message (#d934799)",
-          "Resume boot diffing \u2014 `soma -c` skips redundant preload injection (#de39fd1)",
-          "Restart-required detection \u2014 signal file, cmux notification, and statusline indicator when core/extension files change (#9f2a103, #f845894, #926fd4a, #18eba69)",
-          "`soma-changelog.sh` \u2014 generate categorized changelog entries from conventional commits with `[cl:tag]` consolidation",
-          "`soma-changelog-json.sh` \u2014 parse CHANGELOG.md into JSON for website consumption",
-          "ChangelogIsland.tsx + RoadmapTimeline.tsx \u2014 Preact islands for `/changelog/` and `/roadmap/` pages",
-          "`soma-threads.sh` \u2014 chain-of-thought tracing tool for blog seeds across session logs",
-          "`soma-verify.sh self-analysis` \u2014 muscle health, cross-location divergence, orphan detection",
-          "Protocol TL;DR extraction \u2014 `protocolSummary()` prefers `## TL;DR` body section over breadcrumb (#83ec9ee)",
-          "Combined session ID format (`sNN-<hex>`) \u2014 sequential for human scanning, hex for collision safety (#e7c4057, #618cd9f)",
-          "`commit-msg` git hook \u2014 validates conventional commit format + `[cl:tag]` syntax",
-          "`guard.toolGates` setting \u2014 require reading muscles before dangerous bash commands (#1c6b725)",
-          "`breathe.graceTurns` setting \u2014 configurable auto-breathe grace period, replaces hardcoded 6-turn limit (#c9ab5a8)",
-          "Session log nudge with template at breathe trigger point (#eb8acc8)",
-          "Periodic auto-commit every 5th turn for crash resilience (#c6caccc)",
-          "Scratch note lifecycle \u2014 session IDs, date sections, active/done/parked status, router capabilities, auto-inject (#0d364f2)",
-          "Statusline shows session ID on line 2 (#d474cbf)",
-          "Polyglot script discovery \u2014 `.sh`, `.py`, `.ts`, `.js`, `.mjs` (#1acb8c2)"
+          "Capability router for inter-extension communication. Extensions can provide and consume capabilities, emit and listen for signals.",
+          "Session rotation via signal file. Auto-breathe can now rotate into a fresh context without command context.",
+          "Per-session log files with auto-incrementing names. No more overwrites across rotations.",
+          "Resume boot diffing. Restarting a session skips redundant preload injection.",
+          "Restart-required detection. When you edit core files, the statusline shows a restart indicator.",
+          "Changelog pipeline. Generate categorized entries from commits, parse into JSON for the website.",
+          "Chain-of-thought tracing tool for blog seeds across session logs.",
+          "Self-analysis command. Muscle health checks, cross-location divergence, orphan detection.",
+          "Tool gates. Require reading relevant muscles before dangerous bash commands.",
+          "Grace period setting for auto-breathe. Configurable delay before rotation.",
+          "Scratch notes. Session IDs, date sections, active/done/parked status, auto-inject into context.",
+          "Polyglot script discovery. Scripts in .sh, .py, .ts, .js, .mjs all get picked up.",
+          "Periodic auto-commit every 5th turn for crash resilience."
         ],
         "changed": [
-          "Auto-breathe rotation now writes `.rotate-signal` and calls `ctx.shutdown()` immediately when preload already exists \u2014 no more waiting for `turn_end` that may not fire (#378a1b1)",
-          "Preload filenames use `sNN` iterating pattern (was static session ID suffix) to prevent overwrites within a session (#378a1b1)",
-          "Self-awareness protocols consolidated \u2014 5 redundant protocols became configuration guides (#b70ca44)",
-          "`/scratch` extracted to standalone `soma-scratch.ts` extension (#932f446)",
-          "Shared helpers extracted to `utils.ts` \u2014 deduplication across core modules (#2dbea9a, #3d8467e)",
-          "Unified rotation through `/inhale`, removed `/auto-continue` (#7b7ba52)",
-          "Changelog pipeline switched to Ghostty-style commit-driven entries (#ec27a11)",
-          "`pattern-evolution` protocol updated with identity maturation layer; `working-style` with tool-awareness (#5e4219d)",
-          "Dev hooks generated locally by `soma-dev.sh`, not committed to repo (#efc6ed4)"
+          "Auto-breathe rotation is immediate when preload exists. No more waiting for a turn that may not fire.",
+          "Self-awareness protocols consolidated. Five redundant protocols became configuration guides.",
+          "Scratch extracted to its own extension.",
+          "Unified session rotation through /inhale."
         ]
       }
     },
@@ -88,31 +75,18 @@
       "date": "2026-03-12",
       "features": {
         "added": [
-          "Auto-breathe mode \u2014 proactive context management that triggers wrap-up at configurable %, auto-rotates at higher %. Safety net at 85% always on. Opt-in via `breathe.auto` in settings (#1d533bf)",
-          "`/auto-breathe` command \u2014 runtime toggle (`on|off|status`), persists to settings.json",
-          "Smarter `/breathe` \u2014 context-aware instructions (light/full/urgent), handles preload-already-written and timeout edge cases",
-          "Cold-start muscle boost \u2014 muscles created <48h get +3 effective heat for at least 2 sessions",
-          "Orient-from preloads \u2014 preload template includes `## Orient From` pointing to files next session should read first",
-          "`soma:recall` event signal \u2014 extensions can listen for context pressure events (steno integration)",
-          "`/auto-commit` command \u2014 toggle `.soma/` auto-commit on exhale/breathe (`on|off|status`)",
-          "Auto-commit `.soma/` state \u2014 changes committed to local git on every exhale/breathe via `checkpoints.soma.autoCommit`",
-          "`/pin` and `/kill` invalidate prompt cache \u2014 heat changes take effect next turn, not next session",
-          "`/soma prompt` diagnostic \u2014 shows compiled sections, identity status, heat levels, context %, runtime state",
-          "`sync-to-cli.sh` and `sync-to-website.sh` \u2014 one-command repo sync scripts",
-          "`soma-compat.sh` \u2014 detect protocol/muscle overlap, redundancy, directive conflicts",
-          "`soma-update-check.sh` \u2014 compare local protocol/muscle versions against hub",
-          "`/scratch` command \u2014 quick notes to `.soma/scratchpad.md`, append-only, agent doesn't see unless `/scratch read`",
-          "`guard.bashCommands` setting \u2014 `allow`/`warn`/`block` for dangerous bash command prompts",
-          "Automations system \u2014 `.soma/automations/` for step-by-step procedural flows",
-          "Polyglot script discovery \u2014 boot discovers `.sh`, `.py`, `.ts`, `.js`, `.mjs` scripts with auto-extracted descriptions",
-          "`soma init --orphan` \u2014 `--orphan`/`-o` flag for clean child projects with zero parent inheritance",
-          "Git hooks: `post-commit` auto-changelog + `pre-push` docs-drift nudge",
-          "Bundled protocols: `correction-capture` + `detection-triggers` \u2014 learning-agent protocols"
+          "Auto-breathe mode. Proactive context management that triggers wrap-up at configurable thresholds and auto-rotates at higher ones.",
+          "Identity chain. Layered identity from project, parent, and global .soma/ directories.",
+          "Heat system. Protocols and muscles have temperature scores that rise with use and decay with neglect.",
+          "Protocol loading by heat. Hot protocols load in full, warm ones load a summary, cold ones skip.",
+          "Preload system. The agent writes a briefing for its next self before rotating. Not a summary. A letter.",
+          "Context warnings at 50%, 70%, 80%. Auto-exhale at 85%.",
+          "Muscle discovery by keywords. Focus scoring matches muscles to the current task.",
+          "Settings cascade. Project overrides parent overrides global. Only set what you want to change.",
+          "9 core modules: discovery, identity, heat, muscles, protocols, settings, preload, prompt, utils."
         ],
         "changed": [
-          "Config-first script extensions \u2014 `settings.scripts.extensions` controls which file types are discovered",
-          "Command cleanup \u2014 removed `/flush`, folded `/preload` into `/soma preload` and `/debug` into `/soma debug`",
-          "CI improvements \u2014 PR check and release workflows now run all test suites"
+          "System prompt compiled fresh each boot from identity + protocols + muscles + context."
         ]
       }
     },
@@ -121,24 +95,16 @@
       "date": "2026-03-11",
       "features": {
         "added": [
-          "Compiled system prompt (\"Frontal Cortex\") \u2014 `core/prompt.ts` assembles complete system prompt from identity chain, protocol summaries, muscle digests, dynamic tool section",
-          "Session-scoped preloads \u2014 `preload-<sessionId>.md` prevents multi-terminal conflicts",
-          "Identity in system prompt \u2014 moved from boot user message for better token caching",
-          "Parent-child inheritance \u2014 `inherit: { identity, protocols, muscles, tools }` in settings",
-          "Persona support \u2014 `persona: { name, emoji, icon }` for named agent instances",
-          "Smart init \u2014 `detectProjectContext()` scans for parent `.soma/`, `CLAUDE.md`, project signals",
-          "`systemPrompt` settings \u2014 toggle docs, guard, CLAUDE.md awareness in system prompt assembly",
-          "`prompts/system-core.md` \u2014 static behavioral DNA skeleton",
-          "Debug mode \u2014 `.soma/debug/` logging, `/soma debug on|off`",
-          "Protocol graduation \u2014 heat decay floor, frontmatter enforcement, preload quality validation",
-          "Configurable boot sequence \u2014 `settings.boot.steps` array",
-          "Git context on boot \u2014 `git-context` step injects recent commits and changed files",
-          "Configurable context warnings \u2014 `settings.context` thresholds"
+          "Compiled system prompt. Identity, protocols, muscles, scripts assembled into one coherent prompt at boot.",
+          "7 extensions: boot, breathe, guard, header, route, scratch, statusline.",
+          "Protocol and muscle frontmatter with heat scores, tags, domains.",
+          "Recursive content discovery. Subdirectories for organized AMPS content.",
+          "Global ~/.soma/ directory with shared identity and settings.",
+          "Content installation from the community hub."
         ],
         "changed": [
-          "Extension ownership refactor \u2014 `soma-boot.ts` owns lifecycle + commands, `soma-statusline.ts` owns rendering + keepalive",
-          "Boot user message trimmed \u2014 identity, protocol breadcrumbs, and muscle digests moved to system prompt",
-          "CLAUDE.md awareness, not adoption \u2014 system prompt notes existence but doesn't inject content"
+          "Moved from single CLAUDE.md to layered AMPS system.",
+          "Scripts seeded on soma init instead of manual setup."
         ]
       }
     },
@@ -147,22 +113,14 @@
       "date": "2026-03-10",
       "features": {
         "added": [
-          "AMPS content type system \u2014 4 shareable types: Automations, Muscles, Protocols, Skills. `scope` field controls distribution",
-          "Hub commands \u2014 `/install <type> <name>`, `/list local|remote` with dependency resolution",
-          "`core/content-cli.ts` \u2014 non-interactive content commands for CLI wiring",
-          "`core/install.ts` \u2014 hub content installation with dependency resolution",
-          "`core/prompt.ts` \u2014 compiled system prompt assembly (12th core module)",
-          "`soma-guard.ts` extension \u2014 safe file operation enforcement with `/guard-status` command",
-          "`soma-audit.sh` \u2014 ecosystem health check orchestrating 11 focused audits",
-          "`/rest` command \u2014 disable cache keepalive + exhale",
-          "`/keepalive` command \u2014 toggle cache keepalive on/off/status",
-          "Cache keepalive system \u2014 300s TTL, 45s threshold, 30s cooldown",
-          "Session checkpoints \u2014 `.soma/` committed every exhale (local git)",
-          "10 test suites with 255 passing tests",
-          "Workspace scripts \u2014 `soma-scan.sh`, `soma-search.sh`, `soma-snapshot.sh`, `soma-tldr.sh`"
+          "Auto-init on first soma run. Creates .soma/, detects project stack.",
+          "/inhale and /breathe commands for session continuation.",
+          "Context warnings at configurable thresholds.",
+          "Hub content installation with dependency resolution.",
+          "Extension scaffolding during init."
         ],
         "changed": [
-          "Bundled protocols slimmed from all to 4 core (breath-cycle, heat-tracking, session-checkpoints, pattern-evolution)"
+          "Session rotation unified through /inhale."
         ]
       }
     },
