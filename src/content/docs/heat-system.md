@@ -74,28 +74,39 @@ These work for both protocols and muscles. Tab-complete the name.
 
 ## Where Heat Lives
 
-**Protocols:** Heat state is stored in `.soma/.protocol-state.json` — a JSON file managed by the runtime. You don't edit this directly.
+Heat is stored in two places, depending on the content type:
+
+**Protocols and scripts** use `.soma/state.json` — a JSON file managed by the runtime:
 
 ```json
 {
   "protocols": {
-    "breath-cycle": {
-      "heat": 10,
-      "last_referenced": "2026-03-09",
-      "times_applied": 42,
+    "workflow": {
+      "heat": 8,
+      "lastReferenced": "2026-03-20",
       "pinned": false
-    },
-    "frontmatter-standard": {
-      "heat": 5,
-      "last_referenced": "2026-03-08",
-      "times_applied": 18,
-      "pinned": false
+    }
+  },
+  "scripts": {
+    "soma-code.sh": {
+      "count": 19,
+      "lastUsed": "2026-03-20"
     }
   }
 }
 ```
 
-**Muscles:** Heat is stored in the muscle file's own frontmatter (`heat: N`). The muscle file is the source of truth.
+**Muscles and automations** store heat in their own frontmatter (`heat: N`). The file itself is the source of truth:
+
+```yaml
+---
+type: muscle
+name: e2e-flow-testing
+heat: 5
+---
+```
+
+This dual storage is a known architectural gap — see "Known Gaps" below.
 
 ## Configuration
 
@@ -130,7 +141,7 @@ See [Configuration](configuration.md) for the full settings reference.
 
 ## First Boot
 
-On first boot (no `.protocol-state.json` exists), heat is seeded from each protocol's `heat-default` frontmatter field:
+On first boot (no `state.json` exists), heat is seeded from each protocol's `heat-default` frontmatter field:
 
 | `heat-default` | Starting Heat | Tier |
 |----------------|--------------|------|
@@ -146,10 +157,11 @@ Heat and usage are tracked automatically — no manual updates needed:
 
 | Content | What's tracked | Where stored | Mechanism |
 |---------|---------------|-------------|-----------|
-| Protocols | Heat events (applied, referenced, pinned) | `.protocol-state.json` | `recordHeatEvent()` on tool_result |
-| Muscles | Loads count, heat | Frontmatter (`loads:`, `heat:`) | `trackMuscleLoads()` at boot, `bumpMuscleHeat()` on use |
-| MAPs | Run count, last run date | Frontmatter (`runs:`, `last-run:`) | `trackMapRun()` on .boot-target load |
-| Scripts | Usage count, last used date | `state.json` (`scripts.{name}`) | Auto-detect on `tool_result` (bash command regex) |
+| Protocols | Heat (bump on reference, decay on exhale) | `state.json` | Auto-detect on tool_result |
+| Muscles | Heat in frontmatter | Each muscle's `.md` file | `bumpMuscleHeat()` on focus match, decay on exhale |
+| MAPs | Run count, last run date | Each MAP's frontmatter | `trackMapRun()` on .boot-target load |
+| Scripts | Usage count, last used date | `state.json` | Auto-detect bash command regex on tool_result |
+| Automations | Heat in frontmatter | Each automation's `.md` file | Bump/decay via `automations.ts` |
 
 ### Focus Overrides
 
@@ -178,6 +190,22 @@ With heat, the system self-organizes. Protocols you use daily stay hot and fully
 Context thresholds are percentages of the model's window — they scale automatically from 200K to 1M+ context models.
 
 The result: **the agent's prompt reflects what you actually do, not what you once configured.**
+
+## Known Gaps
+
+We're being honest about where the heat system is today versus where it's going.
+
+**Muscle heat doesn't bump on natural use.** Muscles only get heat bumped when matched by `soma focus`. A muscle that loads at boot because it's warm stays at the same heat forever — regular use during a session doesn't bump it. This means most muscle heat values sit at 0. Fix is in progress.
+
+**Decay only runs on clean shutdown.** If a session crashes, gets interrupted, or rotates unexpectedly, `saveAllHeatState()` never fires. Heat stays stale until the next clean exit. Sessions that end with Ctrl+C don't save heat.
+
+**Dual storage.** Protocols and scripts use `state.json` (centralized JSON). Muscles and automations use frontmatter in each file (distributed markdown). There's no single place to see the full heat picture. We're evaluating whether to unify this.
+
+**No heat visibility command.** There's no way to run "show me what's hot" across all four AMPS layers. You have to read `state.json` and scan frontmatter in individual files. A unified heat dashboard is planned.
+
+**Heat thresholds are hardcoded.** The cold/warm/hot boundaries (0-2, 3-7, 8+) and decay rate are in TypeScript, not in settings. Moving these to configurable settings is part of our [AMPS extraction trajectory](/blog/the-ratio#the-trajectory).
+
+These are architectural gaps, not bugs — the system works within its current constraints. Heat tracking for protocols and scripts is solid. Muscle and automation heat needs the fixes above to reach the same level.
 
 ## Related
 
