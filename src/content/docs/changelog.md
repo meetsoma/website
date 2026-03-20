@@ -5,7 +5,7 @@ section: "Reference"
 order: 10
 ---
 
-What's new in Soma. Full implementation details available to beta testers.
+What's new in Soma. Full implementation details available to registered users.
 
 ---
 
@@ -15,12 +15,12 @@ What's new in Soma. Full implementation details available to beta testers.
 
 - **Soma speaks** — Run `soma` and it talks to you — a different voice each time. Press `?` to ask about memory, heat, or anything else. Every answer is unique. No AI involved.
 - **No compaction. Ever.** — Other agents compress your conversation when context fills up. Soma doesn't. It breathes — writes a surgical briefing with full context, then starts fresh at full capacity.
-- **Private beta** — Soma is now a lightweight launcher on npm. The runtime installs separately for verified beta testers.
+- **Open install** — Soma is now a lightweight launcher on npm. The runtime downloads automatically on first run.
 
 ### New Commands
 
 - `soma` — Welcome experience with rotating daily concepts and interactive Q&A
-- `soma init` — Install the Soma runtime (beta access required)
+- `soma init` — Install the Soma runtime
 - `soma about` — Learn how Soma works
 - `soma doctor` — Health check for your installation
 - `soma update` — Check for new versions
