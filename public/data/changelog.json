@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-21T07:08:35Z",
+  "generated": "2026-03-21T07:22:59Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
@@ -8,39 +8,26 @@
       "entries": {
         "added": [
           "**Natural muscle heat detection** — muscles now heat-bump from natural use, not just focus. Script execution matches against `tools:` field. File edits match path segments against `triggers`. Zero configuration needed.",
-          "**Migration system** — `version` field in settings.json. `core/migrations.ts` discovers and chains migration maps. Per-version fix scripts with agent-prompt fallback.",
-          "**soma-doctor** — workspace health check + migration tool. Three tiers: `--check` (quick), `--fix` (script), `--migrate` (agent). Personality voice on exit.",
-          "**Community template sync** — boot fetches latest protocols from `community/templates/default/template.json`. Bundled protocols serve as offline fallback.",
-          "**soma-theme.sh** — shared source-able library for σ branding, colours, voice banks, summary helpers.",
-          "**soma-rebrand.sh** — ecosystem-wide search/replace for emails, license dates, branding. `--license` audits consistency.",
-          "**soma-switch.sh dev mode** — symlinks ~/.soma/agent/ to repos/agent + repos/cli for dogfooding.",
-          "**BSL 1.1 footer** on all 10 shipped scripts.",
-          "**4 new sandbox tests** — cli.js present, main.js present, cli.js is Soma's, PI_SKIP_VERSION_CHECK set.",
-          "**script-polish muscle** — clean exits, σ voice, BSL footer pattern for all scripts.",
-          "**github-theming muscle** — README roles, SVG technique for centered content, email table."
+          "**Migration system** — `version` field in settings.json. `core/migrations.ts` discovers and chains migration maps. `soma doctor` checks workspace health. `soma doctor --fix` auto-repairs. `soma doctor --migrate` spawns agent for complex fixes.",
+          "**Community template sync** — boot fetches latest protocols from community repo. Bundled protocols serve as offline fallback. Add content to community → add name to template → all new users get it.",
+          "**`tools:` field** in muscle frontmatter — declares which scripts a muscle references. Parsed and used for natural heat detection."
         ],
         "changed": [
-          "**Triggers consolidation** — `triggers` + `keywords` + `topic` merged into single `triggers` string[] at parse time. `tags` stays for categorization only. Old format works indefinitely (backwards compat).",
-          "**Muscle interface** — removed `keywords[]`, `topics[]`, `MuscleTrigger[]` from Muscle. Added `tools[]`, flat `triggers[]`.",
-          "**matchMusclesToFocus** simplified — one list to check instead of four redundant fields with different weights.",
-          "**Help output** polished across soma-code, soma-seam, soma-verify with consistent σ branding.",
-          "**All 7 repo READMEs** refreshed — neutral voice (\"it\" not \"she\"), BSL footer, consistent layout.",
-          "**Personality engine** — no longer claims \"you're looking at it.\" Honest about being templates.",
-          "**Org profile** — install command front and center, SVG directory tree, expandable details."
+          "**Triggers consolidation** — `triggers` + `keywords` + `topic` merged into single `triggers` list at parse time. `tags` stays for categorization only. Old format works indefinitely (backwards compat).",
+          "**Muscle interface simplified** — one activation list instead of four redundant fields with different score weights.",
+          "**Personality engine** — welcome flow is honest about being templates, not the agent."
         ],
         "fixed": [
-          "**SX-25: soma-beta missing cli.js** — thin-cli fell through to raw Pi (no version check skip, no auto-rotate). soma-release.sh now includes cli.js + main.js + Pi runtime dirs.",
-          "**BUILTIN_SETTINGS missing version** — new .soma/ had no version field. Found via hands-on tmux testing.",
-          "**test-protocols.sh** — tested nonexistent 'list' command, checked removed 'topic:' field.",
-          "**soma-verify.sh** — updated to check 'triggers:' instead of removed fields.",
-          "**sync-to-cli.sh** — called deleted sync-from-agent.sh.",
-          "**release-publish.yml** — disabled. Was shipping full source to npm on v* tags. Now manual-dispatch only.",
-          "**License change date** — corrected to 2027-09-18 (18 months), was incorrectly set to 2029/2030.",
-          "**Contact email** — standardised to meetsoma@gravicity.ai across all repos."
+          "**Runtime delegation** — soma-beta now includes cli.js and Pi runtime files. Previously thin-cli fell through to raw Pi (no version skip, no auto-rotate, \"Update Available\" banner).",
+          "**Fresh installs** now include version field in settings.json.",
+          "**Stale test assertions** — test suite checked for removed frontmatter fields and nonexistent commands."
         ],
-        "security": [
-          "Dangerous CI workflow `release-publish.yml` disabled — prevented accidental full source publication.",
-          "`sync-from-agent.sh` deleted from CLI repo — was the mechanism for source leakage."
+        "internal": [
+          "soma-theme.sh, soma-rebrand.sh, soma-switch.sh dev mode, soma-doctor.sh",
+          "script-polish + github-theming muscles",
+          "7 repo READMEs refreshed, post-release MAP created",
+          "License date corrected to 2027-09-18, contact standardised to meetsoma@gravicity.ai",
+          "Dangerous CI disabled (release-publish.yml shipped full source on v* tags)"
         ]
       }
     },
