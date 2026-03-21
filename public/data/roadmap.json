@@ -20,23 +20,24 @@
       }
     },
     {
-      "version": "0.6.3",
+      "version": "0.6.1",
       "date": "2026-03-20",
       "features": {
         "added": [
           "Published to npm. npm install -g meetsoma is live.",
+          "Engine updated to Pi 0.61.1. Keybinding stability, session path fixes.",
           "27 documentation pages across 5 organised sections.",
-          "AMPS overview page. Migration guide from CLAUDE.md and .cursorrules. Troubleshooting page.",
+          "AMPS overview page. Migration guide from CLAUDE.md and .cursorrules. Troubleshooting.",
           "Collapsible docs sidebar with section icons.",
-          "Source access page redesigned with tier cards, Dev Kit teaser, Known Gaps.",
-          "3 solo blog posts: Three Files, The Ratio, The Operating System.",
-          "Known Gaps sections across docs and website.",
-          "Roadmap curated with user-facing language."
+          "Source access page with tier cards, Dev Kit teaser, Known Gaps.",
+          "3 blog posts: Three Files, The Ratio, The Operating System.",
+          "Known Gaps sections across docs \u2014 honest about limitations.",
+          "Roadmap curated. On the Horizon feature cards."
         ],
         "changed": [
-          "Engine updated to Pi 0.61.1. Keybinding stability, session path fixes.",
-          "Heat system docs corrected. .protocol-state.json references fixed across all surfaces.",
-          "@gravicity.ai/soma removed from npm."
+          "Heat system docs corrected across all surfaces.",
+          "@gravicity.ai/soma removed from npm.",
+          "/beta redesigned: Private Beta \u2192 Source Access."
         ]
       }
     },

@@ -23,8 +23,7 @@ interface RoadmapData {
 
 // Editorial labels — curated per release
 const versionLabels: Record<string, string> = {
-  'Next': 'On the Horizon',
-  '0.6.3': 'npm Publish, 27 Docs & Source Access',
+  '0.6.1': 'npm Publish, Pi 0.61.1 & 27 Docs',
   '0.6.0': 'Open Install, Voice & 23 Docs',
   '0.5.2': 'Scratch, Scanning & Session Warnings',
   '0.5.1': 'Router, Auto-Breathe & Dev Tools',

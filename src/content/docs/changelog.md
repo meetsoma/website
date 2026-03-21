@@ -9,7 +9,7 @@ What's new in Soma. Full implementation details available to registered users.
 
 ---
 
-## [0.6.3] — 2026-03-20
+## [0.6.1] — 2026-03-20
 
 ### Highlights
 
