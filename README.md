@@ -1,43 +1,66 @@
-# Astro Starter Kit: Minimal
+<div align="center">
 
-```sh
-pnpm create astro@latest -- --template minimal
+### σ soma.gravicity.ai
+
+**Website, docs, and blog for Soma.**
+
+[**soma.gravicity.ai**](https://soma.gravicity.ai) · [Docs](https://soma.gravicity.ai/docs) · [Blog](https://soma.gravicity.ai/blog) · [Hub](https://soma.gravicity.ai/hub) · [Roadmap](https://soma.gravicity.ai/roadmap)
+
+</div>
+
+---
+
+## Stack
+
+- **Astro** — static site with islands
+- **Vercel** — auto-deploys from `main` branch
+- **Content** — Markdown collections (docs, blog, changelog)
+
+## Development
+
+```bash
+pnpm install
+pnpm dev          # localhost:4321
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Deployment
 
-## 🚀 Project Structure
+```bash
+# Work on dev branch
+git checkout dev
+# ... make changes ...
+git add -A && git commit -m "docs: ..."
+git push
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+# Deploy: merge to main
+git checkout main
+git merge dev --ff-only
+git push                    # Vercel auto-deploys
+git checkout dev
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Content Sources
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+| Content | Source | Sync |
+|---|---|---|
+| **Docs** | `repos/agent/docs/*.md` | Manual copy → preserve Astro frontmatter |
+| **Blog** | Written here in `src/content/blog/` | Native |
+| **Changelog** | `repos/agent/CHANGELOG.md` | `soma-changelog-json.sh --sync` |
+| **Roadmap** | `public/data/roadmap.json` | Curated (don't auto-overwrite) |
+| **Hub** | `repos/community/hub-index.json` | `fetch-community.mjs` at build |
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Structure
 
-## 🧞 Commands
+```
+src/
+  content/
+    docs/          27 documentation pages
+    blog/          published posts
+  pages/           Astro routes
+  layouts/         DocsLayout, BlogLayout
+  components/      islands (changelog, roadmap, hub)
+public/
+  data/            changelog.json, roadmap.json
+```
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+<sub>BSL 1.1 © Curtis Mercier — open source 2030</sub>
