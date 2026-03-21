@@ -19,9 +19,9 @@ Every session starts generic — the agent loads whatever muscles and protocols 
 
 Focus priming runs **before** the model starts. It traces your keyword through:
 
-- **Muscles** — tags, keywords, triggers, digest content
+- **Muscles** — triggers, name, digest content
 - **Protocols** — content matching
-- **MAPs** — trigger keywords, name matching
+- **MAPs** — triggers, name matching
 - **Sessions** — past session logs mentioning the keyword
 - **Preloads** — continuation state with relevant context
 
@@ -50,7 +50,7 @@ Each muscle is scored against the keyword:
 |-----------|-------|---------|
 | Explicit trigger (`triggers: [auth]`) | 10 | Muscle declares it activates on "auth" |
 | Tag match (`tags: [auth]`) | 5 | Muscle is tagged with the keyword |
-| Keyword match (`keywords: [auth]`) | 5 | Keyword in frontmatter keywords list |
+| Trigger match (`triggers: [auth]`) | 10 | Merged from triggers + keywords + topic |
 | Topic match (`topics: [auth]`) | 4 | Topic in frontmatter topics list |
 | Name contains keyword | 3 | `auth-flow.md` matches "auth" |
 | Digest contains keyword | 2 | Keyword appears in the muscle summary |

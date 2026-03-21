@@ -10,13 +10,13 @@ order: 2.5
 `.soma/identity.md` — who Soma is in this project. Four sections: This Project, Voice, How I Work, Review & Evolve. Discovered through use, refined through corrections. Review at exhale and every ~5 sessions. Identity is *who* (voice, values, style), protocols are *how* (rules, workflows). Keep under 30 lines. Layered: project → parent → global. Gitignored by default.
 <!-- /tldr -->
 
-Soma doesn't come pre-configured. She **discovers** who she is through working with you. Her `identity.md` is written by her, not for her.
+Soma doesn't come pre-configured. it **discovers** who it is through working with you. its `identity.md` is written by her, not for her.
 
 ## How Identity Works
 
-On first run in a project, Soma sees an empty (or absent) identity file. Based on your workspace — the languages, frameworks, project structure, and how you work together — she writes her own `identity.md`.
+On first run in a project, Soma sees an empty (or absent) identity file. Based on your workspace — the languages, frameworks, project structure, and how you work together — it writes its own `identity.md`.
 
-This is intentional. Identity that's discovered is more authentic than identity that's assigned. Over time, as Soma works more sessions in your project, she refines her voice, her preferences, her working style.
+This is intentional. Identity that's discovered is more authentic than identity that's assigned. Over time, as Soma works more sessions in your project, it refines its voice, its preferences, its working style.
 
 ## The Identity File
 
@@ -94,7 +94,7 @@ The best identities are under 30 lines of content. Dense beats comprehensive —
 
 You *can* write an identity file yourself. Nothing stops you from creating `.soma/identity.md` with exactly the voice you want. But the design philosophy is:
 
-- **Let Soma write it first.** See what she discovers about herself through your work.
+- **Let Soma write it first.** See what it discovers about herself through your work.
 - **Edit to refine.** If something's off — wrong tone, missing preference — edit the file directly. Soma will respect your changes.
 - **Don't over-specify.** A 3-line identity that captures the essence is better than a 200-line config that tries to control everything.
 
@@ -155,6 +155,6 @@ Persona inherits from parent → global unless overridden at the project level.
 ## Tips
 
 - **Don't fight it.** If Soma's discovered identity feels wrong, edit the file. Don't delete it — refine it.
-- **Read it sometimes.** Soma's self-description can reveal how she sees the project — useful perspective.
+- **Read it sometimes.** Soma's self-description can reveal how it sees the project — useful perspective.
 - **Keep it short.** The identity loads into every session's system prompt. Concise beats comprehensive.
 - **Trust the layers.** Put stable traits in global, project-specific traits in the project file. The layering handles the rest.
