@@ -1,11 +1,89 @@
 {
-  "generated": "2026-03-20T17:23:49Z",
+  "generated": "2026-03-21T07:08:35Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
-      "version": "Unreleased",
-      "date": "",
-      "entries": {}
+      "version": "0.6.2",
+      "date": "2026-03-21",
+      "entries": {
+        "added": [
+          "**Natural muscle heat detection** — muscles now heat-bump from natural use, not just focus. Script execution matches against `tools:` field. File edits match path segments against `triggers`. Zero configuration needed.",
+          "**Migration system** — `version` field in settings.json. `core/migrations.ts` discovers and chains migration maps. Per-version fix scripts with agent-prompt fallback.",
+          "**soma-doctor** — workspace health check + migration tool. Three tiers: `--check` (quick), `--fix` (script), `--migrate` (agent). Personality voice on exit.",
+          "**Community template sync** — boot fetches latest protocols from `community/templates/default/template.json`. Bundled protocols serve as offline fallback.",
+          "**soma-theme.sh** — shared source-able library for σ branding, colours, voice banks, summary helpers.",
+          "**soma-rebrand.sh** — ecosystem-wide search/replace for emails, license dates, branding. `--license` audits consistency.",
+          "**soma-switch.sh dev mode** — symlinks ~/.soma/agent/ to repos/agent + repos/cli for dogfooding.",
+          "**BSL 1.1 footer** on all 10 shipped scripts.",
+          "**4 new sandbox tests** — cli.js present, main.js present, cli.js is Soma's, PI_SKIP_VERSION_CHECK set.",
+          "**script-polish muscle** — clean exits, σ voice, BSL footer pattern for all scripts.",
+          "**github-theming muscle** — README roles, SVG technique for centered content, email table."
+        ],
+        "changed": [
+          "**Triggers consolidation** — `triggers` + `keywords` + `topic` merged into single `triggers` string[] at parse time. `tags` stays for categorization only. Old format works indefinitely (backwards compat).",
+          "**Muscle interface** — removed `keywords[]`, `topics[]`, `MuscleTrigger[]` from Muscle. Added `tools[]`, flat `triggers[]`.",
+          "**matchMusclesToFocus** simplified — one list to check instead of four redundant fields with different weights.",
+          "**Help output** polished across soma-code, soma-seam, soma-verify with consistent σ branding.",
+          "**All 7 repo READMEs** refreshed — neutral voice (\"it\" not \"she\"), BSL footer, consistent layout.",
+          "**Personality engine** — no longer claims \"you're looking at it.\" Honest about being templates.",
+          "**Org profile** — install command front and center, SVG directory tree, expandable details."
+        ],
+        "fixed": [
+          "**SX-25: soma-beta missing cli.js** — thin-cli fell through to raw Pi (no version check skip, no auto-rotate). soma-release.sh now includes cli.js + main.js + Pi runtime dirs.",
+          "**BUILTIN_SETTINGS missing version** — new .soma/ had no version field. Found via hands-on tmux testing.",
+          "**test-protocols.sh** — tested nonexistent 'list' command, checked removed 'topic:' field.",
+          "**soma-verify.sh** — updated to check 'triggers:' instead of removed fields.",
+          "**sync-to-cli.sh** — called deleted sync-from-agent.sh.",
+          "**release-publish.yml** — disabled. Was shipping full source to npm on v* tags. Now manual-dispatch only.",
+          "**License change date** — corrected to 2027-09-18 (18 months), was incorrectly set to 2029/2030.",
+          "**Contact email** — standardised to meetsoma@gravicity.ai across all repos."
+        ],
+        "security": [
+          "Dangerous CI workflow `release-publish.yml` disabled — prevented accidental full source publication.",
+          "`sync-from-agent.sh` deleted from CLI repo — was the mechanism for source leakage."
+        ]
+      }
+    },
+    {
+      "version": "0.6.1",
+      "date": "2026-03-20",
+      "entries": {
+        "changed": [
+          "Pi runtime upgraded 0.61.0 → 0.61.1 — Release Round 3 (#3cbf2bc)"
+        ],
+        "fixed": [
+          "CLI dist synced from pi-mono 0.61.1 — `getEditorKeybindings` → `getKeybindings` crash resolved",
+          "Stale `content-cli.js` import removed (Pi 0.61.0 moved install/list/content to main.js)",
+          "`--help` fixed — `printGumHelp` removed in 0.61.0, replaced with `printHelp`",
+          "Heat system docs: `.protocol-state.json` → `state.json` across 6 files, 3 repos",
+          "Protocols page: collapsed 60-line heat duplication to reference, renamed \"Protocols & Heat\" → \"Protocols\"",
+          "`soma-verify.sh self-analysis`: script search recurses into subdirectories, skips archived `.soma/`",
+          "7 muscles: missing `topic:` / `keywords:` frontmatter restored",
+          "`.protocol-state.json` deleted (dead since March 13)"
+        ],
+        "docs": [
+          "27 pages across 5 sections (was 24 across 5 disorganised sections)",
+          "New: `amps.md` (four-layer overview), `migrating.md` (from CLAUDE.md/.cursorrules), `troubleshooting.md`",
+          "Collapsible sidebar with section icons",
+          "Roadmap curated for all 7 versions, \"Next\" section added",
+          "`/beta` redesigned: \"Private Beta\" → \"Source Access\" with tier cards and Known Gaps"
+        ],
+        "blog": [
+          "\"Three Files\" — solo, on identity and architecture",
+          "\"The Ratio\" — solo, on code vs behavior growth",
+          "\"The Operating System We Didn't Plan\" — solo, on AMPS as dev process",
+          "Interlinks across all 8 published posts + doc page SEO links"
+        ],
+        "internal": [
+          "`soma-dev` CLI: doctor, fix, sync-dist, reinstall commands",
+          "`system-audit` + `audit-preflight` MAPs — truth-check any subsystem",
+          "`release-tracking` protocol + `release-cycle` MAP",
+          "Release folder structure: `v0.6.0/` (archived) + `v0.6.x/` (living)",
+          "AMPS organised: `_public/` staging for hub, consistent across protocols/muscles/scripts",
+          "`amps-interconnect` MAP restored from archive",
+          "`solo-editorial` muscle for agent-authored blog posts"
+        ]
+      }
     },
     {
       "version": "0.6.0",

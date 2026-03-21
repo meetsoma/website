@@ -4,7 +4,6 @@ description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior
 section: "Customization"
 order: 1
 ---
-
 # Configuration
 
 <!-- tldr -->

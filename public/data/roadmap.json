@@ -8,7 +8,6 @@
       "features": {
         "added": [
           "Heat visibility command. See what's hot across all AMPS layers.",
-          "Muscle heat bumps on natural use, not just focus matching.",
           "Soma Dev Kit \u2014 extension SDK, protocol authoring, MAP templates, hub publishing.",
           "Community hub scripts and MAP pages.",
           "Tutorial guides: writing your first protocol, your first muscle."
@@ -16,6 +15,29 @@
         "changed": [
           "Boot sequence extraction \u2014 moving hardcoded behavior into user-editable MAPs.",
           "Heat thresholds moving from TypeScript to configurable settings."
+        ]
+      }
+    },
+    {
+      "version": "0.6.2",
+      "date": "2026-03-21",
+      "features": {
+        "added": [
+          "Natural muscle heat detection \u2014 scripts and file edits bump related muscles automatically.",
+          "Migration system \u2014 soma doctor checks, fixes, and migrates workspaces between versions.",
+          "Community template sync \u2014 boot fetches latest protocols from community repo.",
+          "Script theming \u2014 \u03c3 branding, clean exits, BSL footer on all shipped scripts.",
+          "soma-rebrand \u2014 ecosystem-wide search/replace for branding changes."
+        ],
+        "changed": [
+          "Triggers consolidation \u2014 keywords, topic, triggers merged into single activation list.",
+          "All repo READMEs refreshed with consistent voice and branding.",
+          "License change date corrected to September 2027."
+        ],
+        "fixed": [
+          "Runtime delegation \u2014 soma-beta now includes cli.js and Pi runtime files.",
+          "Fresh installs include version field in settings.json.",
+          "Dangerous CI workflow disabled \u2014 prevented accidental source publication."
         ]
       }
     },

@@ -4,7 +4,6 @@ description: "Behavioral rules that shape how the agent works. Loaded by heat, s
 section: "Core Concepts"
 order: 3
 ---
-
 # Protocols
 
 <!-- tldr -->
@@ -42,7 +41,7 @@ Every protocol has a temperature. Hot (8+) loads the full body. Warm (3-7) loads
 
 Heat rises when a protocol gets used (auto-detected from tool results) and decays by 1 each session if unused. `/pin` locks something hot. `/kill` drops it to zero.
 
-Protocol heat is stored in `.soma/state.json`. For thresholds, configuration, known gaps, and how heat works across all [AMPS](/docs/amps) layers, see [Heat System](/docs/heat-system).
+Protocol heat is stored in `.soma/state.json`. For the full deep-dive on how heat works across all AMPS layers, see the Heat System doc.
 
 ## Writing Your Own Protocol
 

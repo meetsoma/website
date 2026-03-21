@@ -4,7 +4,6 @@ description: "Project vs user level storage, git strategy, data flow."
 section: "Core Concepts"
 order: 5
 ---
-
 # Memory Layout
 
 <!-- tldr -->
