@@ -13,25 +13,21 @@ What's new in Soma. Full implementation details available to registered users.
 
 ### Highlights
 
-- **Published to npm.** `npm install -g meetsoma` is live. 24KB thin launcher — the runtime downloads on first run.
-- **Engine updated to 0.61.1** — keybinding stability, session path fixes, suspend/resume resilience.
-- **27 documentation pages** across 5 sections. New: AMPS overview, migration guide, troubleshooting.
-- **Source access page** redesigned with tier cards, Dev Kit teaser, and Known Gaps.
+- **Published to npm.** `npm install -g meetsoma` is live. Lightweight launcher — the runtime downloads on first run.
+- **Engine updated to 0.61.1** — keybinding stability, session path fixes, suspend/resume.
 
-### Docs & Website
+### New
 
-- Collapsible sidebar with section icons and auto-expand on active page.
-- 3 new pages: AMPS (four layers as one system), Migrating (from CLAUDE.md/.cursorrules), Troubleshooting.
-- Docs reorganised: First Steps → Core Concepts → Workflows → Customization → Reference.
-- Roadmap curated with user-facing language. "On the Horizon" feature cards.
-- 3 solo blog posts: Three Files, The Ratio, The Operating System.
-- Known Gaps sections across docs — honest about heat system limitations and planned fixes.
+- AMPS overview doc — the four layers (protocols, muscles, scripts, MAPs) explained as one system.
+- Migration guide — coming from CLAUDE.md or .cursorrules? Here's how Soma handles it differently.
+- Troubleshooting page with common issues and fixes.
+- Known Gaps sections in docs — honest about heat system limitations and planned fixes.
+- Docs reorganised: First Steps, Core Concepts, Workflows, Customization, Reference. Collapsible sidebar.
 
 ### Fixed
 
-- CLI crash on Pi 0.61.0 (`getEditorKeybindings` renamed upstream). Dist synced safely.
-- Heat system docs corrected across all surfaces.
-- `@gravicity.ai/soma` removed from npm (was shipping full source).
+- CLI crash on Pi 0.61.0 (`getEditorKeybindings` renamed upstream).
+- Heat system docs corrected — `.protocol-state.json` → `state.json` across all surfaces.
 
 ## [0.6.0] — 2026-03-20
 

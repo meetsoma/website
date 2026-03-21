@@ -24,20 +24,17 @@
       "date": "2026-03-20",
       "features": {
         "added": [
-          "Published to npm. npm install -g meetsoma is live.",
-          "Engine updated to Pi 0.61.1. Keybinding stability, session path fixes.",
-          "27 documentation pages across 5 organised sections.",
-          "AMPS overview page. Migration guide from CLAUDE.md and .cursorrules. Troubleshooting.",
+          "Published to npm. npm install -g meetsoma \u2014 runtime downloads on first run.",
+          "Engine updated to Pi 0.61.1. Keybinding stability, session path fixes, suspend/resume.",
+          "AMPS overview documentation. The four layers explained as one system.",
+          "Migration guide. Coming from CLAUDE.md or .cursorrules \u2014 here's how Soma does it differently.",
+          "Troubleshooting page with common issues and fixes.",
           "Collapsible docs sidebar with section icons.",
-          "Source access page with tier cards, Dev Kit teaser, Known Gaps.",
-          "3 blog posts: Three Files, The Ratio, The Operating System.",
-          "Known Gaps sections across docs \u2014 honest about limitations.",
-          "Roadmap curated. On the Horizon feature cards."
+          "Known Gaps sections in docs \u2014 honest about heat system limitations and what's being fixed."
         ],
         "changed": [
-          "Heat system docs corrected across all surfaces.",
-          "@gravicity.ai/soma removed from npm.",
-          "/beta redesigned: Private Beta \u2192 Source Access."
+          "Heat system docs corrected. Dual storage model documented.",
+          "Docs reorganised into 5 sections: First Steps, Core Concepts, Workflows, Customization, Reference."
         ]
       }
     },
