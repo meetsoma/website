@@ -84,6 +84,48 @@ const upcoming: { name: string; icon: string; description: string; status: strin
       </div>
     </section>
 
+    <!-- In Progress -->
+    <section class="section">
+      <SectionHeader title="Shipping Soon" />
+      <div class="progress-list">
+        <div class="progress-item">
+          <span class="progress-dot active"></span>
+          <div>
+            <strong>Heat system fixes</strong>
+            <p>Muscle heat bumps on natural use, not just focus matching. Heat visibility command across all AMPS layers.</p>
+          </div>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot active"></span>
+          <div>
+            <strong>Hub content expansion</strong>
+            <p>7 free-tier scripts and workflow MAPs coming to the community hub. 4 missing protocols to sync.</p>
+          </div>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot"></span>
+          <div>
+            <strong>Boot sequence extraction</strong>
+            <p>Moving hardcoded behavior from TypeScript into user-editable MAPs. Configure what loads and in what order.</p>
+          </div>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot"></span>
+          <div>
+            <strong>Heat thresholds in settings</strong>
+            <p>Cold/warm/hot boundaries and decay rate moving from hardcoded values to configurable settings.json.</p>
+          </div>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot"></span>
+          <div>
+            <strong>Tutorial guides</strong>
+            <p>Writing your first protocol. Writing your first muscle. Hands-on walkthroughs for the AMPS system.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Shipped Timeline -->
     <section class="section">
       <SectionHeader title="Shipped" />
@@ -239,6 +281,56 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     border-radius: var(--radius-sm);
   }
 
+  /* ── Shipping Soon ── */
+  .progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .progress-item {
+    display: flex;
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    transition: border-color 0.2s ease;
+  }
+
+  .progress-item:hover {
+    border-color: var(--border-accent);
+  }
+
+  .progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-subtle);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .progress-dot.active {
+    background: var(--accent-bright);
+    box-shadow: 0 0 6px var(--accent-bright);
+  }
+
+  .progress-item strong {
+    font-family: var(--font-display);
+    font-size: var(--body-text);
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: var(--space-xs);
+  }
+
+  .progress-item p {
+    font-size: var(--body-secondary);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
   @media (max-width: 768px) {
     .upcoming-grid { grid-template-columns: 1fr; }
   }
@@ -258,7 +350,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   .timeline::before {
     content: '';
     position: absolute;
-    left: 8px;
+    left: 7px;
     top: 5px;
     bottom: 5px;
     width: 2px;
@@ -287,16 +379,18 @@ const upcoming: { name: string; icon: string; description: string; status: strin
 
   .timeline-dot {
     position: absolute;
-    left: calc(-1 * var(--space-2xl) - 3px);
-    top: calc(var(--space-xl) + 4px);
-    width: 10px;
-    height: 10px;
+    left: calc(-1 * var(--space-2xl) + 1px);
+    top: calc(var(--space-xl) + 3px);
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: var(--accent-bright);
-    border: 2px solid var(--bg-deep);
+    background: var(--bg-deep);
+    border: 2px solid var(--accent-bright);
+    z-index: 1;
   }
 
   .timeline-entry:first-child .timeline-dot {
+    background: var(--accent-bright);
     box-shadow: 0 0 8px var(--accent-bright);
   }
 
