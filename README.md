@@ -63,4 +63,4 @@ public/
   data/            changelog.json, roadmap.json
 ```
 
-<sub>BSL 1.1 © Curtis Mercier — open source 2030</sub>
+<sub>BSL 1.1 © Curtis Mercier — open source 2027</sub>
