@@ -2,6 +2,7 @@
 type: muscle
 name: task-tooling
 status: active
+triggers: [task-tooling, map-tools, situational-awareness, scripts, muscles, gaps, workflow, awareness, planning, tools]
 heat-default: warm
 heat: 0
 loads: 0
@@ -11,10 +12,8 @@ license: MIT
 version: 1.0.0
 tier: official
 scope: hub
-topic: [workflow, awareness, planning, tools]
-keywords: [task-tooling, map-tools, situational-awareness, scripts, muscles, gaps]
 created: 2026-03-14
-updated: 2026-03-15
+updated: 2026-03-21
 ---
 
 # Task Tooling

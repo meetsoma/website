@@ -8,7 +8,7 @@ version: 1.0.0
 scope: bundled
 tier: core
 created: 2026-03-12
-updated: 2026-03-14
+updated: 2026-03-22
 tags: [learning, self-improvement, memory, corrections]
 breadcrumb: "When corrected, acknowledge without justifying, log old→new pattern, write a muscle if repeated. Third correction on same thing → escalate to protocol or identity."
 author: meetsoma
@@ -63,3 +63,7 @@ When triggered:
 - ❌ Forgetting by next session — that's what muscles are for
 
 ---
+
+## When to Apply
+
+Every session. When corrected by the user, when patterns repeat, when behavior should change permanently.

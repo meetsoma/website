@@ -2,6 +2,7 @@
 type: muscle
 name: test-hygiene
 status: active
+triggers: [test, stale, dead-code, cleanup, validation, ci, suite, coverage, hygiene, testing, code-quality, maintenance]
 heat-default: warm
 heat: 0
 loads: 0
@@ -11,10 +12,8 @@ license: MIT
 version: 1.0.0
 tier: official
 scope: hub
-topic: [testing, ci, code-quality, maintenance]
-keywords: [test, stale, dead-code, cleanup, validation, ci, suite, coverage, hygiene]
 created: 2026-03-09
-updated: 2026-03-14
+updated: 2026-03-21
 ---
 
 # Test Hygiene
@@ -50,6 +49,8 @@ Validate tests aren't stale after any code removal, rename, or restructure. Run 
 | "Skip in CI" hiding real failures | Bug persists undetected | Only skip what's genuinely unavailable in CI |
 | Test count changes unremarked | Coverage silently drops | Note count changes in commit messages |
 | "Cleanup" deleting operational scripts | Working tools lost, tests orphaned | Distinguish artifacts from tooling before bulk delete |
+| Test matches help text not actual output | Passes even when feature is broken | Assert against the COMMAND output format, not fallback text |
+| Test checks removed fields | Passes on old code, fails after migration | Update tests alongside schema changes — same commit |
 
 ## Process
 

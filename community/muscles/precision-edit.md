@@ -2,6 +2,7 @@
 type: muscle
 name: precision-edit
 status: active
+triggers: [edit, precision, whitespace, grep, line-numbers, read-before-write, editing, tools, reliability, workflow]
 heat-default: warm
 heat: 0
 loads: 0
@@ -11,10 +12,8 @@ license: MIT
 version: 1.0.0
 tier: official
 scope: hub
-topic: [editing, tools, reliability, workflow]
-keywords: [edit, precision, whitespace, grep, line-numbers, read-before-write]
 created: 2026-03-14
-updated: 2026-03-15
+updated: 2026-03-21
 ---
 
 # Precision Edit

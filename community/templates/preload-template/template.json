@@ -1,0 +1,17 @@
+{
+  "name": "preload-template",
+  "version": "1.0.0",
+  "description": "Customize how Soma writes preloads \u2014 override the default format with your own sections.",
+  "author": "meetsoma",
+  "install": {
+    "files": {
+      "preload-template.md": "prompts/preload-template.md"
+    }
+  },
+  "requires": {
+    "protocols": [],
+    "muscles": [],
+    "skills": []
+  },
+  "tier": "official"
+}

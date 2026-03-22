@@ -2,6 +2,7 @@
 type: muscle
 name: incremental-refactor
 status: active
+triggers: [refactor, incremental, dependencies, backward-compatible, scan, migration, refactoring, safety, workflow, code-quality]
 heat-default: warm
 heat: 0
 loads: 0
@@ -11,10 +12,8 @@ license: MIT
 version: 1.0.0
 tier: official
 scope: hub
-topic: [refactoring, safety, workflow, code-quality]
-keywords: [refactor, incremental, dependencies, backward-compatible, scan, migration]
 created: 2026-03-14
-updated: 2026-03-15
+updated: 2026-03-21
 ---
 
 # Incremental Refactor

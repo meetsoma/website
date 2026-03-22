@@ -2,6 +2,7 @@
 type: muscle
 name: doc-hygiene
 status: active
+triggers: [doc-hygiene, plans-rot, stale-docs, context-hygiene, plan-lifecycle, archive, remaining, documentation, maintenance, plans, staleness]
 heat-default: warm
 heat: 0
 loads: 0
@@ -11,10 +12,8 @@ license: MIT
 version: 1.0.0
 tier: official
 scope: hub
-topic: [documentation, maintenance, plans, staleness]
-keywords: [doc-hygiene, plans-rot, stale-docs, context-hygiene, plan-lifecycle, archive, remaining]
 created: 2026-03-14
-updated: 2026-03-15
+updated: 2026-03-21
 ---
 
 # Doc Hygiene

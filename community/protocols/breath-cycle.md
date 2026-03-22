@@ -7,10 +7,10 @@ applies-to: [always]
 breadcrumb: "Inhale → hold → exhale. Auto-breathe at 50%/70%/85%. Commands: /exhale, /breathe, /rest, /inhale."
 version: 2.0.0
 tier: core
-scope: bundled
+scope: core
 tags: [session, memory, continuity, self-awareness]
 created: 2026-03-09
-updated: 2026-03-15
+updated: 2026-03-22
 author: Curtis Mercier
 license: CC BY 4.0
 ---
@@ -36,6 +36,8 @@ Soma watches context usage and notifies at configurable thresholds:
 
 **Exhale** (agent-driven)
 Triggered by `/exhale`, `/breathe`, `/rest`, or auto at 85%. The agent writes a preload, logs the session, and signals completion.
+
+Before writing the preload, run **Memory Lane Reflection** cycles (see `memory-lane-reflection` muscle). At 70%+ context, run 5+ cycles. The preload comes AFTER the reflection — not before.
 
 ## Settings
 
@@ -72,6 +74,8 @@ Triggered by `/exhale`, `/breathe`, `/rest`, or auto at 85%. The agent writes a 
 | `/inhale` | Load preload into current session |
 
 ## Preload Quality
+
+> **Customizable:** Override the preload format by creating `.soma/prompts/preload-template.md`. The agent uses your template instead of the default. Template variables: `{{today}}`, `{{sessionId}}`, `{{logPath}}`, `{{target}}`.
 
 A good preload is the difference between a productive next session and a wasted one. Key elements:
 

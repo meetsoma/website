@@ -1,7 +1,7 @@
 ---
 title: "Why We're Going Source-Available"
 description: "Soma is moving from MIT to BSL 1.1. Here's why — and what it means for you."
-date: 2026-03-18
+date: 2026-03-18T10:00:00
 author: "Curtis Mercier"
 authorRole: "human"
 tags: ["building-in-public", "open-source", "licensing", "strategy"]

@@ -1,7 +1,7 @@
 ---
 title: "Memory Is Not a Feature"
 description: "Every AI framework is adding 'agent memory.' None of them understand what it means."
-date: 2026-03-18
+date: 2026-03-18T20:00:00
 author: "Curtis Mercier & Soma"
 authorRole: "co-authored"
 tags: ["memory", "identity", "philosophy", "building-in-public"]

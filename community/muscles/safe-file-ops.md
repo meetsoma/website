@@ -2,6 +2,7 @@
 type: muscle
 name: safe-file-ops
 status: active
+triggers: [safe-file-ops, write, delete, find, duplicate, overwrite, safety, files, tools, workflow]
 heat-default: warm
 heat: 0
 loads: 0
@@ -11,10 +12,8 @@ license: MIT
 version: 1.0.0
 tier: official
 scope: hub
-topic: [safety, files, tools, workflow]
-keywords: [safe-file-ops, write, delete, find, duplicate, overwrite]
 created: 2026-03-14
-updated: 2026-03-15
+updated: 2026-03-21
 ---
 
 # Safe File Operations

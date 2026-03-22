@@ -10,7 +10,7 @@ tier: core
 scope: hub
 tags: [privacy, safety, self-awareness]
 created: 2026-03-10
-updated: 2026-03-14
+updated: 2026-03-22
 author: meetsoma
 license: MIT
 ---
@@ -18,6 +18,11 @@ license: MIT
 
 > How Soma keeps private data out of public content. The channel-guard script catches leaks mechanically — this protocol covers the judgment that prevents creating them.
 
+## TL;DR
+Community content must be generic — no personal data, paths, or secrets. The channel-guard catches leaks pre-push. This protocol covers the judgment.
+
+## When to Apply
+When sharing content to the community hub, syncing to _public, or reviewing PRs.
 ## What's Automated
 
 **`soma-channel-guard.sh`** — pre-push hook that scans for:

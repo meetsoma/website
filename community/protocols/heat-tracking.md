@@ -7,16 +7,16 @@ applies-to: [always]
 breadcrumb: "Soma loads protocols and muscles by temperature: cold (skip), warm (breadcrumb), hot (full). Heat auto-adjusts from usage patterns and decays when idle. /pin and /kill for manual control."
 version: 2.0.0
 tier: core
-scope: bundled
+scope: core
 tags: [memory, loading, performance, self-awareness]
 created: 2026-03-09
-updated: 2026-03-15
+updated: 2026-03-22
 author: Curtis Mercier
 license: CC BY 4.0
 ---
 # Heat Tracking
 
-> How Soma decides what to load into your context. The heat system runs automatically — this protocol helps you understand and tune it.
+> How Soma decides what to load into your context. The heat system is built into the boot extension — this protocol helps you understand what's happening and how to tune it. Editing this file won't change the heat system's behavior.
 
 ## TL;DR
 Cold (0-2): skipped. Warm (3-7): TL;DR only. Hot (8+): full body. Heat decays each session, bumps on use. `/pin` heats, `/kill` drops to 0.
@@ -34,10 +34,16 @@ Every protocol and muscle has a heat value. Higher heat = more presence in your 
 ### Auto-Detection
 
 Soma watches tool results and bumps heat when it sees relevant patterns:
+
+**Protocols:**
 - Frontmatter writes → `frontmatter-standard` +1
-- Git commands → `git-identity` +1
 - Preload writes → `breath-cycle` +1
 - Checkpoint commits → `session-checkpoints` +1
+
+**Muscles:**
+- File reads matching muscle `triggers:` → muscle heat +1
+- Script execution matching muscle name → muscle heat +1
+- SVG/logo file writes → `svg-logo-design` +1
 
 **Limitation:** most protocol usage isn't detectable from tool results. A protocol like `working-style` has no tool signature — its heat only changes via manual `/pin` or `heat-default` in frontmatter.
 

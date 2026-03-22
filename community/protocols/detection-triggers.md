@@ -6,7 +6,7 @@ heat-default: warm
 applies-to: [always]
 version: 1.0.0
 created: 2026-03-12
-updated: 2026-03-15
+updated: 2026-03-22
 tags: [learning, self-improvement, memory, awareness]
 tier: core
 scope: bundled
@@ -75,3 +75,7 @@ This is the bubble-up flow. Each level requires more evidence:
 **Identity is not "above" protocols.** It's a parallel track. Protocols are universal defaults. Identity customizes them. A Soma with good protocols and no identity should still work well. A Soma with identity but no protocols is fragile — it has opinions but no foundation.
 
 ---
+
+## When to Apply
+
+Every session. Automatic detection fires on corrections, preferences, and repeated patterns.

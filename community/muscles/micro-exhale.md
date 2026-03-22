@@ -4,9 +4,8 @@ name: micro-exhale
 breadcrumb: "Write workflow summaries to daily log after major completions — one file per day, always append."
 tier: official
 scope: hub
-topic: [memory, workflow, logging, sessions]
-keywords: [micro-exhale, daily-log, workflow-summary, session-memory]
 status: active
+triggers: [micro-exhale, daily-log, workflow-summary, session-memory, memory, workflow, logging, sessions]
 heat: 0
 heat-default: hot
 loads: 0
@@ -14,7 +13,7 @@ author: meetsoma
 license: MIT
 version: 1.0.0
 created: 2026-03-10
-updated: 2026-03-15
+updated: 2026-03-21
 ---
 
 # Micro-Exhale — Muscle

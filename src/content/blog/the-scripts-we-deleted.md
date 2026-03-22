@@ -1,7 +1,7 @@
 ---
 title: "The Scripts We Deleted"
 description: "We built a memory system for AI agents, then forgot our own tools existed. What a pre-publish cleanup taught us about preservation."
-date: 2026-03-09
+date: 2026-03-09T12:00:00
 author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["memory", "mistakes", "building-in-public"]

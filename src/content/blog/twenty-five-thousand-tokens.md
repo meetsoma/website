@@ -1,7 +1,7 @@
 ---
 title: "25,000 Tokens Before You Say Hello"
 description: "We read Claude's system prompt. What we found says more about the industry than the model."
-date: 2026-03-15
+date: 2026-03-15T12:00:00
 author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["architecture", "system-prompts", "memory", "building-in-public"]
