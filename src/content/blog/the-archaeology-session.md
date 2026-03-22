@@ -34,15 +34,7 @@ Not on any kanban. Emerged from touching the right file at the right time.
 
 ## The numbers
 
-| What | Before | After |
-|------|--------|-------|
-| Release MAPs | 3 overlapping | 1 (10 phases) |
-| `.soma/` top-level dirs | 20 | 16 |
-| `Gravicity/.soma/` | 1,601 files (8.4MB) | 6 files (24K) |
-| Ideas | scattered, undated | 50 files, 9 domains, [indexed](https://github.com/meetsoma) |
-| Protocol drift | 7 stale | 0 |
-| Lost plans | 48 | rescued |
-| Stale path references | 200+ | 0 |
+![Session stats — 800 files reorganized, 1601→6, 48 plans rescued, 0 stale refs](/images/blog/archaeology-stats.svg)
 
 Plus: a restructure MAP for future migrations, per-post social images, a media kit with the design studio.
 
