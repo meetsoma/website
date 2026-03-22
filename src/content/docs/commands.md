@@ -7,7 +7,7 @@ order: 1.8
 # Commands
 
 <!-- tldr -->
-CLI: `soma` (fresh, no preload), `soma inhale` (fresh + preload), `soma -c` (continue), `soma -r` (resume picker). Session: `/inhale` — reset + load preload. `/breathe` — save + rotate. `/exhale` — save + stop. `/rest` — disable keepalive + exhale. `/pin <name>` — bump heat +5. `/kill <name>` — drop to 0. `/soma` — status + management.
+CLI: `soma` (fresh), `soma inhale` (fresh + preload), `soma -c` (continue), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts).
 <!-- /tldr -->
 
 Soma registers slash commands that control the breath cycle, heat system, and session management.
@@ -32,9 +32,15 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 
 | Command | Description |
 |---------|-------------|
-| `/install <type> <name>` | Install a protocol, muscle, skill, or template from the Soma Hub. Templates resolve dependencies automatically. Use `--force` to overwrite. |
-| `/list local [type]` | Show installed content in your `.soma/`. Optionally filter by type (protocol, muscle, skill, template). |
-| `/list remote [type]` | Browse available content on the hub. Fetches from `meetsoma/community` on GitHub. |
+| `/hub` | Hub status — shows paths, repo info, index URL. |
+| `/hub install <type> <name> [-g\|-p] [--force]` | Install from the Soma Hub. Types: `protocol`, `muscle`, `script`, `skill`, `template`. `-g` for global (default), `-p` for project-local. `--force` overwrites existing. |
+| `/hub find <keywords>` | Search hub content by name, description, and tags. |
+| `/hub list [type]` | Show locally installed AMPS content. Optionally filter by type. |
+| `/hub list --remote [type]` | Browse all available content on the hub. Fetches live from `meetsoma/community`. |
+| `/hub fork <type> <name>` | Install from hub and add `forked-from` lineage. Your copy to customize. |
+| `/hub share <type> <name>` | Share your content to the hub — generates README, runs privacy scan, creates PR via `gh`. |
+| `/hub status` | Detailed hub status — paths, repo, index URL. |
+| `/install <type> <name>` | **Backward compat** — redirects to `/hub install`. Use `/hub install` instead. |
 
 ## Guard Commands
 
@@ -52,14 +58,31 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 
 | Command | Description |
 |---------|-------------|
-| `/soma` | Show Soma status — loaded identity, protocol heat states, muscle states, context usage. |
+| `/soma` | Show Soma status — loaded identity, protocol heat states, muscle states, context usage, available commands. |
 | `/soma init` | Create a `.soma/` directory in the current project. |
 | `/soma prompt` | Preview the compiled system prompt — shows all assembled sections, token estimate, and which toggles are active. |
 | `/soma prompt full` | Dump the full compiled system prompt text. |
 | `/soma prompt identity` | Show identity debug — chain, layering, char count. |
 | `/soma preload` | Show available preload files (name, age, staleness). |
 | `/soma debug on\|off` | Toggle debug logging to `.soma/debug/`. |
+| `/soma <command>` | Run a drop-in command from `.soma/amps/scripts/commands/`. See below. |
 | `/status` | Show session stats — context usage, turn count, uptime. Provided by `soma-statusline.ts`. |
+
+## Drop-in Commands
+
+Drop a `.sh` script into `.soma/amps/scripts/commands/` and it becomes a `/soma <name>` command — no restart needed.
+
+```bash
+# Example: /soma find css → runs commands/find.sh with "css" as argument
+.soma/amps/scripts/commands/
+├── find.sh     # /soma find <keywords> — search AMPS content
+├── heat.sh     # /soma heat — show protocol/muscle heat state
+└── hub.sh      # /soma hub — hub drift report
+```
+
+Scripts receive arguments via `$@` and get `SOMA_DIR` and `SOMA_PROJECT` environment variables. Output is sent to the chat (ANSI codes stripped automatically). Add `--help` support and use the `# ---` YAML comment header convention.
+
+Commands appear in `/soma status` output and tab completions. Install community commands with `/hub install script <name>`.
 
 ## User Tools
 

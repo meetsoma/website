@@ -78,7 +78,7 @@ breadcrumb: "One sentence that captures what this protocol enforces. This is ALL
 | Field | Default | Purpose |
 |-------|---------|---------|
 | `applies-to` | `[always]` | Domain signals this protocol applies to |
-| `scope` | `local` | `local` = project only, `shared` = eligible for parent chain |
+| `scope` | `local` | `local` = project only, `shared` = eligible for parent chain, `core` = built-in behavior documentation (never loads into prompt) |
 | `tier` | `community` | `community` or `official` |
 
 ### 3. Write the body

@@ -30,7 +30,7 @@ Session 3 (inhale) ← ...and so on
 
 ### Inhale (Session Start)
 
-When Soma boots, it runs a configurable sequence of **boot steps**:
+When Soma boots, she runs a configurable sequence of **boot steps**:
 
 | Step | What Loads | Default |
 |------|-----------|---------|
@@ -80,9 +80,9 @@ Either way, Soma:
 
 ## Identity
 
-Soma doesn't come pre-configured with a personality. it **discovers** who it is through working with you. its `identity.md` is written by her, not for her.
+Soma doesn't come pre-configured with a personality. She **discovers** who she is through working with you. Her `identity.md` is written by her, not for her.
 
-On first run, Soma sees an empty identity file and writes its own based on the workspace and your interactions. See [Identity](/docs/identity) for the full guide on discovery, layering, and customization.
+On first run, Soma sees an empty identity file and writes her own based on the workspace and your interactions. See [Identity](/docs/identity) for the full guide on discovery, layering, and customization.
 
 ## Muscles
 
@@ -166,6 +166,53 @@ soma --map release-cycle    # boot with a specific MAP loaded
 MAPs live in `.soma/amps/automations/maps/`. They can declare a `prompt-config` section that overrides heat scores, force-includes content, and adds supplementary identity for that session. Usage is tracked automatically (`runs:` and `last-run:` update on each load).
 
 See [MAPs](/docs/maps) for the full guide.
+
+## Hub — Community Content
+
+The Soma Hub is a community repository of protocols, muscles, scripts, and templates. Content is hosted on GitHub (`meetsoma/community`) and accessible through the `/hub` command.
+
+### Architecture
+
+```
+meetsoma/community (GitHub)
+├── protocols/          ← community protocols
+├── muscles/            ← community muscles
+├── scripts/            ← community scripts (folder per script)
+├── templates/          ← starter bundles
+└── hub-index.json      ← auto-generated index (CI rebuilds on merge)
+
+Your .soma/
+├── amps/protocols/     ← installed protocols land here
+├── amps/muscles/       ← installed muscles land here
+└── amps/scripts/       ← installed scripts land here (chmod +x)
+```
+
+### Commands
+
+| Command | What it does |
+|---------|-------------|
+| `/hub install <type> <name>` | Install content from the hub (`-g` global, `-p` project) |
+| `/hub find <keywords>` | Search by name, description, tags |
+| `/hub list --remote` | Browse all available content |
+| `/hub fork <type> <name>` | Install + add `forked-from` lineage for customization |
+| `/hub share <type> <name>` | Share your content — privacy scan, README generation, PR via `gh` |
+
+Install defaults to global (`~/.soma/`) so content is available across projects. Use `-p` for project-specific content. Templates resolve their dependencies automatically — installing a template pulls all its referenced protocols and muscles.
+
+### Dynamic Detail Pages
+
+The hub website (`soma.gravicity.ai/hub`) renders detail pages dynamically — new community content appears immediately without a website rebuild. The index page fetches `hub-index.json` on mount; detail pages fetch README content from GitHub raw at runtime.
+
+### Drop-in Commands
+
+Scripts in `.soma/amps/scripts/commands/` become `/soma <name>` commands — no restart needed. This is the lightest-weight extensibility: one file, one function, immediately usable.
+
+```bash
+.soma/amps/scripts/commands/find.sh   → /soma find <keywords>
+.soma/amps/scripts/commands/heat.sh   → /soma heat
+```
+
+See [Commands](/docs/commands#drop-in-commands) for the full guide.
 
 ## Focus — Seam-Traced Boot
 

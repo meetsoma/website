@@ -71,6 +71,8 @@ Auto-detection runs on every tool result during a session. The agent doesn't nee
 
 These work for both protocols and muscles. Tab-complete the name.
 
+**Note:** Core protocols (`scope: core`) can't be pinned or killed — their behavior is built into extensions, not loaded via heat. `/pin breath-cycle` will explain this.
+
 ## Where Heat Lives
 
 **Protocols:** Heat state is stored in `.soma/state.json` — a JSON file managed by the runtime. You don't edit this directly.
