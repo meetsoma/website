@@ -5,34 +5,25 @@
     {
       "version": "Next",
       "date": "",
-      "features": [
-        {
-          "title": "PHASE Implementation",
-          "description": "Phase-aware MAPs with per-phase brain configuration. Sequential context injection via /phase command."
-        },
-        {
-          "title": "Protocol Voice Pass",
-          "description": "Coaching voice for all TL;DRs and digests. Core protocol rewrite to match current reality."
-        }
-      ]
+      "features": {
+        "added": [
+          "PHASE workflow system \u2014 per-phase brain configuration via /phase command.",
+          "Protocol voice pass \u2014 coaching voice for all TL;DRs and digests."
+        ]
+      }
     },
     {
       "version": "0.6.3",
       "date": "2026-03-22",
-      "features": [
-        {
-          "title": "Community Hub CLI",
-          "description": "/hub command \u2014 install, fork, share, find community content. Smart sharing with quality scoring and privacy auto-fix."
-        },
-        {
-          "title": "Drop-in Commands",
-          "description": "Scripts in .soma/amps/scripts/commands/ become /soma commands instantly. No restart needed."
-        },
-        {
-          "title": "Core Protocol System",
-          "description": "scope:core protocols document built-in behavior without wasting prompt tokens. 5 core protocols established."
-        }
-      ]
+      "features": {
+        "added": [
+          "/hub command \u2014 install, fork, share, find, and browse community content.",
+          "Drop-in /soma commands \u2014 scripts in commands/ become slash commands instantly.",
+          "Smart sharing \u2014 quality scoring, privacy auto-fix, dependency resolution.",
+          "scope:core protocols \u2014 built-in behavior documented without wasting prompt tokens.",
+          "Community hub: 40 items across 5 content types."
+        ]
+      }
     },
     {
       "version": "0.6.2",

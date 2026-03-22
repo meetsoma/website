@@ -23,6 +23,8 @@ interface RoadmapData {
 
 // Editorial labels — curated per release
 const versionLabels: Record<string, string> = {
+  '0.6.3': 'Hub CLI, Drop-in Commands & Core Protocols',
+  '0.6.2': 'Heat Detection, Migration & Community Sync',
   '0.6.1': 'npm Publish, Pi 0.61.1 & 27 Docs',
   '0.6.0': 'Open Install, Voice & 23 Docs',
   '0.5.2': 'Scratch, Scanning & Session Warnings',
