@@ -74,8 +74,8 @@
   <circle cx="950" cy="300" r="0.9" fill="white" opacity="0.15"/>
   <circle cx="60" cy="550" r="1" fill="white" opacity="0.25"/>
 
-  <!-- Aura glow behind mascot -->
-  <ellipse cx="640" cy="230" rx="220" ry="200" fill="url(#aura)"/>
+  <!-- Aura glow behind mascot (removed — looked like artifact) -->
+  <!-- <ellipse cx="640" cy="230" rx="220" ry="200" fill="url(#aura)"/> -->
 
   <!-- Mascot — scaled up -->
   <g transform="translate(640, 210) scale(0.7)">
