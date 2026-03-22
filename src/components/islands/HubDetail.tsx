@@ -32,6 +32,7 @@ interface HubItem {
   topic?: string[];
   keywords?: string[];
   language?: string;
+  license?: string;
   requires?: string[];
   body?: string;
 }
@@ -185,6 +186,7 @@ export default function HubDetail({ type: propType, slug: propSlug, staticItem, 
           tags: Array.isArray(meta.tags) ? meta.tags : undefined,
           topic: Array.isArray(meta.topic) ? meta.topic : undefined,
           language: meta.language,
+          license: meta.license,
           requires: Array.isArray(meta.requires) ? meta.requires : undefined,
           body: mdBody,
         };
@@ -292,6 +294,7 @@ export default function HubDetail({ type: propType, slug: propSlug, staticItem, 
         {item.version && <div class="hd-stat"><span class="hd-stat-label">Version</span><span class="hd-stat-value">{item.version}</span></div>}
         {item.heatDefault && <div class="hd-stat"><span class="hd-stat-label">Heat</span><span class="hd-stat-value hd-heat">{item.heatDefault}</span></div>}
         <div class="hd-stat"><span class="hd-stat-label">Author</span><span class="hd-stat-value">{item.author}</span></div>
+        {item.license && <div class="hd-stat"><span class="hd-stat-label">License</span><span class="hd-stat-value">{item.license}</span></div>}
         {isScript && item.language && <div class="hd-stat"><span class="hd-stat-label">Language</span><span class="hd-stat-value">{item.language}</span></div>}
         {isScript && item.requires && <div class="hd-stat"><span class="hd-stat-label">Requires</span><span class="hd-stat-value">{item.requires.join(', ')}</span></div>}
         {isTemplate && totalRequired > 0 && <div class="hd-stat"><span class="hd-stat-label">Includes</span><span class="hd-stat-value">{totalRequired} items</span></div>}
