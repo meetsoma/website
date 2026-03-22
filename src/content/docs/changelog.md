@@ -5,7 +5,72 @@ section: "Reference"
 order: 7
 ---
 
-What's new in Soma. Full implementation details available to registered users.
+What's new in Soma.
+
+---
+
+## [0.6.3] — 2026-03-22
+
+### Highlights
+
+- **`/hub` command** — unified interface for community content. Install, fork, share, find, browse — all from one command.
+- **Smart sharing** — `/hub share` runs quality checks, auto-fixes private paths, scores quality 0-100%, and opens a PR to the community hub.
+- **Drop-in commands** — drop a script into `.soma/amps/scripts/commands/` and it becomes `/soma <name>` instantly. No restart.
+- **40 community items** across 5 content types — protocols, muscles, scripts, automations (MAPs), and templates.
+
+### New
+
+- `/hub install <type> <name>` — install community content globally (`-g`, default) or per-project (`-p`).
+- `/hub fork` — create your own version of community content with fork lineage tracking.
+- `/hub share` — share your content with privacy scanning, quality scoring, and auto-generated README.
+- `/hub find` and `/hub list --remote` — search and browse the community hub.
+- Drop-in `/soma` commands with `SOMA_DIR` and `SOMA_PROJECT` env vars.
+- `scope: core` protocols — built-in behavior documented without wasting ~2000 tokens of prompt space.
+- `gitIdentity.email` supports arrays — multiple valid emails for multi-account users.
+- Default preload template now includes Weather (session tone) and Warnings (traps for next session).
+- Dependency resolution — installing a protocol that references scripts auto-installs the dependencies.
+- 3 automation MAPs on the hub: debug, refactor, visual-gap-analysis.
+- Customizable preload template available on the hub.
+- Regression test suite: 51 tests across 2 suites.
+
+### Changed
+
+- `/install` and `/list` now redirect to `/hub install` and `/hub list`.
+- Core protocols (breath-cycle, heat-tracking, etc.) are readable on demand but don't load into the prompt.
+- `/pin` and `/kill` explain when targeting core protocols ("behavior is built-in").
+- Community CI upgraded to Node 22 (actions v6).
+
+### Fixed
+
+- `/hub list --remote` flag was parsed as type filter.
+- ANSI escape codes in drop-in command output stripped for clean rendering.
+
+---
+
+## [0.6.2] — 2026-03-21
+
+### Highlights
+
+- **Natural muscle heat** — scripts and file edits bump related muscles automatically. No `/pin` needed.
+- **Migration system** — `soma doctor` checks workspace health, auto-fixes issues, migrates between versions.
+- **Community sync** — boot fetches latest protocols from the community repo. Offline fallback included.
+
+### New
+
+- `soma doctor` — health checks, auto-fix, migration chaining.
+- Natural heat detection from tool results — frontmatter writes, git commands, preload writes.
+- `tools:` field in muscle frontmatter for script associations.
+- Community template sync on boot.
+
+### Changed
+
+- `triggers` consolidates `keywords` + `topic` into one field (backwards compatible).
+- Personality engine is honest about being templates.
+
+### Fixed
+
+- Runtime delegation — soma-beta includes cli.js and Pi runtime files.
+- Fresh installs include version field in settings.json.
 
 ---
 

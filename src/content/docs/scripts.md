@@ -163,12 +163,44 @@ Preview the compiled system prompt without starting a session.
 npx jiti scripts/prompt-preview.ts
 ```
 
+## Drop-in Commands
+
+Scripts in `.soma/amps/scripts/commands/` become `/soma <name>` slash commands — **no restart needed**.
+
+```bash
+# Create a command
+cat > .soma/amps/scripts/commands/deploy.sh << 'EOF'
+#!/usr/bin/env bash
+# ---
+# name: deploy
+# description: Deploy to production
+# ---
+echo "Deploying $(basename $(pwd))..."
+git push origin main
+EOF
+chmod +x .soma/amps/scripts/commands/deploy.sh
+
+# Use it immediately — no restart
+/soma deploy
+```
+
+Drop-in commands receive arguments via `$@` and get two environment variables:
+- `SOMA_DIR` — path to `.soma/` directory
+- `SOMA_PROJECT` — path to project root
+
+Output is sent to the chat with ANSI codes stripped. Commands appear in `/soma status` output and tab completions.
+
+**Install community commands:**
+```bash
+/hub install script soma-code    # installs to .soma/amps/scripts/
+```
+
 ## Building Your Own Scripts
 
 Scripts in `.soma/amps/scripts/` are discovered at boot and listed in the "Available Scripts" table. Build your own:
 
 1. Create a `.sh` file in `.soma/amps/scripts/`
-2. Add a header comment (first `# comment` line becomes the description)
+2. Add a `# ---` YAML comment header with name, description, tags
 3. Add `--help` with usage examples
 4. Leave breadcrumbs: `# Related: <muscle-name>, <other-script>`
 
@@ -176,14 +208,20 @@ Your scripts get usage tracking automatically — the boot system records how of
 
 ```bash
 #!/usr/bin/env bash
-# my-tool.sh — one-line description shown in boot table
+# ---
+# name: my-tool
+# description: One-line description shown in boot table
+# tags: [workflow, automation]
+# ---
 # Related muscles: incremental-refactor
 # Related scripts: soma-code.sh
 
 case "${1:-help}" in
   run)   echo "doing the thing" ;;
-  help)  echo "my-tool.sh — usage: run" ;;
+  --help|help)  echo "my-tool.sh — usage: run" ;;
 esac
 ```
+
+**To make it a slash command too:** put it in `.soma/amps/scripts/commands/` instead. Same format, but now accessible as `/soma my-tool`.
 
 When you do the same thing twice manually, build a script. The agent that builds its own tools gets faster every session.
