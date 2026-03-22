@@ -44,6 +44,7 @@ const typeLabels: Record<string, string> = {
   skill: 'Skill',
   template: 'Template',
   automation: 'Automation',
+  script: 'Script',
 };
 
 const typeIconNames: Record<string, string> = {
@@ -52,6 +53,7 @@ const typeIconNames: Record<string, string> = {
   skill: 'skills',
   template: 'extensions',
   automation: 'extensions',
+  script: 'skills',
 };
 
 const typeAccentColors: Record<string, string> = {
@@ -60,10 +62,15 @@ const typeAccentColors: Record<string, string> = {
   skill: 'rgba(124, 178, 212, 0.25)',
   template: 'rgba(190, 152, 232, 0.25)',
   automation: 'rgba(200, 200, 120, 0.25)',
+  script: 'rgba(124, 212, 178, 0.25)',
 };
+
+const isScript = item.type === 'script';
 
 const installCmd = item.type === 'template'
   ? `soma init --template ${item.slug}`
+  : item.type === 'script'
+  ? `soma install script ${item.slug}`
   : `/install ${item.type} ${item.slug}`;
 
 const ghUrl = item.type === 'template'
@@ -126,6 +133,8 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
       {item.heatDefault && <div class="stat"><span class="stat-label">Heat</span><span class="stat-value stat-heat">{item.heatDefault}</span></div>}
       <div class="stat"><span class="stat-label">Author</span><span class="stat-value">{item.author}</span></div>
       {isTemplate && <div class="stat"><span class="stat-label">Includes</span><span class="stat-value">{requiredCount} + {coreCount} core</span></div>}
+      {isScript && item.language && <div class="stat"><span class="stat-label">Language</span><span class="stat-value">{item.language}</span></div>}
+      {isScript && item.requires && item.requires.length > 0 && <div class="stat"><span class="stat-label">Requires</span><span class="stat-value">{(item.requires as string[]).join(', ')}</span></div>}
       {installs !== null && <div class="stat"><span class="stat-label">Installs</span><span class="stat-value">{installs.toLocaleString()}</span></div>}
       {likes !== null && <div class="stat"><span class="stat-label">Likes</span><span class="stat-value">♥ {likes}</span></div>}
       {compat !== null && <div class="stat"><span class="stat-label">Compat</span><span class={`stat-value ${compat >= 90 ? 'stat-good' : compat >= 70 ? 'stat-warn' : 'stat-bad'}`}>{compat}%</span></div>}

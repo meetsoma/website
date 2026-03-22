@@ -35,7 +35,7 @@ interface Contributor {
 interface HubItem {
   slug: string;
   name: string;
-  type: 'protocol' | 'muscle' | 'skill' | 'template' | 'automation';
+  type: 'protocol' | 'muscle' | 'skill' | 'template' | 'automation' | 'script';
   description: string;
   author: string;
   version: string;
@@ -57,6 +57,10 @@ interface HubItem {
   contributors?: Contributor[];
   /** Items that forked from this one (populated at build time) */
   forks?: { slug: string; type: string; author: string; version: string }[];
+  /** Script-specific: programming language */
+  language?: string;
+  /** Script-specific: runtime requirements */
+  requires?: string[];
 }
 
 interface VersionEntry {
@@ -199,6 +203,12 @@ function loadDir(type: HubItem['type'], dir: string): HubItem[] {
       }
     }
 
+    // Script-specific fields
+    if (type === 'script') {
+      if (meta.language) item.language = meta.language;
+      if (Array.isArray(meta.requires)) item.requires = meta.requires;
+    }
+
     items.push(item);
   }
 
@@ -223,6 +233,10 @@ export function getTemplates(): HubItem[] {
 
 export function getAutomations(): HubItem[] {
   return loadDir('automation', 'automations');
+}
+
+export function getScripts(): HubItem[] {
+  return loadDir('script', 'scripts');
 }
 
 /**
@@ -272,6 +286,7 @@ export function getAllItems(): HubItem[] {
     ...getSkills(),
     ...getTemplates(),
     ...getAutomations(),
+    ...getScripts(),
   ];
 
   // Populate reverse fork references
@@ -307,9 +322,10 @@ export async function getVersionHistory(item: HubItem): Promise<VersionEntry[]> 
     : item.type === 'muscle' ? 'muscles'
     : item.type === 'skill' ? 'skills'
     : item.type === 'automation' ? 'automations'
+    : item.type === 'script' ? 'scripts'
     : 'templates';
 
-  const filePath = item.type === 'template'
+  const filePath = (item.type === 'template' || item.type === 'script')
     ? `${typeDir}/${item.slug}/README.md`
     : `${typeDir}/${item.slug}.md`;
 

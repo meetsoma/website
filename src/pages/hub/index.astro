@@ -4,13 +4,14 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import HubFilters from '../../components/islands/HubFilters';
 import HubGrid from '../../components/islands/HubGrid';
-import { getProtocols, getMuscles, getSkills, getTemplates, getAutomations } from '../../lib/hub';
+import { getProtocols, getMuscles, getSkills, getTemplates, getAutomations, getScripts } from '../../lib/hub';
 
 const protocols = getProtocols();
 const muscles = getMuscles();
 const skills = getSkills();
 const templates = getTemplates();
 const automations = getAutomations();
+const scripts = getScripts();
 
 // Serialize for Preact islands
 const allItems = [
@@ -19,6 +20,7 @@ const allItems = [
   ...skills.map(s => ({ ...s, body: undefined })),
   ...templates.map(t => ({ ...t, body: undefined })),
   ...automations.map(a => ({ ...a, body: undefined })),
+  ...scripts.map(s => ({ ...s, body: undefined })),
 ];
 
 const total = allItems.length;
