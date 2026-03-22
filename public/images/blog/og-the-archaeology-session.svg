@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg-glow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#1a2535"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    .title-text { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 42px; fill: #c9d1d9; font-weight: 700; letter-spacing: -0.5px; }
+    .subtitle-text { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 18px; fill: #6e7681; }
+    .stat-num { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 36px; fill: #6494be; font-weight: 700; }
+    .stat-label { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 12px; fill: #6e7681; }
+    .stat-box { stroke: #30363d; stroke-width: 1; fill: rgba(22,27,34,0.85); rx: 8; }
+    .flow-label { font-family: 'SF Mono', monospace; font-size: 11px; fill: #c9d1d9; }
+    .flow-box { stroke: #30363d; stroke-width: 1; fill: rgba(22,27,34,0.85); rx: 6; }
+    .flow-arrow { stroke: #6494be; stroke-width: 1.5; fill: none; }
+    .flow-head { fill: #6494be; }
+    .result-box { stroke: #6494be; stroke-width: 1.5; fill: rgba(100,148,190,0.06); rx: 6; }
+    .result-label { font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; }
+    .brand { font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; opacity: 0.8; letter-spacing: 2px; }
+    .sigma { font-family: 'Times New Roman', serif; font-size: 28px; fill: #6494be; opacity: 0.6; }
+    .accent { fill: #f0883e; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-glow)"/>
+
+  <!-- Subtle grid dots -->
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="20" cy="20" r="0.5" fill="#6494be" opacity="0.12"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Title -->
+  <text x="80" y="100" class="title-text">The Archaeology Session</text>
+  <text x="80" y="135" class="subtitle-text">Cleanup as product review — 800 files reorganized</text>
+
+  <!-- Stats row -->
+  <rect x="80" y="175" width="155" height="90" class="stat-box"/>
+  <text x="157" y="220" text-anchor="middle" class="stat-num">800</text>
+  <text x="157" y="245" text-anchor="middle" class="stat-label">files moved</text>
+
+  <rect x="255" y="175" width="155" height="90" class="stat-box"/>
+  <text x="332" y="220" text-anchor="middle" class="stat-num">1,601</text>
+  <text x="332" y="245" text-anchor="middle" class="stat-label">→ 6 files</text>
+
+  <rect x="430" y="175" width="155" height="90" class="stat-box"/>
+  <text x="507" y="220" text-anchor="middle" class="stat-num">48</text>
+  <text x="507" y="245" text-anchor="middle" class="stat-label">plans rescued</text>
+
+  <rect x="605" y="175" width="155" height="90" class="stat-box"/>
+  <text x="682" y="220" text-anchor="middle" class="stat-num">0</text>
+  <text x="682" y="245" text-anchor="middle" class="stat-label">stale refs left</text>
+
+  <!-- Flow diagram: what emerged -->
+  <text x="80" y="315" class="subtitle-text">What emerged from the cleanup:</text>
+
+  <rect x="80" y="340" width="140" height="40" class="flow-box"/>
+  <text x="150" y="365" text-anchor="middle" class="flow-label">move studio/</text>
+
+  <line x1="220" y1="360" x2="255" y2="360" class="flow-arrow"/>
+  <polygon points="255,355 267,360 255,365" class="flow-head"/>
+
+  <rect x="267" y="340" width="165" height="40" class="flow-box"/>
+  <text x="349" y="365" text-anchor="middle" class="flow-label">"what if it signals?"</text>
+
+  <line x1="432" y1="360" x2="467" y2="360" class="flow-arrow"/>
+  <polygon points="467,355 479,360 467,365" class="flow-head"/>
+
+  <rect x="479" y="340" width="175" height="40" class="result-box"/>
+  <text x="566" y="365" text-anchor="middle" class="result-label">soma-route v1.1.0</text>
+
+  <line x1="654" y1="360" x2="689" y2="360" class="flow-arrow"/>
+  <polygon points="689,355 701,360 689,365" class="flow-head"/>
+
+  <rect x="701" y="340" width="150" height="40" class="result-box"/>
+  <text x="776" y="365" text-anchor="middle" class="result-label">external inbox</text>
+
+  <!-- Second flow: the spiral keeps turning -->
+  <rect x="80" y="420" width="120" height="40" class="flow-box"/>
+  <text x="140" y="445" text-anchor="middle" class="flow-label">audit gaps</text>
+
+  <line x1="200" y1="440" x2="235" y2="440" class="flow-arrow"/>
+  <polygon points="235,435 247,440 235,445" class="flow-head"/>
+
+  <rect x="247" y="420" width="100" height="40" class="flow-box"/>
+  <text x="297" y="445" text-anchor="middle" class="flow-label">build fix</text>
+
+  <line x1="347" y1="440" x2="382" y2="440" class="flow-arrow"/>
+  <polygon points="382,435 394,440 382,445" class="flow-head"/>
+
+  <rect x="394" y="420" width="100" height="40" class="flow-box"/>
+  <text x="444" y="445" text-anchor="middle" class="flow-label">verify</text>
+
+  <line x1="494" y1="440" x2="529" y2="440" class="flow-arrow"/>
+  <polygon points="529,435 541,440 529,445" class="flow-head"/>
+
+  <rect x="541" y="420" width="100" height="40" class="flow-box"/>
+  <text x="591" y="445" text-anchor="middle" class="flow-label">ship</text>
+
+  <line x1="641" y1="440" x2="676" y2="440" class="flow-arrow"/>
+  <polygon points="676,435 688,440 676,445" class="flow-head"/>
+
+  <text x="700" y="445" class="flow-label" style="fill: #f0883e; font-style: italic;">the spiral keeps turning</text>
+
+  <!-- Brand -->
+  <text x="80" y="590" class="brand">SOMA</text>
+  <text x="1120" y="590" text-anchor="end" class="brand">soma.gravicity.ai</text>
+  <text x="1140" y="555" text-anchor="end" class="sigma">σ</text>
+</svg>
