@@ -1,21 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 520" fill="none">
+
   <style>
     .phase-label { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 14px; fill: #c9d1d9; }
     .phase-num { font-family: 'SF Mono', monospace; font-size: 10px; fill: #6494be; letter-spacing: 1px; }
-    .phase-desc { font-family: -apple-system, sans-serif; font-size: 10px; fill: #6e7681; }
-    .inner-label { font-family: -apple-system, sans-serif; font-size: 10px; fill: #8bb9e0; font-style: italic; }
+    .phase-desc { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 10px; fill: #6e7681; }
+    .inner-label { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 10px; fill: #8bb9e0; font-style: italic; }
     .arrow { stroke: #6494be; stroke-width: 1.5; fill: none; }
     .arrow-head { fill: #6494be; }
-    .arrow-dim { stroke: #6494be; stroke-width: 1; fill: none; opacity: 0.5; }
     .inner-box { stroke: #3a6890; stroke-width: 1; stroke-dasharray: 5,4; fill: rgba(100,148,190,0.04); rx: 10; }
-    .phase-box { stroke: #30363d; stroke-width: 1; fill: rgba(22,27,34,0.7); rx: 8; }
+    .phase-box { stroke: #30363d; stroke-width: 1; fill: rgba(22,27,34,0.85); rx: 8; }
     .phase-box-inner { stroke: #6494be; stroke-width: 1.5; fill: rgba(100,148,190,0.06); rx: 8; }
     .feedback { stroke: #f0883e; stroke-width: 1.5; fill: none; stroke-dasharray: 6,4; }
     .feedback-head { fill: #f0883e; }
     .loop-arrow { stroke: #6494be; stroke-width: 1; fill: none; stroke-dasharray: 3,3; opacity: 0.6; }
-    .title { font-family: -apple-system, sans-serif; font-size: 18px; fill: #c9d1d9; font-weight: 600; }
-    .subtitle { font-family: -apple-system, sans-serif; font-size: 11px; fill: #6e7681; }
+    .title { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 18px; fill: #c9d1d9; font-weight: 600; }
+    .subtitle { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 11px; fill: #6e7681; }
   </style>
+
 
   <!-- Title -->
   <text x="420" y="32" text-anchor="middle" class="title">The Soma Dev Cycle</text>
