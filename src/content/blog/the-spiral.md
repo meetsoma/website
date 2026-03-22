@@ -2,6 +2,7 @@
 title: "The Spiral"
 description: "Our dev workflow was a pipeline. Then we watched what actually happened during a 28-commit session and rebuilt it as a spiral with 7 phases. This is how PHASE was born — not from a spec, but from watching an agent work."
 date: 2026-03-22T12:00:00
+image: /images/blog/og-the-spiral.png
 author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["workflow", "PHASE", "building-in-public", "architecture", "MAPS"]
