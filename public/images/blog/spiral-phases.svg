@@ -1,115 +1,111 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 520" fill="none">
   <style>
-    .phase-label { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; fill: #c9d1d9; }
-    .phase-num { font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; }
-    .phase-desc { font-family: -apple-system, sans-serif; font-size: 11px; fill: #6e7681; }
+    .phase-label { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 14px; fill: #c9d1d9; }
+    .phase-num { font-family: 'SF Mono', monospace; font-size: 10px; fill: #6494be; letter-spacing: 1px; }
+    .phase-desc { font-family: -apple-system, sans-serif; font-size: 10px; fill: #6e7681; }
     .inner-label { font-family: -apple-system, sans-serif; font-size: 10px; fill: #8bb9e0; font-style: italic; }
     .arrow { stroke: #6494be; stroke-width: 1.5; fill: none; }
     .arrow-head { fill: #6494be; }
-    .inner-box { stroke: #3a6890; stroke-width: 1; stroke-dasharray: 4,4; fill: none; rx: 8; }
-    .phase-box { stroke: #30363d; stroke-width: 1; fill: rgba(22,27,34,0.6); rx: 6; }
-    .phase-box-inner { stroke: #6494be; stroke-width: 1.5; fill: rgba(100,148,190,0.08); rx: 6; }
-    .feedback { stroke: #f0883e; stroke-width: 1; fill: none; stroke-dasharray: 6,3; }
+    .arrow-dim { stroke: #6494be; stroke-width: 1; fill: none; opacity: 0.5; }
+    .inner-box { stroke: #3a6890; stroke-width: 1; stroke-dasharray: 5,4; fill: rgba(100,148,190,0.04); rx: 10; }
+    .phase-box { stroke: #30363d; stroke-width: 1; fill: rgba(22,27,34,0.7); rx: 8; }
+    .phase-box-inner { stroke: #6494be; stroke-width: 1.5; fill: rgba(100,148,190,0.06); rx: 8; }
+    .feedback { stroke: #f0883e; stroke-width: 1.5; fill: none; stroke-dasharray: 6,4; }
     .feedback-head { fill: #f0883e; }
-    .title { font-family: -apple-system, sans-serif; font-size: 16px; fill: #c9d1d9; font-weight: 600; }
+    .loop-arrow { stroke: #6494be; stroke-width: 1; fill: none; stroke-dasharray: 3,3; opacity: 0.6; }
+    .title { font-family: -apple-system, sans-serif; font-size: 18px; fill: #c9d1d9; font-weight: 600; }
     .subtitle { font-family: -apple-system, sans-serif; font-size: 11px; fill: #6e7681; }
   </style>
 
   <!-- Title -->
-  <text x="400" y="30" text-anchor="middle" class="title">The Soma Dev Cycle</text>
-  <text x="400" y="48" text-anchor="middle" class="subtitle">7 phases · inner spiral · audit feeds back</text>
+  <text x="420" y="32" text-anchor="middle" class="title">The Soma Dev Cycle</text>
+  <text x="420" y="50" text-anchor="middle" class="subtitle">7 phases · inner spiral · audit feeds back</text>
 
   <!-- Phase 0: Orient -->
-  <rect x="30" y="80" width="130" height="50" class="phase-box"/>
-  <text x="95" y="100" text-anchor="middle" class="phase-num">PHASE 0</text>
-  <text x="95" y="116" text-anchor="middle" class="phase-label">Orient</text>
+  <rect x="40" y="80" width="140" height="55" class="phase-box"/>
+  <text x="110" y="100" text-anchor="middle" class="phase-num">PHASE 0</text>
+  <text x="110" y="120" text-anchor="middle" class="phase-label">Orient</text>
+  <text x="110" y="152" text-anchor="middle" class="phase-desc">kanban + preload</text>
 
   <!-- Arrow 0→1 -->
-  <line x1="160" y1="105" x2="200" y2="105" class="arrow"/>
-  <polygon points="200,100 210,105 200,110" class="arrow-head"/>
+  <line x1="180" y1="107" x2="220" y2="107" class="arrow"/>
+  <polygon points="220,102 232,107 220,112" class="arrow-head"/>
 
   <!-- Phase 1: Plan -->
-  <rect x="210" y="80" width="130" height="50" class="phase-box"/>
-  <text x="275" y="100" text-anchor="middle" class="phase-num">PHASE 1</text>
-  <text x="275" y="116" text-anchor="middle" class="phase-label">Plan</text>
+  <rect x="232" y="80" width="140" height="55" class="phase-box"/>
+  <text x="302" y="100" text-anchor="middle" class="phase-num">PHASE 1</text>
+  <text x="302" y="120" text-anchor="middle" class="phase-label">Plan</text>
+  <text x="302" y="152" text-anchor="middle" class="phase-desc">blast radius + targets</text>
 
   <!-- Arrow 1→inner -->
-  <line x1="275" y1="130" x2="275" y2="160" class="arrow"/>
-  <polygon points="270,160 275,170 280,160" class="arrow-head"/>
+  <line x1="302" y1="135" x2="302" y2="170" class="arrow"/>
+  <polygon points="297,170 302,182 307,170" class="arrow-head"/>
 
   <!-- Inner Spiral Box -->
-  <rect x="170" y="170" width="330" height="190" class="inner-box"/>
-  <text x="335" y="188" text-anchor="middle" class="inner-label">inner spiral — repeats per feature</text>
+  <rect x="130" y="182" width="380" height="200" class="inner-box"/>
+  <text x="320" y="200" text-anchor="middle" class="inner-label">inner spiral — repeats per feature</text>
 
   <!-- Phase 2: Build -->
-  <rect x="195" y="200" width="120" height="50" class="phase-box-inner"/>
-  <text x="255" y="220" text-anchor="middle" class="phase-num">PHASE 2</text>
-  <text x="255" y="236" text-anchor="middle" class="phase-label">Build</text>
+  <rect x="160" y="215" width="130" height="55" class="phase-box-inner"/>
+  <text x="225" y="235" text-anchor="middle" class="phase-num">PHASE 2</text>
+  <text x="225" y="255" text-anchor="middle" class="phase-label">Build</text>
 
   <!-- Arrow 2→3 -->
-  <line x1="315" y1="225" x2="350" y2="225" class="arrow"/>
-  <polygon points="350,220 360,225 350,230" class="arrow-head"/>
+  <line x1="290" y1="242" x2="340" y2="242" class="arrow"/>
+  <polygon points="340,237 352,242 340,247" class="arrow-head"/>
 
   <!-- Phase 3: Verify -->
-  <rect x="360" y="200" width="120" height="50" class="phase-box-inner"/>
-  <text x="420" y="220" text-anchor="middle" class="phase-num">PHASE 3</text>
-  <text x="420" y="236" text-anchor="middle" class="phase-label">Verify</text>
+  <rect x="352" y="215" width="130" height="55" class="phase-box-inner"/>
+  <text x="417" y="235" text-anchor="middle" class="phase-num">PHASE 3</text>
+  <text x="417" y="255" text-anchor="middle" class="phase-label">Verify</text>
 
   <!-- Arrow 3→4 -->
-  <line x1="420" y1="250" x2="420" y2="280" class="arrow"/>
-  <polygon points="415,280 420,290 425,280" class="arrow-head"/>
+  <line x1="417" y1="270" x2="417" y2="300" class="arrow"/>
+  <polygon points="412,300 417,312 422,300" class="arrow-head"/>
 
   <!-- Phase 4: Ship -->
-  <rect x="275" y="290" width="120" height="50" class="phase-box-inner"/>
-  <text x="335" y="310" text-anchor="middle" class="phase-num">PHASE 4</text>
-  <text x="335" y="326" text-anchor="middle" class="phase-label">Ship</text>
+  <rect x="255" y="312" width="130" height="55" class="phase-box-inner"/>
+  <text x="320" y="332" text-anchor="middle" class="phase-num">PHASE 4</text>
+  <text x="320" y="352" text-anchor="middle" class="phase-label">Ship</text>
 
-  <!-- Loop arrow 4→2 -->
-  <path d="M 275,315 L 195,315 L 195,250 L 195,225 L 195,225" class="arrow" stroke-dasharray="4,3"/>
-  <polygon points="190,225 195,215 200,225" class="arrow-head" opacity="0.6"/>
+  <!-- Loop arrow 4→2 (inner spiral repeat) -->
+  <path d="M 255,340 L 145,340 L 145,242 L 160,242" class="loop-arrow"/>
+  <polygon points="155,237 165,242 155,247" class="arrow-head" opacity="0.5"/>
 
   <!-- Arrow out of spiral →5 -->
-  <line x1="335" y1="340" x2="335" y2="385" class="arrow"/>
-  <polygon points="330,385 335,395 340,385" class="arrow-head"/>
+  <line x1="510" y1="242" x2="560" y2="242" class="arrow"/>
+  <polygon points="560,237 572,242 560,247" class="arrow-head"/>
 
   <!-- Phase 5: Document -->
-  <rect x="530" y="200" width="130" height="50" class="phase-box"/>
-  <text x="595" y="220" text-anchor="middle" class="phase-num">PHASE 5</text>
-  <text x="595" y="236" text-anchor="middle" class="phase-label">Document</text>
-
-  <!-- Arrow spiral→5 -->
-  <line x1="500" y1="225" x2="530" y2="225" class="arrow"/>
-  <polygon points="530,220 540,225 530,230" class="arrow-head"/>
-
-  <!-- Phase 6: Audit -->
-  <rect x="530" y="280" width="130" height="50" class="phase-box"/>
-  <text x="595" y="300" text-anchor="middle" class="phase-num">PHASE 6</text>
-  <text x="595" y="316" text-anchor="middle" class="phase-label">Audit</text>
+  <rect x="572" y="215" width="140" height="55" class="phase-box"/>
+  <text x="642" y="235" text-anchor="middle" class="phase-num">PHASE 5</text>
+  <text x="642" y="255" text-anchor="middle" class="phase-label">Document</text>
+  <text x="642" y="285" text-anchor="middle" class="phase-desc">docs, protocols, sync</text>
 
   <!-- Arrow 5→6 -->
-  <line x1="595" y1="250" x2="595" y2="280" class="arrow"/>
-  <polygon points="590,280 595,290 600,280" class="arrow-head"/>
+  <line x1="642" y1="270" x2="642" y2="310" class="arrow"/>
+  <polygon points="637,310 642,322 647,310" class="arrow-head"/>
 
-  <!-- Feedback arrow 6→2 (audit feeds back) -->
-  <path d="M 530,305 L 500,305 L 500,340 L 195,340 L 195,250" class="feedback"/>
-  <polygon points="190,250 195,240 200,250" class="feedback-head"/>
-  <text x="350" y="355" text-anchor="middle" class="inner-label" style="fill: #f0883e;">gaps found → back to Build</text>
+  <!-- Phase 6: Audit -->
+  <rect x="572" y="322" width="140" height="55" class="phase-box"/>
+  <text x="642" y="342" text-anchor="middle" class="phase-num">PHASE 6</text>
+  <text x="642" y="362" text-anchor="middle" class="phase-label">Audit</text>
 
-  <!-- Phase 7: Reflect -->
-  <rect x="530" y="390" width="130" height="50" class="phase-box"/>
-  <text x="595" y="410" text-anchor="middle" class="phase-num">PHASE 7</text>
-  <text x="595" y="426" text-anchor="middle" class="phase-label">Reflect</text>
+  <!-- Feedback arrow 6→Build -->
+  <path d="M 572,350 L 540,350 L 540,390 L 145,390 L 145,270" class="feedback"/>
+  <polygon points="140,270 145,258 150,270" class="feedback-head"/>
+  <text x="340" y="408" text-anchor="middle" class="inner-label" style="fill: #f0883e;">gaps found → back to Build</text>
 
   <!-- Arrow 6→7 -->
-  <line x1="595" y1="330" x2="595" y2="390" class="arrow"/>
-  <polygon points="590,390 595,400 600,390" class="arrow-head"/>
+  <line x1="642" y1="377" x2="642" y2="420" class="arrow"/>
+  <polygon points="637,420 642,432 647,420" class="arrow-head"/>
 
-  <!-- Phase descriptions on the right -->
-  <text x="690" y="108" class="phase-desc">kanban + preload</text>
-  <text x="690" y="228" class="phase-desc">docs, protocols, sync</text>
-  <text x="690" y="308" class="phase-desc">drift, CI, stale refs</text>
-  <text x="690" y="418" class="phase-desc">preload, patterns, tools</text>
+  <!-- Phase 7: Reflect -->
+  <rect x="572" y="432" width="140" height="55" class="phase-box"/>
+  <text x="642" y="452" text-anchor="middle" class="phase-num">PHASE 7</text>
+  <text x="642" y="472" text-anchor="middle" class="phase-label">Reflect</text>
+  <text x="642" y="502" text-anchor="middle" class="phase-desc">preload, patterns, tools</text>
 
   <!-- Soma sigma -->
-  <text x="760" y="470" text-anchor="end" style="font-family: serif; font-size: 14px; fill: #6494be;">σ</text>
+  <text x="800" y="505" text-anchor="end" style="font-family: serif; font-size: 16px; fill: #6494be; opacity: 0.7;">σ</text>
 </svg>
