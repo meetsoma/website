@@ -1,7 +1,50 @@
 {
-  "generated": "2026-03-21T07:22:59Z",
+  "generated": "2026-03-22T13:51:02Z",
   "source": "CHANGELOG.md",
   "versions": [
+    {
+      "version": "0.6.3",
+      "date": "2026-03-22",
+      "entries": {
+        "added": [
+          "**`/hub` command** — unified hub interface for community content. Install, fork, share, find, list, status. Replaces old `/install` and `/list` commands (kept as backward compat aliases).",
+          "**Smart sharing** (`/hub share`) — quality scoring (0-100%), privacy auto-fix with `_public/` staging, README generation that captures `--help` output and extracts functions, dependency resolution.",
+          "**Drop-in commands** — scripts in `.soma/amps/scripts/commands/` become `/soma <name>` commands. Hot-loadable, no restart needed. Tab completions included.",
+          "**`scope: core` protocols** — documentation protocols whose behavior is coded in TypeScript. Never loaded into prompt (saves ~2000 tokens). Discoverable, readable on demand via docs section. `/pin` and `/kill` block with explanation.",
+          "**5 core protocols** — breath-cycle, heat-tracking, session-checkpoints, git-identity, hub-sharing.",
+          "**`automation` content type** — MAPs are now installable hub content. 3 published: debug, refactor, visual-gap-analysis.",
+          "**Dependency resolution** — `requires:` in frontmatter auto-installs dependencies (scripts, protocols, muscles) alongside content.",
+          "**`gitIdentity.email` array support** — multiple valid emails for multi-account users.",
+          "**Default preload template** — Weather (emotional tone) + Warnings (traps for next session) sections.",
+          "**Preload template** on community hub — customizable preload format.",
+          "**Regression test suite** — test-hub.sh (25 tests) + test-commands.sh (26 tests). Side-effect testing for `-p` mode."
+        ],
+        "changed": [
+          "**Hub: 40 items** across 5 content types (17 protocols, 8 muscles, 3 scripts, 3 automations, 9 templates).",
+          "**`/soma prompt`** shows core protocols with 📄 icon instead of misleading heat display.",
+          "**Bundled protocols** updated with shipped tool references (soma-code, soma-scrape, soma-spell).",
+          "**Community CI** — validate-frontmatter accepts `triggers` (replaces `topic`+`keywords`), `description` OR `breadcrumb`. Format-check supports `scope: core`. Attribution allows org identity for owners. Actions upgraded to v6 (Node 22)."
+        ],
+        "fixed": [
+          "**`/hub list --remote`** — flag was parsed as type filter, returning 0 results.",
+          "**Drop-in command output** — ANSI escape codes stripped (sendUserMessage renders markdown, not terminal).",
+          "**Stale git-identity heat rule** removed from HEAT_RULES (protocol was archived).",
+          "**soma-refactor.sh scan** — string references now exclude node_modules/dist/.git."
+        ],
+        "security": [
+          "**soma-beta** — `.map` files (128) and `.d.ts` files (64) stripped from dist. Source maps contained full `sourcesContent`.",
+          "**soma-beta** — orphan history on every release. Old commits can't recover source code."
+        ],
+        "internal": [
+          "7-phase dev cycle MAP (soma-dev/cycle.md with phase files)",
+          "Blog content cycle MAP (blog/cycle.md with phase files)",
+          "SVG blog diagrams muscle (Soma palette, transparent bg, rsvg-convert pipeline)",
+          "Migration v0.6.2→v0.6.3 updated for scope:core + git-identity restore",
+          "FRONTMATTER.md rewritten, CONTRIBUTING.md updated",
+          "185 unit test assertions (was 162), 51 regression tests"
+        ]
+      }
+    },
     {
       "version": "0.6.2",
       "date": "2026-03-21",
