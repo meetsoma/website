@@ -48,13 +48,11 @@ const blogJsonLd = {
   <div class="stars"></div>
 
   <main class="container">
-    <Breadcrumbs items={[
-      { label: 'Blog', href: '/blog' },
-      { label: post.data.title, href: postUrl },
-    ]} />
+    <nav class="back-link"><a href="/blog">← Blog</a></nav>
 
     <article class="article">
       <header class="article-header">
+        <h1 class="article-title">{post.data.title}</h1>
         <div class="article-meta">
           <span>{formatDate(post.data.date)}</span>
           <span class="sep">·</span>
@@ -65,12 +63,10 @@ const blogJsonLd = {
             {authorBadge(post.data.authorRole)}
           </span>
         </div>
-        <h1 class="article-title">{post.data.title}</h1>
-        <p class="article-desc">{post.data.description}</p>
         {post.data.tags.length > 0 && (
           <div class="article-tags">
-            {post.data.tags.map((tag) => (
-              <span class="tag">#{tag}</span>
+            {post.data.tags.map((tag, i) => (
+              <span class={`tag ${i >= 3 ? 'tag-overflow' : ''}`}>#{tag}</span>
             ))}
           </div>
         )}
@@ -103,26 +99,47 @@ const blogJsonLd = {
     position: relative; z-index: 1;
     max-width: 890px;
     margin: 0 auto;
-    padding: var(--card-pad-y) var(--card-pad-x);
+    padding: var(--space-xl) var(--space-lg);
     min-height: 100vh;
   }
 
+  .back-link {
+    margin-bottom: var(--space-lg);
+  }
+
+  .back-link a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: var(--body-secondary);
+  }
+
+  .back-link a:hover { color: var(--accent-bright); }
+
   .article-header {
-    margin-bottom: var(--space-2xl);
-    padding-bottom: 32px;
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-xl);
     border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .article-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-sm);
   }
 
   .article-meta {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-md);
+    gap: var(--space-sm) var(--space-md);
     font-size: var(--label-text);
     color: var(--text-muted);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
   }
 
-  .sep { opacity: 0.5; }
+  .sep { opacity: 0.4; }
 
   .author-badge {
     font-family: var(--font-mono);
@@ -138,22 +155,11 @@ const blogJsonLd = {
     color: var(--warm-bright);
   }
 
-  .article-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 5vw, 2.6rem);
-    font-weight: 700;
-    line-height: var(--leading-tight);
-    margin-bottom: var(--space-lg);
+  .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
   }
-
-  .article-desc {
-    font-size: var(--text-lg);
-    color: var(--text-secondary);
-    line-height: var(--leading-relaxed);
-    margin-bottom: var(--space-lg);
-  }
-
-  .article-tags { display: flex; gap: var(--space-md); }
 
   .tag {
     font-size: var(--badge-text);
@@ -162,6 +168,14 @@ const blogJsonLd = {
     border-radius: var(--radius-lg);
     background: var(--surface-accent-soft);
     border: 1px solid rgba(124, 178, 212, 0.15);
+    white-space: nowrap;
+  }
+
+  /* Mobile: hide tags beyond 3rd */
+  .tag-overflow { display: none; }
+
+  @media (min-width: 768px) {
+    .tag-overflow { display: inline; }
   }
 
   .article-content {
@@ -255,8 +269,8 @@ const blogJsonLd = {
   }
 
   .back-nav {
-    margin-top: var(--space-3xl);
-    padding-top: 21px;
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-lg);
     border-top: 1px solid var(--border-subtle);
     text-align: center;
   }
@@ -269,7 +283,22 @@ const blogJsonLd = {
 
   .back-nav a:hover { color: var(--moon-bright); }
 
-  @media (max-width: 480px) {
-    .container { padding: var(--space-xl) var(--space-lg); }
+  /* SVGs should fill the content width */
+  .article-content :global(img[src$=".svg"]) {
+    width: 100%;
+    height: auto;
+    margin: var(--space-xl) 0;
+  }
+
+  /* Code blocks shouldn't overflow on mobile */
+  .article-content :global(pre) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      padding: var(--card-pad-y) var(--card-pad-x);
+    }
   }
 </style>

@@ -34,31 +34,34 @@ const posts = await getPublishedBlogPosts();
     ) : (
       <div class="posts-grid">
         {posts.map((post) => (
-          <a href={blogPostUrl(post)} class="post-card">
-            <div class="post-meta">
-              <span class="post-date">{formatDate(post.data.date)}</span>
-              <span class="sep">·</span>
-              <span class="post-read">{estimateReadTime(post.body || '')}</span>
-              <span class="author-badge" data-role={post.data.authorRole}>
-                {authorBadge(post.data.authorRole)}
-              </span>
-            </div>
-            <h2 class="post-title">{post.data.title}</h2>
-            <p class="post-desc">{post.data.description}</p>
+          <div class="post-card">
+            <a href={blogPostUrl(post)} class="post-link">
+              <div class="post-meta">
+                <span class="post-date">{formatDate(post.data.date)}</span>
+                <span class="sep">·</span>
+                <span class="post-read">{estimateReadTime(post.body || '')}</span>
+                <span class="author-badge" data-role={post.data.authorRole}>
+                  {authorBadge(post.data.authorRole)}
+                </span>
+              </div>
+              <h2 class="post-title">{post.data.title}</h2>
+              <p class="post-desc">{post.data.description}</p>
+            </a>
             <div class="post-footer">
-              <span class="post-author">{post.data.author}</span>
               <div class="post-tags">
                 {post.data.tags.map((tag) => (
                   <span class="tag">#{tag}</span>
                 ))}
               </div>
             </div>
-          </a>
+          </div>
         ))}
       </div>
     )}
 
   </main>
+
+
 </Layout>
 
 <style>
@@ -167,14 +170,12 @@ const posts = await getPublishedBlogPosts();
   .post-card {
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
-    padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-xl);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card-strong);
-    text-decoration: none;
     color: var(--text-primary);
     transition: all 0.25s ease;
+    overflow: hidden;
   }
 
   .post-card:hover {
@@ -182,6 +183,19 @@ const posts = await getPublishedBlogPosts();
     transform: translateY(-4px);
     box-shadow: 0 16px 48px var(--shadow-accent-soft);
   }
+
+  .post-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: var(--card-pad-y) var(--card-pad-x) 0;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-link .post-meta { margin-bottom: 8px; }
+  .post-link .post-title { margin-bottom: 16px; }
+  .post-link .post-desc { margin-bottom: 4px; }
 
   .post-meta {
     display: flex;
@@ -217,6 +231,7 @@ const posts = await getPublishedBlogPosts();
   }
 
   .post-card:hover .post-title { color: var(--accent-bright); }
+  .post-link:hover { text-decoration: none; }
 
   .post-desc {
     font-size: var(--body-text);
@@ -227,19 +242,28 @@ const posts = await getPublishedBlogPosts();
   .post-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-top: 4px;
-    padding-top: 14px;
-    border-top: 1px solid var(--border-subtle);
+    padding: 8px var(--card-pad-x) var(--card-pad-y);
   }
 
-  .post-author {
-    font-size: var(--body-text);
-    font-weight: 500;
-    color: var(--text-secondary);
+  .post-tags {
+    display: flex;
+    gap: var(--space-sm);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    min-width: 0;
+    flex: 1;
   }
 
-  .post-tags { display: flex; gap: var(--space-md); }
+  .post-tags::-webkit-scrollbar { display: none; }
+
+  .post-tags.has-overflow {
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 48px), transparent);
+    mask-image: linear-gradient(to right, black calc(100% - 48px), transparent);
+  }
 
   .tag {
     font-size: var(--badge-text);
@@ -248,11 +272,48 @@ const posts = await getPublishedBlogPosts();
     border-radius: var(--radius-lg);
     background: var(--surface-accent-soft);
     border: 1px solid rgba(124, 178, 212, 0.15);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .post-tags {
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+    .post-tags.has-overflow {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
   }
 
   @media (max-width: 480px) {
     .container { padding: var(--space-xl) var(--space-lg); }
-    .post-card { padding: var(--space-xl); }
-    .post-footer { flex-direction: column; align-items: flex-start; gap: var(--space-md); }
+    .post-link { padding: var(--space-xl) var(--space-xl) 0; }
+    .post-footer {
+      padding: var(--space-md) var(--space-xl) var(--space-xl);
+    }
   }
 </style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    function updateOverflow() {
+      document.querySelectorAll('.post-tags').forEach(function(el) {
+        if (el.scrollWidth > el.clientWidth + 1) {
+          el.classList.add('has-overflow');
+        } else {
+          el.classList.remove('has-overflow');
+        }
+      });
+    }
+
+    updateOverflow();
+    window.addEventListener('resize', updateOverflow);
+
+    if (typeof ResizeObserver !== 'undefined') {
+      var ro = new ResizeObserver(updateOverflow);
+      document.querySelectorAll('.post-tags').forEach(function(el) { ro.observe(el); });
+    }
+  });
+</script>
