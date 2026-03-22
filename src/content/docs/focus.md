@@ -50,8 +50,7 @@ Each muscle is scored against the keyword:
 |-----------|-------|---------|
 | Explicit trigger (`triggers: [auth]`) | 10 | Muscle declares it activates on "auth" |
 | Tag match (`tags: [auth]`) | 5 | Muscle is tagged with the keyword |
-| Trigger match (`triggers: [auth]`) | 10 | Merged from triggers + keywords + topic |
-| Topic match (`topics: [auth]`) | 4 | Topic in frontmatter topics list |
+| Trigger match (`triggers: [auth]`) | 10 | Matched against frontmatter `triggers:` field |
 | Name contains keyword | 3 | `auth-flow.md` matches "auth" |
 | Digest contains keyword | 2 | Keyword appears in the muscle summary |
 

@@ -97,9 +97,13 @@ Pick from previous sessions to resume.
 | `/keepalive` | Toggle cache keepalive on/off (or check status) |
 | `/status` | Show session stats — context %, cache, keepalive, turns, uptime |
 | `/preload` | List available preload files |
+| `/hub install <type> <name>` | Install a protocol, muscle, script, or automation from the hub |
+| `/hub find <keywords>` | Search the community hub |
+| `/hub list --remote` | Browse all available hub content |
 | `/soma status` | Show memory status (identity, preload, muscles, protocols) |
 | `/soma init` | Create `.soma/` in current directory |
 | `/soma prompt` | Preview compiled system prompt with token estimate |
+| `/soma <command>` | Run a drop-in command (scripts in `.soma/amps/scripts/commands/`) |
 
 ## The `.soma/` Directory
 

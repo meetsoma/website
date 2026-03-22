@@ -52,9 +52,8 @@ loads: 0
 |-------|------|-------------|
 | `type` | `"muscle"` | Always `muscle` |
 | `status` | `active \| dormant \| retired` | Controls discovery. Only `active` muscles load. |
-| `tags` | `string[]` | Searchable tags (used by focus matching) |
-| `topic` | `string[]` | What this muscle covers (broad categories) |
-| `triggers` | `string[]` | Activation keywords — merged from triggers + keywords + topic at parse time (see [Focus](/docs/focus)) |
+| `tags` | `string[]` | Searchable tags (used by hub cards and search) |
+| `triggers` | `string[]` | Activation keywords — used by focus matching, heat auto-detection, and hub search. Replaces the older `topic` + `keywords` fields (v0.6.2+). |
 | `tools` | `string[]` | Scripts this muscle relates to |
 | `heat` | `number` | Current heat level — determines loading tier |
 | `loads` | `number` | How many times loaded at boot (tracked automatically) |

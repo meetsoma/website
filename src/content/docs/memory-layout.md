@@ -28,6 +28,7 @@ Lives in your project root.
 │   ├── muscles/             ← learned patterns (heat-tracked)
 │   ├── protocols/           ← behavioral rules (heat-tracked)
 │   └── scripts/             ← developer tools (usage-tracked via state.json)
+│       └── commands/        ← drop-in /soma commands (hot-loadable)
 │
 ├── memory/                  ← temporal state
 │   ├── preloads/            ← session continuations

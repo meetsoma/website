@@ -56,6 +56,29 @@ Each layer references the others. A MAP lists which muscles to load. A muscle li
 
 The compiled runtime doesn't change. The `.soma/` directory grows around it.
 
+## The Hub
+
+Community AMPS content is available on the [Soma Hub](/hub). Install protocols, muscles, scripts, automations, and templates with `/hub install`:
+
+```bash
+/hub install protocol maps          # install a protocol
+/hub install script soma-code       # install a script
+/hub install template architect     # install a full starter template
+/hub find debugging                 # search by keyword
+/hub list --remote                  # browse everything available
+```
+
+Content installs globally by default (`~/.soma/`). Use `-p` for project-specific installs. Dependencies are resolved automatically — if a protocol references a script, both get installed.
+
+You can share your own content back:
+
+```bash
+/hub share muscle my-pattern        # opens a PR to the community hub
+/hub fork protocol breath-cycle     # create your own version with lineage
+```
+
+See [Commands](/docs/commands#hub-commands) for the full reference.
+
 ## vs CLAUDE.md
 
 | | CLAUDE.md | AMPS |

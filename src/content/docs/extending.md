@@ -23,7 +23,7 @@ What makes Soma different: **muscles and protocols refine skills over time**. A 
 Install from the hub or place manually:
 
 ```bash
-/install skill my-skill        # from Soma Hub
+/hub install skill my-skill     # from Soma Hub
 ```
 
 Or place skill directories in one of these locations:
