@@ -5,18 +5,34 @@
     {
       "version": "Next",
       "date": "",
-      "features": {
-        "added": [
-          "Heat visibility command. See what's hot across all AMPS layers.",
-          "Soma Dev Kit \u2014 extension SDK, protocol authoring, MAP templates, hub publishing.",
-          "Community hub scripts and MAP pages.",
-          "Tutorial guides: writing your first protocol, your first muscle."
-        ],
-        "changed": [
-          "Boot sequence extraction \u2014 moving hardcoded behavior into user-editable MAPs.",
-          "Heat thresholds moving from TypeScript to configurable settings."
-        ]
-      }
+      "features": [
+        {
+          "title": "PHASE Implementation",
+          "description": "Phase-aware MAPs with per-phase brain configuration. Sequential context injection via /phase command."
+        },
+        {
+          "title": "Protocol Voice Pass",
+          "description": "Coaching voice for all TL;DRs and digests. Core protocol rewrite to match current reality."
+        }
+      ]
+    },
+    {
+      "version": "0.6.3",
+      "date": "2026-03-22",
+      "features": [
+        {
+          "title": "Community Hub CLI",
+          "description": "/hub command \u2014 install, fork, share, find community content. Smart sharing with quality scoring and privacy auto-fix."
+        },
+        {
+          "title": "Drop-in Commands",
+          "description": "Scripts in .soma/amps/scripts/commands/ become /soma commands instantly. No restart needed."
+        },
+        {
+          "title": "Core Protocol System",
+          "description": "scope:core protocols document built-in behavior without wasting prompt tokens. 5 core protocols established."
+        }
+      ]
     },
     {
       "version": "0.6.2",
