@@ -61,6 +61,12 @@ const typeConfig: Record<string, { icon: string; color: string; label: string; s
     label: 'Automations',
     sublabel: 'Executable workflows — rituals and hooks that run without thinking.',
   },
+  script: {
+    icon: 'skills',
+    color: 'rgba(124, 212, 178, 0.25)',
+    label: 'Scripts',
+    sublabel: 'CLI tools — bash scripts that extend your agent\'s capabilities.',
+  },
 };
 
 /** Merge static props with live index — live wins on slug+type collision (newer version). */
@@ -128,7 +134,7 @@ export default function HubGrid({ items }: Props) {
     grouped[item.type].push(item);
   }
 
-  const typeOrder = ['protocol', 'muscle', 'skill', 'template', 'automation'];
+  const typeOrder = ['protocol', 'muscle', 'script', 'skill', 'template', 'automation'];
   const sortedTypes = typeOrder.filter(t => grouped[t]?.length);
 
   if (filtered.length === 0) {
@@ -157,7 +163,7 @@ export default function HubGrid({ items }: Props) {
             <div class="card-grid">
               {typeItems.map(item => (
                 <a
-                  href={`/hub/${item.type}/${item.slug}`}
+                  href={`/hub/view?type=${item.type}&slug=${item.slug}`}
                   class="hub-card"
                   key={`${item.type}-${item.slug}`}
                   style={`--card-accent: ${config.color}`}

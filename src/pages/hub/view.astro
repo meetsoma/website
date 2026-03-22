@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HubDetail from '../../components/islands/HubDetail';
+---
+
+<Layout
+  title="Hub — Soma"
+  description="View AMPS content on SomaHub — protocols, muscles, scripts, and more."
+  canonicalUrl="https://soma.gravicity.ai/hub/view"
+>
+  <div class="stars"></div>
+
+  <main class="container">
+    <nav class="back-nav">
+      <a href="/hub" class="back-link">← Back to Hub</a>
+    </nav>
+
+    <!-- Island reads type/slug from URL params: /hub/view?type=script&slug=soma-code -->
+    <HubDetail client:load />
+  </main>
+</Layout>
+
+<style>
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, rgba(228,234,244,0.6), transparent),
+      radial-gradient(1px 1px at 150px 100px, rgba(124,178,212,0.5), transparent);
+    background-size: 400px 180px;
+    animation: twinkle 10s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 0.6; } }
+
+  .container {
+    position: relative; z-index: 1;
+    max-width: 890px;
+    margin: 0 auto;
+    padding: var(--card-pad-y, 2rem) var(--card-pad-x, 1.5rem);
+    min-height: 100vh;
+  }
+
+  .back-nav { margin-bottom: var(--space-xl, 2rem); }
+  .back-link {
+    font-size: var(--body-secondary, 0.9rem);
+    color: var(--accent-bright, #7cb2d4);
+    text-decoration: none;
+  }
+  .back-link:hover { text-decoration: underline; }
+</style>
