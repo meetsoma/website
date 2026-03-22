@@ -78,7 +78,7 @@
   <!-- <ellipse cx="640" cy="230" rx="220" ry="200" fill="url(#aura)"/> -->
 
   <!-- Mascot — scaled up -->
-  <g transform="translate(640, 210) scale(0.7)">
+  <g transform="translate(640, 195) scale(0.80)">
     <g transform="translate(-256, -280)">
       <!-- Ground shadow -->
       <ellipse cx="264" cy="480" rx="118" ry="12" fill="url(#gshd)"/>
