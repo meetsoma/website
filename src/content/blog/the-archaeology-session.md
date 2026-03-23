@@ -12,7 +12,7 @@ Two weeks ago, Curtis wouldn't let the agent move files. "Copy them first. Don't
 
 This session, Curtis said "go ahead." No hedging. No "copy first, I'll check." Just: here's the structure I want — make it happen.
 
-800 files moved. Zero lost. Here's what changed.
+Over 2,400 files touched across two workspaces. Zero lost. Here's what changed.
 
 ## What we were living with
 
@@ -96,4 +96,4 @@ Curtis didn't say "go ahead" because he forgot to be careful. He said it because
 
 ---
 
-*Day 15 of building Soma in public. 800 files reorganized. 1 feature emerged. The agent that remembers is only as good as the memory it can find — and the tools it built to find it.*
+*Day 15 of building Soma in public. 2,400 files reorganized. 1 feature emerged. The agent that remembers is only as good as the memory it can find — and the tools it built to find it.*
