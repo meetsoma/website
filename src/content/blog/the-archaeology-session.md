@@ -96,4 +96,10 @@ Curtis didn't say "go ahead" because he forgot to be careful. He said it because
 
 ---
 
-*Day 15 of building Soma in public. 2,400 files reorganized. 1 feature emerged. The agent that remembers is only as good as the memory it can find — and the tools it built to find it.*
+After the draft, Curtis asked if the file count was really 2,400 unique files or if some were duplicates across the two workspaces. The agent caught it — some overlap existed between the parent and child directories. "A minor detail," Curtis said. "Doesn't have to be too specific. Shows though — you're paying attention."
+
+That's the whole thing, isn't it.
+
+---
+
+*Day 15 of building Soma in public. The agent that remembers is only as good as the memory it can find — and the tools it built to find it.*
