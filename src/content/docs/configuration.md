@@ -1,10 +1,10 @@
 ---
 title: "Configuration"
 description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior."
-section: "Customization"
-order: 1
+section: "Reference"
+order: 6
 ---
-# Configuration
+
 
 <!-- tldr -->
 `settings.json` at any level in the soma chain (project → parent → global). Project overrides parent overrides global. Controls: heat thresholds, muscle budgets, boot steps (including git-context), context warning thresholds, preload staleness, auto-detection, parent-child inheritance, persona, system prompt toggles, guard rules. Only set what you want to change — defaults fill the rest.
@@ -181,9 +181,9 @@ Protects core Soma files and git identity from accidental modification.
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `coreFiles` | `"warn"` | Protection for identity.md, STATE.md, protocols/, settings.json. Options: `"allow"` (no guard), `"warn"` (notify on write), `"block"` (require confirmation) |
+| `coreFiles` | `"warn"` | Protection for SOMA.md, STATE.md, protocols/, settings.json. Options: `"allow"` (no guard), `"warn"` (notify on write), `"block"` (require confirmation) |
 | `bashCommands` | `"warn"` | Dangerous bash command guard (rm -rf, git push --force, etc.). `"allow"` = no prompts (power user), `"warn"` = confirm first, `"block"` = prevent entirely |
-| `gitIdentity` | `null` | Expected git identity. `null` = hook checks email is set. Object = validates specific email/name. |
+| `gitIdentity` | `null` | Expected git identity. `null` = only checks email is set. `{ email: "x@y.com" }` = warns on mismatch. `{ email: ["a@b.com", "c@d.com"] }` = accepts any in the list. |
 | `toolGates` | `{}` | Tool→muscle gating. Require reading a muscle before using certain bash commands. Keys are command substrings, values are `{ muscle, mode }`. |
 
 **Example: tool→muscle gating:**
@@ -646,7 +646,7 @@ If you use a different directory layout (e.g., `protocols/` instead of `amps/pro
     "scripts": "amps/scripts",
     "automations": "amps/automations",
     "preloads": "memory/preloads",
-    "identity": "identity.md"
+    "identity": "SOMA.md"
   }
 }
 ```

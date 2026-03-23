@@ -2,12 +2,12 @@
 title: "Memory Layout"
 description: "Project vs user level storage, git strategy, data flow."
 section: "Core Concepts"
-order: 5
+order: 4
 ---
-# Memory Layout
+
 
 <!-- tldr -->
-Core structure: `.soma/` has five parts — `amps/` (Automations, Muscles, Protocols, Scripts), `memory/` (sessions, preloads), `projects/` (per-project context), `skills/` (Pi-native knowledge sets), and root files (identity.md, settings.json, state.json). AMPS is the content system — what Soma learns and how it behaves. Memory is temporal state. Skills route through Pi's native discovery. Projects hold per-project specs and notes. User-level `~/.soma/agent/` holds global settings and runtime.
+Core structure: `.soma/` has five parts — `amps/` (Automations, Muscles, Protocols, Scripts), `memory/` (sessions, preloads), `body/` (structured identity — soul, voice, templates), `skills/` (installable capabilities), and root files (SOMA.md, settings.json, state.json). AMPS is the content system — what Soma learns and how it behaves. Memory is temporal state. Body files become template variables. User-level `~/.soma/agent/` holds global settings and runtime.
 <!-- /tldr -->
 
 Soma uses two levels of storage: **project-level** (`.soma/` in your repo) and **user-level** (`~/.soma/agent/`).
@@ -18,7 +18,8 @@ Lives in your project root.
 
 ```
 .soma/
-├── identity.md              ← who Soma is in this project
+├── SOMA.md                  ← who Soma is (or body/soul.md when structured)
+├── body/                    ← structured identity (soul, voice, templates)
 ├── settings.json            ← configurable thresholds (optional)
 ├── state.json               ← heat state for AMPS content (auto-managed)
 │
@@ -28,14 +29,13 @@ Lives in your project root.
 │   ├── muscles/             ← learned patterns (heat-tracked)
 │   ├── protocols/           ← behavioral rules (heat-tracked)
 │   └── scripts/             ← developer tools (usage-tracked via state.json)
-│       └── commands/        ← drop-in /soma commands (hot-loadable)
 │
 ├── memory/                  ← temporal state
 │   ├── preloads/            ← session continuations
 │   └── sessions/            ← per-session work logs
 │
 ├── knowledge/               ← scraped docs (from soma-scrape.sh)
-├── projects/                ← per-project specs, plans, notes
+├── docs/                    ← ideas, plans, knowledge
 │
 ├── .boot-target             ← focus/MAP targeting signal (consumed on boot)
 └── skills/                  ← knowledge sets (Pi-native SKILL.md format)
@@ -70,7 +70,7 @@ Directories starting with `_` or `.` are skipped. Max depth: 2 levels.
 ### Marker Files
 
 Soma identifies a valid `.soma/` directory by looking for at least one of:
-- `identity.md`
+- `SOMA.md` (or `body/soul.md`)
 - `amps/` directory
 - `memory/` directory
 - `settings.json`
@@ -82,7 +82,7 @@ Soma identifies a valid `.soma/` directory by looking for at least one of:
 | `skills/` | Tracked | Project-specific skills, shareable |
 | `amps/protocols/` | Tracked | Behavioral rules, shareable across team |
 | `amps/scripts/` | Tracked | Developer tools, shareable |
-| `identity.md` | **Gitignored** | Personal — Soma's identity is unique to each user |
+| `SOMA.md` / `body/` | **Gitignored** | Personal — Soma's identity is unique to each user |
 | `amps/muscles/` | **Gitignored** | Personal learned patterns |
 | `amps/automations/` | **Gitignored** | Personal triggers |
 | `memory/` | **Gitignored** | Session-specific, personal |
@@ -111,7 +111,7 @@ Fresh session (soma):
   ~/.soma/agent/extensions/ load
   → walk up CWD for .soma/ (project → parent → global chain)
   → run boot steps (configurable in settings.json):
-    1. identity — load identity.md (layered)
+    1. identity — load SOMA.md or body/soul.md (layered)
     2. preload — skip (fresh session)
     3. protocols — load by heat (hot=full, warm=breadcrumb, cold=name)
     4. muscles — load by heat within token budget
@@ -161,8 +161,8 @@ Content from each level merges according to the `inherit` settings. See [Configu
 Each project gets its own `.soma/`. When you `cd` between projects and run `soma`, it loads the identity and memory for *that* project. Different projects, different Somas.
 
 ```
-~/project-a/.soma/identity.md   ← "I'm a frontend specialist"
-~/project-b/.soma/identity.md   ← "I'm a systems engineer"
+~/project-a/.soma/SOMA.md       ← "I'm a frontend specialist"
+~/project-b/.soma/SOMA.md       ← "I'm a systems engineer"
 ```
 
 Same `soma` CLI, different memories.

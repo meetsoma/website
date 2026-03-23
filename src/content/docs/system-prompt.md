@@ -1,37 +1,62 @@
 ---
 title: "System Prompt"
 description: "How Soma's compiled system prompt is assembled, configured, and previewed."
-section: "Reference"
-order: 5
+section: "Core Concepts"
+order: 7
 ---
 
-# System Prompt
 
 <!-- tldr -->
-Soma compiles a layered system prompt from: static core → identity → protocols/muscles (behavioral) → docs → guard awareness → CLAUDE.md note → skills. Each section is toggleable via `systemPrompt` settings. Preview with `/soma prompt`. Token budget defaults to 4000 (currently well within range). Identity placement, docs inclusion, and guard awareness are all configurable.
+Soma compiles a system prompt from: static core → identity → protocols/muscles → docs → guard → skills. When `body/_mind.md` exists, it's a **template** — you control the structure with `{{variables}}`. All AMPS are classified by heat: hot = full body, warm = `<available_skills>` XML, cold = hidden. Preview with `/body render` (full output) or `/body map` (structure). Token budget warns at 4000 (configurable).
 <!-- /tldr -->
 
 ## How It's Built
 
-Soma's system prompt is **compiled** at boot from multiple sources. The assembly runs in a fixed order:
+### Template Path (recommended)
+
+When `.soma/body/_mind.md` exists, it becomes the system prompt template. You control the structure:
+
+```markdown
+{{core_rules}}
+# Identity
+{{soul}}
+## Voice
+{{voice}}
+{{protocol_summaries}}
+{{muscle_digests}}
+{{tools_section}}
+{{guard_section}}
+{{docs_section}}
+{{skills_block}}
+```
+
+Every `{{variable}}` resolves from body content files, boot discovery, or settings. Add custom text between variables. Remove sections you don't need. The template IS the compiler.
+
+See [Identity](/docs/identity) for all available variables and the body file system.
+
+### Built-in Path (no template)
+
+Without `_mind.md`, Soma uses a fixed assembly order:
 
 | Order | Section | Source | Toggleable |
 |-------|---------|--------|------------|
-| 1 | Static core | Built-in behavioral rules | No |
-| 2 | Identity | `identity.md` (layered: project → parent → global) | `identityInSystemPrompt` |
-| 3 | Protocols | Hot = full body, warm = breadcrumb (sorted by heat, capped) | No |
+| 1 | Static core | Built-in behavioral rules (`prompts/system-core.md`) | No |
+| 2 | Identity | `SOMA.md` or `body/soul.md` (layered: project → parent → global) | `identityInSystemPrompt` |
+| 3 | Protocols | Hot = full body, warm = one-liner (sorted by heat, capped) | No |
 | 4 | Muscles | Hot = full body, warm = digest (within token budget) | No |
 | 5 | Soma docs | Documentation references | `includeSomaDocs` |
-| 6 | Pi docs | Pi framework documentation | `includePiDocs` |
-| 7 | Guard awareness | File protection rules from `guard` settings | `includeGuardAwareness` |
-| 8 | Automations | Hot = full body, warm = digest (heat-tracked) | No |
-| 9 | Scripts | Available scripts table with usage counts | No |
-| 10 | Git context | Recent commits and changes | `boot.gitContext.enabled` |
-| 11 | CLAUDE.md note | Awareness marker (if file exists in project root) | `includeContextAwareness` |
-| 12 | Skills | Pi skills block | `includeSkills` |
-| 13 | Focus/MAP | Focus context, related MAPs (when `.boot-target` exists) | Via `soma-focus.sh` |
+| 6 | Guard | File protection rules | `includeGuardAwareness` |
+| 7 | Skills | Warm AMPS + Pi skills as `<available_skills>` XML | `includeSkills` |
 
-Protocols and muscles are always included (they're the core of Soma's memory) — their loading is controlled by the heat system and token budgets, not by system prompt toggles.
+### AMPS Skill Loader
+
+All AMPS content (protocols, muscles, automations, body files) is classified by heat:
+
+- 🔥 **Hot** (8+) — full body in system prompt
+- 🟡 **Warm** (3–7) — appears as `<available_skills>` XML (agent reads on demand)
+- ❄️ **Cold** (0–2) — hidden from prompt
+
+This means warm muscles and protocols are still accessible — the agent just reads the file when it needs them, rather than having them always in the prompt.
 
 ## Configuration
 
@@ -63,32 +88,27 @@ All toggles live under the `systemPrompt` key in `settings.json`:
 
 ## Previewing
 
-Use `/soma prompt` to see the fully assembled system prompt:
+| Command | What it shows |
+|---------|--------------|
+| `/body render` | Full compiled system prompt — exactly what the model sees |
+| `/body map` | Template structure — headings + `{{var}}` status (✅/⏳/⬜) |
+| `/body check` | Health report — missing vars, duplicates, token budget |
+| `/body vars` | All variables grouped by category with token counts |
+| `/soma prompt` | Legacy preview — section overview with token estimates |
 
-```
-/soma prompt
-```
+`/body render` recompiles fresh from disk — picks up changes since boot. Use `--send` to inject results into the conversation for discussion.
 
-This shows:
-- Each section with its content
-- Which toggles are active/inactive
-- Estimated token count
-- Whether sections were skipped (and why)
+## Token Budget
 
-Useful for debugging when the agent isn't behaving as expected — see exactly what it's receiving.
+The system prompt competes for space in the model's context window. Soma's portion typically uses **2000–6000 estimated tokens** depending on how many protocols and muscles are hot and how much identity content exists.
 
-## Token Metabolism
+The `maxTokens` setting (default: 4000) is a **soft warning**. When the compiled prompt exceeds this budget, Soma shows a warning notification at boot. It never truncates — the warning helps you decide what to trim.
 
-The system prompt competes for space in the model's context window. Soma's portion typically uses **500–1600 estimated tokens** depending on how many protocols and muscles are hot.
-
-The `maxTokens` setting (default: 4000) is a budget cap. Currently, prompts are well within this budget, so no trimming occurs. If the budget is exceeded in the future, Soma would trim in this order:
-
-1. Muscle digests (nice-to-have)
-2. Protocol breadcrumbs (past the first 3 hottest)
-3. Documentation references
-4. Guard awareness
-5. CLAUDE.md note
-6. **Never trimmed:** Static core, identity, tools, skills
+To reduce token usage:
+- Mark body files as `lazy: true` (loads as skill reference, not full content)
+- Kill cold protocols/muscles (`/kill <name>`)
+- Remove sections from `_mind.md` template
+- Move content from soul to body files (loaded on demand)
 
 ## Identity Placement
 

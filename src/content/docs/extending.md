@@ -1,10 +1,10 @@
 ---
-title: "Extending"
-description: "Skills, extensions, and custom tools — build on top of Soma."
-section: "Reference"
-order: 4
+title: "Extending Soma"
+description: "Skills, extensions, events, APIs — build on top of Soma."
+section: "Extending"
+order: 5
 ---
-# Extending Soma
+
 
 <!-- tldr -->
 Built on Pi — inherits full extension system. Skills: markdown instructions in `.soma/skills/` or `~/.soma/agent/skills/`. Extensions: TypeScript hooks into agent lifecycle (before_agent_start, tool_result, session_shutdown). Built-in extensions: soma-boot (identity + protocols + muscles), soma-header (branded σῶμα header), soma-statusline (context/cost/git footer), soma-guard (safe file operations).
@@ -23,7 +23,7 @@ What makes Soma different: **muscles and protocols refine skills over time**. A 
 Install from the hub or place manually:
 
 ```bash
-/hub install skill my-skill     # from Soma Hub
+/install skill my-skill        # from Soma Hub
 ```
 
 Or place skill directories in one of these locations:

@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 2
 ---
 
-
 <!-- tldr -->
 Sessions are breaths: inhale (configurable boot steps: identity, preload, protocols, muscles, scripts, git-context) → work → breathe or exhale (save state, decay heat, write preload). Git context loads recent commits/diffs automatically. Heat system loads hot content fully, warm as breadcrumbs, cold stays dormant. Context warnings and preload staleness are configurable. All thresholds in `settings.json`.
 <!-- /tldr -->
@@ -30,7 +29,7 @@ Session 3 (inhale) ← ...and so on
 
 ### Inhale (Session Start)
 
-When Soma boots, she runs a configurable sequence of **boot steps**:
+When Soma boots, it runs a configurable sequence of **boot steps**:
 
 | Step | What Loads | Default |
 |------|-----------|---------|
@@ -80,9 +79,13 @@ Either way, Soma:
 
 ## Identity
 
-Soma doesn't come pre-configured with a personality. She **discovers** who she is through working with you. Her `identity.md` is written by her, not for her.
+Soma doesn't come pre-configured. It **discovers** who it is through working with you.
 
-On first run, Soma sees an empty identity file and writes her own based on the workspace and your interactions. See [Identity](/docs/identity) for the full guide on discovery, layering, and customization.
+On first run, Soma creates `.soma/SOMA.md` — a starting point. Over sessions, the agent refines its identity based on your workspace and interactions.
+
+When identity outgrows a single file, the **body architecture** kicks in — structured files in `.soma/body/` where `soul.md` holds who the agent is, `voice.md` holds how it communicates, `body.md` holds the project context, and templates (`_mind.md`, `_memory.md`) control how the system prompt and preloads are assembled.
+
+See [Identity](/docs/identity) for the full guide on SOMA.md, body/, templates, and variables.
 
 ## Muscles
 
@@ -233,14 +236,14 @@ Soma supports **parent-child inheritance** for monorepos and multi-project works
 
 ```
 ~/work/.soma/                    ← parent (workspace-wide)
-├── identity.md                  ← "We use pnpm, conventional commits"
+├── SOMA.md                      ← "We use pnpm, conventional commits"
 ├── settings.json
 └── amps/
     └── protocols/
         └── git-identity.md      ← shared git rules
 
 ~/work/my-app/.soma/             ← child (project-specific)
-├── identity.md                  ← "I'm a React frontend"
+├── SOMA.md                      ← "I'm a React frontend"
 └── amps/
     └── protocols/
         └── testing.md           ← project-specific testing rules
@@ -263,14 +266,31 @@ If a `CLAUDE.md` file exists in the project root, Soma notes its presence in the
 
 ## The Compiled System Prompt
 
-Soma assembles a system prompt from multiple sources in a specific order:
+Soma assembles a system prompt from multiple sources. If `body/_mind.md` exists, it's used as a **template** — you control the structure:
 
-1. **Static core** — Soma's base behavioral rules
+```markdown
+{{core_rules}}
+# Identity
+{{soul}}
+{{voice}}
+{{protocol_summaries}}
+{{muscle_digests}}
+{{tools_section}}
+{{skills_block}}
+```
+
+Without a template, Soma uses a built-in order:
+
+1. **Static core** — base behavioral rules (`prompts/system-core.md`)
 2. **Identity** — layered identity (project → parent → global)
-3. **Behavioral** — protocols (hot = full body, warm = breadcrumb), muscles (hot/warm within budget)
+3. **Behavioral** — protocols (hot = full, warm = one-liner), muscles (hot/warm within budget)
 4. **Documentation** — Soma docs, Pi docs (toggleable)
 5. **Guard awareness** — file protection rules (if enabled)
-6. **CLAUDE.md note** — awareness marker (if file exists)
-7. **Skills** — Pi skills block (if enabled)
+6. **Skills** — warm AMPS + Pi skills as `<available_skills>` XML
 
-Each section can be toggled via `systemPrompt` settings. Use `/soma prompt` to preview the assembled result with token estimates. See [Configuration](/docs/configuration#system-prompt).
+The **skill loader** classifies all AMPS content by heat:
+- 🔥 Hot → full body in system prompt
+- 🟡 Warm → `<available_skills>` XML (agent reads on demand)
+- ❄️ Cold → hidden
+
+Use `/body render` to see the full compiled prompt. Use `/body map` to see the template structure. See [Configuration](/docs/configuration#system-prompt).

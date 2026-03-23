@@ -2,9 +2,9 @@
 title: "Heat System"
 description: "How Soma decides what to load — temperature-based relevance that adapts through use."
 section: "Core Concepts"
-order: 4
+order: 3.5
 ---
-# Heat System
+
 
 > TL;DR: Everything in Soma has a temperature. Hot content loads fully into the agent's prompt. Warm content loads as a one-line reminder. Cold content is listed but not loaded. Heat rises when things get used, decays when they don't. The agent naturally learns what matters.
 
@@ -28,7 +28,7 @@ The heat system is how Soma decides what to put in the agent's context window. I
 | Tier | What Loads | Example |
 |------|-----------|---------|
 | 🔥 Hot | Full protocol body — all rules, all sections | The complete breath-cycle protocol with every phase described |
-| 🟡 Warm | Breadcrumb — a single sentence from the `breadcrumb:` frontmatter field | "Commits must be attributed correctly. Check git config user.email before first commit." |
+| 🟡 Warm | Description — a single sentence from the `description:` frontmatter field | "Commits must be attributed correctly. Check git config user.email before first commit." |
 | ❄️ Cold | Just the protocol name in a list | `- git-identity` |
 
 **Muscles:**

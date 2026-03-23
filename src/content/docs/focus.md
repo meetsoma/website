@@ -1,11 +1,10 @@
 ---
 title: "Focus"
-description: "Seam-traced boot priming — focus the agent on a topic before the session starts."
+description: "Topic-driven session priming — boost relevant muscles, MAPs, and preloads automatically."
 section: "Workflows"
-order: 1
+order: 11
 ---
 
-# Focus — Seam-Traced Boot
 
 <!-- tldr -->
 Run `soma-focus.sh <keyword>` before starting a session to prime the agent for a specific topic. It traces the keyword through your memory, scores muscle/protocol/MAP relevance, and generates system prompt overrides. The agent wakes up already knowing what to focus on.
@@ -19,9 +18,9 @@ Every session starts generic — the agent loads whatever muscles and protocols 
 
 Focus priming runs **before** the model starts. It traces your keyword through:
 
-- **Muscles** — triggers, name, digest content
+- **Muscles** — tags, keywords, triggers, digest content
 - **Protocols** — content matching
-- **MAPs** — triggers, name matching
+- **MAPs** — trigger keywords, name matching
 - **Sessions** — past session logs mentioning the keyword
 - **Preloads** — continuation state with relevant context
 
@@ -50,7 +49,8 @@ Each muscle is scored against the keyword:
 |-----------|-------|---------|
 | Explicit trigger (`triggers: [auth]`) | 10 | Muscle declares it activates on "auth" |
 | Tag match (`tags: [auth]`) | 5 | Muscle is tagged with the keyword |
-| Trigger match (`triggers: [auth]`) | 10 | Matched against frontmatter `triggers:` field |
+| Keyword match (`keywords: [auth]`) | 5 | Keyword in frontmatter keywords list |
+| Topic match (`topics: [auth]`) | 4 | Topic in frontmatter topics list |
 | Name contains keyword | 3 | `auth-flow.md` matches "auth" |
 | Digest contains keyword | 2 | Keyword appears in the muscle summary |
 

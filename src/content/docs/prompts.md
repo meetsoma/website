@@ -1,8 +1,8 @@
 ---
-title: "Prompt Templates"
-description: "Create reusable prompt templates that expand with /name in the editor."
+title: "Prompts"
+description: "Slash-command prompt templates — reusable instructions triggered by /prompt."
 section: "Workflows"
-order: 4
+order: 14
 ---
 
 <!-- tldr -->

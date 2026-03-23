@@ -2,12 +2,12 @@
 title: "Muscles"
 description: "Learned patterns, digest system, heat tiers, writing your own."
 section: "Core Concepts"
-order: 3.5
+order: 5.5
 ---
-# Muscles
+
 
 <!-- tldr -->
-Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, triggers, tags, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = digest only, cold = name listed. Digest blocks between `<!-- digest:start -->` / `<!-- digest:end -->` markers. Write digests — they're what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
+Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = digest only, cold = name listed. Digest blocks between `<!-- digest:start -->` / `<!-- digest:end -->` markers. Write digests — they're what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
 <!-- /tldr -->
 
 Muscles are **learned patterns** — reusable knowledge that Soma builds from experience. Unlike protocols (which are behavioral rules you write), muscles emerge organically from work. They're Soma's playbook.
@@ -22,6 +22,8 @@ A muscle is a markdown file with frontmatter:
 ---
 type: muscle
 status: active
+topic: [deployment, vercel, astro]
+keywords: [deploy, build, preview, production]
 created: 2026-03-09
 updated: 2026-03-09
 heat: 3
@@ -52,8 +54,10 @@ loads: 0
 |-------|------|-------------|
 | `type` | `"muscle"` | Always `muscle` |
 | `status` | `active \| dormant \| retired` | Controls discovery. Only `active` muscles load. |
-| `tags` | `string[]` | Searchable tags (used by hub cards and search) |
-| `triggers` | `string[]` | Activation keywords — used by focus matching, heat auto-detection, and hub search. Replaces the older `topic` + `keywords` fields (v0.6.2+). |
+| `tags` | `string[]` | Searchable tags (used by focus matching) |
+| `topic` | `string[]` | What this muscle covers (broad categories) |
+| `keywords` | `string[]` | Finer search terms for lookup and focus matching |
+| `triggers` | `string[] \| object[]` | Focus triggers — keywords that auto-activate this muscle (see [Focus](/docs/focus)) |
 | `tools` | `string[]` | Scripts this muscle relates to |
 | `heat` | `number` | Current heat level — determines loading tier |
 | `loads` | `number` | How many times loaded at boot (tracked automatically) |
@@ -104,6 +108,8 @@ touch .soma/amps/muscles/my-workflow.md
 ---
 type: muscle
 status: active
+topic: [testing, ci]
+keywords: [jest, vitest, test-runner]
 heat: 3
 loads: 0
 ---

@@ -1,13 +1,13 @@
 ---
 title: "Commands"
-description: "All slash commands, CLI flags, and keyboard shortcuts."
-section: "First Steps"
-order: 1.8
+description: "Slash commands, CLI flags, context warnings, the breath cycle."
+section: "Reference"
+order: 7
 ---
-# Commands
+
 
 <!-- tldr -->
-CLI: `soma` (fresh), `soma inhale` (fresh + preload), `soma -c` (continue), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts).
+CLI: `soma` (fresh), `soma inhale` (fresh + preload), `soma -c` (continue), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts). Body: `/body check`, `/body vars`, `/body map`, `/body render`.
 <!-- /tldr -->
 
 Soma registers slash commands that control the breath cycle, heat system, and session management.
@@ -93,7 +93,8 @@ Commands appear in `/soma status` output and tab completions. Install community 
 | `/scratch clear` | Empty the scratchpad. |
 | `/code <subcommand> [args]` | Fast codebase navigator — wraps `soma-code.sh`. Subcommands: `find`, `lines`, `map`, `refs`, `replace`, `structure`, `physics`, `events`, `css-vars`, `config`. |
 | `/scrape <name\|topic> [--discover]` | Scrape docs for a tool, library, or topic. Providers: `github`, `npm`, `mdn`, `css`, `skills`. |
-| `/scan-logs [count] [--send]` | Scan conversation logs. Use `/scan-logs tools <pattern>` to search tool call history. `--send` injects results into the conversation. |
+| `/scan-logs [count] [--send]` | Scan conversation logs — session analytics via `soma-stats.sh`. `--send` injects results into conversation. |
+| `/body [check\|vars\|map\|render]` | Body template inspector. `check` = health report, `vars` = all variables by category, `map` = template structure, `render` = full compiled system prompt. All support `--send`. |
 
 ## Toggle Commands
 

@@ -5,7 +5,6 @@ section: "First Steps"
 order: 1
 ---
 
-
 <!-- tldr -->
 `npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma -c` to continue with last session's context. `/breathe` saves + continues, `/exhale` saves + stops, `/pin` keeps protocols hot, `/kill` drops them cold.
 <!-- /tldr -->
@@ -52,7 +51,7 @@ On first run, Soma will ask to create a `.soma/` directory. Say yes.
 | **Language/framework** | Scans for `tsconfig.json`, `Cargo.toml`, `go.mod`, `pyproject.toml`, etc. | Tailors identity and suggests relevant protocols |
 | **Monorepo signals** | Detects `pnpm-workspace.yaml`, multiple `package.json`, etc. | Suggests parent-child setup |
 
-The detected context shapes Soma's initial identity and the protocols it recommends installing. You can always edit `identity.md` afterward.
+The detected context shapes Soma's initial identity and the protocols it recommends installing. You can always edit `SOMA.md` afterward.
 
 ## Session Modes
 
@@ -97,13 +96,9 @@ Pick from previous sessions to resume.
 | `/keepalive` | Toggle cache keepalive on/off (or check status) |
 | `/status` | Show session stats — context %, cache, keepalive, turns, uptime |
 | `/preload` | List available preload files |
-| `/hub install <type> <name>` | Install a protocol, muscle, script, or automation from the hub |
-| `/hub find <keywords>` | Search the community hub |
-| `/hub list --remote` | Browse all available hub content |
 | `/soma status` | Show memory status (identity, preload, muscles, protocols) |
 | `/soma init` | Create `.soma/` in current directory |
 | `/soma prompt` | Preview compiled system prompt with token estimate |
-| `/soma <command>` | Run a drop-in command (scripts in `.soma/amps/scripts/commands/`) |
 
 ## The `.soma/` Directory
 
@@ -111,7 +106,7 @@ Created by `soma init` or on first run:
 
 ```
 .soma/
-├── identity.md              ← who Soma becomes (discovered through use)
+├── SOMA.md                  ← who Soma becomes (discovered through use)
 ├── settings.json            ← configurable thresholds (optional)
 ├── state.json               ← heat state (auto-managed)
 │
@@ -140,7 +135,7 @@ Created by `soma init` or on first run:
 If you're using Soma in a public repo:
 
 - **Ships with repo:** `.soma/amps/protocols/`, `.soma/amps/scripts/`, `.soma/skills/`
-- **Gitignored (private):** `.soma/identity.md`, `.soma/memory/`, `.soma/amps/muscles/`, `.soma/amps/automations/`
+- **Gitignored (private):** `.soma/SOMA.md`, `.soma/body/`, `.soma/memory/`, `.soma/amps/muscles/`, `.soma/amps/automations/`
 
 Templates ship. Instances don't.
 

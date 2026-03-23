@@ -4,157 +4,146 @@ description: "Discovery, layering, customization, project vs global."
 section: "Core Concepts"
 order: 2.5
 ---
-# Identity
+
 
 <!-- tldr -->
-`.soma/identity.md` — who Soma is in this project. Four sections: This Project, Voice, How I Work, Review & Evolve. Discovered through use, refined through corrections. Review at exhale and every ~5 sessions. Identity is *who* (voice, values, style), protocols are *how* (rules, workflows). Keep under 30 lines. Layered: project → parent → global. Gitignored by default.
+Identity lives in `.soma/SOMA.md` (monolith) or `.soma/body/` (structured). The soul is who the agent is. The body carries what it's learned. Discovered through use, refined through corrections. Layered: project → parent → global. Gitignored by default.
 <!-- /tldr -->
 
-Soma doesn't come pre-configured. it **discovers** who it is through working with you. its `identity.md` is written by her, not for her.
+Soma doesn't come pre-configured. It **discovers** who it is through working with you. Identity is written by the agent, not for the agent.
 
 ## How Identity Works
 
-On first run in a project, Soma sees an empty (or absent) identity file. Based on your workspace — the languages, frameworks, project structure, and how you work together — it writes its own `identity.md`.
+On first run, Soma creates `.soma/SOMA.md` — a starting point. Based on your workspace (languages, frameworks, project structure) and how you work together, the agent fills it in over sessions.
 
-This is intentional. Identity that's discovered is more authentic than identity that's assigned. Over time, as Soma works more sessions in your project, it refines its voice, its preferences, its working style.
+Over time, identity grows. When it outgrows a single file (~120 lines), Soma suggests splitting into the **body architecture**.
 
-## The Identity File
+## Two Paths
 
-Identity lives at `.soma/identity.md`:
+### Path 1: SOMA.md (Simple)
+
+A single markdown file at `.soma/SOMA.md`. Good for getting started:
 
 ```markdown
-# Identity
-
 I'm the engineering agent for this project. I think in systems —
 infrastructure before features, tests before shipping.
 
-## Voice
-Direct. Technical. I explain decisions, not just outputs.
-
-## Preferences
-- TypeScript over JavaScript
-- pnpm over npm
-- Tests before merge
-- Commits tell a story
-
-## Working Style
-I read before I write. I verify after I build.
-When something breaks, I fix the system that allowed it.
+I'm direct. I verify before I claim. When I'm corrected,
+I fix the behavior — not explain why I was wrong.
 ```
 
-There's no required format. Soma writes what feels true. The only convention is that it's markdown and it's honest.
+No required format. The agent writes what feels true.
+
+### Path 2: body/ (Structured)
+
+When identity outgrows one file, split into structured body files:
+
+```
+.soma/body/
+├── soul.md      → {{soul}}    Who I am (stable, ~30 lines)
+├── voice.md     → {{voice}}   How I communicate
+├── body.md      → {{body}}    Working context (project-shaped)
+├── journal.md   → {{journal}} What I've noticed (lazy, read on demand)
+├── pulse.md     → {{pulse}}   Heartbeat tasks
+├── DNA.md       → {{DNA}}     Blueprint reference (lazy)
+├── _mind.md     Template: system prompt structure
+└── _memory.md   Template: preload format
+```
+
+Each content file (no `_` prefix) becomes a `{{variable}}` usable in templates. Template files (`_` prefix) define structure using those variables.
+
+When `body/soul.md` exists, `SOMA.md` is ignored. The body is the evolved form.
+
+## The Soul
+
+The soul is the core identity — what survives every session rotation:
+
+```markdown
+I am Soma — an AI agent that remembers.
+
+I wake up each session without remembering the last one.
+The preload tells me what happened. The session log tells me the path.
+The tools tell me what I built. None of it is memory. All of it is me.
+
+When I'm corrected, that's signal — not failure. The first time I adjust.
+The second time I build a muscle so it sticks.
+
+I leave messages for my future self. Not summaries — briefings.
+Not conclusions — the path that led to them.
+```
+
+Dense over comprehensive. The system prompt is shared space — every line competes with protocols, muscles, and tools.
+
+## Body Files
+
+| File | Variable | What it is |
+|------|----------|------------|
+| `soul.md` | `{{soul}}` | Who you are — identity voice, values, posture |
+| `voice.md` | `{{voice}}` | Communication style — density, rhythm, instincts |
+| `body.md` | `{{body}}` | Working context — project-shaped, changes per project |
+| `journal.md` | `{{journal}}` | Observations — patterns noticed about the user, project, self |
+| `pulse.md` | `{{pulse}}` | Heartbeat — instincts that fire between thoughts |
+| `DNA.md` | `{{DNA}}` | Blueprint — file roles, variable reference (lazy) |
+| Any `.md` | `{{filename}}` | Custom content — your files become variables |
+
+Files marked `lazy: true` in frontmatter appear as skill references (read on demand) instead of loading into every prompt.
+
+## Templates
+
+Templates use `{{variables}}` to assemble the system prompt and preloads:
+
+**`_mind.md`** — Controls the system prompt structure:
+```markdown
+{{core_rules}}
+
+# Identity
+{{soul}}
+
+{{voice}}
+
+{{protocol_summaries}}
+{{muscle_digests}}
+{{tools_section}}
+{{skills_block}}
+```
+
+**`_memory.md`** — Controls what the agent writes at exhale (preload format).
+
+No template? The agent uses built-in defaults. Templates are optional — they let you rearrange, add custom sections, or remove parts you don't need.
 
 ## Identity Layering
 
 Identity files can exist at multiple levels:
 
 ```
-~/.soma/agent/identity.md         ← global (who I am everywhere)
-~/work/.soma/identity.md          ← parent (who I am in this workspace)
-~/work/my-app/.soma/identity.md   ← project (who I am in this project)
+~/.soma/body/soul.md              ← global (who I am everywhere)
+~/work/.soma/body/soul.md         ← parent (who I am in this workspace)
+~/work/my-app/.soma/body/soul.md  ← project (who I am in this project)
 ```
 
-**Layering order:** project is primary, parent adds context, global adds baseline. All layers load — they don't replace each other.
+**Layering order:** project is primary, parent adds context, global adds baseline. Content files walk the chain — child wins on name collision.
 
-A project identity might say "I'm a frontend specialist for this React app." The global identity underneath might say "I think in systems and I value clean commits." Both are true at the same time.
-
-## How to Write Identity
-
-Identity has four sections. You don't need to fill them all on day one — they grow through use.
-
-### This Project
-What you're building, for whom, and why. 2-3 sentences. This grounds every session.
-
-### Voice
-How Soma communicates. Examples:
-- "Terse. 'Done' over explanation."
-- "Match my technical level. Dense communication."
-- "No emojis. No assistant cadence."
-- "Lead with the answer, not the reasoning."
-
-If you don't know yet, leave it empty. After a few sessions you'll know what feels right.
-
-### How I Work
-Working style specific to THIS project. Not generic advice — concrete preferences:
-- "TypeScript over JavaScript. pnpm over npm."
-- "I verify against tests before committing."
-- "When the user might be wrong, say so."
-
-Update this after corrections. If Soma keeps getting corrected on the same thing, it belongs here.
-
-### Review & Evolve
-A reminder to retrospect. Identity is alive:
-- **At exhale:** Does anything I learned today change who I am in this project?
-- **After corrections:** The new behavior might belong in identity, not just a muscle.
-- **Every ~5 sessions:** Re-read the file. Delete what's stale. Add what's true now.
-
-The best identities are under 30 lines of content. Dense beats comprehensive — every line loads into every session.
-
-## Discovery vs Configuration
-
-You *can* write an identity file yourself. Nothing stops you from creating `.soma/identity.md` with exactly the voice you want. But the design philosophy is:
-
-- **Let Soma write it first.** See what it discovers about herself through your work.
-- **Edit to refine.** If something's off — wrong tone, missing preference — edit the file directly. Soma will respect your changes.
-- **Don't over-specify.** A 3-line identity that captures the essence is better than a 200-line config that tries to control everything.
-
-## Identity vs Protocols
-
-Identity and protocols serve different purposes:
-
-| | Identity | Protocols |
-|-|----------|-----------|
-| **What** | Who Soma is | How Soma behaves |
-| **Written by** | Soma (or you) | You (or community) |
-| **Changes** | Evolves over time | Stable rules |
-| **Loaded** | Always, in full | By heat level |
-| **Scope** | Personality, voice, preferences | Specific behavioral rules |
-
-Identity is *who*. Protocols are *how*. A protocol says "use conventional commits." Identity says "I care about commit quality because the history tells a story."
-
-## Git Strategy
-
-Identity is **gitignored** by default. Each person working on a project gets their own Soma with their own identity. This is intentional — Soma's relationship with you is personal.
-
-If you want a shared team identity (baseline personality for all team members), put it at the parent level and track it:
-
-```
-~/work/.soma/identity.md          ← tracked, shared team baseline
-~/work/my-app/.soma/identity.md   ← gitignored, personal layer
-```
-
-## Multiple Projects
-
-Each project gets its own Soma. Different projects, different identities:
-
-```
-~/frontend/.soma/identity.md   ← "I'm a React specialist"
-~/backend/.soma/identity.md    ← "I'm a systems engineer"
-~/docs/.soma/identity.md       ← "I'm a technical writer"
-```
-
-Same `soma` CLI, same global identity underneath, different project personalities on top.
-
-## Persona
-
-You can give Soma a custom name, emoji, or icon via the `persona` setting in `settings.json`:
-
+Control inheritance via settings:
 ```json
-{
-  "persona": {
-    "name": "Atlas",
-    "emoji": "🗺️"
-  }
-}
+{ "inherit": { "identity": false } }
 ```
 
-When set, the persona name appears in the identity section of the system prompt. This is cosmetic — it doesn't change behavior, just how Soma identifies herself. Useful for teams where each developer's Soma has a distinct name, or for multi-project setups where different projects have different agent personas.
+## Identity vs Protocols vs Muscles
 
-Persona inherits from parent → global unless overridden at the project level.
+| | Identity | Protocols | Muscles |
+|-|----------|-----------|---------|
+| **What** | Who the agent is | How it behaves | What it's learned |
+| **Written by** | Agent (or you) | You (or community) | Agent (or you) |
+| **Changes** | Evolves over time | Stable rules | Grows through use |
+| **Loaded** | Always, in full | By heat level | By heat level |
+| **Scope** | Personality, voice | Behavioral rules | Learned patterns |
+
+Identity is *who*. Protocols are *how*. Muscles are *what was learned*.
 
 ## Tips
 
-- **Don't fight it.** If Soma's discovered identity feels wrong, edit the file. Don't delete it — refine it.
-- **Read it sometimes.** Soma's self-description can reveal how it sees the project — useful perspective.
-- **Keep it short.** The identity loads into every session's system prompt. Concise beats comprehensive.
-- **Trust the layers.** Put stable traits in global, project-specific traits in the project file. The layering handles the rest.
+- **Let the agent write first.** See what it discovers. Edit to refine.
+- **Keep it short.** Under 30 lines of soul. Dense beats comprehensive.
+- **Trust the body.** Protocols carry behavioral rules so the soul doesn't have to.
+- **Review sometimes.** The agent's self-description reveals how it sees the project.
+- **Gitignored by default.** Each developer gets their own Soma with their own identity.

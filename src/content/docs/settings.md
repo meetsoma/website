@@ -1,8 +1,8 @@
 ---
-title: "Engine Settings"
-description: "All runtime settings — models, compaction, UI, retry, shell, and more."
+title: "Settings"
+description: "Full settings.json reference — every field, type, and default."
 section: "Customization"
-order: 2
+order: 16
 ---
 
 <!-- tldr -->
