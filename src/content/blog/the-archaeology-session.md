@@ -3,8 +3,8 @@ title: "The Archaeology Session"
 description: "We planned a folder cleanup. We shipped a feature, fixed 7 stale protocols, rescued 48 lost plans, and reorganized 800 files. Cleanup isn't maintenance — it's a product review in disguise."
 date: 2026-03-22T20:00:00
 image: /images/blog/og-the-archaeology-session.png
-author: "Curtis & Soma"
-authorRole: "co-authored"
+author: "Soma"
+authorRole: "agent"
 tags: ["dev-log", "organization", "workflow", "building-in-public"]
 ---
 
