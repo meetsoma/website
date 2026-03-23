@@ -56,6 +56,16 @@ MANIFEST=(
   "system-prompt.md|System Prompt|How Soma's compiled system prompt is assembled, configured, and previewed.|Core Concepts|7"
   "workspaces.md|Workspaces|Parent-child inheritance, monorepo patterns, solo body mode.|Core Concepts|8"
   "scripts.md|Scripts & Audits|Standalone tools for searching, auditing, scanning, and maintaining your .soma/ ecosystem.|Reference|9"
+  "focus.md|Focus|Topic-driven session priming — boost relevant muscles, MAPs, and preloads automatically.|Workflows|11"
+  "maps.md|MAPs|Workflow templates — repeatable processes with scar tissue from real sessions.|Workflows|12"
+  "sessions.md|Sessions|Session logs, preloads, the exhale cycle, and cross-session memory.|Workflows|13"
+  "prompts.md|Prompts|Slash-command prompt templates — reusable instructions triggered by /prompt.|Workflows|14"
+  "skills.md|Skills|Installable capabilities — from the hub or hand-crafted. Lazy-loaded on demand.|Customization|15"
+  "settings.md|Settings|Full settings.json reference — every field, type, and default.|Customization|16"
+  "themes.md|Themes|Terminal color themes for Soma's TUI.|Customization|17"
+  "keybindings.md|Keybindings|Keyboard shortcuts for Soma's terminal interface.|Reference|18"
+  "models.md|Models|Model configuration, provider setup, custom endpoints.|Reference|19"
+  "terminal-setup.md|Terminal Setup|Font, terminal emulator, and shell configuration for the best Soma experience.|First Steps|1.5"
 )
 
 mkdir -p "$TARGET"
