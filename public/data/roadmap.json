@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-20T17:23:40Z",
+  "generated": "2026-03-23T19:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -7,8 +7,32 @@
       "date": "",
       "features": {
         "added": [
-          "PHASE workflow system \u2014 per-phase brain configuration via /phase command.",
-          "Protocol voice pass \u2014 coaching voice for all TL;DRs and digests."
+          "Init UX \u2014 prompt before auto-init, inherit from parent .soma/",
+          "First-run onboarding \u2014 global user setup (name, style)",
+          "Session tail \u2014 carry forward messages after preload",
+          "Auto-breathe review \u2014 agent reads context % from statusline",
+          "Scoping variables \u2014 {{muscle_block}}, {{protocol_block}} for template control"
+        ]
+      }
+    },
+    {
+      "version": "0.6.4",
+      "date": "2026-03-23",
+      "features": {
+        "added": [
+          "Body architecture \u2014 structured identity with soul.md, voice.md, body.md as {{variables}}.",
+          "Template engine \u2014 _mind.md controls system prompt structure with {{variables}} and modifiers.",
+          "AMPS Skill Loader \u2014 warm content appears as <available_skills> XML. Heat drives everything.",
+          "/body command \u2014 inspect templates, variables, render full compiled prompt.",
+          "SOMA.md \u2014 new canonical identity file. Evolves into body/ when ready.",
+          "50+ template variables with registry, categories, and diagnostics.",
+          "Muscle heat on load \u2014 muscles that stay relevant gain heat naturally."
+        ],
+        "changed": [
+          "System prompt driven by body/_mind.md template when present.",
+          "Auto-breathe \u2014 agent trusts the system instead of guessing context %.",
+          "AMPS cleanup \u2014 44 to 34 active muscles, triggers deduplicated, descriptions standardized.",
+          "Docs sweep \u2014 9 pages updated for body architecture."
         ]
       }
     },
