@@ -72,6 +72,8 @@ const blogJsonLd = {
         )}
       </header>
 
+      <p class="article-lede">{post.data.description}</p>
+
       <div class="article-content">
         <Content />
       </div>
@@ -176,6 +178,14 @@ const blogJsonLd = {
 
   @media (min-width: 768px) {
     .tag-overflow { display: inline; }
+  }
+
+  .article-lede {
+    font-size: var(--body-text);
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-xl);
   }
 
   .article-content {
