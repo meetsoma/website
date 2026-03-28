@@ -15,7 +15,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.5] — 2026-03-28
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **`soma inhale --list`** — show available preloads with age and staleness markers from CLI.
 - **`soma inhale <name>`** — partial name match. Load a specific preload by date, session ID, or any substring. Ambiguous matches show alternatives.
 - **`soma inhale --load <path>`** — load any file as a preload by absolute or relative path.
@@ -43,7 +42,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.4] — 2026-03-23
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **Body architecture** — structured identity system. `.soma/body/` with content files (`soul.md` → `{{soul}}`, `voice.md` → `{{voice}}`, `body.md` → `{{body}}`) and templates (`_mind.md`, `_memory.md`, `_boot.md`). Content files become template variables. Templates control system prompt and preload structure.
 - **Template engine** (`core/body.ts`) — `{{variable}}` interpolation with 5 modifiers (`|tldr`, `|section:Name`, `|lines:N`, `|last:N`, `|ref`), conditional blocks (`{{#var}}...{{/var}}`), graceful degradation for missing vars.
 - **AMPS Skill Loader** (`core/skill-loader.ts`) — unified content scanner. All AMPS classified by heat: hot (8+) = full body in prompt, warm (3-7) = `<available_skills>` XML (agent reads on demand), cold (0-2) = hidden. Claude's native skill format.
@@ -96,7 +94,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.3] — 2026-03-22
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -142,7 +139,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.2] — 2026-03-21
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -219,7 +215,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.0] — 2026-03-20
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -414,7 +409,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.2] — 2026-03-15
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -466,7 +460,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.1] — 2026-03-14
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -535,7 +528,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.0] — 2026-03-12
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -587,7 +579,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.4.0] — 2026-03-11
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -626,7 +617,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.3.0] — 2026-03-10
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -662,7 +652,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.2.0] — 2026-03-09
 
 ### Added
-- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
