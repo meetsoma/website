@@ -12,6 +12,24 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [0.6.6] — 2026-03-29
+
+### Added
+- **Init UX** — prompt before auto-scaffolding (`ctx.ui.confirm`), parent .soma/ inheritance when user declines, `scaffoldBody` templateDir priority chain. (SX-164, SX-165, SX-241)
+- **Command provenance** — `/soma status` shows which extension registered each command via Pi's `sourceInfo`. (SX-233)
+- **cli.js tracked source** — `src/cli.js` in agent repo is source of truth. `sync-to-cli.sh` and `soma-release.sh` use it. (SX-252)
+- **Protocol coaching voice** — 14/17 protocol TL;DRs rewritten from spec/documentation voice to coaching voice. (SX-109)
+
+### Changed
+- **Upstream sync R3** — Pi 0.61.1 → 0.63.1 (71 commits, 3 releases). SourceInfo provenance, built-in tools as extensions, multi-edit, sessionDir, compaction fixes. 0 breaking changes on our imports. (SX-230)
+- **Stale branches cleaned** — deleted `feat/docs-system`, `feat/runtime` (archived to patches), `protocol-quality-pass`, `feature/ship-breath-cycle`. Agent repo: dev + main + backup only.
+- **scaffoldBody** priority chain: templateDir → bundled `_public/` → bundled `body/`.
+
+### Fixed
+- `/soma prompt` diagnostic checked for "Learned Patterns" but actual heading is "Muscle Memory".
+
+---
+
 ## [0.6.5] — 2026-03-28
 
 ### Added
@@ -42,6 +60,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.4] — 2026-03-23
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **Body architecture** — structured identity system. `.soma/body/` with content files (`soul.md` → `{{soul}}`, `voice.md` → `{{voice}}`, `body.md` → `{{body}}`) and templates (`_mind.md`, `_memory.md`, `_boot.md`). Content files become template variables. Templates control system prompt and preload structure.
 - **Template engine** (`core/body.ts`) — `{{variable}}` interpolation with 5 modifiers (`|tldr`, `|section:Name`, `|lines:N`, `|last:N`, `|ref`), conditional blocks (`{{#var}}...{{/var}}`), graceful degradation for missing vars.
 - **AMPS Skill Loader** (`core/skill-loader.ts`) — unified content scanner. All AMPS classified by heat: hot (8+) = full body in prompt, warm (3-7) = `<available_skills>` XML (agent reads on demand), cold (0-2) = hidden. Claude's native skill format.
@@ -94,6 +115,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.3] — 2026-03-22
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -139,6 +163,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.2] — 2026-03-21
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -215,6 +242,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.0] — 2026-03-20
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -409,6 +439,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.2] — 2026-03-15
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -460,6 +493,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.1] — 2026-03-14
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -528,6 +564,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.0] — 2026-03-12
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -579,6 +618,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.4.0] — 2026-03-11
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -617,6 +659,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.3.0] — 2026-03-10
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
@@ -652,6 +697,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.2.0] — 2026-03-09
 
 ### Added
+- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
+- **show command provenance in /soma status (SX-233)**
+- **track cli.js as source in agent repo (SX-252)**
 - **settings-driven heat overrides — per-project AMPS control**
 - **inherit.automations — separate from tools inheritance**
 - **statusline preload indicator + smart /exhale (edit vs write)**
