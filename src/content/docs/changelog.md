@@ -12,9 +12,38 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [0.6.5] — 2026-03-28
+
+### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **`soma inhale --list`** — show available preloads with age and staleness markers from CLI.
+- **`soma inhale <name>`** — partial name match. Load a specific preload by date, session ID, or any substring. Ambiguous matches show alternatives.
+- **`soma inhale --load <path>`** — load any file as a preload by absolute or relative path.
+- **`soma map <name>`** — top-level subcommand replacing `--map` flag. Runs a MAP with prompt-config and targeted preload.
+- **`soma map --list`** — show available MAPs with status and description from CLI.
+- **`/soma preload`** (in-session) — enhanced to list all preloads + inject by partial name match.
+- **`listPreloads()`** + **`findPreloadByName()`** in `core/preload.ts` — preload discovery and partial name matching.
+- **Settings-driven heat overrides** (`settings.heat.overrides`) — per-project AMPS heat control. Values act as both seed and decay floor. Plan/MAP overrides take priority. (`31e1383`)
+- **`inherit.automations`** — separate from tools inheritance, allows projects to opt out of parent MAPs independently. (`3f01343`)
+- **Statusline preload indicator** — shows preload status in footer. Smart `/exhale` detects edit vs write mode. (`76cd246`)
+- **Auto-archive stale preloads** after exhale — `archiveStalePreloads()` moves old preloads to `_archive/`. (`7f2f086`)
+- **Restart signal** — auto-create `.restart-required` on extension/core file changes, check across full soma chain. Signal moved to `~/.soma/` (global). (`14d0253`, `635d36e`, `e252a63`)
+
+### Changed
+- **`--preload` flag deprecated** — shows warning pointing to `soma inhale` or `soma map`. Still works for backward compat.
+- **Boot greeting decomposed** — session ID and file paths now separate template variables. (`4d8331f`)
+
+### Fixed
+- **Crash on partial settings** — `settings.heat.overrides` access without optional chaining crashed when `heat` section missing. Now defensive. (`b837a37`)
+- **Breathe graceSeconds mismatch** — runtime fallback was 60s, settings default was 30s. Aligned to 30s. (`b837a37`)
+- **5 auto-breathe UX gaps** — smart context warnings, resume awareness, write heuristic for preload detection. (`0f86bec`)
+
+---
+
 ## [0.6.4] — 2026-03-23
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
 - **Body architecture** — structured identity system. `.soma/body/` with content files (`soul.md` → `{{soul}}`, `voice.md` → `{{voice}}`, `body.md` → `{{body}}`) and templates (`_mind.md`, `_memory.md`, `_boot.md`). Content files become template variables. Templates control system prompt and preload structure.
 - **Template engine** (`core/body.ts`) — `{{variable}}` interpolation with 5 modifiers (`|tldr`, `|section:Name`, `|lines:N`, `|last:N`, `|ref`), conditional blocks (`{{#var}}...{{/var}}`), graceful degradation for missing vars.
 - **AMPS Skill Loader** (`core/skill-loader.ts`) — unified content scanner. All AMPS classified by heat: hot (8+) = full body in prompt, warm (3-7) = `<available_skills>` XML (agent reads on demand), cold (0-2) = hidden. Claude's native skill format.
@@ -43,6 +72,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Sandbox test** updated for 8 extensions, 19 protocols, SOMA.md init.
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - **Conversation tail injection removed** — was scanning stale Pi JSONL sessions from wrong runtime, sidetracking agent with old conversations.
 - **Soul frontmatter leaking** into rendered system prompt — `loadIdentity()` now strips YAML frontmatter.
 - **Duplicate `# Identity` heading** — `buildLayeredIdentity()` no longer hardcodes heading; template handles it.
@@ -65,6 +96,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.3] — 2026-03-22
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **settings-driven heat overrides — per-project AMPS control**
+- **inherit.automations — separate from tools inheritance**
+- **statusline preload indicator + smart /exhale (edit vs write)**
+- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 - **`/hub` command** — unified hub interface for community content. Install, fork, share, find, list, status. Replaces old `/install` and `/list` commands (kept as backward compat aliases).
 - **Smart sharing** (`/hub share`) — quality scoring (0-100%), privacy auto-fix with `_public/` staging, README generation that captures `--help` output and extracts functions, dependency resolution.
 - **Drop-in commands** — scripts in `.soma/amps/scripts/commands/` become `/soma <name>` commands. Hot-loadable, no restart needed. Tab completions included.
@@ -84,6 +120,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Community CI** — validate-frontmatter accepts `triggers` (replaces `topic`+`keywords`), `description` OR `breadcrumb`. Format-check supports `scope: core`. Attribution allows org identity for owners. Actions upgraded to v6 (Node 22).
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - **`/hub list --remote`** — flag was parsed as type filter, returning 0 results.
 - **Drop-in command output** — ANSI escape codes stripped (sendUserMessage renders markdown, not terminal).
 - **Stale git-identity heat rule** removed from HEAT_RULES (protocol was archived).
@@ -104,6 +142,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.2] — 2026-03-21
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **settings-driven heat overrides — per-project AMPS control**
+- **inherit.automations — separate from tools inheritance**
+- **statusline preload indicator + smart /exhale (edit vs write)**
+- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 - **Natural muscle heat detection** — muscles now heat-bump from natural use, not just focus. Script execution matches against `tools:` field. File edits match path segments against `triggers`. Zero configuration needed.
 - **Migration system** — `version` field in settings.json. `core/migrations.ts` discovers and chains migration maps. `soma doctor` checks workspace health. `soma doctor --fix` auto-repairs. `soma doctor --migrate` spawns agent for complex fixes.
 - **Community template sync** — boot fetches latest protocols from community repo. Bundled protocols serve as offline fallback. Add content to community → add name to template → all new users get it.
@@ -115,6 +158,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Personality engine** — welcome flow is honest about being templates, not the agent.
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - **Runtime delegation** — soma-beta now includes cli.js and Pi runtime files. Previously thin-cli fell through to raw Pi (no version skip, no auto-rotate, "Update Available" banner).
 - **Fresh installs** now include version field in settings.json.
 - **Stale test assertions** — test suite checked for removed frontmatter fields and nonexistent commands.
@@ -138,6 +183,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
   - ToolCallEventResult exported
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - CLI dist synced from pi-mono 0.61.1 — `getEditorKeybindings` → `getKeybindings` crash resolved
 - Stale `content-cli.js` import removed (Pi 0.61.0 moved install/list/content to main.js)
 - `--help` fixed — `printGumHelp` removed in 0.61.0, replaced with `printHelp`
@@ -172,6 +219,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.0] — 2026-03-20
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **settings-driven heat overrides — per-project AMPS control**
+- **inherit.automations — separate from tools inheritance**
+- **statusline preload indicator + smart /exhale (edit vs write)**
+- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 #### MAP System — Plan-Driven Agent Orchestration
 - `maps.ts` — MAP discovery + prompt-config YAML parser (#1039512)
@@ -234,6 +286,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Author attribution + CC BY 4.0 license footers on protocols (#0a2e0ac)
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - Edit tool detection in preload + overwrite-safe breathe instructions (#9e7684f)
 - Auto-breathe graceSeconds consistency + DRY path helpers (#ec857f8)
 - Auto-breathe timeout + session log `-2` suffix bugs (#baaf51b)
@@ -360,6 +414,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.2] — 2026-03-15
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **settings-driven heat overrides — per-project AMPS control**
+- **inherit.automations — separate from tools inheritance**
+- **statusline preload indicator + smart /exhale (edit vs write)**
+- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 - `/scan-logs` command — search previous tool calls + results across sessions (#31a7e17)
 - `/scrape` command + `scrape:build` router capability — intelligent doc discovery (#c950f2b)
 - Boot session warnings injection — tool usage stats from previous session (#0cda314)
@@ -384,51 +443,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Migrated `globalThis.__somaKeepalive` to router (#e919481)
 
 ### Fixed
-- Boot: clean up muscle/protocol/automation formatting (#38a643f)
-- Boot: resume without fingerprint sends minimal boot, not full redundant injection (#7fd064b)
-- Boot: grace countdown skips tool turns during auto-breathe (#53bd421)
-- Boot: preload filename overwrites + rotation when preload pre-exists (#378a1b1)
-- Boot: auto-init `.soma/.git` when autoCommit is true (#276f6f2)
-- Boot: clear restart signal at factory load time (#0bddce2, #bb8350c)
-- Muscles/automations: filter archived status + README in discovery (#5f5ccae, #e42da9b)
-- Protocols: clean stale references, fix broken frontmatter (#7087d6a)
-- Protocols: correct attribution — Curtis Mercier only on personal/protocols-derived (#5d8fb83)
-- Heat: dynamic muscle read + script execution detection (#99a7663)
-- Extensions: soma-route.ts import path — use pi-coding-agent not claude-code (#49454ea)
-- Scripts: stop shipping dev-only scripts to users (#2c8db4a)
-- Scripts: sync paths after _dev/ move, AGENT_DIR resolution (#46615ef, #a520c13)
-- Statusline: restart detection, fs/path imports, signal path fixes (#f845894, #926fd4a, #18eba69)
-- Auto-breathe: reduce triple notifications, preload-as-signal rotation (#927bd74)
-
----
-
-## [0.5.2] — 2026-03-15
-
-### Added
-- `/scan-logs` command — search previous tool calls + results across sessions (#31a7e17)
-- `/scrape` command + `scrape:build` router capability — intelligent doc discovery (#c950f2b)
-- Boot session warnings injection — tool usage stats from previous session (#0cda314)
-- Boot last conversation context — inject last N messages on fresh boot (#f1d7f3d)
-- Periodic auto-commit for crash resilience (#c6caccc)
-- `graceTurns` setting — configurable grace period before auto-breathe rotation (#c9ab5a8)
-- Guard v2: tool→muscle gating — require reading muscles before dangerous commands (#1c6b725)
-- Protocol TL;DR extraction — `protocolSummary()` prefers `## TL;DR` body section (#83ec9ee)
-- Scratch lifecycle: session IDs, date sections, note management, auto-inject (#fd0bda2, #0d364f2)
-- Combined session ID format (`sNN-<hex>`) — sequential for order, hex for uniqueness (#e7c4057)
-- Statusline session ID display (#d474cbf)
-- Polyglot script discovery — .sh, .py, .ts, .js, .mjs (#1acb8c2)
-- Session log nudge with template at trigger point (#eb8acc8)
-- Identity layer in pattern-evolution, tool-awareness in working-style (#5e4219d)
-- Post-commit auto-changelog + pre-push docs-drift nudge hooks (#cc2ef55)
-
-### Changed
-- System prompt trimmed ~19% — remove duplication and stale content (#de9c517)
-- Self-awareness protocols rewritten — 5 redundant protocols → configuration guides (#b70ca44)
-- Config-first script extensions via `settings.scripts.extensions` (#dadb78e)
-- Unified rotation through `/inhale`, removed `/auto-continue` (#7b7ba52)
-- Migrated `globalThis.__somaKeepalive` to router (#e919481)
-
-### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - Boot: clean up muscle/protocol/automation formatting (#38a643f)
 - Boot: resume without fingerprint sends minimal boot, not full redundant injection (#7fd064b)
 - Boot: grace countdown skips tool turns during auto-breathe (#53bd421)
@@ -450,6 +466,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.1] — 2026-03-14
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **settings-driven heat overrides — per-project AMPS control**
+- **inherit.automations — separate from tools inheritance**
+- **statusline preload indicator + smart /exhale (edit vs write)**
+- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - Capability router for inter-extension communication (`soma-route.ts`) — provides/gets capabilities, emits/listens signals. Replaces `globalThis` hacks (#94576f3, #e919481)
 - CLI-based session rotation via `.rotate-signal` file — auto-breathe can now rotate without command context (#2da3155)
@@ -486,6 +507,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Dev hooks generated locally by `soma-dev.sh`, not committed to repo (#efc6ed4)
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - Muscle and automation discovery — filter archived status and README files (#e42da9b, #5f5ccae)
 - Scratch completions — remove PRO commands from free completions list (#fd0bda2)
@@ -512,6 +535,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.0] — 2026-03-12
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **settings-driven heat overrides — per-project AMPS control**
+- **inherit.automations — separate from tools inheritance**
+- **statusline preload indicator + smart /exhale (edit vs write)**
+- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - Auto-breathe mode — proactive context management that triggers wrap-up at configurable %, auto-rotates at higher %. Safety net at 85% always on. Opt-in via `breathe.auto` in settings (#1d533bf)
 - `/auto-breathe` command — runtime toggle (`on|off|status`), persists to settings.json
@@ -541,6 +569,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - CI improvements — PR check and release workflows now run all test suites
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - System prompt dropped after turn 1 — Pi resets each `before_agent_start`, now caches compiled prompt
 - Identity never in compiled prompt — `isPiDefaultPrompt()` checked wrong string
@@ -557,6 +587,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.4.0] — 2026-03-11
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **settings-driven heat overrides — per-project AMPS control**
+- **inherit.automations — separate from tools inheritance**
+- **statusline preload indicator + smart /exhale (edit vs write)**
+- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - Compiled system prompt ("Frontal Cortex") — `core/prompt.ts` assembles complete system prompt from identity chain, protocol summaries, muscle digests, dynamic tool section
 - Session-scoped preloads — `preload-<sessionId>.md` prevents multi-terminal conflicts
@@ -579,6 +614,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - CLAUDE.md awareness, not adoption — system prompt notes existence but doesn't inject content
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - Print-mode race condition — `ctx.hasUI` guard on `sendUserMessage` in `session_start`
 - Skip scaffolding core extensions into project `.soma/extensions/`
@@ -589,6 +626,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.3.0] — 2026-03-10
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **settings-driven heat overrides — per-project AMPS control**
+- **inherit.automations — separate from tools inheritance**
+- **statusline preload indicator + smart /exhale (edit vs write)**
+- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - AMPS content type system — 4 shareable types: Automations, Muscles, Protocols, Skills. `scope` field controls distribution
 - Hub commands — `/install <type> <name>`, `/list local|remote` with dependency resolution
@@ -609,6 +651,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Bundled protocols slimmed from all to 4 core (breath-cycle, heat-tracking, session-checkpoints, pattern-evolution)
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - PII scrubbed from git history across all repos
 - CLI stripped to distribution only — agent is source of truth
@@ -618,6 +662,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.2.0] — 2026-03-09
 
 ### Added
+- **v0.6.5 — CLI UX, heat overrides, breathe improvements**
+- **settings-driven heat overrides — per-project AMPS control**
+- **inherit.automations — separate from tools inheritance**
+- **statusline preload indicator + smart /exhale (edit vs write)**
+- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - Protocols and Heat System — behavioral rules loaded by temperature, heat rises through use, decays through neglect
 - Muscle loading at boot — sorted by heat, loaded within configurable token budget
@@ -629,6 +678,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - 9 core modules — discovery, identity, protocols, muscles, settings, init, preload, utils, index
 
 ### Fixed
+- **defensive settings.heat access + stale test mocks — 567/567 pass**
+- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - Extensions load correctly
 - Skills install to correct path

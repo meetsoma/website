@@ -37,6 +37,7 @@ When Soma boots, it runs a configurable sequence of **boot steps**:
 | `preload` | Last session's state (on `--continue` only) | ✅ On |
 | `protocols` | Behavioral rules, sorted by heat tier | ✅ On |
 | `muscles` | Learned patterns, within token budget | ✅ On |
+| `automations` | MAPs and workflow templates, heat-tracked | ✅ On |
 | `scripts` | Available `.soma/amps/scripts/` with descriptions | ✅ On |
 | `git-context` | Recent commits and changed files from git | ✅ On |
 

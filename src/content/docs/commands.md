@@ -20,6 +20,7 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 | `/breathe` | Save state and rotate into a fresh session. Seamless rotation — exhale + inhale in one motion. |
 | `/exhale` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Session ends. |
 | `/rest` | Going to bed? Disables cache keepalive, then exhales. No pings will fire after you walk away. |
+| `/exit` | Save state and quit Soma cleanly. Exhales, then terminates. |
 
 ## Heat Commands
 

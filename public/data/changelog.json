@@ -1,12 +1,99 @@
 {
-  "generated": "2026-03-22T14:14:17Z",
+  "generated": "2026-03-28T13:26:07Z",
   "source": "CHANGELOG.md",
   "versions": [
+    {
+      "version": "0.6.5",
+      "date": "2026-03-28",
+      "entries": {
+        "added": [
+          "**`soma inhale --list`** — show available preloads with age and staleness markers from CLI.",
+          "**`soma inhale <name>`** — partial name match. Load a specific preload by date, session ID, or any substring. Ambiguous matches show alternatives.",
+          "**`soma inhale --load <path>`** — load any file as a preload by absolute or relative path.",
+          "**`soma map <name>`** — top-level subcommand replacing `--map` flag. Runs a MAP with prompt-config and targeted preload.",
+          "**`soma map --list`** — show available MAPs with status and description from CLI.",
+          "**`/soma preload`** (in-session) — enhanced to list all preloads + inject by partial name match.",
+          "**`listPreloads()`** + **`findPreloadByName()`** in `core/preload.ts` — preload discovery and partial name matching.",
+          "**Settings-driven heat overrides** (`settings.heat.overrides`) — per-project AMPS heat control. Values act as both seed and decay floor. Plan/MAP overrides take priority. (`31e1383`)",
+          "**`inherit.automations`** — separate from tools inheritance, allows projects to opt out of parent MAPs independently. (`3f01343`)",
+          "**Statusline preload indicator** — shows preload status in footer. Smart `/exhale` detects edit vs write mode. (`76cd246`)",
+          "**Auto-archive stale preloads** after exhale — `archiveStalePreloads()` moves old preloads to `_archive/`. (`7f2f086`)",
+          "**Restart signal** — auto-create `.restart-required` on extension/core file changes, check across full soma chain. Signal moved to `~/.soma/` (global). (`14d0253`, `635d36e`, `e252a63`)"
+        ],
+        "changed": [
+          "**`--preload` flag deprecated** — shows warning pointing to `soma inhale` or `soma map`. Still works for backward compat.",
+          "**Boot greeting decomposed** — session ID and file paths now separate template variables. (`4d8331f`)"
+        ],
+        "fixed": [
+          "**Crash on partial settings** — `settings.heat.overrides` access without optional chaining crashed when `heat` section missing. Now defensive. (`b837a37`)",
+          "**Breathe graceSeconds mismatch** — runtime fallback was 60s, settings default was 30s. Aligned to 30s. (`b837a37`)",
+          "**5 auto-breathe UX gaps** — smart context warnings, resume awareness, write heuristic for preload detection. (`0f86bec`)"
+        ]
+      }
+    },
+    {
+      "version": "0.6.4",
+      "date": "2026-03-23",
+      "entries": {
+        "added": [
+          "**Body architecture** — structured identity system. `.soma/body/` with content files (`soul.md` → `{{soul}}`, `voice.md` → `{{voice}}`, `body.md` → `{{body}}`) and templates (`_mind.md`, `_memory.md`, `_boot.md`). Content files become template variables. Templates control system prompt and preload structure.",
+          "**Template engine** (`core/body.ts`) — `{{variable}}` interpolation with 5 modifiers (`|tldr`, `|section:Name`, `|lines:N`, `|last:N`, `|ref`), conditional blocks (`{{#var}}...{{/var}}`), graceful degradation for missing vars.",
+          "**AMPS Skill Loader** (`core/skill-loader.ts`) — unified content scanner. All AMPS classified by heat: hot (8+) = full body in prompt, warm (3-7) = `<available_skills>` XML (agent reads on demand), cold (0-2) = hidden. Claude's native skill format.",
+          "**`/body` command** — template inspector with 4 subcommands: `check` (health report), `vars` (all variables by category), `map` (template structure), `render` (full compiled system prompt, fresh from disk).",
+          "**Variable registry** — 50+ template variables categorized (context, identity, section, boot, session, focus, metadata, preload-tpl, deprecated) with essential flags and descriptions.",
+          "**`SOMA.md`** replaces `identity.md` as canonical identity file. Resolution: `body/soul.md` → `SOMA.md` → `identity.md` (legacy fallback).",
+          "**`body.md`** — project-shaped working context variable (`{{body}}`). Changes per project, placed anywhere in `_mind.md`.",
+          "**First-breath template** — conditional blocks (`{{#has_code}}`, `{{#is_blank}}`) for first-run experience.",
+          "**`/exit`** command — save state and quit cleanly.",
+          "**Boot greetings** rewritten — \"You woke up\" not \"You've booted into a session.\"",
+          "**Header bar** shows soul/body status indicators.",
+          "**`soma-verify.sh drift`** — `_public/` sync check across protocols, muscles, body files, community repo, and agent repo.",
+          "**`systemPrompt.maxTokens`** wired as soft warning — notification when compiled prompt exceeds budget.",
+          "**Muscle heat bumps on load** — muscles that stay relevant gain heat naturally (+1 per boot). Previously only bumped when explicitly read.",
+          "**Body file inheritance** — content files and templates walk the soma chain (project → parent → global). Child wins on collision.",
+          "**`user.name`**, `user.style` settings with `{{user_name}}`, `{{user_style}}` variables."
+        ],
+        "changed": [
+          "**System prompt** driven by `body/_mind.md` template when present. Users control structure, sections, custom text. Falls back to built-in compiler.",
+          "**Warm AMPS** appear as `<available_skills>` XML alongside Pi native skills — Claude's trained format for lazy-loaded content.",
+          "**`prompts/system-core.md`** — removed explicit context percentages (50/70/80/85%). Auto-breathe handles thresholds; agent shouldn't guess.",
+          "**AMPS cleanup** — 44 → 34 active muscles (10 archived), 9 → 2 high-overlap triggers (16 cleaned), 34/34 have descriptions.",
+          "**Docs sweep** — 9 pages updated for body architecture, SOMA.md, skill loader, template engine, removed gendered pronouns.",
+          "**`sync-docs.sh`** manifest expanded — 10 new docs added (focus, maps, sessions, prompts, skills, settings, themes, keybindings, models, terminal-setup).",
+          "**Protocol test** accepts `description:` alongside `breadcrumb:` (migration compat).",
+          "**Sandbox test** updated for 8 extensions, 19 protocols, SOMA.md init."
+        ],
+        "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
+          "**Conversation tail injection removed** — was scanning stale Pi JSONL sessions from wrong runtime, sidetracking agent with old conversations.",
+          "**Soul frontmatter leaking** into rendered system prompt — `loadIdentity()` now strips YAML frontmatter.",
+          "**Duplicate `# Identity` heading** — `buildLayeredIdentity()` no longer hardcodes heading; template handles it.",
+          "**`_public/` drift** — 22 files synced across community + agent repos. Drift detection tool built.",
+          "**Boot message duplication** — stripped content already in system prompt from boot followUp.",
+          "**`/body render`** compiles fresh from disk each time (was using stale boot cache)."
+        ],
+        "internal": [
+          "**`VARIABLE_REGISTRY`** in `core/body.ts` — complete registry of all template variables with categories, essential flags, descriptions.",
+          "**`core/skill-loader.ts`** — `LoadableContent` interface, `loadAllContent()`, `formatAsSkillsXml()`.",
+          "**`compileWithTemplate()`** — template path in `compileFullSystemPrompt()`, shared section builders.",
+          "**`getDefaultMindTemplate()`**, `getDefaultBootTemplate()` — built-in fallback templates.",
+          "**`loadFirstBreath()`** — conditional first-run template with chain inheritance.",
+          "**52 block variables** tested (77/77 body tests + 19 E2E).",
+          "**Frontmatter-kit** — 9 scripts for bulk AMPS frontmatter operations (extract, writeback, sort, migrate, audit).",
+          "**`preload.lastMessages`** setting removed (conversation tail scanner was the only consumer)."
+        ]
+      }
+    },
     {
       "version": "0.6.3",
       "date": "2026-03-22",
       "entries": {
         "added": [
+          "**settings-driven heat overrides — per-project AMPS control**",
+          "**inherit.automations — separate from tools inheritance**",
+          "**statusline preload indicator + smart /exhale (edit vs write)**",
+          "**auto-archive stale preloads after exhale + archiveStalePreloads()**",
           "**`/hub` command** — unified hub interface for community content. Install, fork, share, find, list, status. Replaces old `/install` and `/list` commands (kept as backward compat aliases).",
           "**Smart sharing** (`/hub share`) — quality scoring (0-100%), privacy auto-fix with `_public/` staging, README generation that captures `--help` output and extracts functions, dependency resolution.",
           "**Drop-in commands** — scripts in `.soma/amps/scripts/commands/` become `/soma <name>` commands. Hot-loadable, no restart needed. Tab completions included.",
@@ -26,6 +113,8 @@
           "**Community CI** — validate-frontmatter accepts `triggers` (replaces `topic`+`keywords`), `description` OR `breadcrumb`. Format-check supports `scope: core`. Attribution allows org identity for owners. Actions upgraded to v6 (Node 22)."
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "**`/hub list --remote`** — flag was parsed as type filter, returning 0 results.",
           "**Drop-in command output** — ANSI escape codes stripped (sendUserMessage renders markdown, not terminal).",
           "**Stale git-identity heat rule** removed from HEAT_RULES (protocol was archived).",
@@ -50,6 +139,10 @@
       "date": "2026-03-21",
       "entries": {
         "added": [
+          "**settings-driven heat overrides — per-project AMPS control**",
+          "**inherit.automations — separate from tools inheritance**",
+          "**statusline preload indicator + smart /exhale (edit vs write)**",
+          "**auto-archive stale preloads after exhale + archiveStalePreloads()**",
           "**Natural muscle heat detection** — muscles now heat-bump from natural use, not just focus. Script execution matches against `tools:` field. File edits match path segments against `triggers`. Zero configuration needed.",
           "**Migration system** — `version` field in settings.json. `core/migrations.ts` discovers and chains migration maps. `soma doctor` checks workspace health. `soma doctor --fix` auto-repairs. `soma doctor --migrate` spawns agent for complex fixes.",
           "**Community template sync** — boot fetches latest protocols from community repo. Bundled protocols serve as offline fallback. Add content to community → add name to template → all new users get it.",
@@ -61,6 +154,8 @@
           "**Personality engine** — welcome flow is honest about being templates, not the agent."
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "**Runtime delegation** — soma-beta now includes cli.js and Pi runtime files. Previously thin-cli fell through to raw Pi (no version skip, no auto-rotate, \"Update Available\" banner).",
           "**Fresh installs** now include version field in settings.json.",
           "**Stale test assertions** — test suite checked for removed frontmatter fields and nonexistent commands."
@@ -82,6 +177,8 @@
           "Pi runtime upgraded 0.61.0 → 0.61.1 — Release Round 3 (#3cbf2bc)"
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "CLI dist synced from pi-mono 0.61.1 — `getEditorKeybindings` → `getKeybindings` crash resolved",
           "Stale `content-cli.js` import removed (Pi 0.61.0 moved install/list/content to main.js)",
           "`--help` fixed — `printGumHelp` removed in 0.61.0, replaced with `printHelp`",
@@ -120,6 +217,10 @@
       "date": "2026-03-20",
       "entries": {
         "added": [
+          "**settings-driven heat overrides — per-project AMPS control**",
+          "**inherit.automations — separate from tools inheritance**",
+          "**statusline preload indicator + smart /exhale (edit vs write)**",
+          "**auto-archive stale preloads after exhale + archiveStalePreloads()**",
           "`maps.ts` — MAP discovery + prompt-config YAML parser (#1039512)",
           "`PlanPromptConfig` — plan-driven system prompt overrides: heat overrides, force-include/exclude, section toggles, budget overrides, supplementary identity (#28d71fe)",
           "`soma --map <name>` — MAP targeting via `.boot-target` signal file. Loads prompt-config, targeted preload, and MAP content as navigation context (#a12709e)",
@@ -165,6 +266,8 @@
           "Author attribution + CC BY 4.0 license footers on protocols (#0a2e0ac)"
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "Edit tool detection in preload + overwrite-safe breathe instructions (#9e7684f)",
           "Auto-breathe graceSeconds consistency + DRY path helpers (#ec857f8)",
           "Auto-breathe timeout + session log `-2` suffix bugs (#baaf51b)",
@@ -293,6 +396,10 @@
       "date": "2026-03-15",
       "entries": {
         "added": [
+          "**settings-driven heat overrides — per-project AMPS control**",
+          "**inherit.automations — separate from tools inheritance**",
+          "**statusline preload indicator + smart /exhale (edit vs write)**",
+          "**auto-archive stale preloads after exhale + archiveStalePreloads()**",
           "`/scan-logs` command — search previous tool calls + results across sessions (#31a7e17)",
           "`/scrape` command + `scrape:build` router capability — intelligent doc discovery (#c950f2b)",
           "Boot session warnings injection — tool usage stats from previous session (#0cda314)",
@@ -317,6 +424,8 @@
           "Migrated `globalThis.__somaKeepalive` to router (#e919481)"
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "Boot: clean up muscle/protocol/automation formatting (#38a643f)",
           "Boot: resume without fingerprint sends minimal boot, not full redundant injection (#7fd064b)",
           "Boot: grace countdown skips tool turns during auto-breathe (#53bd421)",
@@ -340,6 +449,10 @@
       "date": "2026-03-14",
       "entries": {
         "added": [
+          "**settings-driven heat overrides — per-project AMPS control**",
+          "**inherit.automations — separate from tools inheritance**",
+          "**statusline preload indicator + smart /exhale (edit vs write)**",
+          "**auto-archive stale preloads after exhale + archiveStalePreloads()**",
           "Capability router for inter-extension communication (`soma-route.ts`) — provides/gets capabilities, emits/listens signals. Replaces `globalThis` hacks (#94576f3, #e919481)",
           "CLI-based session rotation via `.rotate-signal` file — auto-breathe can now rotate without command context (#2da3155)",
           "Per-session log files with auto-incrementing names (`YYYY-MM-DD-sNN.md`) — prevents overwrites across rotations (#d776dd6)",
@@ -374,6 +487,8 @@
           "Dev hooks generated locally by `soma-dev.sh`, not committed to repo (#efc6ed4)"
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "Muscle and automation discovery — filter archived status and README files (#e42da9b, #5f5ccae)",
           "Scratch completions — remove PRO commands from free completions list (#fd0bda2)",
           "Auto-breathe race condition — `sendUserMessage` from `before_agent_start` raced with Pi's prompt processing, now deferred to `agent_end` via pending message queue (#2823ee9, #927bd74)",
@@ -401,6 +516,10 @@
       "date": "2026-03-12",
       "entries": {
         "added": [
+          "**settings-driven heat overrides — per-project AMPS control**",
+          "**inherit.automations — separate from tools inheritance**",
+          "**statusline preload indicator + smart /exhale (edit vs write)**",
+          "**auto-archive stale preloads after exhale + archiveStalePreloads()**",
           "Auto-breathe mode — proactive context management that triggers wrap-up at configurable %, auto-rotates at higher %. Safety net at 85% always on. Opt-in via `breathe.auto` in settings (#1d533bf)",
           "`/auto-breathe` command — runtime toggle (`on|off|status`), persists to settings.json",
           "Smarter `/breathe` — context-aware instructions (light/full/urgent), handles preload-already-written and timeout edge cases",
@@ -428,6 +547,8 @@
           "CI improvements — PR check and release workflows now run all test suites"
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "System prompt dropped after turn 1 — Pi resets each `before_agent_start`, now caches compiled prompt",
           "Identity never in compiled prompt — `isPiDefaultPrompt()` checked wrong string",
           "Context warnings never fired — `getContextUsage()` returns undefined on turn 1, handled gracefully",
@@ -445,6 +566,10 @@
       "date": "2026-03-11",
       "entries": {
         "added": [
+          "**settings-driven heat overrides — per-project AMPS control**",
+          "**inherit.automations — separate from tools inheritance**",
+          "**statusline preload indicator + smart /exhale (edit vs write)**",
+          "**auto-archive stale preloads after exhale + archiveStalePreloads()**",
           "Compiled system prompt (\"Frontal Cortex\") — `core/prompt.ts` assembles complete system prompt from identity chain, protocol summaries, muscle digests, dynamic tool section",
           "Session-scoped preloads — `preload-<sessionId>.md` prevents multi-terminal conflicts",
           "Identity in system prompt — moved from boot user message for better token caching",
@@ -465,6 +590,8 @@
           "CLAUDE.md awareness, not adoption — system prompt notes existence but doesn't inject content"
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "Print-mode race condition — `ctx.hasUI` guard on `sendUserMessage` in `session_start`",
           "Skip scaffolding core extensions into project `.soma/extensions/`",
           "Template placeholder substitution on install"
@@ -476,6 +603,10 @@
       "date": "2026-03-10",
       "entries": {
         "added": [
+          "**settings-driven heat overrides — per-project AMPS control**",
+          "**inherit.automations — separate from tools inheritance**",
+          "**statusline preload indicator + smart /exhale (edit vs write)**",
+          "**auto-archive stale preloads after exhale + archiveStalePreloads()**",
           "AMPS content type system — 4 shareable types: Automations, Muscles, Protocols, Skills. `scope` field controls distribution",
           "Hub commands — `/install <type> <name>`, `/list local|remote` with dependency resolution",
           "`core/content-cli.ts` — non-interactive content commands for CLI wiring",
@@ -494,6 +625,8 @@
           "Bundled protocols slimmed from all to 4 core (breath-cycle, heat-tracking, session-checkpoints, pattern-evolution)"
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "PII scrubbed from git history across all repos",
           "CLI stripped to distribution only — agent is source of truth"
         ]
@@ -504,6 +637,10 @@
       "date": "2026-03-09",
       "entries": {
         "added": [
+          "**settings-driven heat overrides — per-project AMPS control**",
+          "**inherit.automations — separate from tools inheritance**",
+          "**statusline preload indicator + smart /exhale (edit vs write)**",
+          "**auto-archive stale preloads after exhale + archiveStalePreloads()**",
           "Protocols and Heat System — behavioral rules loaded by temperature, heat rises through use, decays through neglect",
           "Muscle loading at boot — sorted by heat, loaded within configurable token budget",
           "Settings chain — `settings.json` with resolution: project → parent → global",
@@ -514,6 +651,8 @@
           "9 core modules — discovery, identity, protocols, muscles, settings, init, preload, utils, index"
         ],
         "fixed": [
+          "**defensive settings.heat access + stale test mocks — 567/567 pass**",
+          "**5 UX gaps — smart warnings, resume awareness, write heuristic**",
           "Extensions load correctly",
           "Skills install to correct path"
         ]
