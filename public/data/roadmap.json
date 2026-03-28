@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-23T19:00:00Z",
+  "generated": "2026-03-28T13:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -7,11 +7,34 @@
       "date": "",
       "features": {
         "added": [
-          "Init UX \u2014 prompt before auto-init, inherit from parent .soma/",
-          "First-run onboarding \u2014 global user setup (name, style)",
-          "Session tail \u2014 carry forward messages after preload",
-          "Auto-breathe review \u2014 agent reads context % from statusline",
-          "Scoping variables \u2014 {{muscle_block}}, {{protocol_block}} for template control"
+          "PHASE workflow system \u2014 phase-aware MAPs with per-phase brain configuration.",
+          "Somaverse \u2014 visual workspace UI for managing sessions, memory, and identity.",
+          "Project navigator \u2014 run soma anywhere, find projects, pick up where you left off.",
+          "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
+          "Release cycle automation \u2014 docs, changelog, roadmap prepared atomically on dev."
+        ]
+      }
+    },
+    {
+      "version": "0.6.5",
+      "date": "2026-03-28",
+      "features": {
+        "added": [
+          "soma inhale \u2014 CLI preload management with --list, partial name match, and --load.",
+          "soma map \u2014 top-level MAP subcommand with --list and prompt-config.",
+          "Settings-driven heat overrides \u2014 per-project AMPS heat control via settings.heat.overrides.",
+          "Statusline preload indicator \u2014 shows preload status, smart /exhale detects edit vs write.",
+          "Auto-archive stale preloads after exhale.",
+          "Restart signal \u2014 auto-detect extension/core changes, prompt for restart."
+        ],
+        "changed": [
+          "--preload flag deprecated in favor of soma inhale.",
+          "Boot greeting decomposed \u2014 session ID and file paths now separate template variables."
+        ],
+        "fixed": [
+          "Defensive settings.heat access \u2014 no crash on partial settings files.",
+          "Breathe graceSeconds aligned to 30s default.",
+          "5 auto-breathe UX gaps \u2014 smart warnings, resume awareness."
         ]
       }
     },
