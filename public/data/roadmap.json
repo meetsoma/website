@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-28T13:00:00Z",
+  "generated": "2026-03-29T12:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -12,6 +12,26 @@
           "Project navigator \u2014 run soma anywhere, find projects, pick up where you left off.",
           "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
           "Release cycle automation \u2014 docs, changelog, roadmap prepared atomically on dev."
+        ]
+      }
+    },
+    {
+      "version": "0.6.6",
+      "date": "2026-03-29",
+      "features": {
+        "added": [
+          "Init UX \u2014 prompt before auto-scaffolding, parent .soma/ inheritance, templateDir for body/.",
+          "Upstream sync R3 \u2014 Pi 0.63.1 (71 commits, SourceInfo provenance, built-in tools as extensions).",
+          "Command provenance \u2014 /soma status shows which extension registered each command.",
+          "cli.js tracked source \u2014 agent/src/cli.js is source of truth, synced to CLI repo.",
+          "Protocol coaching voice \u2014 14 protocol TL;DRs rewritten from spec to coaching voice."
+        ],
+        "changed": [
+          "Stale branches cleaned \u2014 feat/docs-system, feat/runtime, protocol-quality-pass deleted.",
+          "scaffoldBody priority chain \u2014 templateDir \u2192 bundled _public/ \u2192 bundled body/."
+        ],
+        "fixed": [
+          "/soma prompt diagnostic \u2014 'Learned Patterns' check corrected to 'Muscle Memory'."
         ]
       }
     },
