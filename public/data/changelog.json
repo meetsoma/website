@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-28T13:26:07Z",
+  "generated": "2026-03-28T18:01:30Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
@@ -7,6 +7,9 @@
       "date": "2026-03-28",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**`soma inhale --list`** — show available preloads with age and staleness markers from CLI.",
           "**`soma inhale <name>`** — partial name match. Load a specific preload by date, session ID, or any substring. Ambiguous matches show alternatives.",
           "**`soma inhale --load <path>`** — load any file as a preload by absolute or relative path.",
@@ -36,6 +39,9 @@
       "date": "2026-03-23",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**Body architecture** — structured identity system. `.soma/body/` with content files (`soul.md` → `{{soul}}`, `voice.md` → `{{voice}}`, `body.md` → `{{body}}`) and templates (`_mind.md`, `_memory.md`, `_boot.md`). Content files become template variables. Templates control system prompt and preload structure.",
           "**Template engine** (`core/body.ts`) — `{{variable}}` interpolation with 5 modifiers (`|tldr`, `|section:Name`, `|lines:N`, `|last:N`, `|ref`), conditional blocks (`{{#var}}...{{/var}}`), graceful degradation for missing vars.",
           "**AMPS Skill Loader** (`core/skill-loader.ts`) — unified content scanner. All AMPS classified by heat: hot (8+) = full body in prompt, warm (3-7) = `<available_skills>` XML (agent reads on demand), cold (0-2) = hidden. Claude's native skill format.",
@@ -90,6 +96,9 @@
       "date": "2026-03-22",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**settings-driven heat overrides — per-project AMPS control**",
           "**inherit.automations — separate from tools inheritance**",
           "**statusline preload indicator + smart /exhale (edit vs write)**",
@@ -139,6 +148,9 @@
       "date": "2026-03-21",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**settings-driven heat overrides — per-project AMPS control**",
           "**inherit.automations — separate from tools inheritance**",
           "**statusline preload indicator + smart /exhale (edit vs write)**",
@@ -217,6 +229,9 @@
       "date": "2026-03-20",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**settings-driven heat overrides — per-project AMPS control**",
           "**inherit.automations — separate from tools inheritance**",
           "**statusline preload indicator + smart /exhale (edit vs write)**",
@@ -396,6 +411,9 @@
       "date": "2026-03-15",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**settings-driven heat overrides — per-project AMPS control**",
           "**inherit.automations — separate from tools inheritance**",
           "**statusline preload indicator + smart /exhale (edit vs write)**",
@@ -449,6 +467,9 @@
       "date": "2026-03-14",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**settings-driven heat overrides — per-project AMPS control**",
           "**inherit.automations — separate from tools inheritance**",
           "**statusline preload indicator + smart /exhale (edit vs write)**",
@@ -516,6 +537,9 @@
       "date": "2026-03-12",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**settings-driven heat overrides — per-project AMPS control**",
           "**inherit.automations — separate from tools inheritance**",
           "**statusline preload indicator + smart /exhale (edit vs write)**",
@@ -566,6 +590,9 @@
       "date": "2026-03-11",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**settings-driven heat overrides — per-project AMPS control**",
           "**inherit.automations — separate from tools inheritance**",
           "**statusline preload indicator + smart /exhale (edit vs write)**",
@@ -603,6 +630,9 @@
       "date": "2026-03-10",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**settings-driven heat overrides — per-project AMPS control**",
           "**inherit.automations — separate from tools inheritance**",
           "**statusline preload indicator + smart /exhale (edit vs write)**",
@@ -637,6 +667,9 @@
       "date": "2026-03-09",
       "entries": {
         "added": [
+          "**prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**",
+          "**show command provenance in /soma status (SX-233)**",
+          "**track cli.js as source in agent repo (SX-252)**",
           "**settings-driven heat overrides — per-project AMPS control**",
           "**inherit.automations — separate from tools inheritance**",
           "**statusline preload indicator + smart /exhale (edit vs write)**",
