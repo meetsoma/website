@@ -14,9 +14,9 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     statusColor: 'var(--warm-bright)',
   },
   {
-    name: 'Protocol Voice Pass',
+    name: 'Init UX & Onboarding',
     icon: 'protocols',
-    description: 'Coaching voice for all TL;DRs and digests. Core protocol rewrite to match current reality. Every protocol teaches, not just documents.',
+    description: 'First-run onboarding wizard. Learn the user\'s name and style once, globally. Every project inherits. The first soma should feel like meeting someone, not configuring something.',
     status: 'In Progress',
     statusColor: 'var(--warm-bright)',
   },
@@ -105,8 +105,8 @@ const upcoming: { name: string; icon: string; description: string; status: strin
         <div class="progress-item">
           <span class="progress-dot active"></span>
           <div>
-            <strong>Protocol voice pass</strong>
-            <p>Rewriting all protocol TL;DRs in coaching voice. Core protocol rewrite to match working code.</p>
+            <strong>First-run onboarding</strong>
+            <p>Global user setup on first soma run. Ask name and style once, inherit everywhere. The first breath should feel like meeting someone.</p>
           </div>
         </div>
         <div class="progress-item">
@@ -138,6 +138,14 @@ const upcoming: { name: string; icon: string; description: string; status: strin
       <SectionHeader title="Shipped" />
       <RoadmapTimeline client:load />
     </section>
+
+    <!-- Changelog link -->
+    <div class="changelog-link">
+      <p>
+        Every commit, every fix, every feature — the full history lives in the
+        <a href="/docs/changelog">changelog</a>.
+      </p>
+    </div>
 
     <!-- Voting Teaser -->
     <div class="voting-teaser">
@@ -259,6 +267,31 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
     margin: 0;
+  }
+
+  /* ── Changelog Link ── */
+  .changelog-link {
+    margin-bottom: var(--space-xl);
+    text-align: center;
+  }
+
+  .changelog-link p {
+    font-family: var(--font-body);
+    font-size: var(--body-text);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  .changelog-link a {
+    color: var(--accent-bright);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .changelog-link a:hover {
+    border-bottom-color: var(--accent-bright);
   }
 
   /* ── Voting Teaser ── */
