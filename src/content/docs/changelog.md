@@ -12,6 +12,29 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [0.6.7] — 2026-03-30
+
+### Added
+- **`/soma doctor`** — migration command. Detects version mismatch on boot, prompts to run migration script with confirmation, shows output, reloads settings. Post-migration guidance for body file review.
+- **Boot migration check** — notifies when project `.soma/` version is behind agent version.
+- **Global vs parent detection** — `detectProjectContext()` distinguishes `~/.soma/` (global runtime) from real parent workspaces. Init prompt has three-way messaging: real parent choice, global fallback, or no soma.
+- **Monorepo-aware first breath** — detects multi-repo projects, lists sub-projects with detected stacks. Points agent to `soma-code.sh structure` for orientation.
+- **First-breath tool hints** — all first-breath messages include `soma-code.sh` and `soma-seam.sh` usage examples.
+- **Body template scaffolding** — `body.md` (Project, Structure, Workflow, Current Focus sections) and `voice.md` (Delivery, Tone, Rhythm sections) ship with header scaffolding and comment breadcrumbs.
+- **Richer `_memory.md`** — preload template now includes Weather, Who You Were, Orient From, Do NOT Re-Read sections.
+- **Stash checkpoint style** — `checkpoints.project.style: "stash"` now wired. Uses `git stash push --include-untracked` with session ID.
+- **Migration system** — `v0.6.6-to-v0.6.7.md` map + `migrate-0.6.6-to-0.6.7.sh` script. Handles settings, body templates, protocols. Backs up before replacing, skips customized files.
+
+### Changed
+- **System prompt budget** — default `systemPrompt.maxTokens` raised from 4000 to 10000. Anthropic's system prompt is ~25k; ours at ~5k was triggering false warnings.
+
+### Fixed
+- **Preload resume false-positive** — `soma -c` no longer falsely detects preloads from previous rotations as "written this session." Uses mtime check (2-min threshold).
+- **Body template instructions** — moved from frontmatter `description:` (invisible to agent) to HTML comment breadcrumbs in file body (visible, replaceable).
+- **Migration script path resolution** — resolves bundled templates relative to script location, works in sandbox/dev/installed contexts.
+
+---
+
 ## [0.6.6] — 2026-03-29
 
 ### Added
@@ -26,6 +49,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **scaffoldBody** priority chain: templateDir → bundled `_public/` → bundled `body/`.
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - `/soma prompt` diagnostic checked for "Learned Patterns" but actual heading is "Muscle Memory".
 
 ---
@@ -51,6 +78,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Boot greeting decomposed** — session ID and file paths now separate template variables. (`4d8331f`)
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **Crash on partial settings** — `settings.heat.overrides` access without optional chaining crashed when `heat` section missing. Now defensive. (`b837a37`)
 - **Breathe graceSeconds mismatch** — runtime fallback was 60s, settings default was 30s. Aligned to 30s. (`b837a37`)
 - **5 auto-breathe UX gaps** — smart context warnings, resume awareness, write heuristic for preload detection. (`0f86bec`)
@@ -91,6 +122,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Sandbox test** updated for 8 extensions, 19 protocols, SOMA.md init.
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - **Conversation tail injection removed** — was scanning stale Pi JSONL sessions from wrong runtime, sidetracking agent with old conversations.
@@ -141,6 +176,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Community CI** — validate-frontmatter accepts `triggers` (replaces `topic`+`keywords`), `description` OR `breadcrumb`. Format-check supports `scope: core`. Attribution allows org identity for owners. Actions upgraded to v6 (Node 22).
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - **`/hub list --remote`** — flag was parsed as type filter, returning 0 results.
@@ -181,6 +220,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Personality engine** — welcome flow is honest about being templates, not the agent.
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - **Runtime delegation** — soma-beta now includes cli.js and Pi runtime files. Previously thin-cli fell through to raw Pi (no version skip, no auto-rotate, "Update Available" banner).
@@ -206,6 +249,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
   - ToolCallEventResult exported
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - CLI dist synced from pi-mono 0.61.1 — `getEditorKeybindings` → `getKeybindings` crash resolved
@@ -311,6 +358,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Author attribution + CC BY 4.0 license footers on protocols (#0a2e0ac)
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - Edit tool detection in preload + overwrite-safe breathe instructions (#9e7684f)
@@ -470,6 +521,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Migrated `globalThis.__somaKeepalive` to router (#e919481)
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - Boot: clean up muscle/protocol/automation formatting (#38a643f)
@@ -536,6 +591,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Dev hooks generated locally by `soma-dev.sh`, not committed to repo (#efc6ed4)
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
@@ -600,6 +659,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - CI improvements — PR check and release workflows now run all test suites
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
@@ -647,6 +710,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - CLAUDE.md awareness, not adoption — system prompt notes existence but doesn't inject content
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
@@ -686,6 +753,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Bundled protocols slimmed from all to 4 core (breath-cycle, heat-tracking, session-checkpoints, pattern-evolution)
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
@@ -715,6 +786,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - 9 core modules — discovery, identity, protocols, muscles, settings, init, preload, utils, index
 
 ### Fixed
+- **restore walk-up, keep .soma-only + runtime-home skip**
+- **findSomaDir checks current dir only, no walk-up**
+- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
+- **skip global runtime home in findSomaDir walk-up**
 - **defensive settings.heat access + stale test mocks — 567/567 pass**
 - **5 UX gaps — smart warnings, resume awareness, write heuristic**
 

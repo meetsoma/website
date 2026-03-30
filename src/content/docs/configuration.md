@@ -45,7 +45,7 @@ Settings files can exist at any level in the Soma chain:
     "gitIdentity": null
   },
   "systemPrompt": {
-    "maxTokens": 4000,
+    "maxTokens": 10000,
     "includeSomaDocs": true,
     "includePiDocs": true,
     "includeContextAwareness": true,
@@ -229,7 +229,7 @@ Controls what sections appear in Soma's compiled system prompt. Use `/soma promp
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `maxTokens` | `4000` | Estimated token budget for Soma's system prompt portion |
+| `maxTokens` | `10000` | Estimated token budget for Soma's system prompt portion |
 | `includeSomaDocs` | `true` | Include Soma documentation references |
 | `includePiDocs` | `true` | Include Pi framework documentation references |
 | `includeContextAwareness` | `true` | Include CLAUDE.md awareness note |

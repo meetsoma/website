@@ -61,6 +61,7 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 |---------|-------------|
 | `/soma` | Show Soma status — loaded identity, protocol heat states, muscle states, context usage, available commands. |
 | `/soma init` | Create a `.soma/` directory in the current project. |
+| `/soma doctor` | Check for pending migrations. Runs migration scripts with confirmation, reloads settings after. |
 | `/soma prompt` | Preview the compiled system prompt — shows all assembled sections, token estimate, and which toggles are active. |
 | `/soma prompt full` | Dump the full compiled system prompt text. |
 | `/soma prompt identity` | Show identity debug — chain, layering, char count. |
