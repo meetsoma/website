@@ -16,6 +16,27 @@
       }
     },
     {
+      "version": "0.6.7",
+      "date": "2026-03-30",
+      "features": {
+        "added": [
+          "/soma doctor \u2014 migration check + auto-run with confirmation",
+          "Init UX \u2014 global vs parent detection, three-way prompt",
+          "Monorepo-aware first breath with sub-project listing",
+          "Body template scaffolding \u2014 section headers in body.md, voice.md",
+          "Richer preload template \u2014 Weather, Who You Were, Orient From",
+          "Migration system \u2014 v0.6.6\u2192v0.6.7 script with sandbox tests"
+        ],
+        "changed": [
+          "System prompt budget raised from 4000 to 10000 tokens"
+        ],
+        "fixed": [
+          "Preload resume false-positive on soma -c",
+          "Body template instructions moved from invisible frontmatter to HTML comments"
+        ]
+      }
+    },
+    {
       "version": "0.6.6",
       "date": "2026-03-29",
       "features": {
