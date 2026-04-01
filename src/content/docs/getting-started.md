@@ -61,27 +61,41 @@ The detected context shapes Soma's initial identity and the protocols it recomme
 soma
 ```
 
-Starts fresh. Runs the [boot sequence](/docs/configuration#boot-sequence): identity, protocols, muscles, scripts, git context. No replay of previous session context.
+Starts fresh. Runs the [boot sequence](/docs/configuration#boot-sequence): identity, protocols, muscles, scripts, git context. No preload, no prior context — blank slate.
 
-### Resume Session
+### Continue Where You Left Off
 
 ```bash
-soma --continue
-# or
+soma inhale
+```
+
+Starts a **fresh session** and automatically loads the most recent preload — the briefing your last session wrote during `/exhale`. This is the recommended way to continue a project day-to-day: fresh context window, but the agent knows what happened, what's next, and what files to read.
+
+> **When to use:** Morning start, picking up after a break, any time you want continuity without the weight of full conversation history.
+
+### Resume Full Session
+
+```bash
 soma -c
 ```
 
-Resumes the last session. Runs all boot steps including preload (what happened, what's next).
+Reopens the last session with **full conversation history** preserved — same context, same thread. No new boot sequence. Best for short breaks (lunch, meeting) where you want to jump right back in.
 
 ### Select a Session
 
 ```bash
-soma --resume
-# or
 soma -r
 ```
 
 Pick from previous sessions to resume.
+
+### The Difference
+
+| Command | Context | Memory | Best for |
+|---------|---------|--------|----------|
+| `soma` | Fresh | None | New work, exploring |
+| `soma inhale` | Fresh | Preload from last `/exhale` | Daily continuation |
+| `soma -c` | Full history | Complete conversation | Short breaks |
 
 ## Commands
 
@@ -90,7 +104,7 @@ Pick from previous sessions to resume.
 | `/breathe` | Save state + rotate into fresh session |
 | `/exhale` | Save state, write preload, session ends |
 | `/rest` | Disable keepalive + exhale — for when you're done for the night |
-| `/inhale` | Start fresh — shows preload status, suggests `soma -c` |
+| `/inhale` | Check preload status — shows if preload exists, warns if stale |
 | `/pin <name>` | Pin a protocol/muscle to hot (stays loaded) |
 | `/kill <name>` | Kill a protocol/muscle (drops to cold) |
 | `/keepalive` | Toggle cache keepalive on/off (or check status) |

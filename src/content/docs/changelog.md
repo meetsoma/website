@@ -12,6 +12,22 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [0.7.1] — 2026-04-01
+
+### Added
+- **`soma --help` rewrite** — Soma-branded help with session commands, project commands, options, and TUI slash commands. Replaces generic Pi help output.
+- **`soma --help scripts`** — show installed scripts with descriptions. Works from CLI and inside sessions.
+- **`soma --help commands`** — full command reference organized by category (CLI, session, heat, hub, info).
+- **`soma-theme.sh` bundled** — shared script theming now seeds on init (was a missing dependency for 3 bundled scripts).
+
+### Fixed
+- **Scripts crash on fresh projects** — `source soma-theme.sh` with `set -e` caused fatal exit when theme file wasn't present. Fixed with `if [ -f ]; then source; fi` pattern across all 8 scripts.
+- **`soma focus <keyword>` didn't start session** — `main()` call wasn't awaited, `process.exit(0)` ran before session could start.
+- **`postinstall.js` missing from builds** — deleted during Pi 0.64.0 dist sync, restored to CLI repo. Added to `OUR_DIST_FILES` and release script.
+- **Docs: `/inhale` vs `soma inhale` confusion** — commands.md and getting-started.md now clearly distinguish CLI commands (shell) from TUI slash commands, with comparison table.
+
+---
+
 ## [0.7.0] — 2026-04-01
 
 ### Added

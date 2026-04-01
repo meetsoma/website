@@ -14,11 +14,13 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 
 ## Session Commands
 
+These are **slash commands** used inside the Soma TUI during a session.
+
 | Command | Description |
 |---------|-------------|
-| `/inhale` | Start a fresh session with preload. Warns if no preload exists (suggests `/exhale`). Warns if preload is stale (>5 tool calls since write) — use `/inhale --force` to override. |
+| `/inhale` | **Check preload status** — shows whether a preload exists and how stale it is. Warns if no preload found (suggests `/exhale`). Warns if preload is stale (>5 tool calls since write). Use `/inhale --force` to override. **Note:** this does _not_ start a new session — to start a session with a preload, use `soma inhale` from your shell (see [CLI Commands](#cli-commands)). |
 | `/breathe` | Save state and rotate into a fresh session. Seamless rotation — exhale + inhale in one motion. |
-| `/exhale` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Session ends. |
+| `/exhale` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Session ends. The preload written here is what `soma inhale` loads next time. |
 | `/rest` | Going to bed? Disables cache keepalive, then exhales. No pings will fire after you walk away. |
 | `/exit` | Save state and quit Soma cleanly. Exhales, then terminates. |
 
@@ -131,12 +133,29 @@ See [Models & Providers](/docs/models) for full setup, including custom provider
 
 ## CLI Commands
 
+These commands are run from your **shell** (terminal), not inside the Soma TUI.
+
+### Starting a Session
+
 | Command | Description |
 |---------|-------------|
-| `soma` | Fresh session — no preload. Clean slate with identity, hot protocols, active muscles. |
-| `soma inhale` | Fresh session with preload from last session. Use when continuing a project across sessions. |
-| `soma -c` | Continue previous session — full history preserved. |
-| `soma -r` | Resume — pick from previous sessions to restore. |
+| `soma` | **Fresh session** — clean slate. Runs the full boot sequence (identity, protocols, muscles, git context) but does not load any preload. Use when starting new work or when no prior session exists. |
+| `soma inhale` | **Fresh session + preload** — starts a new session and automatically injects the most recent preload from `memory/preloads/`. Use when picking up where you left off across sessions. This is the recommended way to continue a project day-to-day. |
+| `soma -c` | **Continue session** — reopens the last session with full conversation history preserved. No new boot sequence — you're back in the same context. |
+| `soma -r` | **Resume picker** — choose from previous sessions to restore. |
+
+> **`soma` vs `soma inhale` vs `soma -c`:**
+>
+> - `soma` = blank page. No memory of yesterday.
+> - `soma inhale` = blank page with a note from your past self. Fresh context, but the preload tells you what happened, what's next, and what to read. Best for daily work.
+> - `soma -c` = same page. Full history, same context window. Best for short breaks.
+>
+> The preload loaded by `soma inhale` is written during `/exhale` or `/breathe` inside the TUI. If you haven't exhaled yet, `soma inhale` will warn that no preload exists.
+
+### Options
+
+| Command | Description |
+|---------|-------------|
 | `soma --help` | Show formatted help (uses gum when available). |
 | `soma --map <name>` | Boot with a specific MAP loaded — applies prompt-config overrides, loads targeted preload and MAP body. |
 | `soma --model <pattern>` | Start with a specific model (e.g. `sonnet`, `gpt-4o`, `openai/gpt-4o`, `sonnet:high`). |
