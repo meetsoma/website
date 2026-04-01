@@ -6,7 +6,7 @@ order: 1
 ---
 
 <!-- tldr -->
-`npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma -c` to continue with last session's context. `/breathe` saves + continues, `/exhale` saves + stops, `/pin` keeps protocols hot, `/kill` drops them cold.
+`npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma inhale` to continue with a preload from last session, or `soma -c` to resume with full history. `/exhale` saves state + writes a preload, `/breathe` rotates into a fresh session, `/pin` keeps content hot, `/kill` drops it cold.
 <!-- /tldr -->
 
 ## Install
@@ -121,37 +121,43 @@ Created by `soma init` or on first run:
 ```
 .soma/
 ├── SOMA.md                  ← who Soma becomes (discovered through use)
-├── settings.json            ← configurable thresholds (optional)
-├── state.json               ← heat state (auto-managed)
+├── settings.json            ← configurable thresholds
+├── state.json               ← heat state (auto-managed, gitignored)
+├── STATE.md                 ← project architecture snapshot
+│
+├── body/                    ← structured identity templates
+│   ├── soul.md              ← who Soma is in this project
+│   ├── voice.md             ← how Soma communicates
+│   ├── _mind.md             ← system prompt template
+│   └── _memory.md           ← preload template
 │
 ├── amps/                    ← the AMPS content system
-│   ├── automations/         ← triggered actions (heat-tracked)
-│   ├── muscles/             ← learned patterns (heat-tracked)
-│   ├── protocols/           ← behavioral rules (heat-tracked)
-│   │   ├── breath-cycle.md  ← ships by default (16 protocols included)
-│   │   └── _template.md     ← format reference for new protocols
-│   └── scripts/             ← developer tools (9 scripts seeded on init)
+│   ├── automations/         ← triggered actions
+│   ├── muscles/             ← learned patterns
+│   ├── protocols/           ← behavioral rules (17 ship by default)
+│   └── scripts/             ← developer tools (6 seeded on init)
 │       ├── soma-code.sh     ← codebase navigator
-│       ├── soma-seam.sh     ← memory tracing
-│       └── ...              ← see /docs/scripts for full list
+│       ├── soma-seam.sh     ← concept tracing
+│       ├── soma-focus.sh    ← session priming
+│       └── commands/        ← drop-in /soma commands
 │
 ├── memory/                  ← temporal state
 │   ├── preloads/            ← session continuations
 │   └── sessions/            ← per-session work logs
 │
-├── projects/                ← per-project specs, plans, notes
-│
-└── skills/                  ← knowledge sets (Pi-native SKILL.md format)
+└── skills/                  ← knowledge sets (SKILL.md format)
 ```
+
+Run `soma --help scripts` to see what's installed with descriptions.
 
 ### What's Private vs Public
 
 If you're using Soma in a public repo:
 
-- **Ships with repo:** `.soma/amps/protocols/`, `.soma/amps/scripts/`, `.soma/skills/`
-- **Gitignored (private):** `.soma/SOMA.md`, `.soma/body/`, `.soma/memory/`, `.soma/amps/muscles/`, `.soma/amps/automations/`
+- **Ships with repo:** `.soma/amps/protocols/`, `.soma/amps/scripts/`, `.soma/skills/`, `.soma/body/`
+- **Gitignored (private):** `.soma/state.json`, `.soma/memory/`, `.soma/debug/`, `.soma/secrets/`
 
-Templates ship. Instances don't.
+Identity and templates ship. Session data doesn't.
 
 ## Switching Models
 
@@ -171,7 +177,8 @@ See [Models & Providers](/docs/models) for the full guide — including custom p
 ## Tips
 
 - **Let identity grow** — don't pre-write it. Let Soma discover who it becomes through your work.
-- **Trust the breath** — don't worry about context limits. Soma flushes and continues automatically.
-- **Read muscles** — check `.soma/amps/muscles/` to see what patterns Soma has learned.
+- **Trust the breath** — don't worry about context limits. `/breathe` rotates seamlessly. `/exhale` when you're done.
+- **Daily workflow** — `/exhale` at end of day, `soma inhale` next morning. That's it.
+- **Explore commands** — run `soma --help` for all CLI commands, `soma --help scripts` for installed tools, `soma --help commands` for the full reference.
 - **Switch models freely** — use `/model` or `Ctrl+P` mid-session. See [Models & Providers](/docs/models).
 - **Tune settings** — everything is configurable: boot steps, heat thresholds, context warnings. See [Configuration](/docs/configuration).
