@@ -82,7 +82,7 @@ function renderMarkdown(md: string): string {
   let text = md.replace(/<!--[\s\S]*?-->/g, '');
   const lines = text.split('\n');
   const html: string[] = [];
-  let inCode = false, code: string[] = [], inList = false, listType = '';
+  let inCode = false, code: string[] = [], inList = false, listType = '', inTable = false, isHeaderRow = true;
 
   function inline(s: string): string {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -92,6 +92,7 @@ function renderMarkdown(md: string): string {
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   }
   function closeList() { if (inList) { html.push(listType === 'ul' ? '</ul>' : '</ol>'); inList = false; } }
+  function closeTable() { if (inTable) { html.push('</tbody></table>'); inTable = false; isHeaderRow = true; } }
 
   for (const line of lines) {
     if (line.startsWith('```')) {
@@ -100,9 +101,9 @@ function renderMarkdown(md: string): string {
       continue;
     }
     if (inCode) { code.push(line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')); continue; }
-    if (line.trim() === '') { closeList(); continue; }
+    if (line.trim() === '') { closeList(); closeTable(); continue; }
     const h = line.match(/^(#{1,6})\s+(.+)$/);
-    if (h) { closeList(); html.push(`<h${h[1].length}>${inline(h[2])}</h${h[1].length}>`); continue; }
+    if (h) { closeList(); closeTable(); html.push(`<h${h[1].length}>${inline(h[2])}</h${h[1].length}>`); continue; }
     if (line.match(/^[-*]\s/)) {
       if (!inList) { html.push('<ul>'); inList = true; listType = 'ul'; }
       html.push(`<li>${inline(line.replace(/^[-*]\s+/, ''))}</li>`); continue;
@@ -113,15 +114,27 @@ function renderMarkdown(md: string): string {
     }
     if (line.startsWith('> ')) { closeList(); html.push(`<blockquote><p>${inline(line.slice(2))}</p></blockquote>`); continue; }
     if (line.match(/^[|]/)) {
-      if (line.match(/^[|\s-:]+$/)) continue;
+      if (line.match(/^[|\s-:]+$/)) continue; // separator row
+      closeList();
       const cells = line.split('|').filter(c => c.trim()).map(c => inline(c.trim()));
-      html.push(`<tr>${cells.map(c => `<td>${c}</td>`).join('')}</tr>`); continue;
+      if (!inTable) {
+        html.push('<table><thead>');
+        html.push(`<tr>${cells.map(c => `<th>${c}</th>`).join('')}</tr>`);
+        html.push('</thead><tbody>');
+        inTable = true;
+        isHeaderRow = false;
+      } else {
+        html.push(`<tr>${cells.map(c => `<td>${c}</td>`).join('')}</tr>`);
+      }
+      continue;
     }
+    closeTable();
     if (line.match(/^---$/)) { closeList(); html.push('<hr>'); continue; }
     closeList();
     html.push(`<p>${inline(line)}</p>`);
   }
   closeList();
+  closeTable();
   return html.join('\n');
 }
 
@@ -446,6 +459,7 @@ export default function HubDetail({ type: propType, slug: propSlug, staticItem, 
         .hd-body pre { background: var(--bg-elevated); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1rem; font-size: 0.8rem; line-height: 1.5; }
         .hd-body pre code { background: none; padding: 0; color: var(--text-secondary, var(--text-secondary)); }
         .hd-body table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.8rem; }
+        .hd-body th { padding: 0.5rem; border-bottom: 2px solid var(--border-subtle); color: var(--text-primary, var(--text-primary)); text-align: left; font-weight: 600; }
         .hd-body td { padding: 0.5rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary, var(--text-secondary)); }
         .hd-body strong { color: var(--text-primary, var(--text-primary)); }
         .hd-body blockquote { border-left: 3px solid var(--accent-bright); padding-left: 1rem; margin: 1rem 0; color: var(--text-secondary, var(--text-secondary)); font-style: italic; }
