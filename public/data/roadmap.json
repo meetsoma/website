@@ -17,6 +17,23 @@
       }
     },
     {
+      "version": "0.7.1",
+      "date": "2026-04-01",
+      "features": {
+        "added": [
+          "soma --help rewrite — branded output with session, project, and TUI commands.",
+          "soma --help scripts — show installed scripts with descriptions.",
+          "soma --help commands — full command reference by category."
+        ],
+        "fixed": [
+          "Scripts crash on fresh projects — missing theme dependency, now bundled.",
+          "soma focus didn't start session — async call fix.",
+          "postinstall.js missing from builds — restored.",
+          "Docs: /inhale vs soma inhale clearly distinguished."
+        ]
+      }
+    },
+    {
       "version": "0.7.0",
       "date": "2026-04-01",
       "features": {
