@@ -12,6 +12,29 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [0.7.0] — 2026-04-01
+
+### Added
+- **/inhale guard** — warns when no preload exists (suggests `/exhale`), warns when preload is stale (>5 tool calls since write). Use `/inhale --force` to override.
+- **Slash command usage hints** — 10 commands now include `Usage:` patterns in their descriptions: `/pin`, `/kill`, `/auto-commit`, `/inhale`, `/install`, `/auto-breathe`, `/hub`, `/scratch`, `/keepalive`, `/soul-space`, `/soma`.
+- **Hub: 5 new scripts** — soma-seam, soma-reflect, soma-query, soma-focus, soma-plans. All with coaching-voice digests.
+- **Hub: soma-code v2.0.0** — added `blast` (blast radius analysis), `tsc-errors` (TypeScript errors with context), improved `refs` (DEF/IMP/USE), improved `find` (extension filter).
+- **Scripts docs** — `scripts.md` rewritten with hub links for each script.
+
+### Changed
+- **Upstream sync R4** — Pi 0.63.1 → 0.64.0. New APIs: `setHiddenThinkingLabel`, `signal`/`getSignal`, `prepareArguments`, async `getArgumentCompletions`.
+- **Core scripts trimmed** — init seeds 5 core scripts (soma-code, soma-seam, soma-focus, soma-update-check, validate-content). Others available via `soma hub install script <name>`.
+- **Semver discipline** — feature releases now bump minor version (0.X.0). Patch (0.x.Y) reserved for bug-fix-only releases.
+
+### Fixed
+- **Changelog hook** — `soma-dev.sh` post-commit hook now targets only the first `### Added`/`### Fixed` section (was appending to all version sections).
+- **Hub table rendering** — markdown tables in hub detail pages now render with proper `<table>`/`<thead>`/`<tbody>` structure.
+- **Community CI clean** — 21 frontmatter fixes across protocols and muscles (missing breadcrumb, tier, license, author, version fields).
+- **Script drift** — 7 scripts synced from working copies to agent repo (soma-code v1→v2, soma-reflect, soma-seam, soma-scrape, soma-spell, soma-plans, soma-query).
+- **Hub scripts sanitized** — private paths (Gravicity, vault) stripped from soma-seam.sh.
+
+---
+
 ## [0.6.7] — 2026-03-30
 
 ### Added
@@ -38,6 +61,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.6] — 2026-03-29
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **Init UX** — prompt before auto-scaffolding (`ctx.ui.confirm`), parent .soma/ inheritance when user declines, `scaffoldBody` templateDir priority chain. (SX-164, SX-165, SX-241)
 - **Command provenance** — `/soma status` shows which extension registered each command via Pi's `sourceInfo`. (SX-233)
 - **cli.js tracked source** — `src/cli.js` in agent repo is source of truth. `sync-to-cli.sh` and `soma-release.sh` use it. (SX-252)
@@ -60,6 +84,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.5] — 2026-03-28
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **`soma inhale --list`** — show available preloads with age and staleness markers from CLI.
 - **`soma inhale <name>`** — partial name match. Load a specific preload by date, session ID, or any substring. Ambiguous matches show alternatives.
 - **`soma inhale --load <path>`** — load any file as a preload by absolute or relative path.
@@ -91,6 +116,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.4] — 2026-03-23
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**
@@ -150,6 +176,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.3] — 2026-03-22
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**
@@ -202,6 +229,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.2] — 2026-03-21
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**
@@ -289,6 +317,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.0] — 2026-03-20
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**
@@ -490,6 +519,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.2] — 2026-03-15
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**
@@ -548,6 +578,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.1] — 2026-03-14
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**
@@ -623,6 +654,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.0] — 2026-03-12
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**
@@ -681,6 +713,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.4.0] — 2026-03-11
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**
@@ -726,6 +759,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.3.0] — 2026-03-10
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**
@@ -768,6 +802,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.2.0] — 2026-03-09
 
 ### Added
+- **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
 - **track cli.js as source in agent repo (SX-252)**

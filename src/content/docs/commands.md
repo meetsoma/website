@@ -16,7 +16,7 @@ Soma registers slash commands that control the breath cycle, heat system, and se
 
 | Command | Description |
 |---------|-------------|
-| `/inhale` | Start a fresh session. Shows preload status and suggests `soma -c` to continue with context. |
+| `/inhale` | Start a fresh session with preload. Warns if no preload exists (suggests `/exhale`). Warns if preload is stale (>5 tool calls since write) — use `/inhale --force` to override. |
 | `/breathe` | Save state and rotate into a fresh session. Seamless rotation — exhale + inhale in one motion. |
 | `/exhale` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Session ends. |
 | `/rest` | Going to bed? Disables cache keepalive, then exhales. No pings will fire after you walk away. |

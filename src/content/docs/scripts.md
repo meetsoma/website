@@ -8,13 +8,15 @@ order: 9
 
 <!-- tldr -->
 Standalone bash tools that ship with Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions (they appear in the "Available Scripts" boot table). Scripts are seeded into `.soma/amps/scripts/` on `soma init`. Build your own scripts there — they'll be discovered automatically.
+
+All bundled scripts are available on the [Soma Hub](https://soma.gravicity.ai/hub) with full documentation. Install additional scripts with `soma hub install script <name>`.
 <!-- /tldr -->
 
 ## Core Tools
 
-These are the tools your agent uses most. They're designed to be faster and more structured than raw grep/find.
+These are the tools your agent uses most. They're designed to be faster and more structured than raw grep/find. Each links to its full documentation on the hub.
 
-### soma-code.sh
+### soma-code.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-code)
 
 Fast codebase navigator. Maps file structure, finds patterns, classifies references. Works with TypeScript, Python, Rust, Go, Bash, CSS, and more.
 
@@ -30,7 +32,7 @@ soma-code.sh tsc-errors [path]            # TypeScript errors with code context
 
 **Use `map` before editing any file** — it gives you the function index so you know where to make changes.
 
-### soma-seam.sh
+### soma-seam.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-seam)
 
 Trace concepts through memory, code, and sessions. The memory superpower — finds connections across your entire `.soma/` workspace.
 
@@ -44,7 +46,7 @@ soma-seam.sh gaps                      # find orphan documents (no connections)
 soma-seam.sh web <term> [-o FILE]      # generate a full markdown web of connections
 ```
 
-### soma-focus.sh
+### soma-focus.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-focus)
 
 Seam-traced boot priming. Run **before** starting a session to focus the agent on a specific topic. Traces the keyword through memory, scores relevance, and generates heat overrides so the right muscles, protocols, and MAPs load.
 
@@ -59,7 +61,7 @@ soma-focus.sh runtime         # focus on runtime work
 soma                          # start — agent wakes up primed for runtime
 ```
 
-### soma-reflect.sh
+### soma-reflect.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-reflect)
 
 Parse session logs for observations, gaps, and recurring patterns. Use at session start to orient from past lessons, or mid-session to check if an issue was seen before.
 
@@ -72,7 +74,7 @@ soma-reflect.sh --search "sync"        # search across all reflections
 soma-reflect.sh --summary              # condensed view for reviews
 ```
 
-### soma-plans.sh
+### soma-plans.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-plans)
 
 Plan lifecycle management. Plans rot — this tool helps you keep them alive.
 
@@ -84,7 +86,7 @@ soma-plans.sh overlap             # detect plans with overlapping topics
 soma-plans.sh archive <plan>      # archive a completed plan
 ```
 
-### soma-scrape.sh
+### soma-scrape.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-scrape)
 
 Intelligent doc discovery and scraping. Give it a library name, it finds the repo, scans for docs, pulls them locally into `.soma/knowledge/`.
 
@@ -100,7 +102,7 @@ soma-scrape.sh list                    # show all scraped sources
 
 ## Utility Scripts
 
-### soma-query.sh
+### soma-query.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-query)
 
 Unified search across your `.soma/` workspace. Find content, check staleness, search sessions, trace connections.
 
