@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-29T12:00:00Z",
+  "generated": "2026-04-01T12:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -7,11 +7,36 @@
       "date": "",
       "features": {
         "added": [
-          "PHASE workflow system \u2014 phase-aware MAPs with per-phase brain configuration.",
-          "Somaverse \u2014 visual workspace UI for managing sessions, memory, and identity.",
-          "Project navigator \u2014 run soma anywhere, find projects, pick up where you left off.",
-          "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
-          "Release cycle automation \u2014 docs, changelog, roadmap prepared atomically on dev."
+          "PHASE workflow system — phase-aware MAPs with per-phase brain configuration.",
+          "Somaverse — visual workspace UI for managing sessions, memory, and identity.",
+          "Project navigator — run soma anywhere, find projects, pick up where you left off.",
+          "Async agent comms — Soma reaches you on your phone when decisions are needed.",
+          "Body template variables — all block vars available in _memory.md.",
+          "First-run onboarding — ask user name + style on first ever soma."
+        ]
+      }
+    },
+    {
+      "version": "0.7.0",
+      "date": "2026-04-01",
+      "features": {
+        "added": [
+          "/inhale guard — warns when no preload exists or preload is stale.",
+          "Slash command usage hints — 10 commands with Usage: patterns.",
+          "Hub: 5 new scripts — soma-seam, soma-reflect, soma-query, soma-focus, soma-plans.",
+          "Hub: soma-code v2.0.0 — blast radius, tsc-errors, improved refs.",
+          "Scripts docs rewritten with hub links."
+        ],
+        "changed": [
+          "Upstream sync R4 — Pi 0.64.0 with new signal/getSignal APIs.",
+          "Core scripts trimmed — 5 bundled, rest via hub install.",
+          "Semver discipline — feature releases bump minor version."
+        ],
+        "fixed": [
+          "Changelog hook targeting all version sections.",
+          "Hub table rendering with proper HTML structure.",
+          "Community CI — 21 frontmatter fixes.",
+          "7 drifted scripts synced, hub scripts sanitized."
         ]
       }
     },
