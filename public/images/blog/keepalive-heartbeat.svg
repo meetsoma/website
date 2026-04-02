@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 310" fill="none">
+  <style>
+    .title { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 16px; fill: #c9d1d9; font-weight: 600; }
+    .subtitle { font-family: -apple-system, sans-serif; font-size: 11px; fill: #6e7681; }
+    .label { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; fill: #c9d1d9; }
+    .dim { font-family: -apple-system, sans-serif; font-size: 10px; fill: #6e7681; }
+    .accent { font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; }
+    .heart { font-family: 'SF Mono', monospace; font-size: 10px; fill: #f0883e; font-weight: 500; }
+    .heart-icon { font-size: 14px; fill: #f0883e; }
+    .time { font-family: 'SF Mono', monospace; font-size: 9px; fill: #6e7681; }
+    .zone-active { stroke: rgba(100,148,190,0.2); fill: rgba(100,148,190,0.04); rx: 4; }
+    .zone-idle { stroke: rgba(110,118,129,0.15); fill: rgba(22,27,34,0.3); rx: 0; }
+    .ping-line { stroke: #f0883e; stroke-width: 2; opacity: 0.7; }
+    .return-line { stroke: #6494be; stroke-width: 2; opacity: 0.8; }
+    .timeline { stroke: #30363d; stroke-width: 2; }
+    .callout { stroke: rgba(240,136,62,0.2); fill: rgba(240,136,62,0.04); rx: 8; }
+  </style>
+
+  <!-- Title -->
+  <text x="420" y="28" text-anchor="middle" class="title">Soma Keepalive</text>
+  <text x="420" y="45" text-anchor="middle" class="subtitle">the heartbeat that saves your cache</text>
+
+  <!-- Timeline -->
+  <line x1="40" y1="170" x2="800" y2="170" class="timeline"/>
+
+  <!-- Zone 1: User active -->
+  <rect x="40" y="105" width="95" height="55" class="zone-active"/>
+  <text x="87" y="130" text-anchor="middle" class="accent">you type</text>
+  <text x="87" y="145" text-anchor="middle" class="dim">cache resets</text>
+
+  <!-- Zone 2: Idle -->
+  <rect x="135" y="105" width="105" height="55" class="zone-idle"/>
+  <text x="187" y="130" text-anchor="middle" class="dim">TTL counting...</text>
+  <text x="187" y="145" text-anchor="middle" class="dim">4:15 remaining</text>
+
+  <!-- Ping 1 -->
+  <line x1="238" y1="90" x2="238" y2="160" class="ping-line"/>
+  <text x="238" y="82" text-anchor="middle" class="heart-icon">&#9829;</text>
+  <text x="238" y="192" text-anchor="middle" class="heart">5/5</text>
+
+  <!-- Zone 3: Reset -->
+  <rect x="242" y="105" width="105" height="55" class="zone-idle"/>
+  <text x="294" y="130" text-anchor="middle" class="dim">TTL reset</text>
+  <text x="294" y="145" text-anchor="middle" class="dim">5:00 remaining</text>
+
+  <!-- Ping 2 -->
+  <line x1="345" y1="90" x2="345" y2="160" class="ping-line"/>
+  <text x="345" y="82" text-anchor="middle" class="heart-icon">&#9829;</text>
+  <text x="345" y="192" text-anchor="middle" class="heart">4/5</text>
+
+  <!-- Zone 4: Still idle -->
+  <rect x="349" y="105" width="105" height="55" class="zone-idle"/>
+  <text x="401" y="135" text-anchor="middle" class="dim">still on break</text>
+
+  <!-- Ping 3 -->
+  <line x1="452" y1="90" x2="452" y2="160" class="ping-line" opacity="0.6"/>
+  <text x="452" y="82" text-anchor="middle" class="heart-icon" opacity="0.8">&#9829;</text>
+  <text x="452" y="192" text-anchor="middle" class="heart">3/5</text>
+
+  <!-- Zone 5 -->
+  <rect x="456" y="105" width="105" height="55" class="zone-idle"/>
+
+  <!-- Ping 4 -->
+  <line x1="559" y1="90" x2="559" y2="160" class="ping-line" opacity="0.5"/>
+  <text x="559" y="82" text-anchor="middle" class="heart-icon" opacity="0.6">&#9829;</text>
+  <text x="559" y="192" text-anchor="middle" class="heart">2/5</text>
+
+  <!-- Zone 6: Return zone -->
+  <rect x="563" y="105" width="95" height="55" class="zone-idle"/>
+
+  <!-- User returns -->
+  <line x1="620" y1="90" x2="620" y2="160" class="return-line"/>
+  <text x="620" y="82" text-anchor="middle" class="accent" style="font-weight: 600;">you're back</text>
+  <text x="620" y="192" text-anchor="middle" class="accent">reset 5/5</text>
+
+  <!-- Active again -->
+  <rect x="658" y="105" width="95" height="55" class="zone-active"/>
+  <text x="705" y="135" text-anchor="middle" class="accent">cached</text>
+
+  <!-- Time labels -->
+  <text x="87" y="210" text-anchor="middle" class="time">0 min</text>
+  <text x="238" y="210" text-anchor="middle" class="time">~5 min</text>
+  <text x="345" y="210" text-anchor="middle" class="time">~10 min</text>
+  <text x="452" y="210" text-anchor="middle" class="time">~15 min</text>
+  <text x="559" y="210" text-anchor="middle" class="time">~20 min</text>
+  <text x="620" y="210" text-anchor="middle" class="time">~22 min</text>
+
+  <!-- Bottom callout -->
+  <rect x="100" y="235" width="600" height="42" class="callout"/>
+  <text x="400" y="254" text-anchor="middle" class="label" style="fill: #f0883e;">22 minutes of protection from 4 tiny pings (~$0.008 total)</text>
+  <text x="400" y="270" text-anchor="middle" class="dim">without keepalive, returning at 22 min = full rebuild ($0.45+ at 150k context)</text>
+
+  <!-- σ watermark -->
+  <text x="810" y="300" text-anchor="end" style="font-family: serif; font-size: 16px; fill: #6494be; opacity: 0.7;">σ</text>
+</svg>

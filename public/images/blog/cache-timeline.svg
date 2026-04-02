@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 340" fill="none">
+  <style>
+    .title { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 16px; fill: #c9d1d9; font-weight: 600; }
+    .label { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; fill: #c9d1d9; }
+    .dim { font-family: -apple-system, sans-serif; font-size: 10px; fill: #6e7681; }
+    .accent { font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; }
+    .warn { font-family: 'SF Mono', monospace; font-size: 11px; fill: #f0883e; }
+    .warn-dim { font-family: -apple-system, sans-serif; font-size: 10px; fill: #f0883e; opacity: 0.7; }
+    .good { font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; }
+    .time { font-family: 'SF Mono', monospace; font-size: 10px; fill: #6e7681; }
+    .box-active { stroke: rgba(100,148,190,0.4); fill: rgba(100,148,190,0.08); rx: 6; }
+    .box-dead { stroke: rgba(110,118,129,0.3); fill: rgba(22,27,34,0.5); rx: 6; }
+    .box-miss { stroke: rgba(240,136,62,0.4); fill: rgba(240,136,62,0.06); rx: 6; }
+    .timeline { stroke: #30363d; stroke-width: 2; }
+    .tick { stroke: #30363d; stroke-width: 1; }
+  </style>
+
+  <!-- Title -->
+  <text x="420" y="30" text-anchor="middle" class="title">The 5-Minute Cache TTL</text>
+  <text x="420" y="48" text-anchor="middle" class="dim">what happens when you walk away</text>
+
+  <!-- Timeline axis -->
+  <line x1="50" y1="230" x2="790" y2="230" class="timeline"/>
+
+  <!-- Time ticks and labels -->
+  <line x1="70" y1="225" x2="70" y2="235" class="tick"/>
+  <text x="70" y="252" text-anchor="middle" class="time">0 min</text>
+  <line x1="195" y1="225" x2="195" y2="235" class="tick"/>
+  <text x="195" y="252" text-anchor="middle" class="time">2 min</text>
+  <line x1="310" y1="225" x2="310" y2="235" class="tick"/>
+  <text x="310" y="252" text-anchor="middle" class="time">5 min</text>
+  <line x1="420" y1="225" x2="420" y2="235" class="tick"/>
+  <text x="420" y="252" text-anchor="middle" class="time">8 min</text>
+  <line x1="545" y1="225" x2="545" y2="235" class="tick"/>
+  <text x="545" y="252" text-anchor="middle" class="time">11 min</text>
+  <line x1="660" y1="225" x2="660" y2="235" class="tick"/>
+  <text x="660" y="252" text-anchor="middle" class="time">13 min</text>
+  <line x1="770" y1="225" x2="770" y2="235" class="tick"/>
+  <text x="770" y="252" text-anchor="middle" class="time">15 min</text>
+
+  <!-- Cache active zone -->
+  <rect x="70" y="160" width="240" height="55" class="box-active"/>
+  <text x="190" y="185" text-anchor="middle" class="label">Cache Active</text>
+  <text x="190" y="200" text-anchor="middle" class="dim">90% discount on prompt</text>
+
+  <!-- Expiry marker -->
+  <line x1="310" y1="145" x2="310" y2="215" stroke="#f0883e" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="310" y="138" text-anchor="middle" class="warn">EXPIRED</text>
+
+  <!-- Dead zone -->
+  <rect x="318" y="160" width="95" height="55" class="box-dead"/>
+  <text x="365" y="185" text-anchor="middle" class="dim">no cache</text>
+  <text x="365" y="200" text-anchor="middle" class="dim">getting coffee</text>
+
+  <!-- Full rebuild zone -->
+  <rect x="420" y="100" width="220" height="115" class="box-miss"/>
+  <text x="530" y="130" text-anchor="middle" class="warn">Full Cache Rebuild</text>
+  <text x="530" y="148" text-anchor="middle" class="warn-dim">you pay full price again</text>
+
+  <!-- Cost spike annotation -->
+  <line x1="530" y1="160" x2="530" y2="105" stroke="#f0883e" stroke-width="1.5"/>
+  <polygon points="525,108 530,98 535,108" fill="#f0883e"/>
+  <text x="530" y="88" text-anchor="middle" class="warn">cost spike: 10x</text>
+  <text x="530" y="76" text-anchor="middle" class="warn-dim">150k tokens × $3/MTok = $0.45</text>
+
+  <!-- Back to cached -->
+  <rect x="660" y="160" width="110" height="55" class="box-active"/>
+  <text x="715" y="190" text-anchor="middle" class="accent">cached again</text>
+
+  <!-- Phase annotations -->
+  <text x="190" y="148" text-anchor="middle" class="good">you're working</text>
+  <text x="365" y="148" text-anchor="middle" class="dim">idle</text>
+  <text x="715" y="148" text-anchor="middle" class="good">back to work</text>
+
+  <!-- Legend -->
+  <rect x="70" y="280" width="12" height="12" class="box-active"/>
+  <text x="88" y="291" class="dim">cached (cheap)</text>
+  <rect x="220" y="280" width="12" height="12" class="box-miss"/>
+  <text x="238" y="291" class="dim">cache miss (10x cost)</text>
+  <rect x="400" y="280" width="12" height="12" class="box-dead"/>
+  <text x="418" y="291" class="dim">no cache (idle)</text>
+
+  <!-- σ watermark -->
+  <text x="810" y="320" text-anchor="end" style="font-family: serif; font-size: 16px; fill: #6494be; opacity: 0.7;">σ</text>
+</svg>

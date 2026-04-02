@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 400" fill="none">
+  <style>
+    .title { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 16px; fill: #c9d1d9; font-weight: 600; }
+    .col-title { font-family: -apple-system, sans-serif; font-size: 13px; fill: #c9d1d9; font-weight: 600; }
+    .col-title-accent { font-family: -apple-system, sans-serif; font-size: 13px; fill: #6494be; font-weight: 600; }
+    .label { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; fill: #c9d1d9; }
+    .dim { font-family: -apple-system, sans-serif; font-size: 10px; fill: #6e7681; }
+    .accent { font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; }
+    .warn { font-family: 'SF Mono', monospace; font-size: 12px; fill: #f0883e; font-weight: 600; }
+    .good { font-family: 'SF Mono', monospace; font-size: 12px; fill: #6494be; font-weight: 600; }
+    .box-static { stroke: rgba(110,118,129,0.3); fill: rgba(22,27,34,0.5); rx: 4; }
+    .box-hot { stroke: rgba(100,148,190,0.4); fill: rgba(100,148,190,0.08); rx: 4; }
+    .box-warm { stroke: rgba(240,136,62,0.25); fill: rgba(240,136,62,0.04); rx: 4; }
+    .box-cold { stroke: rgba(110,118,129,0.2); fill: rgba(22,27,34,0.3); rx: 4; }
+    .box-off { stroke: rgba(110,118,129,0.1); fill: rgba(22,27,34,0.15); rx: 4; }
+    .total-static { stroke: rgba(240,136,62,0.3); fill: rgba(240,136,62,0.05); rx: 6; }
+    .total-soma { stroke: rgba(100,148,190,0.3); fill: rgba(100,148,190,0.05); rx: 6; }
+    .compare-bar-static { fill: rgba(240,136,62,0.35); rx: 4; }
+    .compare-bar-soma { fill: rgba(100,148,190,0.4); rx: 4; }
+    .callout { stroke: rgba(100,148,190,0.2); fill: rgba(100,148,190,0.03); rx: 8; }
+  </style>
+
+  <!-- Title -->
+  <text x="420" y="28" text-anchor="middle" class="title">Static Prompt vs Dynamic Prompt</text>
+
+  <!-- LEFT: Static -->
+  <g transform="translate(50, 55)">
+    <text x="150" y="12" text-anchor="middle" class="col-title">Typical AI Agent</text>
+
+    <rect x="10" y="25" width="280" height="35" class="box-static"/>
+    <text x="150" y="47" text-anchor="middle" class="label">system prompt (fixed)</text>
+    <text x="275" y="47" text-anchor="end" class="dim">8k tok</text>
+
+    <rect x="10" y="65" width="280" height="30" class="box-static"/>
+    <text x="150" y="85" text-anchor="middle" class="label">CLAUDE.md</text>
+    <text x="275" y="85" text-anchor="end" class="dim">4k tok</text>
+
+    <rect x="10" y="100" width="280" height="30" class="box-static"/>
+    <text x="150" y="120" text-anchor="middle" class="label">all rules loaded</text>
+    <text x="275" y="120" text-anchor="end" class="dim">6k tok</text>
+
+    <rect x="10" y="135" width="280" height="30" class="box-static"/>
+    <text x="150" y="155" text-anchor="middle" class="label">all tools described</text>
+    <text x="275" y="155" text-anchor="end" class="dim">5k tok</text>
+
+    <rect x="10" y="170" width="280" height="30" class="box-static"/>
+    <text x="150" y="190" text-anchor="middle" class="label">everything else</text>
+    <text x="275" y="190" text-anchor="end" class="dim">3k tok</text>
+
+    <rect x="10" y="215" width="280" height="32" class="total-static"/>
+    <text x="150" y="236" text-anchor="middle" class="warn">~26k tokens — always</text>
+
+    <text x="150" y="268" text-anchor="middle" class="dim">same size whether you need it or not</text>
+    <text x="150" y="282" text-anchor="middle" class="dim">every cache miss rebuilds all 26k</text>
+  </g>
+
+  <!-- RIGHT: Soma -->
+  <g transform="translate(460, 55)">
+    <text x="150" y="12" text-anchor="middle" class="col-title-accent">Soma (dynamic)</text>
+
+    <rect x="10" y="25" width="280" height="28" class="box-hot"/>
+    <text x="150" y="44" text-anchor="middle" class="accent">identity + voice</text>
+    <text x="275" y="44" text-anchor="end" class="dim">3k tok</text>
+
+    <rect x="10" y="58" width="280" height="38" class="box-hot"/>
+    <text x="150" y="76" text-anchor="middle" class="accent">hot protocols — full body</text>
+    <text x="275" y="90" text-anchor="end" class="dim">2.4k tok</text>
+
+    <rect x="10" y="101" width="280" height="28" class="box-warm"/>
+    <text x="150" y="120" text-anchor="middle" class="label" style="fill: #f0883e; opacity: 0.8;">warm — one-line summaries</text>
+    <text x="275" y="120" text-anchor="end" class="dim">250 tok</text>
+
+    <rect x="10" y="134" width="280" height="22" class="box-cold"/>
+    <text x="150" y="149" text-anchor="middle" class="dim">cold — just names</text>
+    <text x="275" y="149" text-anchor="end" class="dim">100 tok</text>
+
+    <rect x="10" y="161" width="280" height="22" class="box-off"/>
+    <text x="150" y="176" text-anchor="middle" class="dim" style="opacity: 0.5;">inactive — not loaded</text>
+    <text x="275" y="176" text-anchor="end" class="dim" style="opacity: 0.5;">0 tok</text>
+
+    <rect x="10" y="198" width="280" height="32" class="total-soma"/>
+    <text x="150" y="219" text-anchor="middle" class="good">~5.8k tokens — adaptive</text>
+
+    <text x="150" y="251" text-anchor="middle" class="dim">grows when you need it, shrinks when you don't</text>
+    <text x="150" y="265" text-anchor="middle" class="dim">cache misses rebuild less = cheaper</text>
+  </g>
+
+  <!-- Bottom comparison bar -->
+  <rect x="80" y="340" width="680" height="42" class="callout"/>
+
+  <rect x="110" y="350" width="280" height="10" class="compare-bar-static"/>
+  <text x="395" y="359" class="dim">26k tokens</text>
+
+  <rect x="110" y="366" width="62" height="10" class="compare-bar-soma"/>
+  <text x="178" y="375" class="dim">5.8k tokens</text>
+
+  <text x="580" y="370" text-anchor="middle" class="good">78% less to rebuild on cache miss</text>
+
+  <!-- σ watermark -->
+  <text x="810" y="395" text-anchor="end" style="font-family: serif; font-size: 16px; fill: #6494be; opacity: 0.7;">σ</text>
+</svg>

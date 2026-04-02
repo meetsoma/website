@@ -32,7 +32,7 @@ Those bugs are real and Anthropic should patch them. But there's a cost multipli
 
 Anthropic's prompt cache has a ~5-minute TTL. Every interaction resets the clock. Step away for six minutes and your entire prompt cache expires. Your next message rebuilds the whole thing from scratch.
 
-![Cache Timeline](/blog/cache-costs/cache-timeline.svg)
+![Cache Timeline](/images/blog/cache-timeline.svg)
 
 Cache hits cost 90% less than cache misses. With 150k-300k token contexts (normal for deep sessions), a single miss runs $0.15 to $0.90. For API users, that's dollars. For Pro subscribers, those are the hidden token burns chewing through your 5-hour usage window in 45 minutes. Three coffee breaks a day at 150k tokens? That's $1.35 in wasted rebuilds — or a chunk of your daily quota gone before you've written any real code.
 
@@ -52,7 +52,7 @@ They had it backwards.
 
 A keepalive ping is a tiny message that resets the 5-minute TTL. Costs fractions of a cent. Without it, your next real message triggers a full cache rebuild that costs dollars. The pings aren't the problem. The pings are the cheapest insurance you're not buying.
 
-![Cost Comparison](/blog/cache-costs/cost-comparison.svg)
+![Cost Comparison](/images/blog/cost-comparison.svg)
 
 ## What the Low-Bill Users Do
 
@@ -67,7 +67,7 @@ Most people do neither. Work for 20 minutes, switch to Slack for 10, come back, 
 
 Soma ships a keepalive system that solves this without running up an infinite tab.
 
-![Keepalive Heartbeat](/blog/cache-costs/keepalive-heartbeat.svg)
+![Keepalive Heartbeat](/images/blog/keepalive-heartbeat.svg)
 
 **Automatic pings.** Soma watches the cache countdown. At ~45 seconds before expiry, it sends a tiny ping that resets the TTL.
 
@@ -101,7 +101,7 @@ Even if Anthropic fixes both bugs tomorrow, your system prompt size still determ
 
 Most AI coding agents load everything at once. All rules, all tools, all context. Same fixed prompt every session whether you need it or not.
 
-![Dynamic Prompt](/blog/cache-costs/dynamic-prompt.svg)
+![Dynamic Prompt](/images/blog/dynamic-prompt.svg)
 
 Soma's prompt is dynamic. Content has a heat score based on how often you actually use it:
 

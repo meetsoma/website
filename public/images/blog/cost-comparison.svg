@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 380" fill="none">
+  <style>
+    .title { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 16px; fill: #c9d1d9; font-weight: 600; }
+    .subtitle { font-family: -apple-system, sans-serif; font-size: 11px; fill: #6e7681; }
+    .label { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; fill: #c9d1d9; }
+    .dim { font-family: -apple-system, sans-serif; font-size: 10px; fill: #6e7681; }
+    .accent { font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; }
+    .warn { font-family: 'SF Mono', monospace; font-size: 11px; fill: #f0883e; }
+    .big-num { font-family: 'SF Mono', monospace; font-size: 28px; font-weight: 700; }
+    .axis-label { font-family: 'SF Mono', monospace; font-size: 10px; fill: #6e7681; }
+    .bar-miss { stroke: rgba(240,136,62,0.4); fill: rgba(240,136,62,0.2); }
+    .bar-usage { stroke: rgba(110,118,129,0.3); fill: rgba(110,118,129,0.15); }
+    .bar-ping { stroke: rgba(100,148,190,0.4); fill: rgba(100,148,190,0.15); }
+    .bar-usage-soma { stroke: rgba(100,148,190,0.3); fill: rgba(100,148,190,0.1); }
+    .gridline { stroke: #30363d; stroke-width: 1; stroke-dasharray: 4,4; }
+  </style>
+
+  <!-- Title -->
+  <text x="420" y="30" text-anchor="middle" class="title">Daily Cost: Without vs With Keepalive</text>
+  <text x="420" y="48" text-anchor="middle" class="subtitle">typical 6-hour workday, 150k token context, 3 coffee breaks</text>
+
+  <!-- Y-axis -->
+  <line x1="120" y1="70" x2="120" y2="290" stroke="#30363d" stroke-width="1"/>
+  <text x="108" y="293" text-anchor="end" class="axis-label">$0</text>
+  <line x1="120" y1="238" x2="680" y2="238" class="gridline"/>
+  <text x="108" y="242" text-anchor="end" class="axis-label">$0.50</text>
+  <line x1="120" y1="186" x2="680" y2="186" class="gridline"/>
+  <text x="108" y="190" text-anchor="end" class="axis-label">$1.00</text>
+  <line x1="120" y1="134" x2="680" y2="134" class="gridline"/>
+  <text x="108" y="138" text-anchor="end" class="axis-label">$1.50</text>
+  <line x1="120" y1="82" x2="680" y2="82" class="gridline"/>
+  <text x="108" y="86" text-anchor="end" class="axis-label">$2.00</text>
+
+  <!-- Bar 1: Without keepalive -->
+  <g transform="translate(220, 0)">
+    <!-- Cache rebuild costs ($1.35) -->
+    <rect x="0" y="150" width="90" height="140" class="bar-miss" rx="4"/>
+    <!-- Normal usage ($0.30) -->
+    <rect x="0" y="119" width="90" height="31" class="bar-usage" rx="0"/>
+
+    <text x="45" y="230" text-anchor="middle" class="warn">$1.35</text>
+    <text x="45" y="244" text-anchor="middle" class="dim">cache rebuilds</text>
+    <text x="45" y="138" text-anchor="middle" class="dim">$0.30 usage</text>
+
+    <!-- Total -->
+    <text x="45" y="108" text-anchor="middle" class="big-num" fill="#f0883e">$1.65</text>
+    <text x="45" y="315" text-anchor="middle" class="label">Without Keepalive</text>
+    <text x="45" y="330" text-anchor="middle" class="dim">3 cache misses/day</text>
+  </g>
+
+  <!-- Bar 2: With Soma -->
+  <g transform="translate(490, 0)">
+    <!-- Keepalive pings ($0.02) -->
+    <rect x="0" y="268" width="90" height="22" class="bar-ping" rx="4"/>
+    <!-- Normal usage ($0.30) -->
+    <rect x="0" y="237" width="90" height="31" class="bar-usage-soma" rx="0"/>
+
+    <text x="45" y="284" text-anchor="middle" class="dim">$0.02 pings</text>
+    <text x="45" y="254" text-anchor="middle" class="dim">$0.30 usage</text>
+
+    <!-- Total -->
+    <text x="45" y="226" text-anchor="middle" class="big-num" fill="#6494be">$0.32</text>
+    <text x="45" y="315" text-anchor="middle" class="label">With Soma</text>
+    <text x="45" y="330" text-anchor="middle" class="dim">0 cache misses</text>
+  </g>
+
+  <!-- Savings callout -->
+  <rect x="610" y="130" width="120" height="42" stroke="rgba(100,148,190,0.3)" fill="rgba(100,148,190,0.05)" rx="8"/>
+  <text x="670" y="150" text-anchor="middle" class="accent" style="font-weight: 600;">save 80%</text>
+  <text x="670" y="165" text-anchor="middle" class="accent">$1.33/day</text>
+
+  <!-- Legend -->
+  <rect x="140" y="355" width="10" height="10" class="bar-miss" rx="2"/>
+  <text x="155" y="364" class="dim">cache rebuild</text>
+  <rect x="280" y="355" width="10" height="10" class="bar-usage" rx="2"/>
+  <text x="295" y="364" class="dim">normal usage</text>
+  <rect x="410" y="355" width="10" height="10" class="bar-ping" rx="2"/>
+  <text x="425" y="364" class="dim">keepalive pings</text>
+
+  <!-- σ watermark -->
+  <text x="810" y="370" text-anchor="end" style="font-family: serif; font-size: 16px; fill: #6494be; opacity: 0.7;">σ</text>
+</svg>
