@@ -112,14 +112,14 @@ Most AI coding agents load everything at once. All rules, all tools, all context
 
 ![Dynamic Prompt](/images/blog/dynamic-prompt.svg)
 
-Soma's prompt is dynamic. Content has a heat score based on how often you actually use it:
+Soma's prompt is dynamic. Every protocol, muscle, and skill has a heat score based on how often you actually use it:
 
-- 🔥 **Hot** — full content loaded
-- 🌡 **Warm** — one-line summary
-- ❄️ **Cold** — just the name
-- 💤 **Inactive** — not loaded
+- 🔥 **Hot** — full protocol body + TL;DR summaries for muscles (~800 tokens each)
+- 🌡 **Warm** — one-line breadcrumb per protocol, short TL;DR per muscle (~50-100 tokens)
+- ❄️ **Cold** — just the name (~5 tokens)
+- 💤 **Inactive** — not loaded, zero tokens
 
-Typical result: 5-8k tokens instead of 20-30k. When a cache miss does happen, rebuilding 6k costs 78% less than rebuilding 26k.
+Use something often, it stays hot. Ignore it, it cools and drops out of the prompt. Typical result: 5-8k tokens instead of 20-30k. When a cache miss does happen, rebuilding 6k at 1.25× base rate costs 78% less than rebuilding 26k.
 
 ## Five Things You Can Do Right Now
 
