@@ -9,7 +9,21 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Doctor & Migration',
     icon: 'protocols',
-    description: 'Project health check with Tier 1 auto-fix on boot. soma doctor runs migrations, adds missing settings and templates. 9 migration phases covering v0.6.1 → v0.8.1. Your customizations are never touched.',
+    description: 'Project health check with Tier 1 auto-fix on boot. soma doctor runs migrations, adds missing settings and templates. 10 migration phases covering v0.6.1 → v0.8.1. Your customizations are never touched.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+  },
+  {
+    name: 'Keepalive & Cache Management',
+    icon: 'extensions',
+    description: 'Smart cache keepalive with configurable lives. Auto-exhale saves your session state when you walk away. Keeps the prompt cache warm to reduce API costs.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+  },
+  {
+    name: 'Framework Compatibility',
+    icon: 'extensions',
+    description: 'Soma layers memory on top of any existing setup. Reads CLAUDE.md and AGENTS.md on boot. Project detection identifies your stack automatically. Drop in and it just works.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
   },
@@ -42,23 +56,16 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     statusColor: 'var(--warm-bright)',
   },
   {
-    name: 'SomaRuntime',
-    icon: 'extensions',
-    description: 'Abstraction layer between Soma and the underlying engine. Extensions import from SomaRuntime instead of Pi directly — swap engines without touching your code.',
+    name: 'Content Versioning',
+    icon: 'protocols',
+    description: 'Versioned protocols and muscles from the community hub. Author namespaces, fork infrastructure, commit-anchored lineage.',
     status: 'Planned',
     statusColor: 'var(--accent-bright)',
   },
   {
-    name: 'Framework Compatibility',
+    name: 'SomaRuntime',
     icon: 'extensions',
-    description: 'Layer Soma memory on top of any existing setup. Already reads CLAUDE.md and AGENTS.md on boot. Coming: .cursorrules import, project context merging, zero-config drop-in.',
-    status: 'In Progress',
-    statusColor: 'var(--warm-bright)',
-  },
-  {
-    name: 'Content Versioning',
-    icon: 'protocols',
-    description: 'Versioned protocols and muscles from the community hub. Author namespaces, fork infrastructure, commit-anchored lineage.',
+    description: 'Abstraction layer between Soma and the underlying engine. Extensions import from SomaRuntime instead of Pi directly — swap engines without touching your code.',
     status: 'Planned',
     statusColor: 'var(--accent-bright)',
   },
@@ -105,22 +112,15 @@ const upcoming: { name: string; icon: string; description: string; status: strin
         <div class="progress-item">
           <span class="progress-dot active"></span>
           <div>
-            <strong>Keepalive & Cache Management</strong>
-            <p>Smart cache keepalive with configurable lives. Auto-exhale saves your session when you walk away. Reduces API costs by keeping the prompt cache warm.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot active"></span>
-          <div>
-            <strong>PHASE workflow system</strong>
-            <p>Phase-aware MAPs with per-step brain configuration. /phase command for sequential context injection.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot active"></span>
-          <div>
             <strong>First-run onboarding</strong>
             <p>Global user setup on first soma run. Ask name and style once, inherit everywhere. The first breath should feel like meeting someone.</p>
+          </div>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot active"></span>
+          <div>
+            <strong>Multi-project doctor</strong>
+            <p>Parent-first fix ordering across project chains. soma doctor --all discovers and updates every .soma/ project in your workspace.</p>
           </div>
         </div>
         <div class="progress-item">
@@ -128,13 +128,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
           <div>
             <strong>Tutorial guides</strong>
             <p>Writing your first protocol. Writing your first muscle. Sharing a script to the hub. Hands-on walkthroughs.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot"></span>
-          <div>
-            <strong>Hub versioning</strong>
-            <p>Author namespaces, fork infrastructure, and version history for community content.</p>
           </div>
         </div>
         <div class="progress-item">
