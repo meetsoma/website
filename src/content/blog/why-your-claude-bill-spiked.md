@@ -133,7 +133,7 @@ You don't need Soma for these. They'll help regardless.
 
 **2. Rotate at ~50% context.** Don't let it grow to 300k tokens. Start fresh with a summary. Smaller context, cheaper rebuilds.
 
-**3. Skip `--resume`.** On Claude Code v2.1.69+, every resume triggers a full cache miss. Claude Code's answer to long contexts is compaction — summarizing your conversation to free space, but you lose detail in the process. Soma doesn't compact. It exhales — writing a focused preload of where you are, what you were doing, and what's next. Then `soma inhale` starts a fresh session at ~5k tokens with an agent that knows the goal, not one trying to reconstruct it from a compressed summary.
+**3. Skip `--resume`.** On Claude Code v2.1.69+, every resume triggers a full cache miss. Start a fresh session with a summary of where you left off instead. Claude Code offers compaction for long contexts, but that's lossy — it summarizes your conversation and throws away detail to free space. Soma takes a different approach: `exhale` writes a focused briefing of where you are and what's next, then `soma inhale` starts fresh at ~5k tokens with an agent that knows the goal, not one reconstructing it from a compressed summary.
 
 **4. Trim your system prompt.** Your `CLAUDE.md`, `AGENTS.md`, custom instructions — all cached. All rebuilt from scratch on every miss. Smaller is cheaper.
 
