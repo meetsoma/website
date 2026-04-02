@@ -293,6 +293,39 @@ const blogJsonLd = {
 
   .back-nav a:hover { color: var(--moon-bright); }
 
+  /* Tables */
+  .article-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-xl) 0;
+    font-size: var(--body-secondary);
+  }
+
+  .article-content :global(th) {
+    text-align: left;
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 2px solid var(--border-subtle);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .article-content :global(td) {
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  .article-content :global(tr:last-child td) {
+    border-bottom: none;
+  }
+
+  .article-content :global(tbody tr:hover) {
+    background: var(--surface-accent-soft);
+  }
+
   /* SVGs should fill the content width */
   .article-content :global(img[src$=".svg"]) {
     width: 100%;
