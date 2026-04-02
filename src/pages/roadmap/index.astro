@@ -23,9 +23,9 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Project Navigator',
     icon: 'scripts',
-    description: 'Run soma anywhere — it finds your projects, offers to set up new ones, or picks up where you left off. No arguments needed. Just type soma.',
-    status: 'Planned',
-    statusColor: 'var(--accent-bright)',
+    description: 'Run soma anywhere — it finds your projects, offers to set up new ones, or picks up where you left off. Multi-project doctor discovers and updates all your .soma/ projects.',
+    status: 'In Progress',
+    statusColor: 'var(--warm-bright)',
   },
   {
     name: 'Somaverse',
@@ -95,6 +95,20 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     <section class="section">
       <SectionHeader title="Shipping Soon" />
       <div class="progress-list">
+        <div class="progress-item">
+          <span class="progress-dot shipped"></span>
+          <div>
+            <strong>Doctor & Migration</strong>
+            <p>Project health check and version migration. Tier 1 auto-fix on boot, interactive Tier 2+ via <code>/soma doctor</code>. 9 migration phases covering v0.6.1 → v0.8.0.</p>
+          </div>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot active"></span>
+          <div>
+            <strong>Keepalive & Cache Management</strong>
+            <p>Smart cache keepalive with configurable lives. Auto-exhale saves your session when you walk away. Reduces API costs by keeping the prompt cache warm.</p>
+          </div>
+        </div>
         <div class="progress-item">
           <span class="progress-dot active"></span>
           <div>
@@ -354,6 +368,11 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   .progress-dot.active {
     background: var(--accent-bright);
     box-shadow: 0 0 6px var(--accent-bright);
+  }
+
+  .progress-dot.shipped {
+    background: var(--warm-bright);
+    box-shadow: 0 0 6px var(--warm-bright);
   }
 
   .progress-item strong {
