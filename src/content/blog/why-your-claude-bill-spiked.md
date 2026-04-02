@@ -14,7 +14,7 @@ Two real bugs. One architectural blindspot. And a five-minute timer that's been 
 
 ## What Reddit Found
 
-A post titled ["PSA: Claude Code has two cache bugs that can silently 10-20x your API costs"](https://reddit.com/r/ClaudeAI/comments/1s7mkn3/psa_claude_code_has_two_cache_bugs_that_can/) hit 914 upvotes last week. The author spent six days reverse-engineering Claude Code's 228MB binary with Ghidra, a MITM proxy, and radare2. They found two independent bugs.
+A post titled ["PSA: Claude Code has two cache bugs that can silently 10-20x your API costs"](https://reddit.com/r/ClaudeAI/comments/1s7mkn3/psa_claude_code_has_two_cache_bugs_that_can/) hit 914 upvotes last week. The author spent days reverse-engineering Claude Code's 228MB binary with Ghidra, a MITM proxy, and radare2. They found two independent bugs.
 
 **Bug 1:** A sentinel replacement in the standalone binary breaks cache when your conversation mentions billing internals. The replacement targets the *first* occurrence in the JSON body. If your chat history contains the sentinel string, it replaces the wrong one. Cache prefix broken. Full rebuild on every request.
 
