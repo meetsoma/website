@@ -106,9 +106,11 @@ Configuration:
 
 ## Your System Prompt Is the Other Problem
 
-Even if Anthropic fixes both bugs tomorrow, your system prompt size still determines how much a cache miss costs. Every token in that prompt gets re-cached when the TTL expires.
+Even if Anthropic fixes both bugs tomorrow, your system prompt size still determines how much a cache miss costs. Every token in that prompt gets re-cached at 1.25× when the TTL expires.
 
-Most AI coding agents load everything at once. All rules, all tools, all context. Same fixed prompt every session whether you need it or not.
+We [read Claude's entire system prompt](/blog/twenty-five-thousand-tokens) when it leaked. All 1,191 lines. Roughly 25,000 tokens of instructions sent on every single conversation. 72% of it is tool documentation and legal compliance. The copyright section repeats the same rule six times. The entire behavioural block appears twice — word for word. A user debugging a Python script gets the full artifact storage API spec, the crisis mental health protocol, and 5,000 tokens of copyright law.
+
+That's the static prompt tax. And every time your cache expires, you're rebuilding all 25,000 tokens of it at 1.25× base rate. Including the tools you'll never touch in that session.
 
 ![Dynamic Prompt](/images/blog/dynamic-prompt.svg)
 
@@ -119,7 +121,9 @@ Soma's prompt is dynamic. Every protocol, muscle, and skill has a heat score bas
 - ❄️ **Cold** — just the name (~5 tokens)
 - 💤 **Inactive** — not loaded, zero tokens
 
-Use something often, it stays hot. Ignore it, it cools and drops out of the prompt. Typical result: 5-8k tokens instead of 20-30k. When a cache miss does happen, rebuilding 6k at 1.25× base rate costs 78% less than rebuilding 26k.
+Use something often, it stays hot. Ignore it, it cools and drops out of the prompt. Nothing loads unless it earns its place.
+
+Typical result: 5-8k tokens instead of 25k. When a cache miss does happen, rebuilding 6k at 1.25× base rate costs 76% less than rebuilding 25k. And every token that *is* loaded is relevant to what you're actually doing — not a copy-pasted legal section from a team that never talked to the team that wrote the behavioural rules.
 
 ## Five Things You Can Do Right Now
 
