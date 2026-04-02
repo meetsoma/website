@@ -108,7 +108,7 @@ Configuration:
 
 Even if Anthropic fixes both bugs tomorrow, your system prompt size still determines how much a cache miss costs. Every token in that prompt gets re-cached at 1.25× when the TTL expires.
 
-We [read Claude's entire system prompt](/blog/twenty-five-thousand-tokens) when it leaked. All 1,191 lines. Roughly 25,000 tokens of instructions sent on every single conversation. 72% of it is tool documentation and legal compliance. The copyright section repeats the same rule six times. The entire behavioural block appears twice — word for word. A user debugging a Python script gets the full artifact storage API spec, the crisis mental health protocol, and 5,000 tokens of copyright law.
+When we were rethinking how system prompts should actually work, we [read Claude's entire system prompt](/blog/twenty-five-thousand-tokens) to see if we were missing anything. All 1,191 lines. What we found instead was roughly 25,000 tokens of instructions sent on every single conversation. 72% of it is tool documentation and legal compliance. The copyright section repeats the same rule six times. The entire behavioural block appears twice — word for word. A user debugging a Python script gets the full artifact storage API spec, the crisis mental health protocol, and 5,000 tokens of copyright law.
 
 That's the static prompt tax. And every time your cache expires, you're rebuilding all 25,000 tokens of it at 1.25× base rate. Including the tools you'll never touch in that session.
 
