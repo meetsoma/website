@@ -251,10 +251,22 @@ const blogJsonLd = {
 
   .article-content :global(blockquote) {
     border-left: 3px solid var(--accent-bright);
-    padding-left: 20px;
+    padding: var(--space-lg) var(--space-xl);
     margin: var(--space-xl) 0;
-    color: var(--text-secondary);
+    color: var(--blog-body);
     font-style: italic;
+    background: var(--surface-accent-soft);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .article-content :global(blockquote strong) {
+    color: var(--text-primary);
+    font-style: normal;
+  }
+
+  .article-content :global(blockquote em) {
+    font-style: normal;
+    color: var(--accent-bright);
   }
 
   .article-content :global(ul), .article-content :global(ol) {

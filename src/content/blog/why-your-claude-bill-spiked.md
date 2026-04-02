@@ -37,15 +37,21 @@ Five minutes sounds reasonable until you think about what you actually do betwee
 
 ![Cache Timeline](/images/blog/cache-timeline.svg)
 
-Cache hits cost 90% less than cache misses. With 150k-300k token contexts (normal for deep sessions), a single miss runs $0.15 to $0.90. For API users, that's dollars. For Pro subscribers, those are the hidden token burns chewing through your 5-hour usage window in 45 minutes. Three coffee breaks a day at 150k tokens? That's $1.35 in wasted rebuilds — or a chunk of your daily quota gone before you've written any real code.
+And here's the part most people miss: a cache miss doesn't just cost you the regular input rate. It costs *more*.
 
-| Scenario | Context Size | Cache Hit | Cache Miss | Ratio |
+> **From Anthropic's [prompt caching docs](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching):** *"5-minute cache write tokens are 1.25 times the base input tokens price. Cache reads are 10% of base input token price."*
+
+That's a 12.5× spread. Cache reads at 10% of base. Cache writes at 125% of base. Every time the TTL expires and you send a new message, you're not just "reloading" the cache — you're paying a 25% premium on top of the regular input price to rebuild it.
+
+For API users, that's dollars. For Pro subscribers, those are the hidden token burns chewing through your 5-hour usage window in 45 minutes. Three coffee breaks a day at 150k tokens? That's wasted rebuilds — a chunk of your daily quota gone before you've written any real code.
+
+| Scenario | Context Size | Cache Read | Cache Write (miss) | Spread |
 |----------|-------------|-----------|------------|-------|
-| Quick chat | 50k tokens | ~$0.015 | ~$0.15 | 10× |
-| Deep session | 150k tokens | ~$0.045 | ~$0.45 | 10× |
-| Marathon | 300k tokens | ~$0.09 | ~$0.90 | 10× |
+| Quick chat | 50k tokens | ~$0.015 | ~$0.19 | 12.5× |
+| Deep session | 150k tokens | ~$0.045 | ~$0.56 | 12.5× |
+| Marathon | 300k tokens | ~$0.09 | ~$1.13 | 12.5× |
 
-The ratio is always 10×. But 10× of $0.09 is very different from 10× of $0.015. Before the 1M context update, people rotated sessions more often and kept contexts small. Now conversations run longer, contexts balloon, and every cache miss costs more. That's why your limits started evaporating after the update even though you didn't change how you work.
+The spread is always 12.5×. But 12.5× of $0.09 is very different from 12.5× of $0.015. Before the 1M context update, people rotated sessions more often and kept contexts small. Now conversations run longer, contexts balloon, and every cache miss costs more. That's why your limits started evaporating after the update even though you didn't change how you work.
 
 ## The "Leak" That's Saving You Money
 
