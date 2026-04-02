@@ -77,7 +77,7 @@ Soma ships a keepalive system that solves this without running up an infinite ta
 
 **Smart reset.** Send a real message, lives reset to 5. You only spend them when you're idle.
 
-**Auto-exhale.** Lives run out and you've burned more than 75k tokens? Soma saves your session state automatically. Your next session picks up where you left off with a compressed briefing instead of replaying the full history.
+**Auto-exhale.** Lives run out and you've burned more than 75k tokens? Soma saves your session state automatically. From there you can keep going, or run `soma inhale` — fresh session, ~5k tokens, and an agent that's more focused on what you were actually working on than the bloated session you just left. The preload carries the goal, not the entire conversation.
 
 The notification:
 
