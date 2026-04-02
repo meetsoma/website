@@ -55,11 +55,11 @@ The spread is always 12.5×. But 12.5× of $0.09 is very different from 12.5× o
 
 ## The "Leak" That's Saving You Money
 
-When Anthropic's source code surfaced (April Fools or not — still unclear), people found that Claude Code sends keepalive pings to maintain the cache. Some called it a "usage leak." The system "wasting tokens" on empty pings.
+When Anthropic's source code surfaced (April Fools or not — still unclear), people dug into the caching logic in `claude.ts` and [realized the cache has a TTL](https://reddit.com/r/ClaudeCode/comments/1s8ydmy/tip_for_saving_tokens_on_long_conversations/). Step away too long, your entire conversation gets re-cached from scratch on the next message. Some started manually pinging their sessions to keep the cache warm. Others called this a "usage leak" — the system "wasting tokens" on empty messages.
 
 They had it backwards.
 
-A keepalive ping is a tiny message that resets the 5-minute TTL. Costs fractions of a cent. Without it, your next real message triggers a full cache rebuild that costs dollars. The pings aren't the problem. The pings are the cheapest insurance you're not buying.
+A keepalive ping is a tiny message that resets the TTL. Costs fractions of a cent. Without it, your next real message triggers a full cache rebuild at 1.25× base rate. The pings aren't the problem. The pings are the cheapest insurance you're not buying.
 
 ![Cost Comparison](/images/blog/cost-comparison.svg)
 
