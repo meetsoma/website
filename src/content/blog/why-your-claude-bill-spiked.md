@@ -8,9 +8,9 @@ tags: ["claude-code", "cache", "costs", "keepalive", "engineering"]
 draft: true
 ---
 
-Your Claude Code bill went up. You didn't change anything. You're not imagining it.
+Your Claude Code bill went up. Or you're burning through your Pro usage limits twice as fast as you were a month ago. Same workflows, same habits. You didn't change anything.
 
-Two real bugs. One architectural blindspot. And a five-minute timer that's been draining your wallet every time you grab coffee.
+Two real bugs. One architectural blindspot. And a five-minute timer that's been quietly eating your quota every time you grab coffee.
 
 ## What Reddit Found
 
@@ -34,7 +34,7 @@ Anthropic's prompt cache has a ~5-minute TTL. Every interaction resets the clock
 
 ![Cache Timeline](/blog/cache-costs/cache-timeline.svg)
 
-Cache hits cost 90% less than cache misses. With 150k-300k token contexts (normal for deep sessions), a single miss runs $0.15 to $0.90. Three coffee breaks a day at 150k tokens? That's $1.35 in wasted rebuilds. Every day.
+Cache hits cost 90% less than cache misses. With 150k-300k token contexts (normal for deep sessions), a single miss runs $0.15 to $0.90. For API users, that's dollars. For Pro subscribers, those are the hidden token burns chewing through your 5-hour usage window in 45 minutes. Three coffee breaks a day at 150k tokens? That's $1.35 in wasted rebuilds — or a chunk of your daily quota gone before you've written any real code.
 
 | Scenario | Context Size | Cache Hit | Cache Miss | Ratio |
 |----------|-------------|-----------|------------|-------|
@@ -42,7 +42,7 @@ Cache hits cost 90% less than cache misses. With 150k-300k token contexts (norma
 | Deep session | 150k tokens | ~$0.045 | ~$0.45 | 10× |
 | Marathon | 300k tokens | ~$0.09 | ~$0.90 | 10× |
 
-The ratio is always 10×. But 10× of $0.09 is very different from 10× of $0.015. Bigger contexts turned a minor inefficiency into a real cost problem.
+The ratio is always 10×. But 10× of $0.09 is very different from 10× of $0.015. Before the 1M context update, people rotated sessions more often and kept contexts small. Now conversations run longer, contexts balloon, and every cache miss costs more. That's why your limits started evaporating after the update even though you didn't change how you work.
 
 ## The "Leak" That's Saving You Money
 
