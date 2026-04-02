@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-02T12:00:00Z",
+  "generated": "2026-04-02T18:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -13,6 +13,24 @@
           "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
           "Body template variables \u2014 all block vars available in _memory.md.",
           "First-run onboarding \u2014 ask user name + style on first ever soma."
+        ]
+      }
+    },
+    {
+      "version": "0.8.1",
+      "date": "2026-04-02",
+      "features": {
+        "added": [
+          "Unified warm content \u2014 ## TL;DR replaces <!-- digest --> across all AMPS.",
+          "MAP = automation alias \u2014 map accepted as type in /hub install/fork/share.",
+          "Discovery unification \u2014 discoverMaps() scans flat automations too.",
+          "Keepalive limits \u2014 5 lives per idle period, countdown notification.",
+          "Auto-exhale on idle \u2014 agent writes preload when keepalive expires (75k threshold).",
+          "Migration phase v0.8.0\u2192v0.8.1 \u2014 digest\u2192TL;DR conversion."
+        ],
+        "changed": [
+          "soma-doctor.sh reads version from package.json instead of hardcoded string.",
+          "Hub validator accepts description/triggers/tags, prefers TL;DR."
         ]
       }
     },
