@@ -133,7 +133,9 @@ Typical result: 5-8k tokens instead of 25k. When a cache miss does happen, rebui
 
 You don't need Soma for these. They'll help regardless.
 
-**1. Don't walk away mid-session.** If your break is longer than 5 minutes, save your state first. Your next message will cost 12.5× more than it needs to.
+**1. Don't walk away mid-session.** If your break is longer than 5 minutes, save your state first. Your next message will cost 12.5× more than it needs to. And don't multi-task across agents — while you're focused on one, the other's cache is dying. Pick one, finish the task, move on.
+
+With Soma, you've got ~25 minutes of keepalive per agent, and it doesn't constantly ding you for permissions (no matter how many times you tell Claude Code "don't ask again"). It just does things. We might spend two hours planning a feature — reading MAPs, reviewing architecture, writing the approach — while the cache sits warm. When it's time to build, test, ship, and update docs, we spend half that time because the agent already has a step-by-step workflow that knows the sequence: orient from the kanban, read the plan, build in the inner spiral, verify, ship, document, audit, reflect. No wasted turns asking "what should I do next?" — the MAP already knows.
 
 **2. Rotate at ~50% context.** Don't let it grow to 300k tokens. Start fresh with a summary. Smaller context, cheaper rebuilds.
 
