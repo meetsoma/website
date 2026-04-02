@@ -5,6 +5,7 @@ date: 2026-04-02T16:00:00
 author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["claude-code", "cache", "costs", "keepalive", "engineering"]
+image: "/images/blog/og-cache-costs.png"
 draft: false
 ---
 
