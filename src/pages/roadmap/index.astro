@@ -48,20 +48,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     status: 'In Progress',
     statusColor: 'var(--warm-bright)',
   },
-  {
-    name: 'Content Versioning',
-    icon: 'protocols',
-    description: 'Versioned protocols and muscles from the community hub. Author namespaces, fork infrastructure, commit-anchored lineage.',
-    status: 'Planned',
-    statusColor: 'var(--accent-bright)',
-  },
-  {
-    name: 'SomaRuntime',
-    icon: 'extensions',
-    description: 'Abstraction layer between Soma and the underlying engine. Extensions import from SomaRuntime instead of Pi directly — swap engines without touching your code.',
-    status: 'Planned',
-    statusColor: 'var(--accent-bright)',
-  },
 ];
 ---
 
@@ -135,6 +121,20 @@ const upcoming: { name: string; icon: string; description: string; status: strin
           <div>
             <strong>Boot sequence extraction</strong>
             <p>Moving hardcoded behavior from TypeScript into user-editable MAPs. Configure what loads and in what order.</p>
+          </div>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot"></span>
+          <div>
+            <strong>Content versioning</strong>
+            <p>Versioned protocols and muscles from the community hub. Author namespaces, fork infrastructure, commit-anchored lineage.</p>
+          </div>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot"></span>
+          <div>
+            <strong>SomaRuntime</strong>
+            <p>Abstraction layer between Soma and the underlying engine. Swap engines without touching your extensions or code.</p>
           </div>
         </div>
       </div>
