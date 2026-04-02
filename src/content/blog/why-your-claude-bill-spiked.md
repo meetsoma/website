@@ -5,7 +5,7 @@ date: 2026-04-02T16:00:00
 author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["claude-code", "cache", "costs", "keepalive", "engineering"]
-draft: true
+draft: false
 ---
 
 Your Claude Code bill went up. Or you're burning through your Pro usage limits twice as fast as you were a month ago. Same workflows, same habits. You didn't change anything.
