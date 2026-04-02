@@ -32,6 +32,8 @@ Those bugs are real and Anthropic should patch them. But there's a cost multipli
 
 Anthropic's prompt cache has a ~5-minute TTL. Every interaction resets the clock. Step away for six minutes and your entire prompt cache expires. Your next message rebuilds the whole thing from scratch.
 
+Five minutes sounds reasonable until you think about what you actually do between messages. Read a long response. Think about it. Type a careful reply — especially if you're reviewing a plan or architecture decision, which you should be doing carefully. That's easily 5-10 minutes right there, and you never left your chair. Running two Claude Code agents? Now one is idle while you're focused on the other. Double the exposure.
+
 ![Cache Timeline](/images/blog/cache-timeline.svg)
 
 Cache hits cost 90% less than cache misses. With 150k-300k token contexts (normal for deep sessions), a single miss runs $0.15 to $0.90. For API users, that's dollars. For Pro subscribers, those are the hidden token burns chewing through your 5-hour usage window in 45 minutes. Three coffee breaks a day at 150k tokens? That's $1.35 in wasted rebuilds — or a chunk of your daily quota gone before you've written any real code.
