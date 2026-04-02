@@ -88,7 +88,7 @@
   <!-- Bottom callout -->
   <rect x="100" y="235" width="600" height="42" class="callout"/>
   <text x="400" y="254" text-anchor="middle" class="label" style="fill: #f0883e;">22 minutes of protection from 4 tiny pings (~$0.008 total)</text>
-  <text x="400" y="270" text-anchor="middle" class="dim">without keepalive, returning at 22 min = full rebuild ($0.45+ at 150k context)</text>
+  <text x="400" y="270" text-anchor="middle" class="dim">without keepalive, returning at 22 min = full rebuild ($0.56+ at 150k context)</text>
 
   <!-- σ watermark -->
   <text x="810" y="300" text-anchor="end" style="font-family: serif; font-size: 16px; fill: #6494be; opacity: 0.7;">σ</text>

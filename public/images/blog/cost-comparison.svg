@@ -17,7 +17,7 @@
 
   <!-- Title -->
   <text x="420" y="30" text-anchor="middle" class="title">Daily Cost: Without vs With Keepalive</text>
-  <text x="420" y="48" text-anchor="middle" class="subtitle">typical 6-hour workday, 150k token context, 3 coffee breaks</text>
+  <text x="420" y="48" text-anchor="middle" class="subtitle">typical 6-hour workday, 150k token context, 3 coffee breaks (cache writes at 1.25×)</text>
 
   <!-- Y-axis -->
   <line x1="120" y1="70" x2="120" y2="290" stroke="#30363d" stroke-width="1"/>
@@ -33,17 +33,17 @@
 
   <!-- Bar 1: Without keepalive -->
   <g transform="translate(220, 0)">
-    <!-- Cache rebuild costs ($1.35) -->
+    <!-- Cache rebuild costs (3 × $0.56 = $1.69 at 1.25× write rate) -->
     <rect x="0" y="150" width="90" height="140" class="bar-miss" rx="4"/>
     <!-- Normal usage ($0.30) -->
     <rect x="0" y="119" width="90" height="31" class="bar-usage" rx="0"/>
 
-    <text x="45" y="230" text-anchor="middle" class="warn">$1.35</text>
+    <text x="45" y="230" text-anchor="middle" class="warn">$1.69</text>
     <text x="45" y="244" text-anchor="middle" class="dim">cache rebuilds</text>
     <text x="45" y="138" text-anchor="middle" class="dim">$0.30 usage</text>
 
     <!-- Total -->
-    <text x="45" y="108" text-anchor="middle" class="big-num" fill="#f0883e">$1.65</text>
+    <text x="45" y="108" text-anchor="middle" class="big-num" fill="#f0883e">$1.99</text>
     <text x="45" y="315" text-anchor="middle" class="label">Without Keepalive</text>
     <text x="45" y="330" text-anchor="middle" class="dim">3 cache misses/day</text>
   </g>
@@ -66,8 +66,8 @@
 
   <!-- Savings callout -->
   <rect x="610" y="130" width="120" height="42" stroke="rgba(100,148,190,0.3)" fill="rgba(100,148,190,0.05)" rx="8"/>
-  <text x="670" y="150" text-anchor="middle" class="accent" style="font-weight: 600;">save 80%</text>
-  <text x="670" y="165" text-anchor="middle" class="accent">$1.33/day</text>
+  <text x="670" y="150" text-anchor="middle" class="accent" style="font-weight: 600;">save 84%</text>
+  <text x="670" y="165" text-anchor="middle" class="accent">$1.67/day</text>
 
   <!-- Legend -->
   <rect x="140" y="355" width="10" height="10" class="bar-miss" rx="2"/>

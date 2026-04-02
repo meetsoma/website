@@ -60,8 +60,8 @@
   <!-- Cost spike annotation -->
   <line x1="530" y1="160" x2="530" y2="105" stroke="#f0883e" stroke-width="1.5"/>
   <polygon points="525,108 530,98 535,108" fill="#f0883e"/>
-  <text x="530" y="88" text-anchor="middle" class="warn">cost spike: 10x</text>
-  <text x="530" y="76" text-anchor="middle" class="warn-dim">150k tokens × $3/MTok = $0.45</text>
+  <text x="530" y="88" text-anchor="middle" class="warn">cost spike: 12.5x</text>
+  <text x="530" y="76" text-anchor="middle" class="warn-dim">150k tokens × $3.75/MTok = $0.56</text>
 
   <!-- Back to cached -->
   <rect x="660" y="160" width="110" height="55" class="box-active"/>
@@ -76,7 +76,7 @@
   <rect x="70" y="280" width="12" height="12" class="box-active"/>
   <text x="88" y="291" class="dim">cached (cheap)</text>
   <rect x="220" y="280" width="12" height="12" class="box-miss"/>
-  <text x="238" y="291" class="dim">cache miss (10x cost)</text>
+  <text x="238" y="291" class="dim">cache miss (12.5x cost)</text>
   <rect x="400" y="280" width="12" height="12" class="box-dead"/>
   <text x="418" y="291" class="dim">no cache (idle)</text>
 

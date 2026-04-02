@@ -82,7 +82,9 @@ Soma ships a keepalive system that solves this without running up an infinite ta
 
 **Automatic pings.** Soma watches the cache countdown. At ~45 seconds before expiry, it sends a tiny ping that resets the TTL.
 
-**5 lives.** You get 5 pings per idle period. About 24 minutes of protection. Enough to cover most breaks. We capped it on purpose — if every agent ran unlimited keepalives, Anthropic would kill the mechanism entirely.
+**5 lives.** You get 5 pings per idle period. Each ping fires at ~45 seconds before the TTL expires, so each life covers about 4 minutes and 15 seconds of idle time. Five lives: roughly 24 minutes of protection. Enough to cover a coffee break, a standup, or a code review in another repo.
+
+We capped it at 5 on purpose. Remember the GPU math above — 373 TB to hold everyone's cache. If every agent ran unlimited keepalives, nobody's cache would ever evict. Anthropic's infrastructure costs would spike, and the rational response would be to patch out the caching mechanism entirely or shorten the TTL. Five pings is a fair-use line: enough to protect you, not enough to break the system that makes caching possible in the first place.
 
 **Smart reset.** Send a real message, lives reset to 5. You only spend them when you're idle.
 
@@ -131,7 +133,7 @@ Typical result: 5-8k tokens instead of 25k. When a cache miss does happen, rebui
 
 You don't need Soma for these. They'll help regardless.
 
-**1. Don't walk away mid-session.** If your break is longer than 5 minutes, save your state first. Your next message will cost 10× more than it needs to.
+**1. Don't walk away mid-session.** If your break is longer than 5 minutes, save your state first. Your next message will cost 12.5× more than it needs to.
 
 **2. Rotate at ~50% context.** Don't let it grow to 300k tokens. Start fresh with a summary. Smaller context, cheaper rebuilds.
 
