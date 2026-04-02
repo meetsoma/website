@@ -12,29 +12,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
-<<<<<<< HEAD
-## [0.8.0] — 2026-04-02
 
-### Fixed
-- **actually append doctorPending to boot message**
-- **version bump after notification, add guard/checkpoints to Tier 1**
-- **clean 172 duplicate entries, fix post-commit hook**
-
-### Added
-- **inject _doctor-pending.md into boot message**
-- **wire TUI handler, autoUpdate check, cli.js help**
-- **Tier 1 silent auto-fix on every session start**
-- **migration phases — cycle.md + 9 phase files**
-- **migration log + _doctor-update.md boot template**
-- **add doctor.autoUpdate + declinedVersion**
-- **findChildSomaDirs, compareTemplates, migration tests**
-- **warm AMPS use TL;DR/digest, cold use short description**
-- **improve shipped templates — starter voice, self-aware soul, journal nudge, pulse living docs, body update hint**
-- **sync code fallbacks, clean starters, prod body path**
-- **Tier 1 adds missing body files to existing body/ directory**
-- **route doctor/status/health/update/version through thin-cli**
-- **wire template vars, move legacy migrations, cleanup**
-=======
 ## [0.8.1] — 2026-04-02
 
 ### Added
@@ -83,7 +61,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **CLI help header** — shows "CLI v0.2.0" instead of bare version number.
 - **Dev mode health check** — no longer reports false "git repo has issues" in development.
 - **Tier 1 body scaffold** — adds missing body files to existing `body/` directory (was only creating on fresh init).
->>>>>>> dev
 
 ## [0.7.1] — 2026-04-01
 
