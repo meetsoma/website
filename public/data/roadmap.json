@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-01T12:00:00Z",
+  "generated": "2026-04-02T12:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -7,12 +7,34 @@
       "date": "",
       "features": {
         "added": [
-          "PHASE workflow system — phase-aware MAPs with per-phase brain configuration.",
-          "Somaverse — visual workspace UI for managing sessions, memory, and identity.",
-          "Project navigator — run soma anywhere, find projects, pick up where you left off.",
-          "Async agent comms — Soma reaches you on your phone when decisions are needed.",
-          "Body template variables — all block vars available in _memory.md.",
-          "First-run onboarding — ask user name + style on first ever soma."
+          "PHASE workflow system \u2014 phase-aware MAPs with per-phase brain configuration.",
+          "Somaverse \u2014 visual workspace UI for managing sessions, memory, and identity.",
+          "Project navigator \u2014 run soma anywhere, find projects, pick up where you left off.",
+          "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
+          "Body template variables \u2014 all block vars available in _memory.md.",
+          "First-run onboarding \u2014 ask user name + style on first ever soma."
+        ]
+      }
+    },
+    {
+      "version": "0.8.0",
+      "date": "2026-04-02",
+      "features": {
+        "added": [
+          "soma doctor \u2014 project health check with Tier 1 auto-fix and TUI migration.",
+          "Migration phase files \u2014 complete chain from v0.6.1 to v0.8.0 (9 phases).",
+          "Tier 1 silent auto-fix on boot \u2014 settings, body, protocols, scripts.",
+          "soma status / soma health \u2014 quick project health check.",
+          "soma --version \u2014 shows both agent and CLI versions.",
+          "compareTemplates() \u2014 three-category diff for content, metadata, runtime files.",
+          "findChildSomaDirs() \u2014 multi-project discovery for parent-child .soma/ chains.",
+          "doctor.autoUpdate + declinedVersion settings.",
+          "Warm AMPS load TL;DR/digest, cold load short description."
+        ],
+        "fixed": [
+          "CHANGELOG auto-append bug \u2014 rewrote post-commit hook, cleaned 172 duplicates.",
+          "CLI help header shows 'CLI v...' not bare version.",
+          "Boot version-bump-before-notification race condition."
         ]
       }
     },
@@ -21,14 +43,14 @@
       "date": "2026-04-01",
       "features": {
         "added": [
-          "soma --help rewrite — branded output with session, project, and TUI commands.",
-          "soma --help scripts — show installed scripts with descriptions.",
-          "soma --help commands — full command reference by category."
+          "soma --help rewrite \u2014 branded output with session, project, and TUI commands.",
+          "soma --help scripts \u2014 show installed scripts with descriptions.",
+          "soma --help commands \u2014 full command reference by category."
         ],
         "fixed": [
-          "Scripts crash on fresh projects — missing theme dependency, now bundled.",
-          "soma focus didn't start session — async call fix.",
-          "postinstall.js missing from builds — restored.",
+          "Scripts crash on fresh projects \u2014 missing theme dependency, now bundled.",
+          "soma focus didn't start session \u2014 async call fix.",
+          "postinstall.js missing from builds \u2014 restored.",
           "Docs: /inhale vs soma inhale clearly distinguished."
         ]
       }
@@ -38,21 +60,21 @@
       "date": "2026-04-01",
       "features": {
         "added": [
-          "/inhale guard — warns when no preload exists or preload is stale.",
-          "Slash command usage hints — 10 commands with Usage: patterns.",
-          "Hub: 5 new scripts — soma-seam, soma-reflect, soma-query, soma-focus, soma-plans.",
-          "Hub: soma-code v2.0.0 — blast radius, tsc-errors, improved refs.",
+          "/inhale guard \u2014 warns when no preload exists or preload is stale.",
+          "Slash command usage hints \u2014 10 commands with Usage: patterns.",
+          "Hub: 5 new scripts \u2014 soma-seam, soma-reflect, soma-query, soma-focus, soma-plans.",
+          "Hub: soma-code v2.0.0 \u2014 blast radius, tsc-errors, improved refs.",
           "Scripts docs rewritten with hub links."
         ],
         "changed": [
-          "Upstream sync R4 — Pi 0.64.0 with new signal/getSignal APIs.",
-          "Core scripts trimmed — 5 bundled, rest via hub install.",
-          "Semver discipline — feature releases bump minor version."
+          "Upstream sync R4 \u2014 Pi 0.64.0 with new signal/getSignal APIs.",
+          "Core scripts trimmed \u2014 5 bundled, rest via hub install.",
+          "Semver discipline \u2014 feature releases bump minor version."
         ],
         "fixed": [
           "Changelog hook targeting all version sections.",
           "Hub table rendering with proper HTML structure.",
-          "Community CI — 21 frontmatter fixes.",
+          "Community CI \u2014 21 frontmatter fixes.",
           "7 drifted scripts synced, hub scripts sanitized."
         ]
       }

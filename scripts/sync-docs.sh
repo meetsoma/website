@@ -48,6 +48,7 @@ MANIFEST=(
   "identity.md|Identity|Discovery, layering, customization, project vs global.|Core Concepts|2.5"
   "protocols.md|Protocols & Heat|Behavioral rules, heat system, domain scoping, writing your own.|Core Concepts|3"
   "heat-system.md|Heat System|How Soma decides what to load — temperature-based relevance that adapts through use.|Core Concepts|3.5"
+  "body.md|Body Architecture|Structured identity with templates, variables, lazy loading, and the soma chain.|Core Concepts|3.6"
   "memory-layout.md|Memory Layout|Project vs user level storage, git strategy, data flow.|Core Concepts|4"
   "extending.md|Extending Soma|Skills, extensions, events, APIs — build on top of Soma.|Extending|5"
   "muscles.md|Muscles|Learned patterns, digest system, heat tiers, writing your own.|Core Concepts|5.5"

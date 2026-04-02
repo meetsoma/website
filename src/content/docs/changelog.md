@@ -12,15 +12,39 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [0.8.0] — 2026-04-02
+
+### Fixed
+- **actually append doctorPending to boot message**
+- **version bump after notification, add guard/checkpoints to Tier 1**
+- **clean 172 duplicate entries, fix post-commit hook**
+
+### Added
+- **inject _doctor-pending.md into boot message**
+- **wire TUI handler, autoUpdate check, cli.js help**
+- **Tier 1 silent auto-fix on every session start**
+- **migration phases — cycle.md + 9 phase files**
+- **migration log + _doctor-update.md boot template**
+- **add doctor.autoUpdate + declinedVersion**
+- **findChildSomaDirs, compareTemplates, migration tests**
+- **warm AMPS use TL;DR/digest, cold use short description**
+- **improve shipped templates — starter voice, self-aware soul, journal nudge, pulse living docs, body update hint**
+- **sync code fallbacks, clean starters, prod body path**
+- **Tier 1 adds missing body files to existing body/ directory**
+- **route doctor/status/health/update/version through thin-cli**
+- **wire template vars, move legacy migrations, cleanup**
+
 ## [0.7.1] — 2026-04-01
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **`soma --help` rewrite** — Soma-branded help with session commands, project commands, options, and TUI slash commands. Replaces generic Pi help output.
 - **`soma --help scripts`** — show installed scripts with descriptions. Works from CLI and inside sessions.
 - **`soma --help commands`** — full command reference organized by category (CLI, session, heat, hub, info).
 - **`soma-theme.sh` bundled** — shared script theming now seeds on init (was a missing dependency for 3 bundled scripts).
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **Scripts crash on fresh projects** — `source soma-theme.sh` with `set -e` caused fatal exit when theme file wasn't present. Fixed with `if [ -f ]; then source; fi` pattern across all 8 scripts.
 - **`soma focus <keyword>` didn't start session** — `main()` call wasn't awaited, `process.exit(0)` ran before session could start.
@@ -32,6 +56,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.7.0] — 2026-04-01
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard** — warns when no preload exists (suggests `/exhale`), warns when preload is stale (>5 tool calls since write). Use `/inhale --force` to override.
 - **Slash command usage hints** — 10 commands now include `Usage:` patterns in their descriptions: `/pin`, `/kill`, `/auto-commit`, `/inhale`, `/install`, `/auto-breathe`, `/hub`, `/scratch`, `/keepalive`, `/soul-space`, `/soma`.
 - **Hub: 5 new scripts** — soma-seam, soma-reflect, soma-query, soma-focus, soma-plans. All with coaching-voice digests.
@@ -44,6 +69,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Semver discipline** — feature releases now bump minor version (0.X.0). Patch (0.x.Y) reserved for bug-fix-only releases.
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **Changelog hook** — `soma-dev.sh` post-commit hook now targets only the first `### Added`/`### Fixed` section (was appending to all version sections).
 - **Hub table rendering** — markdown tables in hub detail pages now render with proper `<table>`/`<thead>`/`<tbody>` structure.
@@ -56,6 +82,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.7] — 2026-03-30
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **`/soma doctor`** — migration command. Detects version mismatch on boot, prompts to run migration script with confirmation, shows output, reloads settings. Post-migration guidance for body file review.
 - **Boot migration check** — notifies when project `.soma/` version is behind agent version.
 - **Global vs parent detection** — `detectProjectContext()` distinguishes `~/.soma/` (global runtime) from real parent workspaces. Init prompt has three-way messaging: real parent choice, global fallback, or no soma.
@@ -70,6 +97,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **System prompt budget** — default `systemPrompt.maxTokens` raised from 4000 to 10000. Anthropic's system prompt is ~25k; ours at ~5k was triggering false warnings.
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **Preload resume false-positive** — `soma -c` no longer falsely detects preloads from previous rotations as "written this session." Uses mtime check (2-min threshold).
 - **Body template instructions** — moved from frontmatter `description:` (invisible to agent) to HTML comment breadcrumbs in file body (visible, replaceable).
@@ -80,6 +108,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.6] — 2026-03-29
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **Init UX** — prompt before auto-scaffolding (`ctx.ui.confirm`), parent .soma/ inheritance when user declines, `scaffoldBody` templateDir priority chain. (SX-164, SX-165, SX-241)
 - **Command provenance** — `/soma status` shows which extension registered each command via Pi's `sourceInfo`. (SX-233)
@@ -92,6 +121,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **scaffoldBody** priority chain: templateDir → bundled `_public/` → bundled `body/`.
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -104,6 +134,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.5] — 2026-03-28
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **`soma inhale --list`** — show available preloads with age and staleness markers from CLI.
 - **`soma inhale <name>`** — partial name match. Load a specific preload by date, session ID, or any substring. Ambiguous matches show alternatives.
@@ -123,6 +154,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Boot greeting decomposed** — session ID and file paths now separate template variables. (`4d8331f`)
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -137,6 +169,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.4] — 2026-03-23
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -169,6 +202,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Sandbox test** updated for 8 extensions, 19 protocols, SOMA.md init.
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -198,6 +232,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.3] — 2026-03-22
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -225,6 +260,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Community CI** — validate-frontmatter accepts `triggers` (replaces `topic`+`keywords`), `description` OR `breadcrumb`. Format-check supports `scope: core`. Attribution allows org identity for owners. Actions upgraded to v6 (Node 22).
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -252,6 +288,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.2] — 2026-03-21
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -271,6 +308,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Personality engine** — welcome flow is honest about being templates, not the agent.
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -301,6 +339,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
   - ToolCallEventResult exported
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -342,6 +381,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.6.0] — 2026-03-20
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -412,6 +452,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Author attribution + CC BY 4.0 license footers on protocols (#0a2e0ac)
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -545,6 +586,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.2] — 2026-03-15
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -577,6 +619,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Migrated `globalThis.__somaKeepalive` to router (#e919481)
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -605,6 +648,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.1] — 2026-03-14
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -649,6 +693,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Dev hooks generated locally by `soma-dev.sh`, not committed to repo (#efc6ed4)
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -682,6 +727,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.5.0] — 2026-03-12
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -719,6 +765,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - CI improvements — PR check and release workflows now run all test suites
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -742,6 +789,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.4.0] — 2026-03-11
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -772,6 +820,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - CLAUDE.md awareness, not adoption — system prompt notes existence but doesn't inject content
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -789,6 +838,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.3.0] — 2026-03-10
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -817,6 +867,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Bundled protocols slimmed from all to 4 core (breath-cycle, heat-tracking, session-checkpoints, pattern-evolution)
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
@@ -833,6 +884,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [0.2.0] — 2026-03-09
 
 ### Added
+- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard + stale warning, slash command usage hints**
 - **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
 - **show command provenance in /soma status (SX-233)**
@@ -852,6 +904,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - 9 core modules — discovery, identity, protocols, muscles, settings, init, preload, utils, index
 
 ### Fixed
+- **help header shows 'CLI v...' not bare version**
 - **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
