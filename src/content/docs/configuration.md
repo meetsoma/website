@@ -280,9 +280,9 @@ See [Heat System](heat-system.md) for the full explanation.
 | `fullThreshold` | `5` | Heat needed to load a muscle in full |
 | `digestThreshold` | `1` | Heat needed to load a muscle as digest |
 
-**Why adjust:** If your agent frequently says "I don't remember how to do X" for things you've written muscles about, increase `tokenBudget` or `maxFull`. If boot messages are too long, decrease `maxLoaded` to cap total loaded muscles — unloaded muscles appear as a summary with guidance to `ls .soma/amps/muscles/` and `/pin <name>`. The digest system (via `<!-- digest:start -->` markers) is the best compromise — compact summaries that give the agent enough to know when to read the full muscle.
+**Why adjust:** If your agent frequently says "I don't remember how to do X" for things you've written muscles about, increase `tokenBudget` or `maxFull`. If boot messages are too long, decrease `maxLoaded` to cap total loaded muscles — unloaded muscles appear as a summary with guidance to `ls .soma/amps/muscles/` and `/pin <name>`. The `## TL;DR` system is the best compromise — compact summaries that give the agent enough to know when to read the full muscle.
 
-See [Muscles](muscles.md) for writing muscles and the digest system.
+See [Muscles](muscles.md) for writing muscles and the TL;DR system.
 
 ### Automations
 
@@ -572,6 +572,72 @@ Two-track version control: Soma's own `.soma/` state and your project code are c
       "style": "stash",
       "autoCheckpoint": true
     }
+  }
+}
+```
+
+### Keepalive
+
+Controls the cache keepalive system — automatic pings that prevent expensive prompt re-caching when you step away.
+
+```json
+{
+  "keepalive": {
+    "maxPings": 5,
+    "autoExhale": true,
+    "autoExhaleMinTokens": 75000
+  }
+}
+```
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `maxPings` | `5` | Maximum keepalive pings per idle period (0–5). Resets when you send a message. Set to `0` to disable keepalive entirely. |
+| `autoExhale` | `true` | Automatically triggers an exhale when keepalive lives are exhausted. The agent writes a preload before the cache expires, preserving your session state even if you walk away. |
+| `autoExhaleMinTokens` | `75000` | Minimum context tokens used before auto-exhale triggers. Below this threshold, the session ends quietly instead — not worth saving a preload for a short interaction. |
+
+**How it works:** Anthropic's prompt cache has a ~5 minute TTL. When you stop interacting, the cache countdown begins. Soma pings the cache before it expires, keeping your prompt cached at the discounted rate. Each ping uses one "life." When lives run out, the agent auto-exhales (if enough work was done) or goes idle quietly.
+
+**Why limit pings:** Unlimited keepalive burns API credits if you forget about a session. 5 pings (∼24 minutes of idle time) covers most breaks. Set `maxPings: 3` for shorter sessions, or `0` to disable.
+
+**Example: disable auto-exhale:**
+```json
+{
+  "keepalive": {
+    "autoExhale": false
+  }
+}
+```
+
+### Doctor
+
+Controls how Soma handles project updates and migrations.
+
+```json
+{
+  "doctor": {
+    "autoUpdate": true,
+    "declinedVersion": null
+  }
+}
+```
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `autoUpdate` | `true` | Show boot notification when a newer agent version is available. Set to `false` to suppress update prompts. |
+| `declinedVersion` | `null` | Version string the user declined to update to. Suppresses notification for that specific version. Set automatically when user declines via `/soma doctor`. |
+
+**How it works:**
+
+- **Tier 1 (automatic, every boot):** Adds missing settings sections, body template files, and bundled protocols silently. Converts muscle `<!-- digest -->` blocks to `## TL;DR`. Safe and idempotent.
+- **Tier 2+ (interactive, via `/soma doctor`):** Uses `compareTemplates()` to analyze content files, new templates, and structural changes. References migration phase files for step-by-step guidance.
+- **Boot notification:** When `autoUpdate` is `true` and the agent version is newer than the project version (and not equal to `declinedVersion`), a warning appears suggesting `/soma doctor`.
+
+**Example: suppress all update prompts:**
+```json
+{
+  "doctor": {
+    "autoUpdate": false
   }
 }
 ```

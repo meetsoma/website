@@ -7,7 +7,7 @@ order: 5.5
 
 
 <!-- tldr -->
-Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = digest only, cold = name listed. Digest blocks between `<!-- digest:start -->` / `<!-- digest:end -->` markers. Write digests — they're what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
+Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = TL;DR only, cold = name listed. Add a `## TL;DR` section — it's what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
 <!-- /tldr -->
 
 Muscles are **learned patterns** — reusable knowledge that Soma builds from experience. Unlike protocols (which are behavioral rules you write), muscles emerge organically from work. They're Soma's playbook.
@@ -34,10 +34,10 @@ loads: 0
 
 > Learned patterns for deploying Astro sites to Vercel.
 
-<!-- digest:start -->
-> **Deployment** — build with `pnpm build`, deploy with `npx vercel --prod`.
-> Always verify with curl after deploy. Check build output for page count changes.
-<!-- digest:end -->
+## TL;DR
+
+Build with `pnpm build`, deploy with `npx vercel --prod`.
+Always verify with curl after deploy. Check build output for page count changes.
 
 ## Full Process
 
@@ -66,21 +66,22 @@ loads: 0
 
 ## The Digest System
 
-Muscles can be large — a full logo design muscle might be 200+ lines. Loading all of that into the system prompt wastes context. The **digest system** solves this with a two-tier approach.
+Muscles can be large — a full logo design muscle might be 200+ lines. Loading all of that into the system prompt wastes context. The **TL;DR system** solves this with a two-tier approach.
 
-Every muscle should have a **digest block** between markers:
+Every muscle should have a **`## TL;DR`** section:
 
 ```markdown
-<!-- digest:start -->
-> **Topic** — concise summary of the key patterns
-> - Bullet points the agent needs at a glance
-> - 2-6 lines max
-<!-- digest:end -->
+## TL;DR
+
+Concise summary of the key patterns — what the agent needs at a glance.
+When to apply. What to watch for. 2-6 lines max.
 ```
 
-When a muscle loads as **warm** (digest tier), only the content between `<!-- digest:start -->` and `<!-- digest:end -->` enters the prompt. When it loads as **hot**, the full body loads.
+When a muscle loads as **warm** (digest tier), only the `## TL;DR` content enters the prompt. When it loads as **hot**, the full body loads.
 
-No digest block? The muscle can only load as hot (full) or cold (not at all). Write digests.
+No TL;DR? The muscle can only load as hot (full) or cold (not at all). Write TL;DRs — they're what loads 90% of the time.
+
+> **Note:** The `## TL;DR` format is shared across all AMPS (protocols, muscles, automations). Older muscles may use `<!-- digest:start/end -->` markers — both formats work, but `## TL;DR` is preferred. `soma doctor` auto-converts on boot.
 
 ## Heat & Loading Tiers
 
@@ -89,7 +90,7 @@ Like protocols, muscles use the [heat system](heat-system.md) to decide what loa
 | Tier | Heat | What Loads | When |
 |------|------|-----------|------|
 | 🔥 Hot | ≥ `fullThreshold` (default: 5) | Full body | Heavily used, recent |
-| 🟡 Warm | ≥ `digestThreshold` (default: 1) | Digest block only | Occasionally used |
+| 🟡 Warm | ≥ `digestThreshold` (default: 1) | TL;DR section only | Occasionally used |
 | ❄️ Cold | 0 | Name listed, nothing loaded | Unused, decayed |
 
 Loading respects a **token budget** (default: 2000 estimated tokens). Hot muscles load first (up to `maxFull`, default: 2), then warm muscles fill remaining budget (up to `maxDigest`, default: 8). Cold muscles are listed by name so the agent knows they exist.
@@ -116,10 +117,10 @@ loads: 0
 
 # Testing Workflow — Muscle
 
-<!-- digest:start -->
-> **Testing** — run `pnpm test` before every commit. Use vitest for unit tests.
-> Coverage threshold is 80%. CI runs the same suite.
-<!-- digest:end -->
+## TL;DR
+
+Run `pnpm test` before every commit. Use vitest for unit tests.
+Coverage threshold is 80%. CI runs the same suite.
 
 ## Full Process
 
@@ -150,7 +151,7 @@ By default, muscles **inherit from parent `.soma/` directories** when `inherit.m
 ## Tips
 
 - **Keep muscles focused.** One muscle per domain. Don't mix deployment and testing.
-- **Write digests first.** The digest is what loads 90% of the time. Make it good.
+- **Write TL;DRs first.** The TL;DR is what loads 90% of the time. Make it good.
 - **Let heat do the work.** Don't manually set heat to 15 on everything. Let usage patterns decide what matters.
 - **Retire, don't delete.** Set `status: retired` instead of removing. The knowledge stays searchable.
 - **Update, don't duplicate.** When patterns evolve, update the existing muscle. Don't create `deployment-v2.md`.

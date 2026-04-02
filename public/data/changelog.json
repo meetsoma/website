@@ -1,10 +1,10 @@
 {
-  "generated": "2026-04-02T10:43:56Z",
+  "generated": "2026-04-02T15:29:45Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
-      "version": "Unreleased",
-      "date": "",
+      "version": "0.8.1",
+      "date": "2026-04-02",
       "entries": {
         "added": [
           "**Unified warm content format** — `## TL;DR` replaces `<!-- digest:start/end -->` across all AMPS. Protocols, muscles, and automations all use the same format. Code accepts both during transition.",

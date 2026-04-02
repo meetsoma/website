@@ -35,12 +35,12 @@ The heat system is how Soma decides what to put in the agent's context window. I
 | Tier | What Loads | Example |
 |------|-----------|---------|
 | 🔥 Hot | Full muscle body — all learned patterns, rules, examples | The complete SVG logo design muscle with all techniques |
-| 🟡 Warm | Digest only — the content between `<!-- digest:start -->` and `<!-- digest:end -->` markers | A 3-line summary of the muscle's key rules |
+| 🟡 Warm | TL;DR only — the `## TL;DR` section of the muscle | A 3-line summary of the muscle's key rules |
 | ❄️ Cold | Name listed so the agent knows it exists | `- svg-logo-design` |
 
 ### Token Budget
 
-Muscles have a token budget (default: 2000 estimated tokens). Hot muscles load first (up to 2 full muscles), then warm muscles fill remaining budget with digests (up to 8). This prevents muscles from consuming the entire context window.
+Muscles have a token budget (default: 2000 estimated tokens). Hot muscles load first (up to 2 full muscles), then warm muscles fill remaining budget with TL;DRs (up to 8). This prevents muscles from consuming the entire context window.
 
 Protocols are smaller and don't have a strict token budget, but are limited by count: max 3 hot (full body) and 10 warm (breadcrumbs).
 
@@ -174,7 +174,7 @@ These overrides don't change the persisted heat — they apply only to the sessi
 
 Heat solves a fundamental problem: agents have limited context windows, but users accumulate knowledge over time. Without heat, you'd either load everything (wasting tokens on irrelevant content) or manually curate what loads (nobody does this).
 
-With heat, the system self-organizes. Protocols you use daily stay hot and fully loaded. Muscles you haven't touched in a week cool down to digests, then to just names. If you need them again, one use warms them back up.
+With heat, the system self-organizes. Protocols you use daily stay hot and fully loaded. Muscles you haven't touched in a week cool down to TL;DRs, then to just names. If you need them again, one use warms them back up.
 
 Context thresholds are percentages of the model's window — they scale automatically from 200K to 1M+ context models.
 
@@ -184,6 +184,6 @@ The result: **the agent's prompt reflects what you actually do, not what you onc
 
 - [Configuration](configuration.md) — all heat thresholds, boot steps, context warnings
 - [Protocols](protocols.md) — writing protocols, domain scoping, frontmatter
-- [Muscles](muscles.md) — writing muscles, digest system, token budget
+- [Muscles](muscles.md) — writing muscles, TL;DR system, token budget
 - [MAPs](maps.md) — workflow templates with prompt-config overrides
 - [Focus](focus.md) — seam-traced boot priming with heat overrides

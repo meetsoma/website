@@ -12,6 +12,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+<<<<<<< HEAD
 ## [0.8.0] — 2026-04-02
 
 ### Fixed
@@ -33,6 +34,56 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Tier 1 adds missing body files to existing body/ directory**
 - **route doctor/status/health/update/version through thin-cli**
 - **wire template vars, move legacy migrations, cleanup**
+=======
+## [0.8.1] — 2026-04-02
+
+### Added
+- **Unified warm content format** — `## TL;DR` replaces `<!-- digest:start/end -->` across all AMPS. Protocols, muscles, and automations all use the same format. Code accepts both during transition.
+- **`extractTldr()`** — shared utility for extracting TL;DR sections, used by protocols, muscles, and automations.
+- **MAP = automation alias** — `map` accepted as type alias in `/hub install`, `/hub fork`, `/hub share`. MAPs are a type of automation.
+- **Discovery unification** — `discoverMaps()` now scans `amps/automations/` root alongside `maps/` subdirectories. Installed hub automations are visible as MAPs.
+- **Keepalive limits** — 5 pings per idle period (configurable 0–5), countdown in notification (`♥ Keepalive 3/5`), resets on user message.
+- **Auto-exhale on idle** — when keepalive lives are exhausted and context exceeds 75k tokens, the agent automatically writes a preload. Configurable via `keepalive.autoExhale` and `keepalive.autoExhaleMinTokens`.
+- **Migration phase `v0.8.0→v0.8.1`** — Tier 1 auto-converts muscle digest blocks to TL;DR format, adds keepalive settings.
+
+### Changed
+- **`soma-doctor.sh`** — reads agent version from `package.json` instead of hardcoded string.
+- **Hub validator** — accepts `description`/`triggers`/`tags`, prefers `## TL;DR` over `<!-- digest -->`, warns on legacy format.
+
+---
+
+## [0.8.0] — 2026-04-02
+
+### Added
+- **`soma doctor`** — project health check and migration from CLI. Tier 1 auto-fixes (settings, body, protocols) run silently on every boot. TUI `/soma doctor` provides interactive Tier 2+ migration with `compareTemplates()` analysis.
+- **`soma status` / `soma health`** — quick project health check (renamed from old `soma doctor`).
+- **`soma --version`** — shows both agent and CLI versions.
+- **`soma --help`** — delegates to core agent for full branded help output.
+- **Migration phase system** — `cycle.md` + 9 phase files covering v0.6.1 → v0.8.0. Each phase is self-contained with from/to versions, actions, and what changed. Complete chain with no gaps.
+- **`_doctor-update.md` + `_doctor-pending.md`** — boot templates for agent-assisted migration. Pending template injected into followUp when updates available.
+- **`compareTemplates()`** — three-category file diff (content files, metadata, runtime) for doctor analysis.
+- **`findChildSomaDirs()`** — walks filesystem to discover child `.soma/` directories for multi-project support.
+- **`doctor.autoUpdate` + `declinedVersion`** — per-project settings controlling update notification behavior.
+- **Warm AMPS** — skill loader shows full TL;DR or digest for warm content, short description for cold. All AMPS types unified.
+- **Body templates** — improved starters for soul.md, voice.md, journal.md, pulse.md, body.md. DNA.md rewrite with self-awareness, owner’s manual, and deep reference links.
+- **`_first-breath.md`** — context-aware first-run template with conditional blocks for monorepos, blank projects, code projects, global/inherited `.soma/`.
+- **Test suites** — `test-doctor.sh` (46 tests), `test-migrations.sh` (48 tests) covering all doctor features and migration chain integrity.
+- **Docs** — `updating.md` (migration guide), `install-architecture.md` (CLI → agent flow), `body.md` (full body architecture reference with variables, templates, chain, lifecycle).
+
+### Changed
+- **CLI routing overhaul** — `doctor`, `status`, `health`, `update`, `version` all route through thin-cli. `--help` delegates to core when agent is installed.
+- **Starter content** — code fallbacks synced to `_public/` templates, HTML comments stripped from shipped content.
+- **Bundled scripts** — `soma-theme.sh` seeds on init, breadcrumbs added to all bundled scripts for docs and community references.
+- **`_first-breath.md`** — added self-exploration guidance (agent reads its own docs), breath cycle explanation, learn-the-user prompts.
+- **`_memory.md`** — added Step 1.5 (update living docs), Before You Start (conditional loading), corrections emphasis.
+
+### Fixed
+- **CHANGELOG auto-append bug** — post-commit hook was appending to every section, not just [Unreleased]. Rewrote hook, cleaned 172 duplicate entries.
+- **Boot version-bump race** — version was bumped before notification, causing re-check loops. Now bumps after Tier 1 fixes complete.
+- **CLI help header** — shows "CLI v0.2.0" instead of bare version number.
+- **Dev mode health check** — no longer reports false "git repo has issues" in development.
+- **Tier 1 body scaffold** — adds missing body files to existing `body/` directory (was only creating on fresh init).
+>>>>>>> dev
 
 ## [0.7.1] — 2026-04-01
 

@@ -63,7 +63,7 @@ These are **slash commands** used inside the Soma TUI during a session.
 |---------|-------------|
 | `/soma` | Show Soma status — loaded identity, protocol heat states, muscle states, context usage, available commands. |
 | `/soma init` | Create a `.soma/` directory in the current project. |
-| `/soma doctor` | Check for pending migrations. Runs migration scripts with confirmation, reloads settings after. |
+| `/soma doctor` | Project health check and migration. Shows `compareTemplates()` analysis (content files, new templates, structural changes), references migration phase files for step-by-step guidance. Tier 2+ interactive migration with agent assistance. |
 | `/soma prompt` | Preview the compiled system prompt — shows all assembled sections, token estimate, and which toggles are active. |
 | `/soma prompt full` | Dump the full compiled system prompt text. |
 | `/soma prompt identity` | Show identity debug — chain, layering, char count. |
@@ -162,6 +162,17 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 | `soma --provider <name>` | Set the default provider for this session. |
 | `soma --models <list>` | Limit Ctrl+P cycling to these models (comma-separated). |
 | `soma --list-models [search]` | List available models with optional fuzzy search. |
+
+### Project Management
+
+| Command | Description |
+|---------|-------------|
+| `soma doctor` | Check project health and run migrations. Tier 1 auto-fixes (missing settings, body files, protocols) run silently. Reports stale protocols and version gaps. Use in TUI (`/soma doctor`) for interactive Tier 2+ migration. |
+| `soma status` | Quick project health check — shows .soma/ structure, version, installed content. |
+| `soma health` | Alias for `soma status`. |
+| `soma --version` | Show agent version and CLI version. |
+| `soma doctor --scan` | Scan for child .soma/ projects (delegates to core). |
+| `soma doctor --all` | Fix all discovered projects (delegates to core). |
 
 ## Pre-Session Tools
 

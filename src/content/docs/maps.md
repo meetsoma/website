@@ -116,15 +116,30 @@ MAP usage is tracked programmatically:
 - `last-run:` updates to the current date
 - No manual tracking needed — the system handles it
 
+## MAPs Are Automations
+
+A MAP is a type of **automation**. The hub type is `automation` — `map` works as an alias. MAPs, phases, and cycles are all automations with different shapes:
+
+- **Automation** — a step-by-step workflow (debug, refactor)
+- **MAP** — an automation with `prompt-config` that wires the agent's brain for that task
+- **Phase** — a MAP that chains to other MAPs (`next-map`, `refine-after`)
+- **Cycle** — a meta-MAP that orchestrates phases
+
+All live in `amps/automations/`. The `maps/` subdirectory is organizational only — both flat automations and nested subdirs are discovered.
+
 ## Built-in MAPs
 
-Soma doesn't ship MAPs in the npm package (they're project-specific), but you can install community MAPs from the hub:
+Soma ships one MAP with the core runtime: the **migration cycle** (`migrations/cycle.md`). It orchestrates version-to-version project updates — detecting the version gap, chaining phase files, and walking through each jump.
+
+Install community automations from the hub:
 
 ```bash
-soma install map:release-cycle
+/hub install automation update     # the migration MAP
+/hub install automation debug      # systematic bug hunting
+/hub install automation refactor   # safe code restructuring
 ```
 
-Or create your own — any repeatable process deserves a MAP. The second time you do something manually, build a MAP.
+Or create your own — any repeatable process deserves a MAP. The second time you do something manually, build one.
 
 ## Meta-MAPs
 
