@@ -133,7 +133,7 @@ You don't need Soma for these. They'll help regardless.
 
 **2. Rotate at ~50% context.** Don't let it grow to 300k tokens. Start fresh with a summary. Smaller context, cheaper rebuilds.
 
-**3. Skip `--resume`.** On Claude Code v2.1.69+, every resume triggers a full cache miss. Starting a fresh session with a preload is cheaper than resuming.
+**3. Skip `--resume`.** On Claude Code v2.1.69+, every resume triggers a full cache miss. Starting a fresh session with a compressed summary of where you left off is cheaper than replaying the entire history. Soma calls this `soma inhale` — fresh context window, ~5k tokens, focused on the goal you were working toward. Not the 200k of conversation it took to get there.
 
 **4. Trim your system prompt.** Your `CLAUDE.md`, `AGENTS.md`, custom instructions — all cached. All rebuilt from scratch on every miss. Smaller is cheaper.
 
@@ -141,4 +141,8 @@ You don't need Soma for these. They'll help regardless.
 
 ---
 
-*[Soma](https://soma.gravicity.ai) is an AI coding agent that grows its own memory. It learns your patterns, manages your context, and keeps your cache warm so you don't have to think about it.*
+Soma has [22 lines of learned behavior for every line of compiled code](/blog/the-ratio). Over 35,000 lines of protocols, muscles, and workflows — but only the ones relevant to your current session actually load. The rest stay cold, costing you nothing.
+
+The cache bugs will get fixed. The 5-minute TTL probably won't. The question is whether your tools are built for that reality or pretending it doesn't exist.
+
+[Try Soma →](https://soma.gravicity.ai)
