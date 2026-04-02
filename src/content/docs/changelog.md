@@ -21,6 +21,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **`soma-theme.sh` bundled** — shared script theming now seeds on init (was a missing dependency for 3 bundled scripts).
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **Scripts crash on fresh projects** — `source soma-theme.sh` with `set -e` caused fatal exit when theme file wasn't present. Fixed with `if [ -f ]; then source; fi` pattern across all 8 scripts.
 - **`soma focus <keyword>` didn't start session** — `main()` call wasn't awaited, `process.exit(0)` ran before session could start.
 - **`postinstall.js` missing from builds** — deleted during Pi 0.64.0 dist sync, restored to CLI repo. Added to `OUR_DIST_FILES` and release script.
@@ -43,6 +44,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Semver discipline** — feature releases now bump minor version (0.X.0). Patch (0.x.Y) reserved for bug-fix-only releases.
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **Changelog hook** — `soma-dev.sh` post-commit hook now targets only the first `### Added`/`### Fixed` section (was appending to all version sections).
 - **Hub table rendering** — markdown tables in hub detail pages now render with proper `<table>`/`<thead>`/`<tbody>` structure.
 - **Community CI clean** — 21 frontmatter fixes across protocols and muscles (missing breadcrumb, tier, license, author, version fields).
@@ -68,6 +70,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **System prompt budget** — default `systemPrompt.maxTokens` raised from 4000 to 10000. Anthropic's system prompt is ~25k; ours at ~5k was triggering false warnings.
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **Preload resume false-positive** — `soma -c` no longer falsely detects preloads from previous rotations as "written this session." Uses mtime check (2-min threshold).
 - **Body template instructions** — moved from frontmatter `description:` (invisible to agent) to HTML comment breadcrumbs in file body (visible, replaceable).
 - **Migration script path resolution** — resolves bundled templates relative to script location, works in sandbox/dev/installed contexts.
@@ -89,6 +92,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **scaffoldBody** priority chain: templateDir → bundled `_public/` → bundled `body/`.
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -119,6 +123,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Boot greeting decomposed** — session ID and file paths now separate template variables. (`4d8331f`)
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -164,6 +169,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Sandbox test** updated for 8 extensions, 19 protocols, SOMA.md init.
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -219,6 +225,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Community CI** — validate-frontmatter accepts `triggers` (replaces `topic`+`keywords`), `description` OR `breadcrumb`. Format-check supports `scope: core`. Attribution allows org identity for owners. Actions upgraded to v6 (Node 22).
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -264,6 +271,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Personality engine** — welcome flow is honest about being templates, not the agent.
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -293,6 +301,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
   - ToolCallEventResult exported
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -403,6 +412,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Author attribution + CC BY 4.0 license footers on protocols (#0a2e0ac)
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -567,6 +577,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Migrated `globalThis.__somaKeepalive` to router (#e919481)
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -638,6 +649,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Dev hooks generated locally by `soma-dev.sh`, not committed to repo (#efc6ed4)
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -707,6 +719,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - CI improvements — PR check and release workflows now run all test suites
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -759,6 +772,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - CLAUDE.md awareness, not adoption — system prompt notes existence but doesn't inject content
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -803,6 +817,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - Bundled protocols slimmed from all to 4 core (breath-cycle, heat-tracking, session-checkpoints, pattern-evolution)
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -837,6 +852,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - 9 core modules — discovery, identity, protocols, muscles, settings, init, preload, utils, index
 
 ### Fixed
+- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**

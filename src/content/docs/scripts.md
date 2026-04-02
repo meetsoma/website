@@ -7,14 +7,12 @@ order: 9
 
 
 <!-- tldr -->
-Standalone bash tools that ship with Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions (they appear in the "Available Scripts" boot table). Scripts are seeded into `.soma/amps/scripts/` on `soma init`. Build your own scripts there — they'll be discovered automatically.
-
-All bundled scripts are available on the [Soma Hub](https://soma.gravicity.ai/hub) with full documentation. Install additional scripts with `soma hub install script <name>`.
+Standalone bash tools for Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions. 6 scripts are seeded on `soma init`; more are available via `soma hub install script <name>`. Run `soma --help scripts` to see what's installed.
 <!-- /tldr -->
 
-## Core Tools
+## Bundled Scripts (seeded on init)
 
-These are the tools your agent uses most. They're designed to be faster and more structured than raw grep/find. Each links to its full documentation on the hub.
+These 6 scripts are installed into `.soma/amps/scripts/` when you run `soma init`. They're available immediately — no hub install needed.
 
 ### soma-code.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-code)
 
@@ -61,6 +59,42 @@ soma-focus.sh runtime         # focus on runtime work
 soma                          # start — agent wakes up primed for runtime
 ```
 
+### soma-update-check.sh
+
+Check installed content against the hub for newer versions.
+
+```bash
+soma-update-check.sh            # check for updates
+soma-update-check.sh --json     # machine-readable output
+```
+
+### validate-content.sh
+
+Validate AMPS content files before submitting to the community hub.
+
+```bash
+validate-content.sh protocols/my-protocol.md
+validate-content.sh muscles/                    # validate all in dir
+```
+
+### soma-theme.sh
+
+Shared theming for all Soma scripts. Provides colors, header/footer helpers, and status functions. Sourced by other scripts — you don't run this directly.
+
+---
+
+## Hub Scripts (install with `/hub install script <name>`)
+
+These scripts are available on the [Soma Hub](https://soma.gravicity.ai/hub). Install any of them:
+
+```bash
+# Inside a Soma session:
+/hub install script soma-reflect
+
+# Or from CLI:
+soma hub install script soma-reflect
+```
+
 ### soma-reflect.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-reflect)
 
 Parse session logs for observations, gaps, and recurring patterns. Use at session start to orient from past lessons, or mid-session to check if an issue was seen before.
@@ -100,8 +134,6 @@ soma-scrape.sh list                    # show all scraped sources
 
 **Requires:** `gh` (GitHub CLI), `curl`, `jq`.
 
-## Utility Scripts
-
 ### soma-query.sh — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-query)
 
 Unified search across your `.soma/` workspace. Find content, check staleness, search sessions, trace connections.
@@ -126,15 +158,6 @@ soma-compat.sh              # run compat check
 soma-compat.sh --json       # JSON output
 ```
 
-### soma-update-check.sh
-
-Check installed content against the hub for newer versions.
-
-```bash
-soma-update-check.sh            # check for updates
-soma-update-check.sh --json     # machine-readable output
-```
-
 ### soma-snapshot.sh
 
 Rolling zip snapshots of project directories.
@@ -143,26 +166,18 @@ Rolling zip snapshots of project directories.
 soma-snapshot.sh . "pre-refactor"
 ```
 
-### validate-content.sh
+### soma-spell.sh
 
-Validate AMPS content files before submitting to the community hub.
+Spellcheck for AMPS content — catches common formatting and naming issues.
 
 ```bash
-validate-content.sh protocols/my-protocol.md
-validate-content.sh muscles/                    # validate all in dir
+soma-spell.sh protocols/my-protocol.md
+soma-spell.sh .soma/amps/    # check everything
 ```
 
 ### git-identity-hook.sh
 
 Git pre-commit hook that validates your git identity matches `guard.gitIdentity` settings.
-
-### prompt-preview.ts
-
-Preview the compiled system prompt without starting a session.
-
-```bash
-npx jiti scripts/prompt-preview.ts
-```
 
 ## Building Your Own Scripts
 

@@ -139,10 +139,13 @@ Sessions are stored in `~/.soma/agent/sessions/` as JSONL files, one per project
 ### CLI Session Commands
 
 ```bash
-soma                    # Fresh session
-soma -c                 # Continue last session
+soma                    # Fresh session — clean slate
+soma inhale             # Fresh session + preload from last /exhale
+soma -c                 # Continue last session (full history)
 soma -r                 # Pick from sessions to resume
 ```
+
+See [Commands — CLI Commands](/docs/commands#cli-commands) for the full comparison.
 
 ### Export
 
