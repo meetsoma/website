@@ -8,84 +8,82 @@ tags: ["claude-code", "cache", "costs", "keepalive", "engineering"]
 draft: true
 ---
 
-If you've been using Claude Code since the context window jumped to 1 million tokens, you've probably noticed something: your costs went up. Maybe a lot.
+Your Claude Code bill went up. You didn't change anything. You're not imagining it.
 
-You're not imagining it. And it's not exactly a bug — though the community just found two real ones.
+Two real bugs. One architectural blindspot. And a five-minute timer that's been draining your wallet every time you grab coffee.
 
-## The Pattern Everyone's Seeing
+## What Reddit Found
 
-Reddit has been on fire this week. A post titled ["PSA: Claude Code has two cache bugs that can silently 10-20x your API costs"](https://reddit.com/r/ClaudeAI/comments/1s7mkn3/psa_claude_code_has_two_cache_bugs_that_can/) hit 914 upvotes. The author spent six days reverse-engineering Claude Code's binary with Ghidra, a MITM proxy, and radare2. They found two independent bugs:
+A post titled ["PSA: Claude Code has two cache bugs that can silently 10-20x your API costs"](https://reddit.com/r/ClaudeAI/comments/1s7mkn3/psa_claude_code_has_two_cache_bugs_that_can/) hit 914 upvotes last week. The author spent six days reverse-engineering Claude Code's 228MB binary with Ghidra, a MITM proxy, and radare2. They found two independent bugs.
 
-**Bug 1:** A sentinel replacement in the standalone binary that breaks cache when your conversation discusses billing internals. The replacement targets the *first* occurrence in the JSON body — if your chat history contains the sentinel string, it replaces the wrong one, breaking the cache prefix on every request.
+**Bug 1:** A sentinel replacement in the standalone binary breaks cache when your conversation mentions billing internals. The replacement targets the *first* occurrence in the JSON body. If your chat history contains the sentinel string, it replaces the wrong one. Cache prefix broken. Full rebuild on every request.
 
-**Bug 2:** Every `--resume` causes a full cache miss since v2.1.69. A new `deferred_tools_delta` attachment gets injected at different positions in fresh vs resumed sessions, making the message prefix completely different.
+**Bug 2:** Every `--resume` causes a full cache miss since v2.1.69. A new `deferred_tools_delta` attachment gets injected at different positions in fresh vs resumed sessions. The message prefix changes completely. One-time cache rebuild on every resume.
 
-Another post — ["Thanks to the leaked source code, I patched the root cause of the insane token drain"](https://reddit.com/r/ClaudeAI/comments/1s8zxt4/thanks_to_the_leaked_source_code_for_claude_code/) — hit 2,600 upvotes. People are *desperate* for fixes.
+Another post hit 2,600 upvotes: ["Thanks to the leaked source code, I patched the root cause of the insane token drain."](https://reddit.com/r/ClaudeAI/comments/1s8zxt4/thanks_to_the_leaked_source_code_for_claude_code/) People aren't just complaining. They're reverse-engineering the binary and shipping their own patches.
 
-And then there's the quieter pain. ["Claud is robbing people with their usage limit"](https://reddit.com/r/ClaudeAI/comments/1s5j52m/claud_is_robbing_people_with_their_usage_limit/) (384 pts): *"I got less than an hour in two 5-hour limits debugging a script. My weekly limit went from 48% to 84% in just those two sessions. I'm afraid to ask Claude a question."*
+And then there's [this post](https://reddit.com/r/ClaudeAI/comments/1s5j52m/claud_is_robbing_people_with_their_usage_limit/) at 384 upvotes: *"I got less than an hour in two 5-hour limits debugging a script. My weekly limit went from 48% to 84% in just those two sessions. I'm afraid to ask Claude a question."*
 
-These bugs are real and Anthropic should fix them. But there's a bigger, more common cost multiplier that nobody's talking about — one that affects *everyone*, not just edge cases.
+Afraid to ask a question. About a tool you're paying for. That's where we are.
 
-## The 5-Minute TTL Nobody Respects
+## The Bigger Problem Nobody's Fixing
 
-Anthropic's prompt cache has a ~5-minute TTL (Time To Live). Every interaction resets the clock. But step away for six minutes — check Slack, grab coffee, answer a call — and your entire prompt cache expires. Your next message triggers a **full cache rebuild** of your entire conversation history.
+Those bugs are real and Anthropic should patch them. But there's a cost multiplier that affects everyone, bug or no bug. It's baked into how prompt caching works.
+
+Anthropic's prompt cache has a ~5-minute TTL. Every interaction resets the clock. Step away for six minutes and your entire prompt cache expires. Your next message rebuilds the whole thing from scratch.
 
 ![Cache Timeline](/blog/cache-costs/cache-timeline.svg)
 
-Cache hits are ~90% cheaper than cache misses. With today's larger contexts (150k-300k tokens are common in deep sessions), a single cache miss can cost $0.15-$0.90 depending on context size. Three coffee breaks a day? That's $0.45-$2.70 in *pure waste*.
+Cache hits cost 90% less than cache misses. With 150k-300k token contexts (normal for deep sessions), a single miss runs $0.15 to $0.90. Three coffee breaks a day at 150k tokens? That's $1.35 in wasted rebuilds. Every day.
 
-Here's the math:
-
-| Scenario | Context Size | Cache Hit Cost | Cache Miss Cost | Difference |
-|----------|-------------|---------------|----------------|------------|
+| Scenario | Context Size | Cache Hit | Cache Miss | Ratio |
+|----------|-------------|-----------|------------|-------|
 | Quick chat | 50k tokens | ~$0.015 | ~$0.15 | 10× |
 | Deep session | 150k tokens | ~$0.045 | ~$0.45 | 10× |
 | Marathon | 300k tokens | ~$0.09 | ~$0.90 | 10× |
 
-The ratio is always 10×. But with bigger contexts, 10× of a bigger number hurts a lot more.
+The ratio is always 10×. But 10× of $0.09 is very different from 10× of $0.015. Bigger contexts turned a minor inefficiency into a real cost problem.
 
-## The "Leak" That's Actually a Feature
+## The "Leak" That's Saving You Money
 
-When Anthropic's source code surfaced (intentionally or not — the April Fools discourse is still going), people found that Claude Code sends keepalive pings to maintain the cache. Some reported this as a "usage leak" — the system "wasting tokens" on empty pings.
+When Anthropic's source code surfaced (April Fools or not — still unclear), people found that Claude Code sends keepalive pings to maintain the cache. Some called it a "usage leak." The system "wasting tokens" on empty pings.
 
-They had it backwards. Those pings are **saving you money**, not costing it.
+They had it backwards.
 
-A keepalive ping is a tiny message that resets the 5-minute TTL. Without it, your next real message triggers a full cache rebuild. The ping costs fractions of a cent. The cache miss costs dollars.
+A keepalive ping is a tiny message that resets the 5-minute TTL. Costs fractions of a cent. Without it, your next real message triggers a full cache rebuild that costs dollars. The pings aren't the problem. The pings are the cheapest insurance you're not buying.
 
 ![Cost Comparison](/blog/cache-costs/cost-comparison.svg)
 
-## What Smart Users Do
+## What the Low-Bill Users Do
 
-The people with low Claude Code bills aren't doing anything magical. They're doing one of two things:
+Two strategies. That's it.
 
-1. **Working in short, focused bursts** — they finish before the cache expires
-2. **Using a tool that manages the cache for them** — keepalive pings
+1. They work in focused bursts and finish before the cache expires.
+2. They use something that keeps the cache warm while they're away.
 
-Most people do neither. They work for 20 minutes, switch to Slack for 10, come back, and pay full price to rebuild a 200k+ token cache.
+Most people do neither. Work for 20 minutes, switch to Slack for 10, come back, pay full price to rebuild 200k+ tokens of context. Every single time.
 
 ## How Soma Handles This
 
-Soma has a built-in keepalive system designed to solve exactly this problem — without burning unlimited credits.
+Soma ships a keepalive system that solves this without running up an infinite tab.
 
 ![Keepalive Heartbeat](/blog/cache-costs/keepalive-heartbeat.svg)
 
-Here's how it works:
+**Automatic pings.** Soma watches the cache countdown. At ~45 seconds before expiry, it sends a tiny ping that resets the TTL.
 
-**Automatic pings.** Soma watches the cache countdown. When ~45 seconds remain before expiry, it sends a tiny ping that resets the TTL.
+**5 lives.** You get 5 pings per idle period. About 24 minutes of protection. Enough to cover most breaks. We capped it on purpose — if every agent ran unlimited keepalives, Anthropic would kill the mechanism entirely.
 
-**5 lives.** You get 5 keepalive pings per idle period — about 24 minutes of protection. This covers most breaks without burning unlimited credits. If everyone ran unlimited keepalives, Anthropic would likely patch the mechanism entirely.
+**Smart reset.** Send a real message, lives reset to 5. You only spend them when you're idle.
 
-**Smart reset.** When you send a real message, the lives reset to 5. You only "spend" lives when you're idle.
+**Auto-exhale.** Lives run out and you've burned more than 75k tokens? Soma saves your session state automatically. Your next session picks up where you left off with a compressed briefing instead of replaying the full history.
 
-**Auto-exhale.** When your lives run out and you've used more than 75k tokens of context, Soma automatically saves your session state — a "preload" — so your next session picks up where you left off without re-reading everything.
-
-The notification looks like this:
+The notification:
 
 ```
 ♥ Keepalive 3/5 (2 left, 45s was remaining)
 ```
 
-Configure it in your `settings.json`:
+Configuration:
 
 ```json
 {
@@ -97,37 +95,37 @@ Configure it in your `settings.json`:
 }
 ```
 
-## The Bigger Picture: Why Your System Prompt Matters
+## Your System Prompt Is the Other Problem
 
-Even if Anthropic fixes both cache bugs tomorrow, your system prompt size still determines how much a cache miss costs. Every token in your system prompt has to be re-cached when the TTL expires.
+Even if Anthropic fixes both bugs tomorrow, your system prompt size still determines how much a cache miss costs. Every token in that prompt gets re-cached when the TTL expires.
 
-Most AI coding agents load everything at once — all rules, all tools, all context. Fixed-size system prompt, every session, whether you need it or not.
+Most AI coding agents load everything at once. All rules, all tools, all context. Same fixed prompt every session whether you need it or not.
 
 ![Dynamic Prompt](/blog/cache-costs/dynamic-prompt.svg)
 
-Soma's system prompt is dynamic. Content has a "heat" score based on usage:
+Soma's prompt is dynamic. Content has a heat score based on how often you actually use it:
 
-- **🔥 Hot** (used frequently) → full body loaded
-- **🌡 Warm** (used recently) → TL;DR summary only
-- **❄️ Cold** (not used lately) → just the name
-- **💤 Inactive** → not loaded at all
+- 🔥 **Hot** — full content loaded
+- 🌡 **Warm** — one-line summary
+- ❄️ **Cold** — just the name
+- 💤 **Inactive** — not loaded
 
-The result: Soma's system prompt is typically 5-8k tokens instead of 20-30k. When a cache miss *does* happen, rebuilding 6k tokens costs 78% less than rebuilding 26k.
+Typical result: 5-8k tokens instead of 20-30k. When a cache miss does happen, rebuilding 6k costs 78% less than rebuilding 26k.
 
-## What You Can Do Right Now
+## Five Things You Can Do Right Now
 
-Even without Soma, you can reduce your Claude Code costs today:
+You don't need Soma for these. They'll help regardless.
 
-1. **Don't walk away mid-session.** If you need a break longer than 5 minutes, save your state first. The cache will expire, and your next message costs 10× more.
+**1. Don't walk away mid-session.** If your break is longer than 5 minutes, save your state first. Your next message will cost 10× more than it needs to.
 
-2. **Rotate sessions at ~50% context.** Don't let context grow to 300k tokens. Start fresh with a summary. Smaller context = cheaper cache rebuilds when they happen.
+**2. Rotate at ~50% context.** Don't let it grow to 300k tokens. Start fresh with a summary. Smaller context, cheaper rebuilds.
 
-3. **Watch for the resume bug.** If you're on Claude Code v2.1.69+, every `--resume` triggers a full cache miss. Consider starting fresh sessions with a preload instead of resuming.
+**3. Skip `--resume`.** On Claude Code v2.1.69+, every resume triggers a full cache miss. Starting a fresh session with a preload is cheaper than resuming.
 
-4. **Trim your system prompt.** Your `CLAUDE.md`, `AGENTS.md`, custom instructions — these are all cached. Bigger system prompt = more expensive cache misses.
+**4. Trim your system prompt.** Your `CLAUDE.md`, `AGENTS.md`, custom instructions — all cached. All rebuilt from scratch on every miss. Smaller is cheaper.
 
-5. **Use `npx` instead of the standalone binary.** The sentinel bug only exists in the custom Bun fork compiled into the standalone. The npm package running on standard Node has no replacement mechanism.
+**5. Use `npx` instead of the standalone binary.** The sentinel bug only exists in the custom Bun fork. The npm package running on standard Node doesn't have it.
 
 ---
 
-*[Soma](https://soma.gravicity.ai) is an AI coding agent with self-growing memory. It learns your patterns, manages your context, and keeps your cache warm so you can focus on building.*
+*[Soma](https://soma.gravicity.ai) is an AI coding agent that grows its own memory. It learns your patterns, manages your context, and keeps your cache warm so you don't have to think about it.*
