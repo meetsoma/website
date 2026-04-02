@@ -7,6 +7,13 @@ import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string }[] = [
   {
+    name: 'Doctor & Migration',
+    icon: 'protocols',
+    description: 'Project health check with Tier 1 auto-fix on boot. soma doctor runs migrations, adds missing settings and templates. 9 migration phases covering v0.6.1 → v0.8.1. Your customizations are never touched.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+  },
+  {
     name: 'PHASE — Workflow Orchestration',
     icon: 'automations',
     description: 'Phase-aware MAPs with per-phase brain configuration. /phase command injects the right context at each step. Cascading agent handoff between phases.',
@@ -30,7 +37,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Somaverse',
     icon: 'extensions',
-    description: 'Visual workspace UI for managing sessions, memory, identity, and AMPS. React-based interface that connects to the Soma runtime. See your agent\'s mind.',
+    description: 'Multi-pane workspace UI for AI conversations. Switchable spaces per client or project, zoomable layouts, themed environments. Chat islands proxy into Soma sessions. Your command center for managing multiple agents and contexts.',
     status: 'In Progress',
     statusColor: 'var(--warm-bright)',
   },
@@ -44,9 +51,9 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Framework Compatibility',
     icon: 'extensions',
-    description: 'Extensions that read CLAUDE.md, AGENTS.md, .cursorrules — layer Soma memory on top of any existing setup. Drop in and it just works.',
-    status: 'Planned',
-    statusColor: 'var(--accent-bright)',
+    description: 'Layer Soma memory on top of any existing setup. Already reads CLAUDE.md and AGENTS.md on boot. Coming: .cursorrules import, project context merging, zero-config drop-in.',
+    status: 'In Progress',
+    statusColor: 'var(--warm-bright)',
   },
   {
     name: 'Content Versioning',
@@ -95,13 +102,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     <section class="section">
       <SectionHeader title="Shipping Soon" />
       <div class="progress-list">
-        <div class="progress-item">
-          <span class="progress-dot shipped"></span>
-          <div>
-            <strong>Doctor & Migration</strong>
-            <p>Project health check and version migration. Tier 1 auto-fix on boot, interactive Tier 2+ via <code>/soma doctor</code>. 9 migration phases covering v0.6.1 → v0.8.0.</p>
-          </div>
-        </div>
         <div class="progress-item">
           <span class="progress-dot active"></span>
           <div>
