@@ -21,13 +21,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     statusColor: 'var(--green-bright, #4ade80)',
   },
   {
-    name: 'Framework Compatibility',
-    icon: 'extensions',
-    description: 'Soma layers memory on top of any existing setup. Reads CLAUDE.md and AGENTS.md on boot. Project detection identifies your stack automatically. Drop in and it just works.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
     name: 'PHASE — Workflow Orchestration',
     icon: 'automations',
     description: 'Phase-aware MAPs with per-phase brain configuration. /phase command injects the right context at each step. Cascading agent handoff between phases.',
@@ -121,6 +114,13 @@ const upcoming: { name: string; icon: string; description: string; status: strin
           <div>
             <strong>Multi-project doctor</strong>
             <p>Parent-first fix ordering across project chains. soma doctor --all discovers and updates every .soma/ project in your workspace.</p>
+          </div>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot active"></span>
+          <div>
+            <strong>Framework compatibility</strong>
+            <p>Layer Soma on top of CLAUDE.md, AGENTS.md, .cursorrules. Configurable awareness — choose what your agent reads on boot and how it merges with Soma’s memory.</p>
           </div>
         </div>
         <div class="progress-item">
