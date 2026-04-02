@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" font-family="'Inter', 'SF Pro', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#111"/>
+    </linearGradient>
+    <linearGradient id="heartGlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ec4899" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="350" fill="url(#bg3)" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#e5e5e5" font-size="16" font-weight="600">Soma Keepalive — The Heartbeat That Saves Your Cache</text>
+
+  <!-- Timeline -->
+  <line x1="50" y1="200" x2="750" y2="200" stroke="#333" stroke-width="2"/>
+
+  <!-- TTL countdown zones — each ~4.5 min, ping resets at ~45s remaining -->
+  <!-- Zone 1: User active -->
+  <rect x="50" y="130" width="100" height="70" rx="4" fill="#22c55e" opacity="0.1"/>
+  <text x="100" y="160" text-anchor="middle" fill="#4ade80" font-size="11" font-weight="500">You type</text>
+  <text x="100" y="175" text-anchor="middle" fill="#4ade80" font-size="10" opacity="0.7">Cache resets</text>
+
+  <!-- Zone 2: Idle — TTL counting down -->
+  <rect x="150" y="130" width="110" height="70" rx="0" fill="#fbbf24" opacity="0.06"/>
+  <text x="205" y="160" text-anchor="middle" fill="#888" font-size="10">TTL counting...</text>
+  <text x="205" y="175" text-anchor="middle" fill="#666" font-size="10">4:15 remaining</text>
+
+  <!-- Ping 1 — ♥ 5/5 -->
+  <rect x="258" y="110" width="4" height="90" rx="2" fill="#ec4899" opacity="0.6"/>
+  <text x="260" y="105" text-anchor="middle" fill="#ec4899" font-size="18">♥</text>
+  <text x="260" y="245" text-anchor="middle" fill="#ec4899" font-size="10" font-weight="500">5/5</text>
+
+  <!-- Zone 3: Reset, counting again -->
+  <rect x="262" y="130" width="110" height="70" rx="0" fill="#fbbf24" opacity="0.06"/>
+  <text x="317" y="160" text-anchor="middle" fill="#888" font-size="10">TTL reset ✓</text>
+  <text x="317" y="175" text-anchor="middle" fill="#666" font-size="10">5:00 remaining</text>
+
+  <!-- Ping 2 — ♥ 4/5 -->
+  <rect x="370" y="110" width="4" height="90" rx="2" fill="#ec4899" opacity="0.6"/>
+  <text x="372" y="105" text-anchor="middle" fill="#ec4899" font-size="18">♥</text>
+  <text x="372" y="245" text-anchor="middle" fill="#ec4899" font-size="10" font-weight="500">4/5</text>
+
+  <!-- Zone 4 -->
+  <rect x="374" y="130" width="110" height="70" rx="0" fill="#fbbf24" opacity="0.06"/>
+  <text x="429" y="168" text-anchor="middle" fill="#666" font-size="10">☕ Still on break</text>
+
+  <!-- Ping 3 — ♥ 3/5 -->
+  <rect x="482" y="110" width="4" height="90" rx="2" fill="#ec4899" opacity="0.5"/>
+  <text x="484" y="105" text-anchor="middle" fill="#ec4899" font-size="18">♥</text>
+  <text x="484" y="245" text-anchor="middle" fill="#ec4899" font-size="10" font-weight="500">3/5</text>
+
+  <!-- Zone 5 -->
+  <rect x="486" y="130" width="110" height="70" rx="0" fill="#fbbf24" opacity="0.06"/>
+
+  <!-- Ping 4 — ♥ 2/5 -->
+  <rect x="594" y="110" width="4" height="90" rx="2" fill="#ec4899" opacity="0.4"/>
+  <text x="596" y="105" text-anchor="middle" fill="#ec4899" font-size="16">♥</text>
+  <text x="596" y="245" text-anchor="middle" fill="#ec4899" font-size="10" font-weight="500">2/5</text>
+
+  <!-- Zone 6: User returns -->
+  <rect x="598" y="130" width="102" height="70" rx="0" fill="#22c55e" opacity="0.08"/>
+
+  <!-- User returns marker -->
+  <rect x="650" y="110" width="4" height="90" rx="2" fill="#22c55e" opacity="0.8"/>
+  <text x="652" y="105" text-anchor="middle" fill="#4ade80" font-size="11" font-weight="600">You're back!</text>
+  <text x="652" y="245" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="500">Reset → 5/5</text>
+
+  <!-- Active again -->
+  <rect x="700" y="130" width="50" height="70" rx="4" fill="#22c55e" opacity="0.1"/>
+  <text x="725" y="168" text-anchor="middle" fill="#4ade80" font-size="10">Cached ✓</text>
+
+  <!-- Time labels -->
+  <text x="100" y="222" text-anchor="middle" fill="#666" font-size="10">0 min</text>
+  <text x="260" y="222" text-anchor="middle" fill="#666" font-size="10">~5 min</text>
+  <text x="372" y="222" text-anchor="middle" fill="#666" font-size="10">~10 min</text>
+  <text x="484" y="222" text-anchor="middle" fill="#666" font-size="10">~15 min</text>
+  <text x="596" y="222" text-anchor="middle" fill="#666" font-size="10">~20 min</text>
+  <text x="652" y="222" text-anchor="middle" fill="#666" font-size="10">~22 min</text>
+
+  <!-- Bottom annotation -->
+  <rect x="100" y="275" width="600" height="50" rx="8" fill="#ec4899" opacity="0.06" stroke="#ec4899" stroke-width="1" stroke-opacity="0.2"/>
+  <text x="400" y="296" text-anchor="middle" fill="#f9a8d4" font-size="12" font-weight="500">22 minutes of cache protection from 4 tiny pings (~$0.008 total)</text>
+  <text x="400" y="314" text-anchor="middle" fill="#888" font-size="11">Without keepalive, returning at 22 min = full cache rebuild ($0.45+ for 150k context)</text>
+</svg>
