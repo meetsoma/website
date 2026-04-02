@@ -37,7 +37,9 @@ Five minutes sounds reasonable until you think about what you actually do betwee
 
 ![Cache Timeline](/images/blog/cache-timeline.svg)
 
-And here's the part most people miss: a cache miss doesn't just cost you the regular input rate. It costs *more*.
+To be fair to Anthropic, the TTL exists for a reason. Each user's 200k token context takes roughly 400MB of GPU memory in the KV cache. Multiply that by a million concurrent users and you're looking at 373 TB of GPU RAM — nearly 5,000 H100s just to hold everyone's cache. At current prices, that's over $140 million in hardware sitting idle while you're on Slack. The 5-minute TTL isn't spite. It's economics.
+
+But understanding *why* the TTL exists doesn't change what it costs you. And here's the part most people miss: a cache miss doesn't just cost you the regular input rate. It costs *more*.
 
 > **From Anthropic's [prompt caching docs](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching):** *"5-minute cache write tokens are 1.25 times the base input tokens price. Cache reads are 10% of base input token price."*
 
