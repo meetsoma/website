@@ -17,6 +17,25 @@
       }
     },
     {
+      "version": "0.9.0",
+      "date": "2026-04-04",
+      "features": {
+        "added": [
+          "Inbox system \u2014 {{inbox_summary}} template variable, inter-agent messaging via .soma/inbox/",
+          "Preload auto-inject \u2014 fresh sessions load preloads automatically (configurable)",
+          "Scripts visible in prompt \u2014 {{scripts_table}} in default _mind.md",
+          "Script drift detection \u2014 soma-verify.sh drift checks agent \u2192 working \u2192 global",
+          "7 new documentation pages \u2014 inbox, doctor, hub, troubleshooting, 3 guides",
+          "inter-agent-inbox community protocol published"
+        ],
+        "fixed": [
+          "Keepalive limit enforced \u2014 was infinite due to counter reset on self-triggered turns",
+          "Changelog hook targets [Unreleased] section only",
+          "96 files migrated from digest markers to ## TL;DR format"
+        ]
+      }
+    },
+    {
       "version": "0.8.1",
       "date": "2026-04-02",
       "features": {
