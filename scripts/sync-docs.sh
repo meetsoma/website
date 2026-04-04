@@ -71,6 +71,9 @@ MANIFEST=(
   "doctor.md|Doctor & Migration|Project health checks, version migration, keeping .soma/ current.|Reference|8.5"
   "guides/daily-workflow.md|Daily Workflow|The exhale, reflect, inhale loop — how to use Soma day to day.|Guide|25"
   "guides/customization.md|Customization|How to make Soma yours — identity, voice, rules, tools, and prompt structure.|Guide|26"
+  "guides/first-protocol.md|Your First Protocol|Turn a repeated correction into a permanent rule.|Guide|27"
+  "hub.md|Hub|Install, share, and discover community content.|Core Concepts|5.1"
+  "troubleshooting.md|Troubleshooting|Common issues and fixes.|Reference|22"
   "updating.md|Updating|How to keep Soma up to date across projects.|Reference|20"
   "install-architecture.md|Install Architecture|How Soma installs, updates, and manages versions.|Reference|21"
 )
