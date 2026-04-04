@@ -70,6 +70,7 @@ MANIFEST=(
   "inbox.md|Inbox|Asynchronous messaging between agents, sessions, and humans.|Core Concepts|4.5"
   "doctor.md|Doctor & Migration|Project health checks, version migration, keeping .soma/ current.|Reference|8.5"
   "guides/daily-workflow.md|Daily Workflow|The exhale, reflect, inhale loop — how to use Soma day to day.|Guide|25"
+  "guides/customization.md|Customization|How to make Soma yours — identity, voice, rules, tools, and prompt structure.|Guide|26"
   "updating.md|Updating|How to keep Soma up to date across projects.|Reference|20"
   "install-architecture.md|Install Architecture|How Soma installs, updates, and manages versions.|Reference|21"
 )
