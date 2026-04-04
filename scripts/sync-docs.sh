@@ -67,6 +67,11 @@ MANIFEST=(
   "keybindings.md|Keybindings|Keyboard shortcuts for Soma's terminal interface.|Reference|18"
   "models.md|Models|Model configuration, provider setup, custom endpoints.|Reference|19"
   "terminal-setup.md|Terminal Setup|Font, terminal emulator, and shell configuration for the best Soma experience.|First Steps|1.5"
+  "inbox.md|Inbox|Asynchronous messaging between agents, sessions, and humans.|Core Concepts|4.5"
+  "doctor.md|Doctor & Migration|Project health checks, version migration, keeping .soma/ current.|Reference|8.5"
+  "guides/daily-workflow.md|Daily Workflow|The exhale, reflect, inhale loop — how to use Soma day to day.|Guide|25"
+  "updating.md|Updating|How to keep Soma up to date across projects.|Reference|20"
+  "install-architecture.md|Install Architecture|How Soma installs, updates, and manages versions.|Reference|21"
 )
 
 mkdir -p "$TARGET"
@@ -78,6 +83,7 @@ for entry in "${MANIFEST[@]}"; do
   src="$AGENT_DOCS/$file"
   slug="${file%.md}"
   dest="$TARGET/$slug.md"
+  mkdir -p "$(dirname "$dest")"
 
   if [[ ! -f "$src" ]]; then
     echo "  ⚠ Missing: $file"
