@@ -5,13 +5,20 @@ section: "Reference"
 order: 10
 ---
 
-
-All notable changes to the Soma agent are documented here.
-
-Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
-
 ---
 
+## [Unreleased]
+
+### Added
+- **`{{inbox_summary}}` template variable** — scans `.soma/inbox/` at boot, injects unread message summary into system prompt
+- **`{{scripts_table}}` in default `_mind.md`** — agents can now see their discovered scripts in the system prompt
+- **`preload.autoInject` setting** — auto-inject most recent preload on fresh boot (default: true), no longer requires `SOMA_INHALE=1` env var
+
+### Fixed
+- **Test suite** — added `tsx` to devDependencies (bare `tsx` calls failed), fixed 10 stale test paths (`body/public` → `body/_public`, `identity.md` → `SOMA.md`)
+- **Stale `body/public` references** — updated to `body/_public` across comments, docs, templates, and scripts (6 files)
+
+---
 
 ## [0.8.1] — 2026-04-02
 
