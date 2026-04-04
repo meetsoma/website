@@ -114,11 +114,11 @@ This starts a fresh session with your curated preload loaded. The agent wakes up
 |--------|-------|------|
 | `soma inhale` | Shell (starts new session) | Morning start, after reviewing/updating preload |
 | `soma` | Shell (starts new session) | Quick start — auto-loads preload quietly via `autoInject` |
-| `/inhale` | Inside TUI (same session) | Mid-session preload check, or load a preload without restarting |
+| `/inhale` | Inside TUI (resets session) | After exhale + preload update, or mid-session to load a preload |
 
 **`soma inhale`** is the daily driver — you’re saying "I’ve prepared the context, load it."
 
-**`/inhale`** inside the TUI is useful when you’re already in a session and want to check preload status, or when you started with plain `soma` and realize you want to pull in the preload. It shows whether a preload exists, how stale it is, and can inject it into the current session.
+**`/inhale`** inside the TUI **resets the session** and loads the preload. It’s the same as `soma inhale` but without leaving the TUI. Use it after `/exhale` when you’ve updated the preload and want to continue with fresh context. Also works mid-session when you started with plain `soma` and want to pull in the preload.
 
 For quick starts where you haven’t touched the preload, plain `soma` works fine.
 

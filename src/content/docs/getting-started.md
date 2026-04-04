@@ -108,7 +108,7 @@ Pick from previous sessions to resume.
 | `/breathe` | Save state + rotate into fresh session |
 | `/exhale` | Save state, write preload, session ends |
 | `/rest` | Disable keepalive + exhale - for when you're done for the night |
-| `/inhale` | Check preload status - shows if preload exists, warns if stale |
+| `/inhale` | Reset session and load preload — fresh start with your most recent preload |
 | `/pin <name>` | Pin a protocol/muscle to hot (stays loaded) |
 | `/kill <name>` | Kill a protocol/muscle (drops to cold) |
 | `/keepalive` | Toggle cache keepalive on/off (or check status) |
