@@ -18,7 +18,7 @@ These are **slash commands** used inside the Soma TUI during a session.
 
 | Command | Description |
 |---------|-------------|
-| `/inhale` | **Check preload status** - shows whether a preload exists and how stale it is. Warns if no preload found (suggests `/exhale`). Warns if preload is stale (>5 tool calls since write). Use `/inhale --force` to override. **Note:** this does _not_ start a new session - to start a session with a preload, use `soma inhale` from your shell (see [CLI Commands](#cli-commands)). |
+| `/inhale` | **Load preload into current session.** Finds the most recent preload and injects it. Also shows preload status (exists, age, staleness). Use mid-session when you started with plain `soma` and want to pull in the preload, or after updating a preload between sessions. From the shell, `soma inhale` starts a fresh session with the preload — `/inhale` loads it into the *current* session. |
 | `/breathe` | Save state and rotate into a fresh session. Seamless rotation - exhale + inhale in one motion. |
 | `/exhale` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Session ends. The preload written here is what `soma inhale` loads next time. |
 | `/rest` | Going to bed? Disables cache keepalive, then exhales. No pings will fire after you walk away. |
