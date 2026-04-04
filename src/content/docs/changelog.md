@@ -5,18 +5,32 @@ section: "Reference"
 order: 10
 ---
 
+
+All notable changes to the Soma agent are documented here.
+
+Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
+
 ---
 
-## [Unreleased]
+## [0.9.0] — 2026-04-04
 
 ### Added
-- **`{{inbox_summary}}` template variable** — scans `.soma/inbox/` at boot, injects unread message summary into system prompt
-- **`{{scripts_table}}` in default `_mind.md`** — agents can now see their discovered scripts in the system prompt
-- **`preload.autoInject` setting** — auto-inject most recent preload on fresh boot (default: true), no longer requires `SOMA_INHALE=1` env var
+- **`{{inbox_summary}}` template variable** — scans `.soma/inbox/` at boot, injects unread message summary into system prompt. File-based async messaging between agents.
+- **`{{scripts_table}}` in default `_mind.md`** — agents can now see their discovered scripts in the system prompt.
+- **`preload.autoInject` setting** — auto-inject most recent preload on fresh boot (default: true). No longer requires `soma inhale` CLI command for preload loading.
+- **7 new documentation pages** — `inbox.md`, `doctor.md`, `hub.md`, `troubleshooting.md`, `guides/daily-workflow.md`, `guides/customization.md`, `guides/first-protocol.md`. Total: 33 pages (~36K words).
+- **`inter-agent-inbox` community protocol** — published to community hub. Formal spec for file-based inter-agent messaging.
+- **Script drift detection** — `soma-verify.sh drift` now checks scripts across agent repo → working copies → global.
+
+### Changed
+- **Digest → TL;DR migration complete** — 96 files converted from `<!-- digest:start/end -->` to `## TL;DR`. Both formats still accepted, `## TL;DR` is the standard going forward.
+- **Docs accuracy overhaul** — 13 existing pages updated: `autoInject` mental model, version refs, `breadcrumb` → `description`, `maxTokens` default, session log naming format, identity.md deprecated.
 
 ### Fixed
-- **Test suite** — added `tsx` to devDependencies (bare `tsx` calls failed), fixed 10 stale test paths (`body/public` → `body/_public`, `identity.md` → `SOMA.md`)
-- **Stale `body/public` references** — updated to `body/_public` across comments, docs, templates, and scripts (6 files)
+- **Keepalive limit not enforcing** — keepalive-triggered turns reset the ping counter, making keepalives infinite. Now tracks `keepaliveInFlight` flag to skip reset on self-initiated turns.
+- **Changelog hook targets [Unreleased] only** — old hook appended to first `### Added`/`### Fixed` globally, which could hit released versions.
+- **Test suite** — added `tsx` to devDependencies (bare `tsx` calls failed), fixed 10 stale test paths (`body/public` → `body/_public`, `identity.md` → `SOMA.md`).
+- **Stale `body/public` references** — updated to `body/_public` across comments, docs, templates, and scripts (6 files).
 
 ---
 

@@ -71,7 +71,7 @@ description: "One sentence that captures what this protocol enforces. This is AL
 |-------|---------|
 | `name` | Protocol identifier (used in heat state, `/pin`, `/kill`) |
 | `heat-default` | Starting temperature: `cold`, `warm`, or `hot` |
-| `breadcrumb` | One sentence shown when protocol is warm |
+| `description` | One sentence shown when protocol is warm (this is ALL the agent sees at warm temperature) |
 
 **Optional fields:**
 
@@ -112,7 +112,7 @@ Explicit exclusions.
 | **TL;DR** | `## TL;DR` section | Agent reads deeper on demand |
 | **Full body** | Entire file (minus frontmatter) | Protocol is hot |
 
-Write the breadcrumb to be self-contained — it's the only thing loaded at warm temperature.
+Write the description to be self-contained — it's the only thing loaded at warm temperature.
 
 ## Protocol Resolution Chain
 

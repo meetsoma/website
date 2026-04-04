@@ -129,15 +129,26 @@ All live in `amps/automations/`. The `maps/` subdirectory is organizational only
 
 ## Built-in MAPs
 
-Soma ships one MAP with the core runtime: the **migration cycle** (`migrations/cycle.md`). It orchestrates version-to-version project updates — detecting the version gap, chaining phase files, and walking through each jump.
+Soma's core runtime includes the MAP loading system. The automations themselves live in the [community hub](https://github.com/meetsoma/community) and are installed via `/hub install automation <name>`.
 
-Install community automations from the hub:
+In the hub, MAPs are listed as **automations** — `map` is an alias for `automation`. Install community automations with the `/hub` command:
 
-```bash
-/hub install automation update     # the migration MAP
-/hub install automation debug      # systematic bug hunting
-/hub install automation refactor   # safe code restructuring
 ```
+/hub install automation update      # migration MAP — version-to-version updates
+/hub install automation debug       # systematic bug hunting
+/hub install automation refactor    # safe code restructuring
+```
+
+### Shipped Automations
+
+The community hub currently ships four automations:
+
+| Name | Purpose |
+|------|--------|
+| `update` | Migration cycle — walks through version jumps |
+| `debug` | Systematic bug hunting with trace steps |
+| `refactor` | Safe code restructuring with dependency scanning |
+| `visual-gap-analysis` | UI/UX gap detection workflow |
 
 Or create your own — any repeatable process deserves a MAP. The second time you do something manually, build one.
 

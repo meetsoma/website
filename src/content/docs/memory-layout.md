@@ -34,6 +34,7 @@ Lives in your project root.
 │   ├── preloads/            ← session continuations
 │   └── sessions/            ← per-session work logs
 │
+├── inbox/                   ← inter-agent messages (see Inbox docs)
 ├── knowledge/               ← scraped docs (from soma-scrape.sh)
 ├── docs/                    ← ideas, plans, knowledge
 │
@@ -136,11 +137,11 @@ Exhale (/exhale):
 
 ## Session Logs
 
-Session log files are named `YYYY-MM-DD-sNN.md` — the date plus an auto-incrementing session number (`s01`, `s02`, etc.). Each session gets its own file. The number increments by scanning the directory for existing files, so sessions never overwrite each other — even across restarts.
+Session log files are named `YYYY-MM-DD-sNN-HASH.md` — the date, a sequential session number (`s01`, `s02`), and a 6-character hex hash for uniqueness. Example: `2026-03-28-s01-a3f2c1.md`. Each session gets its own file. The hash prevents collisions when multiple terminals run simultaneously.
 
 ## Session-Scoped Preloads
 
-Preload files are named `preload-next-YYYY-MM-DD-XXXXXX.md` — the date plus 6 characters from the session ID. Each exhale writes a unique file. On resume, Soma picks the most recent preload by modification time.
+Preload files are named `preload-next-YYYY-MM-DD-sNN-HASH.md` — the date plus the full session ID. Example: `preload-next-2026-03-28-s01-a3f2c1.md`. Each exhale writes a unique file. On resume, Soma picks the most recent preload by modification time.
 
 This means you can have multiple preloads from different sessions. The unique filename prevents overwrites. Soma searches: `memory/preloads/` (configured) → `.soma/` root (legacy) → `memory/` (legacy).
 

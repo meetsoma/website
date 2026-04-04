@@ -152,7 +152,7 @@ lazy: true
 
 | Variable | Source |
 |----------|--------|
-| `{{soul}}` | `body/soul.md` or `identity.md` |
+| `{{soul}}` | `body/soul.md` (or `SOMA.md` fallback) |
 | `{{body}}` | `body/body.md` |
 | `{{voice}}` | `body/voice.md` |
 | `{{journal}}` | `body/journal.md` |
@@ -167,6 +167,7 @@ lazy: true
 | `{{protocol_summaries}}` | Active protocols (heat-sorted) |
 | `{{muscle_digests}}` | Learned patterns (hot=full, warm=digest) |
 | `{{scripts_table}}` | Discovered scripts with usage counts |
+| `{{inbox_summary}}` | Unread messages from `.soma/inbox/` |
 | `{{tools_section}}` | Available tools |
 | `{{guard_section}}` | File protection rules |
 | `{{docs_section}}` | Documentation references |
@@ -237,7 +238,7 @@ The runtime loads identity from the first file found:
 ```
 1. body/soul.md     ← structured identity (recommended)
 2. SOMA.md          ← canonical monolith
-3. identity.md      ← legacy
+3. identity.md      ← legacy (deprecated, will be removed)
 ```
 
 When `body/soul.md` exists, the others are never read.

@@ -78,7 +78,7 @@ All toggles live under the `systemPrompt` key in `settings.json`:
 
 | Key | Default | What It Controls |
 |-----|---------|-----------------|
-| `maxTokens` | `4000` | Estimated token budget for Soma's portion of the system prompt |
+| `maxTokens` | `10000` | Estimated token budget for Soma's portion of the system prompt |
 | `includeSomaDocs` | `true` | Soma documentation references (links to docs, how to learn more) |
 | `includePiDocs` | `true` | Pi framework documentation references |
 | `includeContextAwareness` | `true` | Note about CLAUDE.md presence (if file exists) |
@@ -102,7 +102,7 @@ All toggles live under the `systemPrompt` key in `settings.json`:
 
 The system prompt competes for space in the model's context window. Soma's portion typically uses **2000–6000 estimated tokens** depending on how many protocols and muscles are hot and how much identity content exists.
 
-The `maxTokens` setting (default: 4000) is a **soft warning**. When the compiled prompt exceeds this budget, Soma shows a warning notification at boot. It never truncates — the warning helps you decide what to trim.
+The `maxTokens` setting (default: 10000) is a **soft warning**. When the compiled prompt exceeds this budget, Soma shows a warning notification at boot. It never truncates — the warning helps you decide what to trim.
 
 To reduce token usage:
 - Mark body files as `lazy: true` (loads as skill reference, not full content)

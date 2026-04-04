@@ -6,7 +6,7 @@ order: 1
 ---
 
 <!-- tldr -->
-`npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. Use `soma inhale` to continue with a preload from last session, or `soma -c` to resume with full history. `/exhale` saves state + writes a preload, `/breathe` rotates into a fresh session, `/pin` keeps content hot, `/kill` drops it cold.
+`npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. `/exhale` saves state + writes a preload. `soma inhale` starts fresh with that preload loaded. `/breathe` rotates mid-session. `/pin` keeps content hot, `/kill` drops it cold. `soma -c` resumes with full conversation history.
 <!-- /tldr -->
 
 ## Install
@@ -30,7 +30,7 @@ Add this to your shell profile (`~/.zshrc` or `~/.bashrc`) to persist it.
 **No API key?** Free options exist:
 - Use `/login` with **Google Gemini CLI** or **Google Antigravity** (free with any Google account)
 - Use **GitHub Copilot** if you have a subscription
-- Run local models via **Ollama** (free, no API key needed — see [Custom Providers](/docs/models#custom-providers-ollama-lm-studio-etc))
+- Run local models via **Ollama** (free, no API key needed - see [Custom Providers](/docs/models#custom-providers-ollama-lm-studio-etc))
 
 ## First Run
 
@@ -61,17 +61,21 @@ The detected context shapes Soma's initial identity and the protocols it recomme
 soma
 ```
 
-Starts fresh. Runs the [boot sequence](/docs/configuration#boot-sequence): identity, protocols, muscles, scripts, git context. No preload, no prior context — blank slate.
+Starts fresh. Runs the [boot sequence](/docs/configuration#boot-sequence): identity, protocols, muscles, scripts, git context. If a recent preload exists, it's **auto-loaded** by default (`preload.autoInject: true`). Good for quick starts when you haven't changed the preload.
 
-### Continue Where You Left Off
+### Inhale (recommended daily workflow)
 
 ```bash
 soma inhale
 ```
 
-Starts a **fresh session** and automatically loads the most recent preload — the briefing your last session wrote during `/exhale`. This is the recommended way to continue a project day-to-day: fresh context window, but the agent knows what happened, what's next, and what files to read.
+Starts a **fresh session** and loads the most recent preload - the briefing your last session wrote during `/exhale`. This is the recommended way to continue a project:
 
-> **When to use:** Morning start, picking up after a break, any time you want continuity without the weight of full conversation history.
+1. `/exhale` at end of session → writes preload
+2. Review, reflect, update the preload if needed
+3. `soma inhale` → fresh context with your curated preload
+
+The difference from plain `soma`: `soma inhale` is **intentional**. You're saying "I've prepared the preload, load it now." Plain `soma` auto-loads quietly in the background.
 
 ### Resume Full Session
 
@@ -79,7 +83,7 @@ Starts a **fresh session** and automatically loads the most recent preload — t
 soma -c
 ```
 
-Reopens the last session with **full conversation history** preserved — same context, same thread. No new boot sequence. Best for short breaks (lunch, meeting) where you want to jump right back in.
+Reopens the last session with **full conversation history** preserved - same context, same thread. No new boot sequence. Best for short breaks (lunch, meeting) where you want to jump right back in.
 
 ### Select a Session
 
@@ -93,8 +97,8 @@ Pick from previous sessions to resume.
 
 | Command | Context | Memory | Best for |
 |---------|---------|--------|----------|
-| `soma` | Fresh | None | New work, exploring |
-| `soma inhale` | Fresh | Preload from last `/exhale` | Daily continuation |
+| `soma` | Fresh | Auto-loads preload (if exists) | Quick starts, new work |
+| `soma inhale` | Fresh | Loads preload (explicit) | Daily continuation after review |
 | `soma -c` | Full history | Complete conversation | Short breaks |
 
 ## Commands
@@ -103,12 +107,12 @@ Pick from previous sessions to resume.
 |---------|-------------|
 | `/breathe` | Save state + rotate into fresh session |
 | `/exhale` | Save state, write preload, session ends |
-| `/rest` | Disable keepalive + exhale — for when you're done for the night |
-| `/inhale` | Check preload status — shows if preload exists, warns if stale |
+| `/rest` | Disable keepalive + exhale - for when you're done for the night |
+| `/inhale` | Check preload status - shows if preload exists, warns if stale |
 | `/pin <name>` | Pin a protocol/muscle to hot (stays loaded) |
 | `/kill <name>` | Kill a protocol/muscle (drops to cold) |
 | `/keepalive` | Toggle cache keepalive on/off (or check status) |
-| `/status` | Show session stats — context %, cache, keepalive, turns, uptime |
+| `/status` | Show session stats - context %, cache, keepalive, turns, uptime |
 | `/preload` | List available preload files |
 | `/soma status` | Show memory status (identity, preload, muscles, protocols) |
 | `/soma init` | Create `.soma/` in current directory |
@@ -172,13 +176,13 @@ soma --models sonnet,haiku,gpt-4o  # limit cycling to these
 soma --list-models               # see all available
 ```
 
-See [Models & Providers](/docs/models) for the full guide — including custom providers, Ollama setup, OAuth login, and API key management.
+See [Models & Providers](/docs/models) for the full guide - including custom providers, Ollama setup, OAuth login, and API key management.
 
 ## Tips
 
-- **Let identity grow** — don't pre-write it. Let Soma discover who it becomes through your work.
-- **Trust the breath** — don't worry about context limits. `/breathe` rotates seamlessly. `/exhale` when you're done.
-- **Daily workflow** — `/exhale` at end of day, `soma inhale` next morning. That's it.
-- **Explore commands** — run `soma --help` for all CLI commands, `soma --help scripts` for installed tools, `soma --help commands` for the full reference.
-- **Switch models freely** — use `/model` or `Ctrl+P` mid-session. See [Models & Providers](/docs/models).
-- **Tune settings** — everything is configurable: boot steps, heat thresholds, context warnings. See [Configuration](/docs/configuration).
+- **Let identity grow** - don't pre-write it. Let Soma discover who it becomes through your work.
+- **Trust the breath** - don't worry about context limits. `/breathe` rotates seamlessly. `/exhale` when you're done.
+- **Daily workflow** — `/exhale` at end of session, review the preload, `soma inhale` next morning.
+- **Explore commands** - run `soma --help` for all CLI commands, `soma --help scripts` for installed tools, `soma --help commands` for the full reference.
+- **Switch models freely** - use `/model` or `Ctrl+P` mid-session. See [Models & Providers](/docs/models).
+- **Tune settings** - everything is configurable: boot steps, heat thresholds, context warnings. See [Configuration](/docs/configuration).

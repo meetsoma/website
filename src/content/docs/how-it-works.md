@@ -34,7 +34,7 @@ When Soma boots, it runs a configurable sequence of **boot steps**:
 | Step | What Loads | Default |
 |------|-----------|---------|
 | `identity` | Layered identity (project → parent → global) | ✅ On |
-| `preload` | Last session's state (on `--continue` only) | ✅ On |
+| `preload` | Last session’s state (auto-injected by default) | ✅ On |
 | `protocols` | Behavioral rules, sorted by heat tier | ✅ On |
 | `muscles` | Learned patterns, within token budget | ✅ On |
 | `automations` | MAPs and workflow templates, heat-tracked | ✅ On |
@@ -43,7 +43,7 @@ When Soma boots, it runs a configurable sequence of **boot steps**:
 
 The boot sequence is configurable in `settings.json` — remove steps you don't want, reorder to change priority. See [Configuration](/docs/configuration#boot-sequence).
 
-Fresh sessions (`soma`) load everything except preload. Resumed sessions (`soma -c`) add the preload on top.
+Fresh sessions (`soma`) load everything including the most recent preload (auto-injected by default). Resumed sessions (`soma -c`) restore full conversation history instead.
 
 #### Git Context
 

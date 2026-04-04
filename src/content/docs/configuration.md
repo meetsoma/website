@@ -108,7 +108,17 @@ Settings files can exist at any level in the Soma chain:
     "autoExhaleAt": 85
   },
   "preload": {
-    "staleAfterHours": 48
+    "staleAfterHours": 48,
+    "autoInject": true
+  },
+  "keepalive": {
+    "maxPings": 5,
+    "autoExhale": true,
+    "autoExhaleMinTokens": 75000
+  },
+  "doctor": {
+    "autoUpdate": true,
+    "declinedVersion": null
   },
   "checkpoints": {
     "soma": {
@@ -498,6 +508,7 @@ Controls when context usage warnings fire during a session. These are the **pass
 | Key | Default | Description |
 |-----|---------|-------------|
 | `staleAfterHours` | `48` | Hours before a preload file is considered stale. Stale preloads still load but show a ⚠️ warning. |
+| `autoInject` | `true` | Automatically inject the most recent preload on every fresh session start. When `false`, preloads only load via `soma inhale` (explicit CLI command). |
 
 **Why adjust:** The stale threshold prevents the agent from acting on outdated context. If you work on a project daily, 48 hours is right — a preload from 2 days ago is probably stale. For side projects you touch weekly, set it higher so your preloads still auto-load after a few days away.
 
