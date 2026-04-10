@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 2
 ---
 
+
 <!-- tldr -->
 Sessions are breaths: inhale (configurable boot steps: identity, preload, protocols, muscles, scripts, git-context) → work → breathe or exhale (save state, decay heat, write preload). Git context loads recent commits/diffs automatically. Heat system loads hot content fully, warm as breadcrumbs, cold stays dormant. Context warnings and preload staleness are configurable. All thresholds in `settings.json`.
 <!-- /tldr -->
@@ -223,7 +224,7 @@ See [Commands](/docs/commands#drop-in-commands) for the full guide.
 Focus priming lets you prepare the agent for a topic **before** the session starts:
 
 ```bash
-soma-focus.sh runtime    # trace "runtime" through memory, boost relevant content
+soma focus runtime    # trace "runtime" through memory, boost relevant content
 soma                     # boot primed for runtime work
 ```
 

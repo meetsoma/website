@@ -1,13 +1,14 @@
 ---
 title: "Focus"
-description: "Topic-driven session priming — boost relevant muscles, MAPs, and preloads automatically."
-section: "Workflows"
+description: "Seam-traced boot priming — focus the agent on a topic before the session starts."
+section: "Guide"
 order: 11
 ---
 
+# Focus — Seam-Traced Boot
 
 <!-- tldr -->
-Run `soma-focus.sh <keyword>` before starting a session to prime the agent for a specific topic. It traces the keyword through your memory, scores muscle/protocol/MAP relevance, and generates system prompt overrides. The agent wakes up already knowing what to focus on.
+Run `soma focus <keyword>` before starting a session to prime the agent for a specific topic. It traces the keyword through your memory, scores muscle/protocol/MAP relevance, and generates system prompt overrides. The agent wakes up already knowing what to focus on.
 <!-- /tldr -->
 
 ## The Problem
@@ -30,15 +31,15 @@ Everything that matches gets heat-boosted. High-relevance items get force-includ
 
 ```bash
 # Step 1: Set focus
-soma-focus.sh authentication
+soma focus authentication
 
 # Step 2: Start session — agent boots primed
 soma
 
 # Other commands:
-soma-focus.sh show            # see current focus state
-soma-focus.sh clear           # remove focus
-soma-focus.sh dry-run auth    # preview without writing
+soma focus show            # see current focus state
+soma focus clear           # remove focus
+soma focus dry-run auth    # preview without writing
 ```
 
 ## How Matching Works
@@ -102,4 +103,4 @@ The `.boot-target` is consumed (deleted) after boot — focus is a one-shot prim
 - [MAPs](/docs/maps) — workflow templates surfaced by focus
 - [Muscles](/docs/muscles) — learned patterns with trigger support
 - [Heat System](/docs/heat-system) — how heat overrides work
-- [Scripts](/docs/scripts) — `soma-focus.sh` reference
+- [Scripts](/docs/scripts) — `soma focus` reference

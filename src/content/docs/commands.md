@@ -5,6 +5,7 @@ section: "Reference"
 order: 7
 ---
 
+# Commands
 
 <!-- tldr -->
 CLI: `soma` (fresh), `soma inhale` (fresh + preload), `soma -c` (continue full history), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts). Body: `/body check`, `/body vars`, `/body map`, `/body render`.
@@ -95,7 +96,7 @@ Commands appear in `/soma status` output and tab completions. Install community 
 | `/scratch <note>` | Append a quick note to `.soma/scratchpad.md`. The agent doesn't see it - it's your private notepad. |
 | `/scratch read` | Show the scratchpad contents to the agent. |
 | `/scratch clear` | Empty the scratchpad. |
-| `/code <subcommand> [args]` | Fast codebase navigator - wraps `soma-code.sh`. Subcommands: `find`, `lines`, `map`, `refs`, `replace`, `structure`, `physics`, `events`, `css-vars`, `config`. |
+| `/code <subcommand> [args]` | Fast codebase navigator - wraps `soma code`. Subcommands: `find`, `lines`, `map`, `refs`, `replace`, `structure`, `physics`, `events`, `css-vars`, `config`. |
 | `/scrape <name\|topic> [--discover]` | Scrape docs for a tool, library, or topic. Providers: `github`, `npm`, `mdn`, `css`, `skills`. |
 | `/scan-logs [count] [--send]` | Scan conversation logs - session analytics via `soma-stats.sh`. `--send` injects results into conversation. |
 | `/body [check\|vars\|map\|render]` | Body template inspector. `check` = health report, `vars` = all variables by category, `map` = template structure, `render` = full compiled system prompt. All support `--send`. |
@@ -180,13 +181,13 @@ Run these **before** starting a session:
 
 | Command | Description |
 |---------|-------------|
-| `soma-focus.sh <keyword>` | Prime the next boot for a topic - traces keyword through memory, boosts relevant muscles/MAPs. |
-| `soma-focus.sh show` | Show current focus state. |
-| `soma-focus.sh clear` | Remove focus. |
+| `soma focus <keyword>` | Prime the next boot for a topic - traces keyword through memory, boosts relevant muscles/MAPs. |
+| `soma focus show` | Show current focus state. |
+| `soma focus clear` | Remove focus. |
 
 ```bash
 # Example: focus then start
-soma-focus.sh authentication    # trace + boost auth-related content
+soma focus authentication    # trace + boost auth-related content
 soma                            # boots primed for auth work
 ```
 
@@ -198,12 +199,12 @@ Key scripts:
 
 | Script | What it does |
 |--------|-------------|
-| `soma-code.sh` | Codebase navigator: map, find, refs, replace, structure |
-| `soma-seam.sh` | Trace concepts through memory, code, sessions |
-| `soma-query.sh` | Unified search: find, list, sessions, related, impact |
-| `soma-reflect.sh` | Session log pattern mining |
-| `soma-plans.sh` | Plan lifecycle management |
-| `soma-scrape.sh` | Doc discovery + scraping (requires gh, curl, jq) |
+| `soma code` | Codebase navigator: map, find, refs, replace, structure |
+| `soma seam` | Trace concepts through memory, code, sessions |
+| `soma query` | Unified search: find, list, sessions, related, impact |
+| `soma reflect` | Session log pattern mining |
+| `soma plans` | Plan lifecycle management |
+| `soma scrape` | Doc discovery + scraping (requires gh, curl, jq) |
 | `soma-snapshot.sh` | Rolling zip snapshots |
 
 ## The Breath Cycle

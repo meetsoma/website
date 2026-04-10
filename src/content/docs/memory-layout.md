@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 4
 ---
 
+# Memory Layout
 
 <!-- tldr -->
 Core structure: `.soma/` has five parts — `amps/` (Automations, Muscles, Protocols, Scripts), `memory/` (sessions, preloads), `body/` (structured identity — soul, voice, templates), `skills/` (installable capabilities), and root files (SOMA.md, settings.json, state.json). AMPS is the content system — what Soma learns and how it behaves. Memory is temporal state. Body files become template variables. User-level `~/.soma/agent/` holds global settings and runtime.
@@ -35,7 +36,7 @@ Lives in your project root.
 │   └── sessions/            ← per-session work logs
 │
 ├── inbox/                   ← inter-agent messages (see Inbox docs)
-├── knowledge/               ← scraped docs (from soma-scrape.sh)
+├── knowledge/               ← scraped docs (from soma scrape)
 ├── docs/                    ← ideas, plans, knowledge
 │
 ├── .boot-target             ← focus/MAP targeting signal (consumed on boot)

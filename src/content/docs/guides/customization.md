@@ -5,6 +5,7 @@ section: "Guide"
 order: 26
 ---
 
+# Customization
 
 <!-- tldr -->
 Six layers of customization, from quick settings to full prompt control: persona (name/emoji), voice (`body/voice.md`), rules (protocols), patterns (muscles), tools (scripts), and prompt structure (`body/_mind.md`). Start small — change one thing, see the effect. Most customization is just editing markdown files.
@@ -220,10 +221,10 @@ Scripts in `.soma/amps/scripts/` are discovered at boot and listed in the system
 Six scripts ship with Soma:
 
 ```bash
-soma-code.sh map src/       # map file structure
-soma-code.sh find "auth"    # search codebase
-soma-seam.sh trace "deploy" # trace concept through memory
-soma-focus.sh auth          # prime next session for auth work
+soma code map src/       # map file structure
+soma code find "auth"    # search codebase
+soma seam trace "deploy" # trace concept through memory
+soma focus auth          # prime next session for auth work
 ```
 
 ### Write Your Own

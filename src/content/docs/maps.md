@@ -1,10 +1,11 @@
 ---
 title: "MAPs"
-description: "Workflow templates — repeatable processes with scar tissue from real sessions."
-section: "Workflows"
-order: 12
+description: "My Automation Protocol Scripts — reusable workflow templates that tell the agent which muscles to load, which scripts to run, and in what order."
+section: "Reference"
+order: 10
 ---
 
+# MAPs — My Automation Protocol Scripts
 
 <!-- tldr -->
 MAPs are the navigation layer over AMPS. A MAP is a markdown file that describes a repeatable process — which muscles to read, which protocols to follow, which scripts to run, and in what order. MAPs live in `.soma/amps/automations/maps/`. Load a MAP with `soma --map <name>` to prime the agent's system prompt for that specific workflow.
@@ -30,7 +31,7 @@ triggers: [keyword1, keyword2]  # matched by soma focus
 reads:
   muscles: [incremental-refactor, pre-flight-check]
   protocols: [workflow, quality-standards]
-  scripts: [soma-code.sh, soma-verify.sh]
+  scripts: [soma code, soma verify]
 estimated-turns: 10-20
 requires: [tested code changes]
 produces: [pushed commit, updated docs]
@@ -103,7 +104,7 @@ This writes a `.boot-target` signal file that the boot system reads. The MAP's p
 ### Via focus (keyword matching)
 
 ```bash
-soma-focus.sh release       # traces "release" through memory
+soma focus release       # traces "release" through memory
 soma                        # boots with release-related MAPs loaded
 ```
 
