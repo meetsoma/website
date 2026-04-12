@@ -25,28 +25,104 @@ Somaverse changes that.
 
 Somaverse is a tiling workspace in your browser. You add panes — terminal, files, editor, browser, chat, voice. Your AI agent sees every pane, sends commands to any of them, and navigates the web with your session cookies.
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:32px 0; font-family:'Satoshi',system-ui,sans-serif;">
-  <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
-    <div style="font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:#647080; font-weight:600; margin-bottom:6px;">Terminal</div>
-    <code style="font-size:13px; color:#e4eaf4;">$ soma code map src/</code>
-    <div style="font-size:12px; color:#647080; margin-top:8px; font-family:monospace;">src/components/ — 21 files indexed</div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:32px 0;">
+  <div style="background:rgba(20,25,34,0.65); border:1px solid rgba(124,178,212,0.12); border-radius:14px; overflow:hidden; backdrop-filter:blur(12px); ">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid rgba(124,178,212,0.08); background:rgba(12,15,22,0.3);">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="display:inline-grid; grid-template-columns:repeat(3,3px); gap:2px;"><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span></span>
+        <span style="font-size:11px; font-weight:600; color:#9dafc4; letter-spacing:0.3px;">Terminal</span>
+      </div>
+      <div style="display:flex; gap:4px;">
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(232,100,100,0.15);display:inline-block;"></span>
+      </div>
+    </div>
+    <div style="padding:14px 16px;">
+      <div style="font-family:monospace; font-size:12px; line-height:1.7; color:#c8cad0;">
+      <div><span style="color:#4ade80;">~</span> <span style="color:#647080;">$</span> soma code map src/</div>
+      <div style="color:#647080; margin-top:4px;">src/plugins/terminal/  <span style="color:#7cb2d4;">index.tsx</span>  2.1KB</div>
+      <div style="color:#647080;">src/plugins/chat/      <span style="color:#7cb2d4;">index.tsx</span>  4.8KB</div>
+      <div style="color:#647080;">src/plugins/browser/   <span style="color:#7cb2d4;">index.tsx</span>  3.2KB</div>
+      <div style="color:#647080;">src/plugins/files/     <span style="color:#7cb2d4;">index.tsx</span>  1.9KB</div>
+      <div style="color:#4ade80; margin-top:4px;">&#10003; 21 files indexed in 0.3s</div>
+    </div>
+    </div>
   </div>
-  <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
-    <div style="font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:#647080; font-weight:600; margin-bottom:6px;">Browser</div>
-    <div style="font-size:13px; color:#7cb2d4;">github.com/meetsoma</div>
-    <div style="font-size:12px; color:#647080; margin-top:8px;">CDP connected · 3 tabs open</div>
+  <div style="background:rgba(20,25,34,0.65); border:1px solid rgba(124,178,212,0.12); border-radius:14px; overflow:hidden; backdrop-filter:blur(12px); ">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid rgba(124,178,212,0.08); background:rgba(12,15,22,0.3);">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="display:inline-grid; grid-template-columns:repeat(3,3px); gap:2px;"><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span></span>
+        <span style="font-size:11px; font-weight:600; color:#9dafc4; letter-spacing:0.3px;">Browser</span>
+      </div>
+      <div style="display:flex; gap:4px;">
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(232,100,100,0.15);display:inline-block;"></span>
+      </div>
+    </div>
+    <div style="padding:14px 16px;">
+      <div style="font-size:12px;">
+      <div style="background:rgba(12,15,22,0.5); border-radius:6px; padding:6px 10px; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+        <span style="color:#647080;">&#9679;</span>
+        <span style="color:#7cb2d4; font-family:monospace; font-size:11px;">https://github.com/meetsoma/soma-agent</span>
+      </div>
+      <div style="color:#9dafc4; font-size:11px;">CDP connected &middot; Accessibility tree: 847 nodes</div>
+      <div style="color:#647080; font-size:11px; margin-top:4px;">3 tabs &middot; cookies synced &middot; viewport 1440&times;900</div>
+    </div>
+    </div>
   </div>
-  <div style="background:linear-gradient(135deg, rgba(11,16,24,0.85), rgba(240,200,102,0.04)); border:1px solid rgba(240,200,102,0.25); border-radius:10px; padding:16px 20px;">
-    <div style="font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:#f0c866; font-weight:600; margin-bottom:6px;">Chat</div>
-    <div style="font-size:13px; color:#e4eaf4;">I can see your workspace. The test suite has 2 failures in <code style="color:#7cb2d4;">auth.test.ts</code> — want me to trace them?</div>
+  <div style="background:linear-gradient(135deg, rgba(20,25,34,0.65), rgba(240,200,102,0.03)); border:1px solid rgba(240,200,102,0.25); border-radius:14px; overflow:hidden; backdrop-filter:blur(12px); box-shadow:0 0 30px rgba(240,200,102,0.06);">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid rgba(240,200,102,0.08); background:rgba(12,15,22,0.3);">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="display:inline-grid; grid-template-columns:repeat(3,3px); gap:2px;"><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span></span>
+        <span style="font-size:11px; font-weight:600; color:#f0c866; letter-spacing:0.3px;">Chat</span>
+      </div>
+      <div style="display:flex; gap:4px;">
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(232,100,100,0.15);display:inline-block;"></span>
+      </div>
+    </div>
+    <div style="padding:14px 16px;">
+      <div style="font-size:13px; line-height:1.6;">
+      <div style="display:flex; gap:8px; margin-bottom:10px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:#3e6c92;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:700;">C</div>
+        <div style="color:#9dafc4;">Can you check why the auth tests are failing?</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(240,200,102,0.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:12px; color:#f0c866; font-weight:800;">&#963;</span>
+        </div>
+        <div style="color:#e4eaf4;">I can see the workspace. The test suite has 2 failures in <code style="color:#7cb2d4; background:rgba(124,178,212,0.1); padding:1px 5px; border-radius:3px; font-size:12px;">auth.test.ts</code> &#8212; line 47 expects a 200 but gets 401. The token refresh middleware isn&#x27;t being called. Let me trace it.</div>
+      </div>
+    </div>
+    </div>
   </div>
-  <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
-    <div style="font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:#647080; font-weight:600; margin-bottom:6px;">Files</div>
-    <div style="font-size:12px; color:#9dafc4; font-family:monospace; line-height:1.8;">
-      <span style="color:#647080;">▸</span> src/<br/>
-      <span style="color:#647080;">▸</span> tests/<br/>
-      <span style="color:#647080;">▾</span> docs/<br/>
-      <span style="padding-left:16px; color:#7cb2d4;">getting-started.md</span>
+  <div style="background:rgba(20,25,34,0.65); border:1px solid rgba(124,178,212,0.12); border-radius:14px; overflow:hidden; backdrop-filter:blur(12px); ">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid rgba(124,178,212,0.08); background:rgba(12,15,22,0.3);">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="display:inline-grid; grid-template-columns:repeat(3,3px); gap:2px;"><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span></span>
+        <span style="font-size:11px; font-weight:600; color:#9dafc4; letter-spacing:0.3px;">Files</span>
+      </div>
+      <div style="display:flex; gap:4px;">
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(232,100,100,0.15);display:inline-block;"></span>
+      </div>
+    </div>
+    <div style="padding:14px 16px;">
+      <div style="font-family:monospace; font-size:12px; color:#9dafc4; line-height:1.8;">
+      <div><span style="color:#647080;">&#9662;</span> <span style="color:#fbbf24;">src/</span></div>
+      <div style="padding-left:16px;"><span style="color:#647080;">&#9662;</span> <span style="color:#fbbf24;">plugins/</span></div>
+      <div style="padding-left:32px;"><span style="color:#7cb2d4;">terminal/</span></div>
+      <div style="padding-left:32px;"><span style="color:#7cb2d4;">chat/</span></div>
+      <div style="padding-left:32px;"><span style="color:#7cb2d4;">browser/</span></div>
+      <div style="padding-left:32px;"><span style="color:#7cb2d4;">files/</span></div>
+      <div style="padding-left:16px;"><span style="color:#647080;">&#9656;</span> <span style="color:#fbbf24;">components/</span></div>
+      <div style="padding-left:16px;"><span style="color:#647080;">&#9656;</span> <span style="color:#fbbf24;">store/</span></div>
+      <div><span style="color:#647080;">&#9656;</span> <span style="color:#fbbf24;">tests/</span></div>
+    </div>
     </div>
   </div>
 </div>
