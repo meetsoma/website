@@ -277,7 +277,7 @@ The system prompt is assembled from a template at `.soma/body/_mind.md`. If you 
 
 ```bash
 # Copy the default template as a starting point
-cp ~/.soma/agent/body/_public/_mind.md .soma/body/_mind.md
+cp ~/.soma/agent/templates/default/_mind.md .soma/body/_mind.md
 ```
 
 Now edit `.soma/body/_mind.md`:
@@ -332,7 +332,7 @@ Never modify files in the `legacy/` directory.
 Control what the agent writes when it exhales:
 
 ```bash
-cp ~/.soma/agent/body/_public/_memory.md .soma/body/_memory.md
+cp ~/.soma/agent/templates/default/_memory.md .soma/body/_memory.md
 ```
 
 Edit to add your own sections or reorder priorities. See [Body Architecture](/docs/body) for all template variables.

@@ -109,7 +109,7 @@ The chain is complete — no gaps. If your project is at v0.6.4 and the agent is
 ### Content Files (body templates)
 
 ```
-body/_public/soul.md      ← bundled template
+templates/default/soul.md  ← bundled template
 body/soul.md              ← your copy (in .soma/)
 ```
 

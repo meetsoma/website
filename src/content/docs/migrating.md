@@ -15,7 +15,7 @@ In Soma, that one file becomes several:
 
 | Your CLAUDE.md section | Where it goes in Soma |
 |---|---|
-| Project-specific rules ("use pnpm", "deploy branch is main") | `.soma/identity.md` |
+| Project-specific rules ("use pnpm", "deploy branch is main") | `.soma/body/soul.md` |
 | Behavioral preferences ("test before commit", "prefer composition") | `.soma/amps/protocols/` — one file per rule |
 | Learned patterns ("this API uses OAuth", "use esbuild not webpack") | `.soma/amps/muscles/` — one file per pattern |
 | Tool instructions ("run `npm test` after changes") | `.soma/amps/scripts/` — actual executable scripts |
@@ -26,7 +26,7 @@ In Soma, that one file becomes several:
 
 1. Run `soma init` in your project
 2. Open your existing `CLAUDE.md`
-3. Copy project-specific lines into `.soma/identity.md`
+3. Copy project-specific lines into `.soma/body/soul.md`
 4. For each behavioral rule, create a file in `.soma/amps/protocols/`:
 
 ```markdown
