@@ -529,29 +529,37 @@ export default function OrbitalPhysics() {
           pointerEvents: 'none',
         }}
       >
-        <img
-          src="/media/soma-logo-animated.svg"
-          alt=""
+        <svg
+          viewBox="0 0 100 100"
           width="86"
           height="86"
           style={{
-            filter: 'drop-shadow(0 0 21px var(--logo-glow))',
+            filter: 'drop-shadow(0 0 21px rgba(240, 200, 102, 0.25))',
             pointerEvents: 'auto',
             cursor: 'pointer',
           }}
           class="orbital-center-float"
           onClick={() => { window.location.href = '/verse/'; }}
-        />
+        >
+          <defs>
+            <linearGradient id="gcw-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f0c866"/>
+              <stop offset="100%" stop-color="#e8a87c"/>
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="46" fill="none" stroke="url(#gcw-grad)" stroke-width="2.5"/>
+          <text x="50" y="63" text-anchor="middle" fill="url(#gcw-grad)" font-size="52" font-weight="800" font-family="Manrope, system-ui, sans-serif">{"\u03C3"}</text>
+        </svg>
         <span
           style={{
-            fontFamily: 'var(--font-display)',
+            fontFamily: "'Manrope', system-ui, sans-serif",
             fontSize: 'var(--text-xl)',
-            fontWeight: 600,
+            fontWeight: 800,
             color: 'var(--text-primary)',
-            letterSpacing: '0.05em',
+            letterSpacing: '-0.01em',
           }}
         >
-          soma
+          s<span style={{ color: 'var(--promo, #f0c866)' }}>{"\u03C3"}</span>ma
         </span>
       </div>
 
