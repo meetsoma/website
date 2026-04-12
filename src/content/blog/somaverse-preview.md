@@ -30,7 +30,7 @@ Somaverse is a tiling workspace in your browser. You add panes — terminal, fil
     <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid rgba(124,178,212,0.08); background:rgba(12,15,22,0.3);">
       <div style="display:flex; align-items:center; gap:8px;">
         <span style="display:inline-grid; grid-template-columns:repeat(3,3px); gap:2px;"><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span></span>
-        <span style="font-size:11px; font-weight:600; color:#9dafc4; letter-spacing:0.3px;">Terminal</span>
+        <span style="font-size:13px; font-weight:600; color:#9dafc4; letter-spacing:0.3px;">Terminal</span>
       </div>
       <div style="display:flex; gap:4px;">
         <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
@@ -39,7 +39,7 @@ Somaverse is a tiling workspace in your browser. You add panes — terminal, fil
       </div>
     </div>
     <div style="padding:14px 16px;">
-      <div style="font-family:monospace; font-size:12px; line-height:1.7; color:#c8cad0;">
+      <div style="font-family:monospace; font-size:13.5px; line-height:1.7; color:#c8cad0;">
       <div><span style="color:#4ade80;">~</span> <span style="color:#647080;">$</span> soma code map src/</div>
       <div style="color:#647080; margin-top:4px;">src/plugins/terminal/  <span style="color:#7cb2d4;">index.tsx</span>  2.1KB</div>
       <div style="color:#647080;">src/plugins/chat/      <span style="color:#7cb2d4;">index.tsx</span>  4.8KB</div>
@@ -53,7 +53,7 @@ Somaverse is a tiling workspace in your browser. You add panes — terminal, fil
     <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid rgba(124,178,212,0.08); background:rgba(12,15,22,0.3);">
       <div style="display:flex; align-items:center; gap:8px;">
         <span style="display:inline-grid; grid-template-columns:repeat(3,3px); gap:2px;"><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span></span>
-        <span style="font-size:11px; font-weight:600; color:#9dafc4; letter-spacing:0.3px;">Browser</span>
+        <span style="font-size:13px; font-weight:600; color:#9dafc4; letter-spacing:0.3px;">Browser</span>
       </div>
       <div style="display:flex; gap:4px;">
         <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
@@ -62,13 +62,13 @@ Somaverse is a tiling workspace in your browser. You add panes — terminal, fil
       </div>
     </div>
     <div style="padding:14px 16px;">
-      <div style="font-size:12px;">
+      <div style="font-size:13.5px;">
       <div style="background:rgba(12,15,22,0.5); border-radius:6px; padding:6px 10px; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
         <span style="color:#647080;">&#9679;</span>
-        <span style="color:#7cb2d4; font-family:monospace; font-size:11px;">https://github.com/meetsoma/soma-agent</span>
+        <span style="color:#7cb2d4; font-family:monospace; font-size:13px;">https://github.com/meetsoma/soma-agent</span>
       </div>
-      <div style="color:#9dafc4; font-size:11px;">CDP connected &middot; Accessibility tree: 847 nodes</div>
-      <div style="color:#647080; font-size:11px; margin-top:4px;">3 tabs &middot; cookies synced &middot; viewport 1440&times;900</div>
+      <div style="color:#9dafc4; font-size:13px;">CDP connected &middot; Accessibility tree: 847 nodes</div>
+      <div style="color:#647080; font-size:13px; margin-top:4px;">3 tabs &middot; cookies synced &middot; viewport 1440&times;900</div>
     </div>
     </div>
   </div>
@@ -76,7 +76,7 @@ Somaverse is a tiling workspace in your browser. You add panes — terminal, fil
     <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid rgba(240,200,102,0.08); background:rgba(12,15,22,0.3);">
       <div style="display:flex; align-items:center; gap:8px;">
         <span style="display:inline-grid; grid-template-columns:repeat(3,3px); gap:2px;"><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span></span>
-        <span style="font-size:11px; font-weight:600; color:#f0c866; letter-spacing:0.3px;">Chat</span>
+        <span style="font-size:13px; font-weight:600; color:#f0c866; letter-spacing:0.3px;">Chat</span>
       </div>
       <div style="display:flex; gap:4px;">
         <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
@@ -92,9 +92,9 @@ Somaverse is a tiling workspace in your browser. You add panes — terminal, fil
       </div>
       <div style="display:flex; gap:8px;">
         <div style="width:22px;height:22px;border-radius:50%;background:rgba(240,200,102,0.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-          <span style="font-size:12px; color:#f0c866; font-weight:800;">&#963;</span>
+          <span style="font-size:13.5px; color:#f0c866; font-weight:800;">&#963;</span>
         </div>
-        <div style="color:#e4eaf4;">I can see the workspace. The test suite has 2 failures in <code style="color:#7cb2d4; background:rgba(124,178,212,0.1); padding:1px 5px; border-radius:3px; font-size:12px;">auth.test.ts</code> &#8212; line 47 expects a 200 but gets 401. The token refresh middleware isn&#x27;t being called. Let me trace it.</div>
+        <div style="color:#e4eaf4;">I can see the workspace. The test suite has 2 failures in <code style="color:#7cb2d4; background:rgba(124,178,212,0.1); padding:1px 5px; border-radius:3px; font-size:13.5px;">auth.test.ts</code> &#8212; line 47 expects a 200 but gets 401. The token refresh middleware isn&#x27;t being called. Let me trace it.</div>
       </div>
     </div>
     </div>
@@ -103,7 +103,7 @@ Somaverse is a tiling workspace in your browser. You add panes — terminal, fil
     <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid rgba(124,178,212,0.08); background:rgba(12,15,22,0.3);">
       <div style="display:flex; align-items:center; gap:8px;">
         <span style="display:inline-grid; grid-template-columns:repeat(3,3px); gap:2px;"><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span><span style="width:3px;height:3px;border-radius:1px;background:rgba(124,178,212,0.25);"></span></span>
-        <span style="font-size:11px; font-weight:600; color:#9dafc4; letter-spacing:0.3px;">Files</span>
+        <span style="font-size:13px; font-weight:600; color:#9dafc4; letter-spacing:0.3px;">Files</span>
       </div>
       <div style="display:flex; gap:4px;">
         <span style="width:12px;height:12px;border-radius:3px;border:1px solid rgba(124,178,212,0.15);display:inline-block;"></span>
@@ -112,7 +112,7 @@ Somaverse is a tiling workspace in your browser. You add panes — terminal, fil
       </div>
     </div>
     <div style="padding:14px 16px;">
-      <div style="font-family:monospace; font-size:12px; color:#9dafc4; line-height:1.8;">
+      <div style="font-family:monospace; font-size:13.5px; color:#9dafc4; line-height:1.8;">
       <div><span style="color:#647080;">&#9662;</span> <span style="color:#fbbf24;">src/</span></div>
       <div style="padding-left:16px;"><span style="color:#647080;">&#9662;</span> <span style="color:#fbbf24;">plugins/</span></div>
       <div style="padding-left:32px;"><span style="color:#7cb2d4;">terminal/</span></div>
@@ -149,7 +149,7 @@ This is the part that surprised us during development.
 Each pane exposes seam ports — named input/output channels with typed data. The terminal emits `output` events. The editor emits `file:change`. The browser emits `navigation` and `screenshot` events. The chat emits `agent:output`.
 
 <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:12px; padding:24px 28px; margin:32px 0; font-family:monospace; font-size:13px; line-height:2;">
-  <div style="color:#647080; margin-bottom:8px; font-size:11px; text-transform:uppercase; letter-spacing:1.5px; font-family:'Satoshi',system-ui;">Seam Bridges</div>
+  <div style="color:#647080; margin-bottom:8px; font-size:13px; text-transform:uppercase; letter-spacing:1.5px; font-family:'Satoshi',system-ui;">Seam Bridges</div>
   <div><span style="color:#7cb2d4;">chat</span><span style="color:#647080;"> agent:output </span><span style="color:#f0c866;">→</span><span style="color:#647080;"> command </span><span style="color:#7cb2d4;">terminal</span></div>
   <div><span style="color:#7cb2d4;">browser</span><span style="color:#647080;"> screenshot </span><span style="color:#f0c866;">→</span><span style="color:#647080;"> image </span><span style="color:#7cb2d4;">chat</span></div>
   <div><span style="color:#7cb2d4;">editor</span><span style="color:#647080;"> file:change </span><span style="color:#f0c866;">→</span><span style="color:#647080;"> command </span><span style="color:#7cb2d4;">terminal</span> <span style="color:#647080; font-style:italic;"># auto-run tests</span></div>
@@ -172,7 +172,7 @@ A workspace has channels. Each channel is a runtime isolation boundary — panes
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(124,178,212,0.2); border-radius:10px; padding:20px;">
     <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
       <div style="width:8px; height:8px; border-radius:50%; background:#7cb2d4;"></div>
-      <span style="font-size:12px; font-weight:600; color:#7cb2d4; text-transform:uppercase; letter-spacing:1px;">Channel: Research</span>
+      <span style="font-size:13.5px; font-weight:600; color:#7cb2d4; text-transform:uppercase; letter-spacing:1px;">Channel: Research</span>
     </div>
     <div style="font-size:13px; color:#9dafc4; line-height:1.6;">
       Browser → docs, Stack Overflow<br/>
@@ -183,7 +183,7 @@ A workspace has channels. Each channel is a runtime isolation boundary — panes
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(232,168,124,0.2); border-radius:10px; padding:20px;">
     <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
       <div style="width:8px; height:8px; border-radius:50%; background:#e8a87c;"></div>
-      <span style="font-size:12px; font-weight:600; color:#e8a87c; text-transform:uppercase; letter-spacing:1px;">Channel: Deploy</span>
+      <span style="font-size:13.5px; font-weight:600; color:#e8a87c; text-transform:uppercase; letter-spacing:1px;">Channel: Deploy</span>
     </div>
     <div style="font-size:13px; color:#9dafc4; line-height:1.6;">
       Terminal → production SSH<br/>
@@ -203,24 +203,24 @@ Or put everything on "main" and let one agent see it all. Your choice.
 
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:32px 0; font-family:'Satoshi',system-ui,sans-serif;">
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
-    <div style="font-size:11px; color:#f0c866; font-weight:600; margin-bottom:4px;">Frontend</div>
+    <div style="font-size:13px; color:#f0c866; font-weight:600; margin-bottom:4px;">Frontend</div>
     <div style="font-size:13px; color:#e4eaf4;">React 19 + Vite 8 + Tailwind 4</div>
-    <div style="font-size:12px; color:#647080; margin-top:4px;">150 tests · 0 type errors</div>
+    <div style="font-size:13.5px; color:#647080; margin-top:4px;">150 tests · 0 type errors</div>
   </div>
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
-    <div style="font-size:11px; color:#f0c866; font-weight:600; margin-bottom:4px;">Backend</div>
+    <div style="font-size:13px; color:#f0c866; font-weight:600; margin-bottom:4px;">Backend</div>
     <div style="font-size:13px; color:#e4eaf4;">Somadian — Rust</div>
-    <div style="font-size:12px; color:#647080; margin-top:4px;">Agents · filesystem · CDP · voice · graph</div>
+    <div style="font-size:13.5px; color:#647080; margin-top:4px;">Agents · filesystem · CDP · voice · graph</div>
   </div>
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
-    <div style="font-size:11px; color:#f0c866; font-weight:600; margin-bottom:4px;">Transport</div>
+    <div style="font-size:13px; color:#f0c866; font-weight:600; margin-bottom:4px;">Transport</div>
     <div style="font-size:13px; color:#e4eaf4;">Two-layer architecture</div>
-    <div style="font-size:12px; color:#647080; margin-top:4px;">Seam bus (local) + Somadian (server)</div>
+    <div style="font-size:13.5px; color:#647080; margin-top:4px;">Seam bus (local) + Somadian (server)</div>
   </div>
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
-    <div style="font-size:11px; color:#f0c866; font-weight:600; margin-bottom:4px;">Deploy</div>
+    <div style="font-size:13px; color:#f0c866; font-weight:600; margin-bottom:4px;">Deploy</div>
     <div style="font-size:13px; color:#e4eaf4;">Docker + nginx</div>
-    <div style="font-size:12px; color:#647080; margin-top:4px;">VPS-ready · Traefik reverse proxy</div>
+    <div style="font-size:13.5px; color:#647080; margin-top:4px;">VPS-ready · Traefik reverse proxy</div>
   </div>
 </div>
 
@@ -242,11 +242,11 @@ We're opening registration soon. Twenty-four hours, then invite-only.
     <circle cx="50" cy="50" r="42" fill="none" stroke="#f0c866" stroke-width="3"/>
     <text x="50" y="62" text-anchor="middle" fill="#f0c866" font-size="42" font-weight="800" font-family="Manrope,system-ui">σ</text>
   </svg>
-  <div style="font-size:11px; color:#f0c866; letter-spacing:3px; text-transform:uppercase; font-weight:700; margin-bottom:6px;">Genesis Member</div>
+  <div style="font-size:13px; color:#f0c866; letter-spacing:3px; text-transform:uppercase; font-weight:700; margin-bottom:6px;">Genesis Member</div>
   <div style="font-size:24px; font-weight:800; color:#e4eaf4; font-family:'Manrope',system-ui; margin-bottom:4px;">You'll be #?</div>
   <div style="font-size:13px; color:#9dafc4; margin-bottom:14px;">The number is yours forever.</div>
   <div style="width:50px; height:1px; background:rgba(240,200,102,0.3); margin:0 auto 14px;"></div>
-  <div style="font-size:12px; color:#647080; line-height:1.6;">
+  <div style="font-size:13.5px; color:#647080; line-height:1.6;">
     Genesis badge · 3 invite codes · Early access to everything
   </div>
 </div>
@@ -276,19 +276,19 @@ Somaverse is the hosted layer — the workspace, the visual tools, the multiplay
 
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:32px 0; font-family:'Satoshi',system-ui,sans-serif;">
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(124,178,212,0.2); border-radius:10px; padding:20px;">
-    <div style="font-size:12px; font-weight:700; color:#7cb2d4; margin-bottom:8px;">Soma Core — Open Source</div>
+    <div style="font-size:13.5px; font-weight:700; color:#7cb2d4; margin-bottom:8px;">Soma Core — Open Source</div>
     <div style="font-size:13px; color:#9dafc4; line-height:1.6;">
       Terminal agent · persistent memory<br/>
       Identity · protocols · muscles · scripts<br/>
-      <code style="font-size:12px; color:#647080;">npm install -g meetsoma</code>
+      <code style="font-size:13.5px; color:#647080;">npm install -g meetsoma</code>
     </div>
   </div>
   <div style="background:linear-gradient(135deg, rgba(11,16,24,0.85), rgba(240,200,102,0.04)); border:1px solid rgba(240,200,102,0.2); border-radius:10px; padding:20px;">
-    <div style="font-size:12px; font-weight:700; color:#f0c866; margin-bottom:8px;">Somaverse — Hosted Workspace</div>
+    <div style="font-size:13.5px; font-weight:700; color:#f0c866; margin-bottom:8px;">Somaverse — Hosted Workspace</div>
     <div style="font-size:13px; color:#9dafc4; line-height:1.6;">
       Visual workspace · 21 plugins<br/>
       Browser control · voice · multiplayer<br/>
-      <span style="font-size:12px; color:#647080;">somaverse.ai</span>
+      <span style="font-size:13.5px; color:#647080;">somaverse.ai</span>
     </div>
   </div>
 </div>
