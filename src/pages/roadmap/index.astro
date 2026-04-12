@@ -7,44 +7,44 @@ import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string }[] = [
   {
+    name: 'Identity & First Run',
+    icon: 'protocols',
+    description: 'soul.md replaces SOMA.md. Minimal first-run boot -- the agent discovers through use instead of loading everything at once. 11 bundled scripts, extension allowlist, distribution tiers.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+  },
+  {
     name: 'Doctor & Migration',
     icon: 'protocols',
-    description: 'Project health check with Tier 1 auto-fix on boot. soma doctor runs migrations, adds missing settings and templates. 10 migration phases covering v0.6.1 → v0.8.1. Your customizations are never touched.',
+    description: 'Project health check with auto-fix on boot. 13 migration phases from v0.6.1 to v0.11.0. Critical semver fix ensures upgrades actually run. Your customizations are never touched.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
   },
   {
-    name: 'Keepalive & Cache Management',
+    name: 'Image & Error Guard',
     icon: 'extensions',
-    description: 'Smart cache keepalive with configurable lives. Auto-exhale saves your session state when you walk away. Keeps the prompt cache warm to reduce API costs.',
+    description: 'Auto-strips old images when they accumulate. Human-readable API errors instead of raw JSON. Billing notices handled gracefully. Keepalive auto-pause on rate limits.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
   },
   {
-    name: 'PHASE — Workflow Orchestration',
-    icon: 'automations',
-    description: 'Phase-aware MAPs with per-phase brain configuration. /phase command injects the right context at each step. Cascading agent handoff between phases.',
-    status: 'In Progress',
-    statusColor: 'var(--warm-bright)',
-  },
-  {
-    name: 'Init UX & Onboarding',
-    icon: 'protocols',
-    description: 'First-run onboarding wizard. Learn the user\'s name and style once, globally. Every project inherits. The first soma should feel like meeting someone, not configuring something.',
-    status: 'In Progress',
-    statusColor: 'var(--warm-bright)',
-  },
-  {
-    name: 'Project Navigator',
+    name: 'Distribution Tiers',
     icon: 'scripts',
-    description: 'Run soma anywhere — it finds your projects, offers to set up new ones, or picks up where you left off. Multi-project doctor discovers and updates all your .soma/ projects.',
-    status: 'In Progress',
-    statusColor: 'var(--warm-bright)',
+    description: 'Free scripts ship readable. Pro scripts compile to protected JavaScript. Extensions obfuscated with auth-gate. Open-source pledge: core Soma stays open forever.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
   },
   {
     name: 'Somaverse',
     icon: 'extensions',
-    description: 'A growing universe of spaces and workspaces. Create public spaces or private workspaces, connect your Soma with any platform, add plugins, manage APIs and sites from a customizable dashboard. Build, grow, and share with a next-gen AI community.',
+    description: 'Visual workspace with 21 plugins -- terminal, files, editor, browser, chat, voice. Your AI agent sees every pane. Tiling layout, channel isolation, seam bus for pane-to-pane communication.',
+    status: 'Alpha',
+    statusColor: 'var(--warm-bright)',
+  },
+  {
+    name: 'Recall',
+    icon: 'automations',
+    description: 'Persistent memory via graph store. Cross-session, cross-project knowledge that survives context windows. The agent remembers what matters and forgets what does not.',
     status: 'In Progress',
     statusColor: 'var(--warm-bright)',
   },
@@ -91,50 +91,43 @@ const upcoming: { name: string; icon: string; description: string; status: strin
         <div class="progress-item">
           <span class="progress-dot active"></span>
           <div>
-            <strong>First-run onboarding</strong>
-            <p>Global user setup on first soma run. Ask name and style once, inherit everywhere. The first breath should feel like meeting someone.</p>
+            <strong>Somaverse Alpha deploy</strong>
+            <p>Docker + nginx on VPS. Genesis badges, invite codes, 24-hour open window. One deploy command away.</p>
           </div>
         </div>
         <div class="progress-item">
           <span class="progress-dot active"></span>
           <div>
-            <strong>Multi-project doctor</strong>
-            <p>Parent-first fix ordering across project chains. soma doctor --all discovers and updates every .soma/ project in your workspace.</p>
+            <strong>Niche templates</strong>
+            <p>Next.js, Rust, Python ML shipped. Go, Laravel, Astro, React Native, Monorepo planned. Each template shapes the agent for your stack.</p>
           </div>
         </div>
         <div class="progress-item">
           <span class="progress-dot active"></span>
           <div>
-            <strong>Framework compatibility</strong>
-            <p>Layer Soma on top of CLAUDE.md, AGENTS.md, .cursorrules. Configurable awareness — choose what your agent reads on boot and how it merges with Soma’s memory.</p>
+            <strong>Website docs sync</strong>
+            <p>28 docs synced from v0.11.0. Blog post ready. Vercel deploy pending merge.</p>
           </div>
         </div>
         <div class="progress-item">
           <span class="progress-dot"></span>
           <div>
-            <strong>Tutorial guides</strong>
-            <p>Writing your first protocol. Writing your first muscle. Sharing a script to the hub. Hands-on walkthroughs.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot"></span>
-          <div>
-            <strong>Boot sequence extraction</strong>
-            <p>Moving hardcoded behavior from TypeScript into user-editable MAPs. Configure what loads and in what order.</p>
+            <strong>Recall memory</strong>
+            <p>Graph-backed persistent memory. Cross-session knowledge. The agent remembers patterns, decisions, and context across projects.</p>
           </div>
         </div>
         <div class="progress-item">
           <span class="progress-dot"></span>
           <div>
             <strong>Content versioning</strong>
-            <p>Versioned protocols and muscles from the community hub. Author namespaces, fork infrastructure, commit-anchored lineage.</p>
+            <p>Know when hub protocols update. Diff before upgrading. Never lose your customizations to a hub sync.</p>
           </div>
         </div>
         <div class="progress-item">
           <span class="progress-dot"></span>
           <div>
-            <strong>SomaRuntime</strong>
-            <p>Abstraction layer between Soma and the underlying engine. Swap engines without touching your extensions or code.</p>
+            <strong>Async agent comms</strong>
+            <p>Soma reaches you when decisions are needed. File-based inbox already works. Push notifications coming.</p>
           </div>
         </div>
       </div>
