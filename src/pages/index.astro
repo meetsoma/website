@@ -23,7 +23,7 @@ const recentPosts = posts.slice(0, 3);
       </div>
 
       <h1 class="title">
-        <span class="title-main">Soma</span>
+        <span class="title-main">S<span class="title-sigma">σ</span>ma</span>
         <a href="/verse/" class="beta-badge">verse</a>
       </h1>
 
@@ -39,7 +39,7 @@ const recentPosts = posts.slice(0, 3);
     {recentPosts.length > 0 && (
       <section class="recent-posts">
         {recentPosts.map((post, i) => (
-          <a href={blogPostUrl(post)} class="recent-post-card">
+          <a href={blogPostUrl(post)} class:list={['recent-post-card', { 'recent-post-promo': i === 0 }]}>
             {i === 0 && <span class="recent-post-badge">New</span>}
             <span class="recent-post-title">{post.data.title}</span>
             <span class="recent-post-arrow">→</span>
@@ -232,6 +232,42 @@ const recentPosts = posts.slice(0, 3);
       </div>
     </section>
 
+    <!-- Somaverse teaser -->
+    <section class="verse-teaser">
+      <SectionHeader title="Somaverse" subtitle="Give your agent eyes and hands" />
+      <div class="verse-content">
+        <div class="verse-text">
+          <p>Soma lives in the terminal. Somaverse gives it a workspace.</p>
+          <p>A tiling workspace in your browser with 21 plugins. Terminal, files, editor, browser, chat, voice. Your agent sees every pane, sends commands, navigates the web.</p>
+          <p>Not a chatbot with plugins. A co-pilot with eyes.</p>
+          <div class="verse-cta">
+            <a href="/blog/somaverse-preview" class="verse-link">Read the preview &rarr;</a>
+            <span class="verse-status">Alpha &mdash; Genesis coming soon</span>
+          </div>
+        </div>
+        <div class="verse-visual">
+          <div class="verse-panes">
+            <div class="verse-pane" style="grid-area: a">
+              <span class="pane-label">Terminal</span>
+              <code class="pane-content">$ soma code map src/</code>
+            </div>
+            <div class="verse-pane" style="grid-area: b">
+              <span class="pane-label">Browser</span>
+              <span class="pane-content dim">CDP connected</span>
+            </div>
+            <div class="verse-pane accent" style="grid-area: c">
+              <span class="pane-label">Chat</span>
+              <span class="pane-content">I can see your workspace.</span>
+            </div>
+            <div class="verse-pane" style="grid-area: d">
+              <span class="pane-label">Files</span>
+              <span class="pane-content dim">src/</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA with ecosystem links -->
     <section class="cta-section">
       <div class="cta-content">
@@ -339,12 +375,19 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .title-main {
-    background: linear-gradient(135deg, var(--hero-title-start) 0%, var(--accent-bright) 50%, var(--hero-title-end) 100%);
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f0f4fa 0%, #e4eaf4 40%, #a8c4d8 80%, #e4eaf4 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: gradientShift 8s ease infinite;
+  }
+
+  .title-sigma {
+    -webkit-text-fill-color: var(--promo);
+    filter: drop-shadow(0 0 12px var(--promo-glow));
   }
 
   .beta-badge {
@@ -355,7 +398,7 @@ const recentPosts = posts.slice(0, 3);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--bg-deep);
-    background: linear-gradient(135deg, var(--accent-bright) 0%, rgba(124, 178, 212, 0.8) 100%);
+    background: linear-gradient(135deg, var(--promo) 0%, var(--promo-dim) 100%);
     padding: var(--radius-sm) var(--space-md);
     border-radius: var(--radius-md);
     margin-top: 0.15em;
@@ -437,10 +480,20 @@ const recentPosts = posts.slice(0, 3);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--bg-deep);
-    background: var(--accent-bright);
+    background: var(--promo);
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-md);
     flex-shrink: 0;
+  }
+
+  .recent-post-promo {
+    border-color: var(--promo-border);
+    background: linear-gradient(135deg, var(--surface-card) 0%, rgba(240, 200, 102, 0.03) 100%);
+  }
+
+  .recent-post-promo:hover {
+    border-color: var(--promo);
+    box-shadow: 0 var(--space-md) var(--space-xl) rgba(240, 200, 102, 0.08), inset 0 0 0 1px var(--promo-border);
   }
 
   .recent-post-title {
@@ -918,5 +971,100 @@ const recentPosts = posts.slice(0, 3);
 
   @media (max-width: 480px) {
     .container { padding: var(--space-2xl) var(--space-lg); }
+  }
+
+  /* ── Verse Teaser ── */
+  .verse-teaser {
+    margin-bottom: var(--section-gap);
+  }
+
+  .verse-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .verse-text p {
+    font-size: var(--body-text);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
+  }
+
+  .verse-text p:first-child {
+    color: var(--text-primary);
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+
+  .verse-cta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  .verse-link {
+    color: var(--promo);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: var(--body-text);
+    transition: color 0.2s;
+  }
+
+  .verse-link:hover {
+    color: #f5d88a;
+  }
+
+  .verse-status {
+    font-size: var(--label-text);
+    color: var(--text-muted);
+  }
+
+  .verse-panes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "a b" "c d";
+    gap: 8px;
+  }
+
+  .verse-pane {
+    background: rgba(11, 16, 24, 0.8);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg) var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .verse-pane.accent {
+    border-color: var(--promo-border);
+    background: linear-gradient(135deg, rgba(11,16,24,0.85) 0%, rgba(240,200,102,0.04) 100%);
+  }
+
+  .pane-label {
+    font-size: var(--badge-text);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .pane-content {
+    font-size: var(--label-text);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+  }
+
+  .pane-content.dim {
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .verse-content { grid-template-columns: 1fr; }
+    .verse-panes { grid-template-columns: 1fr; grid-template-areas: "a" "b" "c" "d"; }
   }
 </style>
