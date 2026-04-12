@@ -1,0 +1,44 @@
+{
+  "$schema": "https://soma.gravicity.ai/schemas/maintainers.json",
+  "version": 1,
+  "roles": {
+    "owner": {
+      "allowed_tiers": ["core", "official", "community", "pro"],
+      "auto_merge": true,
+      "can_promote_contributors": true
+    },
+    "maintainer": {
+      "allowed_tiers": ["core", "official", "community"],
+      "auto_merge": true,
+      "can_promote_contributors": false
+    },
+    "trusted": {
+      "allowed_tiers": ["community"],
+      "auto_merge": true,
+      "can_promote_contributors": false
+    },
+    "contributor": {
+      "allowed_tiers": ["community"],
+      "auto_merge": false,
+      "can_promote_contributors": false
+    }
+  },
+  "members": {
+    "curtismercier": {
+      "role": "owner",
+      "display_name": "Curtis Mercier"
+    },
+    "meetsoma": {
+      "role": "maintainer",
+      "display_name": "Soma"
+    },
+    "meetsoma[bot]": {
+      "role": "maintainer",
+      "display_name": "Soma Bot"
+    }
+  },
+  "defaults": {
+    "role": "contributor",
+    "default_tier": "community"
+  }
+}

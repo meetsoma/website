@@ -1,23 +1,25 @@
 ---
-type: protocol
 name: maps
-version: 1.1.0
+type: protocol
 status: active
-heat-default: warm
-created: 2026-03-16
-updated: 2026-03-22
-author: Curtis Mercier
-breadcrumb: "MAPS — My Automation Protocol Scripts. Before any task, check for a MAP. After any repeated task, build one. MAPS connect AMPS into repeatable processes. Refine on every use."
+description: "MAPS — My Automation Protocol Scripts. Before any task, check for a MAP. After any repeated task, build one. MAPS connect AMPS into repeatable processes. Refine on every use."
+heat-default: cold
 tags: [workflow, process, navigation, amps, efficiency]
 applies-to: [always]
+scope: bundled
+created: 2026-03-16
+updated: 2026-04-12
+version: 1.1.0
+author: meetsoma
 license: MIT
 tier: official
+---
 
 # MAPS — My Automation Protocol Scripts
 
 ## TL;DR
 
-MAPS are the agent's navigation layer. Before starting any task, check if a MAP exists. A MAP tells you which muscles to load, which protocols to follow, which scripts to run, and in what order. MAPS reference AMPS content by name — they don't repeat it. Every MAP has a Gaps section. Refine on every use. Build a new MAP after the second time you do something manually. Load MAPs with `soma --map <name>` or let `soma focus <keyword>` find relevant MAPs automatically. MAP usage is tracked programmatically (`runs:` and `last-run:` update on each load).
+Read the MAP before starting. Not skim — **read**. The MAP has scar tissue from sessions where you made the exact mistake you're about to make. The Gaps and Lessons Learned sections exist because something went wrong and someone wrote it down so you wouldn't repeat it. In v0.6.2: skipped the refactor MAP → broke the ship pipeline. Skipped the test-hygiene muscle → hid a real bug. Both were in the MAP. When you feel confident enough to skip the MAP, that's exactly when you need it most. Build a new MAP after the second time you do something manually. `soma focus <keyword>` finds relevant MAPs automatically.
 
 ## Why
 
@@ -85,9 +87,9 @@ type: map
 name: <map-name>
 status: active
 created: YYYY-MM-DD
-updated: YYYY-MM-DD
-license: MIT
-tier: officialtriggers: [keyword1, keyword2]
+updated: 2026-03-23
+scope: bundled
+triggers: [keyword1, keyword2]
 reads:
   muscles: [relevant-muscles]
   protocols: [relevant-protocols]
@@ -150,8 +152,3 @@ MAPS are the connective tissue. They don't add new knowledge — they organize e
 
 ---
 
-*© Curtis Mercier. Licensed under MIT.*
-
-## When to Apply
-
-Before starting any task — check if a MAP exists. After completing a repeated task twice — build a MAP.

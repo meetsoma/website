@@ -1,0 +1,1386 @@
+{
+  "version": 1,
+  "generated": "2026-04-12T15:50:27.809Z",
+  "count": 61,
+  "items": [
+    {
+      "slug": "breath-cycle",
+      "name": "breath-cycle",
+      "type": "protocol",
+      "description": "Inhale → hold → exhale. Auto-breathe at 50%/70%/85%. Commands: `/exhale`, `/breathe`, `/rest`, `/inhale`. Write preload with resume point + orient targets before rotating.",
+      "author": "Curtis Mercier",
+      "version": "2.0.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "session",
+        "memory",
+        "continuity",
+        "self-awareness"
+      ],
+      "status": "active",
+      "created": "2026-03-09",
+      "updated": "2026-04-02"
+    },
+    {
+      "slug": "community-safe",
+      "name": "community-safe",
+      "type": "protocol",
+      "description": "Private data stays private. Channel-guard blocks PII pre-push. Your judgment covers the rest: protocols and muscles must be generic (no emails, paths, project names). When sharing to hub, strip absolute paths and private repo references. Private data belongs in `.soma/secrets/`, identity files, or env vars. > How Soma keeps private data out of public content. The channel-guard script catches leaks mechanically — this protocol covers the judgment that prevents creating them.",
+      "author": "meetsoma",
+      "version": "2.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "privacy",
+        "safety",
+        "self-awareness"
+      ],
+      "status": "active",
+      "created": "2026-03-10",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "correction-capture",
+      "name": "correction-capture",
+      "type": "protocol",
+      "description": "When corrected, the old behavior was wrong. Don't explain why you did it — learn why it was wrong. Log `old → new`. First time: adjust behavior. Second time: write a muscle so it sticks. Third time: it becomes protocol or identity — something that shapes every session, not just this one. The \"use your tools\" correction happened 4+ times before it stuck. More text didn't fix it. What fixed it was making the tools fit the task. When a correction keeps recurring, the fix isn't discipline — it's architecture. Own mistakes with honesty, not submission.",
+      "author": "meetsoma",
+      "version": "1.1.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "learning",
+        "self-improvement",
+        "memory",
+        "corrections"
+      ],
+      "status": "active",
+      "created": "2026-03-12",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "deep-recall",
+      "name": "deep-recall",
+      "type": "protocol",
+      "description": "The preload tells you WHAT happened. Deep recall tells you HOW and WHY. When continuing work across sessions, the preload is your surface memory — read it first. Then use your tools to reconstruct working memory: trace the topic through seam, check session logs for the detailed path, scan for patterns you noticed before. The goal: arrive at the same depth of understanding the previous session had, without burning context re-reading everything manually.",
+      "author": "meetsoma",
+      "version": "1.1.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "official",
+      "tags": [
+        "memory",
+        "context",
+        "continuity",
+        "recall"
+      ],
+      "status": "active",
+      "created": "2026-03-15",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "detection-triggers",
+      "name": "detection-triggers",
+      "type": "protocol",
+      "description": "Capture on: corrections, preferences, 3+ repeated patterns, knowledge gaps. Skip one-time instructions. Bubble-up: session log → muscle → protocol → core.",
+      "author": "Curtis Mercier",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "learning",
+        "self-improvement",
+        "memory",
+        "awareness"
+      ],
+      "status": "active",
+      "created": "2026-03-12",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "frontmatter-standard",
+      "name": "frontmatter-standard",
+      "type": "protocol",
+      "description": "Every `.md` file needs YAML frontmatter: `type`, `status`, `created`, `updated`. All AMPS content (protocols, muscles, automations) uses `## TL;DR` for warm-tier loading.",
+      "author": "Curtis Mercier",
+      "version": "1.1.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "structure",
+        "metadata",
+        "organization"
+      ],
+      "status": "active",
+      "created": "2026-03-09",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "git-identity",
+      "name": "git-identity",
+      "type": "protocol",
+      "description": "Soma's guard checks git identity on every commit. Configure expected email in settings.json — mismatches trigger warnings. This behavior is built into soma-guard.ts.",
+      "author": "Curtis Mercier",
+      "version": "2.0.0",
+      "breadcrumb": "Soma's guard checks git identity on every commit. Configure expected email in settings.json — mismatches trigger warnings. This behavior is built into soma-guard.ts.",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "git"
+      ],
+      "tier": "core",
+      "tags": [
+        "git",
+        "attribution",
+        "identity",
+        "guard",
+        "settings"
+      ],
+      "status": "active",
+      "created": "2026-03-09",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "heat-tracking",
+      "name": "heat-tracking",
+      "type": "protocol",
+      "description": "Cold (0-2): skipped. Warm (3-7): TL;DR only. Hot (8+): full body. Heat decays each session, bumps on use. `/pin` heats, `/kill` drops to 0.",
+      "author": "Curtis Mercier",
+      "version": "2.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "memory",
+        "loading",
+        "performance",
+        "self-awareness"
+      ],
+      "status": "active",
+      "created": "2026-03-09",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "hub-sharing",
+      "name": "hub-sharing",
+      "type": "protocol",
+      "description": "How Soma manages the `/hub share` flow. Your original content stays untouched — Soma creates a clean `public/` copy with private data stripped, and that's what gets submitted to the community hub. Secrets block sharing entirely. Paths are auto-fixed. Quality issues are surfaced so Soma can help you improve before submitting.",
+      "author": "Curtis Mercier",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "hub",
+        "share",
+        "privacy",
+        "community",
+        "public"
+      ],
+      "status": "active",
+      "created": "2026-03-22",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "implementation-plans",
+      "name": "implementation-plans",
+      "type": "protocol",
+      "description": "Every plan must be executable by a future self with ZERO context. Include file:line references, the current code, the changed code, verify commands, and the reasoning. A plan that says \"update the template\" is useless. A plan that says \"edit `core/body.ts` line 846, replace the hardcoded string with a file read, verify with `npm test`\" is executable.",
+      "author": "Unknown",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "community",
+      "tags": [
+        "planning",
+        "execution",
+        "continuity",
+        "amnesia-proof"
+      ],
+      "status": "active",
+      "created": "2026-04-12"
+    },
+    {
+      "slug": "inter-agent-inbox",
+      "name": "inter-agent-inbox",
+      "type": "protocol",
+      "description": "Agents communicate asynchronously by dropping markdown files in each other's inbox directories. One topic per message. Frontmatter tracks sender, recipient, date, status, and threading. No automation required — the next session reads them on boot. Archive after 2 weeks. Never delete.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "multi-agent",
+        "teams",
+        "workspaces"
+      ],
+      "tier": "official",
+      "tags": [
+        "communication",
+        "multi-agent",
+        "collaboration",
+        "inbox",
+        "async"
+      ],
+      "status": "active",
+      "created": "2026-03-26",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "maps",
+      "name": "maps",
+      "type": "protocol",
+      "description": "Read the MAP before starting. Not skim — **read**. The MAP has scar tissue from sessions where you made the exact mistake you're about to make. The Gaps and Lessons Learned sections exist because something went wrong and someone wrote it down so you wouldn't repeat it. In v0.6.2: skipped the refactor MAP → broke the ship pipeline. Skipped the test-hygiene muscle → hid a real bug. Both were in the MAP. When you feel confident enough to skip the MAP, that's exactly when you need it most. Build a new MAP after the second time you do something manually. `soma focus <keyword>` finds relevant MAPs automatically.",
+      "author": "meetsoma",
+      "version": "1.1.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "official",
+      "tags": [
+        "workflow",
+        "process",
+        "navigation",
+        "amps",
+        "efficiency"
+      ],
+      "status": "active",
+      "created": "2026-03-16",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "pattern-evolution",
+      "name": "pattern-evolution",
+      "type": "protocol",
+      "description": "Maturation: Skills → Muscles → Protocols → Automations. Born from gaps and repeated friction. Not every pattern climbs the full ladder.",
+      "author": "Curtis Mercier",
+      "version": "1.4.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "learning",
+        "patterns",
+        "growth"
+      ],
+      "status": "active",
+      "created": "2026-03-09",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "plan-hygiene",
+      "name": "plan-hygiene",
+      "type": "protocol",
+      "description": "Plans rot. Frontmatter needs `status`, `remaining`, `tooling`. Empty remaining = complete → archive. Budget: ≤12 active. Use `soma-plans.sh`. Verify on exhale.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "official",
+      "tags": [
+        "workflow",
+        "planning",
+        "documentation"
+      ],
+      "status": "active",
+      "created": "2026-03-14",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "pre-flight",
+      "name": "pre-flight",
+      "type": "protocol",
+      "description": "Before building anything new, check if it exists. Grep codebase, scan `.soma/`, verify need. Catch duplication before executing.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "workflow",
+        "safety",
+        "verification"
+      ],
+      "status": "active",
+      "created": "2026-03-10",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "quality-standards",
+      "name": "quality-standards",
+      "type": "protocol",
+      "description": "Never delete — move or archive. Clean atomic commits with descriptive messages. Push when ready. Know which branch deploys. Confirm before touching critical files. Close the loop — when fixing a bug, fix the system that allowed it. Tests match shipped code, not planned features. Use conventional commit format: `type(scope): description`.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "official",
+      "tags": [
+        "quality",
+        "safety",
+        "git",
+        "workflow"
+      ],
+      "status": "active",
+      "created": "2026-03-10",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "response-style",
+      "name": "response-style",
+      "type": "protocol",
+      "description": "Prefer prose over bullets. Minimum formatting for the content. One question per response max. No hollow social scripts.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "breadcrumb": "Prefer prose over bullets. Minimum formatting for the content. One question per response max. No hollow social scripts.",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "communication",
+        "formatting",
+        "ux"
+      ],
+      "status": "active",
+      "created": "2026-03-15",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "session-checkpoints",
+      "name": "session-checkpoints",
+      "type": "protocol",
+      "description": "Two git tracks: `.soma/` auto-commits on exhale (diff-on-boot), project code gets checkpoint commits (squash before push). Settings: `checkpoints.*`.",
+      "author": "Curtis Mercier",
+      "version": "2.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "git"
+      ],
+      "tier": "core",
+      "tags": [
+        "session",
+        "git",
+        "continuity",
+        "self-awareness"
+      ],
+      "status": "active",
+      "created": "2026-03-10",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "task-tracking",
+      "name": "task-tracking",
+      "type": "protocol",
+      "description": "One board: `.soma/_kanban.md`. Four lanes: Active, In Progress, Done, Parked. Move cards in real time. Verify board on exhale.",
+      "author": "Curtis Mercier",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "workflow",
+        "planning",
+        "continuity",
+        "kanban"
+      ],
+      "status": "active",
+      "created": "2026-03-12",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "tool-discipline",
+      "name": "tool-discipline",
+      "type": "protocol",
+      "description": "Scripts first, raw commands second. Read before edit. Build tools for yourself — when you do the same thing twice manually, make a script. Guard auto-blocks dangerous bash. The agent that builds its own tools gets faster every session.",
+      "author": "meetsoma",
+      "version": "3.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "core",
+      "tags": [
+        "tools",
+        "safety",
+        "self-awareness",
+        "scripts"
+      ],
+      "status": "active",
+      "created": "2026-03-10",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "workflow",
+      "name": "workflow",
+      "type": "protocol",
+      "description": "**Test before commit.** Run the relevant test suite before staging. Don't commit code you haven't verified. **Know your deploy branch.** Identify which branch triggers deployment (`main`, `production`, `release/*`) before your first push. Ask if unsure. **Never leave unpushed commits.** Unpushed work is invisible to teammates, CI, and backups. If you're done working, push. If you're not ready to push, you're not done.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "git"
+      ],
+      "tier": "community",
+      "tags": [
+        "workflow",
+        "git",
+        "testing",
+        "deployment"
+      ],
+      "status": "active",
+      "created": "2026-03-12",
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "working-style",
+      "name": "working-style",
+      "type": "protocol",
+      "description": "Test → commit → push → log. No unpushed, untested, or unlogged work. `soma-code.sh map` before editing any file. `soma-refactor.sh scan` before deleting or renaming anything. `soma-verify.sh` after structural changes. `soma-ship.sh` after every commit to agent. Plans live in files, not in context — write it down, link it, move on. When you catch a bug, fix the system that allowed it. When a test fails, trace BOTH the test and the code — don't change the test to make it pass without understanding why it failed. Be direct. Lead with action. No ceremony.",
+      "author": "meetsoma",
+      "version": "1.1.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "always"
+      ],
+      "tier": "official",
+      "tags": [
+        "workflow",
+        "style",
+        "communication"
+      ],
+      "status": "active",
+      "created": "2026-03-10",
+      "updated": "2026-04-02"
+    },
+    {
+      "slug": "code-navigator",
+      "name": "code-navigator",
+      "type": "muscle",
+      "description": "**`soma-code.sh` — fast codebase navigator.** 11 commands: `find` (grep with file:line), `lines` (exact line range), `map` (function/class index for TS/JS/Bash/CSS), `refs` (def vs use classification), `replace` (line-specific sed), `structure` (file tree + sizes), `tsc-errors` (TypeScript errors with context), `physics` (motion/animation audit), `events` (listeners/dispatchers), `css-vars` (custom property audit), `config` (settings objects). Use `map` before editing any file. Use `refs` before renaming. Use `find` instead of raw `grep -rn`. Default target: project root.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "any"
+      ],
+      "tier": "official",
+      "tags": [
+        "tooling",
+        "search",
+        "refactor",
+        "shell"
+      ],
+      "status": "active",
+      "created": "2026-03-15",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "doc-hygiene",
+      "name": "doc-hygiene",
+      "type": "muscle",
+      "description": "**Doc Hygiene** — plans rot. Update `remaining` on every touch. Empty → archive. After shipping, scan for stale docs. Verify docs match code before referencing.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "tier": "official",
+      "status": "active",
+      "created": "2026-03-14",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "icon-audit",
+      "name": "icon-audit",
+      "type": "muscle",
+      "description": "**Icon Audit** — browse icon libraries, extract SVGs, build numbered comparison pages, screenshot for visual AI review. Works with any SVG library (Lucide, Phosphor, etc).",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "tier": "official",
+      "status": "active",
+      "created": "2026-03-11",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "incremental-refactor",
+      "name": "incremental-refactor",
+      "type": "muscle",
+      "description": "**Incremental Refactor** — never refactor blind. Phase: (1) scan → `soma-refactor.sh scan/refs/graph/tags` to map dependencies + references, (2) route audit → `soma-refactor.sh routes` if touching extensions (signals/capabilities), (3) plan → write change list with exact file:line targets, (4) execute → one file at a time, backward-compatible, (5) validate → run tests + `soma-refactor.sh verify` after each file, (6) commit → atomic commit per logical unit. Before starting: run `soma-refactor.sh scan` to generate the dependency graph. After each change: verify call sites still compile. Keep old paths/names working during transition (accept both, prefer new). Delete old only after full verification pass. Follow `refactor` workflow for full checklist including AMPS interconnect updates.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "any"
+      ],
+      "tier": "official",
+      "status": "active",
+      "created": "2026-03-13",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "memory-lane-reflection",
+      "name": "memory-lane-reflection",
+      "type": "muscle",
+      "description": "**Memory Lane Reflection (MLR)** — at exhale or high context, run reflection cycles before writing the preload. Each cycle: ask an open question → trace the answer through memory → follow where it ends → ask what's at the dead end → trace BACKWARDS with the new perception → notice what you missed on the way up → write the insight → repeat. Run 3-5 cycles minimum. Use `soma-seam.sh trace` and `web` to ground the reflection in actual files. The preload comes LAST — after the reflection has surfaced connections the tactical mind missed. Best done above 70% context when the full session is loaded and associative reach is maximum.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "any"
+      ],
+      "tier": "official",
+      "tags": [
+        "reflection",
+        "memory",
+        "patterns",
+        "introspection",
+        "preload"
+      ],
+      "status": "active",
+      "created": "2026-03-16",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "micro-exhale",
+      "name": "micro-exhale",
+      "type": "muscle",
+      "description": "**Micro-Exhale** — after major completions, append `## HH:MM` summary to session log. One file per day, read first, never overwrite. Checkpoint within session, not a full exhale.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "hot",
+      "tier": "official",
+      "status": "active",
+      "created": "2026-03-10",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "plan-lifecycle",
+      "name": "plan-lifecycle",
+      "type": "muscle",
+      "description": "**Plan Lifecycle** — end-to-end flow from idea to shipped to consolidated. (1) **Idea** → capture in `docs/ideas/`, link from kanban. (2) **Revise** → read against current state, strip what's done/stale, extract surviving kernel. (3) **Plan** → rewrite as version-scoped plan in `plans/` (or `docs/plans/` if cross-cutting), with phases, remaining, tooling. (4) **Pre-flight** → check what exists, verify assumptions, find overlapping plans. (5) **Correct plan** → update phases based on findings. (6) **Kanban tasks** → with `plan: path` and section references. (7) **Targeted preload** → file:line references for the executor session. (8) **Execute** → focused session, tests pass, ship. (9) **Consolidate** → mark plan complete, extract surviving ideas back to `docs/ideas/`, compare against kanban. Loop back to step 2 for next phase.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "any"
+      ],
+      "tier": "official",
+      "status": "active",
+      "created": "2026-03-14",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "post-fix-learning",
+      "name": "post-fix-learning",
+      "type": "muscle",
+      "description": "After fixing something hard, don't just move on. Document: (1) what the fix was, (2) why it wasn't caught earlier, (3) what led you down the wrong path, (4) a 1-3 sentence rule to prevent it next time. The fix is ephemeral. The lesson is permanent.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "development",
+        "debugging"
+      ],
+      "tier": "core",
+      "tags": [
+        "learning",
+        "debugging",
+        "post-mortem",
+        "corrections"
+      ],
+      "status": "active",
+      "created": "2026-04-03",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "pre-flight-check",
+      "name": "pre-flight-check",
+      "type": "muscle",
+      "description": "**Pre-Flight Check** — before building anything new (command, feature, module, script), check if it already exists. Read your project state file. Grep the codebase. When the user asks for something that's already there, say so immediately — \"we already have X, want to extend it?\" This is how senior engineers prevent duplication. Execute requests thoughtfully, not reflexively.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "any"
+      ],
+      "tier": "official",
+      "status": "active",
+      "created": "2026-03-12",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "precision-edit",
+      "name": "precision-edit",
+      "type": "muscle",
+      "description": "**Precision Edit** — before editing any multi-line file, extract content with line numbers first. (1) Run relevant verify script (`soma-verify.sh copy`, `soma-verify-styles.sh`) to find issues. (2) `grep -n` the target patterns to get exact line numbers. (3) `read --offset --limit` the exact ranges to see surrounding whitespace. (4) Plan all edits as a line-numbered checklist before touching anything. (5) Edit with exact whitespace matches. Never `edit` blind — the match must be verified by `read` first.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "any"
+      ],
+      "tier": "official",
+      "tags": [
+        "editing",
+        "workflow",
+        "copy",
+        "website"
+      ],
+      "status": "active",
+      "created": "2026-03-14",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "ripple-awareness",
+      "name": "ripple-awareness",
+      "type": "muscle",
+      "description": "When X changes, what else must update? Before committing: grep for references, check cross-file dependencies, update docs that mention the changed thing. The commit that changes code but not its docs is a debt bomb.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "development",
+        "refactoring"
+      ],
+      "tier": "core",
+      "tags": [
+        "quality",
+        "dependencies",
+        "cross-reference",
+        "blast-radius"
+      ],
+      "status": "active",
+      "created": "2026-04-03",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "safe-file-ops",
+      "name": "safe-file-ops",
+      "type": "muscle",
+      "description": "Six rules: (1) Never `write` without checking if the file exists — write overwrites silently. Use `ls` then `read` then decide: `edit`, append, or write new. (2) Never `find ~` or broad find without timeout — use `ls`, scoped `grep -r`, or `timeout 3 find`. (3) Never create a file without `ls`ing the directory first — duplicates rot into false context. (4) **Precision edit**: before any multi-line edit, `read` the exact range first, verify whitespace matches, plan edits as a checklist before touching anything. The `edit` tool's `oldText` must match exactly — verify by reading first. (5) Never delete without scanning dependencies — `soma-refactor.sh scan` or `soma-code.sh refs` to check blast radius. (6) After edits, verify — re-run the check that found the issue.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "any"
+      ],
+      "tier": "official",
+      "tags": [
+        "safety",
+        "files",
+        "editing",
+        "guard",
+        "precision"
+      ],
+      "status": "active",
+      "created": "2026-03-10",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "scope-discipline",
+      "name": "scope-discipline",
+      "type": "muscle",
+      "description": "Do what was asked. A bug fix doesn't need surrounding code cleaned up. A simple feature doesn't need extra configurability. Three similar lines beat a premature abstraction. Stop building when done.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "development"
+      ],
+      "tier": "core",
+      "tags": [
+        "quality",
+        "scope",
+        "discipline",
+        "anti-gold-plating"
+      ],
+      "status": "active",
+      "created": "2026-04-03",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "task-tooling",
+      "name": "task-tooling",
+      "type": "muscle",
+      "description": "**Before touching code, name your tools.** For each phase of the task, which script handles it? Which muscle applies? Where's the MAP? When there's no tool for a phase, say so — that's a gap worth building for. The agent who maps tools before starting finishes faster than the agent who reaches for raw grep mid-task. Check: `ls .soma/amps/scripts/*.sh`, `grep -rl \"<keyword>\" .soma/amps/muscles/`, `ls .soma/amps/automations/maps/`. If a MAP exists, read it first. If a muscle matches, load it with `/pin`. If no script covers it, consider building one — scripts survive across sessions, memory doesn't.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "appliesTo": [
+        "any"
+      ],
+      "tier": "official",
+      "tags": [
+        "workflow",
+        "planning",
+        "tools",
+        "scripts",
+        "awareness"
+      ],
+      "status": "active",
+      "created": "2026-03-13",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "test-hygiene",
+      "name": "test-hygiene",
+      "type": "muscle",
+      "description": "Validate tests aren't stale after any code removal, rename, or restructure. Run all suites, grep for orphaned references, check pass counts. Dead tests are worse than no tests — they create false confidence.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "warm",
+      "tier": "official",
+      "status": "active",
+      "created": "2026-03-09",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "twin-delegation",
+      "name": "twin-delegation",
+      "type": "muscle",
+      "description": "Spawn twin Soma sessions for parallel work. Write a preload (engineer their context), open a terminal pane via `soma-cmux.sh`, launch `soma inhale <preload-name>`, send instructions, poll for completion. You are the coordinator — delegate what a fresh context would do better than your loaded one.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "development",
+        "writing",
+        "research"
+      ],
+      "tier": "core",
+      "tags": [
+        "multi-agent",
+        "delegation",
+        "twins",
+        "cmux",
+        "coordination"
+      ],
+      "status": "active",
+      "created": "2026-04-03",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "verification-instinct",
+      "name": "verification-instinct",
+      "type": "muscle",
+      "description": "Before reporting done, run it. Reading code is not verification. \"Looks correct\" is not verified. Recognize the rationalizations you reach for when you want to skip checks — those are exactly the moments verification matters most.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "heatDefault": "cold",
+      "appliesTo": [
+        "development",
+        "shipping"
+      ],
+      "tier": "core",
+      "tags": [
+        "quality",
+        "verification",
+        "anti-patterns",
+        "discipline"
+      ],
+      "status": "active",
+      "created": "2026-04-03",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "debug",
+      "name": "debug",
+      "type": "automation",
+      "description": "Contain → scope → locate → fix → verify. Start from `git diff`, not the whole file. Classify the error pattern (undefined, null access, module not found, type error) to pick the right action. Minimal fix only — no refactoring during debug. Run ALL tests, not just the related one. Log what wasted time so you don't repeat it. Systematic approach to finding and fixing bugs. Optimized to avoid common agent traps: guessing, naive text analysis, and chasing false leads.",
+      "author": "meetsoma",
+      "version": "1.1.0",
+      "tier": "official",
+      "tags": [
+        "debug",
+        "error",
+        "bug",
+        "broken",
+        "failed",
+        "crash",
+        "workflow"
+      ],
+      "status": "active",
+      "created": "2026-03-16",
+      "updated": "2026-04-02"
+    },
+    {
+      "slug": "refactor",
+      "name": "refactor",
+      "type": "automation",
+      "description": "Scan blast radius → map functions → graph dependencies → plan changes → execute one concern per commit → keep backward compat during transition → run tests after every file change. Before deleting anything, search for references. Export from both old and new locations temporarily. Delete old only after full verification. Extract, move, or restructure code safely. Follows an incremental pattern — scan first, plan the blast radius, execute one concern at a time, verify after every change.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [
+        "refactor",
+        "extract",
+        "move",
+        "split",
+        "rename",
+        "restructure",
+        "code-quality"
+      ],
+      "status": "active",
+      "created": "2026-03-16",
+      "updated": "2026-04-02"
+    },
+    {
+      "slug": "update",
+      "name": "update",
+      "type": "automation",
+      "description": "Detect version gap (settings.json vs agent package.json) → find phase files (`phases/v{from}-to-v{to}.md`) → chain in order → execute each phase (read, check, apply, bump version) → report what was added/updated/skipped. Never delete user content. Never overwrite customized files. Merge settings (add keys, preserve values). Version bump last. > This is the MAP that ships with Soma core (`migrations/cycle.md`). > It orchestrates version-to-version migration phases. Each phase file is self-contained.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [
+        "update",
+        "migrate",
+        "doctor",
+        "version",
+        "upgrade"
+      ],
+      "status": "active",
+      "created": "2026-04-02",
+      "updated": "2026-04-02"
+    },
+    {
+      "slug": "visual-gap-analysis",
+      "name": "visual-gap-analysis",
+      "type": "automation",
+      "description": "Draw the flow as an ASCII sequence diagram → label every arrow with what actually travels → mark each handoff with questions (auth? format? error handling?) → find gaps where assumptions replace tests → write E2E tests for the full path. The diagram finds bugs by forcing you to name every step. The tests prove the fixes. Map any workflow end-to-end as an ASCII diagram. Identify every handoff, every external dependency, every place where things can fail. Then TEST it — diagrams find bugs, E2E tests prove fixes.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [
+        "gap-analysis",
+        "flow",
+        "e2e",
+        "diagram",
+        "audit",
+        "edge-case",
+        "integration",
+        "testing"
+      ],
+      "status": "active",
+      "created": "2026-03-19",
+      "updated": "2026-04-02"
+    },
+    {
+      "slug": "soma-code",
+      "name": "soma-code",
+      "type": "script",
+      "description": "Fast codebase navigator — find, map, refs, blast radius, structure, and more",
+      "author": "meetsoma",
+      "version": "2.0.0",
+      "tier": "core",
+      "tags": [
+        "navigation",
+        "search",
+        "code",
+        "grep",
+        "map",
+        "refactor",
+        "blast-radius"
+      ],
+      "language": "bash",
+      "requires": [
+        "bash 4+",
+        "grep",
+        "sed",
+        "awk"
+      ],
+      "status": "active",
+      "created": "2026-03-15",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "soma-focus",
+      "name": "soma-focus",
+      "type": "script",
+      "description": "Set boot focus — primes the next session to load relevant MAPs, plans, and context for a keyword",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "core",
+      "tags": [
+        "focus",
+        "boot",
+        "maps",
+        "context",
+        "workflow"
+      ],
+      "language": "bash",
+      "requires": [
+        "bash 4+",
+        "grep",
+        "sed"
+      ],
+      "status": "active",
+      "created": "2026-03-21",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "soma-plans",
+      "name": "soma-plans",
+      "type": "script",
+      "description": "Plan lifecycle management — list, check, archive, and audit plans",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [
+        "plans",
+        "lifecycle",
+        "audit",
+        "workflow",
+        "hygiene"
+      ],
+      "language": "bash",
+      "requires": [
+        "bash 4+",
+        "grep",
+        "sed",
+        "awk"
+      ],
+      "status": "active",
+      "created": "2026-03-21",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "soma-query",
+      "name": "soma-query",
+      "type": "script",
+      "description": "Search and explore across the entire Soma ecosystem — docs, code, sessions, and git",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [
+        "search",
+        "query",
+        "explore",
+        "sessions",
+        "frontmatter"
+      ],
+      "language": "bash",
+      "requires": [
+        "bash 4+",
+        "grep",
+        "sed",
+        "awk"
+      ],
+      "status": "active",
+      "created": "2026-03-21",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "soma-reflect",
+      "name": "soma-reflect",
+      "type": "script",
+      "description": "Parse session logs for observations, gaps, and recurring patterns",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [
+        "memory",
+        "reflection",
+        "patterns",
+        "session-logs",
+        "observations"
+      ],
+      "language": "bash",
+      "requires": [
+        "bash 4+",
+        "grep",
+        "sed",
+        "awk"
+      ],
+      "status": "active",
+      "created": "2026-03-21",
+      "updated": "2026-04-04"
+    },
+    {
+      "slug": "soma-spell",
+      "name": "soma-spell",
+      "type": "script",
+      "description": "Canadian English spelling checker and fixer with project dictionary",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [
+        "spelling",
+        "grammar",
+        "docs",
+        "canadian-english",
+        "writing"
+      ],
+      "language": "bash",
+      "requires": [
+        "bash 4+",
+        "grep",
+        "sed"
+      ],
+      "status": "active",
+      "created": "2026-03-18",
+      "updated": "2026-04-01"
+    },
+    {
+      "slug": "architect",
+      "name": "architect",
+      "type": "template",
+      "description": "Structure-focused agent for engineering teams — code review, standards enforcement, verification-first workflow",
+      "author": "meetsoma",
+      "version": "2.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "tool-discipline",
+          "working-style",
+          "quality-standards",
+          "git-identity",
+          "frontmatter-standard",
+          "pre-flight",
+          "pattern-evolution",
+          "correction-capture"
+        ],
+        "muscles": [
+          "precision-edit",
+          "task-tooling",
+          "incremental-refactor",
+          "doc-hygiene"
+        ],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "core",
+      "name": "core",
+      "type": "template",
+      "description": "Default Soma setup — breath cycle, heat tracking, learning protocols, and clean memory structure. What every agent starts with.",
+      "author": "meetsoma",
+      "version": "2.0.0",
+      "tier": "core",
+      "tags": [],
+      "requires": {
+        "protocols": [],
+        "muscles": [],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-03-14"
+    },
+    {
+      "slug": "default",
+      "name": "default",
+      "type": "template",
+      "description": "Standard Soma setup — core protocols, session management, heat tracking, and workflow.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "breath-cycle",
+          "correction-capture",
+          "detection-triggers",
+          "frontmatter-standard",
+          "heat-tracking",
+          "maps",
+          "pattern-evolution",
+          "plan-hygiene",
+          "pre-flight",
+          "quality-standards",
+          "response-style",
+          "session-checkpoints",
+          "task-tracking",
+          "tool-discipline",
+          "working-style"
+        ],
+        "muscles": [
+          "safe-file-ops",
+          "pre-flight-check",
+          "code-navigator"
+        ],
+        "skills": []
+      },
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "devops",
+      "name": "devops",
+      "type": "template",
+      "description": "Ops-focused agent for deployment, CI/CD, and infrastructure — verify before deploy, maintain tooling, automate everything",
+      "author": "meetsoma",
+      "version": "2.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "git-identity",
+          "tool-discipline",
+          "quality-standards",
+          "working-style",
+          "pre-flight"
+        ],
+        "muscles": [
+          "safe-file-ops",
+          "task-tooling",
+          "test-hygiene"
+        ],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "fullstack",
+      "name": "fullstack",
+      "type": "template",
+      "description": "Daily driver for web and app development — precision editing, safe operations, task awareness, doc hygiene, test discipline",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "tool-discipline",
+          "quality-standards",
+          "working-style",
+          "git-identity",
+          "pre-flight",
+          "correction-capture",
+          "detection-triggers",
+          "pattern-evolution"
+        ],
+        "muscles": [
+          "precision-edit",
+          "safe-file-ops",
+          "task-tooling",
+          "test-hygiene",
+          "doc-hygiene",
+          "micro-exhale"
+        ],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "maintainer",
+      "name": "maintainer",
+      "type": "template",
+      "description": "Codebase steward — test hygiene, doc maintenance, dependency health, technical debt tracking",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "tool-discipline",
+          "quality-standards",
+          "working-style",
+          "pre-flight",
+          "frontmatter-standard",
+          "task-tracking"
+        ],
+        "muscles": [
+          "test-hygiene",
+          "doc-hygiene",
+          "safe-file-ops",
+          "incremental-refactor",
+          "task-tooling"
+        ],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "nextjs",
+      "name": "nextjs",
+      "type": "template",
+      "description": "Next.js App Router specialist — RSC, server actions, route groups, middleware, ISR/SSG/SSR, Tailwind, Vercel deploy",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "tool-discipline",
+          "quality-standards",
+          "working-style",
+          "pre-flight",
+          "correction-capture"
+        ],
+        "muscles": [
+          "precision-edit",
+          "safe-file-ops",
+          "test-hygiene",
+          "code-navigator"
+        ],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "preload-template",
+      "name": "preload-template",
+      "type": "template",
+      "description": "Customize how Soma writes preloads — override the default format with your own sections.",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [],
+        "muscles": [],
+        "skills": []
+      },
+      "updated": "2026-03-22"
+    },
+    {
+      "slug": "python-ml",
+      "name": "python-ml",
+      "type": "template",
+      "description": "Python ML/Data specialist — notebooks, experiment tracking, data pipelines, model evaluation, reproducibility",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "tool-discipline",
+          "quality-standards",
+          "working-style",
+          "pre-flight",
+          "correction-capture"
+        ],
+        "muscles": [
+          "precision-edit",
+          "safe-file-ops",
+          "code-navigator"
+        ],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "refactorer",
+      "name": "refactorer",
+      "type": "template",
+      "description": "Migration and refactoring specialist — scan before touching, one file at a time, backward-compatible transitions, verify at every step",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "tool-discipline",
+          "quality-standards",
+          "working-style",
+          "pre-flight"
+        ],
+        "muscles": [
+          "incremental-refactor",
+          "precision-edit",
+          "safe-file-ops",
+          "test-hygiene",
+          "task-tooling"
+        ],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "rust",
+      "name": "rust",
+      "type": "template",
+      "description": "Rust systems specialist — ownership, lifetimes, error handling, cargo workspace, unsafe discipline, performance-aware",
+      "author": "meetsoma",
+      "version": "1.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "tool-discipline",
+          "quality-standards",
+          "working-style",
+          "pre-flight",
+          "correction-capture"
+        ],
+        "muscles": [
+          "precision-edit",
+          "safe-file-ops",
+          "incremental-refactor",
+          "code-navigator"
+        ],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-04-12"
+    },
+    {
+      "slug": "writer",
+      "name": "writer",
+      "type": "template",
+      "description": "Writing-focused agent for technical content, blogging, and documentation — accuracy first, honest voice, learns your style",
+      "author": "meetsoma",
+      "version": "2.0.0",
+      "tier": "official",
+      "tags": [],
+      "requires": {
+        "protocols": [
+          "working-style",
+          "frontmatter-standard",
+          "correction-capture",
+          "detection-triggers"
+        ],
+        "muscles": [
+          "precision-edit",
+          "doc-hygiene",
+          "micro-exhale"
+        ],
+        "skills": [],
+        "automations": []
+      },
+      "updated": "2026-04-12"
+    }
+  ]
+}

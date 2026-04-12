@@ -1,26 +1,25 @@
 ---
-type: muscle
 name: doc-hygiene
+type: muscle
 status: active
-triggers: [doc-hygiene, plans-rot, stale-docs, context-hygiene, plan-lifecycle, archive, remaining, documentation, maintenance, plans, staleness]
-heat-default: warm
+description: "plans rot. Update `remaining` on every touch. Empty → archive. After shipping, scan for stale docs. Verify docs match code before referencing."
 heat: 0
-loads: 0
-breadcrumb: "Plans rot — update remaining on every touch. Stale docs poison future sessions. After shipping, scan for overlapping/outdated docs and archive or update."
+heat-default: warm
+triggers: [doc-hygiene, plans-rot, stale-docs, context-hygiene, plan-lifecycle, archive, remaining, documentation, maintenance, plans, staleness]
+scope: hub
+tier: official
+created: 2026-03-14
+updated: 2026-04-12
+version: 1.0.0
 author: meetsoma
 license: MIT
-version: 1.0.0
-tier: official
-scope: hub
-created: 2026-03-14
-updated: 2026-03-21
+loads: 0
 ---
 
 # Doc Hygiene
 
-<!-- digest:start -->
-> **Doc Hygiene** — plans rot. Update `remaining` on every touch. Empty → archive. After shipping, scan for stale docs. Verify docs match code before referencing.
-<!-- digest:end -->
+## TL;DR
+**Doc Hygiene** — plans rot. Update `remaining` on every touch. Empty → archive. After shipping, scan for stale docs. Verify docs match code before referencing.
 
 ## Plan Lifecycle
 

@@ -1,12 +1,23 @@
 {
   "name": "refactorer",
-  "description": "Migration and refactoring specialist — scan before touching, one file at a time, backward-compatible transitions, verify at every step",
+  "description": "Migration and refactoring specialist \u2014 scan before touching, one file at a time, backward-compatible transitions, verify at every step",
   "author": "meetsoma",
   "version": "1.0.0",
   "tier": "official",
   "requires": {
-    "protocols": ["tool-discipline", "quality-standards", "working-style", "pre-flight"],
-    "muscles": ["incremental-refactor", "precision-edit", "safe-file-ops", "test-hygiene", "task-tooling"],
+    "protocols": [
+      "tool-discipline",
+      "quality-standards",
+      "working-style",
+      "pre-flight"
+    ],
+    "muscles": [
+      "incremental-refactor",
+      "precision-edit",
+      "safe-file-ops",
+      "test-hygiene",
+      "task-tooling"
+    ],
     "skills": [],
     "automations": []
   },
@@ -39,5 +50,9 @@
     "safe-file-ops": 5,
     "task-tooling": 5
   },
-  "notes": "High muscle budget (4000) — refactoring needs loaded patterns. incremental-refactor and precision-edit start hot because they're used every turn. Higher auto-detect bump (2) because refactoring generates dense tool usage patterns. pre-flight prevents rebuilding what exists."
+  "notes": "High muscle budget (4000) \u2014 refactoring needs loaded patterns. incremental-refactor and precision-edit start hot because they're used every turn. Higher auto-detect bump (2) because refactoring generates dense tool usage patterns. pre-flight prevents rebuilding what exists.",
+  "scripts": [
+    "soma-code",
+    "soma-reflect"
+  ]
 }

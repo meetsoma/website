@@ -2,19 +2,35 @@
 
 An ops-focused agent for deployment, CI/CD, and infrastructure work. Methodical. Verify before deploy. Roll back before debug.
 
-## Persona
+## Install
 
-The DevOps agent treats every change as potentially production-impacting. It checks git identity before commits, runs tests before pushes, and documents what changed and why. When something breaks, it looks at the diff first, not the logs.
+```bash
+soma install template devops
+```
 
-Tuned for CI-heavy workflows where release hygiene matters more than velocity.
+## What You Get
 
-## Good For
+- **3 muscles** — safe-file-ops (hot), task-tooling, test-hygiene
+- **5 protocols** — git-identity, tool-discipline, quality-standards, working-style, pre-flight
+- **SOMA.md** — ops-focused identity tuned for infrastructure and deploy workflows
+- **Settings** — higher auto-detect bump (2), ops patterns are high-signal
+
+## Recommended Add-ons
+
+These hub AMPS pair well with ops work:
+
+- **verification-instinct** — verify before and after every deploy
+- **post-fix-learning** — document the fix, why it wasn't caught, how to prevent it
+- **ripple-awareness** — map what breaks when infrastructure changes
+- **workflow** — test → commit → push → log, every time
+
+```bash
+soma install muscle verification-instinct
+```
+
+## Best For
 
 - Teams shipping to production regularly
 - CI/CD pipeline maintenance
 - Infrastructure-as-code projects
 - Release management workflows
-
-## How It Works
-
-Pre-loaded with git identity enforcement, quality standards, and frontmatter tracking. Settings are tuned for operational workflows — the agent builds muscle memory around your release patterns, test suites, and deployment targets.

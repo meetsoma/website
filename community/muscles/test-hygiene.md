@@ -1,26 +1,25 @@
 ---
-type: muscle
 name: test-hygiene
+type: muscle
 status: active
-triggers: [test, stale, dead-code, cleanup, validation, ci, suite, coverage, hygiene, testing, code-quality, maintenance]
-heat-default: warm
+description: "Validate tests aren't stale after any code removal, rename, or restructure. Run all suites, grep for orphaned references, check pass counts. Dead tests are worse than no tests."
 heat: 0
-loads: 0
-breadcrumb: "Validate tests aren't stale after any code removal, rename, or restructure. Run all suites, grep for orphaned references, check pass counts. Dead tests are worse than no tests."
+heat-default: warm
+triggers: [test, stale, dead-code, cleanup, validation, ci, suite, coverage, hygiene, testing, code-quality, maintenance]
+scope: hub
+tier: official
+created: 2026-03-09
+updated: 2026-04-12
+version: 1.0.0
 author: meetsoma
 license: MIT
-version: 1.0.0
-tier: official
-scope: hub
-created: 2026-03-09
-updated: 2026-03-21
+loads: 0
 ---
 
 # Test Hygiene
 
-<!-- digest:start -->
+## TL;DR
 Validate tests aren't stale after any code removal, rename, or restructure. Run all suites, grep for orphaned references, check pass counts. Dead tests are worse than no tests — they create false confidence.
-<!-- digest:end -->
 
 ## When to Trigger
 

@@ -7,10 +7,15 @@ heat: 15
 triggers: [plan, idea, pre-flight, kanban, preload, consolidation, lifecycle, planning, execution, preloads]
 applies-to: [any]
 created: 2026-03-14
-updated: 2026-04-04
+updated: 2026-04-12
 tools: [soma-plans.sh]
 loads: 64
 seams: [s01-3498d3]
+version: 1.0.0
+author: meetsoma
+license: MIT
+heat-default: warm
+tier: official
 ---
 # Plan Lifecycle
 

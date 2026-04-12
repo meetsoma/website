@@ -1,12 +1,21 @@
 {
   "name": "writer",
-  "description": "Writing-focused agent for technical content, blogging, and documentation — accuracy first, honest voice, learns your style",
+  "description": "Writing-focused agent for technical content, blogging, and documentation \u2014 accuracy first, honest voice, learns your style",
   "author": "meetsoma",
   "version": "2.0.0",
   "tier": "official",
   "requires": {
-    "protocols": ["working-style", "frontmatter-standard", "correction-capture", "detection-triggers"],
-    "muscles": ["precision-edit", "doc-hygiene", "micro-exhale"],
+    "protocols": [
+      "working-style",
+      "frontmatter-standard",
+      "correction-capture",
+      "detection-triggers"
+    ],
+    "muscles": [
+      "precision-edit",
+      "doc-hygiene",
+      "micro-exhale"
+    ],
     "skills": [],
     "automations": []
   },
@@ -37,5 +46,9 @@
     "doc-hygiene": 5,
     "micro-exhale": 5
   },
-  "notes": "correction-capture and detection-triggers help the agent learn your writing preferences over time. Higher muscle budget (4000 tokens) because writers benefit from loaded context. precision-edit starts hot — writers need exact control over text changes. doc-hygiene keeps drafts and plans from rotting."
+  "notes": "correction-capture and detection-triggers help the agent learn your writing preferences over time. Higher muscle budget (4000 tokens) because writers benefit from loaded context. precision-edit starts hot \u2014 writers need exact control over text changes. doc-hygiene keeps drafts and plans from rotting.",
+  "scripts": [
+    "soma-reflect",
+    "soma-spell"
+  ]
 }

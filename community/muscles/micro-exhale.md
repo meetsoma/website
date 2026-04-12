@@ -1,26 +1,25 @@
 ---
-type: muscle
 name: micro-exhale
-breadcrumb: "Write workflow summaries to daily log after major completions — one file per day, always append."
-tier: official
-scope: hub
+type: muscle
 status: active
-triggers: [micro-exhale, daily-log, workflow-summary, session-memory, memory, workflow, logging, sessions]
+description: "after major completions, append `## HH:MM` summary to session log. One file per day, read first, never overwrite. Checkpoint within session, not a full exhale."
 heat: 0
 heat-default: hot
-loads: 0
+triggers: [micro-exhale, daily-log, workflow-summary, session-memory, memory, workflow, logging, sessions]
+scope: hub
+tier: official
+created: 2026-03-10
+updated: 2026-04-12
+version: 1.0.0
 author: meetsoma
 license: MIT
-version: 1.0.0
-created: 2026-03-10
-updated: 2026-03-21
+loads: 0
 ---
 
 # Micro-Exhale — Muscle
 
-<!-- digest:start -->
-> **Micro-Exhale** — after major completions, append `## HH:MM` summary to session log. One file per day, read first, never overwrite. Checkpoint within session, not a full exhale.
-<!-- digest:end -->
+## TL;DR
+**Micro-Exhale** — after major completions, append `## HH:MM` summary to session log. One file per day, read first, never overwrite. Checkpoint within session, not a full exhale.
 
 ## When to Write
 

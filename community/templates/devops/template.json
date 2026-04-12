@@ -1,12 +1,22 @@
 {
   "name": "devops",
-  "description": "Ops-focused agent for deployment, CI/CD, and infrastructure — verify before deploy, maintain tooling, automate everything",
+  "description": "Ops-focused agent for deployment, CI/CD, and infrastructure \u2014 verify before deploy, maintain tooling, automate everything",
   "author": "meetsoma",
   "version": "2.0.0",
   "tier": "official",
   "requires": {
-    "protocols": ["git-identity", "tool-discipline", "quality-standards", "working-style", "pre-flight"],
-    "muscles": ["safe-file-ops", "task-tooling", "test-hygiene"],
+    "protocols": [
+      "git-identity",
+      "tool-discipline",
+      "quality-standards",
+      "working-style",
+      "pre-flight"
+    ],
+    "muscles": [
+      "safe-file-ops",
+      "task-tooling",
+      "test-hygiene"
+    ],
     "skills": [],
     "automations": []
   },
@@ -37,5 +47,9 @@
     "task-tooling": 5,
     "test-hygiene": 5
   },
-  "notes": "working-style v1.1.0 includes 'verify after ship' and 'maintain the tools' — critical for ops. pre-flight catches before you deploy something that already exists. Higher auto-detect bump (2) because ops patterns are high-signal. safe-file-ops starts hot — ops can't afford accidental deletes or overwrites."
+  "notes": "working-style v1.1.0 includes 'verify after ship' and 'maintain the tools' \u2014 critical for ops. pre-flight catches before you deploy something that already exists. Higher auto-detect bump (2) because ops patterns are high-signal. safe-file-ops starts hot \u2014 ops can't afford accidental deletes or overwrites.",
+  "scripts": [
+    "soma-code",
+    "soma-plans"
+  ]
 }

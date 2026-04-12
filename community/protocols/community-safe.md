@@ -1,28 +1,26 @@
 ---
-type: protocol
 name: community-safe
+type: protocol
 status: active
-heat-default: warm
-applies-to: [always]
-breadcrumb: "Community/public content must never contain private data. The channel-guard script catches leaks pre-push. This protocol covers the judgment — what to keep private, where it belongs."
-version: 2.0.0
-tier: core
-scope: hub
+description: "Community/public content must never contain private data. The channel-guard script catches leaks pre-push. This protocol covers the judgment — what to keep private, where it belongs."
+heat-default: cold
 tags: [privacy, safety, self-awareness]
+applies-to: [always]
+scope: hub
+tier: core
 created: 2026-03-10
-updated: 2026-03-22
+updated: 2026-04-12
+version: 2.0.0
 author: meetsoma
 license: MIT
 ---
 # Community Safe
 
+## TL;DR
+Private data stays private. Channel-guard blocks PII pre-push. Your judgment covers the rest: protocols and muscles must be generic (no emails, paths, project names). When sharing to hub, strip absolute paths and private repo references. Private data belongs in `.soma/secrets/`, identity files, or env vars.
+
 > How Soma keeps private data out of public content. The channel-guard script catches leaks mechanically — this protocol covers the judgment that prevents creating them.
 
-## TL;DR
-Community content must be generic — no personal data, paths, or secrets. The channel-guard catches leaks pre-push. This protocol covers the judgment.
-
-## When to Apply
-When sharing content to the community hub, syncing to _public, or reviewing PRs.
 ## What's Automated
 
 **`soma-channel-guard.sh`** — pre-push hook that scans for:
@@ -39,7 +37,7 @@ The script catches obvious leaks. These need your awareness:
 
 **Private data belongs in:**
 - `.soma/secrets/` (gitignored)
-- `.soma/identity.md` (project-local, not pushed to public repos)
+- `.soma/body/soul.md` (project-local, not pushed to public repos)
 - Environment variables / `.env` files (gitignored)
 
 **Protocols and muscles must be generic:**

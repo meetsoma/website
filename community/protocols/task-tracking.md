@@ -1,18 +1,20 @@
 ---
-type: protocol
 name: task-tracking
+type: protocol
 status: active
-heat-default: warm
-applies-to: [always]
-breadcrumb: "One board: .soma/_kanban.md. Move cards in real time. Verify on exhale."
-author: meetsoma
-license: MIT
-version: 1.0.0
-tier: core
-scope: bundled
+description: "One board: .soma/_kanban.md. Move cards in real time. Verify on exhale. A stale board is worse than no board."
+heat-default: cold
 tags: [workflow, planning, continuity, kanban]
+applies-to: [always]
+scope: bundled
+tier: core
 created: 2026-03-12
-updated: 2026-03-15
+updated: 2026-04-12
+version: 1.0.0
+author: Curtis Mercier
+license: CC BY 4.0
+upstream: core
+upstream-version: 1.0.0
 ---
 
 # Task Tracking Protocol
@@ -132,5 +134,3 @@ Group Done cards by session date so you can see velocity:
   }
 }
 ```
-
----

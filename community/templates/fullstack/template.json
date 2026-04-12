@@ -1,12 +1,28 @@
 {
   "name": "fullstack",
-  "description": "Daily driver for web and app development — precision editing, safe operations, task awareness, doc hygiene, test discipline",
+  "description": "Daily driver for web and app development \u2014 precision editing, safe operations, task awareness, doc hygiene, test discipline",
   "author": "meetsoma",
   "version": "1.0.0",
   "tier": "official",
   "requires": {
-    "protocols": ["tool-discipline", "quality-standards", "working-style", "git-identity", "pre-flight", "correction-capture", "detection-triggers", "pattern-evolution"],
-    "muscles": ["precision-edit", "safe-file-ops", "task-tooling", "test-hygiene", "doc-hygiene", "micro-exhale"],
+    "protocols": [
+      "tool-discipline",
+      "quality-standards",
+      "working-style",
+      "git-identity",
+      "pre-flight",
+      "correction-capture",
+      "detection-triggers",
+      "pattern-evolution"
+    ],
+    "muscles": [
+      "precision-edit",
+      "safe-file-ops",
+      "task-tooling",
+      "test-hygiene",
+      "doc-hygiene",
+      "micro-exhale"
+    ],
     "skills": [],
     "automations": []
   },
@@ -40,5 +56,11 @@
     "doc-hygiene": 3,
     "micro-exhale": 3
   },
-  "notes": "The all-rounder. precision-edit starts hot because every dev session involves editing. Pattern-evolution and correction-capture help the agent learn your codebase conventions over time. doc-hygiene prevents plan rot on longer projects."
+  "notes": "The all-rounder. precision-edit starts hot because every dev session involves editing. Pattern-evolution and correction-capture help the agent learn your codebase conventions over time. doc-hygiene prevents plan rot on longer projects.",
+  "scripts": [
+    "soma-code",
+    "soma-reflect",
+    "soma-plans",
+    "soma-focus"
+  ]
 }

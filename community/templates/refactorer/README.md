@@ -1,6 +1,6 @@
-# Refactorer Template
+# Refactorer
 
-Migration and refactoring specialist. Installs with incremental-refactor, precision-edit, safe-file-ops, test-hygiene, and task-tooling muscles pre-loaded and hot.
+Migration and refactoring specialist. Scan before touching, one file at a time, backward-compatible transitions, verify at every step.
 
 ## Install
 
@@ -12,8 +12,20 @@ soma install template refactorer
 
 - **5 muscles** — incremental-refactor (hot), precision-edit (hot), safe-file-ops, test-hygiene, task-tooling
 - **4 protocols** — tool-discipline, quality-standards, working-style, pre-flight
-- **Identity** — refactoring-focused working style
+- **SOMA.md** — refactoring-focused identity that never changes code without scanning dependencies first
 - **Settings** — higher muscle budget (4000 tokens), faster heat detection
+
+## Recommended Add-ons
+
+These hub AMPS extend refactoring workflows:
+
+- **code-navigator** — fast codebase navigation, `refs` for rename safety
+- **ripple-awareness** — map blast radius before committing
+- **verification-instinct** — verify observable behavior is identical after changes
+
+```bash
+soma install muscle code-navigator
+```
 
 ## Best For
 

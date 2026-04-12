@@ -1,18 +1,18 @@
 ---
-type: protocol
 name: detection-triggers
+type: protocol
 status: active
-heat-default: warm
-applies-to: [always]
-version: 1.0.0
-created: 2026-03-12
-updated: 2026-03-22
+description: "Capture on corrections, preferences, 3+ patterns, knowledge gaps. Bubble-up: log → muscle → protocol → core."
+heat-default: cold
 tags: [learning, self-improvement, memory, awareness]
-tier: core
+applies-to: [always]
 scope: bundled
-breadcrumb: "Capture on corrections, preferences, 3+ patterns, knowledge gaps. Bubble-up: log → muscle → protocol → core."
-author: meetsoma
-license: MIT
+tier: core
+created: 2026-03-12
+updated: 2026-04-12
+version: 1.0.0
+author: Curtis Mercier
+license: CC BY 4.0
 ---
 
 # Detection Triggers
@@ -76,6 +76,7 @@ This is the bubble-up flow. Each level requires more evidence:
 
 ---
 
-## When to Apply
-
-Every session. Automatic detection fires on corrections, preferences, and repeated patterns.
+<!--
+Licensed under CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/
+Author: Curtis Mercier
+-->

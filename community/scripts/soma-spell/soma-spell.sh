@@ -29,9 +29,9 @@
 set -eo pipefail
 
 # ── Theme ──
-source "$(dirname "$0")/soma-theme.sh" 2>/dev/null || {
-  SOMA_BOLD='\033[1m'; SOMA_DIM='\033[2m'; SOMA_NC='\033[0m'; SOMA_CYAN='\033[0;36m'
-}
+_sd="$(dirname "$0")"
+if [ -f "$_sd/soma-theme.sh" ]; then source "$_sd/soma-theme.sh"; fi
+SOMA_BOLD="${SOMA_BOLD:-\033[1m}"; SOMA_DIM="${SOMA_DIM:-\033[2m}"; SOMA_NC="${SOMA_NC:-\033[0m}"; SOMA_CYAN="${SOMA_CYAN:-\033[0;36m}"
 # ── Spelling rules: American → Canadian ──
 # Format: american|canadian
 # Only includes words that appear in technical/agent writing

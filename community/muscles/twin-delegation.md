@@ -9,10 +9,11 @@ applies-to: [development, writing, research]
 scope: bundled
 tier: core
 created: 2026-04-03
-updated: 2026-04-04
+updated: 2026-04-12
 version: 1.0.0
 author: meetsoma
 license: MIT
+heat: 0
 ---
 
 # Twin Delegation
@@ -46,10 +47,12 @@ The preload IS the twin's entire context. Engineer it like a briefing for someon
 
 ```markdown
 # .soma/memory/preloads/preload-<task>-<date>.md
+heat: 0
 ---
 type: preload
 created: {{DATE}}
 for: <purpose>-twin
+heat: 0
 ---
 
 ## Resume Point
@@ -159,4 +162,5 @@ bash soma-cmux.sh capture surface:N 15
 bash soma-cmux.sh run surface:N "/exhale"
 ```
 
+heat: 0
 ---

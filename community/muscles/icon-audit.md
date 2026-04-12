@@ -1,26 +1,25 @@
 ---
-type: muscle
 name: icon-audit
-breadcrumb: "Browse icon libraries, extract SVGs, build numbered comparison pages, and screenshot for visual AI review."
-tier: official
-scope: hub
+type: muscle
 status: active
-triggers: [icon-audit, svg, lucide, phosphor, comparison, visual-review, icon-library, design, icons, visual-audit, browser-tools]
+description: "browse icon libraries, extract SVGs, build numbered comparison pages, screenshot for visual AI review. Works with any SVG library (Lucide, Phosphor, etc)."
 heat: 0
 heat-default: warm
-loads: 0
+triggers: [icon-audit, svg, lucide, phosphor, comparison, visual-review, icon-library, design, icons, visual-audit, browser-tools]
+scope: hub
+tier: official
+created: 2026-03-11
+updated: 2026-04-12
+version: 1.0.0
 author: meetsoma
 license: MIT
-version: 1.0.0
-created: 2026-03-11
-updated: 2026-03-21
+loads: 0
 ---
 
 # Icon Audit — Muscle
 
-<!-- digest:start -->
-> **Icon Audit** — browse icon libraries, extract SVGs, build numbered comparison pages, screenshot for visual AI review. Works with any SVG library (Lucide, Phosphor, etc).
-<!-- digest:end -->
+## TL;DR
+**Icon Audit** — browse icon libraries, extract SVGs, build numbered comparison pages, screenshot for visual AI review. Works with any SVG library (Lucide, Phosphor, etc).
 
 ## Workflow
 

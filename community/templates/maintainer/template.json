@@ -1,12 +1,25 @@
 {
   "name": "maintainer",
-  "description": "Codebase steward — test hygiene, doc maintenance, dependency health, technical debt tracking",
+  "description": "Codebase steward \u2014 test hygiene, doc maintenance, dependency health, technical debt tracking",
   "author": "meetsoma",
   "version": "1.0.0",
   "tier": "official",
   "requires": {
-    "protocols": ["tool-discipline", "quality-standards", "working-style", "pre-flight", "frontmatter-standard", "task-tracking"],
-    "muscles": ["test-hygiene", "doc-hygiene", "safe-file-ops", "incremental-refactor", "task-tooling"],
+    "protocols": [
+      "tool-discipline",
+      "quality-standards",
+      "working-style",
+      "pre-flight",
+      "frontmatter-standard",
+      "task-tracking"
+    ],
+    "muscles": [
+      "test-hygiene",
+      "doc-hygiene",
+      "safe-file-ops",
+      "incremental-refactor",
+      "task-tooling"
+    ],
     "skills": [],
     "automations": []
   },
@@ -39,5 +52,10 @@
     "incremental-refactor": 5,
     "task-tooling": 5
   },
-  "notes": "test-hygiene and doc-hygiene start hot — maintenance is about keeping things clean, not building new. Lower hot threshold (6) so protocols activate faster for stewardship work. task-tracking bundled because maintenance needs a kanban to track technical debt items."
+  "notes": "test-hygiene and doc-hygiene start hot \u2014 maintenance is about keeping things clean, not building new. Lower hot threshold (6) so protocols activate faster for stewardship work. task-tracking bundled because maintenance needs a kanban to track technical debt items.",
+  "scripts": [
+    "soma-code",
+    "soma-plans",
+    "soma-reflect"
+  ]
 }

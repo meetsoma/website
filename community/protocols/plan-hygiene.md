@@ -1,42 +1,37 @@
 ---
-type: protocol
 name: plan-hygiene
-version: 1.0.0
-tier: official
-author: Curtis Mercier
-license: MIT
-tags: [plans, hygiene, maintenance, lifecycle]
-heat-default: warm
+type: protocol
 status: active
-created: 2026-03-12
-updated: 2026-03-22
-breadcrumb: "Plans rot. Frontmatter needs status, remaining, tooling. Empty remaining = complete → archive. Budget: ≤12 active. Verify on exhale."
+description: "Plans rot. Update remaining on every touch. Stale docs poison sessions."
+heat-default: cold
+tags: [workflow, planning, documentation]
 applies-to: [always]
+scope: bundled
+tier: official
+created: 2026-03-14
+updated: 2026-04-12
+version: 1.0.0
+author: meetsoma
+license: MIT
 ---
 
 # Plan Hygiene Protocol
-
 ## TL;DR
 Plans rot. Frontmatter needs `status`, `remaining`, `tooling`. Empty remaining = complete → archive. Budget: ≤12 active. Use `soma-plans.sh`. Verify on exhale.
-
 ## The Problem
-
 Plans, kanbans, and changelogs drift from reality. Features get marked "done" in plans but never built. Changelogs claim test suites that don't exist. Plans reference functions that were renamed. 48 plans accumulate when 12 would suffice.
-
 ## Rules
-
 ### 0. Plans Have Live Frontmatter
-
 Every plan's frontmatter tracks its real state. This is the first thing to check and the last thing to update.
-
 ```yaml
 ---
 type: plan
 status: active          # draft | active | blocked | complete | archived
 created: 2026-03-13
 updated: 2026-03-14     # always update on any change
-owner: curtis + soma
-scope: [auto-breathe, notifications]
+author: meetsoma
+license: MITowner: curtis + soma
+version: 1.0.0scope: [auto-breathe, notifications]
 remaining:              # brief list of what's left — empty when complete
   - research API for new feature
   - implement core logic
@@ -104,7 +99,7 @@ npm test
 
 ### 6. Periodic Audit
 
-Run `bash .soma/scripts/plan-audit.sh` at least once per major session. It checks:
+Run your plan audit script at least once per major session. It checks:
 - Active plans with `status: done` (should be archived)
 - Active plan count (warn if >12)
 - Changelog claims vs codebase reality
@@ -121,7 +116,3 @@ Run `bash .soma/scripts/plan-audit.sh` at least once per major session. It check
 | Kanban item "Done" but feature has a bug | Move back to Active. Done means done. |
 | Changelog entry for unreleased version | Keep in [Unreleased] section. Move to version header only on publish. |
 | Writing the changelog BEFORE writing the code | Invert: code → commit → changelog. |
-
-## When to Apply
-
-At session end (exhale), when creating plans, when reviewing existing plans for staleness.

@@ -9,10 +9,11 @@ applies-to: [development, debugging]
 scope: bundled
 tier: core
 created: 2026-04-03
-updated: 2026-04-04
+updated: 2026-04-12
 version: 1.0.0
 author: meetsoma
 license: MIT
+heat: 0
 ---
 
 # Post-Fix Learning
@@ -48,4 +49,5 @@ Correction-capture catches what the user tells you was wrong. Post-fix learning 
 
 The second one is proactive. Nobody had to tell you. You figured it out and wrote it down so the next session doesn't repeat the same investigation.
 
+heat: 0
 ---

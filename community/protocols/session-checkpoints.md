@@ -1,16 +1,16 @@
 ---
-type: protocol
 name: session-checkpoints
+type: protocol
 status: active
-heat-default: warm
-applies-to: [git]
-breadcrumb: "Soma can auto-commit .soma/ state on every exhale and surface git diffs on boot. Two tracks: .soma/ internal git (never pushed) and project code (squash before push)."
-version: 2.0.0
-tier: core
-scope: core
+description: "Soma can auto-commit .soma/ state on every exhale and surface git diffs on boot. Two tracks: .soma/ internal git (never pushed) and project code (squash before push)."
+heat-default: cold
 tags: [session, git, continuity, self-awareness]
+applies-to: [git]
+scope: core
+tier: core
 created: 2026-03-10
-updated: 2026-03-22
+updated: 2026-04-12
+version: 2.0.0
 author: Curtis Mercier
 license: CC BY 4.0
 ---

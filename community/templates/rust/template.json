@@ -1,0 +1,20 @@
+{
+  "name": "rust",
+  "description": "Rust systems specialist — ownership, lifetimes, error handling, cargo workspace, unsafe discipline, performance-aware",
+  "author": "meetsoma",
+  "version": "1.0.0",
+  "tier": "official",
+  "requires": {
+    "protocols": ["tool-discipline", "quality-standards", "working-style", "pre-flight", "correction-capture"],
+    "muscles": ["precision-edit", "safe-file-ops", "incremental-refactor", "code-navigator"],
+    "skills": [],
+    "automations": []
+  },
+  "scripts": ["soma-code", "soma-reflect"],
+  "settings": {
+    "protocols": {
+      "warmThreshold": 2,
+      "hotThreshold": 7
+    }
+  }
+}

@@ -1,57 +1,55 @@
 ---
-type: muscle
 name: precision-edit
+type: muscle
 status: active
-triggers: [edit, precision, whitespace, grep, line-numbers, read-before-write, editing, tools, reliability, workflow]
-heat-default: warm
+description: "the match must be verified by `read` first."
 heat: 0
-loads: 0
-breadcrumb: "Before editing: grep -n to locate, read --offset to see exact whitespace, plan edits as a checklist, then execute. Never edit blind."
+triggers: [edit, replace, sed, line, surgical, precise, oldtext, exact, match, whitespace, editing, precision, code]
+tags: [editing, workflow, copy, website]
+applies-to: [any]
+created: 2026-03-14
+updated: 2026-04-12
+tools: []
+scripts: [soma-verify.sh copy, soma-verify-styles.sh]
+version: 1.0.0
 author: meetsoma
 license: MIT
-version: 1.0.0
+heat-default: warm
 tier: official
-scope: hub
-created: 2026-03-14
-updated: 2026-03-21
 ---
 
 # Precision Edit
 
-<!-- digest:start -->
-> **Precision Edit** — `grep -n` to locate → `read --offset --limit` to see context → plan edits → match exact whitespace → re-read to verify. Never edit blind.
-<!-- digest:end -->
+## TL;DR
+**Precision Edit** — before editing any multi-line file, extract content with line numbers first. (1) Run relevant verify script (`soma-verify.sh copy`, `soma-verify-styles.sh`) to find issues. (2) `grep -n` the target patterns to get exact line numbers. (3) `read --offset --limit` the exact ranges to see surrounding whitespace. (4) Plan all edits as a line-numbered checklist before touching anything. (5) Edit with exact whitespace matches. Never `edit` blind — the match must be verified by `read` first.
 
 ## The Pattern
 
 ```
-1. LOCATE — grep -n to get line numbers for each target
-2. READ   — read --offset --limit to see exact content + whitespace
-3. PLAN   — list every edit: file:line, old text, new text
-4. EDIT   — execute edits with exact whitespace from step 2
-5. VERIFY — re-read the file to confirm changes landed correctly
+1. SCAN   — run verify script to find what's wrong
+2. LOCATE — grep -n to get line numbers for each issue
+3. READ   — read --offset --limit to see exact content + whitespace
+4. PLAN   — list every edit: file:line, old text, new text
+5. EDIT   — execute edits with exact whitespace from step 3
+6. VERIFY — re-run verify script to confirm fixes
 ```
 
 ## Why
 
-The `edit` tool requires exact text matching including whitespace. Guessing whitespace from memory or grep output fails. The only reliable path:
+`edit` requires exact text matching including whitespace. Guessing whitespace from memory or grep output fails. The only reliable path:
 - `grep -n` finds the line number
-- `read --offset --limit` shows the exact content with all whitespace preserved
+- `read --offset --limit` shows the exact content with all whitespace
 - Copy the exact text from read output into the edit
-
-## Rules
-
-1. **Never edit from memory.** Even if you just read the file 2 turns ago, whitespace drifts in your context. Re-read.
-2. **After each edit, line numbers shift.** If making multiple edits, re-read between them or edit bottom-to-top (later lines first).
-3. **For multi-line edits, include enough context.** Match 2-3 lines around the target to avoid ambiguous matches.
-4. **If an edit fails, read the file again.** Don't retry with slightly different whitespace — look at what's actually there.
 
 ## Anti-patterns
 
-| ❌ Don't | ✅ Do |
-|----------|-------|
-| Edit based on line numbers from a previous read | Re-read immediately before editing |
-| Guess indentation from grep output | Read the exact range to see whitespace |
-| Make multiple edits without re-reading | Re-read between edits or edit bottom-to-top |
-| Retry a failed edit with "maybe this whitespace" | Read the file, see what's actually there |
-| Use `write` to "fix" an edit failure | Use `read` → `edit` with correct content |
+- ❌ Editing based on line numbers from a previous read (content shifts after edits)
+- ❌ Guessing indentation from grep output (grep strips context)
+- ❌ Multiple edits without re-reading between them (line numbers drift)
+- ❌ Editing without running the verify script first (might fix the wrong thing)
+
+## Related
+
+- `soma-verify.sh copy` — finds stale copy, counts, framing issues
+- `soma-verify-styles.sh` — finds raw CSS values, inconsistent typography
+- `soma-verify.sh website` — docs sync verification

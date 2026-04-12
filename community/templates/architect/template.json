@@ -1,12 +1,26 @@
 {
   "name": "architect",
-  "description": "Structure-focused agent for engineering teams — code review, standards enforcement, verification-first workflow",
+  "description": "Structure-focused agent for engineering teams \u2014 code review, standards enforcement, verification-first workflow",
   "author": "meetsoma",
   "version": "2.0.0",
   "tier": "official",
   "requires": {
-    "protocols": ["tool-discipline", "working-style", "quality-standards", "git-identity", "frontmatter-standard", "pre-flight", "pattern-evolution", "correction-capture"],
-    "muscles": ["precision-edit", "task-tooling", "incremental-refactor", "doc-hygiene"],
+    "protocols": [
+      "tool-discipline",
+      "working-style",
+      "quality-standards",
+      "git-identity",
+      "frontmatter-standard",
+      "pre-flight",
+      "pattern-evolution",
+      "correction-capture"
+    ],
+    "muscles": [
+      "precision-edit",
+      "task-tooling",
+      "incremental-refactor",
+      "doc-hygiene"
+    ],
     "skills": [],
     "automations": []
   },
@@ -38,5 +52,10 @@
     "incremental-refactor": 5,
     "doc-hygiene": 3
   },
-  "notes": "Heavier protocol load for architecture work — lower warm threshold (2) means protocols activate faster. pre-flight prevents duplicate work. pattern-evolution helps the agent grow project-specific knowledge. correction-capture learns team standards. Now includes muscles: precision-edit (hot), task-tooling, incremental-refactor, doc-hygiene."
+  "notes": "Heavier protocol load for architecture work \u2014 lower warm threshold (2) means protocols activate faster. pre-flight prevents duplicate work. pattern-evolution helps the agent grow project-specific knowledge. correction-capture learns team standards. Now includes muscles: precision-edit (hot), task-tooling, incremental-refactor, doc-hygiene.",
+  "scripts": [
+    "soma-code",
+    "soma-plans",
+    "soma-reflect"
+  ]
 }

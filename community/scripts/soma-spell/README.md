@@ -5,12 +5,13 @@ version: 1.0.0
 status: active
 author: meetsoma
 license: MIT
+tier: official
 language: bash
 description: Canadian English spelling checker and fixer with project dictionary
 tags: [spelling, grammar, docs, canadian-english, writing]
 requires: [bash 4+, grep, sed]
 created: 2026-03-18
-updated: 2026-03-21
+updated: 2026-04-12
 ---
 
 # soma-spell

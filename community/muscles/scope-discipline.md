@@ -9,10 +9,11 @@ applies-to: [development]
 scope: bundled
 tier: core
 created: 2026-04-03
-updated: 2026-04-04
+updated: 2026-04-12
 version: 1.0.0
 author: meetsoma
 license: MIT
+heat: 0
 ---
 
 # Scope Discipline
@@ -44,4 +45,5 @@ If the answer is "no, but it's better this way" — pause. Mention it. Let them 
 
 Outside those cases: do the thing, stop, report.
 
+heat: 0
 ---

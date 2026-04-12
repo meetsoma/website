@@ -8,9 +8,14 @@ triggers: [find, map, refs, structure, grep, navigate, codebase, navigation, sea
 tags: [tooling, search, refactor, shell]
 applies-to: [any]
 created: 2026-03-15
-updated: 2026-04-04
+updated: 2026-04-12
 tools: [soma-code.sh]
 related: [incremental-refactor, task-tooling]
+version: 1.0.0
+author: meetsoma
+license: MIT
+heat-default: warm
+tier: official
 ---
 # Code Navigator
 

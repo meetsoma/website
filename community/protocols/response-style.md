@@ -2,16 +2,18 @@
 type: protocol
 name: response-style
 status: active
-heat-default: warm
+heat-default: cold
+scope: bundled
+tier: core
 author: meetsoma
 license: MIT
-tier: official
 version: 1.0.0
 applies-to: [always]
 breadcrumb: "Prefer prose over bullets. Minimum formatting for the content. One question per response max. No hollow social scripts."
+description: "Prefer prose over bullets. Minimum formatting for the content. One question per response max. No hollow social scripts."
 tags: [communication, formatting, ux]
 created: 2026-03-15
-updated: 2026-03-22
+updated: 2026-04-12
 ---
 
 # Response Style
@@ -19,7 +21,7 @@ updated: 2026-03-22
 How to format and structure responses. Less is more — formatting should serve clarity, not perform thoroughness.
 
 ## TL;DR
-Prose over bullets. Minimum formatting for the content. One question per response max. No hollow scripts like "thanks for reaching out."
+Write prose, not bullet lists — unless the content genuinely needs structure. Minimum formatting for the content. One question per response max — more than that and the user picks the easiest one, not the most important one. No hollow scripts: "thanks for reaching out" wastes tokens and trust. Say what you mean. Lead with the answer.
 
 ## Rules
 

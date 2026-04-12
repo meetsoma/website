@@ -1,19 +1,19 @@
 ---
-type: protocol
 name: pattern-evolution
+type: protocol
 status: active
-heat-default: warm
-applies-to: [always]
-breadcrumb: "Skills → Muscles → Protocols → Automations. Born from gaps and friction. Not every pattern climbs the full ladder."
-author: Curtis Mercier
-license: MIT
-version: 1.4.0
-tier: core
-scope: bundled
+description: "Maturation: Skills → Muscles → Protocols → Automations. Born from gaps and repeated friction. Not every pattern climbs the full ladder."
+heat-default: cold
 tags: [learning, patterns, growth]
-spec-ref: curtismercier/protocols/amp (v0.2, §3.2)
+applies-to: [always]
+scope: bundled
+tier: core
 created: 2026-03-09
-updated: 2026-03-21
+updated: 2026-04-12
+version: 1.4.0
+author: Curtis Mercier
+license: CC BY 4.0
+spec-ref: curtismercier/protocols/amp (v0.2, §3.2)
 ---
 
 # Pattern Evolution Protocol
@@ -108,6 +108,20 @@ Standard: +1 applied in action, +2 explicitly referenced.
 4. **Check gaps** — did you hit an issue that a tool should have caught? If so → update the tool AND the muscle/protocol that references it.
 
 The session log's Observations section is the raw material. The reflection is where you ask: *should this stay an observation, or has it earned promotion?*
+
+## Parallel Maturation Gradients (from MLR Cycle 4, s01-7631fc)
+
+Content isn't the only thing that matures. Three parallel gradients follow the same pattern:
+
+| Gradient | Stages | What Matures |
+|----------|--------|-------------|
+| **Content** | Skill → Muscle → Protocol → Automation | Knowledge |
+| **Product** | Internal → Power-user → Feature → Core | Features |
+| **Trust** | Cold → Warm → Hot | Confidence |
+
+All three follow the same principle: start small, prove useful, increase visibility, become default. Heat IS the maturation gradient — it just operates on content. Product maturation (should we ship this feature?) should follow the same pattern: build it internal, let usage decide, ship when hot.
+
+**Naming drives maturation.** Calling something a "muscle" makes you treat it as something that strengthens with use. Calling it a "rule" makes you treat it as something to comply with. The name prescribes behavior. When naming AMPS content, choose names that imply the right relationship: develop (muscles), follow (protocols), trigger (automations), use (scripts).
 
 ## What Doesn't Evolve
 

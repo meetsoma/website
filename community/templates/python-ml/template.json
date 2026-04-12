@@ -1,0 +1,20 @@
+{
+  "name": "python-ml",
+  "description": "Python ML/Data specialist — notebooks, experiment tracking, data pipelines, model evaluation, reproducibility",
+  "author": "meetsoma",
+  "version": "1.0.0",
+  "tier": "official",
+  "requires": {
+    "protocols": ["tool-discipline", "quality-standards", "working-style", "pre-flight", "correction-capture"],
+    "muscles": ["precision-edit", "safe-file-ops", "code-navigator"],
+    "skills": [],
+    "automations": []
+  },
+  "scripts": ["soma-code", "soma-reflect", "soma-plans"],
+  "settings": {
+    "protocols": {
+      "warmThreshold": 3,
+      "hotThreshold": 8
+    }
+  }
+}

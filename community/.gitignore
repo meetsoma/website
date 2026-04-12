@@ -1,0 +1,6 @@
+
+# Internal state — local dev context, not shipped
+STATE.md
+
+# Local-only directories (never committed)
+_local/

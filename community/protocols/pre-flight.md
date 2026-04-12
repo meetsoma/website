@@ -1,18 +1,18 @@
 ---
-type: protocol
 name: pre-flight
+type: protocol
 status: active
-updated: 2026-03-22
-breadcrumb: "Before building anything: check if it exists. Before accepting a request: verify it's needed. Grep for prior art. Catch user mistakes before executing them."
-heat-default: warm
+description: "Check what exists before creating. Verify assumptions before building."
+heat-default: cold
+tags: [workflow, safety, verification]
+applies-to: [always]
 scope: bundled
 tier: core
+created: 2026-03-10
+updated: 2026-04-12
+version: 1.0.0
 author: meetsoma
 license: MIT
-version: 1.0.0
-tags: [pre-flight, verify, check, before-building]
-applies-to: [always]
-created: 2026-03-10
 ---
 
 # Pre-Flight Protocol

@@ -1,0 +1,8 @@
+# Protect CI infrastructure — owner approval required
+.github/                @curtismercier
+scripts/                @curtismercier
+MAINTAINERS.json        @curtismercier
+CONTRIBUTING.md         @curtismercier
+AGENTS.md               @curtismercier
+FRONTMATTER.md          @curtismercier
+CODEOWNERS              @curtismercier
