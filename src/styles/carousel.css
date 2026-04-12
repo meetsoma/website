@@ -109,12 +109,12 @@
 
 .badge-protocol {
   background: rgba(232, 168, 124, 0.08);
-  color: var(--warm-bright);
+  color: var(--promo);
   border: 1px solid rgba(232, 168, 124, 0.12);
 }
 
 .badge-protocol .badge-dot {
-  background: var(--warm-bright);
+  background: var(--promo);
 }
 
 .badge-muscle {

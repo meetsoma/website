@@ -544,7 +544,7 @@ export default function OrbitalPhysics() {
           <defs>
             <linearGradient id="gcw-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#f0c866"/>
-              <stop offset="100%" stop-color="#e8a87c"/>
+              <stop offset="100%" stop-color="#f0c866"/>
             </linearGradient>
           </defs>
           <circle cx="50" cy="50" r="46" fill="none" stroke="url(#gcw-grad)" stroke-width="2.5"/>
@@ -562,6 +562,24 @@ export default function OrbitalPhysics() {
           s<span style={{ color: 'var(--promo, #f0c866)' }}>{"\u03C3"}</span>ma
         </span>
       </div>
+
+      {/* Mascot — orbiting moon above-right of the badge */}
+      <img
+        src="/media/soma-logo-mascot.svg"
+        alt=""
+        width="52"
+        height="52"
+        className="orbital-center-float"
+        style={{
+          position: 'absolute',
+          top: 'calc(50% - 90px)',
+          left: 'calc(50% + 35px)',
+          zIndex: 3,
+          pointerEvents: 'none',
+          filter: 'drop-shadow(0 0 14px rgba(124, 178, 212, 0.2))',
+          opacity: 0.85,
+        }}
+      />
 
       {/* Orbital nodes */}
       {NODES.map(def => {
@@ -599,7 +617,7 @@ export default function OrbitalPhysics() {
                 border: `1px solid ${isActive ? 'var(--border-accent)' : 'var(--border-subtle)'}`,
                 background: 'var(--surface-card-strong)',
                 backdropFilter: 'blur(8px)',
-                color: def.color === 'warm' ? 'var(--warm-bright)' :
+                color: def.color === 'warm' ? 'var(--promo)' :
                        def.color === 'muted' ? 'var(--text-muted)' : 'var(--accent-bright)',
                 boxShadow: isActive ? '0 0 21px var(--shadow-accent-soft)' : 'none',
                 transition: 'border-color 0.2s, box-shadow 0.2s',

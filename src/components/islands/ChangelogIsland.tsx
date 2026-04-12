@@ -21,7 +21,7 @@ interface ChangelogData {
 const sectionConfig: Record<string, { label: string; color: string }> = {
   added: { label: 'Added', color: '#a8e8a8' },
   changed: { label: 'Changed', color: 'var(--accent-bright)' },
-  fixed: { label: 'Fixed', color: 'var(--warm-bright)' },
+  fixed: { label: 'Fixed', color: 'var(--promo)' },
   born: { label: 'Born', color: 'var(--accent-bright)' },
 };
 

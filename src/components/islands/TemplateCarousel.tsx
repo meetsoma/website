@@ -41,7 +41,7 @@ const templates: Template[] = [
     voice: "Ship it, test it, document it. Every day. That's the job.",
     protocols: ['working-style', 'correction-capture', 'detection-triggers'],
     muscles: ['precision-edit', 'safe-file-ops', 'task-tooling'],
-    color: 'var(--warm-bright)',
+    color: 'var(--promo)',
   },
   {
     name: 'writer', icon: 'penLine', title: 'The Writer',

@@ -417,7 +417,7 @@ export default function HubDetail({ type: propType, slug: propSlug, staticItem, 
         .hd-breadcrumb { color: var(--text-secondary, var(--text-secondary)); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1rem; }
         .hd-meta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
         .hd-meta { font-family: var(--font-mono, monospace); font-size: 0.75rem; color: var(--text-muted, var(--text-muted)); }
-        .hd-heat { color: var(--warm-bright, #e8a87c); }
+        .hd-heat { color: var(--promo, #f0c866); }
         .hd-tier { font-family: var(--font-mono, monospace); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 2px 0.5rem; border-radius: 4px; }
         .tier-core { background: rgba(124, 178, 212, 0.2); color: var(--accent-bright); }
         .tier-official { background: rgba(168, 232, 168, 0.2); color: rgb(168, 232, 168); }
@@ -445,8 +445,8 @@ export default function HubDetail({ type: propType, slug: propSlug, staticItem, 
         .hd-inc-version { font-family: var(--font-mono, monospace); font-size: 0.65rem; color: var(--text-muted, var(--text-muted)); }
         .hd-inc-name { font-size: 0.95rem; font-weight: 600; text-transform: capitalize; margin-bottom: 0.5rem; }
         .hd-inc-desc { font-size: 0.8rem; color: var(--text-secondary, var(--text-secondary)); line-height: 1.5; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .hd-inc-heat { font-size: 0.7rem; color: var(--warm-bright, #e8a87c); font-style: italic; margin-top: 0.5rem; }
-        .hd-missing { font-size: 0.8rem; color: var(--warm-bright, #e8a87c); }
+        .hd-inc-heat { font-size: 0.7rem; color: var(--promo, #f0c866); font-style: italic; margin-top: 0.5rem; }
+        .hd-missing { font-size: 0.8rem; color: var(--promo, #f0c866); }
 
         .hd-body { padding: 2rem; border-radius: 12px; border: 1px solid var(--border-subtle); background: var(--surface-card); margin-bottom: 1.5rem; }
         .hd-body h2 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle); color: var(--text-primary, var(--text-primary)); }
