@@ -42,7 +42,7 @@ Without `_mind.md`, Soma uses a fixed assembly order:
 | Order | Section | Source | Toggleable |
 |-------|---------|--------|------------|
 | 1 | Static core | Built-in behavioral rules (`prompts/system-core.md`) | No |
-| 2 | Identity | `SOMA.md` or `body/soul.md` (layered: project → parent → global) | `identityInSystemPrompt` |
+| 2 | Identity | `body/soul.md` or `SOMA.md` fallback (layered: project → parent → global) | `identityInSystemPrompt` |
 | 3 | Protocols | Hot = full body, warm = one-liner (sorted by heat, capped) | No |
 | 4 | Muscles | Hot = full body, warm = digest (within token budget) | No |
 | 5 | Soma docs | Documentation references | `includeSomaDocs` |

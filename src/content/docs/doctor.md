@@ -1,10 +1,11 @@
 ---
 title: "Doctor & Migration"
-description: "Project health checks, version migration, keeping .soma/ current."
+description: "Project health checks, version migration, and how Soma keeps your .soma/ current."
 section: "Reference"
 order: 8.5
 ---
 
+# Doctor & Migration
 
 <!-- tldr -->
 `soma doctor` from CLI for a quick health check. `/soma doctor` inside the TUI for interactive migration with agent assistance. Tier 1 (silent, every boot): adds missing settings, body files, protocols, converts legacy formats. Tier 2+ (interactive): compares templates, walks migration phases, handles breaking changes. Your customizations are never overwritten.
@@ -109,7 +110,7 @@ The chain is complete — no gaps. If your project is at v0.6.4 and the agent is
 ### Content Files (body templates)
 
 ```
-templates/default/soul.md  ← bundled template
+templates/default/soul.md ← bundled template
 body/soul.md              ← your copy (in .soma/)
 ```
 

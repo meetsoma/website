@@ -1,13 +1,14 @@
 ---
-title: "Protocols & Heat"
+title: "Protocols"
 description: "Behavioral rules, heat system, domain scoping, writing your own."
 section: "Core Concepts"
 order: 3
 ---
 
+# Protocols
 
 <!-- tldr -->
-Behavioral rules in `.soma/amps/protocols/` as markdown with YAML frontmatter. Loaded by heat: hot (≥8) = full body, warm (≥3) = breadcrumb, cold = name only. Heat rises on use (+1 auto-detect), decays per session if unused. Domain scoping via `applies-to` field. Write your own: add `name`, `heat-default`, `breadcrumb`, `applies-to` frontmatter. Configure thresholds in `settings.json`.
+Behavioral rules in `.soma/amps/protocols/` as markdown with YAML frontmatter. Loaded by heat: hot (≥8) = full body, warm (≥3) = TL;DR/description only, cold = name only. Heat rises on use (+1 auto-detect), decays per session if unused. Domain scoping via `applies-to` field. Write your own: add `name`, `heat-default`, `description`, `applies-to` frontmatter. Configure thresholds in `settings.json`.
 <!-- /tldr -->
 
 Protocols are behavioral rules that guide Soma's actions. They live in `.soma/amps/protocols/` as markdown files with YAML frontmatter.
@@ -37,7 +38,7 @@ Soma ships with 16 protocols, scaffolded on `soma init`:
 
 ## Heat
 
-Every protocol has a temperature. Hot (8+) loads the full body. Warm (3-7) loads just the breadcrumb. Cold (0-2) shows the name but nothing else.
+Every protocol has a temperature. Hot (8+) loads the full body. Warm (3-7) loads the TL;DR or description. Cold (0-2) shows the name but nothing else.
 
 Heat rises when a protocol gets used (auto-detected from tool results) and decays by 1 each session if unused. `/pin` locks something hot. `/kill` drops it to zero.
 

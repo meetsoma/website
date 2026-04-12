@@ -2,9 +2,10 @@
 title: "Body Architecture"
 description: "Structured identity with templates, variables, lazy loading, and the soma chain."
 section: "Core Concepts"
-order: 3.6
+order: 3.5
 ---
 
+# Body Architecture
 
 <!-- tldr -->
 The body is Soma's structured identity system. Files in `.soma/body/` become template variables (`soul.md` → `{{soul}}`). Templates (`_mind.md`, `_memory.md`) use these variables to compile the system prompt and preload. Lazy files load on demand. The soma chain (project → parent → global) merges content with child-wins priority.
@@ -238,7 +239,7 @@ The runtime loads identity from the first file found:
 ```
 1. body/soul.md     ← structured identity (recommended)
 2. SOMA.md          ← canonical monolith
-3. identity.md      ← legacy (deprecated, will be removed)
+3. identity.md      ← legacy (deprecated — no longer created by init, ignored if soul.md exists)
 ```
 
 When `body/soul.md` exists, the others are never read.
@@ -282,7 +283,7 @@ soma focus <kw>   → fresh, WITH focus overrides
 When a file outgrows its role, split it:
 
 ```
-SOMA.md (300 lines, monolith)
+soul.md (300 lines, outgrown)
   ↓ evolves into
 soul.md (30 lines) + voice.md + body.md + journal.md (lazy)
 ```

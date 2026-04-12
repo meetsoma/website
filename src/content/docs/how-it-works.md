@@ -83,11 +83,11 @@ Either way, Soma:
 
 Soma doesn't come pre-configured. It **discovers** who it is through working with you.
 
-On first run, Soma creates `.soma/SOMA.md` — a starting point. Over sessions, the agent refines its identity based on your workspace and interactions.
+On first run, Soma creates `.soma/body/soul.md` — a starting point with detected project context. Over sessions, the agent refines its identity based on your workspace and interactions.
 
 When identity outgrows a single file, the **body architecture** kicks in — structured files in `.soma/body/` where `soul.md` holds who the agent is, `voice.md` holds how it communicates, `body.md` holds the project context, and templates (`_mind.md`, `_memory.md`) control how the system prompt and preloads are assembled.
 
-See [Identity](/docs/identity) for the full guide on SOMA.md, body/, templates, and variables.
+See [Identity](/docs/identity) for the full guide on soul.md, body/, templates, and variables.
 
 ## Muscles
 
@@ -238,14 +238,16 @@ Soma supports **parent-child inheritance** for monorepos and multi-project works
 
 ```
 ~/work/.soma/                    ← parent (workspace-wide)
-├── SOMA.md                      ← "We use pnpm, conventional commits"
+├── body/
+│   └── soul.md                  ← "We use pnpm, conventional commits"
 ├── settings.json
 └── amps/
     └── protocols/
         └── git-identity.md      ← shared git rules
 
 ~/work/my-app/.soma/             ← child (project-specific)
-├── SOMA.md                      ← "I'm a React frontend"
+├── body/
+│   └── soul.md                  ← "I'm a React frontend"
 └── amps/
     └── protocols/
         └── testing.md           ← project-specific testing rules

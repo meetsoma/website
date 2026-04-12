@@ -8,7 +8,7 @@ order: 7
 # Commands
 
 <!-- tldr -->
-CLI: `soma` (fresh), `soma inhale` (fresh + preload), `soma -c` (continue full history), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts). Body: `/body check`, `/body vars`, `/body map`, `/body render`.
+CLI: `soma` (fresh), `soma inhale` (fresh + preload), `soma -c` (continue full history), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts). Body: `/body check`, `/body vars`, `/body map`, `/body render`. Script commands: `soma code` (codebase navigator), `soma verify` (structural checks), `soma refactor` (dependency analysis), `soma seam` (concept tracing), `soma session` (maintenance — strip images, list, stats). Scripts discovered via chain: bundled → project → global.
 <!-- /tldr -->
 
 Soma registers slash commands that control the breath cycle, heat system, and session management.
@@ -132,6 +132,86 @@ Override in `settings.json` - see [Configuration](configuration.md#context-warni
 
 See [Models & Providers](/docs/models) for full setup, including custom providers (Ollama, LM Studio), API key configuration, and `models.json`.
 
+## Script Commands
+
+Soma discovers bash scripts and makes them available as CLI commands. Type `soma <name>` and Soma finds `soma-<name>.sh` using a three-level discovery chain:
+
+1. **Bundled** — `~/.soma/agent/scripts/` (ships with Soma)
+2. **Project** — `.soma/amps/scripts/` (your project's scripts)
+3. **Global** — `~/.soma/amps/scripts/` (your personal scripts)
+
+First match wins. This means project scripts can override bundled ones.
+
+### Codebase Tools
+
+| Command | What it does |
+|---------|-------------|
+| `soma code map <file>` | Function/class index for any TS, JS, CSS, or Bash file |
+| `soma code find <pattern> [dir]` | Scoped grep with file:line output |
+| `soma code refs <symbol>` | Find definitions vs usages of a symbol |
+| `soma code structure [dir]` | File tree with sizes |
+| `soma code replace <file> <line> <old> <new>` | Line-specific sed replacement |
+| `soma code blast <symbol> [dir]` | Blast radius — all files that reference a symbol |
+
+```bash
+# Map a file to see its structure
+$ soma code map src/core/init.ts
+  47: function scaffoldProject(dir, options)
+  152: function installGitHooks(projectDir, somaDir)
+  203: function seedScripts(somaDir, bundledDir)
+  ...
+
+# Find all references to a pattern
+$ soma code find "settings.json" src/
+  src/core/init.ts:89: const settingsPath = join(somaDir, "settings.json")
+  src/core/prompt.ts:34: const settings = readSettings(settingsPath)
+  ...
+```
+
+### Project Health
+
+| Command | What it does |
+|---------|-------------|
+| `soma verify` | Post-change structural checks — symlinks, drift, stale refs |
+| `soma refactor scan <file>` | Dependency graph and blast radius for a file |
+| `soma refactor refs <symbol>` | Cross-file reference analysis |
+| `soma health` | Project health dashboard — versions, services, disk |
+
+### Session Maintenance
+
+| Command | What it does |
+|---------|-------------|
+| `soma session list` | List all sessions with sizes per project |
+| `soma session stats` | Image count, dimensions, oversized detection for latest session |
+| `soma session strip-images` | Strip base64 image data from JSONL sessions (recovers disk space, fixes API limits) |
+| `soma session strip --all` | Strip images from all sessions |
+| `soma session strip --dry-run` | Preview what would be stripped without modifying |
+
+When screenshots accumulate in a session, the JSONL file grows large (10-20MB) and can hit Anthropic's many-image size limit. `strip-images` replaces image data with text placeholders so `soma -c` can resume cleanly.
+
+### Exploration
+
+| Command | What it does |
+|---------|-------------|
+| `soma seam <topic>` | Trace a concept through memory, code, and sessions |
+| `soma focus <keyword>` | Prime the next boot for a topic |
+| `soma reflect` | Session log pattern mining |
+| `soma plans` | Plan lifecycle management |
+| `soma github <repo> <cmd>` | Scan GitHub repos without cloning (structure, map, deps, audit) |
+
+### Installing More Scripts
+
+Install community scripts from the hub:
+
+```bash
+soma hub install script soma-refactor
+soma hub install script soma-browser
+```
+
+Or drop any `soma-<name>.sh` into `.soma/amps/scripts/` — it becomes `soma <name>` immediately, no restart needed.
+
+Run `soma --help scripts` to see all discovered scripts with descriptions.
+
 ## CLI Commands
 
 These commands are run from your **shell** (terminal), not inside the Soma TUI.
@@ -140,14 +220,14 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 
 | Command | Description |
 |---------|-------------|
-| `soma` | **Fresh session** — runs the full boot sequence (identity, protocols, muscles, git context). Auto-loads the most recent preload if one exists (`preload.autoInject`, default: on). Good for quick starts. |
+| `soma` | **Fresh session** — runs the full boot sequence (identity, protocols, muscles, git context). By default does NOT load a preload (new projects have `preload.autoInject: false`). Use `soma inhale` to load your preload explicitly. |
 | `soma inhale` | **Fresh session + preload** — starts a new session and loads the most recent preload. The recommended daily workflow: `/exhale` → review/update preload → `soma inhale`. Explicit and intentional — you know exactly what context the agent starts with. |
 | `soma -c` | **Continue session** - reopens the last session with full conversation history preserved. No new boot sequence - you're back in the same context. |
 | `soma -r` | **Resume picker** - choose from previous sessions to restore. |
 
 > **`soma` vs `soma inhale` vs `soma -c`:**
 >
-> - `soma` = fresh start. Auto-loads preload quietly if one exists. Good for quick sessions.
+> - `soma` = fresh start. No preload loaded (default `autoInject: false`). Good for quick sessions.
 > - `soma inhale` = fresh start with deliberate preload. Best for daily work — you’ve reviewed and possibly updated the preload before loading it.
 > - `soma -c` = same page. Full history, same context window. Best for short breaks.
 >
@@ -168,7 +248,7 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 
 | Command | Description |
 |---------|-------------|
-| `soma doctor` | Check project health and run migrations. Tier 1 auto-fixes (missing settings, body files, protocols) run silently. Reports stale protocols and version gaps. Use in TUI (`/soma doctor`) for interactive Tier 2+ migration. |
+| `soma doctor` | Check project health and run migrations. Reports body file inventory (soul.md, voice.md, etc. with sizes), extension health (listed/unlisted vs allowlist, drift detection), stale protocols, and version gaps. Tier 1 auto-fixes run silently. Use in TUI (`/soma doctor`) for interactive Tier 2+ migration. |
 | `soma status` | Quick project health check - shows .soma/ structure, version, installed content. |
 | `soma health` | Alias for `soma status`. |
 | `soma --version` | Show agent version and CLI version. |

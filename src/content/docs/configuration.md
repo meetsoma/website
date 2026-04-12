@@ -110,7 +110,7 @@ Settings files can exist at any level in the Soma chain:
   },
   "preload": {
     "staleAfterHours": 48,
-    "autoInject": true
+    "autoInject": false
   },
   "keepalive": {
     "maxPings": 5,
@@ -192,7 +192,7 @@ Protects core Soma files and git identity from accidental modification.
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `coreFiles` | `"warn"` | Protection for SOMA.md, STATE.md, protocols/, settings.json. Options: `"allow"` (no guard), `"warn"` (notify on write), `"block"` (require confirmation) |
+| `coreFiles` | `"warn"` | Protection for soul.md, SOMA.md, STATE.md, protocols/, settings.json. Options: `"allow"` (no guard), `"warn"` (notify on write), `"block"` (require confirmation) |
 | `bashCommands` | `"warn"` | Dangerous bash command guard (rm -rf, git push --force, etc.). `"allow"` = no prompts (power user), `"warn"` = confirm first, `"block"` = prevent entirely |
 | `gitIdentity` | `null` | Expected git identity. `null` = only checks email is set. `{ email: "x@y.com" }` = warns on mismatch. `{ email: ["a@b.com", "c@d.com"] }` = accepts any in the list. |
 | `toolGates` | `{}` | Tool→muscle gating. Require reading a muscle before using certain bash commands. Keys are command substrings, values are `{ muscle, mode }`. |
@@ -509,7 +509,7 @@ Controls when context usage warnings fire during a session. These are the **pass
 | Key | Default | Description |
 |-----|---------|-------------|
 | `staleAfterHours` | `48` | Hours before a preload file is considered stale. Stale preloads still load but show a ⚠️ warning. |
-| `autoInject` | `true` | Automatically inject the most recent preload on every fresh session start. When `false`, preloads only load via `soma inhale` (explicit CLI command). |
+| `autoInject` | `false` | Automatically inject the most recent preload on every fresh session start. When `true`, `soma` behaves like `soma inhale`. Default is `false` — use `soma inhale` for intentional preload loading. |
 
 **Why adjust:** The stale threshold prevents the agent from acting on outdated context. If you work on a project daily, 48 hours is right — a preload from 2 days ago is probably stale. For side projects you touch weekly, set it higher so your preloads still auto-load after a few days away.
 
@@ -724,7 +724,7 @@ If you use a different directory layout (e.g., `protocols/` instead of `amps/pro
     "scripts": "amps/scripts",
     "automations": "amps/automations",
     "preloads": "memory/preloads",
-    "identity": "SOMA.md"
+    "identity": "body/soul.md"
   }
 }
 ```
@@ -742,6 +742,37 @@ Configure which file extensions are discovered as scripts:
   }
 }
 ```
+
+### Extension Security
+
+Configure an allowlist of approved extension filenames. Extensions not on the list trigger a warning on boot and in `/soma doctor`:
+
+```json
+{
+  "extensions": {
+    "allowlist": [
+      "soma-boot.ts",
+      "soma-breathe.ts",
+      "soma-guard.ts",
+      "soma-header.ts",
+      "soma-hub.ts",
+      "soma-route.ts",
+      "soma-scratch.ts",
+      "soma-statusline.ts",
+      "bridge-connect.ts",
+      "workspace-tools.ts"
+    ],
+    "warnOnUnlisted": true
+  }
+}
+```
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `allowlist` | none | Array of approved extension filenames. When set, unlisted extensions trigger warnings. |
+| `warnOnUnlisted` | `true` | Show warnings for extensions not in the allowlist. |
+
+Without an allowlist configured, all extensions load without warnings.
 
 ## Global Config (~/.soma/)
 

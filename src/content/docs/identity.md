@@ -5,24 +5,25 @@ section: "Core Concepts"
 order: 2.5
 ---
 
+# Identity
 
 <!-- tldr -->
-Identity lives in `.soma/SOMA.md` (monolith) or `.soma/body/` (structured). The soul is who the agent is. The body carries what it's learned. Discovered through use, refined through corrections. Layered: project → parent → global. Gitignored by default.
+Identity lives in `.soma/body/soul.md` (primary) or `.soma/SOMA.md` (legacy monolith). The soul is who the agent is. The body carries what it's learned. Discovered through use, refined through corrections. Layered: project → parent → global. Gitignored by default.
 <!-- /tldr -->
 
 Soma doesn't come pre-configured. It **discovers** who it is through working with you. Identity is written by the agent, not for the agent.
 
 ## How Identity Works
 
-On first run, Soma creates `.soma/SOMA.md` — a starting point. Based on your workspace (languages, frameworks, project structure) and how you work together, the agent fills it in over sessions.
+On first run, Soma creates `.soma/body/soul.md` — a starting point with detected project context (stack, package manager, existing config files). Based on how you work together, the agent refines it over sessions.
 
-Over time, identity grows. When it outgrows a single file (~120 lines), Soma suggests splitting into the **body architecture**.
+Over time, identity grows into the full **body architecture** — soul, voice, journal, and more.
 
 ## Two Paths
 
-### Path 1: SOMA.md (Simple)
+### Path 1: soul.md (Default)
 
-A single markdown file at `.soma/SOMA.md`. Good for getting started:
+A single file at `.soma/body/soul.md`. Created automatically on first run:
 
 ```markdown
 I'm the engineering agent for this project. I think in systems —

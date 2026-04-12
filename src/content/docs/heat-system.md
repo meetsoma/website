@@ -1,10 +1,14 @@
 ---
 title: "Heat System"
-description: "How Soma decides what to load — temperature-based relevance that adapts through use."
+description: "How Soma decides what to load — temperature-based relevance."
 section: "Core Concepts"
 order: 3.5
 ---
 
+# Heat System
+
+<!-- UPDATE WHEN: heat thresholds change, new tier added, decay/boost logic changes -->
+<!-- SEAMS: configuration.md#heat, protocols.md#heat-tracking, muscles.md#heat, how-it-works.md#heat -->
 
 > TL;DR: Everything in Soma has a temperature. Hot content loads fully into the agent's prompt. Warm content loads as a one-line reminder. Cold content is listed but not loaded. Heat rises when things get used, decays when they don't. The agent naturally learns what matters.
 

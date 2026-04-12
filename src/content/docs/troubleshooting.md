@@ -1,10 +1,11 @@
 ---
 title: "Troubleshooting"
-description: "Common issues and fixes."
+description: "Common issues and fixes — install problems, model errors, broken sessions, and more."
 section: "Reference"
 order: 22
 ---
 
+# Troubleshooting
 
 <!-- tldr -->
 Most issues: `soma init` (fixes broken install), `soma doctor` (fixes project version), restart the session (picks up changes). Below: organized by symptom. Check here before filing an issue.
@@ -103,7 +104,7 @@ See [Models & Providers](/docs/models) for the full setup guide.
 ### Preload not loading
 
 1. **Check it exists:** `ls .soma/memory/preloads/preload-next-*.md`
-2. **Check auto-inject:** `grep autoInject .soma/settings.json` — should be `true` (default)
+2. **Check auto-inject:** `grep autoInject .soma/settings.json` — `true` means preloads auto-load on `soma`. Default is `false` for new projects (use `soma inhale` instead).
 3. **Check staleness:** preloads older than `staleAfterHours` (default: 48h) show a warning but still load
 4. **Force it:** `soma inhale` always injects regardless of settings
 
@@ -173,7 +174,7 @@ npm install -g meetsoma
 
 ### `.soma/` not detected
 
-Soma looks for marker files: `SOMA.md`, `body/soul.md`, `amps/`, `memory/`, or `settings.json`. If none exist, Soma treats the directory as having no `.soma/`.
+Soma looks for marker files: `body/soul.md`, `SOMA.md`, `amps/`, `memory/`, or `settings.json`. If none exist, Soma treats the directory as having no `.soma/`.
 
 ```bash
 ls -la .soma/         # check what exists

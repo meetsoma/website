@@ -8,7 +8,7 @@ order: 4
 # Memory Layout
 
 <!-- tldr -->
-Core structure: `.soma/` has five parts — `amps/` (Automations, Muscles, Protocols, Scripts), `memory/` (sessions, preloads), `body/` (structured identity — soul, voice, templates), `skills/` (installable capabilities), and root files (SOMA.md, settings.json, state.json). AMPS is the content system — what Soma learns and how it behaves. Memory is temporal state. Body files become template variables. User-level `~/.soma/agent/` holds global settings and runtime.
+Core structure: `.soma/` has five parts — `amps/` (Automations, Muscles, Protocols, Scripts), `memory/` (sessions, preloads), `body/` (structured identity — soul, voice, templates), `skills/` (installable capabilities), and root files (settings.json, state.json). AMPS is the content system — what Soma learns and how it behaves. Memory is temporal state. Body files become template variables (`soul.md` → `{{soul}}`). User-level `~/.soma/agent/` holds global settings and runtime.
 <!-- /tldr -->
 
 Soma uses two levels of storage: **project-level** (`.soma/` in your repo) and **user-level** (`~/.soma/agent/`).
@@ -19,7 +19,7 @@ Lives in your project root.
 
 ```
 .soma/
-├── SOMA.md                  ← who Soma is (or body/soul.md when structured)
+├── body/soul.md             ← who Soma is (identity, values, posture)
 ├── body/                    ← structured identity (soul, voice, templates)
 ├── settings.json            ← configurable thresholds (optional)
 ├── state.json               ← heat state for AMPS content (auto-managed)
@@ -72,7 +72,7 @@ Directories starting with `_` or `.` are skipped. Max depth: 2 levels.
 ### Marker Files
 
 Soma identifies a valid `.soma/` directory by looking for at least one of:
-- `SOMA.md` (or `body/soul.md`)
+- `body/soul.md` (or legacy `SOMA.md`)
 - `amps/` directory
 - `memory/` directory
 - `settings.json`
@@ -84,7 +84,7 @@ Soma identifies a valid `.soma/` directory by looking for at least one of:
 | `skills/` | Tracked | Project-specific skills, shareable |
 | `amps/protocols/` | Tracked | Behavioral rules, shareable across team |
 | `amps/scripts/` | Tracked | Developer tools, shareable |
-| `SOMA.md` / `body/` | **Gitignored** | Personal — Soma's identity is unique to each user |
+| `body/` | **Gitignored** | Personal — Soma's identity is unique to each user |
 | `amps/muscles/` | **Gitignored** | Personal learned patterns |
 | `amps/automations/` | **Gitignored** | Personal triggers |
 | `memory/` | **Gitignored** | Session-specific, personal |
@@ -113,7 +113,7 @@ Fresh session (soma):
   ~/.soma/agent/extensions/ load
   → walk up CWD for .soma/ (project → parent → global chain)
   → run boot steps (configurable in settings.json):
-    1. identity — load SOMA.md or body/soul.md (layered)
+    1. identity — load body/soul.md (layered, falls back to SOMA.md)
     2. preload — skip (fresh session)
     3. protocols — load by heat (hot=full, warm=breadcrumb, cold=name)
     4. muscles — load by heat within token budget
@@ -146,25 +146,96 @@ Preload files are named `preload-next-YYYY-MM-DD-sNN-HASH.md` — the date plus 
 
 This means you can have multiple preloads from different sessions. The unique filename prevents overwrites. Soma searches: `memory/preloads/` (configured) → `.soma/` root (legacy) → `memory/` (legacy).
 
-## Parent Chain Discovery
+## Inheritance Model
 
-On boot, Soma walks up the filesystem from the current directory looking for `.soma/` directories. This creates a chain:
+Soma uses a three-level inheritance chain. On boot, it walks up the filesystem from the current directory, collecting `.soma/` directories:
 
 ```
-/home/user/work/monorepo/app/.soma/     ← child (primary)
+/home/user/work/monorepo/app/.soma/     ← project (primary)
 /home/user/work/monorepo/.soma/          ← parent (inherited)
-/home/user/.soma/agent/                  ← global (baseline)
+/home/user/.soma/                        ← global (baseline)
 ```
 
-Content from each level merges according to the `inherit` settings. See [Configuration](/docs/configuration#inheritance).
+### How Inheritance Works
+
+Each level can contribute identity, AMPS content, and settings. The `inherit` flag in `settings.json` controls what flows through:
+
+```json
+{
+  "inherit": {
+    "identity": true,
+    "protocols": true,
+    "muscles": true,
+    "tools": true,
+    "automations": true
+  }
+}
+```
+
+When `inherit` is enabled (the default), content merges across levels:
+
+| Content | Merge behavior |
+|---------|---------------|
+| **Identity** (`soul.md`, `voice.md`) | Layered — project content appears first, parent and global append with headers. Project identity dominates. |
+| **Protocols** | Union — all discovered protocols from all levels, deduplicated by filename. Project overrides parent overrides global. |
+| **Muscles** | Union — same as protocols. Project-level muscles take priority on name collision. |
+| **Scripts** | Discovery chain — `soma <name>` checks bundled → project → global. First match wins. |
+| **Settings** | Project settings override parent, which override global. Individual fields merge (not whole-file replacement). |
+
+### Identity Layering
+
+When multiple levels define identity files, they're composed into the system prompt:
+
+```
+# Soul (project: app)
+I am a React frontend specialist...
+
+# Soul (parent: monorepo)
+This is a TypeScript monorepo using pnpm workspaces...
+
+# Soul (global)
+I am Soma, an AI agent that learns who you are...
+```
+
+The project identity comes first and carries the most weight. Parent and global provide context without overriding the project's personality.
+
+### AMPS Content Flow
+
+Protocols, muscles, automations, and scripts flow through the chain:
+
+```
+Global (~/.soma/amps/)          → baseline behaviors
+  └─ Parent (.soma/amps/)        → workspace-wide patterns
+      └─ Project (.soma/amps/)   → project-specific patterns (highest priority)
+```
+
+Heat state (`state.json`) is always project-local — it doesn't inherit. A muscle can be hot in one project and cold in another.
+
+### Disabling Inheritance
+
+Set `inherit: false` (or individual flags) in your project's `settings.json` to isolate it:
+
+```json
+{
+  "inherit": {
+    "identity": false,
+    "protocols": true,
+    "muscles": false
+  }
+}
+```
+
+This project would use shared protocols but have its own identity and muscles, ignoring parent/global.
+
+See [Configuration](/docs/configuration#inheritance) for all inherit options.
 
 ## Multiple Projects
 
 Each project gets its own `.soma/`. When you `cd` between projects and run `soma`, it loads the identity and memory for *that* project. Different projects, different Somas.
 
 ```
-~/project-a/.soma/SOMA.md       ← "I'm a frontend specialist"
-~/project-b/.soma/SOMA.md       ← "I'm a systems engineer"
+~/project-a/.soma/body/soul.md  ← "I'm a frontend specialist"
+~/project-b/.soma/body/soul.md  ← "I'm a systems engineer"
 ```
 
 Same `soma` CLI, different memories.

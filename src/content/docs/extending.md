@@ -5,6 +5,7 @@ section: "Extending"
 order: 5
 ---
 
+# Extending Soma
 
 <!-- tldr -->
 Built on Pi — inherits full extension system. Skills: markdown instructions in `.soma/skills/` or `~/.soma/agent/skills/`. Extensions: TypeScript hooks into agent lifecycle (before_agent_start, tool_result, session_shutdown). Built-in extensions: soma-boot (identity + protocols + muscles), soma-header (branded σῶμα header), soma-statusline (context/cost/git footer), soma-guard (safe file operations).
@@ -23,7 +24,7 @@ What makes Soma different: **muscles and protocols refine skills over time**. A 
 Install from the hub or place manually:
 
 ```bash
-/install skill my-skill        # from Soma Hub
+/hub install skill my-skill    # from Soma Hub
 ```
 
 Or place skill directories in one of these locations:
@@ -73,6 +74,20 @@ Extensions are TypeScript files that hook into Soma's lifecycle events.
 | `.soma/extensions/` | Project-local (loads when CWD is in this project) |
 | `~/.soma/agent/extensions/` | Global (loads for all projects) |
 
+### Extension Security
+
+Extensions run with full system permissions. Configure an allowlist in `settings.json` to get warnings about unrecognized extensions:
+
+```json
+{
+  "extensions": {
+    "allowlist": ["soma-boot.ts", "soma-breathe.ts", "..."]
+  }
+}
+```
+
+See [Configuration → Extension Security](/docs/configuration#extension-security) for details.
+
 ### Writing an Extension
 
 ```typescript
@@ -102,8 +117,7 @@ export default function myExtension(pi: ExtensionAPI) {
 
 | Event | When |
 |-------|------|
-| `session_start` | Session loads |
-| `session_switch` | User runs /new or resumes |
+| `session_start` | Session loads (check `event.reason`: startup, reload, new, resume, fork) |
 | `turn_start` | Agent begins processing |
 | `turn_end` | Agent finishes processing |
 | `message_end` | Message fully rendered |

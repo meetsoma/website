@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 8
 ---
 
+# Workspaces
 
 <!-- tldr -->
 Soma supports parent-child `.soma/` directories for monorepos and multi-project setups. Parent provides shared identity, protocols, muscles, tools — child inherits by default, overrides what it needs. Solo body mode: when only a parent exists, child projects use it directly. All inheritance is toggleable per-dimension via `inherit` settings. Smart init detects parent workspaces automatically on first run.
@@ -18,10 +19,13 @@ Monorepos have shared conventions (git identity, commit style, deployment) and p
 
 Place a `.soma/` at the workspace root for shared knowledge. Child projects inherit from it automatically.
 
+> **Note:** New projects use `body/soul.md` as the primary identity file. Existing projects with `SOMA.md` continue to work — `loadIdentity` checks `body/soul.md` first, then falls back to `SOMA.md`. Both filenames work identically in the chain.
+
 ```
 ~/work/monorepo/
 ├── .soma/                          ← parent
-│   ├── SOMA.md                      ← "We use pnpm, conventional commits, TypeScript"
+│   ├── body/
+│   │   └── soul.md                  ← "We use pnpm, conventional commits, TypeScript"
 │   ├── settings.json               ← shared thresholds
 │   └── amps/
 │       ├── protocols/
@@ -33,14 +37,16 @@ Place a `.soma/` at the workspace root for shared knowledge. Child projects inhe
 │
 ├── apps/web/
 │   └── .soma/                      ← child
-│       ├── SOMA.md                  ← "I'm a Next.js frontend"
+│       ├── body/
+│       │   └── soul.md              ← "I'm a Next.js frontend"
 │       └── amps/
 │           └── protocols/
 │               └── testing.md      ← project-specific: Playwright tests
 │
 ├── apps/api/
 │   └── .soma/                      ← child
-│       ├── SOMA.md                  ← "I'm a Hono API service"
+│       ├── body/
+│       │   └── soul.md              ← "I'm a Hono API service"
 │       └── amps/
 │           └── protocols/
 │               └── api-versioning.md ← project-specific
@@ -127,10 +133,10 @@ Share protocols but use independent identity and muscles:
 
 Parent holds team conventions. Children specialize.
 
-**Parent `SOMA.md`:**
+**Parent `body/soul.md`:**
 > We're a TypeScript shop. pnpm everywhere. Conventional commits. PRs require review.
 
-**Child `SOMA.md` (web app):**
+**Child `body/soul.md` (web app):**
 > I'm the customer-facing Next.js app. Playwright for E2E, Vitest for unit. Deploy to Vercel.
 
 ### Open Source Project with Private Workspace
@@ -140,7 +146,8 @@ Parent holds your personal preferences (gitignored). The project `.soma/` is min
 ```
 ~/oss/
 ├── .soma/                    ← gitignored, personal
-│   ├── SOMA.md                ← your voice, your style
+│   ├── body/
+│   │   └── soul.md            ← your voice, your style
 │   └── amps/
 │       └── protocols/
 │           └── git-identity.md ← your email
@@ -158,10 +165,10 @@ Parent holds your personal preferences (gitignored). The project `.soma/` is min
 One workspace per client. Global identity stays consistent.
 
 ```
-~/.soma/agent/SOMA.md         ← "I think in systems, I value clean code"
+~/.soma/body/soul.md          ← "I think in systems, I value clean code"
 
-~/client-a/.soma/SOMA.md      ← "Client A uses AWS, Python, Django"
-~/client-b/.soma/SOMA.md      ← "Client B uses GCP, Go, Kubernetes"
+~/client-a/.soma/body/soul.md ← "Client A uses AWS, Python, Django"
+~/client-b/.soma/body/soul.md ← "Client B uses GCP, Go, Kubernetes"
 ```
 
 ## Smart Init Detection

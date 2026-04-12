@@ -52,7 +52,7 @@ On first run, Soma will ask to create a `.soma/` directory. Say yes.
 | **Language/framework** | Scans for `tsconfig.json`, `Cargo.toml`, `go.mod`, `pyproject.toml`, etc. | Tailors identity and suggests relevant protocols |
 | **Monorepo signals** | Detects `pnpm-workspace.yaml`, multiple `package.json`, etc. | Suggests parent-child setup |
 
-The detected context shapes Soma's initial identity and the protocols it recommends installing. You can always edit `SOMA.md` afterward.
+The detected context shapes Soma's initial identity at `body/soul.md`. You can always edit it afterward — or split into `body/voice.md`, `body/journal.md` etc. as your identity grows.
 
 ## Session Modes
 
@@ -62,7 +62,7 @@ The detected context shapes Soma's initial identity and the protocols it recomme
 soma
 ```
 
-Starts fresh. Runs the [boot sequence](/docs/configuration#boot-sequence): identity, protocols, muscles, scripts, git context. If a recent preload exists, it's **auto-loaded** by default (`preload.autoInject: true`). Good for quick starts when you haven't changed the preload.
+Starts fresh. Runs the [boot sequence](/docs/configuration#boot-sequence): identity, protocols, muscles, scripts, git context. No preload is loaded by default (`preload.autoInject: false`). Use `soma inhale` when you want to load your preload explicitly.
 
 ### Inhale (recommended daily workflow)
 
@@ -125,7 +125,6 @@ Created by `soma init` or on first run:
 
 ```
 .soma/
-├── SOMA.md                  ← who Soma becomes (discovered through use)
 ├── settings.json            ← configurable thresholds
 ├── state.json               ← heat state (auto-managed, gitignored)
 ├── STATE.md                 ← project architecture snapshot
@@ -140,7 +139,7 @@ Created by `soma init` or on first run:
 │   ├── automations/         ← triggered actions
 │   ├── muscles/             ← learned patterns
 │   ├── protocols/           ← behavioral rules (17 ship by default)
-│   └── scripts/             ← developer tools (6 seeded on init)
+│   └── scripts/             ← developer tools (11 seeded on init)
 │       ├── soma-code.sh     ← codebase navigator
 │       ├── soma-seam.sh     ← concept tracing
 │       ├── soma-focus.sh    ← session priming
@@ -179,6 +178,28 @@ soma --list-models               # see all available
 
 See [Models & Providers](/docs/models) for the full guide - including custom providers, Ollama setup, OAuth login, and API key management.
 
+## Script Commands
+
+Soma ships with developer tools you can run from your terminal:
+
+```bash
+# Map a file's structure (functions, classes, exports)
+soma code map src/App.tsx
+
+# Find a pattern across the codebase
+soma code find "useState" src/
+
+# Trace a concept through memory and code
+soma seam authentication
+
+# Prime the next session for a topic
+soma focus deployment
+```
+
+Scripts are discovered automatically — drop any `soma-<name>.sh` into `.soma/amps/scripts/` and it becomes `soma <name>`. Install more from the hub with `soma hub install script <name>`.
+
+See [Commands](/docs/commands#script-commands) for the full reference.
+
 ## Tips
 
 - **Let identity grow** - don't pre-write it. Let Soma discover who it becomes through your work.
@@ -187,3 +208,5 @@ See [Models & Providers](/docs/models) for the full guide - including custom pro
 - **Explore commands** - run `soma --help` for all CLI commands, `soma --help scripts` for installed tools, `soma --help commands` for the full reference.
 - **Switch models freely** - use `/model` or `Ctrl+P` mid-session. See [Models & Providers](/docs/models).
 - **Tune settings** - everything is configurable: boot steps, heat thresholds, context warnings. See [Configuration](/docs/configuration).
+- **Extend Soma** — write skills, extensions, or custom model providers. See [Extending](/docs/extending).
+- **Something broken?** — check [Troubleshooting](/docs/troubleshooting) for common issues and fixes.

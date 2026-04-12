@@ -8,12 +8,12 @@ order: 9
 # Scripts
 
 <!-- tldr -->
-Standalone bash tools for Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions. 6 scripts are seeded on `soma init`; more are available via `soma hub install script <name>`. Run `soma --help scripts` to see what's installed.
+Standalone bash tools for Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions. 11 scripts are seeded on `soma init`; more are available via `soma hub install script <name>`. Run `soma --help scripts` to see what's installed.
 <!-- /tldr -->
 
 ## Bundled Scripts (seeded on init)
 
-These 6 scripts are installed into `.soma/amps/scripts/` when you run `soma init`. They're available immediately — no hub install needed. (`soma-theme.sh` is also bundled as a shared dependency sourced by other scripts — it's not run directly.)
+These 11 scripts are installed into `.soma/amps/scripts/` when you run `soma init`. They're available immediately — no hub install needed. (`soma-theme.sh` is also bundled as a shared dependency sourced by other scripts — it's not run directly.)
 
 ### soma code — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-code)
 
@@ -78,6 +78,63 @@ validate-content.sh protocols/my-protocol.md
 validate-content.sh muscles/                    # validate all in dir
 ```
 
+### soma body
+
+Body template inspector. Check health, list variables, preview the compiled system prompt.
+
+```bash
+soma body check                     # health report — missing vars, duplicates
+soma body vars                      # all variables grouped by category
+soma body map                       # template structure with var status
+soma body render                    # full compiled system prompt
+```
+
+### soma refactor
+
+Dependency analysis for safe refactoring. Scan before renaming or deleting anything.
+
+```bash
+soma refactor scan <file>           # dependency graph + blast radius
+soma refactor refs <symbol>         # cross-file reference analysis
+soma refactor graph <file>          # import/require tree
+```
+
+### soma reflect
+
+Parse session logs for observations, gaps, and recurring patterns.
+
+```bash
+soma reflect                        # observations from last 7 days
+soma reflect --since 2026-03-12     # observations since date
+soma reflect --gaps                 # gaps and recoveries only
+soma reflect --recurring            # patterns mentioned 2+ times
+```
+
+### soma plans
+
+Plan lifecycle management. Plans rot — this tool helps you keep them alive.
+
+```bash
+soma plans status                   # active plan count + budget check
+soma plans scan                     # list all plans with status
+soma plans stale [--days N]         # find stale plans
+soma plans archive <plan>           # archive a completed plan
+```
+
+### soma session
+
+Session maintenance — strip images, list sizes, analyze sessions.
+
+```bash
+soma session list                   # show all sessions with sizes per project
+soma session stats                  # image count, dimensions for latest session
+soma session strip-images           # strip base64 images from latest session
+soma session strip --all            # strip images from all sessions
+soma session strip --dry-run        # preview without modifying
+```
+
+When screenshots accumulate in a session, the JSONL file grows large and can hit API image limits. `strip-images` replaces image data with text placeholders so `soma -c` can resume cleanly.
+
 ### soma-theme.sh
 
 Shared theming for all Soma scripts. Provides colors, header/footer helpers, and status functions. Sourced by other scripts — you don't run this directly.
@@ -90,35 +147,10 @@ These scripts are available on the [Soma Hub](https://soma.gravicity.ai/hub). In
 
 ```bash
 # Inside a Soma session:
-/hub install script soma-reflect
+/hub install script soma-scrape
 
 # Or from CLI:
-soma hub install script soma-reflect
-```
-
-### soma reflect — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-reflect)
-
-Parse session logs for observations, gaps, and recurring patterns. Use at session start to orient from past lessons, or mid-session to check if an issue was seen before.
-
-```bash
-soma reflect                        # observations from last 7 days
-soma reflect --since 2026-03-12     # observations since date
-soma reflect --gaps                 # gaps and recoveries only
-soma reflect --recurring            # patterns mentioned 2+ times
-soma reflect --search "sync"        # search across all reflections
-soma reflect --summary              # condensed view for reviews
-```
-
-### soma plans — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-plans)
-
-Plan lifecycle management. Plans rot — this tool helps you keep them alive.
-
-```bash
-soma plans status              # active plan count + budget check (≤12)
-soma plans scan                # list all plans with status/lines
-soma plans stale [--days N]    # find plans not updated in N days
-soma plans overlap             # detect plans with overlapping topics
-soma plans archive <plan>      # archive a completed plan
+soma hub install script soma-scrape
 ```
 
 ### soma scrape — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-scrape)

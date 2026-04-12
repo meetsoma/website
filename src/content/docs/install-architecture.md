@@ -1,10 +1,14 @@
 ---
 title: "Install Architecture"
-description: "How Soma installs, updates, and manages versions."
+description: "How Soma installs, updates, and manages versions — the full flow from npm to runtime."
 section: "Reference"
-order: 21
+order: 20
 ---
 
+# Install Architecture
+
+<!-- UPDATE WHEN: install flow changes, thin-cli.js updated, soma-beta structure changes -->
+<!-- SEAMS: getting-started.md#install, updating.md, doctor.md, configuration.md -->
 
 How `npm install -g meetsoma` becomes a working AI agent.
 
@@ -15,7 +19,7 @@ Soma has two independent packages that version separately:
 | Layer | Package | Version | What |
 |-------|---------|---------|------|
 | **CLI** | `meetsoma` (npm) | v0.2.0 | Thin bootstrap — welcome flow, `soma init`, delegates to runtime |
-| **Agent** | `soma-beta` (GitHub) | v0.8.1+ | Full runtime — extensions, protocols, body templates, Pi engine |
+| **Agent** | `soma-beta` (GitHub) | v0.9.0+ | Full runtime — extensions, protocols, body templates, Pi engine |
 
 The CLI is ~50KB. The agent is the real thing. When you run `soma`, the CLI checks if the agent is installed and delegates everything to it.
 
@@ -70,7 +74,7 @@ npm install -g meetsoma
       personality.js        ← Spintax voice engine
     extensions/             ← TypeScript source (dev mode)
     core/                   ← TypeScript source (dev mode)
-    body/_public/           ← body templates (source for soma init)
+    templates/default/      ← body templates (source for soma init)
     migrations/             ← migration phases + cycle
     package.json            ← agent version (source of truth)
     node_modules/           ← Pi runtime dependencies
@@ -93,7 +97,8 @@ your-project/
       sessions/             ← session logs
       preloads/             ← continuation prompts
     settings.json           ← project settings (version, heat, paths)
-    SOMA.md                 ← monolithic identity (legacy, before body/)
+    body/soul.md             ← structured identity (recommended)
+    SOMA.md                 ← monolithic identity (legacy fallback)
 ```
 
 ## Update Flow
@@ -174,12 +179,12 @@ soma doctor (CLI)
 
 ```bash
 soma --version
-# σ  Soma v0.8.1       ← agent version (from ~/.soma/agent/package.json)
+# σ  Soma v0.9.0       ← agent version (from ~/.soma/agent/package.json)
 #    CLI v0.2.0         ← CLI version (from npm package)
 
 soma doctor
-# Agent:   v0.8.1       ← what's installed globally
-# Project: v0.7.1       ← what this project was created with
+# Agent:   v0.9.0       ← what's installed globally
+# Project: v0.8.0       ← what this project was created with
 # CLI:     v0.2.0       ← npm package version
 ```
 
