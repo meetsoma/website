@@ -13,6 +13,9 @@ const sectionIcons: Record<string, string> = {
   "Workflows": "automations",
   "Customization": "settings",
   "Reference": "layers",
+  "Extending": "extensions",
+  "Guide": "protocols",
+  "Meta": "circle-dot",
 };
 
 interface Props {
@@ -46,7 +49,7 @@ const allDocs = (await getCollection('docs'))
   .sort((a, b) => a.data.order - b.data.order);
 
 // Group by section with explicit ordering
-const sectionOrder = ["First Steps", "Core Concepts", "Workflows", "Customization", "Reference"];
+const sectionOrder = ["First Steps", "Core Concepts", "Workflows", "Customization", "Reference", "Extending", "Guide", "Meta"];
 const sectionMap = new Map<string, typeof allDocs>();
 for (const doc of allDocs) {
   const section = doc.data.section;

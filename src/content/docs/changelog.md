@@ -1,14 +1,72 @@
 ---
 title: "Changelog"
 description: "What shipped, what changed, version history."
-section: "Reference"
-order: 10
+section: "Meta"
+order: 1
 ---
 
+## [0.11.0] — 2026-04-12
 
-All notable changes to the Soma agent are documented here.
+Identity overhaul + first-run experience. soul.md replaces SOMA.md as default. Minimal boot for new projects. 11 bundled scripts. Critical doctor fix.
 
-Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
+### Added
+- **`soma session`** — session maintenance tool. `strip-images` removes base64 image data from JSONL (16MB → 2.6MB), `list` shows all sessions with sizes, `stats` analyzes image payload.
+- **test-install-flows.sh** — 36-assertion E2E test suite covering fresh init, v0.6→current upgrade, edge cases (corrupt settings, missing version, empty body/).
+- **Discovery marker: `body`** — `findSomaDir()` now detects projects with only `body/soul.md` (no SOMA.md).
+- **User extension preservation** — reinstall preserves user-installed extensions (bridge-connect.ts, workspace-tools.ts) alongside auth.json and models.json.
+- **Extension allowlist** — configure approved extensions in settings.json, `/soma doctor` reports unlisted extensions.
+- **Image payload guard** — `before_provider_request` strips old images when >15 accumulate in conversation. Prevents Anthropic many-image 2000px limit.
+
+### Changed
+- **Identity: soul.md is primary** — `initSoma` creates `body/soul.md` instead of `SOMA.md`. `ensureGlobalSoma` creates `body/soul.md` at `~/.soma/`. SOMA.md and identity.md still work as fallbacks. All docs, templates, tree diagrams updated (30+ files).
+- **autoInject default: false** — new projects use `soma inhale` for intentional preload loading. Existing settings preserved on upgrade.
+- **First-run minimal boot** — first session skips hot protocol/muscle injection into system prompt. Agent discovers through use.
+- **Pi 0.65 migration** — `session_switch`/`session_fork` → `session_start` with `event.reason`.
+- **Protocol heat-defaults reclassified** — only `breath-cycle` and `working-style` start warm. All others cold.
+- **11 bundled scripts** (was 6) — added soma-body, soma-refactor, soma-reflect, soma-plans, soma-session.
+- **Template single source** — `body/_public/` deleted, templates read from `templates/default/`.
+- **Hub template install** — fetches soul.md → SOMA.md → identity.md, writes to body/soul.md for new projects.
+
+### Fixed
+- **Critical: semver comparison in thin-cli.js** — doctor used JS string comparison (`"0.6.2" > "0.10.0"`), so upgrades NEVER ran for any project. Added `semverCmp()` for proper numeric comparison.
+- **CLI UX** — `soma help`, `soma version` now work (bare words). `soma init` when .soma/ exists routes to doctor instead of broken TUI.
+- **Image payload guard** — strips old images from conversation history, pauses keepalive on 400/invalid_request errors (was only 429). Prevents infinite retry deadlock.
+- **Parent chain detection** — init.ts walker now checks `body/soul.md` and `settings.json`, not just `SOMA.md`/`identity.md`.
+- **soma verify crash** — `${*}` with `set -u` caused unbound variable when called without args.
+- **Stale refs sweep** — 30+ files across docs, core, templates, scripts, community. `identity.md` → `body/soul.md` in all user-facing strings.
+- **Script path leaks** — soma-health, soma-verify, soma-seam, soma-refactor guarded behind path existence checks.
+- **Sandbox** — was creating `identity.md` (deprecated), now creates `body/soul.md`.
+
+---
+
+## [0.10.0] — 2026-04-10
+
+Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 25 commits since v0.9.0.
+
+### Added
+- **v0.8.1→v0.9.0 migration map** — settings additions (inherit, keepalive, heat.autoDetectBump), script routing syntax, AMPS consolidation notes. Chains with existing migration maps.
+- **soma-health.sh** — project health dashboard script.
+- **Docker sandbox** — `soma-sandbox.sh` can now use Docker for isolated E2E testing (21/21 tests pass).
+- **test-hygiene.sh** — repo cleanliness checks (secrets, sessions, dev artifacts).
+- **verify-amps command** — CWD path resolution, community protocol source validation.
+- **3 scripts promoted to bundled** — soma-verify.sh, soma-refactor.sh, soma-browser.sh moved from dev to discoverable.
+
+### Changed
+- **Pi runtime 0.64.0 → 0.66.1** — 2 minor versions, bug fixes, no breaking changes.
+- **Docs: CLI syntax** — all 8 doc files updated from `soma-code.sh` to `soma code` syntax. Website synced.
+- **Scripts reorganized** — 39 dev scripts moved to `_dev/`, 3 promoted to bundled, redundant scripts archived.
+- **CWD safety audit** — dev-path guards on Tier 2 scripts, soma-query demoted to `_dev/`.
+
+### Fixed
+- **soma-guard: orphaned tool_result sanitizer** — `before_provider_request` handler removes orphaned tool_result blocks before API call. Prevents 400 errors from upstream Pi bug.
+- **soma-statusline: auto-pause keepalive on rate limit** — detects 429/rate_limit errors, auto-disables keepalive. Prevented 67+ wasted requests per rate-limit window.
+- **soma-doctor.sh: follow core/ symlink** — was reading stale `~/.soma/agent/package.json` (v0.6.0) instead of following symlink to dev repo. Now resolves through readlink.
+- **init.ts: read version from package.json** — was hardcoded to 0.6.2, now reads dynamically.
+- **Sandbox: deterministic prompt template test** — replaced LLM-dependent test with file-read verification.
+- **Sandbox: extension/protocol count comparison** — use `>=` instead of `==` for forward compatibility.
+- **soma-boot: streamingBehavior on all sendUserMessage calls** — 10 calls patched, prevents runtime errors.
+- **Keepalive infinite loop** — `keepaliveInFlight` flag prevents auto-exhale from re-triggering keepalive.
+- **CI: npm ci + tsx PATH** — added to all test suites for clean CI runs.
 
 ---
 
