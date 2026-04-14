@@ -17,13 +17,14 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WEBSITE_DIR="$(dirname "$SCRIPT_DIR")"
 
-# Support both locations — prefer agent-stable (main branch worktree)
-if [[ -d "$WEBSITE_DIR/../agent-stable/docs" ]]; then
-  AGENT_DOCS="$WEBSITE_DIR/../agent-stable/docs"
-  AGENT_ROOT="$WEBSITE_DIR/../agent-stable"
-elif [[ -d "$WEBSITE_DIR/../agent/docs" ]]; then
+# Support both locations — prefer agent (dev branch, source of truth for Phase 5)
+# agent-stable tracks main, which is behind dev during pre-release sync
+if [[ -d "$WEBSITE_DIR/../agent/docs" ]]; then
   AGENT_DOCS="$WEBSITE_DIR/../agent/docs"
   AGENT_ROOT="$WEBSITE_DIR/../agent"
+elif [[ -d "$WEBSITE_DIR/../agent-stable/docs" ]]; then
+  AGENT_DOCS="$WEBSITE_DIR/../agent-stable/docs"
+  AGENT_ROOT="$WEBSITE_DIR/../agent-stable"
 else
   echo "ERROR: Neither agent-stable/docs nor agent/docs found"
   exit 1
