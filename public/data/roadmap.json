@@ -1,440 +1,101 @@
 {
-  "generated": "2026-04-12T16:00:00Z",
-  "source": "CHANGELOG.md",
   "timeline": [
     {
       "version": "Next",
-      "date": "",
-      "features": {
-        "added": [
-          "Somaverse Alpha — visual workspace UI with 21 plugins, tiling layout, agent-controlled browser.",
-          "Recall — persistent memory via Somadian graph store. Cross-session, cross-project knowledge.",
-          "Async agent comms — Soma reaches you on your phone when decisions are needed.",
-          "Content versioning — know when hub protocols update, diff before upgrading.",
-          "Boot sequence extraction — move hardcoded behavior into user-editable MAPs."
-        ]
-      }
+      "title": "",
+      "items": []
+    },
+    {
+      "version": "0.11.2",
+      "title": "",
+      "date": "2026-04-14",
+      "items": [
+        "`soma-dev verify upstream`",
+        "Runtime integrity tests",
+        "Release pipeline gate",
+        "Pi runtime 0.64.0 \u2192 0.67.1",
+        "Pi telemetry disabled",
+        "Rotation boot aligned with decomposition"
+      ]
+    },
+    {
+      "version": "0.11.1",
+      "title": "",
+      "date": "2026-04-13",
+      "items": [
+        "Cache health tracking",
+        "Idle session detection",
+        "Cache health indicator moved to statusline line 2 (line 1 was crowded)"
+      ]
     },
     {
       "version": "0.11.0",
+      "title": "",
       "date": "2026-04-12",
-      "features": {
-        "added": [
-          "Identity overhaul — soul.md replaces SOMA.md as default for new projects. Minimal first-run boot.",
-          "Distribution tiers — Pro scripts compiled (seam, refactor, scrape, browser), extensions obfuscated with auth-gate.",
-          "soma session tool — strip-images (16MB → 2.6MB), list sessions with sizes, analyze image payloads.",
-          "Image payload guard — auto-strips old images when >15 accumulate, prevents API lockup.",
-          "11 bundled scripts (was 6) — added soma-body, soma-refactor, soma-reflect, soma-plans, soma-session.",
-          "test-install-flows.sh — 36-assertion E2E test suite for init, upgrade, and doctor flows.",
-          "Extension allowlist — configure approved extensions in settings, doctor reports unlisted ones.",
-          "3 niche templates — Next.js (App Router), Rust (ownership), Python ML (reproducibility).",
-          "Error sanitizer — patches Pi dist to show human-readable API errors instead of raw JSON."
-        ],
-        "fixed": [
-          "Critical: semver comparison — doctor used string comparison, so upgrades NEVER ran. Added proper numeric comparison.",
-          "CLI UX — soma help, soma version, soma init routing all fixed.",
-          "Keepalive billing notice — Anthropic billing 400s show gentle message instead of pausing keepalive.",
-          "30+ stale refs — identity.md → body/soul.md across docs, core, templates, scripts, community."
-        ]
-      }
+      "items": [
+        "`soma session`",
+        "test-install-flows.sh",
+        "Discovery marker: `body`",
+        "User extension preservation",
+        "Extension allowlist",
+        "Image payload guard",
+        "Identity: soul.md is primary",
+        "autoInject default: false",
+        "First-run minimal boot",
+        "Pi 0.65 migration",
+        "Protocol heat-defaults reclassified",
+        "11 bundled scripts (was 6)",
+        "Template single source",
+        "Hub template install"
+      ]
     },
     {
       "version": "0.10.0",
+      "title": "",
       "date": "2026-04-10",
-      "features": {
-        "added": [
-          "Pi runtime 0.64.0 → 0.66.1 — 2 minor versions, bug fixes.",
-          "Docker sandbox — isolated E2E testing (48/48 tests pass).",
-          "soma-health.sh — project health dashboard.",
-          "Orphaned tool_result guard — prevents 400 errors from upstream Pi bug.",
-          "Keepalive auto-pause on rate limit — detects 429 errors, stops wasting requests."
-        ],
-        "changed": [
-          "CLI script routing — soma code, soma verify, soma dev. Scripts discoverable by name.",
-          "Scripts reorganized — 39 dev scripts to _dev/, 3 promoted to bundled.",
-          "Docs updated — CLI syntax modernized across 8 doc files."
-        ],
-        "fixed": [
-          "Keepalive infinite loop — auto-exhale re-triggering keepalive.",
-          "soma-doctor version detection — was reading stale package.json instead of following symlink.",
-          "Init version hardcoded to 0.6.2 — now reads from package.json."
-        ]
-      }
+      "items": [
+        "v0.8.1\u2192v0.9.0 migration map",
+        "soma-health.sh",
+        "Docker sandbox",
+        "test-hygiene.sh",
+        "verify-amps command",
+        "3 scripts promoted to bundled",
+        "Pi runtime 0.64.0 \u2192 0.66.1",
+        "Docs: CLI syntax",
+        "Scripts reorganized",
+        "CWD safety audit"
+      ]
     },
     {
       "version": "0.9.0",
+      "title": "",
       "date": "2026-04-04",
-      "features": {
-        "added": [
-          "Inbox system — {{inbox_summary}} template variable, inter-agent messaging via .soma/inbox/",
-          "Preload auto-inject — fresh sessions load preloads automatically (configurable)",
-          "Scripts visible in prompt — {{scripts_table}} in default _mind.md",
-          "Script drift detection — soma-verify.sh drift checks agent → working → global",
-          "7 new documentation pages — inbox, doctor, hub, troubleshooting, 3 guides",
-          "inter-agent-inbox community protocol published"
-        ],
-        "fixed": [
-          "Keepalive limit enforced — was infinite due to counter reset on self-triggered turns",
-          "Changelog hook targets [Unreleased] section only",
-          "96 files migrated from digest markers to ## TL;DR format"
-        ]
-      }
+      "items": [
+        "`{{inbox_summary}}` template variable",
+        "`{{scripts_table}}` in default `_mind.md`",
+        "`preload.autoInject` setting",
+        "7 new documentation pages",
+        "`inter-agent-inbox` community protocol",
+        "Script drift detection",
+        "Digest \u2192 TL;DR migration complete",
+        "Docs accuracy overhaul"
+      ]
     },
     {
       "version": "0.8.1",
+      "title": "",
       "date": "2026-04-02",
-      "features": {
-        "added": [
-          "Unified warm content — ## TL;DR replaces <!-- digest --> across all AMPS.",
-          "MAP = automation alias — map accepted as type in /hub install/fork/share.",
-          "Discovery unification — discoverMaps() scans flat automations too.",
-          "Keepalive limits — 5 lives per idle period, countdown notification.",
-          "Auto-exhale on idle — agent writes preload when keepalive expires (75k threshold).",
-          "Migration phase v0.8.0→v0.8.1 — digest→TL;DR conversion."
-        ],
-        "changed": [
-          "soma-doctor.sh reads version from package.json instead of hardcoded string.",
-          "Hub validator accepts description/triggers/tags, prefers TL;DR."
-        ]
-      }
-    },
-    {
-      "version": "0.8.0",
-      "date": "2026-04-02",
-      "features": {
-        "added": [
-          "soma doctor — project health check with Tier 1 auto-fix and TUI migration.",
-          "Migration phase files — complete chain from v0.6.1 to v0.8.0 (9 phases).",
-          "Tier 1 silent auto-fix on boot — settings, body, protocols, scripts.",
-          "soma status / soma health — quick project health check.",
-          "soma --version — shows both agent and CLI versions.",
-          "compareTemplates() — three-category diff for content, metadata, runtime files.",
-          "findChildSomaDirs() — multi-project discovery for parent-child .soma/ chains.",
-          "doctor.autoUpdate + declinedVersion settings.",
-          "Warm AMPS load TL;DR/digest, cold load short description."
-        ],
-        "fixed": [
-          "CHANGELOG auto-append bug — rewrote post-commit hook, cleaned 172 duplicates.",
-          "CLI help header shows 'CLI v...' not bare version.",
-          "Boot version-bump-before-notification race condition."
-        ]
-      }
-    },
-    {
-      "version": "0.7.1",
-      "date": "2026-04-01",
-      "features": {
-        "added": [
-          "soma --help rewrite — branded output with session, project, and TUI commands.",
-          "soma --help scripts — show installed scripts with descriptions.",
-          "soma --help commands — full command reference by category."
-        ],
-        "fixed": [
-          "Scripts crash on fresh projects — missing theme dependency, now bundled.",
-          "soma focus didn't start session — async call fix.",
-          "postinstall.js missing from builds — restored.",
-          "Docs: /inhale vs soma inhale clearly distinguished."
-        ]
-      }
-    },
-    {
-      "version": "0.7.0",
-      "date": "2026-04-01",
-      "features": {
-        "added": [
-          "/inhale guard — warns when no preload exists or preload is stale.",
-          "Slash command usage hints — 10 commands with Usage: patterns.",
-          "Hub: 5 new scripts — soma-seam, soma-reflect, soma-query, soma-focus, soma-plans.",
-          "Hub: soma-code v2.0.0 — blast radius, tsc-errors, improved refs.",
-          "Scripts docs rewritten with hub links."
-        ],
-        "changed": [
-          "Upstream sync R4 — Pi 0.64.0 with new signal/getSignal APIs.",
-          "Core scripts trimmed — 5 bundled, rest via hub install.",
-          "Semver discipline — feature releases bump minor version."
-        ],
-        "fixed": [
-          "Changelog hook targeting all version sections.",
-          "Hub table rendering with proper HTML structure.",
-          "Community CI — 21 frontmatter fixes.",
-          "7 drifted scripts synced, hub scripts sanitized."
-        ]
-      }
-    },
-    {
-      "version": "0.6.7",
-      "date": "2026-03-30",
-      "features": {
-        "added": [
-          "/soma doctor — migration check + auto-run with confirmation",
-          "Init UX — global vs parent detection, three-way prompt",
-          "Monorepo-aware first breath with sub-project listing",
-          "Body template scaffolding — section headers in body.md, voice.md",
-          "Richer preload template — Weather, Who You Were, Orient From",
-          "Migration system — v0.6.6→v0.6.7 script with sandbox tests"
-        ],
-        "changed": [
-          "System prompt budget raised from 4000 to 10000 tokens"
-        ],
-        "fixed": [
-          "Preload resume false-positive on soma -c",
-          "Body template instructions moved from invisible frontmatter to HTML comments"
-        ]
-      }
-    },
-    {
-      "version": "0.6.6",
-      "date": "2026-03-29",
-      "features": {
-        "added": [
-          "Init UX — prompt before auto-scaffolding, parent .soma/ inheritance, templateDir for body/.",
-          "Upstream sync R3 — Pi 0.63.1 (71 commits, SourceInfo provenance, built-in tools as extensions).",
-          "Command provenance — /soma status shows which extension registered each command.",
-          "cli.js tracked source — agent/src/cli.js is source of truth, synced to CLI repo.",
-          "Protocol coaching voice — 14 protocol TL;DRs rewritten from spec to coaching voice."
-        ],
-        "changed": [
-          "Stale branches cleaned — feat/docs-system, feat/runtime, protocol-quality-pass deleted.",
-          "scaffoldBody priority chain — templateDir → bundled _public/ → bundled body/."
-        ],
-        "fixed": [
-          "/soma prompt diagnostic — 'Learned Patterns' check corrected to 'Muscle Memory'."
-        ]
-      }
-    },
-    {
-      "version": "0.6.5",
-      "date": "2026-03-28",
-      "features": {
-        "added": [
-          "soma inhale — CLI preload management with --list, partial name match, and --load.",
-          "soma map — top-level MAP subcommand with --list and prompt-config.",
-          "Settings-driven heat overrides — per-project AMPS heat control via settings.heat.overrides.",
-          "Statusline preload indicator — shows preload status, smart /exhale detects edit vs write.",
-          "Auto-archive stale preloads after exhale.",
-          "Restart signal — auto-detect extension/core changes, prompt for restart."
-        ],
-        "changed": [
-          "--preload flag deprecated in favor of soma inhale.",
-          "Boot greeting decomposed — session ID and file paths now separate template variables."
-        ],
-        "fixed": [
-          "Defensive settings.heat access — no crash on partial settings files.",
-          "Breathe graceSeconds aligned to 30s default.",
-          "5 auto-breathe UX gaps — smart warnings, resume awareness."
-        ]
-      }
-    },
-    {
-      "version": "0.6.4",
-      "date": "2026-03-23",
-      "features": {
-        "added": [
-          "Body architecture — structured identity with soul.md, voice.md, body.md as {{variables}}.",
-          "Template engine — _mind.md controls system prompt structure with {{variables}} and modifiers.",
-          "AMPS Skill Loader — warm content appears as <available_skills> XML. Heat drives everything.",
-          "/body command — inspect templates, variables, render full compiled prompt.",
-          "SOMA.md — new canonical identity file. Evolves into body/ when ready.",
-          "50+ template variables with registry, categories, and diagnostics.",
-          "Muscle heat on load — muscles that stay relevant gain heat naturally."
-        ],
-        "changed": [
-          "System prompt driven by body/_mind.md template when present.",
-          "Auto-breathe — agent trusts the system instead of guessing context %.",
-          "AMPS cleanup — 44 to 34 active muscles, triggers deduplicated, descriptions standardized.",
-          "Docs sweep — 9 pages updated for body architecture."
-        ]
-      }
-    },
-    {
-      "version": "0.6.3",
-      "date": "2026-03-22",
-      "features": {
-        "added": [
-          "/hub command — install, fork, share, find, and browse community content.",
-          "Drop-in /soma commands — scripts in commands/ become slash commands instantly.",
-          "Smart sharing — quality scoring, privacy auto-fix, dependency resolution.",
-          "scope:core protocols — built-in behavior documented without wasting prompt tokens.",
-          "Community hub: 40 items across 5 content types."
-        ]
-      }
-    },
-    {
-      "version": "0.6.2",
-      "date": "2026-03-21",
-      "features": {
-        "added": [
-          "Natural muscle heat detection — scripts and file edits bump related muscles automatically.",
-          "Migration system — soma doctor checks, fixes, and migrates workspaces between versions.",
-          "Community template sync — boot fetches latest protocols from community repo.",
-          "Script theming — σ branding, clean exits, BSL footer on all shipped scripts.",
-          "soma-rebrand — ecosystem-wide search/replace for branding changes."
-        ],
-        "changed": [
-          "Triggers consolidation — keywords, topic, triggers merged into single activation list.",
-          "All repo READMEs refreshed with consistent voice and branding.",
-          "License change date corrected to September 2027."
-        ],
-        "fixed": [
-          "Runtime delegation — soma-beta now includes cli.js and Pi runtime files.",
-          "Fresh installs include version field in settings.json.",
-          "Dangerous CI workflow disabled — prevented accidental source publication."
-        ]
-      }
-    },
-    {
-      "version": "0.6.1",
-      "date": "2026-03-20",
-      "features": {
-        "added": [
-          "Published to npm. npm install -g meetsoma — runtime downloads on first run.",
-          "Engine updated to Pi 0.61.1. Keybinding stability, session path fixes, suspend/resume.",
-          "AMPS overview documentation. The four layers explained as one system.",
-          "Migration guide. Coming from CLAUDE.md or .cursorrules — here's how Soma does it differently.",
-          "Troubleshooting page with common issues and fixes.",
-          "Collapsible docs sidebar with section icons.",
-          "Known Gaps sections in docs — honest about heat system limitations and what's being fixed."
-        ],
-        "changed": [
-          "Heat system docs corrected. Dual storage model documented.",
-          "Docs reorganised into 5 sections: First Steps, Core Concepts, Workflows, Customization, Reference."
-        ]
-      }
-    },
-    {
-      "version": "0.6.0",
-      "date": "2026-03-20",
-      "features": {
-        "added": [
-          "New install experience. Run soma and it introduces itself with typing animation, rotating concepts, interactive Q&A.",
-          "soma focus — start a session primed for a topic. Relevant content loads hotter.",
-          "soma --map — load a workflow template with pre-configured tools and protocols.",
-          "MAP system. Reusable workflow templates that chain scripts, muscles, and protocols.",
-          "Muscle trigger engine. Muscles auto-activate when focus keywords match their tags.",
-          "13 bundled scripts. Codebase navigation, memory tracing, session focus, plan management.",
-          "23 documentation pages. Models, keybindings, themes, settings, sessions, prompts, skills, extending.",
-          "30 automated E2E tests verify branding, paths, models, and infrastructure.",
-          "Personality engine. 22 Q&A topics, every answer different.",
-          "Scratch notes persist across sessions."
-        ],
-        "changed": [
-          "Engine updated to 0.61.0. Keybinding manager, JSONL export/import, session forking, lazy provider loading.",
-          "License: BSL 1.1. Source-available, converts to MIT on 2027-09-18.",
-          "npm package is now a lightweight launcher. Runtime downloads separately."
-        ]
-      }
-    },
-    {
-      "version": "0.5.2",
-      "date": "2026-03-15",
-      "features": {
-        "added": [
-          "/scan-logs — search previous tool calls and results across sessions.",
-          "/scrape — intelligent doc discovery and scraping from URLs.",
-          "Session warnings. Tool usage stats from previous session shown on boot.",
-          "Scratch notes. Timestamped notes that persist across sessions.",
-          "Grace period setting. Configurable delay before auto-breathe rotates.",
-          "Guard v2. Require reading relevant muscles before dangerous commands."
-        ],
-        "changed": [
-          "System prompt trimmed ~19%. Less noise, same intelligence.",
-          "Unified session rotation through /inhale."
-        ]
-      }
-    },
-    {
-      "version": "0.5.1",
-      "date": "2026-03-14",
-      "features": {
-        "added": [
-          "Capability router for inter-extension communication.",
-          "Session rotation via signal file. Auto-breathe rotates without command context.",
-          "Per-session log files with auto-incrementing names.",
-          "Restart-required detection with statusline indicator.",
-          "Changelog pipeline and chain-of-thought tracing tool.",
-          "Self-analysis command. Muscle health, divergence, orphan detection.",
-          "Tool gates. Require reading muscles before dangerous commands.",
-          "Grace period setting for auto-breathe.",
-          "Scratch notes with session IDs, date sections, auto-inject.",
-          "Polyglot script discovery.",
-          "Periodic auto-commit for crash resilience."
-        ],
-        "changed": [
-          "Auto-breathe rotation is immediate when preload exists.",
-          "Self-awareness protocols consolidated into configuration guides.",
-          "Unified session rotation through /inhale."
-        ]
-      }
-    },
-    {
-      "version": "0.5.0",
-      "date": "2026-03-12",
-      "features": {
-        "added": [
-          "Auto-breathe mode. Proactive context management with configurable thresholds.",
-          "Identity chain. Layered identity from project, parent, and global directories.",
-          "Heat system. Protocols and muscles have temperature scores that rise with use and decay with neglect.",
-          "Protocol loading by heat. Hot loads in full, warm loads a summary, cold skips.",
-          "Preload system. The agent writes a briefing for its next self before rotating.",
-          "Context warnings at 50%, 70%, 80%. Auto-exhale at 85%.",
-          "Muscle discovery by keywords. Focus scoring matches muscles to the current task.",
-          "Settings cascade. Project overrides parent overrides global.",
-          "9 core modules: discovery, identity, heat, muscles, protocols, settings, preload, prompt, utils."
-        ],
-        "changed": [
-          "System prompt compiled fresh each boot from identity, protocols, muscles, and context."
-        ]
-      }
-    },
-    {
-      "version": "0.4.0",
-      "date": "2026-03-11",
-      "features": {
-        "added": [
-          "Compiled system prompt. Identity, protocols, muscles, scripts assembled at boot.",
-          "7 extensions: boot, breathe, guard, header, route, scratch, statusline.",
-          "Protocol and muscle frontmatter with heat scores, tags, domains.",
-          "Recursive content discovery for organized AMPS content.",
-          "Global ~/.soma/ directory with shared identity and settings.",
-          "Content installation from the community hub."
-        ],
-        "changed": [
-          "Moved from single CLAUDE.md to layered AMPS system.",
-          "Scripts seeded on soma init instead of manual setup."
-        ]
-      }
-    },
-    {
-      "version": "0.3.0",
-      "date": "2026-03-10",
-      "features": {
-        "added": [
-          "Auto-init on first soma run. Creates .soma/, detects project stack.",
-          "/inhale and /breathe commands for session continuation.",
-          "Context warnings at configurable thresholds.",
-          "Hub content installation with dependency resolution.",
-          "Extension scaffolding during init."
-        ],
-        "changed": [
-          "Session rotation unified through /inhale."
-        ]
-      }
-    },
-    {
-      "version": "0.2.0",
-      "date": "2026-03-09",
-      "features": {
-        "added": [
-          "Protocols and Heat System — behavioral rules loaded by temperature, heat rises through use, decays through neglect",
-          "Muscle loading at boot — sorted by heat, loaded within configurable token budget",
-          "Settings chain — `settings.json` with resolution: project → parent → global",
-          "Mid-session heat tracking — auto-detects protocol usage from tool results",
-          "Domain scoping — `applies-to` frontmatter + `detectProjectSignals()`",
-          "Breath cycle commands — `/exhale`, `/inhale`, `/pin`, `/kill`",
-          "Script awareness — boot surfaces `.soma/scripts/` inventory",
-          "9 core modules — discovery, identity, protocols, muscles, settings, init, preload, utils, index"
-        ]
-      }
+      "items": [
+        "Unified warm content format",
+        "`extractTldr()`",
+        "MAP = automation alias",
+        "Discovery unification",
+        "Keepalive limits",
+        "Auto-exhale on idle",
+        "Migration phase `v0.8.0\u2192v0.8.1`",
+        "`soma-doctor.sh`",
+        "Hub validator"
+      ]
     }
   ]
 }
