@@ -142,21 +142,13 @@
       "features": {
         "added": [
           "/inhale guard \u2014 warns when no preload exists or preload is stale.",
-          "Slash command usage hints \u2014 10 commands with Usage: patterns.",
-          "Hub: 5 new scripts \u2014 soma-seam, soma-reflect, soma-query, soma-focus, soma-plans.",
-          "Hub: soma-code v2.0.0 \u2014 blast radius, tsc-errors, improved refs.",
-          "Scripts docs rewritten with hub links."
+          "5 new scripts \u2014 soma-seam, soma-reflect, soma-query, soma-focus, soma-plans.",
+          "soma-code v2.0 \u2014 blast radius analysis, TypeScript error context, improved refs.",
+          "Slash command usage hints for 10 commands."
         ],
         "changed": [
-          "Upstream sync R4 \u2014 Pi 0.64.0 with new signal/getSignal APIs.",
-          "Core scripts trimmed \u2014 5 bundled, rest via hub install.",
+          "Pi runtime updated to 0.64.0 with new extension APIs.",
           "Semver discipline \u2014 feature releases bump minor version."
-        ],
-        "fixed": [
-          "Changelog hook targeting all version sections.",
-          "Hub table rendering with proper HTML structure.",
-          "Community CI \u2014 21 frontmatter fixes.",
-          "7 drifted scripts synced, hub scripts sanitized."
         ]
       }
     },
@@ -165,19 +157,14 @@
       "date": "2026-03-30",
       "features": {
         "added": [
-          "/soma doctor \u2014 migration check + auto-run with confirmation",
-          "Init UX \u2014 global vs parent detection, three-way prompt",
-          "Monorepo-aware first breath with sub-project listing",
-          "Body template scaffolding \u2014 section headers in body.md, voice.md",
-          "Richer preload template \u2014 Weather, Who You Were, Orient From",
-          "Migration system \u2014 v0.6.6\u2192v0.6.7 script with sandbox tests"
+          "/soma doctor \u2014 migration check with auto-run and confirmation.",
+          "Monorepo-aware first breath \u2014 detects and lists sub-projects.",
+          "Richer preload template \u2014 Weather, Who You Were, Orient From sections.",
+          "Body template scaffolding \u2014 section headers in body.md and voice.md."
         ],
         "changed": [
-          "System prompt budget raised from 4000 to 10000 tokens"
-        ],
-        "fixed": [
-          "Preload resume false-positive on soma -c",
-          "Body template instructions moved from invisible frontmatter to HTML comments"
+          "System prompt budget raised from 4,000 to 10,000 tokens.",
+          "Init UX \u2014 detects global vs parent .soma/, three-way prompt."
         ]
       }
     },
@@ -186,18 +173,10 @@
       "date": "2026-03-29",
       "features": {
         "added": [
-          "Init UX \u2014 prompt before auto-scaffolding, parent .soma/ inheritance, templateDir for body/.",
-          "Upstream sync R3 \u2014 Pi 0.63.1 (71 commits, SourceInfo provenance, built-in tools as extensions).",
-          "Command provenance \u2014 /soma status shows which extension registered each command.",
-          "cli.js tracked source \u2014 agent/src/cli.js is source of truth, synced to CLI repo.",
-          "Protocol coaching voice \u2014 14 protocol TL;DRs rewritten from spec to coaching voice."
-        ],
-        "changed": [
-          "Stale branches cleaned \u2014 feat/docs-system, feat/runtime, protocol-quality-pass deleted.",
-          "scaffoldBody priority chain \u2014 templateDir \u2192 bundled _public/ \u2192 bundled body/."
-        ],
-        "fixed": [
-          "/soma prompt diagnostic \u2014 'Learned Patterns' check corrected to 'Muscle Memory'."
+          "Init UX \u2014 prompt before scaffolding, parent .soma/ inheritance.",
+          "Pi upstream sync \u2014 71 commits, built-in tools as extensions.",
+          "Protocol coaching voice \u2014 14 protocols rewritten from spec to guidance.",
+          "Command provenance \u2014 /soma status shows which extension owns each command."
         ]
       }
     },
@@ -206,21 +185,10 @@
       "date": "2026-03-28",
       "features": {
         "added": [
-          "soma inhale \u2014 CLI preload management with --list, partial name match, and --load.",
-          "soma map \u2014 top-level MAP subcommand with --list and prompt-config.",
-          "Settings-driven heat overrides \u2014 per-project AMPS heat control via settings.heat.overrides.",
-          "Statusline preload indicator \u2014 shows preload status, smart /exhale detects edit vs write.",
-          "Auto-archive stale preloads after exhale.",
-          "Restart signal \u2014 auto-detect extension/core changes, prompt for restart."
-        ],
-        "changed": [
-          "--preload flag deprecated in favor of soma inhale.",
-          "Boot greeting decomposed \u2014 session ID and file paths now separate template variables."
-        ],
-        "fixed": [
-          "Defensive settings.heat access \u2014 no crash on partial settings files.",
-          "Breathe graceSeconds aligned to 30s default.",
-          "5 auto-breathe UX gaps \u2014 smart warnings, resume awareness."
+          "soma inhale \u2014 CLI preload management with --list and partial name match.",
+          "soma map \u2014 top-level MAP subcommand with --list and prompt config.",
+          "Settings-driven heat overrides \u2014 per-project AMPS heat control.",
+          "Statusline preload indicator \u2014 shows save status, smart /exhale detection."
         ]
       }
     },
@@ -229,19 +197,10 @@
       "date": "2026-03-23",
       "features": {
         "added": [
-          "Body architecture \u2014 structured identity with soul.md, voice.md, body.md as {{variables}}.",
-          "Template engine \u2014 _mind.md controls system prompt structure with {{variables}} and modifiers.",
-          "AMPS Skill Loader \u2014 warm content appears as <available_skills> XML. Heat drives everything.",
-          "/body command \u2014 inspect templates, variables, render full compiled prompt.",
-          "SOMA.md \u2014 new canonical identity file. Evolves into body/ when ready.",
-          "50+ template variables with registry, categories, and diagnostics.",
-          "Muscle heat on load \u2014 muscles that stay relevant gain heat naturally."
-        ],
-        "changed": [
-          "System prompt driven by body/_mind.md template when present.",
-          "Auto-breathe \u2014 agent trusts the system instead of guessing context %.",
-          "AMPS cleanup \u2014 44 to 34 active muscles, triggers deduplicated, descriptions standardized.",
-          "Docs sweep \u2014 9 pages updated for body architecture."
+          "Hub CLI \u2014 /hub install, /hub share, /list remote for community content.",
+          "Heat auto-detect \u2014 protocols and muscles automatically get temperature tiers.",
+          "soma-code.sh \u2014 codebase navigator with map, find, refs, replace.",
+          "Session export \u2014 /export saves conversation as styled HTML."
         ]
       }
     },
@@ -250,11 +209,9 @@
       "date": "2026-03-22",
       "features": {
         "added": [
-          "/hub command \u2014 install, fork, share, find, and browse community content.",
-          "Drop-in /soma commands \u2014 scripts in commands/ become slash commands instantly.",
-          "Smart sharing \u2014 quality scoring, privacy auto-fix, dependency resolution.",
-          "scope:core protocols \u2014 built-in behavior documented without wasting prompt tokens.",
-          "Community hub: 40 items across 5 content types."
+          "Hub integration \u2014 install protocols and muscles from the community.",
+          "Drop-in script commands \u2014 soma code, soma verify, soma refactor.",
+          "Core protocols bundled \u2014 breath-cycle, working-style, heat-tracking."
         ]
       }
     },
@@ -263,21 +220,9 @@
       "date": "2026-03-21",
       "features": {
         "added": [
-          "Natural muscle heat detection \u2014 scripts and file edits bump related muscles automatically.",
-          "Migration system \u2014 soma doctor checks, fixes, and migrates workspaces between versions.",
-          "Community template sync \u2014 boot fetches latest protocols from community repo.",
-          "Script theming \u2014 \u03c3 branding, clean exits, BSL footer on all shipped scripts.",
-          "soma-rebrand \u2014 ecosystem-wide search/replace for branding changes."
-        ],
-        "changed": [
-          "Triggers consolidation \u2014 keywords, topic, triggers merged into single activation list.",
-          "All repo READMEs refreshed with consistent voice and branding.",
-          "License change date corrected to September 2027."
-        ],
-        "fixed": [
-          "Runtime delegation \u2014 soma-beta now includes cli.js and Pi runtime files.",
-          "Fresh installs include version field in settings.json.",
-          "Dangerous CI workflow disabled \u2014 prevented accidental source publication."
+          "Heat system \u2014 protocols and muscles load by temperature (hot/warm/cold).",
+          "Automatic migration \u2014 settings and templates upgrade across versions.",
+          "Community sync \u2014 protocols shared between projects via hub."
         ]
       }
     },
@@ -286,17 +231,9 @@
       "date": "2026-03-20",
       "features": {
         "added": [
-          "Published to npm. npm install -g meetsoma \u2014 runtime downloads on first run.",
-          "Engine updated to Pi 0.61.1. Keybinding stability, session path fixes, suspend/resume.",
-          "AMPS overview documentation. The four layers explained as one system.",
-          "Migration guide. Coming from CLAUDE.md or .cursorrules \u2014 here's how Soma does it differently.",
-          "Troubleshooting page with common issues and fixes.",
-          "Collapsible docs sidebar with section icons.",
-          "Known Gaps sections in docs \u2014 honest about heat system limitations and what's being fixed."
-        ],
-        "changed": [
-          "Heat system docs corrected. Dual storage model documented.",
-          "Docs reorganised into 5 sections: First Steps, Core Concepts, Workflows, Customization, Reference."
+          "npm install \u2014 meetsoma package published, one-command install.",
+          "Pi runtime 0.61.1 \u2014 stable upstream with extension support.",
+          "27 documentation pages \u2014 full coverage of features and configuration."
         ]
       }
     },
@@ -305,21 +242,10 @@
       "date": "2026-03-20",
       "features": {
         "added": [
-          "New install experience. Run soma and it introduces itself with typing animation, rotating concepts, interactive Q&A.",
-          "soma focus \u2014 start a session primed for a topic. Relevant content loads hotter.",
-          "soma --map \u2014 load a workflow template with pre-configured tools and protocols.",
-          "MAP system. Reusable workflow templates that chain scripts, muscles, and protocols.",
-          "Muscle trigger engine. Muscles auto-activate when focus keywords match their tags.",
-          "13 bundled scripts. Codebase navigation, memory tracing, session focus, plan management.",
-          "23 documentation pages. Models, keybindings, themes, settings, sessions, prompts, skills, extending.",
-          "30 automated E2E tests verify branding, paths, models, and infrastructure.",
-          "Personality engine. 22 Q&A topics, every answer different.",
-          "Scratch notes persist across sessions."
-        ],
-        "changed": [
-          "Engine updated to 0.61.0. Keybinding manager, JSONL export/import, session forking, lazy provider loading.",
-          "License: BSL 1.1. Source-available, converts to MIT on 2027-09-18.",
-          "npm package is now a lightweight launcher. Runtime downloads separately."
+          "Open install \u2014 anyone can install via npm, no invite needed.",
+          "Voice system \u2014 agent communication style persists across sessions.",
+          "23 documentation pages \u2014 getting started, protocols, muscles, configuration.",
+          "Extension system \u2014 TypeScript hooks for custom agent behavior."
         ]
       }
     },
@@ -328,16 +254,9 @@
       "date": "2026-03-15",
       "features": {
         "added": [
-          "/scan-logs \u2014 search previous tool calls and results across sessions.",
-          "/scrape \u2014 intelligent doc discovery and scraping from URLs.",
-          "Session warnings. Tool usage stats from previous session shown on boot.",
-          "Scratch notes. Timestamped notes that persist across sessions.",
-          "Grace period setting. Configurable delay before auto-breathe rotates.",
-          "Guard v2. Require reading relevant muscles before dangerous commands."
-        ],
-        "changed": [
-          "System prompt trimmed ~19%. Less noise, same intelligence.",
-          "Unified session rotation through /inhale."
+          "Scratch pad \u2014 persistent notes that survive across sessions.",
+          "Session warnings \u2014 alerts for context limits and idle detection.",
+          "Code scanning tools \u2014 soma-code.sh with structure and find commands."
         ]
       }
     },
@@ -346,22 +265,9 @@
       "date": "2026-03-14",
       "features": {
         "added": [
-          "Capability router for inter-extension communication.",
-          "Session rotation via signal file. Auto-breathe rotates without command context.",
-          "Per-session log files with auto-incrementing names.",
-          "Restart-required detection with statusline indicator.",
-          "Changelog pipeline and chain-of-thought tracing tool.",
-          "Self-analysis command. Muscle health, divergence, orphan detection.",
-          "Tool gates. Require reading muscles before dangerous commands.",
-          "Grace period setting for auto-breathe.",
-          "Scratch notes with session IDs, date sections, auto-inject.",
-          "Polyglot script discovery.",
-          "Periodic auto-commit for crash resilience."
-        ],
-        "changed": [
-          "Auto-breathe rotation is immediate when preload exists.",
-          "Self-awareness protocols consolidated into configuration guides.",
-          "Unified session rotation through /inhale."
+          "Router extension \u2014 /soma commands for agent self-management.",
+          "Auto-breathe \u2014 automatic session rotation at context limits.",
+          "Dev tools \u2014 soma-verify, soma-refactor for codebase maintenance."
         ]
       }
     },
@@ -370,18 +276,8 @@
       "date": "2026-03-12",
       "features": {
         "added": [
-          "Auto-breathe mode. Proactive context management with configurable thresholds.",
-          "Identity chain. Layered identity from project, parent, and global directories.",
-          "Heat system. Protocols and muscles have temperature scores that rise with use and decay with neglect.",
-          "Protocol loading by heat. Hot loads in full, warm loads a summary, cold skips.",
-          "Preload system. The agent writes a briefing for its next self before rotating.",
-          "Context warnings at 50%, 70%, 80%. Auto-exhale at 85%.",
-          "Muscle discovery by keywords. Focus scoring matches muscles to the current task.",
-          "Settings cascade. Project overrides parent overrides global.",
-          "9 core modules: discovery, identity, heat, muscles, protocols, settings, preload, prompt, utils."
-        ],
-        "changed": [
-          "System prompt compiled fresh each boot from identity, protocols, muscles, and context."
+          "Prompt intelligence \u2014 system prompt compiles from identity + protocols + muscles.",
+          "Session stabilization \u2014 reliable session logs and preload handoffs."
         ]
       }
     },
@@ -390,16 +286,8 @@
       "date": "2026-03-11",
       "features": {
         "added": [
-          "Compiled system prompt. Identity, protocols, muscles, scripts assembled at boot.",
-          "7 extensions: boot, breathe, guard, header, route, scratch, statusline.",
-          "Protocol and muscle frontmatter with heat scores, tags, domains.",
-          "Recursive content discovery for organized AMPS content.",
-          "Global ~/.soma/ directory with shared identity and settings.",
-          "Content installation from the community hub."
-        ],
-        "changed": [
-          "Moved from single CLAUDE.md to layered AMPS system.",
-          "Scripts seeded on soma init instead of manual setup."
+          "AMPS architecture \u2014 protocols, muscles, automations, scripts as four layers.",
+          "Distribution system \u2014 bundled vs installable content tiers."
         ]
       }
     },
@@ -408,14 +296,8 @@
       "date": "2026-03-10",
       "features": {
         "added": [
-          "Auto-init on first soma run. Creates .soma/, detects project stack.",
-          "/inhale and /breathe commands for session continuation.",
-          "Context warnings at configurable thresholds.",
-          "Hub content installation with dependency resolution.",
-          "Extension scaffolding during init."
-        ],
-        "changed": [
-          "Session rotation unified through /inhale."
+          "Session intelligence \u2014 preloads carry context across session boundaries.",
+          "Breath cycle \u2014 inhale, work, exhale rhythm for session management."
         ]
       }
     },
@@ -424,14 +306,8 @@
       "date": "2026-03-09",
       "features": {
         "added": [
-          "Protocols and Heat System \u2014 behavioral rules loaded by temperature, heat rises through use, decays through neglect",
-          "Muscle loading at boot \u2014 sorted by heat, loaded within configurable token budget",
-          "Settings chain \u2014 `settings.json` with resolution: project \u2192 parent \u2192 global",
-          "Mid-session heat tracking \u2014 auto-detects protocol usage from tool results",
-          "Domain scoping \u2014 `applies-to` frontmatter + `detectProjectSignals()`",
-          "Breath cycle commands \u2014 `/exhale`, `/inhale`, `/pin`, `/kill`",
-          "Script awareness \u2014 boot surfaces `.soma/scripts/` inventory",
-          "9 core modules \u2014 discovery, identity, protocols, muscles, settings, init, preload, utils, index"
+          "The engine \u2014 core agent runtime with extension loading and identity discovery.",
+          "Settings system \u2014 JSON configuration for behavior tuning."
         ]
       }
     }
