@@ -16,6 +16,22 @@
       }
     },
     {
+      "version": "0.11.4",
+      "date": "2026-04-14",
+      "title": "Image Budget + Settings Audit",
+      "features": {
+        "added": [
+          "Image budget auto-compact for screenshot-heavy sessions",
+          "Configurable breathe thresholds for large-context models",
+          "Sandbox testing from dev/main/beta sources"
+        ],
+        "fixed": [
+          "Script root-finding across 10 dev scripts",
+          "Removed 3 dead settings"
+        ]
+      }
+    },
+    {
       "version": "0.11.3",
       "date": "2026-04-14",
       "title": "Script Parser Fix",

@@ -53,9 +53,7 @@ Settings files can exist at any level in the Soma chain:
     "includeGuardAwareness": true,
     "identityInSystemPrompt": true
   },
-  "memory": {
-    "flowUp": false
-  },
+  "memory": {},
   "protocols": {
     "warmThreshold": 3,
     "hotThreshold": 8,
@@ -99,7 +97,12 @@ Settings files can exist at any level in the Soma chain:
     "auto": false,
     "triggerAt": 50,
     "rotateAt": 70,
-    "graceSeconds": 30
+    "graceSeconds": 30,
+    "maxTokens": 0
+  },
+  "imageBudget": {
+    "softAt": 8,
+    "hardAt": 10
   },
   "context": {
     "notifyAt": 50,
@@ -127,8 +130,7 @@ Settings files can exist at any level in the Soma chain:
     "project": {
       "style": "commit",
       "autoCheckpoint": false,
-      "prefix": "checkpoint:",
-      "workingBranch": null
+      "prefix": "checkpoint:"
     },
     "diffOnBoot": true,
     "maxDiffLines": 80
@@ -260,9 +262,7 @@ Controls what sections appear in Soma's compiled system prompt. Use `/soma promp
 
 ### Memory
 
-| Key | Default | Description |
-|-----|---------|-------------|
-| `flowUp` | `false` | Allow memories to propagate to parent `.soma/` directories. Reserved for future use. |
+Reserved for future memory system settings. Currently empty.
 
 ### Protocols (Heat Thresholds)
 
@@ -411,6 +411,7 @@ Proactive context management. Instead of waiting until context is critical, auto
 | `triggerAt` | `50` | Context % to send a gentle notice (agent keeps working, just stays aware) |
 | `rotateAt` | `70` | Context % to write preload and start countdown to rotation |
 | `graceSeconds` | `30` | Seconds to wait for preload before timing out — time-based, not turn-based |
+| `maxTokens` | `0` | Absolute token cap for threshold calculations. When set, percentages are calculated against this value instead of the model's full context window. Useful for large-context models where 50% of 1M tokens is impractically high. `0` = use model's native window. **Warning:** if you switch to a smaller model, this cap could exceed the actual context window. |
 
 **How the phases work:**
 
@@ -522,19 +523,7 @@ Controls when context usage warnings fire during a session. These are the **pass
 
 ### Sessions
 
-| Key | Default | Description |
-|-----|---------|-------------|
-| `sessions.overwriteGuard` | `true` | Prevent overwriting existing session logs and preloads. Files use unique session IDs in filenames. |
-
 **Session IDs** combine sequential numbering with a random hex suffix: `s05-a3f2c1`. The sequential part (`s05`) gives you human-readable order within a day. The hex part (`a3f2c1`) prevents collisions when multiple terminals run the same Soma agent simultaneously. Both appear in filenames (`2026-03-14-s05-a3f2c1.md`) and frontmatter (`session-id:`).
-
-```json
-{
-  "sessions": {
-    "overwriteGuard": true
-  }
-}
-```
 
 ### Checkpoints
 
@@ -553,7 +542,7 @@ Two-track version control: Soma's own `.soma/` state and your project code are c
 | `project.style` | `"commit"` | How to save project state: `"commit"` (git commit), `"tag"` (lightweight tag), or `"stash"` (git stash) |
 | `project.autoCheckpoint` | `false` | Auto-create checkpoint on exhale. When `false`, Soma prompts first. |
 | `project.prefix` | `"checkpoint:"` | Commit message prefix for project checkpoints |
-| `project.workingBranch` | `null` | Branch for checkpoints. `null` = use current branch. |
+
 
 #### Boot Integration
 
@@ -562,14 +551,13 @@ Two-track version control: Soma's own `.soma/` state and your project code are c
 | `diffOnBoot` | `true` | Show diffs from last checkpoint when session starts |
 | `maxDiffLines` | `80` | Max lines of diff to surface on boot |
 
-**Example: auto-checkpoint to a dedicated branch:**
+**Example: auto-checkpoint on exhale:**
 ```json
 {
   "checkpoints": {
     "project": {
       "autoCheckpoint": true,
-      "style": "commit",
-      "workingBranch": "soma-checkpoints"
+      "style": "commit"
     }
   }
 }
@@ -649,6 +637,35 @@ Controls how Soma handles project updates and migrations.
 {
   "doctor": {
     "autoUpdate": false
+  }
+}
+```
+
+### Image Budget
+
+Auto-compact when screenshots accumulate in context. Each image is ~20K tokens — at 10 images, that's 200K tokens of visual data.
+
+```json
+{
+  "imageBudget": {
+    "softAt": 8,
+    "hardAt": 10
+  }
+}
+```
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `softAt` | `8` | Notify agent to consider `/compact` when this many images are in context. `0` = no notification. |
+| `hardAt` | `10` | Auto-compact at this count. The summary preserves visual observations while dropping raw image data. `0` = disabled. |
+
+After auto-compact, the agent can take new screenshots. The counter resets. Light sessions (few images) never trigger — zero overhead.
+
+**Example: disable auto-compact (manual only):**
+```json
+{
+  "imageBudget": {
+    "hardAt": 0
   }
 }
 ```

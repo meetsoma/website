@@ -12,6 +12,22 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [0.11.4] — 2026-04-14
+
+### Fixed
+- **Script root-finding** — `_find_root()` in 10 dev scripts now checks `repos/agent/package.json` to distinguish `meetsoma/` from `repos/agent/` (both had `.soma/` and `repos/` dirs).
+- **sync-docs.sh** — prefers `agent/` (dev) over `agent-stable/` (main) for Phase 5 doc sync.
+
+### Added
+- **Image budget** — auto-compact when screenshots accumulate. Soft notify at 8 images, hard auto-compact at 10. Counts all image sources (browser_screenshot, Read tool, user-pasted). Counter resets on compact. Visible in `/status`.
+- **`imageBudget` settings** — `softAt` and `hardAt` configurable via `settings.json`. Set `hardAt: 0` to disable.
+- **`breathe.maxTokens` setting** — caps the effective context window for breathe threshold calculations. Fixes breathe being dormant on 1M-context models where 50% = 500K tokens.
+- **Sandbox source flags** — `soma-sandbox.sh --dev` builds and tests from dev branch. `--main` tests agent-stable. `--beta` (default) tests soma-beta. API tests default to claude-haiku-4-5.
+- **14 new settings tests** — covers removed fields, new fields, multi-level inheritance, array replacement.
+
+### Changed
+- **Settings cleanup** — removed 3 never-implemented settings: `memory.flowUp`, `sessions.overwriteGuard`, `checkpoints.project.workingBranch`. Default version updated 0.6.4 → 0.11.3.
+
 ## [0.11.3] — 2026-04-14
 
 ### Fixed
