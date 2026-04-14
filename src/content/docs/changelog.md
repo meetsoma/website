@@ -21,16 +21,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **Triple error cascade on API failure** — three independent handlers fired on single error. Added errorHandled flag, else-if chain, gated fatal-session check.
 - **False-positive billing detection removed** — `err.includes("extra usage")` matched Claude consumer error text, not actual billing issues. Pi shows raw API errors natively. Removed our pattern matching entirely.
 - **Doctor fallback version** — hardcoded 0.10.0 → 0.11.1.
+- **Build pipeline** — `build-dist.mjs` was reading Pi 0.64.0 from stale `repos/cli/dist`. Now reads from npm (Pi 0.67.1). Root cause of months of invisible dist/ drift.
+- **Release script** — removed stale `CLI_DIST` reference; Soma brand themes were being overwritten by Pi defaults.
+- **Dev-mode theme crash** — Pi's config.js resolves to `src/` when it exists. Added symlinks for theme, export-html, and assets paths.
+- **Stale docs** — `repos/cli` ref in install-architecture.md.
 
 ### Changed
 - **Pi runtime 0.64.0 → 0.67.1** — dist/ was stuck at Pi 0.64.0 despite package.json claiming ^0.66.1. Synced from npm. Gets stack overflow fix for long sessions (#2651), subscription auth warning, queued message flush fix.
 - **Pi telemetry disabled** — set PI_TELEMETRY=0 in cli.js to prevent install ping added in Pi 0.67.1.
 - **Rotation boot aligned with decomposition** — greeting no longer embeds session file hints. Consistent with normal boot path pattern.
+- **Error handling** — auth-aware (OAuth vs API key). Account rate limits (real plan limit) handled separately from extra-usage classification errors (often transient). OAuth: progressive retry → warn → pause at 4th. API key: pause immediately.
+- **Error display** — build-time error-sanitizer patch converts raw JSON API errors to human-readable messages. Billing errors show progressive messages. Retryable errors (overloaded, 500) pass through untouched.
 
 ### Added
 - **`soma-dev verify upstream`** — detects dist/ vs node_modules/ drift by fingerprinting key runtime files. Prevents the 0.64→0.66 invisible drift.
 - **Runtime integrity tests** — test-hygiene.sh now checks telemetry disable, boot decomposition, billing removal, error cascade flag, verify-upstream existence.
 - **Release pipeline gate** — `soma-release.sh` now blocks on dist/ upstream drift detection before building.
+- **Error-sanitizer** — build-time patch to Pi's display layer. Progressive billing messages, auth/model rewrites. Zero cache impact.
+- **Patch manifest** — `scripts/_dev/patches/manifest.json` tracks applied dist/ patches.
+- **CLI repo archived** — content merged to agent README. `meetsoma/cli` archived on GitHub.
 
 ## [0.11.1] — 2026-04-13
 
