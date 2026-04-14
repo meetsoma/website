@@ -5,10 +5,9 @@ section: "Extending"
 order: 5
 ---
 
-# Extending Soma
 
 <!-- tldr -->
-Built on Pi — inherits full extension system. Skills: markdown instructions in `.soma/skills/` or `~/.soma/agent/skills/`. Extensions: TypeScript hooks into agent lifecycle (before_agent_start, tool_result, session_shutdown). Built-in extensions: soma-boot (identity + protocols + muscles), soma-header (branded σῶμα header), soma-statusline (context/cost/git footer), soma-guard (safe file operations).
+Built on Pi — inherits full extension system. Skills: markdown instructions in `.soma/skills/` or `~/.soma/agent/skills/`. Extensions: TypeScript hooks into agent lifecycle (before_agent_start, tool_result, session_shutdown). Built-in extensions: soma-boot (identity + protocols + muscles), soma-breathe (breath cycle + session rotation), soma-guard (safe file operations), soma-header (branded σῶμα header), soma-hub (community hub), soma-route (inter-extension communication), soma-scratch (scratch pad), soma-statusline (context/cost/git footer).
 <!-- /tldr -->
 
 Soma is built on [Pi](https://github.com/badlogic/pi-mono) and inherits its full extension system. You can add skills, extensions, and custom tools.
@@ -148,10 +147,14 @@ Soma ships with these extensions:
 
 | Extension | Purpose |
 |-----------|---------|
-| `soma-boot.ts` | Identity loading, preload, /exhale, /soma commands |
-| `soma-header.ts` | Branded σῶμα header with memory status |
-| `soma-statusline.ts` | Footer with model, context %, cost, git status |
+| `soma-boot.ts` | Identity loading, preload, /exhale, /soma commands, script discovery |
+| `soma-breathe.ts` | Breath cycle — /inhale, /breathe, /rest, session rotation, preload management |
 | `soma-guard.ts` | Safe file operation enforcement — intercepts writes to unread/critical files, blocks dangerous bash commands |
+| `soma-header.ts` | Branded σῶμα header with memory status |
+| `soma-hub.ts` | Community hub — /hub install, /hub find, /hub share, /hub fork |
+| `soma-route.ts` | Capability router — inter-extension communication via capabilities and signals |
+| `soma-scratch.ts` | Scratch pad — /scratch save, /scratch list, cross-session snippet storage |
+| `soma-statusline.ts` | Footer with model, context %, cost, git status, auth type |
 
 These install to `~/.soma/agent/extensions/` and can be customized or replaced.
 

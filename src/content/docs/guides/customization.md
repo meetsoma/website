@@ -5,7 +5,6 @@ section: "Guide"
 order: 26
 ---
 
-# Customization
 
 <!-- tldr -->
 Six layers of customization, from quick settings to full prompt control: persona (name/emoji), voice (`body/voice.md`), rules (protocols), patterns (muscles), tools (scripts), and prompt structure (`body/_mind.md`). Start small — change one thing, see the effect. Most customization is just editing markdown files.
@@ -64,7 +63,7 @@ Removed `automations`, `scripts`, and `git-context`. Saves tokens, speeds up boo
 
 ## Identity (who the agent is)
 
-Identity lives in `.soma/body/soul.md` (or `.soma/SOMA.md` for simpler setups).
+Identity lives in `.soma/body/soul.md` (or `.soma/SOMA.md` as a legacy fallback).
 
 ### Path 1: Let It Grow
 
@@ -94,7 +93,7 @@ Keep it under 30 lines. Dense beats comprehensive — every line competes for co
 
 ### Structured vs Monolithic
 
-Start with `SOMA.md` (one file). When it outgrows ~120 lines, split into structured body files:
+Start with `body/soul.md` (one file). When it outgrows ~120 lines, split into structured body files:
 
 | File | What | Example |
 |------|------|---------|

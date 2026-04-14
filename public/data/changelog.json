@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "0.11.3",
+      "date": "2026-04-14",
+      "entries": {
+        "Fixed": [
+          "**Script description parser** \u2014 `getScriptMeta()` was parsing YAML frontmatter delimiters (`---`) as the script description. Every frontmatter-using script showed \"---\" in the system prompt. Parser now skips frontmatter blocks, extracts `# description:` fields, skips decorative lines, and scans 30 lines instead of 15."
+        ],
+        "Changed": [
+          "**Docs version sweep** \u2014 6 docs updated: stale version refs (v0.9.0\u2192v0.11.2, v0.2.0\u2192v0.3.3), extension table 4\u21928, scripts.md restructured into Bundled/Advanced/Hub sections."
+        ]
+      }
+    },
+    {
       "version": "0.11.2",
       "date": "2026-04-14",
       "entries": {
@@ -692,7 +704,7 @@
           "Fix preload naming convention docs (#2b1be52)",
           "Reality check \u2014 remove stale scripts, fix AMPS layout, update commands (#dfce881)"
         ],
-        "Protection & Distribution": [
+        "Protection": [
           "BSL 1.1 license deployed to all repos (agent, cli, community, core)",
           "All GitHub repos \u2192 private (soma-agent, cli, community, core)",
           "npm: 6/7 versions unpublished, v0.1.0 deprecated",
@@ -703,7 +715,7 @@
           "`npm run build:dist` \u2014 clean + compile + verify in one command",
           "Protocols ship as readable .md in `dist/content/`"
         ],
-        "Thin CLI (repos/cli)": [
+        "Thin": [
           "Thin CLI wrapper \u2014 37KB total, zero dependencies, pure Node built-ins",
           "Personality engine (`personality.js`) \u2014 12 skeleton intents, 46 variants, 9 spintax topics, 14 paragraph templates",
           "Interactive Q&A \u2014 press `?` to ask about 9 topics with keyword matching (50+ triggers)",
@@ -735,7 +747,7 @@
           "`test-utils.sh` \u2014 26 executed: every exported function tested (#5dcc324)",
           "`test-muscles.sh` \u2014 enforces triggers, applies-to, frontmatter integrity (#db5c5a4)"
         ],
-        "AMPS Hygiene": [
+        "AMPS": [
           "33 muscles patched \u2014 all active muscles have `triggers:` and `applies-to:`",
           "2 corrupted frontmatter fixes + 31 YAML merge artifacts fixed",
           "e2e-flow-testing muscle \u2014 test in isolation pattern",

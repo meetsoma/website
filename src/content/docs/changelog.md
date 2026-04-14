@@ -1,17 +1,24 @@
 ---
 title: "Changelog"
 description: "What shipped, what changed, version history."
-section: "Meta"
-order: 1
+section: "Reference"
+order: 10
 ---
 
-# Changelog
 
 All notable changes to the Soma agent are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
+
+## [0.11.3] — 2026-04-14
+
+### Fixed
+- **Script description parser** — `getScriptMeta()` was parsing YAML frontmatter delimiters (`---`) as the script description. Every frontmatter-using script showed "---" in the system prompt. Parser now skips frontmatter blocks, extracts `# description:` fields, skips decorative lines, and scans 30 lines instead of 15.
+
+### Changed
+- **Docs version sweep** — 6 docs updated: stale version refs (v0.9.0→v0.11.2, v0.2.0→v0.3.3), extension table 4→8, scripts.md restructured into Bundled/Advanced/Hub sections.
 
 ## [0.11.2] — 2026-04-14
 

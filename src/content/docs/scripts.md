@@ -1,19 +1,18 @@
 ---
-title: "Scripts"
-description: "Standalone tools that ship with Soma — codebase navigation, memory tracing, session focus, doc scraping, and more."
+title: "Scripts & Audits"
+description: "Standalone tools for searching, auditing, scanning, and maintaining your .soma/ ecosystem."
 section: "Reference"
 order: 9
 ---
 
-# Scripts
 
 <!-- tldr -->
-Standalone bash tools for Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions. 11 scripts are seeded on `soma init`; more are available via `soma hub install script <name>`. Run `soma --help scripts` to see what's installed.
+Standalone bash tools for Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions. 9 scripts are seeded on `soma init`; 5 Pro scripts ship as compiled .js; more are available via `soma hub install script <name>`. Run `soma --help scripts` to see what's installed.
 <!-- /tldr -->
 
 ## Bundled Scripts (seeded on init)
 
-These 11 scripts are installed into `.soma/amps/scripts/` when you run `soma init`. They're available immediately — no hub install needed. (`soma-theme.sh` is also bundled as a shared dependency sourced by other scripts — it's not run directly.)
+These 9 scripts are installed into `.soma/amps/scripts/` when you run `soma init`. They're available immediately — no hub install needed. (`soma-theme.sh` is also bundled as a shared dependency sourced by other scripts — it's not run directly.)
 
 ### soma code — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-code)
 
@@ -31,20 +30,6 @@ soma code tsc-errors [path]            # TypeScript errors with code context
 
 **Use `map` before editing any file** — it gives you the function index so you know where to make changes.
 
-### soma seam — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-seam)
-
-Trace concepts through memory, code, and sessions. The memory superpower — finds connections across your entire `.soma/` workspace.
-
-```bash
-soma seam trace <term>              # follow a concept through everything
-soma seam graph <session-id>        # map everything connected to a session
-soma seam timeline [--tag TAG]      # chronological evolution of a concept
-soma seam code <pattern>            # code + the ideas/plans that reference it
-soma seam seeds [--unplanted]       # find seeds that haven't become plans
-soma seam gaps                      # find orphan documents (no connections)
-soma seam web <term> [-o FILE]      # generate a full markdown web of connections
-```
-
 ### soma focus — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-focus)
 
 Seam-traced boot priming. Run **before** starting a session to focus the agent on a specific topic. Traces the keyword through memory, scores relevance, and generates heat overrides so the right muscles, protocols, and MAPs load.
@@ -60,24 +45,6 @@ soma focus runtime         # focus on runtime work
 soma                          # start — agent wakes up primed for runtime
 ```
 
-### soma-update-check.sh
-
-Check installed content against the hub for newer versions.
-
-```bash
-soma-update-check.sh            # check for updates
-soma-update-check.sh --json     # machine-readable output
-```
-
-### validate-content.sh
-
-Validate AMPS content files before submitting to the community hub.
-
-```bash
-validate-content.sh protocols/my-protocol.md
-validate-content.sh muscles/                    # validate all in dir
-```
-
 ### soma body
 
 Body template inspector. Check health, list variables, preview the compiled system prompt.
@@ -87,16 +54,6 @@ soma body check                     # health report — missing vars, duplicates
 soma body vars                      # all variables grouped by category
 soma body map                       # template structure with var status
 soma body render                    # full compiled system prompt
-```
-
-### soma refactor
-
-Dependency analysis for safe refactoring. Scan before renaming or deleting anything.
-
-```bash
-soma refactor scan <file>           # dependency graph + blast radius
-soma refactor refs <symbol>         # cross-file reference analysis
-soma refactor graph <file>          # import/require tree
 ```
 
 ### soma reflect
@@ -135,25 +92,59 @@ soma session strip --dry-run        # preview without modifying
 
 When screenshots accumulate in a session, the JSONL file grows large and can hit API image limits. `strip-images` replaces image data with text placeholders so `soma -c` can resume cleanly.
 
+### soma-update-check.sh
+
+Check installed content against the hub for newer versions.
+
+```bash
+soma-update-check.sh            # check for updates
+soma-update-check.sh --json     # machine-readable output
+```
+
+### validate-content.sh
+
+Validate AMPS content files before submitting to the community hub.
+
+```bash
+validate-content.sh protocols/my-protocol.md
+validate-content.sh muscles/                    # validate all in dir
+```
+
 ### soma-theme.sh
 
 Shared theming for all Soma scripts. Provides colors, header/footer helpers, and status functions. Sourced by other scripts — you don't run this directly.
 
 ---
 
-## Hub Scripts (install with `/hub install script <name>`)
+## Advanced Scripts
 
-These scripts are available on the [Soma Hub](https://soma.gravicity.ai/hub). Install any of them:
+These 5 scripts ship as compiled `.js` files in the agent runtime. They provide deeper capabilities — dependency analysis, memory tracing, doc scraping, remote repo inspection, and browser automation. Available immediately, no install needed.
+
+### soma seam
+
+Trace concepts through memory, code, and sessions. The memory superpower — finds connections across your entire `.soma/` workspace.
 
 ```bash
-# Inside a Soma session:
-/hub install script soma-scrape
-
-# Or from CLI:
-soma hub install script soma-scrape
+soma seam trace <term>              # follow a concept through everything
+soma seam graph <session-id>        # map everything connected to a session
+soma seam timeline [--tag TAG]      # chronological evolution of a concept
+soma seam code <pattern>            # code + the ideas/plans that reference it
+soma seam seeds [--unplanted]       # find seeds that haven't become plans
+soma seam gaps                      # find orphan documents (no connections)
+soma seam web <term> [-o FILE]      # generate a full markdown web of connections
 ```
 
-### soma scrape — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-scrape)
+### soma refactor
+
+Dependency analysis for safe refactoring. Scan before renaming or deleting anything.
+
+```bash
+soma refactor scan <file>           # dependency graph + blast radius
+soma refactor refs <symbol>         # cross-file reference analysis
+soma refactor graph <file>          # import/require tree
+```
+
+### soma scrape
 
 Intelligent doc discovery and scraping. Give it a library name, it finds the repo, scans for docs, pulls them locally into `.soma/knowledge/`.
 
@@ -166,6 +157,37 @@ soma scrape list                    # show all scraped sources
 ```
 
 **Requires:** `gh` (GitHub CLI), `curl`, `jq`.
+
+### soma github
+
+Remote repo analysis — scan GitHub repos WITHOUT cloning.
+
+```bash
+soma github <repo> structure         # file tree + sizes
+soma github <repo> map <file>        # function/class index
+soma github <repo> deps              # dependency analysis
+soma github <repo> audit             # security + quality scan
+soma github <repo> routes            # route discovery (web frameworks)
+soma github <repo> stats             # repo statistics
+```
+
+### soma browser
+
+CDP-based browser automation for testing and scraping.
+
+---
+
+## Hub Scripts (install with `/hub install script <name>`)
+
+These scripts are available on the [Soma Hub](https://soma.gravicity.ai/hub). Install any of them:
+
+```bash
+# Inside a Soma session:
+/hub install script soma-query
+
+# Or from CLI:
+soma hub install script soma-query
+```
 
 ### soma query — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-query)
 

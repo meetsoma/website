@@ -5,7 +5,6 @@ section: "First Steps"
 order: 1
 ---
 
-
 <!-- tldr -->
 `npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. `/exhale` saves state + writes a preload. `soma inhale` starts fresh with that preload loaded. `/breathe` rotates mid-session. `/pin` keeps content hot, `/kill` drops it cold. `soma -c` resumes with full conversation history.
 <!-- /tldr -->

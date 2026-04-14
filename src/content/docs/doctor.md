@@ -1,11 +1,10 @@
 ---
 title: "Doctor & Migration"
-description: "Project health checks, version migration, and how Soma keeps your .soma/ current."
+description: "Project health checks, version migration, keeping .soma/ current."
 section: "Reference"
 order: 8.5
 ---
 
-# Doctor & Migration
 
 <!-- tldr -->
 `soma doctor` from CLI for a quick health check. `/soma doctor` inside the TUI for interactive migration with agent assistance. Tier 1 (silent, every boot): adds missing settings, body files, protocols, converts legacy formats. Tier 2+ (interactive): compares templates, walks migration phases, handles breaking changes. Your customizations are never overwritten.
@@ -59,7 +58,7 @@ Runs automatically on every session start. You never see it unless you check deb
 When Tier 1 isn't enough — structural changes, template updates, breaking format changes — the doctor prompts you:
 
 ```
-⚠ Project .soma/ is at v0.7.1, agent is at v0.8.1.
+⚠ Project .soma/ is at v0.10.0, agent is at v0.11.2.
   Use /soma doctor to check for updates.
 ```
 
@@ -78,7 +77,7 @@ The agent runs `compareTemplates()` which categorizes every file in your `.soma/
 | **Customized** | Your copy differs from the template | Preserved — agent shows what changed and lets you decide |
 | **Extra** | Your file, not in bundled templates | Left alone — it's yours |
 
-The agent reads the applicable **migration phase files** (`migrations/phases/v0.7.1-to-v0.8.0.md`) which describe exactly what changed and what actions to take. Each phase is self-contained — an agent reading only that phase file has everything it needs.
+The agent reads the applicable **migration phase files** (`migrations/phases/v0.10.0-to-v0.11.0.md`) which describe exactly what changed and what actions to take. Each phase is self-contained — an agent reading only that phase file has everything it needs.
 
 ## Migration Phases
 
@@ -89,10 +88,10 @@ migrations/
 ├── cycle.md                    ← overview of the migration system
 └── phases/
     ├── v0.6.1-to-v0.6.2.md
-    ├── v0.6.2-to-v0.6.3.md
     ├── ...
-    ├── v0.7.1-to-v0.8.0.md
-    └── v0.8.0-to-v0.8.1.md
+    ├── v0.8.1-to-v0.9.0.md
+    ├── v0.9.0-to-v0.10.0.md
+    └── v0.10.0-to-v0.11.0.md
 ```
 
 Phase files include:
@@ -101,7 +100,7 @@ Phase files include:
 - **Actions** — what the doctor does (Tier 1 auto-fixes + Tier 2 recommendations)
 - **Breaking changes** — anything that requires manual intervention
 
-The chain is complete — no gaps. If your project is at v0.6.4 and the agent is at v0.8.1, the doctor walks through every phase in order.
+The chain is complete — no gaps. If your project is at v0.9.0 and the agent is at v0.11.2, the doctor walks through every phase in order.
 
 ## What Gets Compared
 

@@ -1,11 +1,10 @@
 ---
 title: "Daily Workflow"
-description: "The exhale → reflect → inhale loop - how to use Soma day to day."
+description: "The exhale, reflect, inhale loop — how to use Soma day to day."
 section: "Guide"
-order: 12
+order: 25
 ---
 
-# Daily Workflow
 
 <!-- tldr -->
 End of session: `/exhale`. Between sessions: review the preload, reflect, update it. Next session: `soma inhale`. That's the loop. The preload is the handoff - write it like a briefing for someone who forgot everything. Power users journal and do MLR (Memory Lane Reflection) between sessions to deepen continuity.
@@ -114,7 +113,7 @@ This starts a fresh session with your curated preload loaded. The agent wakes up
 | Method | Where | When |
 |--------|-------|------|
 | `soma inhale` | Shell (starts new session) | Morning start, after reviewing/updating preload |
-| `soma` | Shell (starts new session) | Quick start — auto-loads preload quietly via `autoInject` |
+| `soma` | Shell (starts new session) | Quick start — fresh session, no preload (unless `autoInject: true`) |
 | `/inhale` | Inside TUI (resets session) | After exhale + preload update, or mid-session to load a preload |
 
 **`soma inhale`** is the daily driver — you’re saying "I’ve prepared the context, load it."

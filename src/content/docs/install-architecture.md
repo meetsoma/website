@@ -1,11 +1,10 @@
 ---
 title: "Install Architecture"
-description: "How Soma installs, updates, and manages versions — the full flow from npm to runtime."
+description: "How Soma installs, updates, and manages versions."
 section: "Reference"
-order: 20
+order: 21
 ---
 
-# Install Architecture
 
 <!-- UPDATE WHEN: install flow changes, thin-cli.js updated, soma-beta structure changes -->
 <!-- SEAMS: getting-started.md#install, updating.md, doctor.md, configuration.md -->
@@ -18,8 +17,8 @@ Soma has two independent packages that version separately:
 
 | Layer | Package | Version | What |
 |-------|---------|---------|------|
-| **CLI** | `meetsoma` (npm) | v0.2.0 | Thin bootstrap — welcome flow, `soma init`, delegates to runtime |
-| **Agent** | `soma-beta` (GitHub) | v0.9.0+ | Full runtime — extensions, protocols, body templates, Pi engine |
+| **CLI** | `meetsoma` (npm) | v0.3.3 | Thin bootstrap — welcome flow, `soma init`, delegates to runtime |
+| **Agent** | `soma-beta` (GitHub) | v0.11.2+ | Full runtime — extensions, protocols, body templates, Pi engine |
 
 The CLI is ~50KB. The agent is the real thing. When you run `soma`, the CLI checks if the agent is installed and delegates everything to it.
 
@@ -179,13 +178,13 @@ soma doctor (CLI)
 
 ```bash
 soma --version
-# σ  Soma v0.9.0       ← agent version (from ~/.soma/agent/package.json)
-#    CLI v0.2.0         ← CLI version (from npm package)
+# σ  Soma v0.11.2      ← agent version (from ~/.soma/agent/package.json)
+#    CLI v0.3.3          ← CLI version (from npm package)
 
 soma doctor
-# Agent:   v0.9.0       ← what's installed globally
-# Project: v0.8.0       ← what this project was created with
-# CLI:     v0.2.0       ← npm package version
+# Agent:   v0.11.2      ← what's installed globally
+# Project: v0.10.0      ← what this project was created with
+# CLI:     v0.3.3       ← npm package version
 ```
 
 The **agent version** is what matters for features and compatibility. The **CLI version** is the thin bootstrap layer. The **project version** tracks what migration level the project's `.soma/` is at.

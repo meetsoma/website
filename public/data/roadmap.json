@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-14T16:20:08Z",
+  "generated": "2026-04-14",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -12,6 +12,19 @@
           "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
           "Content versioning \u2014 know when hub protocols update, diff before upgrading.",
           "Boot sequence extraction \u2014 move hardcoded behavior into user-editable MAPs."
+        ]
+      }
+    },
+    {
+      "version": "0.11.3",
+      "date": "2026-04-14",
+      "title": "Script Parser Fix",
+      "features": {
+        "fixed": [
+          "Script descriptions in system prompt no longer show \"---\" for scripts with YAML frontmatter"
+        ],
+        "changed": [
+          "Documentation updated with current versions and extension list across 6 pages"
         ]
       }
     },

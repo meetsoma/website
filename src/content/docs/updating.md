@@ -1,11 +1,10 @@
 ---
-title: "Updating & Migration"
-description: "Keep Soma up to date across your projects."
+title: "Updating"
+description: "How to keep Soma up to date across projects."
 section: "Reference"
 order: 20
 ---
 
-# Updating & Migration
 
 <!-- UPDATE WHEN: update flow changes, doctor behavior changes, migration phases added -->
 <!-- SEAMS: install-architecture.md, doctor.md, getting-started.md -->
@@ -22,11 +21,11 @@ soma doctor          # Project-level version check + health
 
 `soma --version` shows both versions:
 ```
-σ  Soma v0.8.1
-   CLI v0.2.0
+σ  Soma v0.11.2
+   CLI v0.3.3
 ```
 
-The **agent version** (v0.8.1) is your Soma runtime — extensions, protocols, body templates, the works. The **CLI version** (v0.2.0) is the thin npm package that bootstraps everything.
+The **agent version** (v0.11.2) is your Soma runtime — extensions, protocols, body templates, the works. The **CLI version** (v0.3.3) is the thin npm package that bootstraps everything.
 
 ## Updating the Runtime
 
@@ -38,7 +37,7 @@ When Soma is already installed, `soma init` checks for updates and pulls the lat
 
 If your project `.soma/` is behind the agent version, you'll see:
 ```
-⚠ Project .soma/ is at v0.7.1, agent is at v0.8.1.
+⚠ Project .soma/ is at v0.10.0, agent is at v0.11.2.
   Run soma doctor to check for updates.
 ```
 

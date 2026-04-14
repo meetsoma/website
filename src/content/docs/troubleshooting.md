@@ -1,11 +1,10 @@
 ---
 title: "Troubleshooting"
-description: "Common issues and fixes — install problems, model errors, broken sessions, and more."
+description: "Common issues and fixes."
 section: "Reference"
 order: 22
 ---
 
-# Troubleshooting
 
 <!-- tldr -->
 Most issues: `soma init` (fixes broken install), `soma doctor` (fixes project version), restart the session (picks up changes). Below: organized by symptom. Check here before filing an issue.
@@ -129,7 +128,7 @@ If the agent is confused about project state, check the preload — it might hav
 
 - Check `maxPings` setting: `grep -A 3 keepalive .soma/settings.json`
 - Default is 5 pings. Set to 0 to disable entirely.
-- If pings seem unlimited: update to latest agent version (v0.8.1+ fixes a counter reset bug)
+- If pings seem unlimited: update to latest agent version (v0.11.2+ fixes a counter reset bug)
 
 ### `/exhale` doesn't write a preload
 

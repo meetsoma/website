@@ -1,8 +1,8 @@
 ---
 title: "Themes"
-description: "Customize Soma's appearance with built-in or custom themes."
-section: "Reference"
-order: 6.4
+description: "Terminal color themes for Soma's TUI."
+section: "Customization"
+order: 17
 ---
 
 <!-- tldr -->
