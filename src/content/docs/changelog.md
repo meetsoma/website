@@ -5,6 +5,50 @@ section: "Meta"
 order: 1
 ---
 
+# Changelog
+
+All notable changes to the Soma agent are documented here.
+
+Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
+
+---
+
+## [Unreleased]
+
+### Fixed
+- **block release on dist/ upstream drift**
+- **Duplicate session files in rotation boot** — rotation path embedded file hints in both greeting AND session_files template variable. Now greeting is narrative only, session_files handled by template (matching normal boot pattern from 4d8331f).
+- **Triple error cascade on API failure** — three independent handlers fired on single error. Added errorHandled flag, else-if chain, gated fatal-session check.
+- **False-positive billing detection removed** — `err.includes("extra usage")` matched Claude consumer error text, not actual billing issues. Pi shows raw API errors natively. Removed our pattern matching entirely.
+- **Doctor fallback version** — hardcoded 0.10.0 → 0.11.1.
+
+### Changed
+- **Pi runtime 0.64.0 → 0.67.1** — dist/ was stuck at Pi 0.64.0 despite package.json claiming ^0.66.1. Synced from npm. Gets stack overflow fix for long sessions (#2651), subscription auth warning, queued message flush fix.
+- **Pi telemetry disabled** — set PI_TELEMETRY=0 in cli.js to prevent install ping added in Pi 0.67.1.
+- **Rotation boot aligned with decomposition** — greeting no longer embeds session file hints. Consistent with normal boot path pattern.
+
+### Added
+- **`soma-dev verify upstream`** — detects dist/ vs node_modules/ drift by fingerprinting key runtime files. Prevents the 0.64→0.66 invisible drift.
+- **Runtime integrity tests** — test-hygiene.sh now checks telemetry disable, boot decomposition, billing removal, error cascade flag, verify-upstream existence.
+- **`browser_links` tool** (somaverse) — extract links from browser tabs with optional text/URL filter.
+
+## [0.11.1] — 2026-04-13
+
+### Fixed
+- **Cache invalidation from image stripping** — removed progressive image stripping from `before_provider_request` in soma-guard. Each new screenshot changed the strip set, invalidating the entire cache ($2-3 per invalidation, $152/day on Apr 12). Image management now handled by capture-time optimization + future auto-compact.
+- **Zombie sessions** — idle shutdown timer now runs independently of keepalive. Post-exhale shutdown (15 min) + absolute timeout (30 min). Previously, disabling keepalive also disabled the shutdown check.
+- **Boot resume cache waste** — silent resume when no .soma files changed. Was injecting "Nothing changed" message that cost ~$1.78 in cache rewrite with zero value.
+- **Keepalive on fatal errors** — kill keepalive on first-turn API failures to prevent infinite retry loops.
+- **Billing notice handling** — separate billing notices from error-pause logic so keepalive isn't killed on credit warnings.
+- **Pipeline** — remove `streamingBehavior` (not in Pi types), fix `focus --help` without seam.
+
+### Added
+- **Cache health tracking** — statusline tracks cacheRead, cacheWrite, cost per session. Alerts on cache invalidations (>50K token writes). Footer shows ✓cache / Ninv indicator.
+- **Idle session detection** — auto-shutdown after configurable idle period with no user input.
+
+### Changed
+- Cache health indicator moved to statusline line 2 (line 1 was crowded).
+
 ## [0.11.0] — 2026-04-12
 
 Identity overhaul + first-run experience. soul.md replaces SOMA.md as default. Minimal boot for new projects. 11 bundled scripts. Critical doctor fix.
