@@ -9,17 +9,26 @@
           "**Duplicate session files in rotation boot** \u2014 rotation path embedded file hints in both greeting AND session_files template variable. Now greeting is narrative only, session_files handled by template (matching normal boot pattern from 4d8331f).",
           "**Triple error cascade on API failure** \u2014 three independent handlers fired on single error. Added errorHandled flag, else-if chain, gated fatal-session check.",
           "**False-positive billing detection removed** \u2014 `err.includes(\"extra usage\")` matched Claude consumer error text, not actual billing issues. Pi shows raw API errors natively. Removed our pattern matching entirely.",
-          "**Doctor fallback version** \u2014 hardcoded 0.10.0 \u2192 0.11.1."
+          "**Doctor fallback version** \u2014 hardcoded 0.10.0 \u2192 0.11.1.",
+          "**Build pipeline** \u2014 `build-dist.mjs` was reading Pi 0.64.0 from stale `repos/cli/dist`. Now reads from npm (Pi 0.67.1). Root cause of months of invisible dist/ drift.",
+          "**Release script** \u2014 removed stale `CLI_DIST` reference; Soma brand themes were being overwritten by Pi defaults.",
+          "**Dev-mode theme crash** \u2014 Pi's config.js resolves to `src/` when it exists. Added symlinks for theme, export-html, and assets paths.",
+          "**Stale docs** \u2014 `repos/cli` ref in install-architecture.md."
         ],
         "Changed": [
           "**Pi runtime 0.64.0 \u2192 0.67.1** \u2014 dist/ was stuck at Pi 0.64.0 despite package.json claiming ^0.66.1. Synced from npm. Gets stack overflow fix for long sessions (#2651), subscription auth warning, queued message flush fix.",
           "**Pi telemetry disabled** \u2014 set PI_TELEMETRY=0 in cli.js to prevent install ping added in Pi 0.67.1.",
-          "**Rotation boot aligned with decomposition** \u2014 greeting no longer embeds session file hints. Consistent with normal boot path pattern."
+          "**Rotation boot aligned with decomposition** \u2014 greeting no longer embeds session file hints. Consistent with normal boot path pattern.",
+          "**Error handling** \u2014 auth-aware (OAuth vs API key). Account rate limits (real plan limit) handled separately from extra-usage classification errors (often transient). OAuth: progressive retry \u2192 warn \u2192 pause at 4th. API key: pause immediately.",
+          "**Error display** \u2014 build-time error-sanitizer patch converts raw JSON API errors to human-readable messages. Billing errors show progressive messages. Retryable errors (overloaded, 500) pass through untouched."
         ],
         "Added": [
           "**`soma-dev verify upstream`** \u2014 detects dist/ vs node_modules/ drift by fingerprinting key runtime files. Prevents the 0.64\u21920.66 invisible drift.",
           "**Runtime integrity tests** \u2014 test-hygiene.sh now checks telemetry disable, boot decomposition, billing removal, error cascade flag, verify-upstream existence.",
-          "**Release pipeline gate** \u2014 `soma-release.sh` now blocks on dist/ upstream drift detection before building."
+          "**Release pipeline gate** \u2014 `soma-release.sh` now blocks on dist/ upstream drift detection before building.",
+          "**Error-sanitizer** \u2014 build-time patch to Pi's display layer. Progressive billing messages, auth/model rewrites. Zero cache impact.",
+          "**Patch manifest** \u2014 `scripts/_dev/patches/manifest.json` tracks applied dist/ patches.",
+          "**CLI repo archived** \u2014 content merged to agent README. `meetsoma/cli` archived on GitHub."
         ]
       }
     },
