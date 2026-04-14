@@ -13,10 +13,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
-## [Unreleased]
+## [0.11.2] — 2026-04-14
 
 ### Fixed
-- **block release on dist/ upstream drift**
+- **soma-install.sh paths** — updated `products/soma` → `meetsoma/repos` references.
 - **Duplicate session files in rotation boot** — rotation path embedded file hints in both greeting AND session_files template variable. Now greeting is narrative only, session_files handled by template (matching normal boot pattern from 4d8331f).
 - **Triple error cascade on API failure** — three independent handlers fired on single error. Added errorHandled flag, else-if chain, gated fatal-session check.
 - **False-positive billing detection removed** — `err.includes("extra usage")` matched Claude consumer error text, not actual billing issues. Pi shows raw API errors natively. Removed our pattern matching entirely.
@@ -30,7 +30,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ### Added
 - **`soma-dev verify upstream`** — detects dist/ vs node_modules/ drift by fingerprinting key runtime files. Prevents the 0.64→0.66 invisible drift.
 - **Runtime integrity tests** — test-hygiene.sh now checks telemetry disable, boot decomposition, billing removal, error cascade flag, verify-upstream existence.
-- **`browser_links` tool** (somaverse) — extract links from browser tabs with optional text/URL filter.
+- **Release pipeline gate** — `soma-release.sh` now blocks on dist/ upstream drift detection before building.
 
 ## [0.11.1] — 2026-04-13
 
