@@ -3,7 +3,7 @@
     {
       "version": "0.11.2",
       "date": "2026-04-14",
-      "sections": {
+      "entries": {
         "Fixed": [
           "**soma-install.sh paths** \u2014 updated `products/soma` \u2192 `meetsoma/repos` references.",
           "**Duplicate session files in rotation boot** \u2014 rotation path embedded file hints in both greeting AND session_files template variable. Now greeting is narrative only, session_files handled by template (matching normal boot pattern from 4d8331f).",
@@ -26,7 +26,7 @@
     {
       "version": "0.11.1",
       "date": "2026-04-13",
-      "sections": {
+      "entries": {
         "Fixed": [
           "**Cache invalidation from image stripping** \u2014 removed progressive image stripping from `before_provider_request` in soma-guard. Each new screenshot changed the strip set, invalidating the entire cache ($2-3 per invalidation, $152/day on Apr 12). Image management now handled by capture-time optimization + future auto-compact.",
           "**Zombie sessions** \u2014 idle shutdown timer now runs independently of keepalive. Post-exhale shutdown (15 min) + absolute timeout (30 min). Previously, disabling keepalive also disabled the shutdown check.",
@@ -47,7 +47,7 @@
     {
       "version": "0.11.0",
       "date": "2026-04-12",
-      "sections": {
+      "entries": {
         "Added": [
           "**`soma session`** \u2014 session maintenance tool. `strip-images` removes base64 image data from JSONL (16MB \u2192 2.6MB), `list` shows all sessions with sizes, `stats` analyzes image payload.",
           "**test-install-flows.sh** \u2014 36-assertion E2E test suite covering fresh init, v0.6\u2192current upgrade, edge cases (corrupt settings, missing version, empty body/).",
@@ -81,7 +81,7 @@
     {
       "version": "0.10.0",
       "date": "2026-04-10",
-      "sections": {
+      "entries": {
         "Added": [
           "**v0.8.1\u2192v0.9.0 migration map** \u2014 settings additions (inherit, keepalive, heat.autoDetectBump), script routing syntax, AMPS consolidation notes. Chains with existing migration maps.",
           "**soma-health.sh** \u2014 project health dashboard script.",
@@ -112,7 +112,7 @@
     {
       "version": "0.9.0",
       "date": "2026-04-04",
-      "sections": {
+      "entries": {
         "Added": [
           "**`{{inbox_summary}}` template variable** \u2014 scans `.soma/inbox/` at boot, injects unread message summary into system prompt. File-based async messaging between agents.",
           "**`{{scripts_table}}` in default `_mind.md`** \u2014 agents can now see their discovered scripts in the system prompt.",
@@ -136,7 +136,7 @@
     {
       "version": "0.8.1",
       "date": "2026-04-02",
-      "sections": {
+      "entries": {
         "Added": [
           "**Unified warm content format** \u2014 `## TL;DR` replaces `<!-- digest:start/end -->` across all AMPS. Protocols, muscles, and automations all use the same format. Code accepts both during transition.",
           "**`extractTldr()`** \u2014 shared utility for extracting TL;DR sections, used by protocols, muscles, and automations.",
@@ -155,7 +155,7 @@
     {
       "version": "0.8.0",
       "date": "2026-04-02",
-      "sections": {
+      "entries": {
         "Added": [
           "**`soma doctor`** \u2014 project health check and migration from CLI. Tier 1 auto-fixes (settings, body, protocols) run silently on every boot. TUI `/soma doctor` provides interactive Tier 2+ migration with `compareTemplates()` analysis.",
           "**`soma status` / `soma health`** \u2014 quick project health check (renamed from old `soma doctor`).",
@@ -191,7 +191,7 @@
     {
       "version": "0.7.1",
       "date": "2026-04-01",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**`soma --help` rewrite** \u2014 Soma-branded help with session commands, project commands, options, and TUI slash commands. Replaces generic Pi help output.",
@@ -212,7 +212,7 @@
     {
       "version": "0.7.0",
       "date": "2026-04-01",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard** \u2014 warns when no preload exists (suggests `/exhale`), warns when preload is stale (>5 tool calls since write). Use `/inhale --force` to override.",
@@ -240,7 +240,7 @@
     {
       "version": "0.6.7",
       "date": "2026-03-30",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**`/soma doctor`** \u2014 migration command. Detects version mismatch on boot, prompts to run migration script with confirmation, shows output, reloads settings. Post-migration guidance for body file review.",
@@ -268,7 +268,7 @@
     {
       "version": "0.6.6",
       "date": "2026-03-29",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -296,7 +296,7 @@
     {
       "version": "0.6.5",
       "date": "2026-03-28",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -333,7 +333,7 @@
     {
       "version": "0.6.4",
       "date": "2026-03-23",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -398,7 +398,7 @@
     {
       "version": "0.6.3",
       "date": "2026-03-22",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -458,7 +458,7 @@
     {
       "version": "0.6.2",
       "date": "2026-03-21",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -504,7 +504,7 @@
     {
       "version": "0.6.1",
       "date": "2026-03-20",
-      "sections": {
+      "entries": {
         "Changed": [
           "Pi runtime upgraded 0.61.0 \u2192 0.61.1 \u2014 Release Round 3 (#3cbf2bc)"
         ],
@@ -553,7 +553,7 @@
     {
       "version": "0.6.0",
       "date": "2026-03-20",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -743,7 +743,7 @@
     {
       "version": "0.5.2",
       "date": "2026-03-15",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -807,7 +807,7 @@
     {
       "version": "0.5.1",
       "date": "2026-03-14",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -885,7 +885,7 @@
     {
       "version": "0.5.0",
       "date": "2026-03-12",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -946,7 +946,7 @@
     {
       "version": "0.4.0",
       "date": "2026-03-11",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -994,7 +994,7 @@
     {
       "version": "0.3.0",
       "date": "2026-03-10",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -1039,7 +1039,7 @@
     {
       "version": "0.2.0",
       "date": "2026-03-09",
-      "sections": {
+      "entries": {
         "Added": [
           "**rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference**",
           "**/inhale guard + stale warning, slash command usage hints**",
@@ -1076,7 +1076,7 @@
     {
       "version": "0.1.0",
       "date": "2026-03-08",
-      "sections": {
+      "entries": {
         "Born": [
           "\u03c3\u1ff6\u03bc\u03b1 (s\u014dma) \u2014 *Greek for \"body.\"* The vessel that grows around you.",
           "Built on Pi with `piConfig.configDir: \".soma\"`",

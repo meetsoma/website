@@ -1,101 +1,171 @@
 {
+  "generated": "2026-04-14T16:10:21Z",
+  "source": "CHANGELOG.md",
   "timeline": [
     {
       "version": "Next",
-      "title": "",
-      "items": []
+      "date": "",
+      "features": {
+        "added": [
+          "Somaverse Alpha \u2014 visual workspace UI with 21 plugins, tiling layout, agent-controlled browser.",
+          "Recall \u2014 persistent memory via Somadian graph store. Cross-session, cross-project knowledge.",
+          "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
+          "Content versioning \u2014 know when hub protocols update, diff before upgrading.",
+          "Boot sequence extraction \u2014 move hardcoded behavior into user-editable MAPs."
+        ]
+      }
     },
     {
       "version": "0.11.2",
-      "title": "",
       "date": "2026-04-14",
-      "items": [
-        "`soma-dev verify upstream`",
-        "Runtime integrity tests",
-        "Release pipeline gate",
-        "Pi runtime 0.64.0 \u2192 0.67.1",
-        "Pi telemetry disabled",
-        "Rotation boot aligned with decomposition"
-      ]
+      "features": {
+        "added": [
+          "`soma-dev verify upstream` \u2014 detects dist/ vs node_modules/ drift by fingerprinting key runtime files. Prevents the 0.64\u21920.66 invisible drift.",
+          "Runtime integrity tests \u2014 test-hygiene.sh now checks telemetry disable, boot decomposition, billing removal, error cascade flag, verify-upstream existence.",
+          "Release pipeline gate \u2014 `soma-release.sh` now blocks on dist/ upstream drift detection before building."
+        ],
+        "changed": [
+          "Pi runtime 0.64.0 \u2192 0.67.1 \u2014 dist/ was stuck at Pi 0.64.0 despite package.json claiming ^0.66.1. Synced from npm. Gets stack overflow fix for long sessions (#2651), subscription auth warning, queued message flush fix.",
+          "Pi telemetry disabled \u2014 set PI_TELEMETRY=0 in cli.js to prevent install ping added in Pi 0.67.1.",
+          "Rotation boot aligned with decomposition \u2014 greeting no longer embeds session file hints. Consistent with normal boot path pattern."
+        ]
+      }
     },
     {
       "version": "0.11.1",
-      "title": "",
       "date": "2026-04-13",
-      "items": [
-        "Cache health tracking",
-        "Idle session detection",
-        "Cache health indicator moved to statusline line 2 (line 1 was crowded)"
-      ]
+      "features": {
+        "added": [
+          "Cache health tracking \u2014 statusline tracks cacheRead, cacheWrite, cost per session. Alerts on cache invalidations (>50K token writes). Footer shows \u2713cache / Ninv indicator.",
+          "Idle session detection \u2014 auto-shutdown after configurable idle period with no user input."
+        ],
+        "changed": [
+          "Cache health indicator moved to statusline line 2 (line 1 was crowded)."
+        ]
+      }
     },
     {
       "version": "0.11.0",
-      "title": "",
       "date": "2026-04-12",
-      "items": [
-        "`soma session`",
-        "test-install-flows.sh",
-        "Discovery marker: `body`",
-        "User extension preservation",
-        "Extension allowlist",
-        "Image payload guard",
-        "Identity: soul.md is primary",
-        "autoInject default: false",
-        "First-run minimal boot",
-        "Pi 0.65 migration",
-        "Protocol heat-defaults reclassified",
-        "11 bundled scripts (was 6)",
-        "Template single source",
-        "Hub template install"
-      ]
+      "features": {
+        "added": [
+          "`soma session` \u2014 session maintenance tool. `strip-images` removes base64 image data from JSONL (16MB \u2192 2.6MB), `list` shows all sessions with sizes, `stats` analyzes image payload.",
+          "test-install-flows.sh \u2014 36-assertion E2E test suite covering fresh init, v0.6\u2192current upgrade, edge cases (corrupt settings, missing version, empty body/).",
+          "Discovery marker: `body` \u2014 `findSomaDir()` now detects projects with only `body/soul.md` (no SOMA.md).",
+          "User extension preservation \u2014 reinstall preserves user-installed extensions (bridge-connect.ts, workspace-tools.ts) alongside auth.json and models.json.",
+          "Extension allowlist \u2014 configure approved extensions in settings.json, `/soma doctor` reports unlisted extensions.",
+          "Image payload guard \u2014 `before_provider_request` strips old images when >15 accumulate in conversation. Prevents Anthropic many-image 2000px limit."
+        ],
+        "changed": [
+          "Identity: soul.md is primary \u2014 `initSoma` creates `body/soul.md` instead of `SOMA.md`. `ensureGlobalSoma` creates `body/soul.md` at `~/.soma/`. SOMA.md and identity.md still work as fallbacks. All docs, templates, tree diagrams updated (30+ files).",
+          "autoInject default: false \u2014 new projects use `soma inhale` for intentional preload loading. Existing settings preserved on upgrade.",
+          "First-run minimal boot \u2014 first session skips hot protocol/muscle injection into system prompt. Agent discovers through use.",
+          "Pi 0.65 migration \u2014 `session_switch`/`session_fork` \u2192 `session_start` with `event.reason`.",
+          "Protocol heat-defaults reclassified \u2014 only `breath-cycle` and `working-style` start warm. All others cold.",
+          "11 bundled scripts (was 6) \u2014 added soma-body, soma-refactor, soma-reflect, soma-plans, soma-session.",
+          "Template single source \u2014 `body/_public/` deleted, templates read from `templates/default/`.",
+          "Hub template install \u2014 fetches soul.md \u2192 SOMA.md \u2192 identity.md, writes to body/soul.md for new projects."
+        ]
+      }
     },
     {
       "version": "0.10.0",
-      "title": "",
       "date": "2026-04-10",
-      "items": [
-        "v0.8.1\u2192v0.9.0 migration map",
-        "soma-health.sh",
-        "Docker sandbox",
-        "test-hygiene.sh",
-        "verify-amps command",
-        "3 scripts promoted to bundled",
-        "Pi runtime 0.64.0 \u2192 0.66.1",
-        "Docs: CLI syntax",
-        "Scripts reorganized",
-        "CWD safety audit"
-      ]
+      "features": {
+        "added": [
+          "v0.8.1\u2192v0.9.0 migration map \u2014 settings additions (inherit, keepalive, heat.autoDetectBump), script routing syntax, AMPS consolidation notes. Chains with existing migration maps.",
+          "soma-health.sh \u2014 project health dashboard script.",
+          "Docker sandbox \u2014 `soma-sandbox.sh` can now use Docker for isolated E2E testing (21/21 tests pass).",
+          "test-hygiene.sh \u2014 repo cleanliness checks (secrets, sessions, dev artifacts).",
+          "verify-amps command \u2014 CWD path resolution, community protocol source validation.",
+          "3 scripts promoted to bundled \u2014 soma-verify.sh, soma-refactor.sh, soma-browser.sh moved from dev to discoverable."
+        ],
+        "changed": [
+          "Pi runtime 0.64.0 \u2192 0.66.1 \u2014 2 minor versions, bug fixes, no breaking changes.",
+          "Docs: CLI syntax \u2014 all 8 doc files updated from `soma-code.sh` to `soma code` syntax. Website synced.",
+          "Scripts reorganized \u2014 39 dev scripts moved to `_dev/`, 3 promoted to bundled, redundant scripts archived.",
+          "CWD safety audit \u2014 dev-path guards on Tier 2 scripts, soma-query demoted to `_dev/`."
+        ]
+      }
     },
     {
       "version": "0.9.0",
-      "title": "",
       "date": "2026-04-04",
-      "items": [
-        "`{{inbox_summary}}` template variable",
-        "`{{scripts_table}}` in default `_mind.md`",
-        "`preload.autoInject` setting",
-        "7 new documentation pages",
-        "`inter-agent-inbox` community protocol",
-        "Script drift detection",
-        "Digest \u2192 TL;DR migration complete",
-        "Docs accuracy overhaul"
-      ]
+      "features": {
+        "added": [
+          "`{{inbox_summary}}` template variable \u2014 scans `.soma/inbox/` at boot, injects unread message summary into system prompt. File-based async messaging between agents.",
+          "`{{scripts_table}}` in default `_mind.md` \u2014 agents can now see their discovered scripts in the system prompt.",
+          "`preload.autoInject` setting \u2014 auto-inject most recent preload on fresh boot (default: true). No longer requires `soma inhale` CLI command for preload loading.",
+          "7 new documentation pages \u2014 `inbox.md`, `doctor.md`, `hub.md`, `troubleshooting.md`, `guides/daily-workflow.md`, `guides/customization.md`, `guides/first-protocol.md`. Total: 33 pages (~36K words).",
+          "`inter-agent-inbox` community protocol \u2014 published to community hub. Formal spec for file-based inter-agent messaging.",
+          "Script drift detection \u2014 `soma-verify.sh drift` now checks scripts across agent repo \u2192 working copies \u2192 global."
+        ],
+        "changed": [
+          "Digest \u2192 TL;DR migration complete \u2014 96 files converted from `<!-- digest:start/end -->` to `## TL;DR`. Both formats still accepted, `## TL;DR` is the standard going forward.",
+          "Docs accuracy overhaul \u2014 13 existing pages updated: `autoInject` mental model, version refs, `breadcrumb` \u2192 `description`, `maxTokens` default, session log naming format, identity.md deprecated."
+        ]
+      }
     },
     {
       "version": "0.8.1",
-      "title": "",
       "date": "2026-04-02",
-      "items": [
-        "Unified warm content format",
-        "`extractTldr()`",
-        "MAP = automation alias",
-        "Discovery unification",
-        "Keepalive limits",
-        "Auto-exhale on idle",
-        "Migration phase `v0.8.0\u2192v0.8.1`",
-        "`soma-doctor.sh`",
-        "Hub validator"
-      ]
+      "features": {
+        "added": [
+          "Unified warm content format \u2014 `## TL;DR` replaces `<!-- digest:start/end -->` across all AMPS. Protocols, muscles, and automations all use the same format. Code accepts both during transition.",
+          "`extractTldr()` \u2014 shared utility for extracting TL;DR sections, used by protocols, muscles, and automations.",
+          "MAP = automation alias \u2014 `map` accepted as type alias in `/hub install`, `/hub fork`, `/hub share`. MAPs are a type of automation.",
+          "Discovery unification \u2014 `discoverMaps()` now scans `amps/automations/` root alongside `maps/` subdirectories. Installed hub automations are visible as MAPs.",
+          "Keepalive limits \u2014 5 pings per idle period (configurable 0\u20135), countdown in notification (`\u2665 Keepalive 3/5`), resets on user message.",
+          "Auto-exhale on idle \u2014 when keepalive lives are exhausted and context exceeds 75k tokens, the agent automatically writes a preload. Configurable via `keepalive.autoExhale` and `keepalive.autoExhaleMinTokens`.",
+          "Migration phase `v0.8.0\u2192v0.8.1` \u2014 Tier 1 auto-converts muscle digest blocks to TL;DR format, adds keepalive settings."
+        ],
+        "changed": [
+          "`soma-doctor.sh` \u2014 reads agent version from `package.json` instead of hardcoded string.",
+          "Hub validator \u2014 accepts `description`/`triggers`/`tags`, prefers `## TL;DR` over `<!-- digest -->`, warns on legacy format."
+        ]
+      }
+    },
+    {
+      "version": "0.8.0",
+      "date": "2026-04-02",
+      "features": {
+        "added": [
+          "`soma doctor` \u2014 project health check and migration from CLI. Tier 1 auto-fixes (settings, body, protocols) run silently on every boot. TUI `/soma doctor` provides interactive Tier 2+ migration with `compareTemplates()` analysis.",
+          "`soma status` / `soma health` \u2014 quick project health check (renamed from old `soma doctor`).",
+          "`soma --version` \u2014 shows both agent and CLI versions.",
+          "`soma --help` \u2014 delegates to core agent for full branded help output.",
+          "Migration phase system \u2014 `cycle.md` + 9 phase files covering v0.6.1 \u2192 v0.8.0. Each phase is self-contained with from/to versions, actions, and what changed. Complete chain with no gaps.",
+          "`_doctor-update.md` + `_doctor-pending.md` \u2014 boot templates for agent-assisted migration. Pending template injected into followUp when updates available.",
+          "`compareTemplates()` \u2014 three-category file diff (content files, metadata, runtime) for doctor analysis.",
+          "`findChildSomaDirs()` \u2014 walks filesystem to discover child `.soma/` directories for multi-project support.",
+          "`doctor.autoUpdate` + `declinedVersion` \u2014 per-project settings controlling update notification behavior.",
+          "Warm AMPS \u2014 skill loader shows full TL;DR or digest for warm content, short description for cold. All AMPS types unified.",
+          "Body templates \u2014 improved starters for soul.md, voice.md, journal.md, pulse.md, body.md. DNA.md rewrite with self-awareness, owner\u2019s manual, and deep reference links.",
+          "`_first-breath.md` \u2014 context-aware first-run template with conditional blocks for monorepos, blank projects, code projects, global/inherited `.soma/`.",
+          "Test suites \u2014 `test-doctor.sh` (46 tests), `test-migrations.sh` (48 tests) covering all doctor features and migration chain integrity.",
+          "Docs \u2014 `updating.md` (migration guide), `install-architecture.md` (CLI \u2192 agent flow), `body.md` (full body architecture reference with variables, templates, chain, lifecycle)."
+        ],
+        "changed": [
+          "CLI routing overhaul \u2014 `doctor`, `status`, `health`, `update`, `version` all route through thin-cli. `--help` delegates to core when agent is installed.",
+          "Starter content \u2014 code fallbacks synced to `_public/` templates, HTML comments stripped from shipped content.",
+          "Bundled scripts \u2014 `soma-theme.sh` seeds on init, breadcrumbs added to all bundled scripts for docs and community references.",
+          "`_first-breath.md` \u2014 added self-exploration guidance (agent reads its own docs), breath cycle explanation, learn-the-user prompts.",
+          "`_memory.md` \u2014 added Step 1.5 (update living docs), Before You Start (conditional loading), corrections emphasis."
+        ]
+      }
+    },
+    {
+      "version": "0.7.1",
+      "date": "2026-04-01",
+      "features": {
+        "added": [
+          "rewrite DNA.md \u2014 self-awareness, owner's manual, link to docs for deep reference",
+          "`soma --help` rewrite \u2014 Soma-branded help with session commands, project commands, options, and TUI slash commands. Replaces generic Pi help output.",
+          "`soma --help scripts` \u2014 show installed scripts with descriptions. Works from CLI and inside sessions.",
+          "`soma --help commands` \u2014 full command reference organized by category (CLI, session, heat, hub, info).",
+          "`soma-theme.sh` bundled \u2014 shared script theming now seeds on init (was a missing dependency for 3 bundled scripts)."
+        ]
+      }
     }
   ]
 }
