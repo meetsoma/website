@@ -219,8 +219,8 @@ Or put everything on "main" and let one agent see it all. Your choice.
   </div>
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
     <div style="font-size:13px; color:#f0c866; font-weight:600; margin-bottom:4px;">Deploy</div>
-    <div style="font-size:13px; color:#e4eaf4;">Docker + nginx</div>
-    <div style="font-size:13.5px; color:#647080; margin-top:4px;">VPS-ready · Traefik reverse proxy</div>
+    <div style="font-size:13px; color:#e4eaf4;">One command</div>
+    <div style="font-size:13.5px; color:#647080; margin-top:4px;">Self-hosted or cloud · your choice</div>
   </div>
 </div>
 

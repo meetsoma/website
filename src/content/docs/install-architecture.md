@@ -197,7 +197,7 @@ For Soma developers, `soma-install.sh dev` creates symlinks instead of using the
 ```
 ~/.soma/agent/core/        → symlink → repos/agent/core/
 ~/.soma/agent/extensions/  → symlink → repos/agent/extensions/
-~/.soma/agent/dist/cli.js  → hardlink → repos/cli/dist/cli.js
+~/.soma/agent/dist/         → symlink → repos/agent/dist/
 ```
 
 This means edits to source files are live — no rebuild needed. The `getAgentVersion()` function in thin-cli.js follows symlinks to find the real `package.json`.
