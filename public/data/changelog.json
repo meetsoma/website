@@ -1,6 +1,38 @@
 {
   "versions": [
     {
+      "version": "0.12.1",
+      "date": "2026-04-15",
+      "entries": {
+        "Fixed": [
+          "**Image budget auto-compact loop** — `checkImageBudget()` runs on a 5-second timer but `ctx.compact()` is async. The counter wasn't reset until `onComplete`, so the next timer tick re-fired the warning and compact attempt, looping 6+ times. Added `imageCompactInFlight` guard flag."
+        ]
+      }
+    },
+    {
+      "version": "0.12.0",
+      "date": "2026-04-15",
+      "title": "Somaverse Edition",
+      "entries": {
+        "Added": [
+          "**`soma login`** — Pair your agent with Somaverse. Creates a pairing code, opens your browser, saves your device key.",
+          "**Hub-connect extension** — Connects your agent to the Somaverse hub as a provider. Works alongside bridge-connect (local + cloud simultaneously).",
+          "**Workspace proxy** — All 28 workspace + browser tools work through the hub relay.",
+          "**Device-key auth** — Workspace tools auto-detect hub mode when `~/.soma/device-key` exists.",
+          "**28 agent tools** — 10 workspace, 10 browser, 5 AI, 2 plugin state, 1 browser_links."
+        ],
+        "Architecture": [
+          "**Reverse proxy model** — The hub relays WebSocket messages between your browser and your agent. Data stays on your machine.",
+          "**Per-user isolation** — Device keys are Argon2-hashed. Each user's workspace connection paired by user_id.",
+          "**Modular extensions** — bridge-connect (local), hub-connect (cloud). Both run simultaneously with dedup."
+        ],
+        "Fixed": [
+          "**Breathe stale warning** — disabled by default, fires at most once, crash fixed.",
+          "**`soma init`** — fixed to create new .soma/ even when parent directory has one."
+        ]
+      }
+    },
+    {
       "version": "0.11.4",
       "date": "2026-04-14",
       "entries": {
