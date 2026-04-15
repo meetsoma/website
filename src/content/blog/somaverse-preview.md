@@ -129,7 +129,7 @@ Somaverse is a tiling workspace in your browser. You add panes — terminal, fil
 
 It looks like a workspace because it is one. Glass panes over a dark canvas, draggable, resizable, organized into channels. Each channel is an isolation boundary — the agent on channel "research" can't see or interfere with the agent on channel "deploy."
 
-Twenty-one plugins at launch:
+Thirty-three plugins and growing:
 
 - **Terminal** — full PTY, the agent types commands and reads output
 - **Files** — browse, open, navigate your project tree
@@ -205,7 +205,7 @@ Or put everything on "main" and let one agent see it all. Your choice.
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
     <div style="font-size:13px; color:#f0c866; font-weight:600; margin-bottom:4px;">Frontend</div>
     <div style="font-size:13px; color:#e4eaf4;">React 19 + Vite 8 + Tailwind 4</div>
-    <div style="font-size:13.5px; color:#647080; margin-top:4px;">150 tests · 0 type errors</div>
+    <div style="font-size:13.5px; color:#647080; margin-top:4px;">161 tests · 0 type errors</div>
   </div>
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
     <div style="font-size:13px; color:#f0c866; font-weight:600; margin-bottom:4px;">Backend</div>
@@ -219,7 +219,7 @@ Or put everything on "main" and let one agent see it all. Your choice.
   </div>
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(132,148,170,0.12); border-radius:10px; padding:16px 20px;">
     <div style="font-size:13px; color:#f0c866; font-weight:600; margin-bottom:4px;">Deploy</div>
-    <div style="font-size:13px; color:#e4eaf4;">Coming soon</div>
+    <div style="font-size:13px; color:#e4eaf4;">Live at somaverse.ai</div>
     <div style="font-size:13.5px; color:#647080; margin-top:4px;">Early access for testers</div>
   </div>
 </div>
@@ -234,7 +234,7 @@ The workspace runs in your browser. Somadian runs on your server (or ours). The 
   </div>
 </div>
 
-We're opening registration soon. Twenty-four hours, then invite-only.
+Registration is open. Genesis badges are being minted.
 
 <div style="background:linear-gradient(135deg, rgba(20,25,34,0.9), rgba(30,40,55,0.9)); border:1px solid rgba(240,200,102,0.2); border-radius:14px; padding:32px 36px; margin:32px 0; text-align:center; position:relative; overflow:hidden; font-family:'Satoshi',system-ui,sans-serif;">
   <div style="position:absolute; top:-30px; right:-30px; width:100px; height:100px; background:radial-gradient(circle, rgba(240,200,102,0.08) 0%, transparent 70%); border-radius:50%;"></div>
@@ -286,7 +286,7 @@ Somaverse is the hosted layer — the workspace, the visual tools, the multiplay
   <div style="background:linear-gradient(135deg, rgba(11,16,24,0.85), rgba(240,200,102,0.04)); border:1px solid rgba(240,200,102,0.2); border-radius:10px; padding:20px;">
     <div style="font-size:13.5px; font-weight:700; color:#f0c866; margin-bottom:8px;">Somaverse — Hosted Workspace</div>
     <div style="font-size:13px; color:#9dafc4; line-height:1.6;">
-      Visual workspace · 21 plugins<br/>
+      Visual workspace · 33 plugins<br/>
       Browser control · voice · multiplayer<br/>
       <span style="font-size:13.5px; color:#647080;">somaverse.ai</span>
     </div>
