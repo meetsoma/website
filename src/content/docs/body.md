@@ -2,9 +2,10 @@
 title: "Body Architecture"
 description: "Structured identity with templates, variables, lazy loading, and the soma chain."
 section: "Core Concepts"
-order: 3.6
+order: 3.5
 ---
 
+# Body Architecture
 
 <!-- tldr -->
 The body is Soma's structured identity system. Files in `.soma/body/` become template variables (`soul.md` → `{{soul}}`). Templates (`_mind.md`, `_memory.md`) use these variables to compile the system prompt and preload. Lazy files load on demand. The soma chain (project → parent → global) merges content with child-wins priority.
@@ -58,12 +59,21 @@ Project-specific context: stack, conventions, deploy targets, current focus. Upd
 
 Quiet observations — not the work log (that's `memory/sessions/`). What you noticed about the user, patterns, what surprised you.
 
+### ecosystem.md — Cross-Project Map
+
+**Variable:** `{{ecosystem}}`
+
+Shared context across projects in a workspace. Describes what exists, how projects connect, who owns what. Useful for multi-project setups where multiple `.soma/` directories share a parent.
+
+**Inherited via the soma chain.** If your project doesn't have `ecosystem.md`, the agent walks up to the parent or global `.soma/body/` and uses theirs. Create your own to override.
+
 ### Adding Your Own Files
 
 Any `.md` without a `_` prefix becomes a variable. Dashes become underscores:
 
 | You create | Variable |
 |------------|----------|
+| `ecosystem.md` | `{{ecosystem}}` |
 | `my-rules.md` | `{{my_rules}}` |
 | `project-context.md` | `{{project_context}}` |
 
