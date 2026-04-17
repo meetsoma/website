@@ -37,8 +37,15 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Somaverse',
     icon: 'extensions',
-    description: 'Visual workspace at somaverse.ai -- 33 plugins, 28 agent tools. soma login pairs your agent. Hub relay routes data through your machine, never stores it. Per-user isolation with Argon2 device keys. Your browser is the UI, your machine is the brain.',
+    description: 'Visual workspace at somaverse.ai — 33 plugins, 28 agent tools. soma login pairs your agent. Hub relay routes data through your machine, never stores it. Per-user isolation with Argon2 device keys. Your browser is the UI, your machine is the brain.',
     status: 'Live',
+    statusColor: 'var(--green-bright, #4ade80)',
+  },
+  {
+    name: 'Model Switching & Opus 4.7',
+    icon: 'scripts',
+    description: 'soma model command — switch default models from CLI with fuzzy matching. 23 providers, 842+ models. Claude Opus 4.7 with adaptive thinking. Smarter prompt caching — tool changes no longer invalidate your cache.',
+    status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
   },
   {
@@ -91,8 +98,8 @@ const upcoming: { name: string; icon: string; description: string; status: strin
         <div class="progress-item">
           <span class="progress-dot active"></span>
           <div>
-            <strong>Somaverse Alpha deploy</strong>
-            <p>Genesis badges, invite codes, early tester access. Visual workspace for your agent.</p>
+            <strong>Somaverse public beta</strong>
+            <p>Open registration, team workspaces, pane drag-and-drop. Visual workspace for your agent — already live at somaverse.ai.</p>
           </div>
         </div>
         <div class="progress-item">
@@ -105,8 +112,8 @@ const upcoming: { name: string; icon: string; description: string; status: strin
         <div class="progress-item">
           <span class="progress-dot active"></span>
           <div>
-            <strong>Website docs sync</strong>
-            <p>28 docs synced from v0.11.0. Blog post ready. Vercel deploy pending merge.</p>
+            <strong>CLI convergence</strong>
+            <p>Reduce wrapping around the Pi engine. Let upstream flags pass through cleanly. Persistent model switching already shipped — more commands coming.</p>
           </div>
         </div>
         <div class="progress-item">
