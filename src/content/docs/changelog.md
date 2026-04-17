@@ -12,6 +12,28 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [0.12.3] — 2026-04-17
+
+Shipping integrity release. Fixes a critical bug where `npm install -g meetsoma@0.3.3` produced a broken install (missing internal imports), and makes the update flow actually work. If you've been stuck on an older Pi runtime despite cutting newer Soma versions, this is why.
+
+### Fixed
+- **`meetsoma@0.3.3` broken npm install**. The published tarball imported from `./lib/` and `./welcome/` paths that weren't included, so every fresh `npm install -g meetsoma` failed with `ERR_MODULE_NOT_FOUND` on first run. Fixed by bundling `thin-cli.js` with esbuild into a single self-contained file before publish.
+- **TUI leakage from extensions**. `soma-route.ts` had `console.error` calls that leaked into the input buffer on shutdown and during security rejects. `hub-connect.ts` had WebSocket handshake logs that appeared mid-keystroke in the prompt. Both silenced.
+
+### Changed
+- **`soma init` no longer updates the runtime.** Previously, typing `soma init` in an already-initialized project silently ran a runtime update instead of doing project work. `soma init` now always means "set up this project."
+- **`soma update` now actually updates.** Was previously status-only (told you to run `soma init`). Now it performs the update: `git pull` + `npm install` if dependencies changed.
+- **Pi runtime locked to Soma version.** `soma-beta/package.json` pins Pi exact (was `^0.67.6`, now `0.67.6`). `soma-beta` now ships a `package-lock.json` — users get the exact Pi dependency tree we tested against. Pi updates only when Soma cuts a new release.
+- **`soma status` / `soma doctor`** shows installed Pi runtime version and flags drift between declared and installed. Catches the class of bug where `npm install` hadn't been re-run after a Pi bump.
+- **`soma check-updates`** preserves the old "report-only" behavior that `soma update` used to have.
+
+### Added
+- **Periodic update check inside the agent.** The statusline runs a silent `git fetch` every 30 minutes while the agent is running. If behind, shows `⬆ update` in the statusline and writes to `~/.soma/config.json` so the next `soma` boot prints a one-line notice. Zero network latency at CLI launch.
+- **Pre-publish smoke test.** `soma-npm-publish.sh` now packs the tarball, extracts to a clean temp dir, and runs `node dist/thin-cli.js --version` before allowing publish. Aborts if the tarball has broken imports or contains forbidden content.
+- **Docker e2e sandbox fix** — previous Dockerfile had a broken `COPY ... local-pkg*` glob that created a file literally named `local-pkg*`. Sandbox was silently falling through to the registry install, never actually testing local bundles. Fixed — 24/24 tests pass in clean `node:22-slim`.
+
+---
+
 ## [0.12.2] — 2026-04-17
 
 ### Added

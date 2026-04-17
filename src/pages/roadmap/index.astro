@@ -49,6 +49,13 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     statusColor: 'var(--green-bright, #4ade80)',
   },
   {
+    name: 'Shipping Integrity',
+    icon: 'protocols',
+    description: 'Fresh `npm install -g meetsoma` now actually works (was broken since the npm/ reorg). Pi runtime is locked to the Soma version that tested it — no more silent drift. `soma update` actually updates; `soma init` is for projects. Periodic update nudge appears in the statusline so you see new releases within minutes of starting a session. Pre-publish smoke test prevents broken tarballs from shipping.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+  },
+  {
     name: 'Recall',
     icon: 'automations',
     description: 'Persistent memory via graph store. Cross-session, cross-project knowledge that survives context windows. The agent remembers what matters and forgets what does not.',
