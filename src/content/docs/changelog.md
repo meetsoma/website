@@ -12,6 +12,66 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [Unreleased]
+
+### Added
+- **`soma model` command** — Switch your default model from the CLI. Fuzzy matching (`soma model opus`), interactive selection when multiple matches, persistent save to settings. Subcommands: `soma model <pattern> set` (save without starting), `soma model <pattern> start` (save + start session), `soma model --list [search]` (browse models).
+- **Claude Opus 4.7 support** — Available via `/model` in-session or `soma model opus-4-7 set` from CLI. Includes adaptive thinking support.
+- **`soma-dev check-upstream`** — Detect and audit Pi runtime updates. Checks changelog, extension surface, provider diffs, patch compatibility. Supports `--audit` (full analysis) and `--json` (machine-readable).
+- **`--no-context-files` / `-nc` flag** — Skip AGENTS.md and CLAUDE.md loading for clean sessions without project context injection.
+- **`after_provider_response` extension hook** — Extensions can inspect provider HTTP status and headers after each response.
+
+### Changed
+- **CLI help reorganized** — Session flags (`--model`, `--provider`, `--thinking`) now grouped under "Session Options (apply to this session only)" to distinguish from persistent project commands (`soma model`, `soma focus`).
+- **Prompt caching improved** — Tool schemas now cached independently from the system prompt. Adding/removing tools no longer invalidates your entire system prompt cache (reduces cost when workspace tools connect/disconnect).
+- **Fresh boot greeting** — When a preload exists but wasn't loaded (plain `soma` vs `soma inhale`), the greeting now says so explicitly and suggests `/inhale`. Prevents the agent from reading stale preloads on clean starts.
+
+### Fixed
+- **`grep` tool performance** — No longer stalls on broad searches with `context=0`.
+- **`find` tool gitignore** — Nested `.gitignore` rules no longer leak across sibling directories.
+- **Type safety** — Fixed `breathe.preloadStaleThreshold` type cast for Pi 0.67.6 compatibility.
+
+### Upgraded
+- Pi runtime 0.67.1 → 0.67.6 (5 releases, 15+ fixes)
+
+---
+
+## [0.12.1] — 2026-04-15
+
+### Fixed
+- **Image budget auto-compact loop** — `checkImageBudget()` runs on a 5-second timer but `ctx.compact()` is async. The image counter wasn't reset until `onComplete`, so the next timer tick re-fired the warning and compact attempt, looping 6+ times. Added `imageCompactInFlight` guard flag.
+
+---
+
+## [0.12.0] — 2026-04-15 — Somaverse Edition
+
+Soma meets the Somaverse. Your agent can now connect to somaverse.ai,
+control your workspace remotely, and pair with your browser — all through
+a secure relay. Data stays on your machine. The shard is just the pipe.
+
+### Added
+- **`soma login`** — Pair your agent with Somaverse. Creates a pairing code, opens your browser, and saves your device key. One command to connect.
+- **Hub-connect extension** — Connects your agent to the Somaverse hub as a provider. Your browser pairs with it automatically. Works alongside bridge-connect (local + cloud simultaneously).
+- **Workspace proxy** — All 28 workspace + browser tools work through the hub relay. Your agent controls the workspace even from a remote machine.
+- **Device-key auth** — Workspace tools auto-detect hub mode when `~/.soma/device-key` exists. Routes to hub URL with Bearer auth instead of localhost.
+- **28 agent tools** — 10 workspace, 10 browser, 5 AI, 2 plugin state, 1 browser_links (new).
+
+### Architecture
+- **Reverse proxy model** — The Somaverse hub relays WebSocket messages between your browser and your agent. It never stores your data — everything flows through to your machine.
+- **Per-user isolation** — Device keys are Argon2-hashed. Each user’s workspace connection is paired by user_id. No cross-user access possible.
+- **Modular extensions** — bridge-connect (local), hub-connect (cloud). Both run simultaneously with dedup. Add a service, add an extension.
+
+### Security
+- Device keys: 192-bit random, Argon2 hashed in DB
+- Transport: WSS via Traefik + Let’s Encrypt
+- Hub proxy: Bearer device_key + JWT cookie auth on every request
+- CORS: restricted to somaverse.ai, somaverse.space, dev.somaverse.ai
+
+### Fixed
+- **Breathe stale warning** — disabled by default. Was firing every turn in long sessions ("28 tool calls since preload"). Now fires at most once, configurable via `breathe.preloadStaleThreshold` in settings.
+
+---
+
 ## [0.11.4] — 2026-04-14
 
 ### Fixed

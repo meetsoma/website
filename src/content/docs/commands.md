@@ -232,27 +232,33 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 >
 > The preload is written during `/exhale` or `/breathe`. Power users often reflect and update the preload between sessions, then `soma inhale` to load the curated version.
 
-### Options
+### Session Options
 
-| Command | Description |
-|---------|-------------|
-| `soma --help` | Show formatted help (uses gum when available). |
-| `soma --map <name>` | Boot with a specific MAP loaded - applies prompt-config overrides, loads targeted preload and MAP body. |
-| `soma --model <pattern>` | Start with a specific model (e.g. `sonnet`, `gpt-4o`, `openai/gpt-4o`, `sonnet:high`). |
-| `soma --provider <name>` | Set the default provider for this session. |
+These flags apply to the current session only — they don't change your defaults.
+
+| Flag | Description |
+|------|-------------|
+| `soma --model <pattern>` | Start with a specific model for this session (e.g. `sonnet`, `opus-4-7`, `openai/gpt-4o`, `sonnet:high`). |
+| `soma --provider <name>` | Use a specific provider for this session. |
+| `soma --thinking <level>` | Set thinking level: `off`, `minimal`, `low`, `medium`, `high`, `xhigh`. |
 | `soma --models <list>` | Limit Ctrl+P cycling to these models (comma-separated). |
+| `soma --no-context-files` / `-nc` | Skip AGENTS.md and CLAUDE.md loading. |
+| `soma --no-session` | Ephemeral session (not saved to disk). |
+| `soma --print` / `-p` | Non-interactive: process prompt and exit. |
 | `soma --list-models [search]` | List available models with optional fuzzy search. |
+| `soma --map <name>` | Boot with a specific MAP loaded. |
+| `soma --help` | Show formatted help. |
 
 ### Project Management
 
 | Command | Description |
 |---------|-------------|
-| `soma doctor` | Check project health and run migrations. Reports body file inventory (soul.md, voice.md, etc. with sizes), extension health (listed/unlisted vs allowlist, drift detection), stale protocols, and version gaps. Tier 1 auto-fixes run silently. Use in TUI (`/soma doctor`) for interactive Tier 2+ migration. |
-| `soma status` | Quick project health check - shows .soma/ structure, version, installed content. |
-| `soma health` | Alias for `soma status`. |
+| `soma model <pattern>` | Switch your default model. Fuzzy matches, asks you to pick if multiple hits, saves persistently. Use `soma model <pattern> set` to save without starting a session, or `soma model --list [search]` to browse. |
+| `soma doctor` | Check project health and run migrations. Reports body file inventory, extension health, stale protocols, and version gaps. Tier 1 auto-fixes run silently. |
+| `soma status` | Quick project health check — .soma/ structure, version, installed content. |
 | `soma --version` | Show agent version and CLI version. |
-| `soma doctor --scan` | Scan for child .soma/ projects (delegates to core). |
-| `soma doctor --all` | Fix all discovered projects (delegates to core). |
+| `soma doctor --scan` | Scan for child .soma/ projects. |
+| `soma doctor --all` | Fix all discovered projects. |
 
 ## Pre-Session Tools
 

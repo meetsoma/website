@@ -199,6 +199,36 @@ Scripts are discovered automatically — drop any `soma-<name>.sh` into `.soma/a
 
 See [Commands](/docs/commands#script-commands) for the full reference.
 
+## Connect to Somaverse
+
+Somaverse gives your agent a visual workspace in the browser — a tiling desktop of plugin panes that Soma can see, control, and interact with.
+
+```bash
+soma login
+```
+
+This creates a pairing code, opens your browser to [somaverse.ai](https://somaverse.ai), and waits for you to enter the code. Once paired, your device key is saved to `~/.soma/device-key` and Soma auto-connects on every future session.
+
+**What you get:**
+- 🖥️ **28 workspace tools** — Soma sees your panes, sends commands, takes snapshots, manages layout
+- 🌐 **Remote access** — control your workspace from anywhere, even with the browser tab minimized
+- 🔒 **Your data stays local** — Somaverse is a relay, not storage. Everything flows through to your machine
+- 🧩 **33 plugins** — chat, terminal, files, editor, browser, voice, graph, and more
+
+**How it works:**
+
+```
+Your browser (somaverse.ai)
+  ↕ secure WebSocket
+Somaverse hub (relay — routes messages, stores nothing)
+  ↕ secure WebSocket  
+Your machine (soma agent — does the actual work)
+```
+
+The hub never sees your data as data — it's just passing messages. Your files, conversations, API keys, and graph all stay on your machine.
+
+See [How It Works](/docs/how-it-works#somaverse) for the architecture deep-dive.
+
 ## Tips
 
 - **Let identity grow** - don't pre-write it. Let Soma discover who it becomes through your work.
