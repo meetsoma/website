@@ -37,7 +37,7 @@ When Soma is already installed, `soma init` checks for updates and pulls the lat
 
 If your project `.soma/` is behind the agent version, you'll see:
 ```
-⚠ Project .soma/ is at v0.10.0, agent is at v0.11.2.
+⚠ Project .soma/ is at v0.10.0, agent is at v0.12.2.
   Run soma doctor to check for updates.
 ```
 

@@ -12,7 +12,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
-## [Unreleased]
+## [0.12.2] — 2026-04-17
 
 ### Added
 - **`soma model` command** — Switch your default model from the CLI. Fuzzy matching (`soma model opus`), interactive selection when multiple matches, persistent save to settings. Subcommands: `soma model <pattern> set` (save without starting), `soma model <pattern> start` (save + start session), `soma model --list [search]` (browse models).
@@ -222,7 +222,7 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 
 ### Fixed
 - **Keepalive limit not enforcing** — keepalive-triggered turns reset the ping counter, making keepalives infinite. Now tracks `keepaliveInFlight` flag to skip reset on self-initiated turns.
-- **Changelog hook targets [Unreleased] only** — old hook appended to first `### Added`/`### Fixed` globally, which could hit released versions.
+- **Changelog hook targets [0.12.2] — 2026-04-17 only** — old hook appended to first `### Added`/`### Fixed` globally, which could hit released versions.
 - **Test suite** — added `tsx` to devDependencies (bare `tsx` calls failed), fixed 10 stale test paths (`body/public` → `body/_public`, `identity.md` → `SOMA.md`).
 - **Stale `body/public` references** — updated to `body/_public` across comments, docs, templates, and scripts (6 files).
 
@@ -271,7 +271,7 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **`_memory.md`** — added Step 1.5 (update living docs), Before You Start (conditional loading), corrections emphasis.
 
 ### Fixed
-- **CHANGELOG auto-append bug** — post-commit hook was appending to every section, not just [Unreleased]. Rewrote hook, cleaned 172 duplicate entries.
+- **CHANGELOG auto-append bug** — post-commit hook was appending to every section, not just [0.12.2] — 2026-04-17. Rewrote hook, cleaned 172 duplicate entries.
 - **Boot version-bump race** — version was bumped before notification, causing re-check loops. Now bumps after Tier 1 fixes complete.
 - **CLI help header** — shows "CLI v0.2.0" instead of bare version number.
 - **Dev mode health check** — no longer reports false "git repo has issues" in development.
