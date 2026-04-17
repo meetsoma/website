@@ -22,7 +22,7 @@ That's it. Soma will use Claude as the default model.
 
 ## Supported Providers
 
-Soma runs on the Pi engine, which supports **17+ providers** out of the box:
+Soma runs on the Pi engine, which supports **23 providers** out of the box:
 
 ### Subscription-Based (OAuth)
 
@@ -52,6 +52,9 @@ Set an environment variable or add to `auth.json`:
 | **Hugging Face** | `HF_TOKEN` |
 | **Cerebras** | `CEREBRAS_API_KEY` |
 | **OpenCode** | `OPENCODE_API_KEY` |
+| **Kimi Coding** | `KIMI_API_KEY` |
+| **Minimax** | `MINIMAX_API_KEY` |
+| **Z.ai** | `ZAI_API_KEY` |
 
 ### Cloud Providers
 
@@ -60,6 +63,7 @@ Set an environment variable or add to `auth.json`:
 | **Amazon Bedrock** | AWS credentials (`AWS_PROFILE` or IAM keys) |
 | **Azure OpenAI** | `AZURE_OPENAI_API_KEY` + `AZURE_OPENAI_BASE_URL` |
 | **Google Vertex AI** | `gcloud auth application-default login` + `GOOGLE_CLOUD_PROJECT` |
+| **Vercel AI Gateway** | Vercel account + AI Gateway setup |
 
 ## Choosing a Model
 

@@ -58,7 +58,7 @@ Runs automatically on every session start. You never see it unless you check deb
 When Tier 1 isn't enough — structural changes, template updates, breaking format changes — the doctor prompts you:
 
 ```
-⚠ Project .soma/ is at v0.10.0, agent is at v0.11.2.
+⚠ Project .soma/ is at v0.10.0, agent is at v0.12.2.
   Use /soma doctor to check for updates.
 ```
 
@@ -100,7 +100,7 @@ Phase files include:
 - **Actions** — what the doctor does (Tier 1 auto-fixes + Tier 2 recommendations)
 - **Breaking changes** — anything that requires manual intervention
 
-The chain is complete — no gaps. If your project is at v0.9.0 and the agent is at v0.11.2, the doctor walks through every phase in order.
+The chain is complete — no gaps. If your project is at v0.9.0 and the agent is at v0.12.2, the doctor walks through every phase in order.
 
 ## What Gets Compared
 

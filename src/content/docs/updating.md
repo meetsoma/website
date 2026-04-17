@@ -21,11 +21,11 @@ soma doctor          # Project-level version check + health
 
 `soma --version` shows both versions:
 ```
-σ  Soma v0.11.2
+σ  Soma v0.12.2
    CLI v0.3.3
 ```
 
-The **agent version** (v0.11.2) is your Soma runtime — extensions, protocols, body templates, the works. The **CLI version** (v0.3.3) is the thin npm package that bootstraps everything.
+The **agent version** (v0.12.2) is your Soma runtime — extensions, protocols, body templates, the works. The **CLI version** (v0.3.2) is the thin npm package that bootstraps everything.
 
 ## Updating the Runtime
 

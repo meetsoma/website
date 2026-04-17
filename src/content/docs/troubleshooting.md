@@ -128,7 +128,7 @@ If the agent is confused about project state, check the preload — it might hav
 
 - Check `maxPings` setting: `grep -A 3 keepalive .soma/settings.json`
 - Default is 5 pings. Set to 0 to disable entirely.
-- If pings seem unlimited: update to latest agent version (v0.11.2+ fixes a counter reset bug)
+- If pings seem unlimited: update to latest agent version (v0.11.2+ fixed a counter reset bug)
 
 ### `/exhale` doesn't write a preload
 

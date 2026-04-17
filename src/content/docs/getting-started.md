@@ -25,7 +25,7 @@ export ANTHROPIC_API_KEY=sk-ant-...
 
 Add this to your shell profile (`~/.zshrc` or `~/.bashrc`) to persist it.
 
-**Other providers:** Soma supports 17+ providers including OpenAI, Google Gemini, Ollama, GitHub Copilot, and more. See [Models & Providers](/docs/models) for the full setup guide.
+**Other providers:** Soma supports 23 providers including OpenAI, Google Gemini, Ollama, GitHub Copilot, and more. See [Models & Providers](/docs/models) for the full setup guide.
 
 **No API key?** Free options exist:
 - Use `/login` with **Google Gemini CLI** or **Google Antigravity** (free with any Google account)
