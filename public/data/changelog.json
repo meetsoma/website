@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-18T23:09:23Z",
+  "generated": "2026-04-18T22:29:21Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
@@ -31,7 +31,6 @@
           "Distinct from `scripts/prompt-preview.ts` (fixtures-based scenarios for testing)."
         ],
         "fixed": [
-          "**pi-agent keyword false-positive on public package**",
           "**auto-advance workspace marker when no migration is pending**",
           "**`soma update` false positive on dev versions.** The CLI update check used string",
           "**`npm install -g meetsoma` EEXIST on dev installs.** When `soma` bin is a manual",
