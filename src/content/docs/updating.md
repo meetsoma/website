@@ -1,10 +1,11 @@
 ---
-title: "Updating"
-description: "How to keep Soma up to date across projects."
+title: "Updating & Migration"
+description: "Keep Soma up to date across your projects."
 section: "Reference"
 order: 20
 ---
 
+# Updating & Migration
 
 <!-- UPDATE WHEN: update flow changes, doctor behavior changes, migration phases added -->
 <!-- SEAMS: install-architecture.md, doctor.md, getting-started.md -->
@@ -14,18 +15,51 @@ How to keep Soma up to date across your projects.
 ## Checking for Updates
 
 ```bash
-soma update          # Check for CLI and agent updates
+soma check-updates   # Three-layer drift check (CLI / agent / workspace) + recovery hints
+soma update          # Pull the latest agent code (runs a git pull + npm install)
 soma --version       # Show current agent + CLI versions
 soma doctor          # Project-level version check + health
 ```
 
-`soma --version` shows both versions:
+### The three layers
+
+Soma has three version markers that can drift independently:
+
+| Layer | Source of truth | What drifts here |
+|---|---|---|
+| **CLI** (`meetsoma`) | `npm/package.json` at `~/.nvm/.../lib/node_modules/meetsoma/` | Thin-cli bootstrap — updated via `npm i -g meetsoma` |
+| **Agent** (`soma-agent`) | `~/.soma/agent/package.json` | Runtime extensions, protocols, body templates, the works |
+| **Workspace** (`.soma`) | `$PWD/.soma/settings.json:version` | Per-project migration marker |
+
+`soma check-updates` reads all three and reports status per layer:
+
 ```
-σ  Soma v0.12.3
-   CLI v0.3.4
+  Version snapshot:
+
+  CLI (meetsoma)            v0.3.3        ⬆ stale (npm: v0.3.4)
+  Agent (soma-agent)        v0.20.1.1     ✓ dev-ahead (npm: v0.0.1)
+  Workspace (.soma)         v0.11.4       ⬆ marker lag — run `soma doctor` to advance
+
+  Found some drift. Easy one.
+
+  → CLI stale: run npm i -g meetsoma
+  → Workspace marker behind agent: run soma doctor
 ```
 
-The **agent version** (v0.12.3) is your Soma runtime — extensions, protocols, body templates, the works. The **CLI version** (v0.3.2) is the thin npm package that bootstraps everything.
+**Statuses per layer:**
+- `aligned` — local matches npm latest
+- `dev-ahead` — local version higher than npm (dev builds)
+- `stale` — local older than npm (update available)
+- `marker-lag` — workspace marker older than agent (doctor advances it)
+- `no-workspace` — not inside a `.soma/` project
+
+Every drifted layer gets a matching recovery hint. No closed ends.
+
+`soma --version` shows agent + CLI:
+```
+σ  Soma v0.20.1.1
+   CLI v0.3.4
+```
 
 ## Updating the Runtime
 
@@ -35,11 +69,10 @@ soma update
 
 When Soma is already installed, `soma update` pulls the latest agent code and reinstalls dependencies if needed. Your project files (`.soma/body/`, protocols, scripts) are never overwritten — only the global runtime at `~/.soma/agent/` gets updated.
 
-If your project `.soma/` is behind the agent version, you'll see:
-```
-⚠ Project .soma/ is at v0.10.0, agent is at v0.12.3.
-  Run soma doctor to check for updates.
-```
+If your project `.soma/` is behind the agent version, `soma check-updates` shows `marker lag` on the Workspace row. Run `soma doctor` to resolve:
+
+- If there's a migration phase file in the chain, doctor walks it (see [doctor.md](doctor.md)).
+- If there's no migration needed but the marker is stale (common when several releases ship without schema changes), doctor silently advances the marker to the agent version. No action required.
 
 ## Updating the CLI
 

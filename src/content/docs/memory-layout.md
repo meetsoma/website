@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 4
 ---
 
+# Memory Layout
 
 <!-- tldr -->
 Core structure: `.soma/` has five parts — `amps/` (Automations, Muscles, Protocols, Scripts), `memory/` (sessions, preloads), `body/` (structured identity — soul, voice, templates), `skills/` (installable capabilities), and root files (settings.json, state.json). AMPS is the content system — what Soma learns and how it behaves. Memory is temporal state. Body files become template variables (`soul.md` → `{{soul}}`). User-level `~/.soma/agent/` holds global settings and runtime.

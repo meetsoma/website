@@ -1,10 +1,11 @@
 ---
 title: "Doctor & Migration"
-description: "Project health checks, version migration, keeping .soma/ current."
+description: "Project health checks, version migration, and how Soma keeps your .soma/ current."
 section: "Reference"
 order: 8.5
 ---
 
+# Doctor & Migration
 
 <!-- tldr -->
 `soma doctor` from CLI for a quick health check. `/soma doctor` inside the TUI for interactive migration with agent assistance. Tier 1 (silent, every boot): adds missing settings, body files, protocols, converts legacy formats. Tier 2+ (interactive): compares templates, walks migration phases, handles breaking changes. Your customizations are never overwritten.
@@ -52,6 +53,32 @@ Runs automatically on every session start. You never see it unless you check deb
 - Delete anything
 - Change existing settings values
 - Modify body content (soul.md, voice.md, etc.)
+
+### Marker auto-advance (v0.20.3+)
+
+When `soma doctor` (or `/soma doctor`) runs and the migration chain reports **nothing to do** (`needsMigration: false`), but your workspace marker in `.soma/settings.json:version` is older than the agent version, the doctor silently advances the marker.
+
+**Why:** several releases can ship without requiring a schema migration. When that happens, the chain walker finds no `from: <your-marker>` phase file and stops. That's *correct* (nothing to migrate) but leaves the marker stuck at an old version, which makes other tools (`soma check-updates`, release tooling, upgrade prompts) report false drift.
+
+The fix is semantic: "no migration needed" + "marker < agent" means the workspace is genuinely caught up — so we relabel it.
+
+**Observable effect:**
+
+```
+# Before doctor
+$ soma check-updates
+  Workspace (.soma)         v0.11.4       ⬆ marker lag
+
+# Run doctor
+$ soma doctor
+  ✓ Project .soma/ is up to date (v0.20.1.1)
+
+# After doctor
+$ soma check-updates
+  Workspace (.soma)         v0.20.1.1     ✓ aligned with agent
+```
+
+No files other than `settings.json:version` are touched. Your body, protocols, muscles, everything else is untouched.
 
 ### Tier 2+: Interactive Migration (on demand)
 
