@@ -514,11 +514,11 @@ export default function OrbitalPhysics() {
         ))}
       </svg>
 
-      {/* Center: Soma logo */}
+      {/* Center: Somaverse — sits above geometric center, between you (NW) and pi (NE) */}
       <div
         style={{
           position: 'absolute',
-          top: '50%',
+          top: '42%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           display: 'flex',
@@ -531,10 +531,10 @@ export default function OrbitalPhysics() {
       >
         <svg
           viewBox="0 0 100 100"
-          width="86"
-          height="86"
+          width="108"
+          height="108"
           style={{
-            filter: 'drop-shadow(0 0 21px rgba(240, 200, 102, 0.25))',
+            filter: 'drop-shadow(0 0 26px rgba(240, 200, 102, 0.28))',
             pointerEvents: 'auto',
             cursor: 'pointer',
           }}
@@ -559,7 +559,7 @@ export default function OrbitalPhysics() {
             letterSpacing: '-0.01em',
           }}
         >
-          s<span style={{ color: 'var(--promo, #f0c866)' }}>{"\u03C3"}</span>ma
+          S<span style={{ color: 'var(--promo, #f0c866)' }}>{"\u03C3"}</span>maverse
         </span>
       </div>
 
