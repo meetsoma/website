@@ -15,6 +15,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ## [Unreleased]
 
+_(empty — last stamp was v0.20.2)_
+
+---
+
+## [0.20.2] — 2026-04-18
+
 The v0.20.3 prompt refactor arc. Moves Soma from "replace Pi's prompt wholesale"
 (compileFullSystemPrompt rebuild path) to "let Pi compile; we augment" (SYSTEM.md
 + APPEND_SYSTEM.md via Pi's native auto-discovery). Option B from the REFACTOR-PLAN.

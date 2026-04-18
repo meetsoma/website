@@ -15,8 +15,8 @@
       }
     },
     {
-      "version": "Unreleased",
-      "date": "",
+      "version": "0.20.2",
+      "date": "2026-04-18",
       "title": "Pi-Native Prompts & Three-Layer Version UX",
       "features": {
         "changed": [
