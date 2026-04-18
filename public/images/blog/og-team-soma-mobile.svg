@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="Team Soma — eight specialized children coordinated by a parent agent (mobile)">
+  <defs>
+    <radialGradient id="bgM" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#1a2230"/>
+      <stop offset="100%" stop-color="#0a0d14"/>
+    </radialGradient>
+    <radialGradient id="centerGlowM" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(240,200,102,0.22)"/>
+      <stop offset="70%" stop-color="rgba(240,200,102,0.04)"/>
+      <stop offset="100%" stop-color="rgba(240,200,102,0)"/>
+    </radialGradient>
+    <symbol id="paneM" viewBox="0 0 240 76">
+      <rect x="0.5" y="0.5" width="239" height="75" rx="11" fill="rgba(20,25,34,0.72)" stroke="rgba(124,178,212,0.22)"/>
+      <rect x="0.5" y="0.5" width="239" height="22" rx="11" fill="rgba(12,15,22,0.55)"/>
+      <rect x="0.5" y="11" width="239" height="11.5" fill="rgba(12,15,22,0.55)"/>
+      <g transform="translate(10,9)" fill="rgba(124,178,212,0.35)">
+        <rect width="3" height="3" rx="0.5"/><rect x="5" width="3" height="3" rx="0.5"/><rect x="10" width="3" height="3" rx="0.5"/>
+        <rect y="5" width="3" height="3" rx="0.5"/><rect x="5" y="5" width="3" height="3" rx="0.5"/><rect x="10" y="5" width="3" height="3" rx="0.5"/>
+      </g>
+      <line x1="0" y1="22" x2="240" y2="22" stroke="rgba(124,178,212,0.1)"/>
+    </symbol>
+  </defs>
+
+  <rect width="600" height="1020" fill="url(#bgM)"/>
+
+  <g opacity="0.03" stroke="#7cb2d4" stroke-width="1">
+    <path d="M 0 200 L 600 200 M 0 460 L 600 460 M 0 720 L 600 720"/>
+    <path d="M 200 0 L 200 1020 M 400 0 L 400 1020"/>
+  </g>
+
+  <circle cx="300" cy="220" r="170" fill="url(#centerGlowM)"/>
+
+  <!-- PARENT (top) -->
+  <g transform="translate(150,80)">
+    <rect x="0.5" y="0.5" width="299" height="160" rx="14" fill="rgba(20,25,34,0.85)" stroke="rgba(240,200,102,0.42)" stroke-width="1.4"/>
+    <rect x="0.5" y="0.5" width="299" height="32" rx="14" fill="rgba(12,15,22,0.7)"/>
+    <rect x="0.5" y="16" width="299" height="16" fill="rgba(12,15,22,0.7)"/>
+    <line x1="0" y1="32" x2="300" y2="32" stroke="rgba(240,200,102,0.2)"/>
+    <g transform="translate(14,12)" fill="rgba(240,200,102,0.55)">
+      <rect width="3" height="3" rx="0.5"/><rect x="5" width="3" height="3" rx="0.5"/><rect x="10" width="3" height="3" rx="0.5"/>
+      <rect y="5" width="3" height="3" rx="0.5"/><rect x="5" y="5" width="3" height="3" rx="0.5"/><rect x="10" y="5" width="3" height="3" rx="0.5"/>
+    </g>
+    <text x="34" y="22" fill="#f0c866" font-family="\'Satoshi\',system-ui" font-size="12" font-weight="700" letter-spacing="0.5">PARENT · SOMA</text>
+    <text x="150" y="92" text-anchor="middle" fill="#f0c866" font-family="\'Manrope\',system-ui" font-size="56" font-weight="800">σ</text>
+    <text x="150" y="124" text-anchor="middle" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="15" font-weight="600">orchestrator</text>
+    <text x="150" y="146" text-anchor="middle" fill="#9dafc4" font-family="ui-monospace,monospace" font-size="12" opacity="0.85">claude-opus-4-7</text>
+  </g>
+
+  <!-- wires to children (4 rows of 2) -->
+  <g stroke="rgba(124,178,212,0.22)" stroke-width="1.2" fill="none" stroke-dasharray="3 4">
+    <path d="M 300 240 L 130 340"/>
+    <path d="M 300 240 L 470 340"/>
+    <path d="M 300 240 L 130 470"/>
+    <path d="M 300 240 L 470 470"/>
+    <path d="M 300 240 L 130 600"/>
+    <path d="M 300 240 L 470 600"/>
+    <path d="M 300 240 L 130 730"/>
+    <path d="M 300 240 L 470 730"/>
+  </g>
+
+  <!-- 4 rows of 2 children -->
+  <g transform="translate(20,300)"><use href="#paneM" width="240" height="76"/>
+    <text x="28" y="16" fill="#9dafc4" font-family="\'Satoshi\',system-ui" font-size="9.5" font-weight="600" letter-spacing="0.4">VERIFIER</text>
+    <text x="20" y="44" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="13" font-weight="700">read-only</text>
+    <text x="20" y="65" fill="#7cb2d4" font-family="ui-monospace,monospace" font-size="9.5" opacity="0.85">claude-haiku-4-5</text>
+  </g>
+  <g transform="translate(340,300)"><use href="#paneM" width="240" height="76"/>
+    <text x="28" y="16" fill="#9dafc4" font-family="\'Satoshi\',system-ui" font-size="9.5" font-weight="600" letter-spacing="0.4">BUILDER</text>
+    <text x="20" y="44" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="13" font-weight="700">write · edit · run</text>
+    <text x="20" y="65" fill="#7cb2d4" font-family="ui-monospace,monospace" font-size="9.5" opacity="0.85">claude-sonnet-4-6</text>
+  </g>
+
+  <g transform="translate(20,430)"><use href="#paneM" width="240" height="76"/>
+    <text x="28" y="16" fill="#9dafc4" font-family="\'Satoshi\',system-ui" font-size="9.5" font-weight="600" letter-spacing="0.4">CURATOR</text>
+    <text x="20" y="44" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="13" font-weight="700">closes the loop</text>
+    <text x="20" y="65" fill="#7cb2d4" font-family="ui-monospace,monospace" font-size="9.5" opacity="0.85">claude-sonnet-4-6</text>
+  </g>
+  <g transform="translate(340,430)"><use href="#paneM" width="240" height="76"/>
+    <text x="28" y="16" fill="#9dafc4" font-family="\'Satoshi\',system-ui" font-size="9.5" font-weight="600" letter-spacing="0.4">AUDITOR</text>
+    <text x="20" y="44" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="13" font-weight="700">post-release review</text>
+    <text x="20" y="65" fill="#7cb2d4" font-family="ui-monospace,monospace" font-size="9.5" opacity="0.85">claude-opus-4-6</text>
+  </g>
+
+  <g transform="translate(20,560)"><use href="#paneM" width="240" height="76"/>
+    <text x="28" y="16" fill="#9dafc4" font-family="\'Satoshi\',system-ui" font-size="9.5" font-weight="600" letter-spacing="0.4">PLANNER</text>
+    <text x="20" y="44" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="13" font-weight="700">cold-read tasks</text>
+    <text x="20" y="65" fill="#7cb2d4" font-family="ui-monospace,monospace" font-size="9.5" opacity="0.85">claude-opus-4-7</text>
+  </g>
+  <g transform="translate(340,560)"><use href="#paneM" width="240" height="76"/>
+    <text x="28" y="16" fill="#9dafc4" font-family="\'Satoshi\',system-ui" font-size="9.5" font-weight="600" letter-spacing="0.4">DOC_WRITER</text>
+    <text x="20" y="44" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="13" font-weight="700">wrote this post</text>
+    <text x="20" y="65" fill="#7cb2d4" font-family="ui-monospace,monospace" font-size="9.5" opacity="0.85">claude-sonnet-4-6</text>
+  </g>
+
+  <g transform="translate(20,690)"><use href="#paneM" width="240" height="76"/>
+    <text x="28" y="16" fill="#9dafc4" font-family="\'Satoshi\',system-ui" font-size="9.5" font-weight="600" letter-spacing="0.4">REFLECTOR</text>
+    <text x="20" y="44" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="13" font-weight="700">runs MLR cycle</text>
+    <text x="20" y="65" fill="#7cb2d4" font-family="ui-monospace,monospace" font-size="9.5" opacity="0.85">claude-sonnet-4-6</text>
+  </g>
+  <g transform="translate(340,690)"><use href="#paneM" width="240" height="76"/>
+    <text x="28" y="16" fill="#9dafc4" font-family="\'Satoshi\',system-ui" font-size="9.5" font-weight="600" letter-spacing="0.4">GENERAL</text>
+    <text x="20" y="44" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="13" font-weight="700">does everything</text>
+    <text x="20" y="65" fill="#7cb2d4" font-family="ui-monospace,monospace" font-size="10" opacity="0.85">any model</text>
+  </g>
+
+  <g transform="translate(300,840)">
+    <text text-anchor="middle" fill="#e4eaf4" font-family="\'Satoshi\',system-ui" font-size="22" font-weight="700" letter-spacing="-0.4">Team Soma</text>
+    <text y="28" text-anchor="middle" fill="#9dafc4" font-family="\'Satoshi\',system-ui" font-size="13" letter-spacing="0.3" opacity="0.85">One agent became eight</text>
+    <text y="52" text-anchor="middle" fill="#7cb2d4" font-family="ui-monospace,monospace" font-size="11" opacity="0.7">v0.20.x · meetsoma</text>
+  </g>
+</svg>

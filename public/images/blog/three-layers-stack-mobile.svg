@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 880" width="600" height="880" role="img" aria-label="Three layers to confidence — CLI, Agent, Workspace version drift visualized as stacked panes (mobile)">
+  <defs>
+    <linearGradient id="bgGradM" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#11151c"/>
+      <stop offset="100%" stop-color="#0a0d14"/>
+    </linearGradient>
+    <symbol id="wireDotM" viewBox="0 0 12 12">
+      <circle cx="6" cy="6" r="3" fill="rgba(124,178,212,0.35)"/>
+    </symbol>
+  </defs>
+  <rect width="600" height="880" fill="url(#bgGradM)"/>
+
+  <!-- ── Layer 1: CLI ── -->
+  <g transform="translate(40,40)">
+    <rect x="0.5" y="0.5" width="519" height="220" rx="14" fill="rgba(20,25,34,0.72)" stroke="rgba(230,174,90,0.42)" stroke-width="1.4"/>
+    <rect x="0.5" y="0.5" width="519" height="36" rx="14" fill="rgba(12,15,22,0.55)"/>
+    <rect x="0.5" y="18" width="519" height="18" fill="rgba(12,15,22,0.55)"/>
+    <line x1="0" y1="36" x2="520" y2="36" stroke="rgba(230,174,90,0.18)"/>
+    <g transform="translate(16,14)" fill="rgba(124,178,212,0.35)">
+      <rect width="4" height="4" rx="0.5"/><rect x="6" width="4" height="4" rx="0.5"/><rect x="12" width="4" height="4" rx="0.5"/>
+      <rect y="6" width="4" height="4" rx="0.5"/><rect x="6" y="6" width="4" height="4" rx="0.5"/><rect x="12" y="6" width="4" height="4" rx="0.5"/>
+    </g>
+    <text x="42" y="24" fill="#9dafc4" font-family="'Satoshi',system-ui" font-size="13" font-weight="600" letter-spacing="0.5">LAYER 1 · CLI (meetsoma)</text>
+    <!-- big version -->
+    <text x="28" y="92" fill="#e4eaf4" font-family="'Satoshi',system-ui" font-size="38" font-weight="700">v0.3.3</text>
+    <text x="28" y="118" fill="#9dafc4" font-family="'Satoshi',system-ui" font-size="14">the thin npm bootstrap</text>
+    <!-- status row -->
+    <g transform="translate(28,148)">
+      <text fill="#e6ae5a" font-family="'Satoshi',system-ui" font-size="17" font-weight="700">⬆ stale</text>
+      <text x="86" y="0" fill="#9dafc4" font-family="ui-monospace,monospace" font-size="13">npm: v0.3.4</text>
+    </g>
+    <!-- fix hint -->
+    <g transform="translate(28,184)">
+      <text fill="#f0c866" font-family="'Satoshi',system-ui" font-size="13" font-weight="600">→ Fix:</text>
+      <text x="46" y="0" fill="#e4eaf4" font-family="ui-monospace,monospace" font-size="13.5">npm i -g meetsoma</text>
+    </g>
+  </g>
+
+  <!-- ── Layer 2: Agent ── -->
+  <g transform="translate(40,290)">
+    <rect x="0.5" y="0.5" width="519" height="220" rx="14" fill="rgba(20,25,34,0.72)" stroke="rgba(124,178,212,0.4)" stroke-width="1.4"/>
+    <rect x="0.5" y="0.5" width="519" height="36" rx="14" fill="rgba(12,15,22,0.55)"/>
+    <rect x="0.5" y="18" width="519" height="18" fill="rgba(12,15,22,0.55)"/>
+    <line x1="0" y1="36" x2="520" y2="36" stroke="rgba(124,178,212,0.18)"/>
+    <g transform="translate(16,14)" fill="rgba(124,178,212,0.35)">
+      <rect width="4" height="4" rx="0.5"/><rect x="6" width="4" height="4" rx="0.5"/><rect x="12" width="4" height="4" rx="0.5"/>
+      <rect y="6" width="4" height="4" rx="0.5"/><rect x="6" y="6" width="4" height="4" rx="0.5"/><rect x="12" y="6" width="4" height="4" rx="0.5"/>
+    </g>
+    <text x="42" y="24" fill="#9dafc4" font-family="'Satoshi',system-ui" font-size="13" font-weight="600" letter-spacing="0.5">LAYER 2 · AGENT (soma-agent)</text>
+    <text x="28" y="92" fill="#e4eaf4" font-family="'Satoshi',system-ui" font-size="38" font-weight="700">v0.20.1.1</text>
+    <text x="28" y="118" fill="#9dafc4" font-family="'Satoshi',system-ui" font-size="14">runtime · extensions · body · protocols</text>
+    <g transform="translate(28,148)">
+      <text fill="#89d189" font-family="'Satoshi',system-ui" font-size="17" font-weight="700">✓ dev-ahead</text>
+      <text x="118" y="0" fill="#9dafc4" font-family="ui-monospace,monospace" font-size="13">npm: unpublished</text>
+    </g>
+    <g transform="translate(28,184)">
+      <text fill="#89d189" font-family="'Satoshi',system-ui" font-size="13" font-weight="600">✓ No action needed</text>
+    </g>
+  </g>
+
+  <!-- ── Layer 3: Workspace ── -->
+  <g transform="translate(40,540)">
+    <rect x="0.5" y="0.5" width="519" height="220" rx="14" fill="rgba(20,25,34,0.72)" stroke="rgba(230,174,90,0.42)" stroke-width="1.4"/>
+    <rect x="0.5" y="0.5" width="519" height="36" rx="14" fill="rgba(12,15,22,0.55)"/>
+    <rect x="0.5" y="18" width="519" height="18" fill="rgba(12,15,22,0.55)"/>
+    <line x1="0" y1="36" x2="520" y2="36" stroke="rgba(230,174,90,0.18)"/>
+    <g transform="translate(16,14)" fill="rgba(124,178,212,0.35)">
+      <rect width="4" height="4" rx="0.5"/><rect x="6" width="4" height="4" rx="0.5"/><rect x="12" width="4" height="4" rx="0.5"/>
+      <rect y="6" width="4" height="4" rx="0.5"/><rect x="6" y="6" width="4" height="4" rx="0.5"/><rect x="12" y="6" width="4" height="4" rx="0.5"/>
+    </g>
+    <text x="42" y="24" fill="#9dafc4" font-family="'Satoshi',system-ui" font-size="13" font-weight="600" letter-spacing="0.5">LAYER 3 · WORKSPACE (.soma)</text>
+    <text x="28" y="92" fill="#e4eaf4" font-family="'Satoshi',system-ui" font-size="38" font-weight="700">v0.11.4</text>
+    <text x="28" y="118" fill="#9dafc4" font-family="'Satoshi',system-ui" font-size="14">per-project marker in settings.json</text>
+    <g transform="translate(28,148)">
+      <text fill="#e6ae5a" font-family="'Satoshi',system-ui" font-size="17" font-weight="700">⬆ marker lag</text>
+      <text x="132" y="0" fill="#9dafc4" font-family="ui-monospace,monospace" font-size="13">9 silent releases</text>
+    </g>
+    <g transform="translate(28,184)">
+      <text fill="#f0c866" font-family="'Satoshi',system-ui" font-size="13" font-weight="600">→ Fix:</text>
+      <text x="46" y="0" fill="#e4eaf4" font-family="ui-monospace,monospace" font-size="13.5">soma doctor</text>
+    </g>
+  </g>
+
+  <!-- Connector wires -->
+  <g stroke="rgba(124,178,212,0.22)" stroke-width="1.4" fill="none" stroke-dasharray="3 4">
+    <path d="M 22 150 L 22 400"/>
+    <path d="M 22 400 L 22 650"/>
+  </g>
+  <use href="#wireDotM" x="16" y="144" width="12" height="12"/>
+  <use href="#wireDotM" x="16" y="394" width="12" height="12"/>
+  <use href="#wireDotM" x="16" y="644" width="12" height="12"/>
+
+  <!-- Caption -->
+  <text x="300" y="810" text-anchor="middle" fill="#9dafc4" font-family="'Satoshi',system-ui" font-size="14" letter-spacing="0.3" opacity="0.85">soma check-updates</text>
+  <text x="300" y="836" text-anchor="middle" fill="#9dafc4" font-family="'Satoshi',system-ui" font-size="13" letter-spacing="0.2" opacity="0.7">three layers · every drift has a recovery hint</text>
+</svg>
