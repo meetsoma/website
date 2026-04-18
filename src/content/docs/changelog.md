@@ -5,10 +5,238 @@ section: "Reference"
 order: 10
 ---
 
+# Changelog
 
 All notable changes to the Soma agent are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
+
+---
+
+## [Unreleased]
+
+The v0.20.3 prompt refactor arc. Moves Soma from "replace Pi's prompt wholesale"
+(compileFullSystemPrompt rebuild path) to "let Pi compile; we augment" (SYSTEM.md
++ APPEND_SYSTEM.md via Pi's native auto-discovery). Option B from the REFACTOR-PLAN.
+Also: 5 script-backed Pi tools, a pretest CLI, and two version-check bug fixes.
+
+Pi-native mode is now DEFAULT when SYSTEM.md + APPEND_SYSTEM.md exist. Escape
+hatch: `SOMA_LEGACY_PROMPT=1` forces the old full-replacement path. Kept alive
+until Phase 1c.2 (planned deletion of ~300 LOC rebuild path).
+
+### Added
+- **smarter randomizer + version-aware skeletons + CLI integration**
+- **three-layer version snapshot + update check (SX-489)**
+
+**Phase 1a/1b — SYSTEM.md + APPEND_SYSTEM.md auto-discovery pipeline:**
+- `compileSystemMd(options)` + `writeSystemMd(options)` in `core/prompt.ts`. Compiles
+  identity-only content (soul + voice + body + ecosystem + core_rules) to
+  `<somaPath>/SYSTEM.md`. Pi auto-discovers via
+  `resource-loader.js:660 discoverSystemPromptFile()` and uses as `customPrompt`.
+- `compileAppendSystemMd(options)` + `writeAppendSystemMd(options)` in `core/prompt.ts`.
+  Compiles AMPS + tools + guard + docs to `<somaPath>/APPEND_SYSTEM.md`. Pi auto-discovers
+  via `resource-loader.js:671 discoverAppendSystemPromptFile()` and uses as `appendSystemPrompt`.
+- Writers wired in `extensions/soma-boot.ts`: `writeSystemMd` at `session_start`,
+  `writeAppendSystemMd` at `before_agent_start` (eagerly, before path split, so both
+  Pi-native and legacy paths keep APPEND current).
+- `SYSTEM_MD_FALLBACKS` constant: minimum-viable Soma-voice prose for empty soul/voice/body/
+  core_rules. Keeps SYSTEM.md coherent in fresh-install directories.
+
+**Phase 1c.1 — Pi-native as default:**
+- `before_agent_start` now defaults to Pi-native when SYSTEM.md + APPEND_SYSTEM.md exist.
+- Legacy opt-out via `SOMA_LEGACY_PROMPT=1`. First-run safety: missing files → legacy path
+  runs, seeds files for session N+1.
+
+**Phase 1d — XML tag experiment (Anthropic-style adherence aid):**
+- `<rules>` tag around core_rules in SYSTEM.md output (first behavioral tag in our
+  compiled prompt — previously we had only Pi's native `<available_skills>`).
+- `<behavioral_rules>` + `<tool_guidance>` tags in APPEND_SYSTEM.md. Matches Anthropic's
+  own prompt conventions (Sonnet 4.5 → 4.6 doubled tag count; we were at 1).
+
+**Phase 2 — 5 script-backed Pi tools (`extensions/soma-code-tools.ts`):**
+- `code_find` — grep with file:line:match output, respects .gitignore (cap 500)
+- `code_map` — function/class/method index for a file
+- `code_refs` — symbol references classified as DEF / USE / IMP (run before renaming)
+- `code_structure` — directory tree with file sizes, max depth 3
+- `code_blast` — blast radius: all files touching a symbol with severity (run before deleting)
+- All `executionMode: "parallel"` (read-only, safe concurrent), ANSI colors stripped,
+  output capped with helpful refinement hints when truncated.
+- `promptSnippet` + `promptGuidelines` populated on all 5 so Pi surfaces them in the
+  "Available tools:" / "Guidelines:" prose (first effect visible post Phase 1c.1).
+
+**`soma preview` — pretest CLI (`scripts/soma-preview.{sh,ts}`):**
+- Compiles SYSTEM.md + APPEND_SYSTEM.md from live body files without a sandbox restart.
+- Flags: `--out <dir>`, `--system-only`, `--append-only`, `--quiet`, `--diff`, `--help`.
+- `--diff` compares fresh compile against on-disk files with byte deltas and staleness.
+- Runs outside the TUI. No API cost.
+- Distinct from `scripts/prompt-preview.ts` (fixtures-based scenarios for testing).
+
+### Fixed
+- **cap items per version (highlights only, not full changelog)**
+- **pi-agent keyword false-positive on public package**
+- **auto-advance workspace marker when no migration is pending**
+
+- **`soma update` false positive on dev versions.** The CLI update check used string
+  comparison (`latest > VERSION`) which made `"0.3.4" > "0.20.1.1"` true (`'3' > '2'`
+  lexically). Dev users on 0.20.x were told to "update" to stable 0.3.x — which is older.
+  Fix: use `semverCmp()` (already defined in the module, just not called here).
+  Applied to both `repos/agent/npm/thin-cli.js` and `repos/agent-2x/npm/thin-cli.js`.
+- **`npm install -g meetsoma` EEXIST on dev installs.** When `soma` bin is a manual
+  symlink to `repos/agent/dist/cli.js` (typical dev setup via `soma-install.sh dev`),
+  npm refuses to overwrite the unowned file. Fix: `detectDevInstall()` reads the bin's
+  symlink target and, when it's not an npm-managed path, guides to
+  `soma-install.sh stable` first before `npm install -g meetsoma`.
+- **`delegate` tool invisible in Pi's "Available tools:" prose.** Pi intentionally omits
+  custom tools when `promptSnippet` is absent (per `ToolDefinition` contract at
+  `types.d.ts:289`). Added `promptSnippet` + `promptGuidelines` to `soma-delegate.ts`.
+  Previously unobservable because our rebuild path stripped the section entirely;
+  became visible after Phase 1c.1 landed.
+- **APPEND_SYSTEM.md went stale between sessions.** Was only refreshed inside the legacy
+  branch — Pi-native sessions never rewrote it even when body files or heat changed.
+  Moved `writeAppendSystemMd` to run BEFORE the path split so both paths keep APPEND current.
+
+### Changed
+
+- `before_agent_start` restructured: APPEND refresh happens eagerly, path selection
+  (Pi-native vs legacy) happens after. Escape hatch env var renamed from
+  `SOMA_PI_NATIVE_PROMPT` (opt-in gate, Phase 1b Commit 3) to `SOMA_LEGACY_PROMPT`
+  (opt-out gate, Phase 1c.1) as the default flipped.
+- `compileSystemMd` source comment stamp bumped: `Phase 1a` → `Phase 1d` (tag adoption).
+- `compileAppendSystemMd` source comment stamp bumped: `Phase 1b` → `Phase 1d`.
+
+### Notes
+
+- **Sandbox verified end-to-end** (session `s01-5c01df`): Pi-native path active,
+  APPEND content visible in system prompt including Behavioral Rules, Muscle Memory,
+  Tools section with all 6 tools (read, bash, edit, write, code_find, code_map,
+  code_refs, code_structure, code_blast, delegate), and Tool Guidelines. Model
+  naturally preferred `code_find` over `bash('soma code find ...')` — typed-tool
+  adherence signal positive.
+- **Phase 1c.2 deliberately deferred.** Deleting ~300 LOC of `compileFullSystemPrompt`
+  + `extractSections` + `buildToolSection` + `BUILTIN_TOOL_DESCRIPTIONS` + helpers is
+  the next step after one real session of Pi-native-default observation. Bisectable
+  single commit when it lands.
+- **Tag experiment signal pending.** `_mind.md` tags affect the legacy path (still
+  reachable via `SOMA_LEGACY_PROMPT=1`). New-path tags are in place. The real
+  adherence delta measurement requires parent meetsoma session-level observation.
+
+Refs: `.soma/releases/v0.20.x/plans/v0.20.3-prompt-refactor.md` (living plan, all phases + progress),
+`.soma/releases/v0.20.x/plans/v0.20.4-tool-audit.md` (next arc, seeded).
+
+---
+
+## [0.20.1.1] — 2026-04-18
+
+Role expansion + curator polish. Closes the Phase-2 delegation arc: the
+curator can now run apply inline (opt-in), pending gaps flow to a
+human-editable scratchpad, and roles can declare where their canonical
+file lives (source-of-truth) + where artifacts go (paths block).
+
+### Added
+- **Three more roles**: `planner` (writes plan files, `[read, bash, write]`), `doc_writer` (markdown-only edits, `[read, edit, write]`), `reflector` (journal entries under `memory/journal/`, `[read, write]`). 7 roles total. Researcher deferred to v0.20.2 pending search integration.
+- **`source-of-truth` frontmatter field** on roles. Project-root-relative or absolute path to the canonical role file. When set, `discoverRole` re-reads from there and `apply` writes amendments there — fixes the runtime-copy vs git-source drift v0.20.1 highlighted. Missing file → stderr warning + fallback to chain-walked copy.
+- **`paths:` frontmatter block** on roles. Per-role artifact paths (`invocations`, `proposals`, `proposalsApplied`, `scratchpad`) with `{role}` templating. Absent block = hardcoded defaults (zero migration). All paths live under `memory/` so writes stay cache-safe.
+- **`--auto-apply` flag** on `soma-dev children curate`. When set, auto-apply-class proposals apply inline during curate (one command for the round trip). Default OFF — proposals stay in `proposals/` for human review.
+- **Scratchpad** (`memory/children/<role>/scratchpad.md`). When `--auto-apply` is off, auto-apply-class findings still write proposals AND append dated sections to the scratchpad so pending gaps are visible at a glance. Append-only; human-editable.
+- **`applyProposal`** exported from `core/delegate-core.ts` as a library function. CLI stub is a thin wrapper now. `curateRole` calls it directly under `--auto-apply`. Returns structured `ApplyProposalResult` with 8 reason codes.
+- **`resolveRolePaths(role, somaDir, roleDef?)`** — single source of truth for per-role artifact paths. Threaded through `logInvocation`, `scanMLRQueue`, `writeProposal`, `hasProposalBeenApplied`, and `applyProposal`.
+
+### Fixed
+- **Classifier false-positive on `what_worked` entries.** An MLR observation like `what_worked: ['Task completed within budget']` matched the config-keyword regex for `budget` and produced a bogus propose-class amendment. `inferAmendmentSection` now short-circuits on `sourceField === 'what_worked'` and routes to `accumulated_knowledge` unconditionally — success reports are observations, not config changes.
+
+### Changed
+- `curateRole` signature extends with `opts?: { autoApply?: boolean }` (back-compat default false). Returns extended `CurateResult` with `applied` array and `scratchpadAppended` count.
+- `buildProposal` now accepts `roleDef` to avoid redundant `discoverRole` I/O.
+
+### Cache-safety confirmed
+`core/body.ts:628-648` iterates `readdirSync(bodyDir)` filtering `.endsWith(".md")` — directories (incl. `body/children/`) are skipped. Role edits don't invalidate parent cache. All new artifacts (scratchpad, proposals, invocations) live under `memory/` which is likewise not walked. Verified empirically: source-of-truth writes to canonical `body/children/verifier.md` completed without cache storm.
+
+---
+
+## [0.20.0.1] — 2026-04-18
+
+Delegation hardening. v0.20.0 shipped the MVP; v0.20.0.1 makes it production-shaped:
+model fallback chain (free-tier friendly), per-invocation health cache + cooldown,
+MLR parsed into structured objects, cost/token tracking, and CLI paths (`children run`,
+`children health`) for driving delegations outside the TUI.
+
+### Added
+- **Structured model chain in role frontmatter** (`model-chain:` list of entries with `id`, `class`, `cooldown-on-rate-limit`). Scalar `default-model: <id>` still works (1-entry chain back-compat).
+- **Model policies** (`model-policy:` — `order` | `free-only` | `paid-only` | `prefer-free`). Runtime walks the chain per-policy, skipping unavailable or cooldown'd models.
+- **Health cache + cooldown** at `.soma/state/model-health.json`. Rate-limited or dead models get marked and skipped for a TTL (default 1h). Survives across sessions.
+- **MLR (Memory-Lane-Reflection) yaml parsing** on child final messages. Observations flow to `inv.mlr.{what_worked, what_struggled, missing_capability, suggested_amendments, map_issues}` in `memory/children/<role>/invocations.jsonl`. Foundation for v0.20.1's curator loop.
+- **Cost + token tracking** per attempt (`inv.cost_usd`, `inv.tokens_input`, `inv.tokens_output`). Attempts array records each model tried in the chain.
+- **`soma-dev children run <role> "<task>"`** — CLI stub that invokes `runDelegation` outside the TUI. Useful for dev regression + batch testing.
+- **`soma-dev children health <role>`** — shows chain with per-model class, resolvable state, cooldown, filtered (per policy). Diagnostic for "why is my child using sonnet when I declared a chain?"
+
+### Changed
+- **`extensions/soma-delegate.ts` refactored to thin wrapper** (~50 lines) over `core/delegate-core.ts` (~800 lines at v0.20.0.1). Logic lives in core; extension just registers the Pi tool. Enables CLI stubs to call `runDelegation` without Pi's extension harness.
+- `loadAgentClass` is now async (dual-strategy: `createRequire` for CJS, dynamic `import()` for ESM). Callers must `await`.
+
+### Fixed
+- **Free-tier rate limits (429/503) on `openrouter/*:free` models**. v0.20.0's hardcoded Haiku default was a workaround; v0.20.0.1's chain-walking is the real fix. Role can declare a free-first chain and fall through to paid-cheap on rate limit.
+
+### Sandbox-verified (5 cases)
+T1 scalar back-compat, T3 chain gemma→qwen→haiku fall-through, T4 cooldown skip, T6 MLR parsed into structured object, T7 cost $0.0044 / 2819+313 tokens.
+
+---
+
+## [0.20.0] — 2026-04-18
+
+**Delegation MVP. Team Soma begins.** The `delegate` Pi tool spawns an in-process child agent via `pi-agent-core.Agent`, running a role-tuned system prompt while inheriting parent soul/voice/ecosystem. Foundation for everything in v0.20.x.
+
+### Added
+- **`delegate` tool** (registered via `extensions/soma-delegate.ts`). Called as `delegate(task, role?, model?)`. Spawns `pi-agent-core.Agent` in-process, tool budget enforced (`max-tool-calls`), returns summary + cost + MLR.
+- **Role files** in `body/children/`: `_child.md` (sub-compiler template), `_child-template.md` (scaffold for new roles), `general.md` (starter role: Sonnet, full tools, budget 25/$0.25).
+- **Role discovery via body chain.** `discoverRole` walks `body/children/<role>.md` across the soma chain (project → parent → global) so a workspace can ship roles its child projects inherit.
+- **Prompt compilation** for children. Compact soul (1500 chars) + voice (1000) + ecosystem (2000) + role identity + role accumulated knowledge + task. Haiku by default so cost stays tight.
+- **`soma-dev children` CLI** (new subcommand group). `list` / `show` / `add` / `edit` / `stats` / `tail` / `validate` for inspecting + managing roles and their invocation logs.
+- **Invocation log** at `memory/children/<role>/invocations.jsonl`. Append-only JSONL per role: timestamp, model, tool calls, duration, cost, summary.
+- **`pi-agent-core`** added as direct dependency (was transitive). Uses its `Agent` class as the child-spawning primitive.
+- **Sandbox architecture** — persistent `~/soma-2x-sandbox/` folder (her filesystem) + dedicated `~/.soma-2x/agent/` install (runtime symlinks to `repos/agent-2x/`, auth/settings shared from main install). Keeps parent session's `~/.soma/agent/` untouched during iteration.
+- **`soma-2x-cmux.sh`** launcher. Opens a cmux workspace with Sonnet parent + invocation-monitor pane. `--focus` / `--close` / `--restart` flags for iteration cycle.
+
+### Fixed (during MVP verification, same release cycle)
+- **`pi-agent-core.Agent` via `createRequire` bypass.** Pi's extension loader aliases `@mariozechner/pi-agent-core` and can resolve to wrong package under jiti. Switched to `createRequire(import.meta.url)` for that one import — native Node resolution bypasses jiti. `pi-ai` + `pi-coding-agent` stay ESM-only (static imports at module top).
+- **Inline flow YAML arrays.** `inherits: []` was parsed as the string `"[]"`; parser now detects and splits `[a, b, c]` inline.
+- **Inline YAML comments.** `default-model: claude-sonnet-4-5  # comment` previously included the comment in the value. `stripComment` handles this now (respects `#` inside quoted strings).
+- **`getModel` returning `undefined`** (not throwing) when a model id was unknown. Now surfaces as a typed error the chain walker can react to.
+- **OpenRouter Claude models** — wired provider + normalized id forms; `openrouter/google/gemma-4-31b-it:free` resolves correctly now.
+
+### Notes
+- Not tagged as a discrete release; delegation MVP was sandbox-internal on `dev-2x` and consolidated under the v0.20.1 tag when the curator loop landed. This entry backfills the history.
+
+---
+
+## [0.20.1] — 2026-04-18
+
+Curator loop + specialized child roles (verifier, builder, curator). Closes the self-improvement cycle: delegation observations (MLR) → classifier → proposal files → human-apply → role.md amended.
+
+> Shipped on `dev-2x` branch. Merged to `dev` at tag time. Follows v0.20.0 (delegation MVP) + v0.20.0.1 (delegation hardening).
+
+### Added
+- **Three role files** in `body/children/`: `verifier.md` (read-only, `read + bash`, PASS/FAIL + evidence), `builder.md` (write-capable, `read + bash + edit + write`, bounded edits with verify-after), `curator.md` (meta-role, `read + write`, proposes amendments). All bound to `claude-haiku-4-5` by default with per-role budgets.
+- **MLR queue reader** `scanMLRQueue(role, somaDir, sinceTs?)` in `core/delegate-core.ts`. Scans `memory/children/<role>/invocations.jsonl`, flattens `mlr.{what_worked, what_struggled, missing_capability, suggested_amendments}` into structured amendment candidates.
+- **Amendment classifier** `classifyAmendment(entry, evidence)` returns `auto-apply` | `propose` | `human-only` | `skip`. Auto-apply requires `accumulated_knowledge` section + ≥2 distinct invocations + text < 200 chars. `default-tools`/`budget`/`success_criteria` → `propose`. Identity/soul/voice/inherits → `human-only`.
+- **Proposal writer** `writeProposal` emits `memory/children/<role>/proposals/<id>.md` with frontmatter (id, role, class, section, evidence) + body (amendment, reason, apply command).
+- **`soma-dev children mlr [<role>]`** — scan MLR queue, table output (ts, source, section, text).
+- **`soma-dev children curate [<role>]`** — classify queue → write proposals. Summary by class (auto-apply / propose / human-only).
+- **`soma-dev children apply <proposal-id> [--force]`** — append amendment to role.md section, archive to `proposals/_applied/`. Auto-apply default; `--force` for propose-class (v0.20.1 still gates non-`accumulated_knowledge` sections).
+- **Chain-walk in `children.sh`** (SX-482). Port of `core/discovery.ts:getSomaChain` to bash. Shell subcommands now resolve roles across the full soma chain (project → parent → global `~/.soma`), matching runtime behavior. Adds per-role `source` column in `list` (project/parent/global) and `--soma=<path>` pin flag.
+- **Dedup in curator flow** (SX-481 fixup). `hasAmendmentInRole` + `hasProposalBeenApplied` helpers prevent duplicate bullets when curator runs on different days (slug-based dedup includes date, so same text on new day previously slipped through). Applied at both `buildProposal` (skip before write) and `apply-proposal` (skip + archive-only, defense in depth).
+- **`resolveTools` honors `bash` in read-only roles** (s01-b420d5 fix). `createReadOnlyTools()` upstream returns `[Read, Grep, Find, Ls]` with no Bash; `resolveTools` was dropping the `bash` declaration for any role without edit/write. Now rebuilt declaratively from 7 individual constructors so `[read, bash]` resolves correctly.
+
+### Changed
+- `buildProposal` signature: optional `cwd` + `somaDirPath` params so library callers can thread the caller's chain into role discovery (instead of relying on `process.cwd()`).
+- `curateRole` signature: optional `cwd` param threaded to `buildProposal`.
+- `children list` output includes a `SOURCE` column (project/parent/global).
+
+### Deferred to v0.20.1.1 / v0.20.2
+- Remaining 4 roles: planner, doc_writer, researcher, reflector.
+- Path-gated `edit` tool for curator (direct role.md edits without proposal round-trip).
+- Direct auto-apply during curator run (today: curator writes proposals, human runs `apply`).
+- `source-of-truth` frontmatter field — route amendments to git-canonical path, not chain-walk result (SX-483, v0.20.2).
+- `soma-dev children audit` — diff runtime copies vs git source, merge in either direction (SX-484, v0.20.2).
 
 ---
 
