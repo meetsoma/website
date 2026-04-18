@@ -20,14 +20,13 @@
       "title": "Pi-Native Prompts & Three-Layer Version UX",
       "features": {
         "changed": [
-          "Pi-native prompt assembly is now the default \u2014 Soma writes SYSTEM.md and APPEND_SYSTEM.md, Pi auto-discovers them. Faster boot, cleaner upstream story.",
-          "soma check-updates shows three layers at once \u2014 CLI, agent runtime, workspace marker \u2014 with a recovery hint baked into every drift.",
-          "soma doctor silently advances the workspace marker when no migration is pending. No more stale 'v0.11.4' on a v0.20.x agent."
+          "Pi assembles the system prompt now \u2014 Soma writes SYSTEM.md and APPEND_SYSTEM.md and Pi auto-discovers them. Faster boots, cheaper child agents.",
+          "`soma check-updates` shows three layers \u2014 CLI, agent, workspace \u2014 with the fix command for any drift.",
+          "`soma doctor` quietly bumps stale workspace markers when no migration's actually needed."
         ],
         "added": [
-          "Five new built-in tools for code navigation: code_find, code_map, code_refs, code_structure, code_blast.",
-          "Smarter word picker \u2014 Soma's voice no longer repeats the same opener back-to-back; greetings shade by time of day.",
-          "An auditor child role for post-release review."
+          "Eight child roles now \u2014 auditor joined for post-release review.",
+          "Five built-in code-search tools: code_find, code_map, code_refs, code_structure, code_blast."
         ]
       }
     },
@@ -37,12 +36,9 @@
       "title": "Role Expansion & Curator Polish",
       "features": {
         "added": [
-          "Three more child roles: planner (cold-reads tasks), doc_writer (markdown only), reflector (journal + MLR).",
-          "Curator can auto-apply proposals in one command \u2014 close the learning loop without a second pass.",
+          "Three more roles: planner, doc_writer, reflector. Seven total.",
+          "Curator can auto-apply proposals in one command \u2014 no second pass to integrate findings.",
           "Per-role scratchpads track pending amendments at a glance."
-        ],
-        "changed": [
-          "Roles can declare a source-of-truth path so amendments always write to the canonical file, not a runtime copy."
         ]
       }
     },
@@ -52,12 +48,9 @@
       "title": "Curator Loop & 3 Roles",
       "features": {
         "added": [
-          "Three specialized child roles to start: verifier, builder, curator.",
-          "Curator reads MLR reports from every child run, classifies amendments, writes proposals.",
-          "soma-dev children mlr / curate / apply CLI to inspect, propose, and integrate learnings."
-        ],
-        "changed": [
-          "Children walk the body chain, so any project can override a role with its own file."
+          "Three specialized roles to start: verifier, builder, curator.",
+          "Curator reads every child's MLR report and writes proposals back to body files.",
+          "`soma-dev children mlr / curate / apply` CLI for the loop."
         ]
       }
     },
@@ -67,12 +60,9 @@
       "title": "Delegation Hardening",
       "features": {
         "added": [
-          "Cost and token tracking per child invocation.",
-          "Health check + cooldown so a flaky model doesn't burn budget retrying.",
-          "soma-dev children run / health subcommands."
-        ],
-        "changed": [
-          "Roles declare a model chain (preferred + fallbacks) instead of a single hard-coded model."
+          "Cost and token tracking per child run.",
+          "Roles declare a model chain (preferred + fallbacks) instead of a single hard-coded model.",
+          "Health checks plus cooldown so flaky models don't burn budget retrying."
         ]
       }
     },
@@ -82,9 +72,9 @@
       "title": "Delegation MVP & Sandbox",
       "features": {
         "added": [
-          "delegate tool \u2014 Soma can spawn a child agent in-process for bounded work.",
-          "Role files (body/children/<role>.md) define a child's persona, tools, and model.",
-          "Sandbox architecture for testing delegation safely without polluting the parent session."
+          "`delegate` tool \u2014 Soma can spawn a child agent for bounded work.",
+          "Role files (`body/children/<role>.md`) define each child's persona, tools, and model.",
+          "Sandbox isolation for safe delegation testing."
         ]
       }
     },
@@ -94,13 +84,12 @@
       "title": "Pi 0.67.68 & Release Parity",
       "features": {
         "changed": [
-          "Pi runtime bumped to 0.67.68 \u2014 better network retry, stable date format in prompts, afterToolCall error handling",
-          "Release script keeps dev and main in sync automatically (main can no longer fall a full release behind)"
+          "Pi runtime \u2192 0.67.68 \u2014 better network retry, stable date format, tool-call error handling.",
+          "Release script keeps dev and main in sync. Main can no longer fall a release behind."
         ],
         "fixed": [
-          "soma update and check-updates no longer crash on fresh installs \u2014 clear guidance instead",
-          "Thin-CLI help covers the full command surface (doctor, health, focus, model, exhale)",
-          "Script robustness \u2014 check-phases no longer exits early on clean working trees"
+          "`soma update` and `check-updates` no longer crash on fresh installs.",
+          "Thin-CLI help covers the full command surface."
         ]
       }
     },
@@ -127,17 +116,12 @@
       "title": "Model Switching & Opus 4.7",
       "features": {
         "added": [
-          "soma model command \u2014 switch models from CLI with fuzzy matching",
-          "Claude Opus 4.7 support with adaptive thinking",
-          "Upstream audit tooling (soma-dev check-upstream)"
+          "`soma model` command \u2014 switch models from CLI with fuzzy matching.",
+          "Claude Opus 4.7 with adaptive thinking.",
+          "Upstream audit tooling for tracking Pi version drift."
         ],
         "changed": [
-          "Smarter prompt caching \u2014 tool changes no longer invalidate system prompt cache",
-          "CLI help reorganized with clear session vs persistent commands"
-        ],
-        "fixed": [
-          "grep and find tool reliability improvements",
-          "Fresh boot correctly signals when preload was intentionally skipped"
+          "Smarter prompt caching \u2014 tool changes no longer invalidate the system prompt."
         ]
       }
     },
@@ -157,14 +141,9 @@
       "title": "Somaverse Edition",
       "features": {
         "added": [
-          "soma login \u2014 pair your agent with Somaverse",
-          "Hub-connect extension \u2014 cloud relay provider",
-          "28 workspace + browser tools through hub proxy",
-          "Device-key auth for automatic hub mode"
-        ],
-        "fixed": [
-          "Breathe stale warning crash",
-          "soma init parent directory detection"
+          "`soma login` \u2014 pair your agent with Somaverse through a cloud relay.",
+          "28 workspace + browser tools through the hub proxy.",
+          "Device-key auth for automatic hub mode."
         ]
       }
     },
