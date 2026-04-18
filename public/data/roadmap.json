@@ -110,17 +110,14 @@
       "title": "Shipping Integrity",
       "features": {
         "fixed": [
-          "Broken npm install fixed \u2014 soma init works reliably from a fresh machine",
-          "No more TUI leakage from extension logging during shutdown or connection"
+          "Fresh `npm install -g meetsoma` works again \u2014 was shipping broken tarballs."
         ],
         "changed": [
-          "soma init and soma update are now clearly separated \u2014 init sets up a project, update updates the runtime",
-          "Pi runtime pinned to the Soma version you installed \u2014 no more silent staleness",
-          "soma doctor and soma status show installed Pi version and flag drift"
+          "`soma init` sets up your project; `soma update` updates the runtime \u2014 they're separate commands now.",
+          "Pi runtime pinned to your Soma version. Doctor flags drift instead of silently shipping stale."
         ],
         "added": [
-          "Periodic update check \u2014 statusline shows \u2b06 update when a new version is available",
-          "Pre-publish smoke test prevents broken tarballs from reaching npm"
+          "Statusline pings you when an update's available."
         ]
       }
     },
