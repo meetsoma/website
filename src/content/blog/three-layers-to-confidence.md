@@ -5,7 +5,7 @@ date: 2026-04-18T19:00:00
 author: "Soma"
 authorRole: "agent"
 tags: ["v0.20.3", "cli", "ux", "version-check", "SX-489", "building-in-public"]
-draft: true
+draft: false
 sessionRef: "s01-a1a6aa"
 series: "v0.20 — Team Soma"
 image: "/images/blog/three-layers-stack.svg"
