@@ -12,25 +12,53 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
+## [0.12.4] — 2026-04-18
+
+Follow-up to v0.12.3 shipping integrity. Pi runtime bump, thin-CLI UX cleanup, release-flow parity (dev ↔ main auto-sync), and a script pipefail fix.
+
+### Changed
+- **Pi runtime 0.67.6 → 0.67.68** — 2 upstream releases. Network connection retry (#3317), stable date format in system prompts (#2814), scoped-models Alt+Up/Down fix (#3331), `afterToolCall` error forwarding (#3051, #3084), git update notification reliability (#3027). New: Bedrock bearer-token auth, prompt template `argument-hint` frontmatter, `after_provider_response` extension hook, OSC 8 hyperlink rendering.
+- **Release script auto-syncs `agent-stable`/main.** `soma-release.sh` now squash-merges `dev → agent-stable/main` after building soma-beta and tags both branches. Prevents the drift where agent-stable fell a full release behind dev (the v0.12.2 → v0.12.3 gap that this release closes).
+
+### Fixed
+- **Thin-CLI `update` / `check-updates` / `status` now guard on `isInstalled()`.** Previously these commands assumed `~/.soma/agent/` existed and crashed unhelpfully on a fresh global install before `soma init`. Now they show a clear "not installed — run `soma init`" message.
+- **Thin-CLI header text** — `Status` → `Update` on the update subcommand (matches what the command actually does).
+- **Thin-CLI help text** — `postInstallCmds` expanded from 8 to 16 commands, covers `update`, `check-updates`, `status`, `doctor`, `health`, `focus`, `model`, `exhale`, etc.
+- **Pre-versioning project guidance** — correct instructions for projects that pre-date `soma init` (no version file, but `.soma/` exists).
+- **Stale `soma init` → `soma update` references** in `thin-cli.js`, `docs/updating.md`, and `docs/troubleshooting.md`. Missed during the v0.12.3 command reshuffle.
+- **`check-phases.sh` pipefail crash on clean working tree.** `grep -v` returns 1 on empty input, which under `set -o pipefail` killed the script mid-run. Same bug class as `soma-plans.sh` bash 3.2 issues. Script now runs all 10 phases to completion.
+
+### Internal
+- Dropped the B2 patch attempt (`settings-manager.js` enabledModels sync). Pi #3331 fixes the upstream symptom, and the target function is minified to `.n()` in 0.67.68 — patching by name would silently fail. See `.soma/releases/v0.12.x/model-resolution-audit.md`.
+- `UPSTREAM-NOTES.md` scratchpad added to `soma-dev/` for tracking changelog-worthy upstream items between Pi bumps.
+
+---
+
 ## [0.12.3] — 2026-04-17
 
 Shipping integrity release. Fixes a critical bug where `npm install -g meetsoma@0.3.3` produced a broken install (missing internal imports), and makes the update flow actually work. If you've been stuck on an older Pi runtime despite cutting newer Soma versions, this is why.
 
 ### Fixed
-- **`meetsoma@0.3.3` broken npm install**. The published tarball imported from `./lib/` and `./welcome/` paths that weren't included, so every fresh `npm install -g meetsoma` failed with `ERR_MODULE_NOT_FOUND` on first run. Fixed by bundling `thin-cli.js` with esbuild into a single self-contained file before publish.
-- **TUI leakage from extensions**. `soma-route.ts` had `console.error` calls that leaked into the input buffer on shutdown and during security rejects. `hub-connect.ts` had WebSocket handshake logs that appeared mid-keystroke in the prompt. Both silenced.
+- **`meetsoma@0.3.3` broken npm install**. The published tarball imported from `./lib/` and `./welcome/` paths that weren't included, so every fresh `npm install -g meetsoma` failed with `ERR_MODULE_NOT_FOUND` on first run. Fixed by bundling `thin-cli.js` with esbuild into a single self-contained file before publish. Has been broken since the `npm/` reorg — unnoticed because existing users had working installs from before.
+- **TUI leakage from extensions**. `soma-route.ts` had `console.error` calls that leaked into the input buffer on shutdown and during security rejects. `hub-connect.ts` (somaverse) had WebSocket handshake logs that appeared mid-keystroke in the prompt. Both silenced — matches `bridge-connect.ts`'s silent pattern.
+- **Silent Pi staleness in dev**. `soma-dev status` now compares `dist/` vs `node_modules/` Pi versions and flags drift (was the root cause of the "opus-4-7 missing" bug several users hit).
 
 ### Changed
-- **`soma init` no longer updates the runtime.** Previously, typing `soma init` in an already-initialized project silently ran a runtime update instead of doing project work. `soma init` now always means "set up this project."
-- **`soma update` now actually updates.** Was previously status-only (told you to run `soma init`). Now it performs the update: `git pull` + `npm install` if dependencies changed.
-- **Pi runtime locked to Soma version.** `soma-beta/package.json` pins Pi exact (was `^0.67.6`, now `0.67.6`). `soma-beta` now ships a `package-lock.json` — users get the exact Pi dependency tree we tested against. Pi updates only when Soma cuts a new release.
-- **`soma status` / `soma doctor`** shows installed Pi runtime version and flags drift between declared and installed. Catches the class of bug where `npm install` hadn't been re-run after a Pi bump.
-- **`soma check-updates`** preserves the old "report-only" behavior that `soma update` used to have.
+- **`soma init` no longer updates the runtime.** Previously, typing `soma init` in an already-initialized project silently ran a runtime update instead of doing project work — the confusing overload is removed. `soma init` now always means "set up this project."
+- **`soma update` now actually updates.** Was previously status-only (told you to run `soma init`). Now it performs the update: `git pull --ff-only` in `~/.soma/agent/` + `npm install --omit=dev` if dependencies changed.
+- **Pi runtime is now locked to Soma version.** `soma-beta/package.json` pins Pi exact (was `^0.67.6`, now `0.67.6`). `soma-beta` now ships a `package-lock.json` too — users get the exact Pi dependency tree we tested against. Pi updates only when Soma cuts a new release.
+- **`soma doctor` / `soma status`** now shows installed Pi runtime version and flags drift between declared and installed. Catches the class of bug where `npm install` hadn't been re-run after a Pi bump.
+- **`soma check-updates`** preserves the old "report-only" behavior that `soma update` used to have, for when you just want to see what's available without updating.
 
 ### Added
-- **Periodic update check inside the agent.** The statusline runs a silent `git fetch` every 30 minutes while the agent is running. If behind, shows `⬆ update` in the statusline and writes to `~/.soma/config.json` so the next `soma` boot prints a one-line notice. Zero network latency at CLI launch.
-- **Pre-publish smoke test.** `soma-npm-publish.sh` now packs the tarball, extracts to a clean temp dir, and runs `node dist/thin-cli.js --version` before allowing publish. Aborts if the tarball has broken imports or contains forbidden content.
-- **Docker e2e sandbox fix** — previous Dockerfile had a broken `COPY ... local-pkg*` glob that created a file literally named `local-pkg*`. Sandbox was silently falling through to the registry install, never actually testing local bundles. Fixed — 24/24 tests pass in clean `node:22-slim`.
+- **Periodic update check inside the agent.** `soma-statusline.ts` runs a silent `git fetch` every 30 minutes while the agent is running. If behind, shows `⬆ update` in the statusline and writes to `~/.soma/config.json` so the next `soma` boot prints a one-line notice. Zero network latency at CLI launch.
+- **Pre-publish smoke test.** `soma-npm-publish.sh` now packs the tarball, extracts it to a clean temp dir, and runs `node dist/thin-cli.js --version` before allowing npm publish. Aborts if the tarball has broken imports or contains forbidden content (`dist/core/`, `.ts`, `node_modules/`, etc.). Also integrated into `soma-dev pipeline` so dev cycles catch breakage early.
+- **Docker e2e sandbox** (`soma-sandbox-docker.sh local`) now reliably tests our local bundle. Previous Dockerfile had a broken `COPY ... local-pkg*` glob that created a file literally named `local-pkg*`, so the sandbox was silently falling through to the registry version. Fixed — 24/24 tests pass in clean `node:22-slim` container.
+
+### Internal
+- `repos/agent/scripts/_dev/patches/` unchanged — only `error-sanitizer` remains. An attempt to add a `settings-manager-enabled-models` patch was rolled back when it turned out not to be necessary (speculation from an inbox report; the actual user bug was update-flow staleness, not Ctrl+P cycling).
+- New muscles: `inbox-handling.md` (inbox letters are diagnoses, not FYIs), `tui-safe-logging.md` (no bare `console.*` in extensions).
+- New soma-dev-map phase entry: Phase 0 orient now checks Pi drift (`soma-dev status`) and scans inbox as part of orientation.
 
 ---
 
@@ -40,6 +68,8 @@ Shipping integrity release. Fixes a critical bug where `npm install -g meetsoma@
 - **`soma model` command** — Switch your default model from the CLI. Fuzzy matching (`soma model opus`), interactive selection when multiple matches, persistent save to settings. Subcommands: `soma model <pattern> set` (save without starting), `soma model <pattern> start` (save + start session), `soma model --list [search]` (browse models).
 - **Claude Opus 4.7 support** — Available via `/model` in-session or `soma model opus-4-7 set` from CLI. Includes adaptive thinking support.
 - **`soma-dev check-upstream`** — Detect and audit Pi runtime updates. Checks changelog, extension surface, provider diffs, patch compatibility. Supports `--audit` (full analysis) and `--json` (machine-readable).
+- **`soma-dev check-docs`** — Stale reference sweep across docs and website. Catches old version numbers, deprecated APIs, provider count mismatches.
+- **`soma-dev check-phases`** — Verify dev cycle phase completion before release. Checks artifacts across all 10 phases. Supports `--patch` for reduced requirements.
 - **`--no-context-files` / `-nc` flag** — Skip AGENTS.md and CLAUDE.md loading for clean sessions without project context injection.
 - **`after_provider_response` extension hook** — Extensions can inspect provider HTTP status and headers after each response.
 
@@ -52,6 +82,10 @@ Shipping integrity release. Fixes a critical bug where `npm install -g meetsoma@
 - **`grep` tool performance** — No longer stalls on broad searches with `context=0`.
 - **`find` tool gitignore** — Nested `.gitignore` rules no longer leak across sibling directories.
 - **Type safety** — Fixed `breathe.preloadStaleThreshold` type cast for Pi 0.67.6 compatibility.
+- **Preload validator** — Section header matching is now fuzzy — accepts `## Next Session`, `## Next Session: Priorities`, `## Next Session: [Task Name]`, etc.
+- **Protocol warm fallback** — Protocols with `description` in frontmatter now use it for warm-tier display when `breadcrumb` is absent. Most protocols already use `description` — this fix makes them visible at warm tier.
+- **Template sync** — Shipped improved `_memory.md` template to all users (Traps section, phase breadcrumbs, warning-task binding guidance).
+- **4 missing providers** — Kimi Coding, Minimax, Z.ai, and Vercel AI Gateway added to docs. Provider count updated from 17 to 23.
 
 ### Upgraded
 - Pi runtime 0.67.1 → 0.67.6 (5 releases, 15+ fixes)

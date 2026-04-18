@@ -253,12 +253,22 @@ These flags apply to the current session only — they don't change your default
 
 | Command | Description |
 |---------|-------------|
+| `soma init` | Initialize a new `.soma/` directory in the current project. First-time users also install the runtime here. Never updates an existing runtime — use `soma update` for that. |
+| `soma update` | Update the installed Soma runtime in `~/.soma/agent/`. Pulls the latest soma-beta, runs `npm install --omit=dev` if dependencies changed (e.g. a new Pi runtime version). *As of v0.12.3* — previously this command was status-only. |
+| `soma check-updates` | Report what updates are available without installing them. The old `soma update` behavior. |
 | `soma model <pattern>` | Switch your default model. Fuzzy matches, asks you to pick if multiple hits, saves persistently. Use `soma model <pattern> set` to save without starting a session, or `soma model --list [search]` to browse. |
 | `soma doctor` | Check project health and run migrations. Reports body file inventory, extension health, stale protocols, and version gaps. Tier 1 auto-fixes run silently. |
-| `soma status` | Quick project health check — .soma/ structure, version, installed content. |
+| `soma status` | Quick project health check — .soma/ structure, version, installed content. *As of v0.12.3* — now includes a Pi runtime check that flags drift between declared and installed Pi versions. |
 | `soma --version` | Show agent version and CLI version. |
 | `soma doctor --scan` | Scan for child .soma/ projects. |
 | `soma doctor --all` | Fix all discovered projects. |
+
+> **Update flow in v0.12.3+:** While the agent is running, the statusline quietly
+> checks for new versions every 30 minutes. If there's one available, you'll see
+> `⬆ update` in the statusline, and the next time you type `soma` you'll get a
+> one-line notice pointing you at `soma update`. There's no background daemon
+> and no network call at CLI launch — the check only runs while you're already
+> using Soma.
 
 ## Pre-Session Tools
 

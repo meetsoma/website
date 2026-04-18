@@ -43,7 +43,7 @@ npm install -g meetsoma
          │    soma init
          │         │
          │         ├── git clone --depth 1 soma-beta → ~/.soma/agent/
-         │         ├── npm install --omit=dev (Pi runtime + deps)
+         │         ├── npm install --omit=dev (Pi runtime + deps, pinned by lockfile)
          │         ├── Save config.json (installedAt, coreVersion, installPath)
          │         └── Restore user files (auth.json, models.json if they existed)
          │
@@ -76,7 +76,8 @@ npm install -g meetsoma
     templates/default/      ← body templates (source for soma init)
     migrations/             ← migration phases + cycle
     package.json            ← agent version (source of truth)
-    node_modules/           ← Pi runtime dependencies
+    node_modules/           ← Pi runtime dependencies (exact versions from package-lock.json)
+    package-lock.json       ← ships with soma-beta releases (v0.12.3+) — pins Pi and transitive tree
   config.json               ← install metadata
   amps/                     ← global AMPS (shared across projects)
   memory/                   ← global memory
@@ -105,13 +106,13 @@ your-project/
 ### Updating the Agent (runtime)
 
 ```bash
-soma init                   # when already installed
+soma update                 # v0.12.3+ — actually performs the update
 ```
 
-This does `git pull --ff-only` on `~/.soma/agent/`, then reinstalls deps if `package.json` changed. Your project `.soma/` files are never touched.
+This does `git pull --ff-only` on `~/.soma/agent/`, then reinstalls deps if `package.json` changed. Your project `.soma/` files are never touched. Pi runtime version follows Soma version — when a new Soma release changes the Pi pin, this command fetches the new Pi as part of the update.
 
 ```
-soma init (when installed)
+soma update
     │
     ├── git fetch origin
     ├── Compare: HEAD vs origin/main
@@ -119,13 +120,45 @@ soma init (when installed)
     ├── Behind? → prompt "Update now? [y/n]"
     │   ├── Yes → git pull --ff-only
     │   │         npm install if package.json changed
+    │   │         Clear config.json updateAvailable flag
     │   │         ✓ Updated (hash1 → hash2)
-    │   └── No  → "Skipped. Run soma init anytime."
+    │   └── No  → "Skipped. Run soma update anytime."
     │
     └── Current? → "Already up to date."
                    Check project version vs agent version
                    Warn if project is behind
 ```
+
+> **Pre-v0.12.3**: `soma update` was status-only (just reported what was available
+> and told you to run `soma init`). `soma init` on an existing install was the
+> one that actually did updates — an overload that silently hid the update flow
+> when you typed `init` for project work. Both behaviors are now corrected:
+> `soma init` = project setup, `soma update` = runtime update.
+
+### Periodic Update Notices (v0.12.3+)
+
+The running agent checks for updates in the background:
+
+```
+soma-statusline.ts (inside running agent)
+    │
+    ├── Every 30 min (piggybacks on the 5s render tick)
+    ├── git fetch origin (silent, bounded 15s timeout)
+    ├── Compare: HEAD vs origin/main
+    │
+    └── Behind?
+         ├── Show "⬆ update" marker in statusline
+         └── Write {updateAvailable: true, latestSummary} to ~/.soma/config.json
+
+soma (plain launch)
+    │
+    ├── Read ~/.soma/config.json (no network)
+    ├── If updateAvailable → print one-line notice → run soma update
+    └── Delegate to agent
+```
+
+Design goals: zero network latency at CLI boot, no background daemon, update
+check only while user is actively using Soma.
 
 ### Updating the CLI (npm package)
 

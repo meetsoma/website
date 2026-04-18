@@ -163,7 +163,7 @@ cat .soma/settings.json | grep version    # project version
 
 If the agent version is old:
 ```bash
-soma init             # pulls latest from GitHub
+soma update           # pulls latest from GitHub
 ```
 
 If the CLI version is old:
@@ -278,7 +278,7 @@ Then manually copy back what you want from the backup (identity, muscles, protoc
 
 ```bash
 mv ~/.soma/agent ~/.soma/agent-backup-$(date +%s)
-soma init     # re-downloads from GitHub
+soma update   # re-downloads from GitHub
 ```
 
 Your project `.soma/` directories are untouched — only the global runtime resets.

@@ -21,23 +21,23 @@ soma doctor          # Project-level version check + health
 
 `soma --version` shows both versions:
 ```
-σ  Soma v0.12.2
-   CLI v0.3.3
+σ  Soma v0.12.3
+   CLI v0.3.4
 ```
 
-The **agent version** (v0.12.2) is your Soma runtime — extensions, protocols, body templates, the works. The **CLI version** (v0.3.2) is the thin npm package that bootstraps everything.
+The **agent version** (v0.12.3) is your Soma runtime — extensions, protocols, body templates, the works. The **CLI version** (v0.3.2) is the thin npm package that bootstraps everything.
 
 ## Updating the Runtime
 
 ```bash
-soma init
+soma update
 ```
 
-When Soma is already installed, `soma init` checks for updates and pulls the latest agent code. Your project files (`.soma/body/`, protocols, scripts) are never overwritten — only the global runtime at `~/.soma/agent/` gets updated.
+When Soma is already installed, `soma update` pulls the latest agent code and reinstalls dependencies if needed. Your project files (`.soma/body/`, protocols, scripts) are never overwritten — only the global runtime at `~/.soma/agent/` gets updated.
 
 If your project `.soma/` is behind the agent version, you'll see:
 ```
-⚠ Project .soma/ is at v0.10.0, agent is at v0.12.2.
+⚠ Project .soma/ is at v0.10.0, agent is at v0.12.3.
   Run soma doctor to check for updates.
 ```
 
@@ -89,7 +89,7 @@ Project extensions always take priority. If a bundled extension changes in a new
 ### "Runtime dependencies missing"
 
 ```bash
-soma init    # Re-runs install, fixes deps
+soma update  # Re-runs install, fixes deps
 ```
 
 ### "Core git repo has issues"
@@ -100,7 +100,7 @@ The agent runtime at `~/.soma/agent/` is a git repo. If it gets into a bad state
 cd ~/.soma/agent
 git status              # See what's wrong
 git reset --hard HEAD   # Reset to last known good state
-soma init               # Or just re-run init
+soma update             # Or just re-run update
 ```
 
 ### Version Mismatch
@@ -108,7 +108,7 @@ soma init               # Or just re-run init
 If `soma --version` shows an old agent version after updating:
 
 ```bash
-soma init               # Pull latest agent code
+soma update             # Pull latest agent code
 ```
 
 The agent version comes from `~/.soma/agent/package.json`. If you're using a dev setup with symlinks, the version reflects your local repo.
