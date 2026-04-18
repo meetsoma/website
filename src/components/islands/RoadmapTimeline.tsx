@@ -9,9 +9,11 @@ import { useState, useEffect } from 'preact/hooks';
 interface TimelineVersion {
   version: string;
   date: string;
+  title?: string;
   features: {
     added?: string[];
     changed?: string[];
+    fixed?: string[];
   };
 }
 
@@ -72,11 +74,13 @@ export default function RoadmapTimeline() {
   return (
     <div class="timeline">
       {shipped.map((release, i) => {
-        const label = versionLabels[release.version] || `Version ${release.version}`;
+        // Prefer JSON title (source of truth) → fall back to TS map (legacy) → generic
+        const label = release.title || versionLabels[release.version] || `Version ${release.version}`;
         const eggs = easterEggs[release.version] || [];
         const items = [
           ...(release.features.added || []),
           ...(release.features.changed || []),
+          ...(release.features.fixed || []),
           ...eggs,
         ];
         const isLatest = i === 0;
