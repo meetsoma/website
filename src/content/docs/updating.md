@@ -20,6 +20,12 @@ Most users want this:
 npm install -g meetsoma@latest && soma update
 ```
 
+**For scripts / CI:** add `--yes` to skip the update confirmation prompt:
+
+```bash
+npm install -g meetsoma@latest && soma update --yes
+```
+
 That's it. The first half updates the CLI wrapper (thin, ~100KB); the second half pulls the latest agent runtime (extensions, protocols, body templates) into `~/.soma/agent/`. Your project `.soma/` directories are never touched by either command — your customizations are safe.
 
 After updating:
