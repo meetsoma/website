@@ -15,7 +15,26 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ## [Unreleased]
 
-_(empty — last stamp was v0.20.2)_
+_(empty — last stamp was v0.20.3)_
+
+---
+
+## [0.20.3] — 2026-04-20
+
+Cache stickiness. `/reload` no longer invalidates your Anthropic prompt
+cache — the compiled system prompt is persisted to disk and restored
+when the session resumes. A new `/rebuild` command (optional) forces an
+explicit recompile when you want mid-session body edits to apply. The
+restart banner moved from an intrusive toast to a subtle statusline tag.
+
+### Added
+- **`/rebuild` command** — forces recompile of the system prompt and deletes the disk cache. Optional — only run it if you've edited `body/*.md` mid-session AND you want the change to apply right now. Otherwise `/reload` keeps the prompt sticky and body edits land naturally on your next session.
+- **Disk-backed prompt cache** — `.soma/state/.session-prompt-cache.json` written on first compile, restored on `/reload`, `/resume`, `/fork`. Eliminates the ~$1 cache-invalidation cost per `/reload` cycle.
+- **Severity-aware restart indicator on statusline line 3** — replaced the intrusive "Changes detected" toast with a subtle third-line tag. Labels: `🔄 /reload` (extensions/core .ts), `📝 /rebuild?` (body/*.md — the `?` denotes optional), `🔄 restart` (dist/* or core/*.js — real TUI restart required).
+- **Commands doc — Reload & Rebuild section** — explains the two commands, when to use each, and what the statusline indicators mean.
+
+### Fixed
+- **`/reload` no longer invalidates the Anthropic prompt cache.** Previously, re-importing the boot extension reset the compiled prompt reference; the next turn recompiled and re-sealed a fresh cache — forcing a miss (~$1 per `/reload` on Sonnet/Opus). Now the compiled prompt rehydrates from disk on `session_start` with `reason ∈ {reload, resume, fork}`. Fresh `soma` launches still compile from scratch. Tier 2 extension build path also updated for the somaverse repo restructure.
 
 ---
 
