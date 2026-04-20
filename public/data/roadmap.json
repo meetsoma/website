@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-18T23:14:30Z",
+  "generated": "2026-04-20T07:30:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -11,6 +11,22 @@
           "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
           "Content versioning \u2014 know when hub protocols update, diff before upgrading.",
           "Boot sequence extraction \u2014 move hardcoded behavior into user-editable MAPs."
+        ]
+      }
+    },
+    {
+      "version": "0.20.3",
+      "date": "2026-04-20",
+      "title": "Cache Stickiness",
+      "features": {
+        "changed": [
+          "Iterating on your setup is free \u2014 `/reload` keeps your session's cached memory warm, so there's no dollar cost for rapid iteration.",
+          "Body edits apply on your terms \u2014 run `/rebuild` when you want them live this session, or skip it and they land naturally on your next start.",
+          "The restart banner became a quiet statusline tag that tells you exactly what each file change actually needs."
+        ],
+        "added": [
+          "`soma update --yes` for scripted upgrades \u2014 the documented `npm install -g meetsoma@latest && soma update --yes` one-liner now truly works unattended.",
+          "CHANGELOG.md ships with every install \u2014 read what's new without leaving your terminal."
         ]
       }
     },
