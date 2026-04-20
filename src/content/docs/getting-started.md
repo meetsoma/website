@@ -16,6 +16,8 @@ order: 1
 npm install -g meetsoma
 ```
 
+**Already have Soma installed?** See [Updating](/docs/updating) for `npm install -g meetsoma@latest && soma update`.
+
 ## Set Up a Provider
 
 Soma needs an AI provider to work. The fastest option:

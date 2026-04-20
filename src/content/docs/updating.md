@@ -8,9 +8,35 @@ order: 20
 # Updating & Migration
 
 <!-- UPDATE WHEN: update flow changes, doctor behavior changes, migration phases added -->
-<!-- SEAMS: install-architecture.md, doctor.md, getting-started.md -->
+<!-- SEAMS: install-architecture.md, doctor.md, getting-started.md, changelog.md -->
 
 How to keep Soma up to date across your projects.
+
+## Quick upgrade (the one-liner)
+
+Most users want this:
+
+```bash
+npm install -g meetsoma@latest && soma update
+```
+
+That's it. The first half updates the CLI wrapper (thin, ~100KB); the second half pulls the latest agent runtime (extensions, protocols, body templates) into `~/.soma/agent/`. Your project `.soma/` directories are never touched by either command — your customizations are safe.
+
+After updating:
+
+```bash
+soma --version       # Verify the new version
+soma doctor          # (Optional) check that your current project is compatible
+```
+
+If `soma doctor` surfaces a migration, run it — details in [Project Migration](#project-migration) below.
+
+### When to use which command
+
+- `npm install -g meetsoma@latest` — **CLI update only.** Updates the thin wrapper. Run when `soma check-updates` says `CLI stale`. Usually also needed alongside an agent update.
+- `soma update` — **Agent runtime update.** Pulls the latest `~/.soma/agent/` (extensions, protocols, body templates). This is what you want 95% of the time.
+- `soma doctor` — **Project migration.** Run INSIDE a project `.soma/` after updating the agent. Advances the per-project version marker and applies any migrations.
+- `soma check-updates` — **Status only.** Three-layer drift report with recovery hints. No changes made. Run first if you're unsure what needs updating.
 
 ## Checking for Updates
 

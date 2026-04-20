@@ -11,6 +11,8 @@ All notable changes to the Soma agent are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
 
+> **Upgrading:** `npm install -g meetsoma@latest && soma update` — see [Updating](/docs/updating) for details.
+
 ---
 
 ## [Unreleased]
