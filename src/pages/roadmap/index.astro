@@ -58,7 +58,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Cache Stickiness',
     icon: 'protocols',
-    description: '`/reload` no longer invalidates your Anthropic prompt cache. The compiled system prompt is persisted to disk and restored on reload, resume, and fork — reloads become near-free instead of costing ~$1 each. New optional `/rebuild` command forces recompile when you want mid-session body edits to apply. The old intrusive restart toast became a subtle tag on statusline line 3, with severity labels (`/reload`, `/rebuild?`, or `restart`) so you know what the change actually needs.',
+    description: '`/reload` no longer invalidates your Anthropic prompt cache. The compiled system prompt is persisted to disk and restored on reload, resume, and fork — reloads become near-free instead of costing ~$1 each. New optional `/rebuild` command forces recompile when you want mid-session body edits to apply. The old intrusive restart toast became a subtle tag on statusline line 3, with severity labels (`/reload`, `/rebuild?`, or `relaunch`) so you know what the change actually needs — and why.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
   },

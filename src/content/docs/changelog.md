@@ -30,7 +30,7 @@ restart banner moved from an intrusive toast to a subtle statusline tag.
 ### Added
 - **`/rebuild` command** — forces recompile of the system prompt and deletes the disk cache. Optional — only run it if you've edited `body/*.md` mid-session AND you want the change to apply right now. Otherwise `/reload` keeps the prompt sticky and body edits land naturally on your next session.
 - **Disk-backed prompt cache** — `.soma/state/.session-prompt-cache.json` written on first compile, restored on `/reload`, `/resume`, `/fork`. Eliminates the ~$1 cache-invalidation cost per `/reload` cycle.
-- **Severity-aware restart indicator on statusline line 3** — replaced the intrusive "Changes detected" toast with a subtle third-line tag. Labels: `🔄 /reload` (extensions/core .ts), `📝 /rebuild?` (body/*.md — the `?` denotes optional), `🔄 restart` (dist/* or core/*.js — real TUI restart required).
+- **Severity-aware change indicator on statusline line 3** — replaced the intrusive "Changes detected" toast with a subtle third-line tag. Labels: `🔄 /reload` (extensions/core `.ts` — Pi's hot-reload handles it), `📝 /rebuild?` (`body/*.md` — the `?` denotes optional), `⚠ relaunch` (`dist/*` or `core/*.js` — Pi's static imports are frozen at process boot, `/reload` can't help; quit and run `soma` again).
 - **Commands doc — Reload & Rebuild section** — explains the two commands, when to use each, and what the statusline indicators mean.
 
 ### Fixed
