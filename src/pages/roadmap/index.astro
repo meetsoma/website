@@ -58,7 +58,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Cache Stickiness',
     icon: 'protocols',
-    description: '`/reload` no longer invalidates your Anthropic prompt cache. The compiled system prompt is persisted to disk and restored on reload, resume, and fork — reloads become near-free instead of costing ~$1 each. New optional `/rebuild` command forces recompile when you want mid-session body edits to apply. The old intrusive restart toast became a subtle tag on statusline line 3, with severity labels (`/reload`, `/rebuild?`, or `relaunch`) so you know what the change actually needs — and why.',
+    description: 'Iterating on your setup is free. Reload your extensions as often as you want — your session’s cached memory stays warm, so there’s no dollar cost for rapid iteration. Body edits apply on your terms with a new /rebuild command — run it to pick up changes mid-session, skip it and they land naturally on your next start. The statusline quietly tells you what each file change actually needs, so you never guess.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
   },
