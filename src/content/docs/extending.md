@@ -122,17 +122,47 @@ export default function myExtension(pi: ExtensionAPI) {
 | `turn_end` | Agent finishes processing |
 | `message_end` | Message fully rendered |
 | `tool_result` | Tool call completes |
-| `before_agent_start` | Before each agent turn (can modify system prompt) |
+| `before_agent_start` | Before each agent turn — **can modify the system prompt** by returning `{ systemPrompt }` |
 | `session_shutdown` | Session closing |
+
+**Hot-reload:** Pi's `/reload` command re-loads extensions via `jiti.import`
+(mtime-keyed cache). Extension file edits are picked up without restarting
+the process. `core/*.ts` changes *may* hot-reload through the chain; `dist/`
+changes require a full restart.
+
+### Modifying the System Prompt
+
+The `before_agent_start` event is the hook for prompt modification. Return
+a `{ systemPrompt }` object to replace or augment what Pi compiled:
+
+```typescript
+pi.on("before_agent_start", async (event, _ctx) => {
+  // event.systemPrompt is Pi's compiled prompt (may include customPrompt
+  // from .soma/SYSTEM.md + context files + skills XML + date/cwd)
+  const modified = event.systemPrompt + "\n\n<!-- my addition -->";
+  return { systemPrompt: modified };
+});
+```
+
+Pi resets the system prompt to base each turn, so the handler must return
+the full prompt every time — not just the first turn.
+
+Soma's `soma-boot.ts` owns the main path (template-driven compile via
+`_mind.md` → full prompt). New extensions should generally **augment**
+rather than replace, or use Soma's existing compile hooks instead of
+fighting them.
 
 ### Available APIs
 
 | API | What it does |
 |-----|-------------|
 | `pi.registerCommand(name, opts)` | Add a `/command` |
+| `pi.registerTool(def)` | Register a tool (raw — prefer `somaRegisterTool` for Soma tools) |
 | `pi.sendUserMessage(text, opts)` | Inject a message |
 | `pi.appendEntry(type, data)` | Persist state in session |
 | `pi.on(event, handler)` | Listen to lifecycle events |
+| `pi.getActiveTools()` | Tool names enabled in this session |
+| `pi.getAllTools()` | All registered tools (info only — strips `promptSnippet`) |
 | `pi.getThinkingLevel()` | Current thinking level |
 | `ctx.ui.notify(msg, level)` | Show notification |
 | `ctx.ui.setHeader(factory)` | Custom header component |
@@ -141,6 +171,82 @@ export default function myExtension(pi: ExtensionAPI) {
 | `ctx.newSession(opts)` | Create new session |
 
 See the [Pi extension docs](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/extensions.md) for the full API reference.
+
+## Soma Tools
+
+Soma tools are capabilities the agent can call. They're registered through
+Pi's tool API but wrapped by Soma's `somaRegisterTool()` so `_tools.md`
+configuration applies and the full guidance (`promptSnippet` + per-tool
+`promptGuidelines`) reaches the system prompt.
+
+**Write tools with `somaRegisterTool`** — not `pi.registerTool` — whenever
+the tool should be user-configurable or should benefit from the rich
+prompt rendering.
+
+### Writing a Soma tool
+
+```typescript
+import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import { Type } from "@sinclair/typebox";
+import { somaRegisterTool } from "../core/tool-registry.js";
+
+export default function myExt(pi: ExtensionAPI) {
+  somaRegisterTool(pi, {
+    name: "my_tool",
+    label: "My Tool",
+    description: "Long-form explanation the model reads.",
+    promptSnippet: "my_tool: one-line tagline for the 'Available tools' header",
+    promptGuidelines: [
+      "When X, prefer my_tool over bash",
+      "Chain my_tool → read for full context",
+    ],
+    parameters: Type.Object({
+      input: Type.String({ description: "What to process" }),
+    }),
+    executionMode: "parallel",
+    execute: async (_id, { input }, _signal, _onUpdate, _ctx) => {
+      return {
+        content: [{ type: "text" as const, text: `Processed: ${input}` }],
+        details: undefined,
+      };
+    },
+  });
+}
+```
+
+**Fields:**
+- `name` — identifier the model invokes
+- `description` — full explanation (used as fallback in prompt)
+- `promptSnippet` — snappy tagline (primary prompt render)
+- `promptGuidelines` — per-tool mechanics bullets prefixed `[tool_name]` in the prompt
+- `parameters` — TypeBox schema, validated by Pi before `execute` runs
+- `executionMode` — `"parallel"` for read-only (safe concurrent) or `"sequential"` for side-effects
+- `execute` — `(toolCallId, params, signal, onUpdate, ctx) => Promise<AgentToolResult>`
+
+### What `somaRegisterTool` does
+
+1. Reads merged `_tools.md` config from the soma body chain.
+2. If the tool's name is in `## Disabled` **and not hardwired** — skips Pi registration entirely.
+3. Merges any `## Overrides` block onto the definition (`description`, `promptSnippet`, `promptGuidelines`, `executionMode`).
+4. Stores the effective definition in Soma's prompt registry (for `buildToolSection`).
+5. Forwards to `pi.registerTool()` so the tool is invocable.
+
+See [Tools](/docs/tools) for the full `_tools.md` format and the bundled
+Soma tool set.
+
+### `pi.registerTool` vs `somaRegisterTool`
+
+| | `pi.registerTool` | `somaRegisterTool` |
+|---|---|---|
+| Tool is invocable | ✓ | ✓ |
+| Respects `_tools.md` disable | ✗ | ✓ |
+| Applies `_tools.md` overrides | ✗ | ✓ |
+| `promptSnippet` reaches system prompt | ✗ (Pi's `ToolInfo` strips it) | ✓ |
+| `promptGuidelines` reach system prompt | ✗ | ✓ |
+| Appears in `/soma prompt` diagnostics | degraded | full |
+
+Use `pi.registerTool` directly only for experimental one-offs or when
+integrating a third-party library that registers its own tools.
 
 ## Soma's Built-in Extensions
 
@@ -192,6 +298,56 @@ route.emit("my:event", { key: "value" });
 **Commands:** `/route` shows all registered capabilities and signal listeners.
 
 **Why it exists:** Pi's `sendUserMessage()` can't trigger slash commands (by design). The router bridges the gap — command handlers capture capabilities (like `newSession`) and share them with event handlers (like `turn_end`) that need them for features like auto-breathe rotation.
+
+### External tool → Soma bridge (the inbox)
+
+Soma's router includes a **drop-in inbox** for external tools (CLI
+scripts, CI jobs, browser automation, file watchers) to inject signals
+into a running Soma session.
+
+**How it works:**
+
+- On `session_start`, `soma-route.ts` generates an 8-char session token
+  and writes it to `.soma/inbox/.token`. The inbox directory is
+  gitignored automatically.
+- External tools drop JSON files into `.soma/inbox/`:
+  ```json
+  {
+    "signal": "ci:result",
+    "token": "a1b2c3d4",
+    "data": { "status": "passed", "tests": 45 },
+    "ts": "2026-04-19T10:00:00Z",
+    "source": "github-actions"
+  }
+  ```
+- On every `turn_end`, `soma-route.ts` reads the inbox, verifies each
+  file's token + signal allowlist, emits valid signals via the router,
+  and deletes the consumed file.
+- Any extension listening via `route.on(signal, handler)` receives the
+  payload.
+
+**Allowed signals** (hard allowlist — not configurable, enforced in
+`soma-route.ts:INBOX_ALLOWED_SIGNALS`):
+
+| Signal | Intended use |
+|---|---|
+| `studio:vote` | Design-review votes from a studio tool |
+| `studio:feedback` | Design-review comments |
+| `ci:result` | CI build/test outcomes |
+| `deploy:status` | Deployment status updates |
+| `fs:changed` | File watcher notifications |
+| `browser:capture` | Browser automation screenshots |
+| `scheduled:task` | Cron/scheduled job output |
+| `external:notify` | Generic custom notification |
+
+Internal signals (session management, guard, breathe) are never
+injectable from outside — hard boundary.
+
+**Commands:** `/route inbox` shows the current token, pending message
+count, and allowed signals list.
+
+**Use case:** let a VS Code extension, browser tool, or CI job poke a
+running Soma without opening a socket or proxy.
 
 ### soma-guard.ts
 

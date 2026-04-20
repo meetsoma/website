@@ -31,6 +31,8 @@ soma code tsc-errors [path]            # TypeScript errors with code context
 
 **Use `map` before editing any file** — it gives you the function index so you know where to make changes.
 
+📖 **Full guide:** [Code Navigator](/docs/guides/code-navigator) — per-command docs, examples, why it exists, troubleshooting.
+
 ### soma focus — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-focus)
 
 Seam-traced boot priming. Run **before** starting a session to focus the agent on a specific topic. Traces the keyword through memory, scores relevance, and generates heat overrides so the right muscles, protocols, and MAPs load.

@@ -73,6 +73,33 @@ These are **slash commands** used inside the Soma TUI during a session.
 | `/soma <command>` | Run a drop-in command from `.soma/amps/scripts/commands/`. See below. |
 | `/status` | Show session stats - context usage, turn count, uptime. Provided by `soma-statusline.ts`. |
 
+## Reload & Rebuild
+
+Two commands that look similar but do different things. Added in v0.20.3 —
+the distinction matters because one is free and one costs a cache write.
+
+| Command | Does | When to use |
+|---|---|---|
+| `/reload` | Re-imports extensions, reloads settings + skills + themes + keybindings + prompts. **Preserves the compiled system prompt** (restored from disk cache). | After editing an extension (`extensions/*.ts`) or tweaking settings. Free — no Anthropic cache invalidation. |
+| `/rebuild` | Recompiles the system prompt from `body/*.md` and deletes the disk cache. Takes effect on the next turn. | **Optional.** Only when you've edited `body/*.md` mid-session AND you want the change to apply right now. Costs one cache write (~$1 on Sonnet/Opus). If you can wait for the next session, skip it. |
+
+`/reload` covers everything Pi hot-reloads — extensions, skills, prompts,
+themes, keybindings (authority: Pi's extensions docs). Extensions are
+loaded via [jiti](https://github.com/unjs/jiti), which is mtime-keyed,
+so transitive `core/*.ts` imports refresh along with them. If you
+changed a `.ts` file, `/reload` picks it up.
+
+### Statusline line 3 — what each label means
+
+When a commit (or your own edits) touches files the running session might
+want to pick up, line 3 of the statusline shows a short tag. Severity-labeled:
+
+| Tag | What changed | What to do |
+|---|---|---|
+| `🔄 /reload` | `extensions/*.ts` or `core/*.ts` | Run `/reload` — takes <1s, no cost. |
+| `📝 /rebuild?` | `body/*.md` | **Optional.** The `?` means "only if you want it applied right now." Skip freely if the edit is for your next session (preloads, journal, identity tweaks). |
+| `⚠ relaunch` | `dist/*` or `core/*.js` | `/reload` can't help — Pi's static imports are frozen at process boot. `/exit`, then run `soma` again. Only happens when you've run `build-dist.mjs` or bumped Pi; normal source edits never trigger this. |
+
 ## Drop-in Commands
 
 Drop a `.sh` script into `.soma/amps/scripts/commands/` and it becomes a `/soma <name>` command - no restart needed.
