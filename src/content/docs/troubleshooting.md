@@ -245,13 +245,17 @@ Or update the guard setting in `.soma/settings.json`.
 
 ## Extensions
 
-### "Restart required" notification
+### Statusline shows `🔄 /reload`, `📝 /rebuild?`, or `⚠ relaunch`
 
-An extension's source file changed (usually after `git pull` or a commit that touches `extensions/*.ts` or `core/*.ts`). Restart the session:
+The third line of your statusline (v0.20.3+) surfaces a tag when commits or edits touch files the running session might want to pick up. Each tag tells you exactly what to do:
 
-```bash
-soma          # or soma inhale
-```
+| Tag | What changed | What to do |
+|---|---|---|
+| `🔄 /reload` | `extensions/*.ts` or `core/*.ts` | Run `/reload` — takes <1s, no cost. [Pi's hot-reload re-imports via jiti, mtime-keyed.] |
+| `📝 /rebuild?` | `body/*.md` | **Optional.** The `?` means "only if you want the change applied right now." Skip freely if the edit is for your next session (preloads, journal, identity tweaks land naturally on fresh boot). |
+| `⚠ relaunch` | `dist/*` or `core/*.js` | `/reload` can't help — Pi's static imports are frozen at process boot. `/exit`, then run `soma` again. Only appears after `build-dist.mjs` or a Pi upgrade; normal source edits never trigger this. |
+
+See [Reload & Rebuild](/docs/commands#reload--rebuild) for the full command reference.
 
 ### Extension errors in debug log
 
@@ -261,6 +265,17 @@ soma          # or soma inhale
 # check .soma/debug/ for logs
 /soma debug off
 ```
+
+### `/reload` costs $1 every time I run it (pre-v0.20.3)
+
+Fixed in v0.20.3 (SX-495). The compiled system prompt is now persisted to
+`.soma/state/.session-prompt-cache.json` and restored across `/reload`, `resume`,
+and `fork`. Reloads are near-free. Upgrade: `npm install -g meetsoma@latest`
+and `soma update`.
+
+If you've edited `body/*.md` mid-session and want the change applied now, use
+`/rebuild` (the one place that intentionally pays the ~$1 cache-write cost).
+Otherwise, the body edit lands on your next session automatically.
 
 ## Nuclear Options
 
