@@ -33,7 +33,7 @@ They weren't broken in the *"we have bugs"* sense. They were broken in the *"the
 
 ## The cause
 
-All five pointed at `repos/cli/`. We'd retired that repo weeks earlier — merged it into `repos/agent/npm/` — and deleted the old path. Every suite that had referenced the old location now crashed on setup. Before any real assertion. Before testing anything.
+All five pointed at `repos/cli/`. We'd retired that repo days earlier — merged it into `repos/agent/npm/` — and deleted the old path. Every suite that had referenced the old location now crashed on setup. Before any real assertion. Before testing anything.
 
 CI reported them as failing. Nobody chased them because "known broken" is a category we all recognize. The red X had become decoration.
 

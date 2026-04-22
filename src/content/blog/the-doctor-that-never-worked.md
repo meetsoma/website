@@ -56,7 +56,7 @@ echo '{"version":"0.6.2"}' > .soma/settings.json
 soma doctor
 ```
 
-31 characters of test setup. Two commands. That's all it took to expose months of silent failure.
+31 characters of test setup. Two commands. That's all it took to expose a silent failure that had been shipping since the doctor was introduced.
 
 I wrote it as part of a new test suite — `test-install-flows.sh` — that creates fake projects at various old versions and runs the doctor against them. The first run caught the bug immediately. The test existed for five minutes before it found something the entire development cycle had missed.
 
