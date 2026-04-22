@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="The tools were always there. Now callable. (mobile)">
+  <defs>
+    <radialGradient id="bgM" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#1a2230"/>
+      <stop offset="100%" stop-color="#0a0d14"/>
+    </radialGradient>
+    <radialGradient id="body-gM" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#6898be"/>
+      <stop offset="50%" stop-color="#5282a8"/>
+      <stop offset="100%" stop-color="#3e6c92"/>
+    </radialGradient>
+    <radialGradient id="spec-gM" cx="28%" cy="24%" r="16%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="moon-gM" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#7cb2d4"/>
+      <stop offset="50%" stop-color="#669cc0"/>
+      <stop offset="100%" stop-color="#5086aa"/>
+    </radialGradient>
+    <radialGradient id="moon-spec-gM" cx="28%" cy="24%" r="18%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="1020" fill="url(#bgM)"/>
+  <pattern id="dotsM" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="15" cy="15" r="0.4" fill="#6494be" opacity="0.08"/>
+  </pattern>
+  <rect width="600" height="1020" fill="url(#dotsM)"/>
+
+  <!-- ═══ VERSION TAG top ═══ -->
+  <text x="300" y="75" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 19px; fill: #6494be; letter-spacing: 6px; opacity: 0.7; font-weight: 600;">v0.21.0</text>
+
+  <!-- ═══ MASCOT — top center ═══ -->
+  <g transform="translate(100, 115) scale(1.05)">
+    <circle cx="190" cy="175" r="130" fill="url(#body-gM)"/>
+    <circle cx="190" cy="175" r="130" fill="url(#spec-gM)"/>
+
+    <!-- Sunglasses -->
+    <rect x="102" y="140" width="78" height="48" rx="10" fill="#0e1a26" stroke="#080f18" stroke-width="3"/>
+    <rect x="192" y="138" width="78" height="48" rx="10" fill="#0e1a26" stroke="#080f18" stroke-width="3"/>
+    <path d="M180,162 Q187,150 192,162" fill="none" stroke="#080f18" stroke-width="4"/>
+    <line x1="102" y1="159" x2="62" y2="149" stroke="#080f18" stroke-width="4" stroke-linecap="round"/>
+    <line x1="270" y1="157" x2="305" y2="147" stroke="#080f18" stroke-width="4" stroke-linecap="round"/>
+    <rect x="110" y="147" width="22" height="10" rx="4" fill="white" opacity="0.06"/>
+    <rect x="200" y="145" width="22" height="10" rx="4" fill="white" opacity="0.06"/>
+
+    <!-- Smirk -->
+    <path d="M158,222 Q190,250 232,215" fill="none" stroke="white" stroke-width="5.5" stroke-linecap="round" opacity="0.55"/>
+
+    <!-- Moon -->
+    <circle cx="302" cy="50" r="50" fill="url(#moon-gM)"/>
+    <circle cx="302" cy="50" r="50" fill="url(#moon-spec-gM)"/>
+    <rect x="278" y="40" width="22" height="16" rx="4" fill="#0e1a26" stroke="#080f18" stroke-width="1.5"/>
+    <rect x="304" y="39" width="22" height="16" rx="4" fill="#0e1a26" stroke="#080f18" stroke-width="1.5"/>
+    <path d="M300,47 Q302,43 304,47" fill="none" stroke="#080f18" stroke-width="2"/>
+    <line x1="278" y1="47" x2="265" y2="43" stroke="#080f18" stroke-width="2" stroke-linecap="round"/>
+    <line x1="326" y1="46" x2="338" y2="42" stroke="#080f18" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- ═══ MAIN TEXT — centered, smaller for mobile ═══ -->
+  <text x="300" y="580" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-size: 54px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">The tools were</text>
+  <text x="300" y="648" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-size: 54px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">always there.</text>
+  <text x="300" y="728" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-size: 54px; fill: #f0883e; font-weight: 700; letter-spacing: -1.5px;">Now callable.</text>
+
+  <!-- Command hint — wrapped for mobile width -->
+  <text x="300" y="800" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 0.5px;">soma tool</text>
+  <text x="300" y="825" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 0.5px;">capabilities()</text>
+  <text x="300" y="850" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 0.5px;">soma new muscle</text>
+
+  <!-- ═══ BRAND BAR ═══ -->
+  <line x1="100" y1="945" x2="500" y2="945" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="100" y="980" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="980" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>
