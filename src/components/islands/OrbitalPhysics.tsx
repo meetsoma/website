@@ -514,25 +514,27 @@ export default function OrbitalPhysics() {
         ))}
       </svg>
 
-      {/* Center: Somaverse — sits above geometric center, between you (NW) and pi (NE) */}
+      {/* Center: Somaverse — centered at true orbital center (50%/50%).
+          Badge sits at the concentric-ring center; inner-orbit pills
+          (you NW, pi NE, memory S) orbit around it as peers. */}
       <div
         style={{
           position: 'absolute',
-          top: '42%',
+          top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '6px',
+          gap: '8px',
           zIndex: 2,
           pointerEvents: 'none',
         }}
       >
         <svg
           viewBox="0 0 100 100"
-          width="108"
-          height="108"
+          width="96"
+          height="96"
           style={{
             filter: 'drop-shadow(0 0 26px rgba(240, 200, 102, 0.28))',
             pointerEvents: 'auto',
@@ -547,8 +549,8 @@ export default function OrbitalPhysics() {
               <stop offset="100%" stop-color="#f0c866"/>
             </linearGradient>
           </defs>
-          <circle cx="50" cy="50" r="47" fill="none" stroke="url(#gcw-grad)" stroke-width="3"/>
-          <text x="50" y="74" text-anchor="middle" fill="url(#gcw-grad)" font-size="72" font-weight="800" font-family="Manrope, system-ui, sans-serif">{"\u03C3"}</text>
+          <circle cx="50" cy="50" r="46" fill="none" stroke="url(#gcw-grad)" stroke-width="2.75"/>
+          <text x="50" y="68" text-anchor="middle" fill="url(#gcw-grad)" font-size="58" font-weight="800" font-family="Manrope, system-ui, sans-serif">{"\u03C3"}</text>
         </svg>
         <span
           style={{
@@ -563,17 +565,19 @@ export default function OrbitalPhysics() {
         </span>
       </div>
 
-      {/* Mascot — orbiting moon above-right of the badge */}
+      {/* Mascot — orbiting moon, NE of Somaverse badge.
+          Offset far enough from center that it clears the 'pi / runtime'
+          inner-orbit pill while staying visually attached as a satellite. */}
       <img
         src="/media/soma-logo-mascot.svg"
         alt=""
-        width="52"
-        height="52"
+        width="60"
+        height="60"
         className="orbital-center-float"
         style={{
           position: 'absolute',
-          top: 'calc(50% - 90px)',
-          left: 'calc(50% + 35px)',
+          top: 'calc(50% - 78px)',
+          left: 'calc(50% + 72px)',
           zIndex: 3,
           pointerEvents: 'none',
           filter: 'drop-shadow(0 0 14px rgba(124, 178, 212, 0.2))',
