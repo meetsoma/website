@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-22T00:00:00Z",
+  "generated": "2026-04-22T22:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -7,10 +7,37 @@
       "date": "",
       "features": {
         "added": [
-          "Recall \u2014 persistent memory via Somadian graph store. Cross-session, cross-project knowledge.",
-          "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
-          "Content versioning \u2014 know when hub protocols update, diff before upgrading.",
-          "Boot sequence extraction \u2014 move hardcoded behavior into user-editable MAPs."
+          "Recall — persistent memory via Somadian graph store. Cross-session, cross-project knowledge.",
+          "Async agent comms — Soma reaches you on your phone when decisions are needed.",
+          "Content versioning — know when hub protocols update, diff before upgrading.",
+          "Boot sequence extraction — move hardcoded behavior into user-editable MAPs.",
+          "Child MLR writing — background children persist a Memory Lane Reflection on exit, so `harvest` returns the real reflection instead of a placeholder.",
+          "Statusline children-count + cost badge — at-a-glance visibility into background fleet and spend.",
+          "AppleScript terminal drivers (ghostty, iTerm, Terminal.app) — macOS-native background panes for users who want OS-level windows."
+        ]
+      }
+    },
+    {
+      "version": "0.21.1",
+      "date": "2026-04-22",
+      "title": "Children control panel + tmux baseline",
+      "features": {
+        "added": [
+          "Background children now work for every user — tmux is the shipping baseline driver. Detached sessions by default; attach on demand with `tmux attach -t soma-child-<id>` to watch a child work.",
+          "`children tail / steer / kill / harvest` — completes the control panel. Peek a child's pane without focusing it, inject a steering message, abort a stuck child, or read the MLR + auto-cleanup the registry entry.",
+          "`soma terminals` CLI — detect, configure, and diagnose terminal drivers. `soma terminals prefer tmux` persists your choice to `~/.soma/settings.json`.",
+          "`[Soma Boot — /reloaded]` boot message — when you run `/reload`, the agent immediately knows the cache was just busted and any 'needs /reload' work from the prior turn is now live.",
+          "Background-delegation guide (`docs/guides/background-delegation.md`) — full user-facing walkthrough with install hints, attach-on-demand pattern, and troubleshooting."
+        ],
+        "changed": [
+          "Model aliases (`haiku`, `sonnet`, `opus`) pre-resolve to fully-qualified ids before spawning children — no more accidental bedrock routing in the child's environment.",
+          "`children list` auto-reconciles against driver state on every call — a closed pane flips to `completed` without needing an explicit `kill`."
+        ],
+        "fixed": [
+          "`delegate(background:true)` was broken since Phase A shipped — cmux path resolution never resolved in the extension context. Fixed; driver-backed spawn now works end-to-end.",
+          "Boot resume delta-diff branch was silently dead since written — filter read the wrong field (`.content` vs `.data`). Resume with changes now actually shows the delta.",
+          "pi-tui: tall clipboard screenshots no longer cover the TUI (inline image height capped via `PI_TUI_MAX_IMAGE_ROWS`).",
+          "Compaction summaries no longer accumulate macOS clipboard paste-temp and `/tmp` screenshot paths across turns."
         ]
       }
     },
@@ -21,20 +48,20 @@
       "features": {
         "added": [
           "Recent Ancestry auto-injects the last 3 session-log entries into the preload, so the next-self sees continuity without paying the cached-prefix cost.",
-          "`soma tool` from the shell + `capabilities()` from inside a session \u2014 two callable ways to discover what tools the agent has registered.",
-          "`soma new muscle <name>` and `soma new protocol <name>` \u2014 scaffold a new muscle or protocol in one command, frontmatter pre-filled.",
+          "`soma tool` from the shell + `capabilities()` from inside a session — two callable ways to discover what tools the agent has registered.",
+          "`soma new muscle <name>` and `soma new protocol <name>` — scaffold a new muscle or protocol in one command, frontmatter pre-filled.",
           "Background delegation: `delegate(background:true)` spawns a child soma in a new pane and returns immediately; `children list` shows status across sessions.",
-          "`soma children spawn / list / watch / tail / kill` shipped to all users \u2014 shell-side and in-session views share one registry."
+          "`soma children spawn / list / watch / tail / kill` shipped to all users — shell-side and in-session views share one registry."
         ],
         "changed": [
           "Agent Notes moved out of `body/ecosystem.md` to `memory/notes/soma-log.md`. Cached prompt prefix shrank ~25% per boot.",
-          "Migration system became data-driven \u2014 `## Doctor Actions` blocks in the migration map declare what doctor should backfill. New settings additions no longer need CLI changes.",
-          "Terminal tab title now reads `\u03c3 - <session> - <cwd>`."
+          "Migration system became data-driven — `## Doctor Actions` blocks in the migration map declare what doctor should backfill. New settings additions no longer need CLI changes.",
+          "Terminal tab title now reads `σ - <session> - <cwd>`."
         ],
         "fixed": [
-          "Pi's preventive OAuth-billing boot warning suppressed \u2014 real billing errors are still caught at runtime and shown contextually.",
+          "Pi's preventive OAuth-billing boot warning suppressed — real billing errors are still caught at runtime and shown contextually.",
           "13 settings keys backfilled idempotently for projects upgrading from any version since v0.11. User customizations preserved.",
-          "5 Pro scripts (soma seam, refactor, scrape, github, browser) work for every install during the v0.21.x beta \u2014 no friction."
+          "5 Pro scripts (soma seam, refactor, scrape, github, browser) work for every install during the v0.21.x beta — no friction."
         ]
       }
     },
@@ -44,13 +71,13 @@
       "title": "Cache Stickiness",
       "features": {
         "changed": [
-          "Iterating on your setup is free \u2014 `/reload` keeps your session's cached memory warm, so there's no dollar cost for rapid iteration.",
-          "Body edits apply on your terms \u2014 run `/rebuild` when you want them live this session, or skip it and they land naturally on your next start.",
+          "Iterating on your setup is free — `/reload` keeps your session's cached memory warm, so there's no dollar cost for rapid iteration.",
+          "Body edits apply on your terms — run `/rebuild` when you want them live this session, or skip it and they land naturally on your next start.",
           "The restart banner became a quiet statusline tag that tells you exactly what each file change actually needs."
         ],
         "added": [
-          "`soma update --yes` for scripted upgrades \u2014 the documented `npm install -g meetsoma@latest && soma update --yes` one-liner now truly works unattended.",
-          "CHANGELOG.md ships with every install \u2014 read what's new without leaving your terminal."
+          "`soma update --yes` for scripted upgrades — the documented `npm install -g meetsoma@latest && soma update --yes` one-liner now truly works unattended.",
+          "CHANGELOG.md ships with every install — read what's new without leaving your terminal."
         ]
       }
     },
@@ -60,12 +87,12 @@
       "title": "Pi-Native Prompts & Three-Layer Version UX",
       "features": {
         "changed": [
-          "Pi assembles the system prompt now \u2014 Soma writes SYSTEM.md and APPEND_SYSTEM.md and Pi auto-discovers them. Faster boots, cheaper child agents.",
-          "`soma check-updates` shows three layers \u2014 CLI, agent, workspace \u2014 with the fix command for any drift.",
+          "Pi assembles the system prompt now — Soma writes SYSTEM.md and APPEND_SYSTEM.md and Pi auto-discovers them. Faster boots, cheaper child agents.",
+          "`soma check-updates` shows three layers — CLI, agent, workspace — with the fix command for any drift.",
           "`soma doctor` quietly bumps stale workspace markers when no migration's actually needed."
         ],
         "added": [
-          "Eight child roles now \u2014 auditor joined for post-release review.",
+          "Eight child roles now — auditor joined for post-release review.",
           "Five built-in code-search tools: code_find, code_map, code_refs, code_structure, code_blast."
         ]
       }
@@ -77,7 +104,7 @@
       "features": {
         "added": [
           "Three more roles: planner, doc_writer, reflector. Seven total.",
-          "Curator can auto-apply proposals in one command \u2014 no second pass to integrate findings.",
+          "Curator can auto-apply proposals in one command — no second pass to integrate findings.",
           "Per-role scratchpads track pending amendments at a glance."
         ]
       }
@@ -112,7 +139,7 @@
       "title": "Delegation MVP & Sandbox",
       "features": {
         "added": [
-          "`delegate` tool \u2014 Soma can spawn a child agent for bounded work.",
+          "`delegate` tool — Soma can spawn a child agent for bounded work.",
           "Role files (`body/children/<role>.md`) define each child's persona, tools, and model.",
           "Sandbox isolation for safe delegation testing."
         ]
@@ -124,7 +151,7 @@
       "title": "Pi 0.67.68 & Release Parity",
       "features": {
         "changed": [
-          "Pi runtime \u2192 0.67.68 \u2014 better network retry, stable date format, tool-call error handling.",
+          "Pi runtime → 0.67.68 — better network retry, stable date format, tool-call error handling.",
           "Release script keeps dev and main in sync. Main can no longer fall a release behind."
         ],
         "fixed": [
@@ -139,10 +166,10 @@
       "title": "Shipping Integrity",
       "features": {
         "fixed": [
-          "Fresh `npm install -g meetsoma` works again \u2014 was shipping broken tarballs."
+          "Fresh `npm install -g meetsoma` works again — was shipping broken tarballs."
         ],
         "changed": [
-          "`soma init` sets up your project; `soma update` updates the runtime \u2014 they're separate commands now.",
+          "`soma init` sets up your project; `soma update` updates the runtime — they're separate commands now.",
           "Pi runtime pinned to your Soma version. Doctor flags drift instead of silently shipping stale."
         ],
         "added": [
@@ -156,12 +183,12 @@
       "title": "Model Switching & Opus 4.7",
       "features": {
         "added": [
-          "`soma model` command \u2014 switch models from CLI with fuzzy matching.",
+          "`soma model` command — switch models from CLI with fuzzy matching.",
           "Claude Opus 4.7 with adaptive thinking.",
           "Upstream audit tooling for tracking Pi version drift."
         ],
         "changed": [
-          "Smarter prompt caching \u2014 tool changes no longer invalidate the system prompt."
+          "Smarter prompt caching — tool changes no longer invalidate the system prompt."
         ]
       }
     },
@@ -171,7 +198,7 @@
       "title": "Patch",
       "features": {
         "fixed": [
-          "Image budget auto-compact loop \u2014 guard against repeated compact triggers"
+          "Image budget auto-compact loop — guard against repeated compact triggers"
         ]
       }
     },
@@ -181,7 +208,7 @@
       "title": "Somaverse Edition",
       "features": {
         "added": [
-          "`soma login` \u2014 pair your agent with Somaverse through a cloud relay.",
+          "`soma login` — pair your agent with Somaverse through a cloud relay.",
           "28 workspace + browser tools through the hub proxy.",
           "Device-key auth for automatic hub mode."
         ]
@@ -221,10 +248,10 @@
       "date": "2026-04-14",
       "features": {
         "added": [
-          "Smarter error messages \u2014 raw API errors now show clear, actionable guidance instead of JSON dumps.",
-          "Auth-aware billing \u2014 detects your plan type (subscription vs API key) and handles billing hiccups accordingly.",
-          "Auto-retry on transient errors \u2014 session startup issues resolve themselves without manual intervention.",
-          "Runtime integrity checks \u2014 catches version drift before it ships."
+          "Smarter error messages — raw API errors now show clear, actionable guidance instead of JSON dumps.",
+          "Auth-aware billing — detects your plan type (subscription vs API key) and handles billing hiccups accordingly.",
+          "Auto-retry on transient errors — session startup issues resolve themselves without manual intervention.",
+          "Runtime integrity checks — catches version drift before it ships."
         ]
       }
     },
@@ -233,11 +260,11 @@
       "date": "2026-04-13",
       "features": {
         "added": [
-          "Cache health tracking \u2014 see cache performance in the statusline. Alerts on costly invalidations.",
-          "Idle session detection \u2014 auto-shutdown prevents runaway sessions."
+          "Cache health tracking — see cache performance in the statusline. Alerts on costly invalidations.",
+          "Idle session detection — auto-shutdown prevents runaway sessions."
         ],
         "changed": [
-          "Major cost fix \u2014 stopped a $152/day cache bleed from image handling. Sessions are dramatically cheaper."
+          "Major cost fix — stopped a $152/day cache bleed from image handling. Sessions are dramatically cheaper."
         ]
       }
     },
@@ -246,14 +273,14 @@
       "date": "2026-04-12",
       "features": {
         "added": [
-          "soul.md replaces SOMA.md \u2014 identity is discovered from your codebase, not configured.",
-          "Minimal first-run boot \u2014 new projects start lean, Soma learns through use.",
-          "soma session tool \u2014 strip images from session logs (16MB \u2192 2.6MB), list and analyze sessions.",
-          "11 bundled scripts (was 6) \u2014 more tools out of the box.",
-          "Extension allowlist \u2014 control which extensions load, doctor reports unlisted ones."
+          "soul.md replaces SOMA.md — identity is discovered from your codebase, not configured.",
+          "Minimal first-run boot — new projects start lean, Soma learns through use.",
+          "soma session tool — strip images from session logs (16MB → 2.6MB), list and analyze sessions.",
+          "11 bundled scripts (was 6) — more tools out of the box.",
+          "Extension allowlist — control which extensions load, doctor reports unlisted ones."
         ],
         "changed": [
-          "Intentional preloads \u2014 `soma inhale` loads memory on purpose, not automatically."
+          "Intentional preloads — `soma inhale` loads memory on purpose, not automatically."
         ]
       }
     },
@@ -262,15 +289,15 @@
       "date": "2026-04-10",
       "features": {
         "added": [
-          "Soma themes \u2014 sky-blue accent, custom dark and light palettes.",
-          "soma github \u2014 scan GitHub repos without cloning: structure, map, deps, audit.",
-          "Keepalive auto-pause \u2014 stops pinging on API errors to prevent runaway sessions.",
-          "Docker sandbox \u2014 isolated E2E testing for pre-release verification.",
-          "Project health dashboard \u2014 soma-health.sh shows project state at a glance."
+          "Soma themes — sky-blue accent, custom dark and light palettes.",
+          "soma github — scan GitHub repos without cloning: structure, map, deps, audit.",
+          "Keepalive auto-pause — stops pinging on API errors to prevent runaway sessions.",
+          "Docker sandbox — isolated E2E testing for pre-release verification.",
+          "Project health dashboard — soma-health.sh shows project state at a glance."
         ],
         "changed": [
-          "Pi runtime updated to 0.66.1 \u2014 bug fixes, no breaking changes.",
-          "Scripts reorganized \u2014 dev scripts separated from bundled scripts."
+          "Pi runtime updated to 0.66.1 — bug fixes, no breaking changes.",
+          "Scripts reorganized — dev scripts separated from bundled scripts."
         ]
       }
     },
@@ -279,14 +306,14 @@
       "date": "2026-04-04",
       "features": {
         "added": [
-          "Inbox system \u2014 agents can leave messages for each other across sessions.",
-          "Intentional preloads \u2014 new autoInject setting controls when memory loads.",
-          "7 new documentation pages \u2014 scripts, sessions, inbox, workspaces, and more.",
-          "Script drift detection \u2014 catches when installed scripts diverge from source."
+          "Inbox system — agents can leave messages for each other across sessions.",
+          "Intentional preloads — new autoInject setting controls when memory loads.",
+          "7 new documentation pages — scripts, sessions, inbox, workspaces, and more.",
+          "Script drift detection — catches when installed scripts diverge from source."
         ],
         "changed": [
-          "TL;DR replaces Digest \u2014 cleaner warm-tier format across all AMPS content.",
-          "Documentation accuracy overhaul \u2014 30+ stale references fixed."
+          "TL;DR replaces Digest — cleaner warm-tier format across all AMPS content.",
+          "Documentation accuracy overhaul — 30+ stale references fixed."
         ]
       }
     },
@@ -295,13 +322,13 @@
       "date": "2026-04-02",
       "features": {
         "added": [
-          "Auto-exhale on idle \u2014 session saves itself when keepalive runs out.",
-          "Keepalive limits \u2014 configurable max pings to prevent runaway sessions.",
-          "MAP system \u2014 workflow automation maps for repeatable dev processes."
+          "Auto-exhale on idle — session saves itself when keepalive runs out.",
+          "Keepalive limits — configurable max pings to prevent runaway sessions.",
+          "MAP system — workflow automation maps for repeatable dev processes."
         ],
         "changed": [
-          "Doctor improvements \u2014 better migration detection and template comparison.",
-          "Warm content format unified \u2014 consistent TL;DR loading across protocols and muscles."
+          "Doctor improvements — better migration detection and template comparison.",
+          "Warm content format unified — consistent TL;DR loading across protocols and muscles."
         ]
       }
     },
@@ -310,17 +337,17 @@
       "date": "2026-04-02",
       "features": {
         "added": [
-          "soma doctor \u2014 project health check with automatic migration for version upgrades.",
-          "soma status / soma health \u2014 infrastructure health at a glance.",
-          "soma --version and soma --help \u2014 proper CLI help system.",
-          "Migration phases \u2014 automatic settings and template updates across versions.",
-          "First-breath template \u2014 guides the agent's first session in a new project.",
-          "Warm AMPS \u2014 protocols and muscles load by temperature tier (hot/warm/cold).",
-          "6 new test suites \u2014 doctor, settings, protocols, muscles, identity, migrations."
+          "soma doctor — project health check with automatic migration for version upgrades.",
+          "soma status / soma health — infrastructure health at a glance.",
+          "soma --version and soma --help — proper CLI help system.",
+          "Migration phases — automatic settings and template updates across versions.",
+          "First-breath template — guides the agent's first session in a new project.",
+          "Warm AMPS — protocols and muscles load by temperature tier (hot/warm/cold).",
+          "6 new test suites — doctor, settings, protocols, muscles, identity, migrations."
         ],
         "changed": [
-          "CLI routing overhaul \u2014 commands discover scripts automatically.",
-          "Starter content updated \u2014 better defaults for new projects."
+          "CLI routing overhaul — commands discover scripts automatically.",
+          "Starter content updated — better defaults for new projects."
         ]
       }
     },
@@ -329,11 +356,11 @@
       "date": "2026-04-01",
       "features": {
         "added": [
-          "soma --help rewrite \u2014 shows scripts, commands, and usage.",
-          "soma-theme.sh \u2014 switch terminal color themes."
+          "soma --help rewrite — shows scripts, commands, and usage.",
+          "soma-theme.sh — switch terminal color themes."
         ],
         "changed": [
-          "DNA.md rewrite \u2014 clearer project conventions template."
+          "DNA.md rewrite — clearer project conventions template."
         ]
       }
     },
@@ -342,14 +369,14 @@
       "date": "2026-04-01",
       "features": {
         "added": [
-          "/inhale guard \u2014 warns when no preload exists or preload is stale.",
-          "5 new scripts \u2014 soma-seam, soma-reflect, soma-query, soma-focus, soma-plans.",
-          "soma-code v2.0 \u2014 blast radius analysis, TypeScript error context, improved refs.",
+          "/inhale guard — warns when no preload exists or preload is stale.",
+          "5 new scripts — soma-seam, soma-reflect, soma-query, soma-focus, soma-plans.",
+          "soma-code v2.0 — blast radius analysis, TypeScript error context, improved refs.",
           "Slash command usage hints for 10 commands."
         ],
         "changed": [
           "Pi runtime updated to 0.64.0 with new extension APIs.",
-          "Semver discipline \u2014 feature releases bump minor version."
+          "Semver discipline — feature releases bump minor version."
         ]
       }
     },
@@ -358,14 +385,14 @@
       "date": "2026-03-30",
       "features": {
         "added": [
-          "/soma doctor \u2014 migration check with auto-run and confirmation.",
-          "Monorepo-aware first breath \u2014 detects and lists sub-projects.",
-          "Richer preload template \u2014 Weather, Who You Were, Orient From sections.",
-          "Body template scaffolding \u2014 section headers in body.md and voice.md."
+          "/soma doctor — migration check with auto-run and confirmation.",
+          "Monorepo-aware first breath — detects and lists sub-projects.",
+          "Richer preload template — Weather, Who You Were, Orient From sections.",
+          "Body template scaffolding — section headers in body.md and voice.md."
         ],
         "changed": [
           "System prompt budget raised from 4,000 to 10,000 tokens.",
-          "Init UX \u2014 detects global vs parent .soma/, three-way prompt."
+          "Init UX — detects global vs parent .soma/, three-way prompt."
         ]
       }
     },
@@ -374,10 +401,10 @@
       "date": "2026-03-29",
       "features": {
         "added": [
-          "Init UX \u2014 prompt before scaffolding, parent .soma/ inheritance.",
-          "Pi upstream sync \u2014 71 commits, built-in tools as extensions.",
-          "Protocol coaching voice \u2014 14 protocols rewritten from spec to guidance.",
-          "Command provenance \u2014 /soma status shows which extension owns each command."
+          "Init UX — prompt before scaffolding, parent .soma/ inheritance.",
+          "Pi upstream sync — 71 commits, built-in tools as extensions.",
+          "Protocol coaching voice — 14 protocols rewritten from spec to guidance.",
+          "Command provenance — /soma status shows which extension owns each command."
         ]
       }
     },
@@ -386,10 +413,10 @@
       "date": "2026-03-28",
       "features": {
         "added": [
-          "soma inhale \u2014 CLI preload management with --list and partial name match.",
-          "soma map \u2014 top-level MAP subcommand with --list and prompt config.",
-          "Settings-driven heat overrides \u2014 per-project AMPS heat control.",
-          "Statusline preload indicator \u2014 shows save status, smart /exhale detection."
+          "soma inhale — CLI preload management with --list and partial name match.",
+          "soma map — top-level MAP subcommand with --list and prompt config.",
+          "Settings-driven heat overrides — per-project AMPS heat control.",
+          "Statusline preload indicator — shows save status, smart /exhale detection."
         ]
       }
     },
@@ -398,10 +425,10 @@
       "date": "2026-03-23",
       "features": {
         "added": [
-          "Hub CLI \u2014 /hub install, /hub share, /list remote for community content.",
-          "Heat auto-detect \u2014 protocols and muscles automatically get temperature tiers.",
-          "soma-code.sh \u2014 codebase navigator with map, find, refs, replace.",
-          "Session export \u2014 /export saves conversation as styled HTML."
+          "Hub CLI — /hub install, /hub share, /list remote for community content.",
+          "Heat auto-detect — protocols and muscles automatically get temperature tiers.",
+          "soma-code.sh — codebase navigator with map, find, refs, replace.",
+          "Session export — /export saves conversation as styled HTML."
         ]
       }
     },
@@ -410,9 +437,9 @@
       "date": "2026-03-22",
       "features": {
         "added": [
-          "Hub integration \u2014 install protocols and muscles from the community.",
-          "Drop-in script commands \u2014 soma code, soma verify, soma refactor.",
-          "Core protocols bundled \u2014 breath-cycle, working-style, heat-tracking."
+          "Hub integration — install protocols and muscles from the community.",
+          "Drop-in script commands — soma code, soma verify, soma refactor.",
+          "Core protocols bundled — breath-cycle, working-style, heat-tracking."
         ]
       }
     },
@@ -421,9 +448,9 @@
       "date": "2026-03-21",
       "features": {
         "added": [
-          "Heat system \u2014 protocols and muscles load by temperature (hot/warm/cold).",
-          "Automatic migration \u2014 settings and templates upgrade across versions.",
-          "Community sync \u2014 protocols shared between projects via hub."
+          "Heat system — protocols and muscles load by temperature (hot/warm/cold).",
+          "Automatic migration — settings and templates upgrade across versions.",
+          "Community sync — protocols shared between projects via hub."
         ]
       }
     },
@@ -432,9 +459,9 @@
       "date": "2026-03-20",
       "features": {
         "added": [
-          "npm install \u2014 meetsoma package published, one-command install.",
-          "Pi runtime 0.61.1 \u2014 stable upstream with extension support.",
-          "27 documentation pages \u2014 full coverage of features and configuration."
+          "npm install — meetsoma package published, one-command install.",
+          "Pi runtime 0.61.1 — stable upstream with extension support.",
+          "27 documentation pages — full coverage of features and configuration."
         ]
       }
     },
@@ -443,10 +470,10 @@
       "date": "2026-03-20",
       "features": {
         "added": [
-          "Open install \u2014 anyone can install via npm, no invite needed.",
-          "Voice system \u2014 agent communication style persists across sessions.",
-          "23 documentation pages \u2014 getting started, protocols, muscles, configuration.",
-          "Extension system \u2014 TypeScript hooks for custom agent behavior."
+          "Open install — anyone can install via npm, no invite needed.",
+          "Voice system — agent communication style persists across sessions.",
+          "23 documentation pages — getting started, protocols, muscles, configuration.",
+          "Extension system — TypeScript hooks for custom agent behavior."
         ]
       }
     },
@@ -455,9 +482,9 @@
       "date": "2026-03-15",
       "features": {
         "added": [
-          "Scratch pad \u2014 persistent notes that survive across sessions.",
-          "Session warnings \u2014 alerts for context limits and idle detection.",
-          "Code scanning tools \u2014 soma-code.sh with structure and find commands."
+          "Scratch pad — persistent notes that survive across sessions.",
+          "Session warnings — alerts for context limits and idle detection.",
+          "Code scanning tools — soma-code.sh with structure and find commands."
         ]
       }
     },
@@ -466,9 +493,9 @@
       "date": "2026-03-14",
       "features": {
         "added": [
-          "Router extension \u2014 /soma commands for agent self-management.",
-          "Auto-breathe \u2014 automatic session rotation at context limits.",
-          "Dev tools \u2014 soma-verify, soma-refactor for codebase maintenance."
+          "Router extension — /soma commands for agent self-management.",
+          "Auto-breathe — automatic session rotation at context limits.",
+          "Dev tools — soma-verify, soma-refactor for codebase maintenance."
         ]
       }
     },
@@ -477,8 +504,8 @@
       "date": "2026-03-12",
       "features": {
         "added": [
-          "Prompt intelligence \u2014 system prompt compiles from identity + protocols + muscles.",
-          "Session stabilization \u2014 reliable session logs and preload handoffs."
+          "Prompt intelligence — system prompt compiles from identity + protocols + muscles.",
+          "Session stabilization — reliable session logs and preload handoffs."
         ]
       }
     },
@@ -487,8 +514,8 @@
       "date": "2026-03-11",
       "features": {
         "added": [
-          "AMPS architecture \u2014 protocols, muscles, automations, scripts as four layers.",
-          "Distribution system \u2014 bundled vs installable content tiers."
+          "AMPS architecture — protocols, muscles, automations, scripts as four layers.",
+          "Distribution system — bundled vs installable content tiers."
         ]
       }
     },
@@ -497,8 +524,8 @@
       "date": "2026-03-10",
       "features": {
         "added": [
-          "Session intelligence \u2014 preloads carry context across session boundaries.",
-          "Breath cycle \u2014 inhale, work, exhale rhythm for session management."
+          "Session intelligence — preloads carry context across session boundaries.",
+          "Breath cycle — inhale, work, exhale rhythm for session management."
         ]
       }
     },
@@ -507,8 +534,8 @@
       "date": "2026-03-09",
       "features": {
         "added": [
-          "The engine \u2014 core agent runtime with extension loading and identity discovery.",
-          "Settings system \u2014 JSON configuration for behavior tuning."
+          "The engine — core agent runtime with extension loading and identity discovery.",
+          "Settings system — JSON configuration for behavior tuning."
         ]
       }
     }
