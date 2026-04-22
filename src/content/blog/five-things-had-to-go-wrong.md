@@ -31,6 +31,8 @@ The 37th screenshot — the 2786px Retina image that should have been resized bu
 
 The API returned a 400 error. The terminal input locked. The keepalive system, designed to prevent cache eviction, didn't recognize 400 as a "stop retrying" signal (it only knew about 429 rate limits). So it retried. Got another 400. Retried again. The session was permanently dead.
 
+![Five cards in a row: Retina viewport lies → resize trusts the lie → fix mid-air can't reload → 37 screenshots pile up → keepalive blind to 400 errors. Each card is survivable alone; the chain isn't.](/images/blog/five-things-cascade.svg)
+
 ## Five failures, one crash
 
 Remove any single link from the chain and the session survives:
@@ -62,6 +64,8 @@ We didn't fix one thing. We fixed five, at different layers:
 ## The boundary
 
 The most interesting failure in the chain is #4 — the agent fixed the code but couldn't reload it. This isn't a bug we can fix. It's a boundary.
+
+![A session boundary separates saved code on disk (agent can read, write, test, commit) from running code in memory (frozen, immune to edits, unreachable). The agent lives on the left; the session runs on the right.](/images/blog/five-things-boundary.svg)
 
 The extension runtime loads code once. That's a security and stability feature — you don't want running code to change underneath you mid-session. But it means an agent that modifies its own tools lives in a paradox: it can write the fix but can't apply it.
 

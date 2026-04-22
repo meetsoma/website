@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="900" height="380" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="canEdit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2ea043" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#2ea043" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="cantTouch" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f85149" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#f85149" stop-opacity="0.06"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="380" fill="url(#bg)"/>
+
+  <text x="450" y="40" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="13" letter-spacing="4" fill="#8b949e">T&#8239;H&#8239;E &#160;&#160; S&#8239;E&#8239;S&#8239;S&#8239;I&#8239;O&#8239;N &#160;&#160; B&#8239;O&#8239;U&#8239;N&#8239;D&#8239;A&#8239;R&#8239;Y</text>
+
+  <!-- LEFT: saved code zone -->
+  <rect x="60" y="90" width="360" height="220" rx="12" fill="url(#canEdit)" stroke="#2ea043" stroke-width="1.5"/>
+  <text x="240" y="120" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" letter-spacing="2" fill="#2ea043">S&#8239;A&#8239;V&#8239;E&#8239;D &#160; C&#8239;O&#8239;D&#8239;E</text>
+  <text x="240" y="165" text-anchor="middle" font-size="22" font-style="italic" fill="#c9d1d9">on disk</text>
+
+  <g font-family="ui-monospace, 'SF Mono', monospace" font-size="13" fill="#c9d1d9">
+    <text x="90" y="205">&#8226; agent can read</text>
+    <text x="90" y="232">&#8226; agent can write</text>
+    <text x="90" y="259">&#8226; tests can exercise</text>
+    <text x="90" y="286">&#8226; commit captures it</text>
+  </g>
+
+  <!-- RIGHT: running code zone -->
+  <rect x="480" y="90" width="360" height="220" rx="12" fill="url(#cantTouch)" stroke="#f85149" stroke-width="1.5"/>
+  <text x="660" y="120" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" letter-spacing="2" fill="#f85149">R&#8239;U&#8239;N&#8239;N&#8239;I&#8239;N&#8239;G &#160; C&#8239;O&#8239;D&#8239;E</text>
+  <text x="660" y="165" text-anchor="middle" font-size="22" font-style="italic" fill="#c9d1d9">in memory</text>
+
+  <g font-family="ui-monospace, 'SF Mono', monospace" font-size="13" fill="#c9d1d9">
+    <text x="510" y="205">&#8226; loaded at session start</text>
+    <text x="510" y="232">&#8226; frozen until restart</text>
+    <text x="510" y="259">&#8226; immune to edits on disk</text>
+    <text x="510" y="286">&#8226; unreachable from inside</text>
+  </g>
+
+  <!-- Boundary line -->
+  <g>
+    <line x1="450" y1="80" x2="450" y2="320" stroke="#c9d1d9" stroke-width="2" stroke-dasharray="6,4"/>
+    <text x="450" y="75" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="3" fill="#c9d1d9">B&#8239;O&#8239;U&#8239;N&#8239;D&#8239;A&#8239;R&#8239;Y</text>
+  </g>
+
+  <!-- agent avatar straddling -->
+  <g transform="translate(425, 360)">
+    <text x="0" y="0" text-anchor="middle" font-size="14" font-style="italic" fill="#c9d1d9">The agent lives on the left. The session runs on the right.</text>
+  </g>
+</svg>

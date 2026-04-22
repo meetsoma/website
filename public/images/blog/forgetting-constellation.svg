@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" width="900" height="480" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f0b254" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#f0b254" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="900" height="480" fill="url(#bg)"/>
+
+  <text x="450" y="40" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="13" letter-spacing="4" fill="#8b949e">3&#8239;9&#8239;8&#8239;,&#8239;0&#8239;0&#8239;0 &#160;&#160; L&#8239;I&#8239;N&#8239;E&#8239;S &#160;&#160; W&#8239;E &#160;&#160; R&#8239;E&#8239;A&#8239;D</text>
+
+  <!-- Connection lines (drawn first, under nodes) -->
+  <g stroke="#30363d" stroke-width="1" fill="none" opacity="0.7">
+    <!-- extractMemories ↔ autoDream (both per-turn capture) -->
+    <line x1="200" y1="160" x2="360" y2="130"/>
+    <!-- extractMemories ↔ MEMORY.md -->
+    <line x1="200" y1="160" x2="210" y2="280"/>
+    <!-- autoDream ↔ MEMORY.md -->
+    <line x1="360" y1="130" x2="210" y2="280"/>
+    <!-- verificationAgent ↔ plan-verifier -->
+    <line x1="590" y1="160" x2="700" y2="110"/>
+    <!-- verificationAgent ↔ swarm -->
+    <line x1="590" y1="160" x2="720" y2="250"/>
+    <!-- Sonnet-retrieval ↔ MEMORY.md -->
+    <line x1="400" y1="280" x2="210" y2="280"/>
+    <!-- swarm ↔ isUndercover -->
+    <line x1="720" y1="250" x2="780" y2="370"/>
+    <!-- companion pets isolated -->
+  </g>
+
+  <!-- GRAY nodes (left behind) -->
+  <g>
+    <!-- extractMemories — big, central-left -->
+    <circle cx="200" cy="160" r="22" fill="#21262d" stroke="#6b7280" stroke-width="1.5"/>
+    <text x="200" y="200" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#c9d1d9">extractMemories</text>
+    <text x="200" y="216" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">silent per-turn fork</text>
+
+    <!-- autoDream -->
+    <circle cx="360" cy="130" r="18" fill="#21262d" stroke="#6b7280" stroke-width="1.5"/>
+    <text x="360" y="95" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#c9d1d9">autoDream</text>
+    <text x="360" y="79" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">invisible consolidation</text>
+
+    <!-- MEMORY.md -->
+    <circle cx="210" cy="280" r="16" fill="#21262d" stroke="#6b7280" stroke-width="1.5"/>
+    <text x="210" y="316" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#c9d1d9">MEMORY.md</text>
+    <text x="210" y="332" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">flat taxonomy</text>
+
+    <!-- Sonnet retrieval -->
+    <circle cx="400" cy="280" r="16" fill="#21262d" stroke="#6b7280" stroke-width="1.5"/>
+    <text x="400" y="316" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#c9d1d9">Sonnet retrieval</text>
+    <text x="400" y="332" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">another model scores</text>
+
+    <!-- Swarm coordinator -->
+    <circle cx="720" cy="250" r="20" fill="#21262d" stroke="#6b7280" stroke-width="1.5"/>
+    <text x="720" y="290" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#c9d1d9">The Swarm</text>
+    <text x="720" y="306" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">git-worktree coordinator</text>
+
+    <!-- Plan verifier (off) -->
+    <circle cx="700" cy="110" r="16" fill="#21262d" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <text x="700" y="75" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#c9d1d9">plan-verifier</text>
+    <text x="700" y="59" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">built &#183; disabled</text>
+
+    <!-- isUndercover -->
+    <circle cx="780" cy="370" r="14" fill="#21262d" stroke="#6b7280" stroke-width="1.5"/>
+    <text x="780" y="400" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#c9d1d9">isUndercover()</text>
+    <text x="780" y="416" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">stealth mode flag</text>
+
+    <!-- Companion pets -->
+    <circle cx="500" cy="400" r="16" fill="#21262d" stroke="#6b7280" stroke-width="1.5"/>
+    <text x="500" y="435" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#c9d1d9">companion pets</text>
+    <text x="500" y="451" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">rarity tiers</text>
+  </g>
+
+  <!-- ORANGE (adopted into Soma) -->
+  <g>
+    <!-- verificationAgent -->
+    <circle cx="590" cy="160" r="30" fill="url(#nodeGlow)"/>
+    <circle cx="590" cy="160" r="22" fill="#21262d" stroke="#f0b254" stroke-width="2"/>
+    <text x="590" y="200" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#f0b254">verificationAgent</text>
+    <text x="590" y="216" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#f0b254">&#187; verification instinct</text>
+
+    <!-- confirmation-capture (derived from extractMemories idea) — placed adjacent -->
+    <circle cx="100" cy="360" r="28" fill="url(#nodeGlow)"/>
+    <circle cx="100" cy="360" r="20" fill="#21262d" stroke="#f0b254" stroke-width="2"/>
+    <text x="100" y="398" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#f0b254">confirmation capture</text>
+    <text x="100" y="414" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#f0b254">&#187; corrections + confirms</text>
+
+    <!-- drift detection -->
+    <circle cx="320" cy="420" r="28" fill="url(#nodeGlow)"/>
+    <circle cx="320" cy="420" r="20" fill="#21262d" stroke="#f0b254" stroke-width="2"/>
+    <text x="320" y="460" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#f0b254">drift detection</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(40, 95)">
+    <circle cx="0" cy="0" r="6" fill="#21262d" stroke="#6b7280" stroke-width="1.5"/>
+    <text x="14" y="4" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#c9d1d9">left behind</text>
+    <circle cx="0" cy="22" r="6" fill="#21262d" stroke="#f0b254" stroke-width="2"/>
+    <text x="14" y="26" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#c9d1d9">taken into Soma</text>
+  </g>
+</svg>

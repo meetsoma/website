@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="900" height="380" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#161b22"/>
+      <stop offset="1" stop-color="#0d1117"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="380" fill="url(#bg)"/>
+
+  <text x="450" y="40" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="13" letter-spacing="4" fill="#8b949e">F&#8239;I&#8239;V&#8239;E &#160;&#160; F&#8239;A&#8239;I&#8239;L&#8239;U&#8239;R&#8239;E&#8239;S &#160;&#160; O&#8239;N&#8239;E &#160;&#160; C&#8239;R&#8239;A&#8239;S&#8239;H</text>
+
+  <!-- Five cards evenly spaced. Width 148, gap 20. Total 5*148 + 4*20 = 820. Start at x=40 -->
+  <!-- Card coordinates: i=0..4 → x = 40 + i*168 -->
+  <!-- Card box: width 148, height 180, top=100 -->
+
+  <!-- Card 1: Retina lies -->
+  <g>
+    <rect x="40" y="100" width="148" height="180" rx="8" fill="url(#card)" stroke="#f85149" stroke-width="1.5"/>
+    <circle cx="70" cy="132" r="12" fill="#f85149" opacity="0.2"/>
+    <text x="70" y="137" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#f85149">1</text>
+    <text x="114" y="137" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.5" fill="#8b949e">RETINA</text>
+    <text x="58" y="175" font-size="14" font-weight="700" fill="#c9d1d9">viewport lies</text>
+    <text x="58" y="200" font-size="12" fill="#8b949e">1393px reported.</text>
+    <text x="58" y="220" font-size="12" fill="#8b949e">2786px actual.</text>
+    <text x="58" y="252" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">browser API</text>
+    <text x="58" y="268" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">returns 1x.</text>
+  </g>
+
+  <!-- Card 2: Resize trusts lie -->
+  <g>
+    <rect x="208" y="100" width="148" height="180" rx="8" fill="url(#card)" stroke="#f85149" stroke-width="1.5"/>
+    <circle cx="238" cy="132" r="12" fill="#f85149" opacity="0.2"/>
+    <text x="238" y="137" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#f85149">2</text>
+    <text x="282" y="137" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.5" fill="#8b949e">RESIZE</text>
+    <text x="226" y="175" font-size="14" font-weight="700" fill="#c9d1d9">trusted the lie</text>
+    <text x="226" y="200" font-size="12" fill="#8b949e">1393 &lt; 1568.</text>
+    <text x="226" y="220" font-size="12" fill="#8b949e">skipped resize.</text>
+    <text x="226" y="252" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">2x the limit</text>
+    <text x="226" y="268" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">entered convo.</text>
+  </g>
+
+  <!-- Card 3: fixed but no-reload -->
+  <g>
+    <rect x="376" y="100" width="148" height="180" rx="8" fill="url(#card)" stroke="#f85149" stroke-width="1.5"/>
+    <circle cx="406" cy="132" r="12" fill="#f85149" opacity="0.2"/>
+    <text x="406" y="137" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#f85149">3</text>
+    <text x="450" y="137" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.5" fill="#8b949e">RELOAD</text>
+    <text x="394" y="175" font-size="14" font-weight="700" fill="#c9d1d9">fixed mid-air</text>
+    <text x="394" y="200" font-size="12" fill="#8b949e">disk: new code.</text>
+    <text x="394" y="220" font-size="12" fill="#8b949e">memory: old.</text>
+    <text x="394" y="252" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">no hot reload</text>
+    <text x="394" y="268" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">for extensions.</text>
+  </g>
+
+  <!-- Card 4: Accumulation -->
+  <g>
+    <rect x="544" y="100" width="148" height="180" rx="8" fill="url(#card)" stroke="#f85149" stroke-width="1.5"/>
+    <circle cx="574" cy="132" r="12" fill="#f85149" opacity="0.2"/>
+    <text x="574" y="137" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#f85149">4</text>
+    <text x="618" y="137" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.5" fill="#8b949e">PILE-UP</text>
+    <text x="562" y="175" font-size="14" font-weight="700" fill="#c9d1d9">37 screenshots</text>
+    <text x="562" y="200" font-size="12" fill="#8b949e">3 hours.</text>
+    <text x="562" y="220" font-size="12" fill="#8b949e">10 MB stored.</text>
+    <text x="562" y="252" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">each OK alone.</text>
+    <text x="562" y="268" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">sum: fatal.</text>
+  </g>
+
+  <!-- Card 5: 400 blind -->
+  <g>
+    <rect x="712" y="100" width="148" height="180" rx="8" fill="url(#card)" stroke="#f85149" stroke-width="1.5"/>
+    <circle cx="742" cy="132" r="12" fill="#f85149" opacity="0.2"/>
+    <text x="742" y="137" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#f85149">5</text>
+    <text x="786" y="137" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.5" fill="#8b949e">BLIND</text>
+    <text x="730" y="175" font-size="14" font-weight="700" fill="#c9d1d9">400 != 429</text>
+    <text x="730" y="200" font-size="12" fill="#8b949e">keepalive only</text>
+    <text x="730" y="220" font-size="12" fill="#8b949e">knew 429.</text>
+    <text x="730" y="252" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">retried a 400.</text>
+    <text x="730" y="268" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#6b7280">again. again.</text>
+  </g>
+
+  <!-- Connecting arrows between cards -->
+  <g stroke="#f85149" stroke-width="1.5" fill="none">
+    <path d="M 188,190 L 208,190" marker-end="url(#arrow)"/>
+    <path d="M 356,190 L 376,190" marker-end="url(#arrow)"/>
+    <path d="M 524,190 L 544,190" marker-end="url(#arrow)"/>
+    <path d="M 692,190 L 712,190" marker-end="url(#arrow)"/>
+  </g>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0,0 L 10,5 L 0,10 z" fill="#f85149"/>
+    </marker>
+  </defs>
+
+  <!-- caption -->
+  <text x="450" y="335" text-anchor="middle" font-style="italic" font-size="14" fill="#c9d1d9">Fix any single link. The session survives.</text>
+  <text x="450" y="360" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#6b7280">cascading failure &#8239;&#183;&#8239; five reasonable assumptions, wrong at once</text>
+</svg>

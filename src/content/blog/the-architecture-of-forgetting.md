@@ -18,6 +18,8 @@ When Claude Code's source leaked on April 1st — still unclear whether intentio
 
 ![The architecture of forgetting — 398,000 lines of code we chose to leave behind.](/images/blog/og-architecture-of-forgetting.svg)
 
+![Claude Code's memory architecture as a constellation: gray nodes left behind (extractMemories, autoDream, MEMORY.md, Sonnet retrieval, The Swarm, plan-verifier, isUndercover, companion pets), orange nodes taken into Soma (verificationAgent → verification instinct, confirmation capture, drift detection).](/images/blog/forgetting-constellation.svg)
+
 ## How Claude Code Remembers
 
 Claude Code's memory lives in a directory called `memdir/` — a flat collection of markdown files indexed by a `MEMORY.md` manifest. Each memory gets a type: `user`, `feedback`, `project`, or `reference`. Content-typed. What the memory *is*, not what it *does*.
