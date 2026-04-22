@@ -69,15 +69,15 @@ for (const [name, docs] of sectionMap) {
 const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === currentSlug)?.data.section || "";
 ---
 
-<Layout title={`${title} — Soma Docs`} description={description} jsonLd={docJsonLd} canonicalUrl={`https://soma.gravicity.ai/docs/${currentSlug}`}>
+<Layout title={`${title} — σ Docs`} description={description} jsonLd={docJsonLd} canonicalUrl={`https://soma.gravicity.ai/docs/${currentSlug}`}>
   <div class="stars"></div>
 
   <div class="docs-wrapper">
     <!-- Left Sidebar -->
     <aside class="sidebar">
       <a href="/docs" class="sidebar-brand">
-        <img src="/media/soma-logo-animated.svg" alt="Soma" width="28" height="28" />
-        <span>Soma Docs</span>
+        <img src="/media/soma-logo-animated.svg" alt="σ" width="28" height="28" />
+        <span>σ Docs</span>
       </a>
 
       <Search />
