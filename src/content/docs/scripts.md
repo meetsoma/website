@@ -8,12 +8,12 @@ order: 9
 # Scripts
 
 <!-- tldr -->
-Standalone bash tools for Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions. 9 scripts are seeded on `soma init`; 5 Pro scripts ship as compiled .js; more are available via `soma hub install script <name>`. Run `soma --help scripts` to see what's installed.
+Standalone bash tools for Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions. **20+ free scripts** ship with the agent + **5 Pro scripts** as compiled `.js`; more are available via `soma hub install script <name>`. Run `soma --help scripts` to see what's installed.
 <!-- /tldr -->
 
-## Bundled Scripts (seeded on init)
+## Bundled Scripts
 
-These 9 scripts are installed into `.soma/amps/scripts/` when you run `soma init`. They're available immediately — no hub install needed. (`soma-theme.sh` is also bundled as a shared dependency sourced by other scripts — it's not run directly.)
+Installed to `.soma/amps/scripts/` (or available via your global `soma` CLI). All ship with the agent — no hub install needed. `soma-theme.sh` is a shared dependency sourced by other scripts; not run directly. Use `soma tool` to introspect the agent-side tool surface (separate from these CLI scripts).
 
 ### soma code — [hub](https://soma.gravicity.ai/hub/view?type=script&slug=soma-code)
 
@@ -104,6 +104,47 @@ soma-update-check.sh            # check for updates
 soma-update-check.sh --json     # machine-readable output
 ```
 
+### soma children
+
+Delegated-child monitor + spawner. Wraps tmux/cmux session management plus the `~/.soma/state/children.json` registry that the in-session `delegate(background:true)` Pi tool writes.
+
+```bash
+soma children list                              # active children + cost/runtime
+soma children spawn <role> "<task>"             # tmux-default; --cmux when available
+soma children spawn <role> "<task>" --model haiku   # pin model
+soma children watch [interval]                  # flicker-free dashboard
+soma children tail <id>                         # tail a child's output
+soma children kill <id>                         # terminate a child
+```
+
+Dashboard reads from `children.json` as the source of truth; pane scan is enrichment only. Hex IDs (`child-xxxxxx`) match the in-session tool's shape so the agent and CLI views stay coherent.
+
+### soma tool
+
+Discover what tools the agent has registered. Static parser — doesn't start a session.
+
+```bash
+soma tool                       # list every tool with one-liner
+soma tool <name>                # full guidance: description, promptSnippet, params
+soma tool --extensions          # group by extension file
+```
+
+For the runtime view (post-`_tools.md` overrides), call `capabilities(op:'list')` from inside a session.
+
+### soma new
+
+Scaffold a new muscle or protocol with correct frontmatter — lowers the friction of crystallizing patterns. Idempotent: re-running on an existing name opens it in `$EDITOR` instead of clobbering.
+
+```bash
+soma new muscle <name>                          # .soma/amps/muscles/<name>.md
+soma new protocol <name>                        # .soma/amps/protocols/<name>.md
+soma new muscle <name> --global                 # ~/.soma/amps/...
+soma new muscle <name> -d "description" -t trigger1,trigger2
+soma new muscle <name> --no-edit                # skip $EDITOR
+```
+
+Templates live at `templates/default/_muscle-template.md` + `_protocol-template.md` — single source of truth for frontmatter conventions.
+
 ### validate-content.sh
 
 Validate AMPS content files before submitting to the community hub.
@@ -119,9 +160,11 @@ Shared theming for all Soma scripts. Provides colors, header/footer helpers, and
 
 ---
 
-## Advanced Scripts
+## Advanced Scripts (Pro tier — beta)
 
-These 5 scripts ship as compiled `.js` files in the agent runtime. They provide deeper capabilities — dependency analysis, memory tracing, doc scraping, remote repo inspection, and browser automation. Available immediately, no install needed.
+These 5 scripts ship as compiled `.js` files (base64-encoded bash, obfuscated) and provide deeper capabilities — dependency analysis, memory tracing, doc scraping, remote repo inspection, and browser automation.
+
+**During the v0.21.x beta, every install gets these working** — a Pro session token is provisioned automatically on first `soma` invocation. The auth scaffold inside each compiled script is real (not a no-op); when the Pro subscription tier ships, only the token-provisioning source changes — the scripts themselves ship unchanged. No friction for current users.
 
 ### soma seam
 

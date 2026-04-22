@@ -225,6 +225,16 @@ When screenshots accumulate in a session, the JSONL file grows large (10-20MB) a
 | `soma reflect` | Session log pattern mining |
 | `soma plans` | Plan lifecycle management |
 | `soma github <repo> <cmd>` | Scan GitHub repos without cloning (structure, map, deps, audit) |
+| `soma tool` | List every registered Soma tool (one-liner each) |
+| `soma tool <name>` | Full guidance for one tool — description, promptSnippet, promptGuidelines, parameters |
+| `soma tool --extensions` | Group tools by the extension file that defines them |
+| `soma new muscle <name>` | Scaffold a new muscle with correct frontmatter. `--global` writes to `~/.soma/`. `--no-edit` skips `$EDITOR`. |
+| `soma new protocol <name>` | Scaffold a new protocol with correct frontmatter. Same flags as `new muscle`. |
+| `soma children list` | Dashboard of background soma children registered in `~/.soma/state/children.json`. Enriched with live pane/cost data. |
+| `soma children spawn <role> "<task>"` | Spawn a background child (tmux default; `--cmux` if available; `--model <alias>`). Registers in children.json. |
+| `soma children watch [N]` | Flicker-free monitor dashboard, refresh every N seconds (default 2). Ctrl+C to stop. |
+| `soma children tail <id>` | Tail a specific child's pane. |
+| `soma children kill <id>` | Terminate a child. |
 
 ### Installing More Scripts
 

@@ -98,9 +98,30 @@ Loading respects a **token budget** (default: 2000 estimated tokens). Hot muscle
 
 All thresholds are configurable in [settings.json](/docs/configuration#muscles).
 
-## Writing a Muscle Manually
+## Writing a Muscle
 
-You don't have to wait for Soma to discover patterns. Create a muscle directly:
+### With `soma new` (recommended)
+
+Scaffolds the file from a template with frontmatter pre-filled:
+
+```bash
+soma new muscle my-workflow
+soma new muscle my-workflow -d "Run tests before every commit."
+soma new muscle my-workflow -t testing,ci,commit-hook
+soma new muscle my-workflow --global         # write to ~/.soma/ instead of project
+soma new muscle my-workflow --no-edit        # skip opening $EDITOR
+```
+
+Idempotent — re-running on an existing name opens it in `$EDITOR` rather
+than clobbering. Use `--force` to overwrite.
+
+The template at `templates/default/_muscle-template.md` is the single source
+of truth for frontmatter shape. If you want to change conventions for new
+muscles project-wide, edit that template rather than each muscle file.
+
+### Writing manually (lower friction, more ceremony)
+
+You can still write the file by hand if you prefer:
 
 ```bash
 touch .soma/amps/muscles/my-workflow.md

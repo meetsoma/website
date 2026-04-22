@@ -11,32 +11,125 @@ All notable changes to the Soma agent are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
 
-> **Upgrading:** `npm install -g meetsoma@latest && soma update` — see [Updating](/docs/updating) for details.
-
 ---
 
 ## [Unreleased]
 
-_(empty — last stamp was v0.20.3)_
+## [0.21.0] — 2026-04-22 — Cache Economics + Discoverability + Self-Knowledge
+
+### Added
+- **suppress preventive OAuth-billing warning at boot (SX-566)**
+- **test-audit command + hygiene rule engine (SX-564)**
+- **swap Pi's π terminal-title glyph for Soma's σ**
+- **Agent Notes relocation + preload ancestry + v0.21.0**
+- **Terminal tab title now shows `σ - <session> - <cwd>`** — build-time patch to Pi's `interactive-mode.js` swaps the `π` brand glyph for Soma's `σ`. Display-only, zero cache/payload impact. Closes the last Pi brand leak in the TUI chrome.
+- **Declarative migration replay via map frontmatter (SX-562)** — `soma doctor` is now data-driven. Migration maps can declare `replay-until: <version>` in frontmatter + a `## Doctor Actions` JSON block in the body (schema: `settings-defaults`, `settings-subkeys`, `scaffold-files`). While the running agent is below `replay-until`, doctor re-evaluates that map on every invocation and applies its actions idempotently. Once agent catches up, the map retires from the replay pass automatically. Future backfill-class migrations don't need CLI code changes — they just add the block to their map. Session-start boot path untouched; only explicit `soma doctor` runs the replay.
+- **Agent Notes relocated out of `body/ecosystem.md` (SX-547, v0.21.0)** — the rolling session-observation log now lives at `memory/notes/soma-log.md` (bundled template seeds at init, doctor tier-1 soft-check backfills for upgrades via `writeIfMissing`). `body/ecosystem.md` shrank from 33KB/322 lines to 10KB/174 lines and is now `lazy: true` so its content no longer hits the cached prefix on every boot. Expected cacheWrite savings: ~5.5K tokens/boot (~25%).
+- **Recent Ancestry auto-injected into preload (SX-549)** — last N entries from `memory/notes/soma-log.md` inject as `## Recent Ancestry` in the preload user-message on fresh boot. Configured via `settings.preload.recentNotesCount` (default 3; set 0 to disable). User-message injection only; does not affect the cached system prompt. Graceful no-op if `memory/notes/soma-log.md` is missing.
+- **Children monitor promoted to bundled scripts (SX-557 follow-up)** — `soma children list/tail/kill/focus/watch` + new `soma children spawn <role> "<task>"` now ship via `repos/agent/scripts/` (was workspace-only). Shell-spawned children register themselves in `~/.soma/state/children.json` so the shipped `children` Pi tool and the CLI dashboard share the same registry. Hex IDs (`child-xxxxxx`) match the SX-553 shape. tmux default driver, cmux optional when available.
+- **Doctor tier-1 soft-check for v0.21.0 structural pieces** — pre-0.21.0 users never received the backfilled migration chain, so `addIfMissing` + a new `scaffoldMemoryNotes` check run on every boot. Missing `memory/notes/soma-log.md` gets scaffolded from the bundled template (writeIfMissing, never clobbers). Tier-2 (agent-driven) handles `body/_memory.md` customization review via the migration map's `agent-prompt`.
+- **Crystallize Phase A: `soma new muscle` / `soma new protocol` + templates (SX-559)** — lowers the friction of creating new muscles or protocols. Scaffolds the file at the right location (`.soma/amps/muscles/<name>.md` or `--global` for `~/.soma/...`) from a canonical template with frontmatter pre-filled (created date, session origin, author, description, triggers). Idempotent — re-running on an existing name opens it in `$EDITOR` instead of clobbering. Templates live at `templates/default/_muscle-template.md` + `_protocol-template.md` as single source of truth for frontmatter conventions. Addresses the "she'll see patterns but won't crystallize them because the ceremony is too high" gap. Phase B (the `crystallize` Pi tool) + Phase C (idempotent update semantics) scoped in `releases/v0.20.x/plans/crystallize/README.md`.
+- **Discoverability: `soma tool` CLI + `capabilities` Pi tool (SX-558)** — two surfaces to introspect Soma's tool registry without re-reading the whole system prompt. `soma tool` (no args) lists every registered tool with a one-liner; `soma tool <name>` prints the full authored guidance (description, promptSnippet, promptGuidelines, parameters). Runs offline via static parse of `extensions/*.ts` — no session needed. For the runtime view (post-`_tools.md` overrides), a new `capabilities` Pi tool with `op:'list'` and `op:'detail'` does the same thing from inside a session. Closes the "`soma delegate --help` does nothing" gap. Bundled docs at `docs/tools.md#discovering-whats-registered` and `docs/commands.md`.
+- **Lazy-loaded body files (SX-548)** — body files with `lazy: true` in frontmatter now contribute only their `description` field to the cached system prompt. Full content loaded on demand via the `read` tool. Opt-in per file; missing flag preserves existing behavior. Enables Tier 2 loading for volatile files (ecosystem.md Agent Notes, journal.md index) with a one-line config change. Expected cacheWrite savings: ~5K tokens per boot when applied to ecosystem + journal.
+- **Project `core_rules.md` additions (SX-555)** — projects can now place a `body/core_rules.md` in their `.soma/` directory; content is appended after the agent-shipped `system-core.md` rather than replacing it. Shipped rules cannot be accidentally removed by a project override. Missing file = identical behavior to pre-0.20.4.
+- **`delegate(background:true)` + `children` tool (SX-553 Phase A)** — `delegate` now accepts `background:true` to spawn a child soma in a new cmux pane and return a handle immediately (`{childId, pane, surface, status}`) instead of blocking. New `children` Pi tool with `op:"list"` reads `~/.soma/state/children.json` and formats a status table (id, role, model, status, cost, runtime, pane). Atomic-rename IO helpers (`appendChild`, `updateChild`, `readChildrenJson`, `writeChildrenJson`). Backward-compat: omitting `background` preserves existing synchronous behavior. Phase B (tail/steer/kill/harvest) + Phase C (ghostty/tmux drivers) pending.
+- **`cache.retention` setting (SX-544 Phase A)** — new settings schema `cache: { retention: 'long' | 'short' | 'none' | null }`. When set to `"long"`, soma-boot injects `PI_CACHE_RETENTION=long` for Pi's provider layer, enabling 1-hour Anthropic prompt cache TTL (2× write cost, break-even at one re-hit within 60m). Default `null` = inherit shell env or Pi default (5m). Doctor migration adds the key to existing `settings.json`. No behavior change until user opts in. Phase B (validation) + Phase C (keepalive coupling) still pending.
+- **soma-deploy.sh — thin wrapper on Dokploy API**
+- **browserCdpHost + browserCdpUrl — browser can live anywhere**
+- **browser profile tokenization — userDataDir + profileDirectory**
+- **Endpoint resolver (SX-513, s01-6d05dd)** — single source of truth for every URL the agent touches. Tier 2 extensions (`bridge-connect`, `workspace-tools`) + dev scripts (`launch-browser`) now route through `_shared/env.ts` (Node side) + `soma-env.sh` (bash side). Mode taxonomy: `local` / `cloud` / `pro` / `enterprise` / `auto`. User default `cloud`; our dev default `auto` (probes localhost:18800, falls back to cloud). Config lives under `environment` in `settings.json` and is only read by the dev extension — prod has endpoints baked at build time.
+- **`bridge-connect-dev.ts`** — dev-only sibling of the shipped `bridge-connect.ts`. Reads `environment.mode` + overrides live, exposes a new `env_status` tool for runtime diagnostics. Installed via `soma-dev symlink extensions --dev`.
+- **`soma-env.sh`** — pure-bash resolver helper (no node dep, no cold start). Mirrors env.ts's defaults table. Parity guarded by `test-env-resolver-parity.sh` so the two implementations can't drift.
+- **`environment` block in `SomaSettings` interface** (`core/settings.ts`) — typed config for future agent-side `soma env` CLI; dev extensions read it today, prod extensions ignore it.
+- **Three new test suites** (`tests/test-env-resolver.sh`, `test-env-resolver-parity.sh`, `test-no-hardcoded-endpoints.sh`) — 25 + 24 + 4 assertions covering resolver behavior, shell/TS parity, and a golden-rule guard that catches any regression back to literal endpoints in migrated Tier 2 files.
+- **`SOMA_PROJECT_DIR` env var exported to discovered scripts (SX-555)** — when `soma <cmd>` dispatches to a discovered script (bundled / project / global), it now walks up from `$PWD` to find the nearest `.soma/` directory and exports the path as `SOMA_PROJECT_DIR`. Scripts can trust the env var instead of recomputing from `$0` (which breaks for bundled scripts living far from the user's project). Paired with the `resolve_soma_dir` helpers in `soma-refactor.sh` / `soma-seam.sh`.
+- **`soma update --yes` / `-y`** — skip the Y/N confirmation prompt in scripted upgrades. Closes the documented one-liner `npm install -g meetsoma@latest && soma update --yes`. Surfaced during the s01-c6944c CLI audit (post-v0.20.3 follow-up).
+
+### Fixed
+- **ship .py helpers + _lib/ alongside .sh scripts**
+- **comprehensive settings backfill + Pro auth scaffold + upgrade test**
+- **add digest blocks to 3 bundled muscles (SX-563)**
+- **run tier-1 soft-check unconditionally**
+- **resolve soma_dir correctly + bash 3.2 compat + honest stable error**
+- **`soma refactor` / `soma seam` now resolve the right project directory when run outside cwd (SX-555)** — both scripts previously computed `SOMA_DIR` relative to their own install location, which broke for users whose project `.soma/` wasn't a sibling of the script. Added `resolve_soma_dir` helper that prefers `$SOMA_PROJECT_DIR`, then walks up from `$PWD`, then falls back to the legacy relative path. Also handles SIGPIPE gracefully (was killing piped output).
+- **`soma plans` bash 3.2 compat restored (SX-555)** — the `overlap` command used `declare -A` (associative arrays), which macOS bash 3.2 doesn't support. Rewrote to emit topic/path tuples to a tempfile, sort, and group — portable across bash versions. `get_field` now returns `|| true` so missing frontmatter fields don't trip `pipefail`.
+- **`soma-install.sh stable` gives an honest error (SX-555)** — `repos/agent-stable` was retired s01-419457 in favor of git tags. Stable mode now prints an explanation and points to the tag-based-install plan instead of failing silently.
+- **extractTldr no longer truncates multi-line TL;DRs**
+- **`symlink-extensions.sh` used stale post-restructure path** — was pointing at `somaverse/extensions/` (moved to `somaverse/builds/local/extensions/` in s01-efe898). Updated + added `--dev` flag that swaps the bridge-connect symlink to the dev variant.
+- **`build.sh` auth-gate temp files broke relative imports** — temps were written to `/tmp/` so esbuild couldn't resolve `./_shared/env.js`. Moved temps next to sources.
 
 ---
 
 ## [0.20.3] — 2026-04-20
 
-Cache stickiness. `/reload` no longer invalidates your Anthropic prompt
-cache — the compiled system prompt is persisted to disk and restored
-when the session resumes. A new `/rebuild` command (optional) forces an
-explicit recompile when you want mid-session body edits to apply. The
-restart banner moved from an intrusive toast to a subtle statusline tag.
+Patch release. Cache-stickiness: `/reload` no longer invalidates the
+Anthropic prompt cache. The compiled system prompt is persisted to
+`.soma/state/.session-prompt-cache.json` and restored across
+reload/resume/fork. A new `/rebuild` command forces explicit recompile
+when body edits should be picked up.
 
 ### Added
-- **`/rebuild` command** — forces recompile of the system prompt and deletes the disk cache. Optional — only run it if you've edited `body/*.md` mid-session AND you want the change to apply right now. Otherwise `/reload` keeps the prompt sticky and body edits land naturally on your next session.
-- **Disk-backed prompt cache** — `.soma/state/.session-prompt-cache.json` written on first compile, restored on `/reload`, `/resume`, `/fork`. Eliminates the ~$1 cache-invalidation cost per `/reload` cycle.
-- **Severity-aware change indicator on statusline line 3** — replaced the intrusive "Changes detected" toast with a subtle third-line tag. Labels: `🔄 /reload` (extensions/core `.ts` — Pi's hot-reload handles it), `📝 /rebuild?` (`body/*.md` — the `?` denotes optional), `⚠ relaunch` (`dist/*` or `core/*.js` — Pi's static imports are frozen at process boot, `/reload` can't help; quit and run `soma` again).
-- **Commands doc — Reload & Rebuild section** — explains the two commands, when to use each, and what the statusline indicators mean.
+- **`/rebuild` command (SX-495)** — forces recompile of the system prompt and deletes the disk cache. Optional — only run it if you've edited `body/*.md` mid-session AND you want the change to apply right now. Otherwise `/reload` keeps the prompt sticky and body edits land naturally on your next session.
+- **Disk-backed prompt cache (SX-495)** — `.soma/state/.session-prompt-cache.json` written on first compile, restored on subsequent reloads. Eliminates the ~$1 cache-invalidation cost per `/reload`.
+- **Severity-aware change indicator on statusline line 3** — replaced the intrusive "Changes detected" toast with a subtle third-line tag. Labels: `🔄 /reload` (extensions/*.ts + core/*.ts; picked up by jiti re-import — confirmed in Pi's `extensions.md`), `📝 /rebuild?` (body/*.md — the `?` denotes optional), `⚠ relaunch` (dist/* or core/*.js — Pi's static imports are frozen at process boot, `/reload` can't help; `/exit` and run `soma` again). Signal writer + reader updated; legacy `severity: restart` still read for back-compat. Parser handles both YAML and JSON payloads (SX-497 will unify writers).
+- **Commands doc — Reload & Rebuild section** (`docs/commands.md`) — explains the two commands, when to use each, and what the statusline indicators mean.
 
 ### Fixed
-- **`/reload` no longer invalidates the Anthropic prompt cache.** Previously, re-importing the boot extension reset the compiled prompt reference; the next turn recompiled and re-sealed a fresh cache — forcing a miss (~$1 per `/reload` on Sonnet/Opus). Now the compiled prompt rehydrates from disk on `session_start` with `reason ∈ {reload, resume, fork}`. Fresh `soma` launches still compile from scratch. Tier 2 extension build path also updated for the somaverse repo restructure.
+- **Tier 2 extension build path updated for somaverse restructure** — `build-extensions/build.sh` SOMAVERSE_EXT now points to `somaverse/builds/local/extensions/` (moved s01-efe898). Unblocked v0.20.3 dry-run.
+- **`soma focus` restored.** Was silently broken since the Pro-scripts refactor moved `soma-seam.sh` into `scripts/_pro/` (and released form renamed to `.js`). `soma-focus.sh` only looked for `scripts/soma-seam.sh` and always errored. Now searches `scripts/`, `scripts/_pro/`, `$SOMA_DIR/amps/scripts/`, `~/.soma/amps/scripts/` and dispatches `node` for `.js` / `bash` for `.sh`. End-to-end verified.
+- **`docs/focus.md` accuracy.** Scoring table, force-include threshold, and heat formula were all out of date. Corrected to match `core/muscles.ts:matchMusclesToFocus` — trigger/keywords/topic list match (10), name (3), digest (2); force-include at `>= 8`; heat = `score + 2`; tags don't participate.
+- **`soma-dev sync-docs` walks subdirs.** `docs/guides/` was missing from the website; bash 3.2-compatible explicit loop added.
+
+- **`/reload` no longer invalidates Anthropic prompt cache (SX-495)** — previously, re-importing `soma-boot` reset `compiledSystemPrompt` to null; next turn recompiled from disk and re-sealed a fresh cache, forcing a miss. Now `tryRestoreCompiledPrompt()` rehydrates from disk when `session_start.reason ∈ {reload, resume, fork}`. Fresh launches (`reason=startup|new`) still compile from scratch. `invalidateCompiledPrompt()` also unlinks the cache file (called by `/pin` and `/kill`).
+
+### Plan
+- `.soma/releases/v0.20.x/plans/cache-stickiness.md` — full audit + fix spec + acceptance criteria.
+
+---
+
+## [0.20.2.1] — 2026-04-19
+
+Patch release. Closes the `_mind.md` template orphan, adds the Soma tool
+registry with `_tools.md` configuration, documents tools + extension
+plumbing, softens the restart alert. Three Soma tools added (`context_status`,
+`file_outline`, `search`). Four script-UX no-flag fixes. CLI version label
+corrected in dev mode.
+
+### Added
+- **Soma tool registry** (`core/tool-registry.ts`) with `somaRegisterTool()` helper — the man-in-the-middle between extension-defined tools and Pi's registry. Preserves `promptSnippet` + `promptGuidelines` in the compiled system prompt (Pi's `ToolInfo` strips them).
+- **`_tools.md` configuration** (project → parent → global body chain). Sections: **Disabled** (opt-out list), **Overrides** (per-tool field tweaks), **Custom** (parsed; registration lands v0.20.3). Hardwired set (`delegate`) cannot be disabled.
+- **`context_status` tool** — returns `{percent, tokens, contextWindow}` so the agent can ground its runway decisions instead of estimating.
+- **`file_outline` tool** — markdown/text headings with line numbers. 10–15× cheaper than full-file reads for orientation.
+- **`search` tool (MVP)** — unified search with pluggable backends. Default: ripgrep over cwd, respects `.gitignore`. `scope="api"` uses Brave Search when `BRAVE_API_KEY` or `SOMA_SEARCH_API_KEY` is set. `scope="semantic"` deferred to v0.20.3.1.
+- **`docs/tools.md`** (new) — Soma tools reference: three registration routes, `_tools.md` format, sub-agent scoping, bundled set, invocation vs prompt registries.
+- **`docs/extending.md`** additions: `pi.registerTool` + `pi.getActiveTools` + `pi.getAllTools` in API table; hot-reload notes; "Modifying the System Prompt" section; full **Soma Tools** section (writing a tool with `somaRegisterTool`, comparison table vs `pi.registerTool`); **External tool → Soma bridge (the inbox)** section documenting the drop-in CLI integration (token, allowlist, JSON format).
+- `body/_tools.md` seeded in meetsoma + bundled `templates/default/_tools.md`.
+- Refactor breadcrumbs at top of `extensions/soma-boot.ts` — clean-break candidates noted (~3700 LOC file) for a future refactor session.
+
+### Fixed
+- **Tool-registry timing fix (`37106e0`)** — `_tools.md` disable/override rules now apply at extension-load time. Pi loads extensions (calling `somaRegisterTool`) BEFORE firing `session_start`, so the previous `setToolConfigChain()` call ran too late. Fix: lazy chain self-discovery in `getToolConfig()` — walks up from `process.cwd()` if no explicit chain is set. 6 new timing tests added (62/62 total passing, was 56).
+
+- **`_mind.md` was orphaned** since Phase 1c.1 (`s01-a1a6aa`). The Pi-native shortcut returned `event.systemPrompt` unchanged when `SYSTEM.md` + `APPEND_SYSTEM.md` existed, bypassing the template compiler. User customizations to `body/_mind.md` had no effect. The shortcut is removed. `compileFullSystemPrompt` (template-driven via `compileWithTemplate`) is now the single path. `SYSTEM.md` / `APPEND_SYSTEM.md` writes redirect to `.soma/state/` as introspection artifacts; Pi no longer auto-discovers them.
+- **`soma --version`** in dev mode showed runtime v0.20.2 instead of CLI v0.3.5. `npm/thin-cli.js` read `__dirname/../package.json`, which resolved to agent's package.json in dev-symlink installs. Esbuild `--define:__CLI_VERSION__` + `build-dist.mjs` string-substitution now inject the correct literal.
+- **Restart alert too aggressive.** Pi `/reload` hot-reloads extensions via `jiti.import` (mtime-keyed cache) — `extensions/*.ts` edits don't need a full process restart. `.git-hooks/post-commit` now classifies changed files: `extensions/*.ts` and `core/*.ts` → `severity=reload`; `core/*.js` and `dist/*` → `severity=restart`. `soma-statusline` reads severity and shows the matching message.
+- **Script no-flag UX (SX-490):** `soma-login` no longer starts OAuth without an explicit `start` subcommand. `soma-snapshot` no longer snapshots CWD without an explicit path — bare invocation prints help + recent snapshots. `soma-theme` now prints help when executed directly (still sources cleanly). `git-identity-hook` unchanged (silent exit-0 is correct for a git hook).
+
+### Changed
+- `somaRegisterTool` replaces `pi.registerTool` across all Soma bundled tool files (`soma-delegate`, `soma-code-tools`, `soma-context`, `soma-search`). Third-party extensions using `pi.registerTool` directly still work; tools just render with description-only (no per-tool `promptSnippet`/`promptGuidelines`).
+- `buildToolSection` accepts an optional `somaTools` registry. When present, rendered output includes per-tool guideline bullets prefixed `[tool_name]`.
+- `.git-hooks/` now tracked in git (was gitignored under a non-existent "generator"). Install path unchanged: `git config core.hooksPath .git-hooks`.
+
+### Docs
+- New `docs/tools.md`.
+- Substantial `docs/extending.md` expansion (tools, inbox, system-prompt hook, hot-reload).
+
+### Deferred / parked for v0.20.3
+- Full deletion of `compileFullSystemPrompt` + `extractSections` + `buildToolSection` legacy helpers (reversed this session — the compiler is staying; `_mind.md` drives the prompt).
+- Custom markdown-defined tools (`_tools.md` **Custom** section) — shell execution + security model.
+- Multi-provider search backends (tavily, exa, perplexity).
+- Local-semantic search backend + `soma index` command.
+- Audit-token release tool.
+- Upstream ask to Mario re: exposing `promptSnippet`/`promptGuidelines` on `ToolInfo`.
 
 ---
 

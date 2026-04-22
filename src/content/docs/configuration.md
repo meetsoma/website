@@ -791,6 +791,33 @@ Configure an allowlist of approved extension filenames. Extensions not on the li
 
 Without an allowlist configured, all extensions load without warnings.
 
+## Environment Configuration (advanced)
+
+> Reserved for future use — the shipped agent does not consume this block today.
+
+The `environment` setting declares which endpoint tier the agent should route through. It is read only by dev-mode extensions in the current release; shipped extensions use baked defaults that match their install context.
+
+```json
+{
+  "environment": {
+    "mode": "auto",
+    "overrides": { }
+  }
+}
+```
+
+| Mode | Meaning |
+|------|---------|
+| `local` | Local dev stack (localhost) |
+| `cloud` | Shared public tier |
+| `pro` | Private dedicated tier (future paid option) |
+| `enterprise` | Tenant-declared endpoints (reservation — requires explicit overrides) |
+| `auto` | Probe local, fall back to cloud |
+
+Per-endpoint `overrides` accept string values (use the default when `null`). Back-compat environment variables (e.g. `BRIDGE_URL`, `SOMADIAN_URL`) remain honored as the lowest-priority override.
+
+If you aren't sure whether you need this block, you don't.
+
 ## Global Config (~/.soma/)
 
 Soma creates a global workspace at `~/.soma/` on first boot. This provides:

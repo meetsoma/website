@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via _tools.md, and the bundled set
 status: active
-updated: 2026-04-19
+updated: 2026-04-22
 ---
 
 # Tools
@@ -122,6 +122,8 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 | Tool | Extension | Purpose |
 |---|---|---|
 | `delegate` | `soma-delegate.ts` | Spawn a focused child agent for a bounded task. **Hardwired.** |
+| `children` | `soma-delegate.ts` | Inspect/manage background children spawned via `delegate(background:true)`. |
+| `capabilities` | `soma-capabilities.ts` | Introspect the tool registry. `op:'list'` — all tools; `op:'detail', name:'<tool>'` — full guidance. |
 | `code_find` | `soma-code-tools.ts` | Grep with `file:line` output. Respects `.gitignore`. |
 | `code_map` | `soma-code-tools.ts` | Function/class/method index for one file (TS/JS/CSS/Bash). |
 | `code_refs` | `soma-code-tools.ts` | Symbol references split into DEF (definition) vs USE (usage). |
@@ -143,6 +145,32 @@ Each tool defines:
 
 **Read the source** — each extension file has the authoritative definition
 and inline commentary on why each guideline exists.
+
+### Discovering what's registered
+
+Two surfaces (SX-558):
+
+**From a shell, without starting the agent:**
+
+```bash
+soma tool                  # list all registered tools (one-liner each)
+soma tool delegate         # full guidance for one tool
+soma tool --extensions     # group by extension file
+```
+
+This runs an offline static parser over `extensions/*.ts` (or
+`dist/extensions/*.js` for release installs). It does NOT apply `_tools.md`
+overrides — it shows the authored definition.
+
+**Inside a running Soma session, with overrides applied:**
+
+```
+capabilities(op: "list")
+capabilities(op: "detail", name: "delegate")
+```
+
+The `capabilities` tool reads the runtime Soma registry (post-`_tools.md`
+merge) and reflects active/inactive status for the current session.
 
 ## Writing a new tool
 
