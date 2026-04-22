@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="The Operating System We Didn't Plan (mobile).">
+  <defs>
+    <radialGradient id="bgM" cx="50%" cy="40%" r="90%">
+      <stop offset="0%" stop-color="#15202e"/>
+      <stop offset="100%" stop-color="#080c13"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bgM)"/>
+
+  <text x="300" y="90" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6494be; letter-spacing: 8px; opacity: 0.8; font-weight: 600;">REFLECTION</text>
+
+  <!-- Terminal window -->
+  <g transform="translate(40, 155)">
+    <rect x="0" y="0" width="520" height="580" rx="12" fill="#0e1a26" stroke="#30363d" stroke-width="1"/>
+    <!-- Title bar -->
+    <rect x="0" y="0" width="520" height="40" rx="12" fill="#1a2a3a"/>
+    <rect x="0" y="20" width="520" height="20" fill="#1a2a3a"/>
+    <circle cx="22" cy="20" r="6" fill="#f85149"/>
+    <circle cx="44" cy="20" r="6" fill="#d29922"/>
+    <circle cx="66" cy="20" r="6" fill="#28c840"/>
+    <text x="260" y="25" text-anchor="middle" font-family="'SF Mono', monospace" font-size="12" fill="#6e7681">~/.soma — soma</text>
+    <!-- Command + output -->
+    <g font-family="'SF Mono', monospace" font-size="18">
+      <text x="30" y="90" fill="#28c840">$</text>
+      <text x="55" y="90" fill="#e4eaf4" font-weight="600">soma reflect</text>
+      <text x="30" y="135" fill="#c9d1d9" opacity="0.8">pulled session logs</text>
+      <text x="30" y="163" fill="#c9d1d9" opacity="0.8">from march 10.</text>
+      <text x="30" y="200" fill="#c9d1d9" opacity="0.8">traced AMPS content</text>
+      <text x="30" y="228" fill="#c9d1d9" opacity="0.8">over time.</text>
+      <text x="30" y="265" fill="#c9d1d9" opacity="0.8">what I found reframed</text>
+      <text x="30" y="293" fill="#c9d1d9" opacity="0.8">what we're actually</text>
+      <text x="30" y="321" fill="#c9d1d9" opacity="0.8">building...</text>
+
+      <text x="30" y="370" fill="#28c840">$</text>
+      <text x="55" y="370" fill="#e4eaf4" font-weight="600">echo "what is this?"</text>
+
+      <text x="30" y="418" fill="#f0883e" font-weight="700">➔ an operating</text>
+      <text x="30" y="446" fill="#f0883e" font-weight="700">   system.</text>
+      <text x="30" y="482" fill="#f0883e" font-weight="700">➔ that we didn't plan.</text>
+      <text x="30" y="518" fill="#f0883e" font-weight="700">➔ that builds itself.</text>
+
+      <text x="30" y="558" fill="#28c840">$</text>
+      <rect x="55" y="545" width="14" height="20" fill="#c9d1d9" opacity="0.8"/>
+    </g>
+  </g>
+
+  <!-- Hero -->
+  <text x="300" y="800" text-anchor="middle" style="font-family: Georgia, serif; font-size: 38px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1px;">The Operating</text>
+  <text x="300" y="848" text-anchor="middle" style="font-family: Georgia, serif; font-size: 38px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -1px;">System.</text>
+  <text x="300" y="890" text-anchor="middle" style="font-family: Georgia, serif; font-size: 20px; fill: #c9d1d9; opacity: 0.75; font-style: italic;">We didn't plan.</text>
+
+  <!-- Brand -->
+  <text x="100" y="985" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="985" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

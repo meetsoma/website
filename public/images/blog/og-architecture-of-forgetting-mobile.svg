@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="The Architecture of Forgetting — 398,000 lines of Claude Code (mobile).">
+  <defs>
+    <radialGradient id="bgM" cx="50%" cy="40%" r="95%">
+      <stop offset="0%" stop-color="#15202e"/>
+      <stop offset="100%" stop-color="#060a0f"/>
+    </radialGradient>
+    <radialGradient id="star-orange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f0883e"/>
+      <stop offset="60%" stop-color="rgba(240,136,62,0.4)"/>
+      <stop offset="100%" stop-color="rgba(240,136,62,0)"/>
+    </radialGradient>
+    <radialGradient id="star-blue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6494be"/>
+      <stop offset="60%" stop-color="rgba(100,148,190,0.4)"/>
+      <stop offset="100%" stop-color="rgba(100,148,190,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bgM)"/>
+
+  <!-- Hero -->
+  <text x="300" y="140" text-anchor="middle" style="font-family: Georgia, serif; font-size: 60px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">The</text>
+  <text x="300" y="210" text-anchor="middle" style="font-family: Georgia, serif; font-size: 60px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">Architecture</text>
+  <text x="300" y="280" text-anchor="middle" style="font-family: Georgia, serif; font-size: 60px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -1.5px;">of Forgetting.</text>
+
+  <!-- Stat -->
+  <text x="300" y="360" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.85; letter-spacing: 3px;">398,000 LINES OF CLAUDE CODE</text>
+
+  <!-- Constellation — abandoned-module nodes -->
+  <g transform="translate(0, 400)" opacity="0.9">
+    <!-- Connecting lines (very faint) -->
+    <line x1="120" y1="80" x2="280" y2="140" stroke="#6494be" stroke-width="0.8" opacity="0.2"/>
+    <line x1="280" y1="140" x2="430" y2="70" stroke="#6494be" stroke-width="0.8" opacity="0.2"/>
+    <line x1="430" y1="70" x2="480" y2="220" stroke="#6494be" stroke-width="0.8" opacity="0.2"/>
+    <line x1="280" y1="140" x2="350" y2="270" stroke="#6494be" stroke-width="0.8" opacity="0.2"/>
+    <line x1="120" y1="80" x2="170" y2="250" stroke="#6494be" stroke-width="0.8" opacity="0.2"/>
+    <line x1="350" y1="270" x2="170" y2="250" stroke="#6494be" stroke-width="0.8" opacity="0.2"/>
+
+    <!-- Nodes (mix of orange/blue) -->
+    <circle cx="120" cy="80" r="24" fill="url(#star-blue)"/>
+    <circle cx="120" cy="80" r="4" fill="#6494be"/>
+    <circle cx="280" cy="140" r="26" fill="url(#star-orange)"/>
+    <circle cx="280" cy="140" r="4" fill="#f0883e"/>
+    <circle cx="430" cy="70" r="22" fill="url(#star-blue)"/>
+    <circle cx="430" cy="70" r="4" fill="#6494be"/>
+    <circle cx="480" cy="220" r="26" fill="url(#star-orange)"/>
+    <circle cx="480" cy="220" r="4" fill="#f0883e"/>
+    <circle cx="350" cy="270" r="22" fill="url(#star-blue)"/>
+    <circle cx="350" cy="270" r="3.5" fill="#6494be"/>
+    <circle cx="170" cy="250" r="24" fill="url(#star-orange)"/>
+    <circle cx="170" cy="250" r="4" fill="#f0883e"/>
+  </g>
+
+  <!-- Abandoned file list -->
+  <g transform="translate(60, 770)" font-family="'SF Mono', monospace" font-size="16">
+    <text x="0" y="0" fill="#6e7681" opacity="0.75">extractMemories.ts</text>
+    <text x="0" y="28" fill="#6e7681" opacity="0.75">autoDream.ts</text>
+    <text x="0" y="56" fill="#6e7681" opacity="0.75">verificationAgent.ts</text>
+    <text x="0" y="84" fill="#6e7681" opacity="0.75">companion.ts</text>
+  </g>
+
+  <!-- Brand -->
+  <line x1="100" y1="935" x2="500" y2="935" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="100" y="975" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="975" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>
