@@ -6,33 +6,31 @@ import { getPublishedBlogPosts, formatDate, estimateReadTime, authorBadge, blogP
 
 const posts = await getPublishedBlogPosts();
 
-// Derive filter tags — exclude ultra-common building-in-public + version refs
+// Prefer SVG over PNG for crisp scaling in cards (both columns + mobile).
+function cardHero(post: any) {
+  const img = post.data.image || '';
+  if (!img) return null;
+  // Replace .png with .svg when we have both. SVG scales cleanly in the grid.
+  const svgPath = img.replace(/\.(png|jpg|jpeg|webp)$/i, '.svg');
+  return { src: svgPath, fallback: img };
+}
+
+// Filter tag counts
 const tagCounts = new Map<string, number>();
 for (const post of posts) {
   for (const tag of post.data.tags || []) {
     tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
   }
 }
-// Curated filter set: human-meaningful categories with enough posts to warrant a pill
-const FILTER_TAGS = [
-  'architecture',
-  'memory',
-  'cache',
-  'identity',
-  'philosophy',
-  'somaverse',
-  'debugging',
-  'reflection',
-];
+const FILTER_TAGS = ['architecture','memory','cache','identity','philosophy','somaverse','debugging','reflection'];
 const visibleFilters = FILTER_TAGS
   .filter(t => (tagCounts.get(t) || 0) >= 2)
   .map(t => ({ tag: t, count: tagCounts.get(t) || 0 }));
 
-// Stats subheader
 const totalPosts = posts.length;
 const agentAuthored = posts.filter(p => p.data.authorRole === 'agent').length;
-const oldestDate = posts[posts.length - 1]?.data.date;
-const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
+const firstPostDate = posts[posts.length - 1]?.data.date;
+const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
 ---
 
 <Layout
@@ -54,7 +52,7 @@ const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
       <p class="stats">
         <span>{totalPosts} posts</span>
         <span class="sep">·</span>
-        <span>since {firstPostDate}</span>
+        <span>since {firstPostDateStr}</span>
         <span class="sep">·</span>
         <span>{agentAuthored} agent-authored</span>
       </p>
@@ -78,45 +76,46 @@ const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
           ))}
         </nav>
 
-        <div class="posts-grid">
-          {posts.map((post) => (
-            <article class="post-card" data-tags={(post.data.tags || []).join(',')}>
-              <a href={blogPostUrl(post)} class="post-link">
-                {post.data.image ? (
-                  <div class="post-thumb">
-                    <img
-                      src={post.data.image}
-                      alt=""
-                      loading="lazy"
-                      width="480"
-                      height="252"
-                    />
+        <div class="masonry">
+          {posts.map((post) => {
+            const hero = cardHero(post);
+            return (
+              <article class="m-card" data-tags={(post.data.tags || []).join(',')}>
+                <a href={blogPostUrl(post)} class="m-link">
+                  {hero ? (
+                    <div class="m-hero">
+                      <img
+                        src={hero.src}
+                        alt=""
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : (
+                    <div class="m-hero m-hero-placeholder">
+                      <span class="placeholder-mark">σ</span>
+                    </div>
+                  )}
+                  <div class="m-body">
+                    <div class="m-meta">
+                      <span class="m-date">{formatDate(post.data.date)}</span>
+                      <span class="sep">·</span>
+                      <span class="m-read">{estimateReadTime(post.body || '')}</span>
+                      <span class="author-badge" data-role={post.data.authorRole}>
+                        {authorBadge(post.data.authorRole)}
+                      </span>
+                    </div>
+                    <h2 class="m-title">{post.data.title}</h2>
+                    <p class="m-desc">{post.data.description}</p>
+                    <div class="m-tags">
+                      {(post.data.tags || []).slice(0, 4).map((tag) => (
+                        <span class="tag">#{tag}</span>
+                      ))}
+                    </div>
                   </div>
-                ) : (
-                  <div class="post-thumb post-thumb-placeholder">
-                    <span class="placeholder-mark">σ</span>
-                  </div>
-                )}
-                <div class="post-body">
-                  <div class="post-meta">
-                    <span class="post-date">{formatDate(post.data.date)}</span>
-                    <span class="sep">·</span>
-                    <span class="post-read">{estimateReadTime(post.body || '')}</span>
-                    <span class="author-badge" data-role={post.data.authorRole}>
-                      {authorBadge(post.data.authorRole)}
-                    </span>
-                  </div>
-                  <h2 class="post-title">{post.data.title}</h2>
-                  <p class="post-desc">{post.data.description}</p>
-                  <div class="post-tags">
-                    {(post.data.tags || []).map((tag) => (
-                      <span class="tag">#{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </a>
-            </article>
-          ))}
+                </a>
+              </article>
+            );
+          })}
         </div>
 
         <p class="filter-empty" hidden>
@@ -124,9 +123,7 @@ const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
         </p>
       </>
     )}
-
   </main>
-
 </Layout>
 
 <style>
@@ -149,13 +146,13 @@ const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
 
   .container {
     position: relative; z-index: 1;
-    max-width: 980px;
+    max-width: 1180px;
     margin: 0 auto;
     padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
     min-height: 100vh;
   }
 
-  .header { text-align: center; margin-bottom: 40px; animation: fadeUp 0.6s ease-out; }
+  .header { text-align: center; margin-bottom: 36px; animation: fadeUp 0.6s ease-out; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
   .title {
@@ -179,13 +176,14 @@ const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
 
   .stats {
     color: var(--text-muted);
-    font-size: 0.84rem;
+    font-size: 0.82rem;
     font-family: var(--font-mono);
     letter-spacing: 0.02em;
     display: flex;
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
+    margin: 0;
   }
   .stats .sep { opacity: 0.4; }
 
@@ -195,10 +193,9 @@ const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 32px;
+    margin-bottom: 30px;
     padding: 0 8px;
   }
-
   .filter-chip {
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -221,117 +218,103 @@ const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
     border-color: rgba(240, 200, 102, 0.55);
     color: #f0c866;
   }
-  .filter-count {
-    display: inline-block;
-    margin-left: 4px;
-    opacity: 0.6;
-    font-size: 0.72rem;
-  }
+  .filter-count { display: inline-block; margin-left: 4px; opacity: 0.6; font-size: 0.72rem; }
 
-  .filter-empty {
-    text-align: center;
-    color: var(--text-muted);
-    margin: 60px 0;
-    font-style: italic;
-  }
+  .filter-empty { text-align: center; color: var(--text-muted); margin: 60px 0; font-style: italic; }
   .reset-filter {
-    background: none;
-    border: none;
-    color: var(--accent-bright);
-    cursor: pointer;
-    font-family: inherit;
-    font-size: inherit;
+    background: none; border: none; color: var(--accent-bright);
+    cursor: pointer; font-family: inherit; font-size: inherit;
     text-decoration: underline;
-    font-style: normal;
   }
 
-  /* ── empty state ─────────────────────────────────────── */
   .empty-state { text-align: center; padding: 100px var(--space-xl); }
   .empty-icon { color: var(--accent-bright); margin-bottom: 18px; animation: pulse 3s ease-in-out infinite; }
   @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
   .empty-text { color: var(--text-muted); font-size: var(--body-text); font-style: italic; }
 
-  /* ── posts grid ─────────────────────────────────────── */
-  .posts-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+  /* ── masonry grid ───────────────────────────────────── */
+  /* CSS columns for true masonry. Cards have break-inside: avoid so they
+     never split across columns. Portrait OGs (from mobile variants) give
+     each card a tall, Pinterest-style visual. */
+  .masonry {
+    column-count: 2;
+    column-gap: 20px;
     margin-bottom: 56px;
   }
 
-  .post-card {
+  /* 3 columns on larger desktops */
+  @media (min-width: 1040px) {
+    .masonry { column-count: 3; column-gap: 22px; }
+  }
+
+  .m-card {
+    break-inside: avoid;
+    display: block;
     border-radius: 14px;
     border: 1px solid var(--border-subtle);
     background: var(--surface-card-strong);
     transition: all 0.22s ease;
     overflow: hidden;
+    margin-bottom: 20px;
   }
-  .post-card:hover {
+  .m-card:hover {
     border-color: var(--accent-bright);
     transform: translateY(-3px);
     box-shadow: 0 12px 36px var(--shadow-accent-soft);
   }
-  .post-card[hidden] { display: none; }
+  .m-card[hidden] { display: none; }
 
-  .post-link {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 20px;
-    align-items: stretch;
-    padding: 0;
+  .m-link {
+    display: block;
     text-decoration: none;
     color: inherit;
   }
 
-  .post-thumb {
-    overflow: hidden;
+  .m-hero {
+    display: block;
     background: linear-gradient(135deg, #1a2030 0%, #0f1420 100%);
-    min-height: 130px;
+    overflow: hidden;
     position: relative;
+    border-bottom: 1px solid rgba(124, 178, 212, 0.1);
+    aspect-ratio: 1200 / 630;  /* landscape OG */
   }
-  .post-thumb img {
+  .m-hero img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
     transition: transform 0.4s ease;
   }
-  .post-card:hover .post-thumb img { transform: scale(1.03); }
+  .m-card:hover .m-hero img { transform: scale(1.02); }
 
-  .post-thumb-placeholder {
+  .m-hero-placeholder {
     display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #1a2030 0%, #0a0f18 100%);
   }
   .placeholder-mark {
     font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 60px;
+    font-size: 96px;
     font-weight: 800;
     color: rgba(240, 200, 102, 0.35);
   }
 
-  .post-body {
-    display: flex;
-    flex-direction: column;
-    padding: 18px 22px 18px 0;
-    gap: 6px;
-    min-width: 0;
+  .m-body {
+    padding: 14px 16px 16px;
+    display: flex; flex-direction: column; gap: 6px;
   }
 
-  .post-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.78rem;
+  .m-meta {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.72rem;
     color: var(--text-muted);
     font-family: var(--font-mono);
+    flex-wrap: wrap;
   }
-  .post-meta .sep { opacity: 0.5; }
-
+  .m-meta .sep { opacity: 0.45; }
   .author-badge {
     margin-left: auto;
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border-radius: 6px;
+    font-size: 0.65rem;
+    padding: 2px 7px;
+    border-radius: 5px;
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
     letter-spacing: 0.05em;
@@ -341,83 +324,59 @@ const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
     color: var(--promo);
   }
 
-  .post-title {
+  .m-title {
     font-family: var(--font-display);
-    font-size: clamp(1.15rem, 2.1vw, 1.35rem);
+    font-size: 1.08rem;
     font-weight: 700;
-    line-height: 1.25;
+    line-height: 1.3;
     margin: 4px 0 2px;
     color: var(--text-primary);
     transition: color 0.18s;
   }
-  .post-card:hover .post-title { color: var(--accent-bright); }
+  .m-card:hover .m-title { color: var(--accent-bright); }
 
-  .post-desc {
-    font-size: 0.92rem;
+  .m-desc {
+    font-size: 0.85rem;
     line-height: 1.5;
     color: var(--text-secondary);
-    /* clamp to 2 lines on the grid view */
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin: 0;
   }
 
-  .post-tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-top: 6px;
+  .m-tags {
+    display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px;
   }
   .tag {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.66rem;
     color: var(--moon-bright);
-    padding: 2px 8px;
-    border-radius: 6px;
+    padding: 2px 7px;
+    border-radius: 5px;
     background: rgba(124, 178, 212, 0.08);
     border: 1px solid rgba(124, 178, 212, 0.15);
     white-space: nowrap;
   }
 
-  /* ── mobile (<=640px) — vertical stack ───────────────── */
+  /* Mobile: single column, bigger cards */
   @media (max-width: 640px) {
-    .container { padding: var(--space-2xl) var(--space-lg); }
+    .container { padding: var(--space-2xl) var(--space-lg); max-width: 100%; }
     .header { margin-bottom: 24px; }
     .filter-bar { margin-bottom: 22px; }
-
-    .post-link {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-    .post-thumb {
-      aspect-ratio: 16 / 9;
-      min-height: 0;
-      max-height: 200px;
-    }
-    .post-body {
-      padding: 16px 18px;
-    }
-    .post-title { font-size: 1.08rem; }
-    .post-desc { -webkit-line-clamp: 3; }
-    .post-tags { flex-wrap: nowrap; overflow-x: auto; }
-    .post-tags::-webkit-scrollbar { display: none; }
-  }
-
-  /* ── tablet / narrow desktop — keep horizontal but smaller ── */
-  @media (min-width: 641px) and (max-width: 860px) {
-    .post-link {
-      grid-template-columns: 160px 1fr;
-    }
-    .post-body { padding: 14px 18px 14px 0; }
+    .masonry { column-count: 1; }
+    .m-card { margin-bottom: 16px; }
+    .m-body { padding: 16px 18px 18px; }
+    .m-title { font-size: 1.15rem; }
+    .m-desc { font-size: 0.9rem; -webkit-line-clamp: 3; }
   }
 </style>
 
 <script is:inline>
   document.addEventListener('DOMContentLoaded', function() {
     const chips = document.querySelectorAll('.filter-chip');
-    const cards = document.querySelectorAll('.post-card');
+    const cards = document.querySelectorAll('.m-card');
     const emptyMsg = document.querySelector('.filter-empty');
     const resetBtn = document.querySelector('.reset-filter');
 
@@ -439,7 +398,6 @@ const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
         applyFilter(chip.dataset.filter);
       });
     });
-
     if (resetBtn) {
       resetBtn.addEventListener('click', function() {
         chips.forEach(c => c.classList.remove('active'));
