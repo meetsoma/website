@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="An agent that remembers.">
+  <defs>
+    <radialGradient id="bg-g" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1a2534"/>
+      <stop offset="100%" stop-color="#080c13"/>
+    </radialGradient>
+    <radialGradient id="body-g" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#6898be"/>
+      <stop offset="50%" stop-color="#5282a8"/>
+      <stop offset="100%" stop-color="#3e6c92"/>
+    </radialGradient>
+    <radialGradient id="spec-g" cx="28%" cy="24%" r="16%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(100,148,190,0.18)"/>
+      <stop offset="60%" stop-color="rgba(100,148,190,0.04)"/>
+      <stop offset="100%" stop-color="rgba(100,148,190,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+  <pattern id="dots" x="0" y="0" width="34" height="34" patternUnits="userSpaceOnUse">
+    <circle cx="17" cy="17" r="0.4" fill="#6494be" opacity="0.10"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- ═══ MASCOT — centered, hero composition, larger ═══ -->
+  <circle cx="900" cy="315" r="300" fill="url(#halo)"/>
+  <g transform="translate(720, 125) scale(2.1)">
+    <circle cx="90" cy="90" r="85" fill="url(#body-g)"/>
+    <circle cx="90" cy="90" r="85" fill="url(#spec-g)"/>
+    <!-- Sunglasses -->
+    <rect x="30" y="68" width="58" height="36" rx="8" fill="#0e1a26" stroke="#080f18" stroke-width="2.5"/>
+    <rect x="92" y="66" width="58" height="36" rx="8" fill="#0e1a26" stroke="#080f18" stroke-width="2.5"/>
+    <path d="M85,82 Q90,74 92,82" fill="none" stroke="#080f18" stroke-width="3"/>
+    <line x1="30" y1="81" x2="4" y2="75" stroke="#080f18" stroke-width="3" stroke-linecap="round"/>
+    <line x1="150" y1="80" x2="172" y2="74" stroke="#080f18" stroke-width="3" stroke-linecap="round"/>
+    <rect x="35" y="74" width="16" height="8" rx="3" fill="white" opacity="0.08"/>
+    <rect x="98" y="72" width="16" height="8" rx="3" fill="white" opacity="0.08"/>
+    <!-- Smirk -->
+    <path d="M60,125 Q90,145 122,122" fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round" opacity="0.6"/>
+  </g>
+
+  <!-- ═══ TEXT — left-aligned, serif, generous spacing ═══ -->
+  <!-- Supra label -->
+  <text x="65" y="150" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #6494be; letter-spacing: 8px; opacity: 0.7; font-weight: 600;">INTRODUCING</text>
+
+  <!-- Hero — single breath -->
+  <text x="60" y="260" style="font-family: Georgia, 'Times New Roman', serif; font-size: 108px; fill: #e4eaf4; font-weight: 700; letter-spacing: -3px;">Soma.</text>
+
+  <!-- Sub-hero — the promise -->
+  <text x="60" y="390" style="font-family: Georgia, 'Times New Roman', serif; font-size: 46px; fill: #c9d1d9; font-weight: 400; font-style: italic;">An agent that</text>
+  <text x="60" y="448" style="font-family: Georgia, 'Times New Roman', serif; font-size: 46px; fill: #f0883e; font-weight: 400; font-style: italic;">remembers.</text>
+
+  <!-- ═══ BRAND BAR ═══ -->
+  <line x1="60" y1="565" x2="500" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="60" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.7; letter-spacing: 3px;">SOMA</text>
+  <text x="500" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

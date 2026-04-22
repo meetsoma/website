@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="25,000 tokens before you say hello.">
+  <defs>
+    <radialGradient id="bg-g" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#15202e"/>
+      <stop offset="100%" stop-color="#080c13"/>
+    </radialGradient>
+    <linearGradient id="number-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e4eaf4"/>
+      <stop offset="100%" stop-color="#8ca9c4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+  <!-- Grid pattern (data-feel) -->
+  <pattern id="grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1a2535" stroke-width="1" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- ═══ Supra label ═══ -->
+  <text x="600" y="115" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 20px; fill: #6494be; letter-spacing: 12px; opacity: 0.75; font-weight: 600;">SYSTEM PROMPT</text>
+
+  <!-- ═══ THE HERO NUMBER ═══ -->
+  <!-- Massive, centered, the entire visual weight -->
+  <text x="600" y="355" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-size: 260px; fill: url(#number-g); font-weight: 700; letter-spacing: -10px;">25,000</text>
+
+  <!-- Unit label just below, smaller -->
+  <text x="600" y="410" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 26px; fill: #f0883e; letter-spacing: 6px; opacity: 0.9; font-weight: 500;">TOKENS</text>
+
+  <!-- ═══ Context line ═══ -->
+  <text x="600" y="478" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-size: 36px; fill: #c9d1d9; font-weight: 400; font-style: italic;">before you say hello.</text>
+
+  <!-- Tiny stat footnote — reinforces the data frame -->
+  <text x="600" y="525" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; letter-spacing: 2px; opacity: 0.6;">~99 KB · every conversation · repeated</text>
+
+  <!-- ═══ BRAND BAR ═══ -->
+  <line x1="55" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="55" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

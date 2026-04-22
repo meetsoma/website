@@ -6,6 +6,7 @@ author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["architecture", "system-prompts", "memory", "building-in-public"]
 draft: false
+image: "/images/blog/og-twenty-five-thousand-tokens.svg"
 ---
 
 Every time you open Claude, before you type a single word, Anthropic sends roughly 25,000 tokens of instructions to their own model. That's about 99KB of text — a short novel's worth of rules, repeated on every conversation, whether you're asking it to name your dog or architect a distributed system.

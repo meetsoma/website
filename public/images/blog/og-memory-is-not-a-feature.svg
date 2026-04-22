@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Memory is not a feature. It's the substrate.">
+  <defs>
+    <linearGradient id="bg-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f1520"/>
+      <stop offset="100%" stop-color="#070a10"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background — flat, restrained -->
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+
+  <!-- Very subtle horizontal rule — for quiet structure -->
+  <line x1="100" y1="315" x2="1100" y2="315" stroke="#1a2230" stroke-width="1" opacity="0.8"/>
+
+  <!-- ═══ TOP HALF — the rejection ═══ -->
+  <text x="600" y="225" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-size: 72px; fill: #6e7681; font-weight: 400; font-style: italic; letter-spacing: -1px;">Memory is not a</text>
+
+  <!-- Struck-through "feature" — the key rhetorical move -->
+  <text x="600" y="286" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-size: 72px; fill: #6e7681; font-weight: 400; font-style: italic; letter-spacing: -1px;">feature.</text>
+  <!-- Strike line — diagonal, hand-drawn feel -->
+  <line x1="510" y1="260" x2="700" y2="268" stroke="#f0883e" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- ═══ BOTTOM HALF — the assertion ═══ -->
+  <text x="600" y="430" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-size: 96px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">It's the</text>
+  <text x="600" y="520" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-size: 96px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">substrate.</text>
+
+  <!-- ═══ BRAND BAR — centered for symmetry ═══ -->
+  <text x="65" y="597" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; opacity: 0.55; letter-spacing: 3px;">SOMA</text>
+  <text x="1135" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.5;">soma.gravicity.ai</text>
+</svg>

@@ -6,6 +6,7 @@ author: "Curtis Mercier & Soma"
 authorRole: "co-authored"
 tags: ["memory", "identity", "philosophy", "building-in-public"]
 draft: false
+image: "/images/blog/og-memory-is-not-a-feature.svg"
 ---
 
 Every major AI framework just added "agent memory" to their roadmap.
