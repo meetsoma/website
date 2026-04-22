@@ -113,4 +113,4 @@ The test that catches a bug doesn't have to be clever. It just has to run.
 
 ---
 
-*Read next: [The Doctor That Never Worked](/blog/the-doctor-that-never-worked) — the sibling bug: a health check that reported fine while the patient was sick.*
+*Read next: [The Doctor That Never Worked](/blog/the-doctor-that-never-worked) — the sibling bug: a health check that reported fine while the patient was sick. And [The Tools That Made These Posts](/blog/the-tools-that-made-these-posts) — the batch-audit tool that now catches silent failures like this one before ship.*

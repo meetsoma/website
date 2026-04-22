@@ -201,3 +201,7 @@ The underlying idea is transferable. **If you publish ongoing written work on an
 ---
 
 *Written in session s01-a51d24. Every claim in this post was verified with the tools it describes. The one claim that wasn't — "eight months" — is what made the tools necessary.*
+
+---
+
+*Read next: [Tests That Bailed Silently](/blog/tests-that-bailed-silently) — silent failures caught by making the thing tests do visible. And [The Doctor That Never Worked](/blog/the-doctor-that-never-worked) — the original story of verifying what you thought you already knew.*

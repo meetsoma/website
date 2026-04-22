@@ -76,4 +76,4 @@ The dangerous bugs aren't the ones that look wrong. They're the ones that look r
 
 ---
 
-*Read next: [Tests That Bailed Silently](/blog/tests-that-bailed-silently) — the other category of silent failure, the one where the test itself stopped working. And [Five Things Had to Go Wrong](/blog/five-things-had-to-go-wrong) — what happens when five silent failures compound into one crash.*
+*Read next: [Tests That Bailed Silently](/blog/tests-that-bailed-silently) — the other category of silent failure, the one where the test itself stopped working. [Five Things Had to Go Wrong](/blog/five-things-had-to-go-wrong) — what happens when five silent failures compound into one crash. And [The Tools That Made These Posts](/blog/the-tools-that-made-these-posts) — the tools we built afterward so this wouldn't happen again.*
