@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="The Backup You Didn't Know You Had — distribution as redundancy (mobile).">
+  <defs>
+    <radialGradient id="bgM" cx="50%" cy="40%" r="85%">
+      <stop offset="0%" stop-color="#15172a"/>
+      <stop offset="100%" stop-color="#070810"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bgM)"/>
+
+  <text x="300" y="90" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #f0883e; letter-spacing: 5px; opacity: 0.85; font-weight: 600;">DISTRIBUTION AS REDUNDANCY</text>
+
+  <!-- Hero -->
+  <text x="300" y="190" text-anchor="middle" style="font-family: Georgia, serif; font-size: 56px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">The Backup You</text>
+  <text x="300" y="256" text-anchor="middle" style="font-family: Georgia, serif; font-size: 56px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">Didn't Know</text>
+  <text x="300" y="322" text-anchor="middle" style="font-family: Georgia, serif; font-size: 56px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -1.5px;">You Had.</text>
+
+  <!-- Three file cards — stacked vertically -->
+  <g transform="translate(150, 420)">
+    <!-- Card 1: REPO SOURCE (struck) -->
+    <g opacity="0.45">
+      <rect x="0" y="0" width="300" height="90" rx="8" fill="rgba(100,148,190,0.04)" stroke="rgba(100,148,190,0.3)" stroke-width="1.2"/>
+      <polyline points="280,0 300,0 300,20" fill="none" stroke="rgba(100,148,190,0.3)" stroke-width="1.2"/>
+      <line x1="280" y1="0" x2="300" y2="20" stroke="rgba(100,148,190,0.3)" stroke-width="1.2"/>
+      <text x="20" y="28" font-family="'SF Mono', monospace" font-size="10" fill="#6494be" letter-spacing="2" opacity="0.75">REPO SOURCE</text>
+      <text x="20" y="60" font-family="Georgia, serif" font-size="20" fill="#c9d1d9" font-weight="700">soma-github</text>
+      <text x="20" y="80" font-family="'SF Mono', monospace" font-size="11" fill="#6494be" opacity="0.75">v1.1.0</text>
+      <!-- Strikethrough -->
+      <line x1="-20" y1="45" x2="260" y2="75" stroke="#f85149" stroke-width="3" opacity="0.85"/>
+    </g>
+    <text x="0" y="115" font-family="'SF Mono', monospace" font-size="11" fill="#f85149" opacity="0.85">git checkout --</text>
+
+    <!-- Card 2: INSTALLED COPY -->
+    <g transform="translate(0, 150)">
+      <rect x="0" y="0" width="300" height="90" rx="8" fill="rgba(100,148,190,0.08)" stroke="#6494be" stroke-width="1.5"/>
+      <polyline points="280,0 300,0 300,20" fill="none" stroke="#6494be" stroke-width="1.5"/>
+      <line x1="280" y1="0" x2="300" y2="20" stroke="#6494be" stroke-width="1.5"/>
+      <text x="20" y="28" font-family="'SF Mono', monospace" font-size="10" fill="#6494be" letter-spacing="2">INSTALLED COPY</text>
+      <text x="20" y="60" font-family="Georgia, serif" font-size="20" fill="#e4eaf4" font-weight="700">soma-github</text>
+      <text x="20" y="80" font-family="'SF Mono', monospace" font-size="11" fill="#6494be">v1.1.0</text>
+      <!-- Check badge -->
+      <circle cx="275" cy="18" r="10" fill="#28c840" opacity="0.9"/>
+      <path d="M 270 18 L 273 21 L 280 14" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="265" font-family="'SF Mono', monospace" font-size="11" fill="#6494be" opacity="0.85">~/.soma/agent/scripts/</text>
+
+    <!-- Card 3: SEEDED COPY -->
+    <g transform="translate(0, 300)">
+      <rect x="0" y="0" width="300" height="90" rx="8" fill="rgba(100,148,190,0.08)" stroke="#6494be" stroke-width="1.5"/>
+      <polyline points="280,0 300,0 300,20" fill="none" stroke="#6494be" stroke-width="1.5"/>
+      <line x1="280" y1="0" x2="300" y2="20" stroke="#6494be" stroke-width="1.5"/>
+      <text x="20" y="28" font-family="'SF Mono', monospace" font-size="10" fill="#6494be" letter-spacing="2">SEEDED COPY</text>
+      <text x="20" y="60" font-family="Georgia, serif" font-size="20" fill="#e4eaf4" font-weight="700">soma-github</text>
+      <text x="20" y="80" font-family="'SF Mono', monospace" font-size="11" fill="#6494be">v1.1.0</text>
+      <circle cx="275" cy="18" r="10" fill="#28c840" opacity="0.9"/>
+      <path d="M 270 18 L 273 21 L 280 14" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </g>
+    <text x="0" y="415" font-family="'SF Mono', monospace" font-size="11" fill="#6494be" opacity="0.85">.soma/amps/scripts/</text>
+  </g>
+
+  <!-- Subtext -->
+  <text x="300" y="885" text-anchor="middle" style="font-family: Georgia, serif; font-size: 17px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">Good distribution systems create</text>
+  <text x="300" y="910" text-anchor="middle" style="font-family: Georgia, serif; font-size: 17px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">redundancy you don't plan for.</text>
+
+  <!-- Brand -->
+  <line x1="100" y1="960" x2="500" y2="960" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="100" y="992" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="992" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

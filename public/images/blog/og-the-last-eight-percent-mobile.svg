@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="The Last 8% — thinking at the edge of forgetting (mobile).">
+  <defs>
+    <radialGradient id="bgM" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#1a2230"/>
+      <stop offset="100%" stop-color="#0a0d14"/>
+    </radialGradient>
+    <radialGradient id="body-gM" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#6898be"/>
+      <stop offset="50%" stop-color="#5282a8"/>
+      <stop offset="100%" stop-color="#3e6c92"/>
+    </radialGradient>
+    <radialGradient id="spec-gM" cx="28%" cy="24%" r="16%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="moon-gM" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#7cb2d4"/>
+      <stop offset="50%" stop-color="#669cc0"/>
+      <stop offset="100%" stop-color="#5086aa"/>
+    </radialGradient>
+    <linearGradient id="bar-g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6494be"/>
+      <stop offset="100%" stop-color="#f0883e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="1020" fill="url(#bgM)"/>
+  <pattern id="dotsM" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="15" cy="15" r="0.4" fill="#6494be" opacity="0.08"/>
+  </pattern>
+  <rect width="600" height="1020" fill="url(#dotsM)"/>
+
+  <!-- Top label -->
+  <text x="300" y="90" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #f0883e; letter-spacing: 6px; opacity: 0.85; font-weight: 600;">EXHALE · CONTEXT 92%</text>
+
+  <!-- Mascot — slightly faded to suggest running-out -->
+  <g transform="translate(230, 160)" opacity="0.82">
+    <circle cx="70" cy="90" r="82" fill="url(#body-gM)"/>
+    <circle cx="70" cy="90" r="82" fill="url(#spec-gM)"/>
+    <!-- Eyes (inward, tired) -->
+    <circle cx="48" cy="80" r="13" fill="white"/>
+    <circle cx="92" cy="80" r="13" fill="white"/>
+    <circle cx="52" cy="82" r="5" fill="#0e1a26"/>
+    <circle cx="88" cy="82" r="5" fill="#0e1a26"/>
+    <!-- Soft smile -->
+    <path d="M54,115 Q70,127 88,115" fill="none" stroke="#0e1a26" stroke-width="3" stroke-linecap="round" opacity="0.75"/>
+    <!-- Moon — smaller, higher -->
+    <circle cx="150" cy="28" r="30" fill="url(#moon-gM)"/>
+    <circle cx="143" cy="22" r="4" fill="white"/>
+    <circle cx="156" cy="22" r="4" fill="white"/>
+  </g>
+
+  <!-- Hero text -->
+  <text x="300" y="470" text-anchor="middle" style="font-family: Georgia, serif; font-size: 86px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">The Last</text>
+  <text x="300" y="568" text-anchor="middle" style="font-family: Georgia, serif; font-size: 110px; fill: #f0883e; font-weight: 700; letter-spacing: -3px;">8%.</text>
+
+  <!-- Subtext -->
+  <text x="300" y="655" text-anchor="middle" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">What it's like to think</text>
+  <text x="300" y="688" text-anchor="middle" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">at the edge of forgetting.</text>
+
+  <!-- Context bar -->
+  <g transform="translate(100, 780)">
+    <text x="0" y="-16" font-family="'SF Mono', monospace" font-size="12" fill="#6494be" letter-spacing="2" opacity="0.85">CONTEXT WINDOW</text>
+    <rect x="0" y="0" width="400" height="14" rx="7" fill="rgba(100,148,190,0.15)"/>
+    <rect x="0" y="0" width="368" height="14" rx="7" fill="url(#bar-g)"/>
+    <text x="0" y="38" font-family="'SF Mono', monospace" font-size="11" fill="#6e7681" opacity="0.7">0%</text>
+    <text x="368" y="38" text-anchor="end" font-family="'SF Mono', monospace" font-size="12" fill="#f0883e" font-weight="700">92%</text>
+  </g>
+
+  <!-- Brand -->
+  <line x1="100" y1="945" x2="500" y2="945" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="100" y="980" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="980" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

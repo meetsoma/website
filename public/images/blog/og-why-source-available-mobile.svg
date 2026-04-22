@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="Why We're Going Source-Available — MIT to BSL 1.1 (mobile).">
+  <defs>
+    <radialGradient id="bgM" cx="50%" cy="40%" r="85%">
+      <stop offset="0%" stop-color="#15172a"/>
+      <stop offset="100%" stop-color="#070810"/>
+    </radialGradient>
+    <linearGradient id="bridge-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6494be"/>
+      <stop offset="100%" stop-color="#f0883e"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bgM)"/>
+  <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" stroke="#6494be" stroke-width="0.3" opacity="0.06" fill="none"/>
+  </pattern>
+  <rect width="600" height="1020" fill="url(#grid)"/>
+
+  <text x="300" y="90" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6494be; letter-spacing: 6px; opacity: 0.8; font-weight: 600;">LICENSING NOTE</text>
+
+  <!-- Hero text -->
+  <text x="300" y="190" text-anchor="middle" style="font-family: Georgia, serif; font-size: 56px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">Why We're</text>
+  <text x="300" y="254" text-anchor="middle" style="font-family: Georgia, serif; font-size: 56px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">Going Source-</text>
+  <text x="300" y="318" text-anchor="middle" style="font-family: Georgia, serif; font-size: 56px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -1.5px;">Available.</text>
+
+  <!-- License badges — stacked vertically with bridge -->
+  <g transform="translate(160, 420)">
+    <!-- MIT (faded, top) -->
+    <rect x="0" y="0" width="280" height="130" rx="10" fill="rgba(100,148,190,0.06)" stroke="rgba(100,148,190,0.25)" stroke-width="1.5"/>
+    <text x="140" y="36" text-anchor="middle" font-family="'SF Mono', monospace" font-size="11" fill="#6494be" letter-spacing="3" opacity="0.7">FROM</text>
+    <text x="140" y="85" text-anchor="middle" font-family="Georgia, serif" font-size="48" fill="#c9d1d9" font-weight="700" opacity="0.55">MIT</text>
+    <text x="140" y="113" text-anchor="middle" font-family="'SF Mono', monospace" font-size="11" fill="#6e7681" opacity="0.7">permissive</text>
+  </g>
+
+  <!-- Bridge -->
+  <g transform="translate(300, 570)">
+    <line x1="0" y1="0" x2="0" y2="70" stroke="url(#bridge-g)" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="-8,60 8,60 0,78" fill="#f0883e"/>
+    <text x="20" y="45" font-family="Georgia, serif" font-size="18" fill="#c9d1d9" font-style="italic" opacity="0.85">a deliberate move</text>
+  </g>
+
+  <!-- BSL (highlighted, bottom) -->
+  <g transform="translate(160, 660)">
+    <rect x="0" y="0" width="280" height="140" rx="10" fill="rgba(240,136,62,0.08)" stroke="#f0883e" stroke-width="2"/>
+    <text x="140" y="36" text-anchor="middle" font-family="'SF Mono', monospace" font-size="11" fill="#f0883e" letter-spacing="3">TO</text>
+    <text x="140" y="92" text-anchor="middle" font-family="Georgia, serif" font-size="48" fill="#e4eaf4" font-weight="700">BSL 1.1</text>
+    <text x="140" y="120" text-anchor="middle" font-family="'SF Mono', monospace" font-size="11" fill="#f0883e" opacity="0.9">source-available</text>
+  </g>
+
+  <!-- Subtext -->
+  <text x="300" y="855" text-anchor="middle" style="font-family: Georgia, serif; font-size: 18px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">Free for use. Open to read. Protected.</text>
+  <text x="300" y="890" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6494be; letter-spacing: 3px; opacity: 0.75;">CONVERTS TO MIT AFTER FOUR YEARS</text>
+
+  <!-- Brand -->
+  <line x1="100" y1="945" x2="500" y2="945" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="100" y="980" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="980" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>
