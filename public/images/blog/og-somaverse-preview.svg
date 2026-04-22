@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <radialGradient id="bg" cx="55%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#182030"/>
+      <stop offset="100%" stop-color="#0b0f15"/>
+    </radialGradient>
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.7" fill="#6494be" opacity="0.08"/>
+    </pattern>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0c866"/>
+      <stop offset="1" stop-color="#d18f2a"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7cb2d4"/>
+      <stop offset="1" stop-color="#5086aa"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Kicker -->
+  <text x="80" y="110" fill="#6494be" font-family="'SF Mono', monospace" font-size="15"
+        letter-spacing="6" opacity="0.85">SOMAVERSE  —  PRE-LAUNCH</text>
+
+  <!-- Hero: Somaverse wordmark with golden σ -->
+  <text x="80" y="230" fill="#e4eaf4" font-size="94" font-weight="700" letter-spacing="-2"
+        font-family="Manrope, system-ui, sans-serif">
+    S<tspan fill="url(#gold)">σ</tspan>maverse
+  </text>
+
+  <!-- Hero subtitle -->
+  <text x="80" y="310" fill="#e4eaf4" font-size="44" font-weight="700" letter-spacing="-1">
+    Where AI agents <tspan fill="url(#gold)" font-style="italic">live.</tspan>
+  </text>
+
+  <text x="80" y="378" fill="#9dafc4" font-size="23" font-style="italic">A tiling workspace with eyes and hands.</text>
+
+  <!-- Feature chips -->
+  <g font-family="'SF Mono', monospace" font-size="16">
+    <rect x="80" y="425" width="220" height="48" rx="8" fill="rgba(124,178,212,0.12)" stroke="rgba(124,178,212,0.4)" stroke-width="1"/>
+    <text x="98" y="456" fill="#8bb9e0">see the screen</text>
+
+    <rect x="320" y="425" width="240" height="48" rx="8" fill="rgba(124,178,212,0.12)" stroke="rgba(124,178,212,0.4)" stroke-width="1"/>
+    <text x="338" y="456" fill="#8bb9e0">drive the browser</text>
+
+    <rect x="580" y="425" width="240" height="48" rx="8" fill="rgba(124,178,212,0.12)" stroke="rgba(124,178,212,0.4)" stroke-width="1"/>
+    <text x="598" y="456" fill="#8bb9e0">own the terminal</text>
+
+    <rect x="840" y="425" width="280" height="48" rx="8" fill="rgba(240,200,102,0.15)" stroke="rgba(240,200,102,0.5)" stroke-width="1"/>
+    <text x="858" y="456" fill="#f0c866">pair with your agent</text>
+  </g>
+
+  <!-- Somaverse ring mark (σ-in-circle, gold) -->
+  <g transform="translate(1050, 165)">
+    <circle cx="0" cy="0" r="80" fill="none" stroke="url(#ring)" stroke-width="4"/>
+    <text x="0" y="28" text-anchor="middle" fill="url(#gold)" font-size="110" font-weight="800"
+          font-family="Manrope, system-ui, sans-serif">σ</text>
+  </g>
+
+  <!-- Brand bar -->
+  <line x1="80" y1="580" x2="1120" y2="580" stroke="#30363d" stroke-width="1"/>
+  <text x="80" y="608" fill="#6494be" font-family="'SF Mono', monospace" font-size="13" letter-spacing="3" opacity="0.85">SOMA</text>
+  <text x="1120" y="608" fill="#6e7681" font-family="'SF Mono', monospace" font-size="13" text-anchor="end" opacity="0.7">soma.gravicity.ai</text>
+</svg>
