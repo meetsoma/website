@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="The Tests That Bailed Silently — five test suites passing zero assertions.">
+  <defs>
+    <radialGradient id="bg-g" cx="40%" cy="45%" r="85%">
+      <stop offset="0%" stop-color="#15172a"/>
+      <stop offset="100%" stop-color="#070810"/>
+    </radialGradient>
+    <linearGradient id="row-fade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(40,200,64,0.12)"/>
+      <stop offset="100%" stop-color="rgba(40,200,64,0)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+  <pattern id="grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+    <path d="M 60 0 L 0 0 0 60" stroke="#6494be" stroke-width="0.3" opacity="0.06" fill="none"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- HERO TEXT — left side -->
+  <text x="60" y="112" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #f0883e; letter-spacing: 6px; opacity: 0.9; font-weight: 600;">CI STATUS · GREEN</text>
+
+  <text x="60" y="208" style="font-family: Georgia, serif; font-size: 72px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">The Tests That</text>
+  <text x="60" y="288" style="font-family: Georgia, serif; font-size: 72px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -2px;">Bailed Silently.</text>
+
+  <text x="60" y="358" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">Five suites. Zero assertions. Four real bugs —</text>
+  <text x="60" y="388" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">hiding behind a green checkmark.</text>
+
+  <!-- Stat card -->
+  <g transform="translate(60, 430)">
+    <rect x="0" y="0" width="480" height="100" rx="8" fill="rgba(100,148,190,0.06)" stroke="rgba(100,148,190,0.2)" stroke-width="1"/>
+    <text x="24" y="30" font-family="'SF Mono', monospace" font-size="11" fill="#6494be" letter-spacing="2" opacity="0.85">AFTER FIXING FIVE PATHS</text>
+    <text x="24" y="72" font-family="Georgia, serif" font-size="34" fill="#e4eaf4" font-weight="700">800 → <tspan fill="#28c840">1041</tspan></text>
+    <text x="220" y="72" font-family="'SF Mono', monospace" font-size="13" fill="#c9d1d9" opacity="0.7">assertions running</text>
+    <text x="24" y="92" font-family="'SF Mono', monospace" font-size="12" fill="#f0883e" opacity="0.9">+ 4 user-impacting bugs surfaced</text>
+  </g>
+
+  <!-- ═══ RIGHT SIDE — mock CI output ═══ -->
+  <g transform="translate(660, 110)">
+    <!-- Terminal window chrome -->
+    <rect x="0" y="0" width="480" height="400" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+    <circle cx="18" cy="18" r="5" fill="#ff5f56"/>
+    <circle cx="36" cy="18" r="5" fill="#ffbd2e"/>
+    <circle cx="54" cy="18" r="5" fill="#27c93f"/>
+    <text x="240" y="22" text-anchor="middle" font-family="'SF Mono', monospace" font-size="10" fill="#8b949e" letter-spacing="1">CI · test-suite</text>
+
+    <!-- Green-check header (looks like everything passed) -->
+    <g transform="translate(20, 54)">
+      <text x="0" y="0" font-family="'SF Mono', monospace" font-size="13" fill="#28c840" font-weight="600">✓ ALL SUITES PASSING</text>
+      <text x="240" y="0" font-family="'SF Mono', monospace" font-size="11" fill="#6e7681" opacity="0.8">5 of 5  •  0 failures</text>
+    </g>
+
+    <!-- Row per suite -->
+    <g font-family="'SF Mono', monospace" font-size="12.5">
+      <!-- row 1 -->
+      <g transform="translate(20, 100)">
+        <rect x="-10" y="-16" width="470" height="34" fill="url(#row-fade)"/>
+        <text x="0" y="0" fill="#28c840" font-weight="600">✓</text>
+        <text x="24" y="0" fill="#c9d1d9">test-maps.sh</text>
+        <text x="260" y="0" fill="#6e7681">0 assertions</text>
+        <text x="370" y="0" fill="#f85149" opacity="0.85" font-size="10.5" letter-spacing="1.5">BAILED</text>
+      </g>
+      <!-- row 2 -->
+      <g transform="translate(20, 140)">
+        <rect x="-10" y="-16" width="470" height="34" fill="url(#row-fade)"/>
+        <text x="0" y="0" fill="#28c840" font-weight="600">✓</text>
+        <text x="24" y="0" fill="#c9d1d9">test-skill-loader.sh</text>
+        <text x="260" y="0" fill="#6e7681">0 assertions</text>
+        <text x="370" y="0" fill="#f85149" opacity="0.85" font-size="10.5" letter-spacing="1.5">BAILED</text>
+      </g>
+      <!-- row 3 -->
+      <g transform="translate(20, 180)">
+        <rect x="-10" y="-16" width="470" height="34" fill="url(#row-fade)"/>
+        <text x="0" y="0" fill="#28c840" font-weight="600">✓</text>
+        <text x="24" y="0" fill="#c9d1d9">test-doctor.sh</text>
+        <text x="260" y="0" fill="#6e7681">3 skipped</text>
+        <text x="370" y="0" fill="#f85149" opacity="0.85" font-size="10.5" letter-spacing="1.5">BAILED</text>
+      </g>
+      <!-- row 4 -->
+      <g transform="translate(20, 220)">
+        <rect x="-10" y="-16" width="470" height="34" fill="url(#row-fade)"/>
+        <text x="0" y="0" fill="#28c840" font-weight="600">✓</text>
+        <text x="24" y="0" fill="#c9d1d9">test-somaverse.sh</text>
+        <text x="260" y="0" fill="#6e7681">4 skipped</text>
+        <text x="370" y="0" fill="#f85149" opacity="0.85" font-size="10.5" letter-spacing="1.5">BAILED</text>
+      </g>
+      <!-- row 5 -->
+      <g transform="translate(20, 260)">
+        <rect x="-10" y="-16" width="470" height="34" fill="url(#row-fade)"/>
+        <text x="0" y="0" fill="#28c840" font-weight="600">✓</text>
+        <text x="24" y="0" fill="#c9d1d9">test-install-flows.sh</text>
+        <text x="260" y="0" fill="#6e7681">0 assertions</text>
+        <text x="370" y="0" fill="#f85149" opacity="0.85" font-size="10.5" letter-spacing="1.5">BAILED</text>
+      </g>
+    </g>
+
+    <!-- Divider -->
+    <line x1="20" y1="310" x2="460" y2="310" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+
+    <!-- Caption inside terminal -->
+    <text x="240" y="345" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#c9d1d9" font-style="italic" opacity="0.9">Every check exited before the</text>
+    <text x="240" y="366" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#c9d1d9" font-style="italic" opacity="0.9">first assertion. CI stayed green.</text>
+  </g>
+
+  <!-- Brand -->
+  <line x1="60" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.5"/>
+  <text x="60" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>
