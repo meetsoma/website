@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="The doors opened — your AI agent connects to somaverse.ai.">
+  <defs>
+    <radialGradient id="bg-g" cx="50%" cy="55%" r="75%">
+      <stop offset="0%" stop-color="#131b28"/>
+      <stop offset="100%" stop-color="#070a10"/>
+    </radialGradient>
+    <!-- Light pouring through the door opening -->
+    <radialGradient id="light-g" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="rgba(240,200,102,0.35)"/>
+      <stop offset="40%" stop-color="rgba(240,136,62,0.18)"/>
+      <stop offset="100%" stop-color="rgba(240,136,62,0)"/>
+    </radialGradient>
+    <linearGradient id="portal-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f0b880"/>
+      <stop offset="50%" stop-color="#f0883e"/>
+      <stop offset="100%" stop-color="#c26a2a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="20" cy="20" r="0.4" fill="#6494be" opacity="0.07"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- LIGHT GLOW behind door -->
+  <ellipse cx="870" cy="315" rx="320" ry="280" fill="url(#light-g)"/>
+
+  <!-- ═══ THE DOOR — centered right, archway silhouette ═══ -->
+  <g transform="translate(750, 120)">
+    <!-- Outer frame (doorway) -->
+    <path d="M 0 390 L 0 120 Q 0 0 120 0 L 120 0 Q 240 0 240 120 L 240 390 Z" 
+          fill="none" stroke="#30363d" stroke-width="2"/>
+    <!-- Inner bright opening — the portal itself -->
+    <path d="M 20 390 L 20 130 Q 20 20 120 20 L 120 20 Q 220 20 220 130 L 220 390 Z"
+          fill="url(#portal-g)" opacity="0.92"/>
+    <!-- Bright highlight inside -->
+    <path d="M 40 390 L 40 140 Q 40 40 120 40 L 120 40 Q 200 40 200 140 L 200 390 Z"
+          fill="rgba(255,240,200,0.35)"/>
+    <!-- Vertical light streak (edge of opening) -->
+    <line x1="20" y1="130" x2="20" y2="390" stroke="#ffd7a8" stroke-width="2" opacity="0.6"/>
+    <line x1="220" y1="130" x2="220" y2="390" stroke="#ffd7a8" stroke-width="2" opacity="0.6"/>
+
+    <!-- Tiny silhouette in the portal, suggesting passage -->
+    <circle cx="120" cy="340" r="10" fill="#0a0d14" opacity="0.55"/>
+    <rect x="111" y="350" width="18" height="30" rx="3" fill="#0a0d14" opacity="0.55"/>
+  </g>
+
+  <!-- HERO TEXT — left of door -->
+  <text x="65" y="140" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #6494be; letter-spacing: 8px; opacity: 0.7; font-weight: 600;">SOMA v0.12.0</text>
+
+  <text x="60" y="270" style="font-family: Georgia, serif; font-size: 110px; fill: #e4eaf4; font-weight: 700; letter-spacing: -3px;">The doors</text>
+  <text x="60" y="380" style="font-family: Georgia, serif; font-size: 110px; fill: #f0883e; font-weight: 700; letter-spacing: -3px;">opened.</text>
+
+  <text x="60" y="460" style="font-family: Georgia, serif; font-size: 26px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">Your data stays on your machine.</text>
+  <text x="60" y="495" style="font-family: Georgia, serif; font-size: 26px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">The hub is just the pipe.</text>
+
+  <!-- Brand -->
+  <line x1="60" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="60" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

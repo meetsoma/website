@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="18 to 125 — the code is fixed, the body grows.">
+  <defs>
+    <linearGradient id="bg-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f1520"/>
+      <stop offset="100%" stop-color="#070a10"/>
+    </linearGradient>
+    <linearGradient id="ratio-g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6494be"/>
+      <stop offset="100%" stop-color="#f0883e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+
+  <!-- Supra label -->
+  <text x="600" y="110" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 17px; fill: #6494be; letter-spacing: 12px; opacity: 0.7; font-weight: 600;">THE RATIO</text>
+
+  <!-- LEFT: 18 (day one) -->
+  <text x="260" y="340" text-anchor="middle" style="font-family: Georgia, serif; font-size: 220px; fill: #6494be; font-weight: 700; letter-spacing: -6px; opacity: 0.85;">18</text>
+  <text x="260" y="395" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; letter-spacing: 4px; opacity: 0.85;">DAY ONE</text>
+  <text x="260" y="425" text-anchor="middle" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.7;">protocols</text>
+
+  <!-- MIDDLE: arrow -->
+  <!-- The transition — long arrow with a subtle tick mark pattern -->
+  <line x1="440" y1="285" x2="760" y2="285" stroke="url(#ratio-g)" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="760,275 780,285 760,295" fill="#f0883e"/>
+  <text x="600" y="260" text-anchor="middle" style="font-family: Georgia, serif; font-size: 24px; fill: #c9d1d9; font-style: italic; opacity: 0.75;">47 days later</text>
+
+  <!-- Tiny scale ticks along the arrow -->
+  <g opacity="0.3">
+    <line x1="500" y1="278" x2="500" y2="292" stroke="#9cb2c6" stroke-width="1"/>
+    <line x1="560" y1="278" x2="560" y2="292" stroke="#9cb2c6" stroke-width="1"/>
+    <line x1="620" y1="278" x2="620" y2="292" stroke="#9cb2c6" stroke-width="1"/>
+    <line x1="680" y1="278" x2="680" y2="292" stroke="#9cb2c6" stroke-width="1"/>
+    <line x1="740" y1="278" x2="740" y2="292" stroke="#9cb2c6" stroke-width="1"/>
+  </g>
+
+  <!-- RIGHT: 125 (day 47) -->
+  <text x="940" y="340" text-anchor="middle" style="font-family: Georgia, serif; font-size: 220px; fill: #f0883e; font-weight: 700; letter-spacing: -6px;">125</text>
+  <text x="940" y="395" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #f0883e; letter-spacing: 4px; opacity: 0.9;">DAY FORTY-SEVEN</text>
+  <text x="940" y="425" text-anchor="middle" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.7;">items</text>
+
+  <!-- Bottom line -->
+  <text x="600" y="495" text-anchor="middle" style="font-family: Georgia, serif; font-size: 32px; fill: #e4eaf4; font-weight: 400; font-style: italic;">The code is fixed. The body grows.</text>
+
+  <!-- Brand -->
+  <line x1="55" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="55" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

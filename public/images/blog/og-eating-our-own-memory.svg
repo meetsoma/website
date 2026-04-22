@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Eating our own memory — five days, twenty sessions, the bugs no design doc predicted.">
+  <defs>
+    <radialGradient id="bg-g" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#141b28"/>
+      <stop offset="100%" stop-color="#070a10"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="20" cy="20" r="0.4" fill="#6494be" opacity="0.08"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Left quote mark — HUGE, decorative -->
+  <text x="60" y="270" style="font-family: Georgia, 'Times New Roman', serif; font-size: 280px; fill: #f0883e; opacity: 0.22; font-weight: 700;">"</text>
+
+  <!-- THE QUOTE — centered, serif, breathing room -->
+  <text x="600" y="220" text-anchor="middle" style="font-family: Georgia, serif; font-size: 56px; fill: #e4eaf4; font-weight: 400; font-style: italic; letter-spacing: -1px;">The product we were building</text>
+
+  <text x="600" y="295" text-anchor="middle" style="font-family: Georgia, serif; font-size: 56px; fill: #e4eaf4; font-weight: 400; font-style: italic; letter-spacing: -1px;">had never been used</text>
+
+  <text x="600" y="370" text-anchor="middle" style="font-family: Georgia, serif; font-size: 56px; fill: #f0883e; font-weight: 700; font-style: italic; letter-spacing: -1px;">by itself.</text>
+
+  <!-- Right quote mark -->
+  <text x="1140" y="460" text-anchor="end" style="font-family: Georgia, serif; font-size: 280px; fill: #f0883e; opacity: 0.22; font-weight: 700;">"</text>
+
+  <!-- Attribution / date line -->
+  <line x1="500" y1="430" x2="700" y2="430" stroke="#6494be" stroke-width="1" opacity="0.5"/>
+  <text x="600" y="468" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 5px; opacity: 0.75;">DAY FIVE · TWENTY SESSIONS IN</text>
+
+  <!-- Title label at top -->
+  <text x="600" y="90" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 10px; opacity: 0.6; font-weight: 600;">DOGFOOD</text>
+
+  <!-- Brand bar -->
+  <line x1="55" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="55" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

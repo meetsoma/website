@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="The scripts we deleted — and almost shipped without.">
+  <defs>
+    <linearGradient id="bg-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#101621"/>
+      <stop offset="100%" stop-color="#060910"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+
+  <!-- ═══ LEFT COLUMN — diff/file-list style ═══ -->
+  <g transform="translate(65, 100)">
+    <!-- File list with strikethrough "deleted" entries -->
+    <rect x="0" y="0" width="560" height="420" rx="10" fill="#0d131f" stroke="#1a2535" stroke-width="1.5"/>
+
+    <!-- Header -->
+    <text x="24" y="38" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6494be; letter-spacing: 3px; opacity: 0.75;">GIT STATUS — BEFORE RELEASE</text>
+    <line x1="24" y1="52" x2="536" y2="52" stroke="#1a2535" stroke-width="1"/>
+
+    <!-- Deleted files (strikethrough + minus) -->
+    <g font-family="'SF Mono', monospace" font-size="19px">
+      <text x="24" y="94" fill="#c84242" opacity="0.75">-</text>
+      <text x="52" y="94" fill="#8b8b8b" text-decoration="line-through" style="text-decoration-color:#f0883e;">soma-find.sh</text>
+
+      <text x="24" y="132" fill="#c84242" opacity="0.75">-</text>
+      <text x="52" y="132" fill="#8b8b8b" text-decoration="line-through" style="text-decoration-color:#f0883e;">soma-search.sh</text>
+
+      <text x="24" y="170" fill="#c84242" opacity="0.75">-</text>
+      <text x="52" y="170" fill="#8b8b8b" text-decoration="line-through" style="text-decoration-color:#f0883e;">soma-grep.sh</text>
+
+      <text x="24" y="208" fill="#c84242" opacity="0.75">-</text>
+      <text x="52" y="208" fill="#8b8b8b" text-decoration="line-through" style="text-decoration-color:#f0883e;">soma-locate.sh</text>
+
+      <text x="24" y="246" fill="#c84242" opacity="0.75">-</text>
+      <text x="52" y="246" fill="#8b8b8b" text-decoration="line-through" style="text-decoration-color:#f0883e;">soma-findref.sh</text>
+
+      <!-- blank divider line visually -->
+
+      <!-- Visible strikethrough lines drawn explicitly (SVG text-decoration isn't rendered by rsvg-convert reliably) -->
+    </g>
+
+    <!-- Explicit strikethroughs (rsvg sometimes ignores text-decoration) -->
+    <g stroke="#f0883e" stroke-width="2" opacity="0.9">
+      <line x1="52" y1="88" x2="240" y2="88"/>
+      <line x1="52" y1="126" x2="270" y2="126"/>
+      <line x1="52" y1="164" x2="240" y2="164"/>
+      <line x1="52" y1="202" x2="258" y2="202"/>
+      <line x1="52" y1="240" x2="278" y2="240"/>
+    </g>
+
+    <!-- Warning line at bottom of panel -->
+    <line x1="24" y1="300" x2="536" y2="300" stroke="#1a2535" stroke-width="1"/>
+    <text x="24" y="340" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #f0883e; font-weight: 600;">! almost shipped</text>
+    <text x="24" y="370" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #f0883e; opacity: 0.85;">  without our own tools.</text>
+  </g>
+
+  <!-- ═══ RIGHT COLUMN — hero text ═══ -->
+  <text x="670" y="150" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; letter-spacing: 6px; opacity: 0.7; font-weight: 600;">PRE-PUBLISH CLEANUP</text>
+
+  <text x="670" y="260" style="font-family: Georgia, serif; font-size: 78px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">The Scripts</text>
+  <text x="670" y="340" style="font-family: Georgia, serif; font-size: 78px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">We</text>
+  <text x="670" y="420" style="font-family: Georgia, serif; font-size: 78px; fill: #f0883e; font-weight: 700; letter-spacing: -2px;">Deleted.</text>
+
+  <text x="670" y="490" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">What preservation taught us.</text>
+
+  <!-- Brand -->
+  <line x1="65" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="65" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

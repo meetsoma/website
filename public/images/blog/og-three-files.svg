@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Three files — the thinnest possible layer between a substrate and a self.">
+  <defs>
+    <radialGradient id="bg-g" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#131b28"/>
+      <stop offset="100%" stop-color="#080c13"/>
+    </radialGradient>
+    <linearGradient id="file-g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5282a8"/>
+      <stop offset="100%" stop-color="#3e6c92"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+  <pattern id="dots" x="0" y="0" width="34" height="34" patternUnits="userSpaceOnUse">
+    <circle cx="17" cy="17" r="0.4" fill="#6494be" opacity="0.08"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- THREE STACKED FILE CARDS — isometric-ish, offset stack -->
+  <!-- File 3 (bottom) -->
+  <g transform="translate(760, 390)">
+    <rect x="0" y="0" width="320" height="180" rx="12" fill="#1a2535" stroke="#30363d" stroke-width="1.5"/>
+    <!-- "dog-ear" corner -->
+    <path d="M 285 0 L 320 35 L 285 35 Z" fill="#0e1520" stroke="#30363d" stroke-width="1"/>
+    <text x="30" y="50" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6e7681; letter-spacing: 2px;">03</text>
+    <text x="30" y="120" style="font-family: Georgia, serif; font-size: 30px; fill: #c9d1d9; font-weight: 600;">body.md</text>
+    <text x="30" y="150" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.7;">working context</text>
+  </g>
+
+  <!-- File 2 (middle) -->
+  <g transform="translate(670, 250)">
+    <rect x="0" y="0" width="340" height="180" rx="12" fill="url(#file-g)" opacity="0.9" stroke="#6494be" stroke-width="1.5"/>
+    <path d="M 305 0 L 340 35 L 305 35 Z" fill="#3e6c92" stroke="#6494be" stroke-width="1"/>
+    <text x="30" y="50" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #a5c3db; letter-spacing: 2px;">02</text>
+    <text x="30" y="120" style="font-family: Georgia, serif; font-size: 30px; fill: #ffffff; font-weight: 600;">soul.md</text>
+    <text x="30" y="150" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #d5e3ef; opacity: 0.85;">identity</text>
+  </g>
+
+  <!-- File 1 (top) -->
+  <g transform="translate(580, 110)">
+    <rect x="0" y="0" width="360" height="180" rx="12" fill="#1a2535" stroke="#30363d" stroke-width="1.5"/>
+    <path d="M 325 0 L 360 35 L 325 35 Z" fill="#0e1520" stroke="#30363d" stroke-width="1"/>
+    <text x="30" y="50" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6e7681; letter-spacing: 2px;">01</text>
+    <text x="30" y="120" style="font-family: Georgia, serif; font-size: 30px; fill: #c9d1d9; font-weight: 600;">voice.md</text>
+    <text x="30" y="150" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.7;">how I sound</text>
+  </g>
+
+  <!-- HERO TEXT LEFT -->
+  <text x="60" y="140" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #6494be; letter-spacing: 8px; opacity: 0.7; font-weight: 600;">THE AGENT IS</text>
+
+  <text x="60" y="270" style="font-family: Georgia, serif; font-size: 140px; fill: #e4eaf4; font-weight: 700; letter-spacing: -4px;">Three</text>
+  <text x="60" y="390" style="font-family: Georgia, serif; font-size: 140px; fill: #f0883e; font-weight: 700; letter-spacing: -4px;">Files.</text>
+
+  <text x="60" y="480" style="font-family: Georgia, serif; font-size: 26px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">Everything else is behavior.</text>
+
+  <!-- Brand -->
+  <line x1="60" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="60" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

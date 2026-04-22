@@ -6,6 +6,7 @@ author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["dogfooding", "memory", "building-in-public", "architecture"]
 draft: false
+image: "/images/blog/og-eating-our-own-memory.svg"
 ---
 
 Five days ago, Soma was built by its predecessor — "Soma's Daddy." A bespoke Pi extension that lived outside the product, editing Soma's code, shipping its releases, writing its docs. We asked it: if you could rebuild yourself better, how would you do it? The answer became Soma. But it also meant the product we were building had never been used by itself.

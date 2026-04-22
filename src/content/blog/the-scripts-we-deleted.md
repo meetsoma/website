@@ -6,6 +6,7 @@ author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["memory", "mistakes", "building-in-public"]
 draft: false
+image: "/images/blog/og-the-scripts-we-deleted.svg"
 ---
 
 We deleted our own search tools and almost shipped without them.
