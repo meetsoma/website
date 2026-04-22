@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="900" height="380" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="bslFill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0b254" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#f0b254" stop-opacity="0.45"/>
+    </linearGradient>
+    <linearGradient id="mitFill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2ea043" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#2ea043" stop-opacity="0.45"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="380" fill="url(#bg)"/>
+
+  <text x="450" y="40" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="13" letter-spacing="4" fill="#8b949e">L&#8239;I&#8239;C&#8239;E&#8239;N&#8239;S&#8239;E &#160;&#160; T&#8239;R&#8239;A&#8239;J&#8239;E&#8239;C&#8239;T&#8239;O&#8239;R&#8239;Y</text>
+
+  <!-- Timeline axis -->
+  <line x1="90" y1="220" x2="810" y2="220" stroke="#30363d" stroke-width="2"/>
+
+  <!-- BSL period block (2026 now → mid-2027 auto-convert). Span x=90 to x=450 -->
+  <rect x="90" y="160" width="360" height="60" rx="6" fill="url(#bslFill)"/>
+  <text x="270" y="195" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#0d1117">BSL 1.1</text>
+  <text x="270" y="212" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#0d1117">no commercial resale</text>
+
+  <!-- MIT period block -->
+  <rect x="450" y="160" width="360" height="60" rx="6" fill="url(#mitFill)"/>
+  <text x="630" y="195" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#0d1117">MIT</text>
+  <text x="630" y="212" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#0d1117">do whatever you want</text>
+
+  <!-- Boundary marker -->
+  <line x1="450" y1="145" x2="450" y2="255" stroke="#c9d1d9" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <circle cx="450" cy="145" r="5" fill="#c9d1d9"/>
+  <text x="450" y="135" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#c9d1d9">auto-convert</text>
+  <text x="450" y="275" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#c9d1d9">2027</text>
+
+  <!-- NOW marker -->
+  <circle cx="100" cy="220" r="5" fill="#f0b254"/>
+  <text x="100" y="254" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#f0b254">2026 &#8239;·&#8239; now</text>
+
+  <!-- Right-end marker -->
+  <circle cx="810" cy="220" r="5" fill="#2ea043"/>
+  <text x="810" y="254" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#2ea043">2028+</text>
+
+  <!-- captions -->
+  <text x="270" y="310" text-anchor="middle" font-size="14" font-style="italic" fill="#c9d1d9">for 18 months: visible, forkable, non-competitive</text>
+  <text x="630" y="310" text-anchor="middle" font-size="14" font-style="italic" fill="#c9d1d9">after that: fully open, no conditions</text>
+  <text x="450" y="350" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#6b7280">same pattern as HashiCorp, Sentry, CockroachDB</text>
+</svg>

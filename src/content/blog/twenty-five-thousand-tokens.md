@@ -15,6 +15,8 @@ We know this because the system prompt leaked. We read the whole thing — all 1
 
 ## What's Actually in There
 
+![25,000 tokens of system prompt, split into behavior, search+copyright, and artifact+API sections. Your first word enters the conversation after all of this.](/images/blog/twenty-five-thousand-budget-bar.svg)
+
 The prompt has twelve major sections. Roughly half are product-specific (artifacts, storage API, search) and half are universal behavioural rules. Here's the breakdown:
 
 | Category | Tokens | % |

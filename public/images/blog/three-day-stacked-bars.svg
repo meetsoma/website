@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" width="900" height="440" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="greenBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2ea043"/>
+      <stop offset="1" stop-color="#2ea043" stop-opacity="0.65"/>
+    </linearGradient>
+    <linearGradient id="redBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f85149"/>
+      <stop offset="1" stop-color="#f85149" stop-opacity="0.65"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="440" fill="url(#bg)"/>
+
+  <text x="450" y="40" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="13" letter-spacing="4" fill="#8b949e">S&#8239;E&#8239;S&#8239;S&#8239;I&#8239;O&#8239;N &#160;&#160; s&#8239;0&#8239;1&#8239;-&#8239;7&#8239;2&#8239;c&#8239;d&#8239;2&#8239;9</text>
+
+  <!-- Stats trio -->
+  <g>
+    <text x="180" y="110" text-anchor="middle" font-size="64" font-weight="700" fill="#c9d1d9">57</text>
+    <text x="180" y="140" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" letter-spacing="2" fill="#6b7280">C&#8239;O&#8239;M&#8239;M&#8239;I&#8239;T&#8239;S</text>
+  </g>
+  <g>
+    <text x="450" y="110" text-anchor="middle" font-size="64" font-weight="700" fill="#c9d1d9">12</text>
+    <text x="450" y="140" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" letter-spacing="2" fill="#6b7280">F&#8239;E&#8239;A&#8239;T&#8239;U&#8239;R&#8239;E&#8239;S</text>
+  </g>
+  <g>
+    <text x="720" y="110" text-anchor="middle" font-size="64" font-weight="700" fill="#c9d1d9">72</text>
+    <text x="720" y="140" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" letter-spacing="2" fill="#6b7280">T&#8239;E&#8239;S&#8239;T&#8239;S &#160;&#160; P&#8239;A&#8239;S&#8239;S&#8239;I&#8239;N&#8239;G</text>
+  </g>
+
+  <!-- divider -->
+  <line x1="150" y1="180" x2="750" y2="180" stroke="#30363d" stroke-width="1"/>
+
+  <!-- diff skew section -->
+  <text x="450" y="215" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" letter-spacing="3" fill="#8b949e">L&#8239;I&#8239;N&#8239;E&#8239;S &#160;&#160; C&#8239;H&#8239;A&#8239;N&#8239;G&#8239;E&#8239;D</text>
+
+  <!-- inserted bar (5222) width scaled: max 600px for 5222 -->
+  <text x="150" y="262" text-anchor="end" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#2ea043">+5,222</text>
+  <rect x="160" y="245" width="600" height="26" rx="3" fill="url(#greenBar)"/>
+  <text x="170" y="263" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#0d1117">inserted</text>
+
+  <!-- deleted bar (1824) — proportional: 1824/5222 * 600 = 210 -->
+  <text x="150" y="302" text-anchor="end" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#f85149">-1,824</text>
+  <rect x="160" y="285" width="210" height="26" rx="3" fill="url(#redBar)"/>
+  <text x="170" y="303" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#0d1117">deleted</text>
+
+  <!-- cost hero -->
+  <line x1="150" y1="345" x2="750" y2="345" stroke="#30363d" stroke-width="1"/>
+  <text x="450" y="388" text-anchor="middle" font-size="36" font-weight="700" fill="#f0b254">$176.62</text>
+  <text x="450" y="415" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#8b949e">6h 15m of active compute &#8239;·&#8239; $28 / hour</text>
+</svg>

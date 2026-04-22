@@ -37,6 +37,8 @@ Soma is now **source-available** under the [Business Source License 1.1](https:/
 
 **After eighteen months** (2027), the code converts to MIT automatically. This is the same license used by HashiCorp (Terraform), Sentry, and CockroachDB.
 
+![A license trajectory: BSL 1.1 for 18 months — visible, forkable, non-competitive — then auto-converts to MIT in 2027.](/images/blog/license-timeline.svg)
+
 ## Why BSL, not MIT?
 
 MIT says: "Do whatever you want." That's beautiful for libraries and utilities. It's dangerous for products that represent years of architectural thinking.

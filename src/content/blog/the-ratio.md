@@ -72,6 +72,8 @@ Each of these adds to the AMPS layer. Not to the TypeScript. The behavior grows.
 
 ## What 47 sessions looks like
 
+![Two lines across 47 sessions: the compiled runtime stayed flat at 18 items; the body and AMPS content grew to 125.](/images/blog/ratio-two-lines.svg)
+
 One session produced 40+ deliverables. Another shipped 60+ commits. The [day we pulled back](/blog/why-source-available) and went private, we executed a full strategy pivot mid-session without losing the thread of the code work.
 
 None of that happened because the TypeScript got better. It happened because the AMPS layer was loaded. The right protocols were hot. The right muscles were triggering. Scripts I built last week saved me hours this week. The preload from the previous session aimed me at the right targets before I typed a word.

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="900" height="380" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="seg1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#58a6ff"/>
+      <stop offset="1" stop-color="#58a6ff" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="seg2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f85149"/>
+      <stop offset="1" stop-color="#f85149" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="seg3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0b254"/>
+      <stop offset="1" stop-color="#f0b254" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="380" fill="url(#bg)"/>
+
+  <text x="450" y="40" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="13" letter-spacing="4" fill="#8b949e">2&#8239;5&#8239;,&#8239;0&#8239;0&#8239;0 &#160;&#160; T&#8239;O&#8239;K&#8239;E&#8239;N&#8239;S &#160;&#160; B&#8239;E&#8239;F&#8239;O&#8239;R&#8239;E &#160;&#160; H&#8239;E&#8239;L&#8239;L&#8239;O</text>
+
+  <!-- Bar 720px wide from x=90 to x=810. Proportions per post:
+       behavior 28% -> 219px, search+copyright 35% -> 274px, artifact/api 29% -> 227px.
+       Remainder ~8% unaccounted; use actual data. -->
+  <g transform="translate(0, 90)">
+    <rect x="90"  y="0" width="219" height="60" fill="url(#seg1)"/>
+    <rect x="309" y="0" width="274" height="60" fill="url(#seg2)"/>
+    <rect x="583" y="0" width="227" height="60" fill="url(#seg3)"/>
+
+    <text x="199" y="33" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#0d1117">~10k &#8239; behavior</text>
+    <text x="199" y="51" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#0d1117">tone, safety, formatting</text>
+
+    <text x="446" y="33" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#0d1117">~12k &#8239; search + copyright</text>
+    <text x="446" y="51" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#0d1117">legal compliance</text>
+
+    <text x="696" y="33" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" font-weight="700" fill="#0d1117">~10k &#8239; artifacts + API</text>
+    <text x="696" y="51" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="10" fill="#0d1117">product docs</text>
+
+    <!-- % labels below -->
+    <text x="199" y="80" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#58a6ff">28%</text>
+    <text x="446" y="80" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#f85149">35%</text>
+    <text x="696" y="80" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#f0b254">29%</text>
+
+    <!-- ticks -->
+    <line x1="90" y1="60" x2="90" y2="72" stroke="#30363d"/>
+    <text x="90" y="98" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#6b7280">0</text>
+    <line x1="810" y1="60" x2="810" y2="72" stroke="#30363d"/>
+    <text x="810" y="98" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#6b7280">25k</text>
+  </g>
+
+  <!-- inflection arrow: your first word enters at the far right -->
+  <g transform="translate(810, 200)">
+    <line x1="0" y1="-20" x2="0" y2="14" stroke="#2ea043" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <polygon points="-6,14 6,14 0,24" fill="#2ea043"/>
+    <text x="0" y="44" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#2ea043">your first word</text>
+    <text x="0" y="60" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#2ea043">enters here</text>
+  </g>
+
+  <text x="450" y="320" text-anchor="middle" font-size="14" font-style="italic" fill="#c9d1d9">A short novel of instructions, sent before you say anything.</text>
+  <text x="450" y="345" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#6b7280">the same 25k on every request, regardless of who's asking or why</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" height="460" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="t1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2ea043" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#2ea043" stop-opacity="0.5"/>
+    </linearGradient>
+    <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#58a6ff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#58a6ff" stop-opacity="0.5"/>
+    </linearGradient>
+    <linearGradient id="t3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0b254" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#f0b254" stop-opacity="0.5"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="460" fill="url(#bg)"/>
+
+  <text x="450" y="40" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="13" letter-spacing="4" fill="#8b949e">T&#8239;H&#8239;R&#8239;E&#8239;E &#160;&#160; T&#8239;I&#8239;E&#8239;R&#8239;S</text>
+
+  <!-- Tier 1 — Core (bottom, widest) -->
+  <rect x="120" y="320" width="660" height="80" rx="10" fill="url(#t1)" stroke="#2ea043" stroke-width="1.5"/>
+  <text x="150" y="355" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#0d1117" letter-spacing="2">TIER 1 &#160;·&#160; CORE</text>
+  <text x="150" y="385" font-size="18" font-style="italic" fill="#0d1117">Soma agent &#8239;·&#8239; 9 extensions &#8239;·&#8239; AMPS &#8239;·&#8239; body/</text>
+  <text x="770" y="370" text-anchor="end" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#0d1117">open source</text>
+
+  <!-- Tier 2 — Somaverse (middle) -->
+  <rect x="170" y="220" width="560" height="80" rx="10" fill="url(#t2)" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="200" y="255" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#0d1117" letter-spacing="2">TIER 2 &#160;·&#160; SOMAVERSE</text>
+  <text x="200" y="285" font-size="18" font-style="italic" fill="#0d1117">workspace UI &#8239;·&#8239; bridge relay &#8239;·&#8239; plugins</text>
+  <text x="720" y="270" text-anchor="end" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#0d1117">proprietary</text>
+
+  <!-- Tier 3 — Somadian (top, narrowest) -->
+  <rect x="220" y="120" width="460" height="80" rx="10" fill="url(#t3)" stroke="#f0b254" stroke-width="1.5"/>
+  <text x="250" y="155" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" font-weight="700" fill="#0d1117" letter-spacing="2">TIER 3 &#160;·&#160; SOMADIAN</text>
+  <text x="250" y="185" font-size="18" font-style="italic" fill="#0d1117">graph store &#8239;·&#8239; Recall &#8239;·&#8239; cross-session memory</text>
+  <text x="670" y="170" text-anchor="end" font-family="ui-monospace, 'SF Mono', monospace" font-size="12" fill="#0d1117">licensed</text>
+
+  <!-- caption -->
+  <text x="450" y="435" text-anchor="middle" font-style="italic" font-size="14" fill="#8b949e">The doors opened inward. Each tier rests on the one below.</text>
+</svg>
