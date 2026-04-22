@@ -581,7 +581,7 @@ export default function OrbitalPhysics() {
           zIndex: 3,
           pointerEvents: 'none',
           filter: 'drop-shadow(0 0 14px rgba(124, 178, 212, 0.2))',
-          opacity: 0.85,
+          opacity: 1,
         }}
       />
 
