@@ -15,7 +15,10 @@ On March 10th, we switched. Soma started building Soma.
 
 Twenty sessions and 200+ commits later, the product is unrecognizably better — not because we had a roadmap, but because the system kept tripping over its own assumptions.
 
-![Day five, twenty sessions in — the moment we noticed we weren't using it ourselves.](/images/blog/og-eating-our-own-memory.svg)
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/blog/og-eating-our-own-memory-mobile.svg">
+  <img src="/images/blog/og-eating-our-own-memory.svg" alt="Day five, twenty sessions in — the moment we noticed we weren't using it ourselves." />
+</picture>
 
 ## The First Ten Minutes
 

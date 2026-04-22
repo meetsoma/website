@@ -13,7 +13,10 @@ Most AI agents start fresh every time. You open a session, explain your context,
 
 Soma is different.
 
-![σῶμα — the body that remembers. Introducing Soma.](/images/blog/og-introducing-soma.svg)
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/blog/og-introducing-soma-mobile.svg">
+  <img src="/images/blog/og-introducing-soma.svg" alt="σῶμα — the body that remembers. Introducing Soma." />
+</picture>
 
 ## What Soma Is
 

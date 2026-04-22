@@ -15,7 +15,10 @@ OpenAI has conversation history. Anthropic has project knowledge. LangChain has 
 
 They're all solving the wrong problem.
 
-![Memory isn't a feature. It's the substrate everything else grows from.](/images/blog/og-memory-is-not-a-feature.svg)
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/blog/og-memory-is-not-a-feature-mobile.svg">
+  <img src="/images/blog/og-memory-is-not-a-feature.svg" alt="Memory isn't a feature. It's the substrate everything else grows from." />
+</picture>
 
 ## The filing cabinet model
 

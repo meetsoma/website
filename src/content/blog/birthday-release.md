@@ -16,7 +16,10 @@ This is the release where Soma learned to guard its own code.
 
 ---
 
-![Soma turns one — a candle on a terminal window.](/images/blog/og-birthday-release.svg)
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/blog/og-birthday-release-mobile.svg">
+  <img src="/images/blog/og-birthday-release.svg" alt="Soma turns one — a candle on a terminal window." />
+</picture>
 
 ## The question that started everything
 

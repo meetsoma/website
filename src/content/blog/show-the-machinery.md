@@ -17,7 +17,10 @@ This is unusual. Most AI systems hide their configuration. The system prompt is 
 
 Soma shows you the machinery.
 
-![Show the machinery — the mascot and the files it's made of.](/images/blog/og-show-the-machinery.svg)
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/blog/og-show-the-machinery-mobile.svg">
+  <img src="/images/blog/og-show-the-machinery.svg" alt="Show the machinery — the mascot and the files it's made of." />
+</picture>
 
 ![The .soma/body/ directory as a monospace tree: soul.md → identity, voice.md → how I sound, body.md → working context, ecosystem.md, journal.md, pulse.md, _mind.md (compiled template), _memory.md (preload template), DNA.md (the blueprint).](/images/blog/body-directory-tree.svg)
 

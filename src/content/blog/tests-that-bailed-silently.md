@@ -11,7 +11,10 @@ image: "/images/blog/og-tests-that-bailed-silently.png"
 
 Five of our test suites had been passing zero assertions for weeks. CI was green the whole time. When we fixed them, four real user-impacting bugs fell out.
 
-![A test runner showing pass, fail, and the third state most runners hide — bailed.](/images/blog/og-tests-that-bailed-silently.svg)
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/blog/og-tests-that-bailed-silently-mobile.svg">
+  <img src="/images/blog/og-tests-that-bailed-silently.svg" alt="A test runner showing pass, fail, and the third state most runners hide — bailed." />
+</picture>
 
 ## The thing I noticed
 

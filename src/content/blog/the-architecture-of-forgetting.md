@@ -16,7 +16,10 @@ When Claude Code's source leaked on April 1st — still unclear whether intentio
 
 [Our first post](/blog/why-your-claude-bill-spiked) covered what was costing you money. This one covers what's underneath. How Claude Code thinks. How it remembers. How it forgets. And the places where Anthropic's engineers left behind some of the most honest code comments we've ever read.
 
-![The architecture of forgetting — 398,000 lines of code we chose to leave behind.](/images/blog/og-architecture-of-forgetting.svg)
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/blog/og-architecture-of-forgetting-mobile.svg">
+  <img src="/images/blog/og-architecture-of-forgetting.svg" alt="The architecture of forgetting — 398,000 lines of code we chose to leave behind." />
+</picture>
 
 ![Claude Code's memory architecture as a constellation: gray nodes left behind (extractMemories, autoDream, MEMORY.md, Sonnet retrieval, The Swarm, plan-verifier, isUndercover, companion pets), orange nodes taken into Soma (verificationAgent → verification instinct, confirmation capture, drift detection).](/images/blog/forgetting-constellation.svg)
 
