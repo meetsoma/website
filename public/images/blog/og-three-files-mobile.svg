@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="Three files — mobile.">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="90%">
+      <stop offset="0%" stop-color="#131b28"/>
+      <stop offset="100%" stop-color="#080c13"/>
+    </radialGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5282a8"/>
+      <stop offset="100%" stop-color="#3e6c92"/>
+    </linearGradient>
+    <pattern id="dots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="0.5" fill="#6494be" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bg)"/>
+  <rect width="600" height="1020" fill="url(#dots)"/>
+
+  <!-- Category -->
+  <text x="300" y="80" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6494be; letter-spacing: 8px; opacity: 0.8; font-weight: 600;">IDENTITY</text>
+
+  <!-- Three stacked cards (vertical) -->
+  <g transform="translate(130, 170)">
+    <!-- Card 1 -->
+    <g>
+      <rect x="0" y="0" width="340" height="110" rx="10" fill="url(#card)" stroke="#6494be" stroke-width="1"/>
+      <text x="20" y="45" style="font-family: 'SF Mono', monospace; font-size: 22px; fill: #0a1220; font-weight: 700;">soul.md</text>
+      <text x="20" y="82" style="font-family: Georgia, serif; font-size: 15px; fill: #0a1220; opacity: 0.7; font-style: italic;">who I am</text>
+    </g>
+    <!-- Card 2 -->
+    <g transform="translate(0, 150)">
+      <rect x="0" y="0" width="340" height="110" rx="10" fill="url(#card)" stroke="#6494be" stroke-width="1"/>
+      <text x="20" y="45" style="font-family: 'SF Mono', monospace; font-size: 22px; fill: #0a1220; font-weight: 700;">voice.md</text>
+      <text x="20" y="82" style="font-family: Georgia, serif; font-size: 15px; fill: #0a1220; opacity: 0.7; font-style: italic;">how I sound</text>
+    </g>
+    <!-- Card 3 -->
+    <g transform="translate(0, 300)">
+      <rect x="0" y="0" width="340" height="110" rx="10" fill="url(#card)" stroke="#6494be" stroke-width="1"/>
+      <text x="20" y="45" style="font-family: 'SF Mono', monospace; font-size: 22px; fill: #0a1220; font-weight: 700;">body.md</text>
+      <text x="20" y="82" style="font-family: Georgia, serif; font-size: 15px; fill: #0a1220; opacity: 0.7; font-style: italic;">what I know</text>
+    </g>
+  </g>
+
+  <!-- Hero -->
+  <text x="300" y="720" text-anchor="middle" style="font-family: Georgia, serif; font-size: 58px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">Three</text>
+  <text x="300" y="780" text-anchor="middle" style="font-family: Georgia, serif; font-size: 58px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -1.5px;">files.</text>
+
+  <!-- Sub -->
+  <text x="300" y="840" text-anchor="middle" style="font-family: Georgia, serif; font-size: 19px; fill: #c9d1d9; opacity: 0.8; font-style: italic;">The thinnest possible layer</text>
+  <text x="300" y="865" text-anchor="middle" style="font-family: Georgia, serif; font-size: 19px; fill: #c9d1d9; opacity: 0.8; font-style: italic;">between a substrate and a self.</text>
+
+  <!-- Brand -->
+  <line x1="100" y1="950" x2="500" y2="950" stroke="#30363d" stroke-width="1" opacity="0.5"/>
+  <text x="100" y="985" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="985" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

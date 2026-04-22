@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="57 commits, 105 files, one session (mobile).">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#121a26"/>
+      <stop offset="100%" stop-color="#080c13"/>
+    </linearGradient>
+    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a2535" stroke-width="1" opacity="0.4"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bg)"/>
+  <rect width="600" height="1020" fill="url(#grid)"/>
+
+  <text x="300" y="80" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6494be; letter-spacing: 7px; opacity: 0.7; font-weight: 600;">SESSION s01-72cd29</text>
+
+  <!-- Big 3 stats stacked -->
+  <g>
+    <text x="300" y="220" text-anchor="middle" style="font-family: Georgia, serif; font-size: 120px; fill: #e4eaf4; font-weight: 700; letter-spacing: -3px;">3</text>
+    <text x="300" y="260" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 5px; opacity: 0.8;">DAYS</text>
+
+    <text x="300" y="400" text-anchor="middle" style="font-family: Georgia, serif; font-size: 120px; fill: #e4eaf4; font-weight: 700; letter-spacing: -3px;">57</text>
+    <text x="300" y="440" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 5px; opacity: 0.8;">COMMITS</text>
+
+    <text x="300" y="580" text-anchor="middle" style="font-family: Georgia, serif; font-size: 120px; fill: #f0883e; font-weight: 700; letter-spacing: -3px;">105</text>
+    <text x="300" y="620" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 5px; opacity: 0.8;">FILES</text>
+  </g>
+
+  <!-- Divider -->
+  <line x1="150" y1="690" x2="450" y2="690" stroke="#30363d" stroke-width="1" opacity="0.5"/>
+
+  <!-- Tagline -->
+  <text x="300" y="770" text-anchor="middle" style="font-family: Georgia, serif; font-size: 34px; fill: #e4eaf4; font-weight: 700;">One session.</text>
+  <text x="300" y="820" text-anchor="middle" style="font-family: Georgia, serif; font-size: 26px; fill: #c9d1d9; opacity: 0.8; font-style: italic;">That shipped v0.12.0.</text>
+
+  <!-- subtext -->
+  <text x="300" y="890" text-anchor="middle" style="font-family: Georgia, serif; font-size: 16px; fill: #c9d1d9; opacity: 0.65; font-style: italic;">An AI agent doesn't sleep.</text>
+  <text x="300" y="912" text-anchor="middle" style="font-family: Georgia, serif; font-size: 16px; fill: #c9d1d9; opacity: 0.65; font-style: italic;">Three days in, neither does the project.</text>
+
+  <!-- Brand -->
+  <line x1="100" y1="950" x2="500" y2="950" stroke="#30363d" stroke-width="1" opacity="0.5"/>
+  <text x="100" y="985" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="985" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

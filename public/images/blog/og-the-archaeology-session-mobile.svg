@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="The Archaeology Session — mobile.">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="90%">
+      <stop offset="0%" stop-color="#1a2535"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bg)"/>
+
+  <text x="300" y="80" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6494be; letter-spacing: 7px; opacity: 0.75; font-weight: 600;">CLEANUP AS REVIEW</text>
+
+  <!-- Hero -->
+  <text x="300" y="185" text-anchor="middle" style="font-family: Georgia, serif; font-size: 54px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">The</text>
+  <text x="300" y="248" text-anchor="middle" style="font-family: Georgia, serif; font-size: 54px; fill: #e4eaf4; font-weight: 700; letter-spacing: -1.5px;">Archaeology</text>
+  <text x="300" y="310" text-anchor="middle" style="font-family: Georgia, serif; font-size: 54px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -1.5px;">Session.</text>
+
+  <!-- Stats grid 2×2 -->
+  <g transform="translate(60, 400)">
+    <rect x="0" y="0" width="225" height="105" fill="rgba(22,27,34,0.85)" stroke="#30363d" stroke-width="1" rx="10"/>
+    <text x="112" y="55" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 38px; fill: #6494be; font-weight: 700;">800</text>
+    <text x="112" y="85" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #c9d1d9; opacity: 0.7;">files moved</text>
+
+    <rect x="255" y="0" width="225" height="105" fill="rgba(22,27,34,0.85)" stroke="#30363d" stroke-width="1" rx="10"/>
+    <text x="367" y="55" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 38px; fill: #f0883e; font-weight: 700;">1,601</text>
+    <text x="367" y="85" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #c9d1d9; opacity: 0.7;">→ 6 files</text>
+
+    <rect x="0" y="130" width="225" height="105" fill="rgba(22,27,34,0.85)" stroke="#30363d" stroke-width="1" rx="10"/>
+    <text x="112" y="185" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 38px; fill: #6494be; font-weight: 700;">48</text>
+    <text x="112" y="215" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #c9d1d9; opacity: 0.7;">plans rescued</text>
+
+    <rect x="255" y="130" width="225" height="105" fill="rgba(22,27,34,0.85)" stroke="#30363d" stroke-width="1" rx="10"/>
+    <text x="367" y="185" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 38px; fill: #28c840; font-weight: 700;">0</text>
+    <text x="367" y="215" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #c9d1d9; opacity: 0.7;">stale refs left</text>
+  </g>
+
+  <!-- Sub -->
+  <text x="300" y="790" text-anchor="middle" style="font-family: Georgia, serif; font-size: 20px; fill: #c9d1d9; opacity: 0.85; font-style: italic;">Cleanup as product review.</text>
+  <text x="300" y="825" text-anchor="middle" style="font-family: Georgia, serif; font-size: 18px; fill: #c9d1d9; opacity: 0.65; font-style: italic;">What you keep is what you are.</text>
+
+  <line x1="100" y1="935" x2="500" y2="935" stroke="#30363d" stroke-width="1" opacity="0.5"/>
+  <text x="100" y="975" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="975" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

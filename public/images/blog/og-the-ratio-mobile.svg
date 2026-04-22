@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="The Ratio: 18 to 125 — mobile.">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f1520"/>
+      <stop offset="100%" stop-color="#070a10"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bg)"/>
+
+  <text x="300" y="90" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 10px; opacity: 0.8; font-weight: 600;">THE RATIO</text>
+
+  <!-- DAY ONE stat (top) -->
+  <text x="300" y="290" text-anchor="middle" style="font-family: Georgia, serif; font-size: 220px; fill: #6494be; font-weight: 700; letter-spacing: -6px; opacity: 0.9;">18</text>
+  <text x="300" y="340" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 5px; opacity: 0.85;">DAY ONE</text>
+  <text x="300" y="372" text-anchor="middle" style="font-family: Georgia, serif; font-size: 20px; fill: #c9d1d9; font-style: italic; opacity: 0.7;">protocols</text>
+
+  <!-- Arrow -->
+  <g transform="translate(300, 435)">
+    <line x1="0" y1="0" x2="0" y2="40" stroke="#f0883e" stroke-width="2" opacity="0.8"/>
+    <polygon points="-8,35 8,35 0,50" fill="#f0883e" opacity="0.85"/>
+  </g>
+  <text x="300" y="510" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #f0883e; opacity: 0.85; letter-spacing: 4px;">47 SESSIONS</text>
+
+  <!-- DAY FORTY-SEVEN stat (bottom) -->
+  <text x="300" y="720" text-anchor="middle" style="font-family: Georgia, serif; font-size: 220px; fill: #f0883e; font-weight: 700; letter-spacing: -6px;">125</text>
+  <text x="300" y="770" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #f0883e; letter-spacing: 5px; opacity: 0.9;">DAY FORTY-SEVEN</text>
+  <text x="300" y="802" text-anchor="middle" style="font-family: Georgia, serif; font-size: 20px; fill: #c9d1d9; font-style: italic; opacity: 0.7;">items</text>
+
+  <!-- Divider -->
+  <line x1="170" y1="850" x2="430" y2="850" stroke="#30363d" stroke-width="1" opacity="0.5"/>
+
+  <!-- Sub -->
+  <text x="300" y="900" text-anchor="middle" style="font-family: Georgia, serif; font-size: 18px; fill: #c9d1d9; opacity: 0.8; font-style: italic;">The code is fixed.</text>
+  <text x="300" y="925" text-anchor="middle" style="font-family: Georgia, serif; font-size: 18px; fill: #c9d1d9; opacity: 0.8; font-style: italic;">The body grows.</text>
+
+  <!-- Brand -->
+  <text x="100" y="985" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="985" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

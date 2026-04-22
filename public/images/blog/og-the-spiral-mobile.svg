@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="The Spiral — 7 phases, inner loop (mobile).">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="90%">
+      <stop offset="0%" stop-color="#1a2535"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </radialGradient>
+    <radialGradient id="dot-orange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f0883e" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#f0883e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="dot-blue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6494be" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#6494be" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bg)"/>
+
+  <!-- Category -->
+  <text x="300" y="85" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6494be; letter-spacing: 9px; opacity: 0.8; font-weight: 600;">WORKFLOW · PHASE</text>
+
+  <!-- Hero -->
+  <text x="300" y="190" text-anchor="middle" style="font-family: Georgia, serif; font-size: 90px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">The</text>
+  <text x="300" y="280" text-anchor="middle" style="font-family: Georgia, serif; font-size: 90px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -2px;">Spiral.</text>
+
+  <!-- Spiral diagram -->
+  <g transform="translate(300, 580)">
+    <circle r="180" fill="none" stroke="#6494be" stroke-width="1" opacity="0.15"/>
+    <circle r="125" fill="none" stroke="#6494be" stroke-width="1" opacity="0.2"/>
+    <circle r="70" fill="none" stroke="#6494be" stroke-width="1" opacity="0.3"/>
+
+    <!-- Phase nodes on outer ring: Orient, Plan, Document, Audit, Reflect -->
+    <!-- Inner loop: Build, Verify, Ship (orange) -->
+    <g font-family="'SF Mono', monospace" font-size="11">
+      <!-- Orient -->
+      <circle cx="0" cy="-180" r="9" fill="url(#dot-blue)"/><circle cx="0" cy="-180" r="5" fill="#6494be"/>
+      <text x="0" y="-200" text-anchor="middle" fill="#c9d1d9" opacity="0.8">Orient</text>
+      <!-- Plan -->
+      <circle cx="128" cy="-128" r="9" fill="url(#dot-blue)"/><circle cx="128" cy="-128" r="5" fill="#6494be"/>
+      <text x="150" y="-138" fill="#c9d1d9" opacity="0.8">Plan</text>
+      <!-- Document -->
+      <circle cx="180" cy="0" r="9" fill="url(#dot-blue)"/><circle cx="180" cy="0" r="5" fill="#6494be"/>
+      <text x="195" y="5" fill="#c9d1d9" opacity="0.8">Document</text>
+      <!-- Audit -->
+      <circle cx="128" cy="128" r="9" fill="url(#dot-blue)"/><circle cx="128" cy="128" r="5" fill="#6494be"/>
+      <text x="148" y="140" fill="#c9d1d9" opacity="0.8">Audit</text>
+      <!-- Reflect -->
+      <circle cx="-128" cy="128" r="9" fill="url(#dot-blue)"/><circle cx="-128" cy="128" r="5" fill="#6494be"/>
+      <text x="-196" y="140" fill="#c9d1d9" opacity="0.8">Reflect</text>
+
+      <!-- Inner loop: Build, Verify, Ship (bright orange) -->
+      <circle cx="60" cy="0" r="11" fill="url(#dot-orange)"/><circle cx="60" cy="0" r="6" fill="#f0883e"/>
+      <text x="75" y="5" fill="#f0883e" font-size="11" font-weight="600">Ship</text>
+      <circle cx="-30" cy="52" r="11" fill="url(#dot-orange)"/><circle cx="-30" cy="52" r="6" fill="#f0883e"/>
+      <text x="-98" y="57" fill="#f0883e" font-size="11" font-weight="600">Verify</text>
+      <circle cx="-30" cy="-52" r="11" fill="url(#dot-orange)"/><circle cx="-30" cy="-52" r="6" fill="#f0883e"/>
+      <text x="-92" y="-47" fill="#f0883e" font-size="11" font-weight="600">Build</text>
+
+      <!-- Audit → Build feedback arrow (dashed orange) -->
+      <path d="M 128,128 Q 180,0 -30,-52" fill="none" stroke="#f0883e" stroke-width="1.3" stroke-dasharray="4,4" opacity="0.55"/>
+    </g>
+    <!-- Center σ -->
+    <text y="6" text-anchor="middle" style="font-family: serif; font-size: 20px; fill: #6494be; opacity: 0.7;">σῶμα</text>
+  </g>
+
+  <!-- sub -->
+  <text x="300" y="860" text-anchor="middle" style="font-family: Georgia, serif; font-size: 18px; fill: #c9d1d9; opacity: 0.85; font-style: italic;">Our pipeline was a lie.</text>
+  <text x="300" y="886" text-anchor="middle" style="font-family: Georgia, serif; font-size: 18px; fill: #c9d1d9; opacity: 0.85; font-style: italic;">What we actually do loops.</text>
+
+  <line x1="100" y1="935" x2="500" y2="935" stroke="#30363d" stroke-width="1" opacity="0.5"/>
+  <text x="100" y="975" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="975" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>
