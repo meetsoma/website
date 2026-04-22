@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#182030"/>
+      <stop offset="100%" stop-color="#0b0f15"/>
+    </radialGradient>
+    <pattern id="dots" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.7" fill="#6494be" opacity="0.08"/>
+    </pattern>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0c866"/>
+      <stop offset="1" stop-color="#d18f2a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="1020" fill="url(#bg)"/>
+  <rect width="600" height="1020" fill="url(#dots)"/>
+
+  <text x="300" y="120" text-anchor="middle" fill="#6494be"
+        font-family="'SF Mono', monospace" font-size="16" letter-spacing="5"
+        opacity="0.85">THE  TOOLS  THAT  MADE</text>
+
+  <text x="300" y="260" text-anchor="middle" fill="#e4eaf4"
+        font-size="94" font-weight="700" letter-spacing="-2">these</text>
+
+  <text x="300" y="365" text-anchor="middle" fill="url(#gold)"
+        font-size="94" font-weight="700" font-style="italic" letter-spacing="-2">posts.</text>
+
+  <text x="300" y="440" text-anchor="middle" fill="#9dafc4" font-size="22" font-style="italic">Four commands.</text>
+  <text x="300" y="475" text-anchor="middle" fill="#9dafc4" font-size="22" font-style="italic">One corpus.</text>
+  <text x="300" y="510" text-anchor="middle" fill="#9dafc4" font-size="22" font-style="italic">No more drift.</text>
+
+  <line x1="180" y1="555" x2="420" y2="555" stroke="#30363d" stroke-width="1"/>
+
+  <g font-family="'SF Mono', monospace" font-size="18">
+    <rect x="80" y="600" width="440" height="54" rx="8"
+          fill="rgba(100,148,190,0.12)" stroke="rgba(100,148,190,0.4)" stroke-width="1"/>
+    <text x="300" y="634" text-anchor="middle" fill="#8bb9e0">soma trace</text>
+
+    <rect x="80" y="670" width="440" height="54" rx="8"
+          fill="rgba(100,148,190,0.12)" stroke="rgba(100,148,190,0.4)" stroke-width="1"/>
+    <text x="300" y="704" text-anchor="middle" fill="#8bb9e0">soma concepts</text>
+
+    <rect x="80" y="740" width="440" height="54" rx="8"
+          fill="rgba(100,148,190,0.12)" stroke="rgba(100,148,190,0.4)" stroke-width="1"/>
+    <text x="300" y="774" text-anchor="middle" fill="#8bb9e0">soma blog-graph</text>
+
+    <rect x="80" y="810" width="440" height="54" rx="8"
+          fill="rgba(240,200,102,0.15)" stroke="rgba(240,200,102,0.5)" stroke-width="1"/>
+    <text x="300" y="844" text-anchor="middle" fill="#f0c866">soma blog-audit</text>
+  </g>
+
+  <line x1="80" y1="940" x2="520" y2="940" stroke="#30363d" stroke-width="1"/>
+  <text x="80" y="975" fill="#6494be" font-family="'SF Mono', monospace" font-size="14" letter-spacing="3" opacity="0.85">SOMA</text>
+  <text x="520" y="975" fill="#6e7681" font-family="'SF Mono', monospace" font-size="12" text-anchor="end" opacity="0.7">soma.gravicity.ai</text>
+</svg>
