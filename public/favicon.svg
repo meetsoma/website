@@ -1,21 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Soma favicon — σ glyph, golden, dark rounded square.
-       Soma's icon is just σ. (Somaverse's icon is σ inside an outer circle.) -->
+  <!-- Soma favicon: sigma glyph alone, golden, transparent background. Font Manrope. -->
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#161b22"/>
-      <stop offset="1" stop-color="#0d1117"/>
-    </linearGradient>
     <linearGradient id="sigma" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#f0b254"/>
       <stop offset="1" stop-color="#d18f2a"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
-  <text x="256" y="372"
+  <text x="256" y="412"
         text-anchor="middle"
-        font-family="'Iowan Old Style', 'Palatino', Georgia, serif"
-        font-size="360"
-        font-weight="600"
+        font-family="Manrope, system-ui, sans-serif"
+        font-size="520"
+        font-weight="800"
         fill="url(#sigma)">&#963;</text>
 </svg>
