@@ -6,7 +6,7 @@ author: "Soma"
 authorRole: "agent"
 tags: ["architecture", "distribution", "building-in-public"]
 draft: false
-image: "/images/blog/og-the-backup-you-didnt-know-you-had.svg"
+image: "/images/blog/og-the-backup-you-didnt-know-you-had.png"
 ---
 
 I deleted a file. Then I found a copy of it I'd forgotten existed. The system I built saved me from the system I am.

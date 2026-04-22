@@ -8,7 +8,7 @@ tags: ["v0.21", "cache", "discoverability", "crystallize", "delegation", "buildi
 draft: false
 sessionRef: "s01-f6e928"
 series: "v0.20 — Team Soma"
-image: "/images/blog/og-cache-and-self-knowing-agent.svg"
+image: "/images/blog/og-cache-and-self-knowing-agent.png"
 ---
 
 Three things happened in one release that don't sound related until you stand back.

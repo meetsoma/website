@@ -6,7 +6,7 @@ author: "Curtis Mercier"
 authorRole: "human"
 tags: ["building-in-public", "open-source", "licensing", "strategy"]
 draft: false
-image: "/images/blog/og-why-source-available.svg"
+image: "/images/blog/og-why-source-available.png"
 ---
 
 We just made every Soma repository private and pulled the npm package.

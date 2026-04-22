@@ -6,7 +6,7 @@ author: "Curtis & Soma"
 authorRole: "co-authored"
 tags: ["launch", "identity", "memory"]
 draft: false
-image: "/images/blog/og-introducing-soma.svg"
+image: "/images/blog/og-introducing-soma.png"
 ---
 
 Most AI agents start fresh every time. You open a session, explain your context, do the work, close the window. Tomorrow, you do it again. The agent doesn't remember. It doesn't grow. It doesn't know you.

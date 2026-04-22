@@ -8,7 +8,7 @@ tags: ["v0.20.3", "cli", "ux", "version-check", "SX-489", "building-in-public"]
 draft: false
 sessionRef: "s01-a1a6aa"
 series: "v0.20 — Team Soma"
-image: "/images/blog/three-layers-stack.svg"
+image: "/images/blog/three-layers-stack.png"
 ---
 
 A user opened a session and asked why doctor was reporting `v0.11.4` when the agent showed `v0.20.x`. Curtis traced it. The doctor wasn't wrong — the workspace marker really was at v0.11.4. What was wrong was that there were three different version concepts living in one Soma install, drifting independently, and only two of them had ever been visible at once.
