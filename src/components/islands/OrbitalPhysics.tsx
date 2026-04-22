@@ -576,8 +576,8 @@ export default function OrbitalPhysics() {
         className="orbital-center-float"
         style={{
           position: 'absolute',
-          top: 'calc(50% - 78px)',
-          left: 'calc(50% + 72px)',
+          top: 'calc(50% - 76px)',
+          left: 'calc(50% + 14px)',
           zIndex: 3,
           pointerEvents: 'none',
           filter: 'drop-shadow(0 0 14px rgba(124, 178, 212, 0.2))',
