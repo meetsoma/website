@@ -547,8 +547,8 @@ export default function OrbitalPhysics() {
               <stop offset="100%" stop-color="#f0c866"/>
             </linearGradient>
           </defs>
-          <circle cx="50" cy="50" r="46" fill="none" stroke="url(#gcw-grad)" stroke-width="2.5"/>
-          <text x="50" y="63" text-anchor="middle" fill="url(#gcw-grad)" font-size="52" font-weight="800" font-family="Manrope, system-ui, sans-serif">{"\u03C3"}</text>
+          <circle cx="50" cy="50" r="47" fill="none" stroke="url(#gcw-grad)" stroke-width="3"/>
+          <text x="50" y="74" text-anchor="middle" fill="url(#gcw-grad)" font-size="72" font-weight="800" font-family="Manrope, system-ui, sans-serif">{"\u03C3"}</text>
         </svg>
         <span
           style={{

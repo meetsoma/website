@@ -1,15 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Soma favicon: sigma glyph alone, golden, transparent background. Font Manrope. -->
-  <defs>
-    <linearGradient id="sigma" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#f0b254"/>
-      <stop offset="1" stop-color="#d18f2a"/>
-    </linearGradient>
-  </defs>
-  <text x="256" y="412"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Soma favicon: sigma glyph, gold #f0c866, Manrope ExtraBold, transparent bg.
+       Fills most of the canvas. Soma's mark is the sigma alone; Somaverse adds the ring. -->
+  <text x="50" y="82"
         text-anchor="middle"
         font-family="Manrope, system-ui, sans-serif"
-        font-size="520"
+        font-size="102"
         font-weight="800"
-        fill="url(#sigma)">&#963;</text>
+        fill="#f0c866">&#963;</text>
 </svg>
