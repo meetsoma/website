@@ -1,11 +1,38 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import SectionHeader from '../../components/SectionHeader.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import { getPublishedBlogPosts, formatDate, estimateReadTime, authorBadge, blogPostUrl } from '../../lib/blog';
 
 const posts = await getPublishedBlogPosts();
+
+// Derive filter tags — exclude ultra-common building-in-public + version refs
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags || []) {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  }
+}
+// Curated filter set: human-meaningful categories with enough posts to warrant a pill
+const FILTER_TAGS = [
+  'architecture',
+  'memory',
+  'cache',
+  'identity',
+  'philosophy',
+  'somaverse',
+  'debugging',
+  'reflection',
+];
+const visibleFilters = FILTER_TAGS
+  .filter(t => (tagCounts.get(t) || 0) >= 2)
+  .map(t => ({ tag: t, count: tagCounts.get(t) || 0 }));
+
+// Stats subheader
+const totalPosts = posts.length;
+const agentAuthored = posts.filter(p => p.data.authorRole === 'agent').length;
+const oldestDate = posts[posts.length - 1]?.data.date;
+const firstPostDate = oldestDate ? formatDate(oldestDate) : '';
 ---
 
 <Layout
@@ -24,6 +51,13 @@ const posts = await getPublishedBlogPosts();
         Building Soma in public — the dev log, the incidents, the lessons learned 
         from giving AI agents persistent memory.
       </p>
+      <p class="stats">
+        <span>{totalPosts} posts</span>
+        <span class="sep">·</span>
+        <span>since {firstPostDate}</span>
+        <span class="sep">·</span>
+        <span>{agentAuthored} agent-authored</span>
+      </p>
     </header>
 
     {posts.length === 0 ? (
@@ -32,35 +66,66 @@ const posts = await getPublishedBlogPosts();
         <p class="empty-text">First post incoming. The agent is thinking.</p>
       </div>
     ) : (
-      <div class="posts-grid">
-        {posts.map((post) => (
-          <div class="post-card">
-            <a href={blogPostUrl(post)} class="post-link">
-              <div class="post-meta">
-                <span class="post-date">{formatDate(post.data.date)}</span>
-                <span class="sep">·</span>
-                <span class="post-read">{estimateReadTime(post.body || '')}</span>
-                <span class="author-badge" data-role={post.data.authorRole}>
-                  {authorBadge(post.data.authorRole)}
-                </span>
-              </div>
-              <h2 class="post-title">{post.data.title}</h2>
-              <p class="post-desc">{post.data.description}</p>
-            </a>
-            <div class="post-footer">
-              <div class="post-tags">
-                {post.data.tags.map((tag) => (
-                  <span class="tag">#{tag}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <>
+        <nav class="filter-bar" aria-label="Filter posts by topic">
+          <button class="filter-chip active" data-filter="all" type="button">
+            All <span class="filter-count">{totalPosts}</span>
+          </button>
+          {visibleFilters.map(({ tag, count }) => (
+            <button class="filter-chip" data-filter={tag} type="button">
+              {tag} <span class="filter-count">{count}</span>
+            </button>
+          ))}
+        </nav>
+
+        <div class="posts-grid">
+          {posts.map((post) => (
+            <article class="post-card" data-tags={(post.data.tags || []).join(',')}>
+              <a href={blogPostUrl(post)} class="post-link">
+                {post.data.image ? (
+                  <div class="post-thumb">
+                    <img
+                      src={post.data.image}
+                      alt=""
+                      loading="lazy"
+                      width="480"
+                      height="252"
+                    />
+                  </div>
+                ) : (
+                  <div class="post-thumb post-thumb-placeholder">
+                    <span class="placeholder-mark">σ</span>
+                  </div>
+                )}
+                <div class="post-body">
+                  <div class="post-meta">
+                    <span class="post-date">{formatDate(post.data.date)}</span>
+                    <span class="sep">·</span>
+                    <span class="post-read">{estimateReadTime(post.body || '')}</span>
+                    <span class="author-badge" data-role={post.data.authorRole}>
+                      {authorBadge(post.data.authorRole)}
+                    </span>
+                  </div>
+                  <h2 class="post-title">{post.data.title}</h2>
+                  <p class="post-desc">{post.data.description}</p>
+                  <div class="post-tags">
+                    {(post.data.tags || []).map((tag) => (
+                      <span class="tag">#{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+
+        <p class="filter-empty" hidden>
+          No posts match that filter. <button class="reset-filter" type="button">Show all</button>
+        </p>
+      </>
     )}
 
   </main>
-
 
 </Layout>
 
@@ -74,47 +139,24 @@ const posts = await getPublishedBlogPosts();
     background-size: 400px 180px;
     animation: twinkle 10s ease-in-out infinite alternate;
   }
-
   .nebula {
     position: fixed; inset: 0; pointer-events: none; z-index: 0;
     background:
       radial-gradient(ellipse 70% 50% at 15% 20%, rgba(104,152,190,0.08), transparent 50%),
       radial-gradient(ellipse 50% 50% at 85% 30%, rgba(124,178,212,0.06), transparent 50%);
   }
-
   @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 0.6; } }
 
   .container {
     position: relative; z-index: 1;
-    max-width: 890px;
+    max-width: 980px;
     margin: 0 auto;
     padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
   }
 
-  .header {
-    text-align: center;
-    margin-bottom: var(--section-gap);
-    animation: fadeUp 0.6s ease-out;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .back-link {
-    display: inline-block;
-    margin-bottom: 20px;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: var(--body-secondary);
-    transition: color 0.2s;
-  }
-
-  .back-link:hover { color: var(--accent-bright); }
+  .header { text-align: center; margin-bottom: 40px; animation: fadeUp 0.6s ease-out; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
   .title {
     font-family: var(--font-display);
@@ -131,93 +173,169 @@ const posts = await getPublishedBlogPosts();
     color: var(--text-secondary);
     font-size: var(--text-lg);
     max-width: var(--content-narrow);
-    margin: 0 auto;
+    margin: 0 auto 12px;
     line-height: var(--leading-relaxed);
   }
 
-  /* Empty state */
-  .empty-state {
-    text-align: center;
-    padding: var(--space-4xl) var(--space-xl);
-  }
-
-  .empty-icon {
-    font-size: var(--text-3xl);
-    color: var(--accent-bright);
-    margin-bottom: var(--space-lg);
-    animation: pulse 3s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-  }
-
-  .empty-text {
+  .stats {
     color: var(--text-muted);
-    font-size: var(--body-text);
+    font-size: 0.84rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .stats .sep { opacity: 0.4; }
+
+  /* ── filter bar ─────────────────────────────────────── */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    padding: 0 8px;
+  }
+
+  .filter-chip {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(22, 27, 34, 0.65);
+    border: 1px solid rgba(124, 178, 212, 0.18);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+  }
+  .filter-chip:hover {
+    border-color: rgba(124, 178, 212, 0.5);
+    color: var(--text-primary);
+    background: rgba(100, 148, 190, 0.15);
+  }
+  .filter-chip.active {
+    background: rgba(240, 200, 102, 0.15);
+    border-color: rgba(240, 200, 102, 0.55);
+    color: #f0c866;
+  }
+  .filter-count {
+    display: inline-block;
+    margin-left: 4px;
+    opacity: 0.6;
+    font-size: 0.72rem;
+  }
+
+  .filter-empty {
+    text-align: center;
+    color: var(--text-muted);
+    margin: 60px 0;
     font-style: italic;
   }
+  .reset-filter {
+    background: none;
+    border: none;
+    color: var(--accent-bright);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: underline;
+    font-style: normal;
+  }
 
-  /* Posts */
+  /* ── empty state ─────────────────────────────────────── */
+  .empty-state { text-align: center; padding: 100px var(--space-xl); }
+  .empty-icon { color: var(--accent-bright); margin-bottom: 18px; animation: pulse 3s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+  .empty-text { color: var(--text-muted); font-size: var(--body-text); font-style: italic; }
+
+  /* ── posts grid ─────────────────────────────────────── */
   .posts-grid {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: 18px;
     margin-bottom: 56px;
   }
 
   .post-card {
-    display: flex;
-    flex-direction: column;
-    border-radius: var(--radius-xl);
+    border-radius: 14px;
     border: 1px solid var(--border-subtle);
     background: var(--surface-card-strong);
-    color: var(--text-primary);
-    transition: all 0.25s ease;
+    transition: all 0.22s ease;
     overflow: hidden;
   }
-
   .post-card:hover {
     border-color: var(--accent-bright);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px var(--shadow-accent-soft);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px var(--shadow-accent-soft);
   }
+  .post-card[hidden] { display: none; }
 
   .post-link {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding: var(--card-pad-y) var(--card-pad-x) 0;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    align-items: stretch;
+    padding: 0;
     text-decoration: none;
     color: inherit;
   }
 
-  .post-link .post-meta { margin-bottom: 8px; }
-  .post-link .post-title { margin-bottom: 16px; }
-  .post-link .post-desc { margin-bottom: 4px; }
+  .post-thumb {
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a2030 0%, #0f1420 100%);
+    min-height: 130px;
+    position: relative;
+  }
+  .post-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .post-card:hover .post-thumb img { transform: scale(1.03); }
+
+  .post-thumb-placeholder {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1a2030 0%, #0a0f18 100%);
+  }
+  .placeholder-mark {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 60px;
+    font-weight: 800;
+    color: rgba(240, 200, 102, 0.35);
+  }
+
+  .post-body {
+    display: flex;
+    flex-direction: column;
+    padding: 18px 22px 18px 0;
+    gap: 6px;
+    min-width: 0;
+  }
 
   .post-meta {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
-    font-size: var(--label-text);
+    gap: 8px;
+    font-size: 0.78rem;
     color: var(--text-muted);
+    font-family: var(--font-mono);
   }
-
-  .sep { opacity: 0.5; }
+  .post-meta .sep { opacity: 0.5; }
 
   .author-badge {
     margin-left: auto;
-    font-family: var(--font-mono);
-    font-size: var(--badge-text);
-    padding: 2px var(--space-md);
-    border-radius: var(--radius-md);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 6px;
     background: var(--surface-accent-soft);
     color: var(--accent-bright);
     letter-spacing: 0.05em;
   }
-
   .author-badge[data-role="human"] {
     background: var(--surface-warm-soft);
     color: var(--promo);
@@ -225,95 +343,109 @@ const posts = await getPublishedBlogPosts();
 
   .post-title {
     font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: 600;
-    line-height: var(--leading-normal);
+    font-size: clamp(1.15rem, 2.1vw, 1.35rem);
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 4px 0 2px;
+    color: var(--text-primary);
+    transition: color 0.18s;
   }
-
   .post-card:hover .post-title { color: var(--accent-bright); }
-  .post-link:hover { text-decoration: none; }
 
   .post-desc {
-    font-size: var(--body-text);
-    line-height: var(--leading-relaxed);
+    font-size: 0.92rem;
+    line-height: 1.5;
     color: var(--text-secondary);
-  }
-
-  .post-footer {
-    display: flex;
-    align-items: center;
-    padding: 8px var(--card-pad-x) var(--card-pad-y);
+    /* clamp to 2 lines on the grid view */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
   }
 
   .post-tags {
     display: flex;
-    gap: var(--space-sm);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
-    min-width: 0;
-    flex: 1;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 6px;
   }
-
-  .post-tags::-webkit-scrollbar { display: none; }
-
-  .post-tags.has-overflow {
-    -webkit-mask-image: linear-gradient(to right, black calc(100% - 48px), transparent);
-    mask-image: linear-gradient(to right, black calc(100% - 48px), transparent);
-  }
-
   .tag {
-    font-size: var(--badge-text);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
     color: var(--moon-bright);
-    padding: var(--space-xs) 10px;
-    border-radius: var(--radius-lg);
-    background: var(--surface-accent-soft);
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(124, 178, 212, 0.08);
     border: 1px solid rgba(124, 178, 212, 0.15);
     white-space: nowrap;
-    flex-shrink: 0;
   }
 
-  @media (min-width: 768px) {
-    .post-tags {
-      flex-wrap: wrap;
-      overflow-x: visible;
+  /* ── mobile (<=640px) — vertical stack ───────────────── */
+  @media (max-width: 640px) {
+    .container { padding: var(--space-2xl) var(--space-lg); }
+    .header { margin-bottom: 24px; }
+    .filter-bar { margin-bottom: 22px; }
+
+    .post-link {
+      grid-template-columns: 1fr;
+      gap: 0;
     }
-    .post-tags.has-overflow {
-      -webkit-mask-image: none;
-      mask-image: none;
+    .post-thumb {
+      aspect-ratio: 16 / 9;
+      min-height: 0;
+      max-height: 200px;
     }
+    .post-body {
+      padding: 16px 18px;
+    }
+    .post-title { font-size: 1.08rem; }
+    .post-desc { -webkit-line-clamp: 3; }
+    .post-tags { flex-wrap: nowrap; overflow-x: auto; }
+    .post-tags::-webkit-scrollbar { display: none; }
   }
 
-  @media (max-width: 480px) {
-    .container { padding: var(--space-xl) var(--space-lg); }
-    .post-link { padding: var(--space-xl) var(--space-xl) 0; }
-    .post-footer {
-      padding: var(--space-md) var(--space-xl) var(--space-xl);
+  /* ── tablet / narrow desktop — keep horizontal but smaller ── */
+  @media (min-width: 641px) and (max-width: 860px) {
+    .post-link {
+      grid-template-columns: 160px 1fr;
     }
+    .post-body { padding: 14px 18px 14px 0; }
   }
 </style>
 
 <script is:inline>
   document.addEventListener('DOMContentLoaded', function() {
-    function updateOverflow() {
-      document.querySelectorAll('.post-tags').forEach(function(el) {
-        if (el.scrollWidth > el.clientWidth + 1) {
-          el.classList.add('has-overflow');
-        } else {
-          el.classList.remove('has-overflow');
-        }
+    const chips = document.querySelectorAll('.filter-chip');
+    const cards = document.querySelectorAll('.post-card');
+    const emptyMsg = document.querySelector('.filter-empty');
+    const resetBtn = document.querySelector('.reset-filter');
+
+    function applyFilter(filter) {
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const tags = (card.getAttribute('data-tags') || '').split(',');
+        const show = filter === 'all' || tags.includes(filter);
+        card.hidden = !show;
+        if (show) visibleCount++;
       });
+      if (emptyMsg) emptyMsg.hidden = visibleCount > 0;
     }
 
-    updateOverflow();
-    window.addEventListener('resize', updateOverflow);
+    chips.forEach(chip => {
+      chip.addEventListener('click', function() {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        applyFilter(chip.dataset.filter);
+      });
+    });
 
-    if (typeof ResizeObserver !== 'undefined') {
-      var ro = new ResizeObserver(updateOverflow);
-      document.querySelectorAll('.post-tags').forEach(function(el) { ro.observe(el); });
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function() {
+        chips.forEach(c => c.classList.remove('active'));
+        chips[0].classList.add('active');
+        applyFilter('all');
+      });
     }
   });
 </script>
