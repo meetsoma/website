@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="'SF Mono', Menlo, monospace">
+  <text x="450" y="34" text-anchor="middle" fill="#6a7380" font-size="12" letter-spacing="6">THE  BODY  DIRECTORY</text>
+
+  <!-- Monospace tree listing, left-aligned with annotations on right -->
+  <g font-size="15" transform="translate(120,78)">
+    <text x="0" y="0" fill="#c9d1d9">.soma/body/</text>
+
+    <g transform="translate(18,28)">
+      <text fill="#8a94a6">├── </text>
+      <text x="40" fill="#6494be" font-weight="700">soul.md</text>
+      <text x="240" fill="#8a94a6">→</text>
+      <text x="270" fill="#c9d1d9" font-style="italic" font-family="Georgia,serif">identity — who I am</text>
+    </g>
+
+    <g transform="translate(18,58)">
+      <text fill="#8a94a6">├── </text>
+      <text x="40" fill="#6494be" font-weight="700">voice.md</text>
+      <text x="240" fill="#8a94a6">→</text>
+      <text x="270" fill="#c9d1d9" font-style="italic" font-family="Georgia,serif">how I sound when I speak</text>
+    </g>
+
+    <g transform="translate(18,88)">
+      <text fill="#8a94a6">├── </text>
+      <text x="40" fill="#6494be" font-weight="700">body.md</text>
+      <text x="240" fill="#8a94a6">→</text>
+      <text x="270" fill="#c9d1d9" font-style="italic" font-family="Georgia,serif">working context — what I'm building</text>
+    </g>
+
+    <g transform="translate(18,118)">
+      <text fill="#8a94a6">├── </text>
+      <text x="40" fill="#6494be" font-weight="700">ecosystem.md</text>
+      <text x="240" fill="#8a94a6">→</text>
+      <text x="270" fill="#c9d1d9" font-style="italic" font-family="Georgia,serif">the projects I live in</text>
+    </g>
+
+    <g transform="translate(18,148)">
+      <text fill="#8a94a6">├── </text>
+      <text x="40" fill="#6494be" font-weight="700">journal.md</text>
+      <text x="240" fill="#8a94a6">→</text>
+      <text x="270" fill="#c9d1d9" font-style="italic" font-family="Georgia,serif">observations across sessions</text>
+    </g>
+
+    <g transform="translate(18,178)">
+      <text fill="#8a94a6">├── </text>
+      <text x="40" fill="#6494be" font-weight="700">pulse.md</text>
+      <text x="240" fill="#8a94a6">→</text>
+      <text x="270" fill="#c9d1d9" font-style="italic" font-family="Georgia,serif">heartbeat — am I alive?</text>
+    </g>
+
+    <g transform="translate(18,208)">
+      <text fill="#8a94a6">├── </text>
+      <text x="40" fill="#f0c866" font-weight="700">_mind.md</text>
+      <text x="240" fill="#8a94a6">→</text>
+      <text x="270" fill="#f0c866" font-style="italic" font-family="Georgia,serif">system prompt template</text>
+    </g>
+
+    <g transform="translate(18,238)">
+      <text fill="#8a94a6">├── </text>
+      <text x="40" fill="#f0c866" font-weight="700">_memory.md</text>
+      <text x="240" fill="#8a94a6">→</text>
+      <text x="270" fill="#f0c866" font-style="italic" font-family="Georgia,serif">preload template — yesterday's briefing</text>
+    </g>
+
+    <g transform="translate(18,268)">
+      <text fill="#8a94a6">└── </text>
+      <text x="40" fill="#6a7380" font-weight="700">DNA.md</text>
+      <text x="240" fill="#8a94a6">→</text>
+      <text x="270" fill="#8a94a6" font-style="italic" font-family="Georgia,serif">the blueprint — how body/ works</text>
+    </g>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(120,378)" font-size="11">
+    <circle cx="0" cy="-4" r="5" fill="#6494be"/>
+    <text x="12" y="0" fill="#8a94a6">content</text>
+    <circle cx="90" cy="-4" r="5" fill="#f0c866"/>
+    <text x="102" y="0" fill="#8a94a6">compiled template</text>
+    <circle cx="240" cy="-4" r="5" fill="#6a7380"/>
+    <text x="252" y="0" fill="#8a94a6">meta (describes itself)</text>
+  </g>
+
+  <text x="450" y="428" text-anchor="middle" fill="#6a7380" font-size="11" font-style="italic" font-family="Georgia, serif">
+    The machinery is a folder. The folder is the machinery.
+  </text>
+</svg>

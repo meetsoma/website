@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" font-family="'SF Mono', Menlo, monospace">
+  <text x="450" y="34" text-anchor="middle" fill="#6a7380" font-size="12" letter-spacing="6">SAME  WORK,  DIFFERENT  BILL</text>
+
+  <!-- Two bars — before (red, wide) / after (green, narrow). Horizontal. -->
+
+  <!-- BEFORE: cache-bust bug (v0.11.1) -->
+  <g transform="translate(120,110)">
+    <text x="0" y="-12" fill="#8a94a6" font-size="11" letter-spacing="2">BEFORE  —  v0.11.1  cache-bust  bug</text>
+    <rect x="0" y="0" width="660" height="58" rx="6" fill="rgba(240,136,62,0.22)" stroke="rgba(240,136,62,0.7)" stroke-width="1.5"/>
+    <text x="20" y="37" fill="#f0883e" font-size="32" font-weight="700" font-family="Manrope, system-ui">$152 / day</text>
+    <text x="640" y="37" text-anchor="end" fill="#c9d1d9" font-size="12" font-style="italic" font-family="Georgia,serif">payload drift invalidated cache every turn</text>
+  </g>
+
+  <!-- AFTER: fixed -->
+  <g transform="translate(120,230)">
+    <text x="0" y="-12" fill="#8a94a6" font-size="11" letter-spacing="2">AFTER  —  same developer, same model, longer session</text>
+    <rect x="0" y="0" width="230" height="58" rx="6" fill="rgba(100,148,190,0.22)" stroke="rgba(100,148,190,0.7)" stroke-width="1.5"/>
+    <text x="20" y="37" fill="#6494be" font-size="32" font-weight="700" font-family="Manrope, system-ui">$79</text>
+    <text x="640" y="37" text-anchor="end" fill="#c9d1d9" font-size="12" font-style="italic" font-family="Georgia,serif">597 messages · full release pipeline · stable prefix</text>
+  </g>
+
+  <!-- Inflection marker -->
+  <g transform="translate(780,168)">
+    <circle r="5" fill="#f0c866"/>
+    <text x="10" y="4" fill="#f0c866" font-size="11" font-weight="700" letter-spacing="1">PROTOCOL</text>
+    <text x="10" y="20" fill="#8a94a6" font-size="10">never touch the prefix</text>
+  </g>
+
+  <!-- Breakdown: cache read vs write economy -->
+  <g transform="translate(120,330)" font-size="12">
+    <text x="0" y="0" fill="#8a94a6">cache write:</text>
+    <text x="120" y="0" fill="#c9d1d9" font-weight="600">$$$</text>
+    <text x="200" y="0" fill="#8a94a6">cache read:</text>
+    <text x="320" y="0" fill="#c9d1d9" font-weight="600">$</text>
+    <text x="360" y="0" fill="#6a7380" font-style="italic" font-family="Georgia,serif">1/10th</text>
+    <text x="440" y="0" fill="#8a94a6">→ stable prefix means reads, not writes</text>
+  </g>
+
+  <text x="450" y="398" text-anchor="middle" fill="#6a7380" font-size="11" font-style="italic" font-family="Georgia, serif">
+    The architecture was already there. We just stopped invalidating it.
+  </text>
+</svg>

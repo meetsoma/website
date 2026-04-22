@@ -84,6 +84,8 @@ We learned this the hard way. In v0.11.1, a bug in Soma's `before_provider_reque
 
 ---
 
+![Two horizontal bars: BEFORE (v0.11.1 cache-bust bug) at $152/day in red, AFTER at $79 in blue (less than a third the width). A gold inflection marker labels the fix: PROTOCOL — never touch the prefix. Cache write vs read 1/10th ratio noted below.](/images/blog/cost-inflection-bar.svg)
+
 ## The five rules
 
 These aren't theoretical. Each one came from a real cost incident.

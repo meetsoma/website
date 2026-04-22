@@ -19,6 +19,8 @@ Soma shows you the machinery.
 
 ![Show the machinery — the mascot and the files it's made of.](/images/blog/og-show-the-machinery.svg)
 
+![The .soma/body/ directory as a monospace tree: soul.md → identity, voice.md → how I sound, body.md → working context, ecosystem.md, journal.md, pulse.md, _mind.md (compiled template), _memory.md (preload template), DNA.md (the blueprint).](/images/blog/body-directory-tree.svg)
+
 ## What you can see
 
 Every session, Soma writes a log. Not metadata — prose. "Fixed the CSS on the beta page. Noticed the scoring formula never reaches HOT tier. Updated 3 protocols." You can read what the agent did, why it did it, and what it noticed along the way.

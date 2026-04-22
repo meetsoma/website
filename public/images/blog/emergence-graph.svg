@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="'SF Mono', Menlo, monospace">
+  <text x="450" y="32" text-anchor="middle" fill="#6a7380" font-size="12" letter-spacing="6">EMERGENT  OPERATING  SYSTEM</text>
+
+  <!-- 6 nodes arranged in a loose hexagon — edges show how one enriches another -->
+
+  <!-- protocols (NW) -->
+  <g transform="translate(210,130)">
+    <circle r="44" fill="rgba(100,148,190,0.12)" stroke="rgba(100,148,190,0.6)" stroke-width="1.5"/>
+    <text y="-2" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="600">protocols</text>
+    <text y="15" text-anchor="middle" fill="#8a94a6" font-size="10">rules</text>
+  </g>
+
+  <!-- muscles (N) -->
+  <g transform="translate(450,100)">
+    <circle r="44" fill="rgba(100,148,190,0.12)" stroke="rgba(100,148,190,0.6)" stroke-width="1.5"/>
+    <text y="-2" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="600">muscles</text>
+    <text y="15" text-anchor="middle" fill="#8a94a6" font-size="10">reflexes</text>
+  </g>
+
+  <!-- AMPS (NE) -->
+  <g transform="translate(690,130)">
+    <circle r="44" fill="rgba(100,148,190,0.12)" stroke="rgba(100,148,190,0.6)" stroke-width="1.5"/>
+    <text y="-2" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="600">AMPS</text>
+    <text y="15" text-anchor="middle" fill="#8a94a6" font-size="10">content system</text>
+  </g>
+
+  <!-- body/ (SW) -->
+  <g transform="translate(210,340)">
+    <circle r="44" fill="rgba(240,200,102,0.13)" stroke="rgba(240,200,102,0.6)" stroke-width="1.5"/>
+    <text y="-2" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="600">body/</text>
+    <text y="15" text-anchor="middle" fill="#8a94a6" font-size="10">identity</text>
+  </g>
+
+  <!-- journal/ (S) -->
+  <g transform="translate(450,370)">
+    <circle r="44" fill="rgba(240,200,102,0.13)" stroke="rgba(240,200,102,0.6)" stroke-width="1.5"/>
+    <text y="-2" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="600">journal/</text>
+    <text y="15" text-anchor="middle" fill="#8a94a6" font-size="10">history</text>
+  </g>
+
+  <!-- preloads/ (SE) -->
+  <g transform="translate(690,340)">
+    <circle r="44" fill="rgba(240,200,102,0.13)" stroke="rgba(240,200,102,0.6)" stroke-width="1.5"/>
+    <text y="-2" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="600">preloads/</text>
+    <text y="15" text-anchor="middle" fill="#8a94a6" font-size="10">briefings</text>
+  </g>
+
+  <!-- Edges — drawn with varying opacity to show density -->
+  <g stroke="rgba(100,148,190,0.35)" stroke-width="1.2" fill="none">
+    <!-- protocols ↔ muscles -->
+    <line x1="254" y1="130" x2="406" y2="100"/>
+    <!-- muscles ↔ AMPS -->
+    <line x1="494" y1="100" x2="646" y2="130"/>
+    <!-- protocols ↔ AMPS (top arc) -->
+    <path d="M 254 110 Q 450 40 646 110"/>
+    <!-- muscles → body/ -->
+    <line x1="438" y1="144" x2="234" y2="300"/>
+    <!-- AMPS → body/ -->
+    <line x1="650" y1="168" x2="250" y2="320"/>
+    <!-- protocols → journal -->
+    <line x1="234" y1="170" x2="430" y2="330"/>
+    <!-- muscles → journal (direct) -->
+    <line x1="450" y1="144" x2="450" y2="326"/>
+    <!-- body/ → journal -->
+    <line x1="254" y1="340" x2="406" y2="370"/>
+    <!-- journal → preloads -->
+    <line x1="494" y1="370" x2="646" y2="340"/>
+    <!-- body/ → preloads (bottom arc) -->
+    <path d="M 254 360 Q 450 420 646 360"/>
+    <!-- AMPS → preloads -->
+    <line x1="690" y1="174" x2="690" y2="296"/>
+  </g>
+
+  <!-- Highlight one reinforcing loop: protocols → muscles → journal → preloads -->
+  <g stroke="#f0c866" stroke-width="1.6" fill="none" opacity="0.7" stroke-dasharray="5 3">
+    <line x1="254" y1="130" x2="406" y2="100"/>
+    <line x1="450" y1="144" x2="450" y2="326"/>
+    <line x1="494" y1="370" x2="646" y2="340"/>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(120,442)" font-size="11">
+    <circle cx="0" cy="-4" r="5" fill="rgba(100,148,190,0.5)"/>
+    <text x="12" y="0" fill="#8a94a6">machinery</text>
+    <circle cx="100" cy="-4" r="5" fill="rgba(240,200,102,0.5)"/>
+    <text x="112" y="0" fill="#8a94a6">identity + trace</text>
+    <line x1="260" y1="-4" x2="285" y2="-4" stroke="#f0c866" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <text x="295" y="0" fill="#8a94a6">one discovered loop</text>
+  </g>
+
+  <text x="780" y="452" text-anchor="end" fill="#6a7380" font-size="10" font-style="italic" font-family="Georgia, serif">
+    We built the nodes. The edges emerged.
+  </text>
+</svg>

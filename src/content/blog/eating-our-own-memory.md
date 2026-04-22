@@ -55,6 +55,8 @@ Layer three: no automated check. The dev ship script had no changelog step. Drif
 
 Each layer alone wouldn't have fixed it. This is what "fix the system, not the instance" looks like when you actually commit to it.
 
+![A circular loop: Build → Use → Find Friction → Fix → Build. A Day 5 marker spurs off between Find and Fix: 'we weren't using our own scripts.'](/images/blog/dogfood-loop.svg)
+
 ## How Corrections Become Identity
 
 The most powerful product improvements didn't come from the roadmap. They came from the human correcting the agent, and the agent learning to make those corrections permanent.

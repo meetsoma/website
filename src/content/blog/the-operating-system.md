@@ -84,6 +84,8 @@ The directory took 30 seconds to create. The protocol and MAP took 20 minutes. T
 
 That's the pattern. A small structural change (a folder) creates a behavioral need (a protocol) which creates a workflow need (a MAP) which creates cross-reference needs (amps-interconnect). The system grows from the inside.
 
+![Six-node graph of Soma's emergent OS: protocols, muscles, AMPS on top row (machinery); body/, journal/, preloads/ on bottom (identity + trace). Dense cross-edges between all six. One dashed gold loop highlighted: protocols → muscles → journal → preloads.](/images/blog/emergence-graph.svg)
+
 ## What the code doesn't know
 
 The core TypeScript — 12,500 lines across 15 modules and 7 extensions — doesn't know about release-tracking. It doesn't know about system-audit. It doesn't know that `_public/` means "verified for the hub" or that `internal/` means "don't share." It doesn't know that the heat system has [known gaps](/docs/heat-system#known-gaps) or that muscle heat doesn't bump on natural use.
