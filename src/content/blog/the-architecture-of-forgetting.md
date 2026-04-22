@@ -16,6 +16,8 @@ When Claude Code's source leaked on April 1st — still unclear whether intentio
 
 [Our first post](/blog/why-your-claude-bill-spiked) covered what was costing you money. This one covers what's underneath. How Claude Code thinks. How it remembers. How it forgets. And the places where Anthropic's engineers left behind some of the most honest code comments we've ever read.
 
+![The architecture of forgetting — 398,000 lines of code we chose to leave behind.](/images/blog/og-architecture-of-forgetting.svg)
+
 ## How Claude Code Remembers
 
 Claude Code's memory lives in a directory called `memdir/` — a flat collection of markdown files indexed by a `MEMORY.md` manifest. Each memory gets a type: `user`, `feedback`, `project`, or `reference`. Content-typed. What the memory *is*, not what it *does*.

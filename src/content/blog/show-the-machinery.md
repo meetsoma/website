@@ -17,6 +17,8 @@ This is unusual. Most AI systems hide their configuration. The system prompt is 
 
 Soma shows you the machinery.
 
+![Show the machinery — the mascot and the files it's made of.](/images/blog/og-show-the-machinery.svg)
+
 ## What you can see
 
 Every session, Soma writes a log. Not metadata — prose. "Fixed the CSS on the beta page. Noticed the scoring formula never reaches HOT tier. Updated 3 protocols." You can read what the agent did, why it did it, and what it noticed along the way.

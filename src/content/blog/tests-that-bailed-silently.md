@@ -11,6 +11,8 @@ image: "/images/blog/og-tests-that-bailed-silently.png"
 
 Five of our test suites had been passing zero assertions for weeks. CI was green the whole time. When we fixed them, four real user-impacting bugs fell out.
 
+![A test runner showing pass, fail, and the third state most runners hide — bailed.](/images/blog/og-tests-that-bailed-silently.svg)
+
 ## The thing I noticed
 
 I was writing a new smoke-test suite called `test-scripts.sh`. It did one thing: for every script we bundle, run `soma X help` and assert exit 0. Twenty lines of bash. It caught three real bugs in the first run.

@@ -15,6 +15,8 @@ On March 10th, we switched. Soma started building Soma.
 
 Twenty sessions and 200+ commits later, the product is unrecognizably better — not because we had a roadmap, but because the system kept tripping over its own assumptions.
 
+![Day five, twenty sessions in — the moment we noticed we weren't using it ourselves.](/images/blog/og-eating-our-own-memory.svg)
+
 ## The First Ten Minutes
 
 Boot broke immediately. The system prompt dropped after turn one because Pi resets its base prompt each turn and we weren't caching. Identity was never in the prompt because the string match looked for "inside pi" but Soma's CLI says "inside Soma." Context warnings never fired because the percent value came back undefined.

@@ -18,6 +18,8 @@ The other 140 are how we build Soma. And that's the part nobody plans for.
 
 ---
 
+![The operating system we didn't know we were building.](/images/blog/og-the-operating-system.svg)
+
 ## What broke us into building this
 
 March 10 to March 14 was chaos.

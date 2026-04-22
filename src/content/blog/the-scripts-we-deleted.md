@@ -15,6 +15,8 @@ Not metaphorically. Literally. Two bash scripts — `soma-search.sh` and `soma-s
 
 Gone. One commit. `"cleanup: remove internal files before public release."` Ninety-seven files deleted. Logo iterations, concept art, preview HTML, media kits, design docs. All lumped together with six operational scripts. Nothing was classified. Everything was treated as disposable. The search engine for the memory system, deleted by the system that was supposed to remember.
 
+![The scripts we deleted — the tool we never used was the one we thought we needed most.](/images/blog/og-the-scripts-we-deleted.svg)
+
 ## How It Happened
 
 The instinct was subtraction. We were preparing for a public release and the repo had accumulated days of internal artifacts. Logo drafts, vote files, design explorations. The `.soma/scripts/` directory sat next to `.soma/logos/`. Everything under `.soma/` felt internal. So we removed it all.

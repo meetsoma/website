@@ -16,6 +16,8 @@ This is the release where Soma learned to guard its own code.
 
 ---
 
+![Soma turns one — a candle on a terminal window.](/images/blog/og-birthday-release.svg)
+
 ## The question that started everything
 
 "If we ship now without obfuscating — there's no taking them back."

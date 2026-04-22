@@ -11,6 +11,8 @@ image: "/images/blog/og-five-things-had-to-go-wrong.png"
 
 A screenshot crashed a 3-hour AI session. But it wasn't the screenshot's fault.
 
+![Five domino failures. Fix any one and the session survives.](/images/blog/og-five-things-had-to-go-wrong.svg)
+
 ## The chain
 
 Here's what happened, in order:

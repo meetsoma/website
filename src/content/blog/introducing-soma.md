@@ -13,6 +13,8 @@ Most AI agents start fresh every time. You open a session, explain your context,
 
 Soma is different.
 
+![σῶμα — the body that remembers. Introducing Soma.](/images/blog/og-introducing-soma.svg)
+
 ## What Soma Is
 
 Soma is an AI coding agent built on [Pi](https://github.com/badlogic/pi-mono) with three things most agents don't have:

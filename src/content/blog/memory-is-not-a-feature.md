@@ -15,6 +15,8 @@ OpenAI has conversation history. Anthropic has project knowledge. LangChain has 
 
 They're all solving the wrong problem.
 
+![Memory isn't a feature. It's the substrate everything else grows from.](/images/blog/og-memory-is-not-a-feature.svg)
+
 ## The filing cabinet model
 
 Most agent memory works like a filing cabinet. The agent encounters information, files it away (usually in a vector database), and retrieves it when the embedding similarity score is high enough.
