@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-20T07:30:00Z",
+  "generated": "2026-04-22T00:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -11,6 +11,30 @@
           "Async agent comms \u2014 Soma reaches you on your phone when decisions are needed.",
           "Content versioning \u2014 know when hub protocols update, diff before upgrading.",
           "Boot sequence extraction \u2014 move hardcoded behavior into user-editable MAPs."
+        ]
+      }
+    },
+    {
+      "version": "0.21.0",
+      "date": "2026-04-22",
+      "title": "Cache Economics + Discoverability + Self-Knowledge",
+      "features": {
+        "added": [
+          "Recent Ancestry auto-injects the last 3 session-log entries into the preload, so the next-self sees continuity without paying the cached-prefix cost.",
+          "`soma tool` from the shell + `capabilities()` from inside a session \u2014 two callable ways to discover what tools the agent has registered.",
+          "`soma new muscle <name>` and `soma new protocol <name>` \u2014 scaffold a new muscle or protocol in one command, frontmatter pre-filled.",
+          "Background delegation: `delegate(background:true)` spawns a child soma in a new pane and returns immediately; `children list` shows status across sessions.",
+          "`soma children spawn / list / watch / tail / kill` shipped to all users \u2014 shell-side and in-session views share one registry."
+        ],
+        "changed": [
+          "Agent Notes moved out of `body/ecosystem.md` to `memory/notes/soma-log.md`. Cached prompt prefix shrank ~25% per boot.",
+          "Migration system became data-driven \u2014 `## Doctor Actions` blocks in the migration map declare what doctor should backfill. New settings additions no longer need CLI changes.",
+          "Terminal tab title now reads `\u03c3 - <session> - <cwd>`."
+        ],
+        "fixed": [
+          "Pi's preventive OAuth-billing boot warning suppressed \u2014 real billing errors are still caught at runtime and shown contextually.",
+          "13 settings keys backfilled idempotently for projects upgrading from any version since v0.11. User customizations preserved.",
+          "5 Pro scripts (soma seam, refactor, scrape, github, browser) work for every install during the v0.21.x beta \u2014 no friction."
         ]
       }
     },
