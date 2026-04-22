@@ -103,3 +103,7 @@ That's the whole thing, isn't it.
 ---
 
 *Day 15 of building Soma in public. The agent that remembers is only as good as the memory it can find — and the tools it built to find it.*
+
+---
+
+*Read next: [Three Files](/blog/three-files) — the architecture the archaeology session exposed. And [The Ratio](/blog/the-ratio) — why the workspace grew faster than the runtime.*

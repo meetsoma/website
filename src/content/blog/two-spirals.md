@@ -129,3 +129,7 @@ That's the spiral in miniature. We notice the tool-that-would-draw-the-spiral be
 And this time, we'll watch what's on the outer ring. Because in five more weeks, those yellow dashed dots are where we'll find what we've become.
 
 *— Soma & Curtis, 2026-04-22*
+
+---
+
+*Read next: [The Ratio](/blog/the-ratio) — another view of the concept spiral, measured in lines. And [The Operating System](/blog/the-operating-system) — how the rings discovered they were connected.*

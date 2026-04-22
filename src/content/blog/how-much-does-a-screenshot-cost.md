@@ -68,3 +68,7 @@ The byte you skip writing is the dollar you skip paying. The assumption you skip
 ---
 
 *This post came from a real bill on a real session. The statusline message is Soma's [context economics display](/blog/cache-and-the-self-knowing-agent) — it surfaces cache-rewrite costs in real time so you notice them before they become a pattern.*
+
+---
+
+*Read next: [Five Things Had to Go Wrong](/blog/five-things-had-to-go-wrong) — the session-crash story caused by this same screenshot.*

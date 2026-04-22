@@ -97,6 +97,10 @@ BSL protects the core. But it also protects everyone who builds on it. Consultan
 
 The code converts to MIT in eighteen months. By then, either the ecosystem is strong enough that it doesn't matter, or the ideas have spread far enough that the community benefits regardless.
 
+---
+
+*Read next: [The Architecture of Forgetting](/blog/the-architecture-of-forgetting) — what 398,000 lines of Claude Code revealed about memory systems. And [The Ratio](/blog/the-ratio) — what a substrate looks like when it grows.*
+
 ## What stays open
 
 The ideas are open. The protocol specs. The AMPS architecture. The concept of heat-based memory, identity that evolves, muscles that crystallise through use. Anyone can implement these patterns. We encourage it.

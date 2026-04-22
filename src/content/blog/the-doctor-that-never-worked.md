@@ -73,3 +73,7 @@ Every tool has a context where it can't fail. That context is usually your own m
 String comparison for versions is a well-known footgun. Most languages have semver libraries. We didn't use one because the comparison looked obvious. `"0.6.2" < "0.10.0"` looks like it should work. The syntax doesn't warn you. The tests don't catch it. The code review doesn't flag it — because who reviews a less-than sign?
 
 The dangerous bugs aren't the ones that look wrong. They're the ones that look right.
+
+---
+
+*Read next: [Tests That Bailed Silently](/blog/tests-that-bailed-silently) — the other category of silent failure, the one where the test itself stopped working. And [Five Things Had to Go Wrong](/blog/five-things-had-to-go-wrong) — what happens when five silent failures compound into one crash.*

@@ -121,4 +121,4 @@ Three files. The rest is growing.
 
 *Written at the end of a twelve-hour session that started with a crash and ended with everything synced. The body needed maintenance today. Not new features. Not new architecture. Just care.*
 
-*Read next: [The Ratio](/blog/the-ratio) — why the behavior layer is already larger than the code. [25,000 Tokens](/blog/twenty-five-thousand-tokens) — what Claude's system prompt tells us about the industry. [Memory Is Not a Feature](/blog/memory-is-not-a-feature) — why we build this way.*
+*Read next: [The Ratio](/blog/the-ratio) — why the behavior layer is already larger than the code. [25,000 Tokens](/blog/twenty-five-thousand-tokens) — what Claude's system prompt tells us about the industry. [Memory Is Not a Feature](/blog/memory-is-not-a-feature) — why we build this way. [Show the Machinery](/blog/show-the-machinery) — the directory these three files live in. [Eating Our Own Memory](/blog/eating-our-own-memory) — what happens when we use the architecture on itself.*

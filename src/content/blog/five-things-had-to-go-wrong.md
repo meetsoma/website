@@ -89,3 +89,7 @@ After stripping: 15.9MB → 2.6MB. The session resumed cleanly.
 37 images over 3 hours is about one every 5 minutes. That's not unusual for an agent working on a UI — it takes screenshots to verify its changes. The system needs to handle this as a normal workload, not an edge case.
 
 Every screenshot is a promise: "I'll remember what this looked like." 37 promises, 10 megabytes of proof. When the proof gets too heavy, you have to let some of it go. The trick is choosing which ones to keep.
+
+---
+
+*Read next: [How Much Does a Screenshot Cost?](/blog/how-much-does-a-screenshot-cost) — the cache-economics angle of the same bug. And [Tests That Bailed Silently](/blog/tests-that-bailed-silently) — another silent failure mode that hid in plain sight.*

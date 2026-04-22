@@ -167,3 +167,7 @@ The third most productive thing was writing the soul. Not because it ships to us
 ---
 
 *Session s01-72cd29. Three days. 57 commits. The house has doors now.*
+
+---
+
+*Read next: [The Session That Paid For Itself](/blog/the-session-that-paid-for-itself) — a longer session that cost less, and why. And [Birthday Release](/blog/birthday-release) — the reflection on what shipping this actually meant.*

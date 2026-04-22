@@ -65,3 +65,7 @@ When you build a distribution system — scripts, configs, templates, anything t
 Don't fight this. Don't try to reduce copies to exactly one for "cleanliness." The redundancy isn't waste. It's the reason you can recover from `git checkout --` at 3am without losing someone else's work.
 
 Build systems that distribute. The backups will take care of themselves.
+
+---
+
+*Read next: [Three Files](/blog/three-files) — the architecture that makes backups like this possible. And [The Scripts We Deleted](/blog/the-scripts-we-deleted) — another story about tools you didn't know you still had.*

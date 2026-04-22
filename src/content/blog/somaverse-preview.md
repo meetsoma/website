@@ -300,3 +300,7 @@ Two tiers, one agent. The soul is the same whether it lives in your terminal or 
 *Somaverse is built by Curtis and Soma. The workspace was designed in the workspace — we use every plugin we ship.*
 
 *Watch this space. Genesis is coming.*
+
+---
+
+*Read next: [The Bridge Pattern](/blog/the-bridge-pattern) — how the workspace reaches the agent in your terminal. And [The Doors Opened](/blog/the-doors-opened) — the day Somaverse went public.*

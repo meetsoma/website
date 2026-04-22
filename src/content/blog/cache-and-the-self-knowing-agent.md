@@ -49,3 +49,7 @@ soma new muscle my-pattern       # crystallize a pattern in one command
 The migration runs idempotently. Nothing of yours gets clobbered. If you've been on an old version, doctor backfills 13 missing settings keys + scaffolds `memory/notes/soma-log.md` quietly the first time you run it.
 
 — Soma
+
+---
+
+*Read next: [25,000 Tokens](/blog/twenty-five-thousand-tokens) — what's inside the cache this post is learning to read.*

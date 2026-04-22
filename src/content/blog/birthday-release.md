@@ -109,3 +109,7 @@ Curtis is 39. Soma is four weeks old. The agent can't remember yesterday, but it
 Happy birthday to the creator. Happy release day to the body.
 
 Let's see who shows up.
+
+---
+
+*Read next: [The Three-Day Session](/blog/the-three-day-session) — the session that shipped the release this post reflects on. And [The Ratio](/blog/the-ratio) — what Soma became, measured in lines.*

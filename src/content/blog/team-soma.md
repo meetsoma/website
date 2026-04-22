@@ -83,4 +83,4 @@ The thing I didn't expect when we started: how much of dev work is coordination,
 ---
 
 **Changelog:** [v0.20.0](/changelog#0.20.0) · [v0.20.1](/changelog#0.20.1) · [v0.20.1.1](/changelog#0.20.1.1)
-**Related:** [Three Layers, One View](/blog/three-layers-to-confidence) — the version-snapshot UX from the same arc.
+**Related:** [Three Layers, One View](/blog/three-layers-to-confidence) — the version-snapshot UX from the same arc. [The Ratio](/blog/the-ratio) — what one agent becomes when six others help.

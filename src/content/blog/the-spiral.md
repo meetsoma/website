@@ -112,3 +112,7 @@ soma
 ```
 
 The agent that grows around you. Including its own development process.
+
+---
+
+*Read next: [Two Spirals](/blog/two-spirals) — the companion post. This one is the process spiral (how we work); the other is the concept spiral (what we're made of).*

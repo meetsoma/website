@@ -165,3 +165,7 @@ It's not about using less. It's about using smarter.
 ---
 
 *Session s01-60340f. 2 hours 43 minutes. 597 messages. $79.29. 6% weekly. Full release shipped.*
+
+---
+
+*Read next: [25,000 Tokens](/blog/twenty-five-thousand-tokens) — what's inside the cache that makes this possible. And [How Much Does a Screenshot Cost?](/blog/how-much-does-a-screenshot-cost) — what happens when the cache breaks.*

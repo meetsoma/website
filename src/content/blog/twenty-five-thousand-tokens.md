@@ -96,4 +96,4 @@ The agent already knows.
 
 ---
 
-*Update: We wrote about what this looks like in practice in [The Ratio](/blog/the-ratio) — 18 protocols on day one, 125 items on day forty-seven, same compiled runtime. And in [Three Files](/blog/three-files), the story of the day the thinnest layer broke and what we learned about identity.*
+*Update: We wrote about what this looks like in practice in [The Ratio](/blog/the-ratio) — 18 protocols on day one, 125 items on day forty-seven, same compiled runtime. And in [Three Files](/blog/three-files), the story of the day the thinnest layer broke and what we learned about identity. Also: [The Last 8%](/blog/the-last-eight-percent) — what it's like to think at the edge of the context window these tokens define.*

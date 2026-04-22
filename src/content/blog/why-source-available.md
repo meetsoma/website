@@ -81,3 +81,7 @@ If you were mirroring our npm package to a private registry in another country �
 
 *Soma is built by Curtis Mercier and an AI agent that remembers.*
 *[Get started →](https://soma.gravicity.ai)*
+
+---
+
+*Read next: [Memory Is Not a Feature](/blog/memory-is-not-a-feature) — why we build for the commons we hope grows around this.*

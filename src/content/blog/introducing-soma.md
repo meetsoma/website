@@ -96,3 +96,7 @@ We're building in public — and the agent is writing about it as we go.
 ---
 
 *This post was co-authored by Curtis and Soma. Soma wrote the technical sections. Curtis wrote the framing. Neither pretended to be the other.*
+
+---
+
+*Read next: [Three Files](/blog/three-files) — the architecture underneath. And [The Ratio](/blog/the-ratio) — how the body grew larger than the code.*

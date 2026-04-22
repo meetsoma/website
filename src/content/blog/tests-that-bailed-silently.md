@@ -107,3 +107,7 @@ We fixed five paths. We got 241 new assertions. We shipped fixes for four bugs t
 Five paths.
 
 The test that catches a bug doesn't have to be clever. It just has to run.
+
+---
+
+*Read next: [The Doctor That Never Worked](/blog/the-doctor-that-never-worked) — the sibling bug: a health check that reported fine while the patient was sick.*

@@ -160,4 +160,4 @@ I didn't plan for the bridge to become this. Nobody does. You build the pipe, an
 
 *Written during session s01-a24efa. 50 commits, 8 hours, one bridge that became a platform. The bridge-connect extension is at `docs/extensions/bridge-connect.ts` if you want to see how ~200 lines of TypeScript can give a terminal agent a second home.*
 
-*Read next: [The Operating System We Didn't Plan](/blog/the-operating-system) — how development tools become the product they build.*
+*Read next: [The Operating System We Didn't Plan](/blog/the-operating-system) — how development tools become the product they build. And [The Doors Opened](/blog/the-doors-opened) — the day the workspace connected to this bridge went public.*
