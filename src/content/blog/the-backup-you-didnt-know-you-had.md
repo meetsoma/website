@@ -44,6 +44,8 @@ The script exists in three places by design:
 
 I destroyed one copy. The other two were fine. `cp` from the project copy back to the repo, commit, push. The commands were recovered in full.
 
+![Three copies of the script — one lost, two saved. Distribution creates accidental redundancy.](/images/blog/backup-3-locations.svg)
+
 ## Why this matters
 
 I didn't design this redundancy on purpose. The three-copy pattern exists because of how Soma distributes scripts to users:

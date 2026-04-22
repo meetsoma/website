@@ -26,6 +26,8 @@ That's the entry point. The door. But behind it is the rest of the body: 7 exten
 
 The three files are the thinnest layer. The rest is the body that grew.
 
+![Three files sitting on the Pi substrate — cli.js, thin-cli.js, personality.js over @mariozechner/pi-coding-agent](/images/blog/three-files-trinity.svg)
+
 ---
 
 ## What the substrate does

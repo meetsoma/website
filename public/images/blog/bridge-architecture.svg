@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" height="460" role="img" aria-label="The bridge pattern — agent, relay, world with data flow.">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#131b28"/>
+      <stop offset="100%" stop-color="#0a0e17"/>
+    </linearGradient>
+    <radialGradient id="agent-g" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#7ca3c4"/>
+      <stop offset="100%" stop-color="#4a6e92"/>
+    </radialGradient>
+    <radialGradient id="world-g" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#f0a468"/>
+      <stop offset="100%" stop-color="#c2722a"/>
+    </radialGradient>
+  </defs>
+  <rect width="900" height="460" fill="url(#bg)"/>
+
+  <text x="450" y="38" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6494be; letter-spacing: 6px; opacity: 0.75;">ARCHITECTURE — THE BRIDGE PATTERN</text>
+
+  <!-- AGENT (left) -->
+  <g transform="translate(120, 220)">
+    <circle cx="0" cy="0" r="85" fill="url(#agent-g)"/>
+    <text x="0" y="-6" text-anchor="middle" style="font-family: Georgia, serif; font-size: 24px; fill: #0a1220; font-weight: 700;">agent</text>
+    <text x="0" y="16" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 11px; fill: #0a1220; opacity: 0.75;">local</text>
+    <text x="0" y="32" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 10px; fill: #0a1220; opacity: 0.65;">~/.soma · Pi</text>
+  </g>
+  <text x="120" y="350" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; letter-spacing: 2px; opacity: 0.75;">the brain</text>
+
+  <!-- RELAY (center) -->
+  <g transform="translate(450, 220)">
+    <rect x="-110" y="-70" width="220" height="140" rx="16" fill="#1a2535" stroke="#6494be" stroke-width="1.5"/>
+    <text x="0" y="-36" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 10px; fill: #6494be; letter-spacing: 3px; opacity: 0.75;">WEBSOCKET RELAY</text>
+    <text x="0" y="-8" text-anchor="middle" style="font-family: Georgia, serif; font-size: 20px; fill: #e4eaf4; font-weight: 700;">bridge</text>
+    <text x="0" y="14" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 11px; fill: #8ba4c0; opacity: 0.75;">local-first</text>
+
+    <!-- Relay dashes inside -->
+    <g transform="translate(0, 40)">
+      <line x1="-70" y1="0" x2="-40" y2="0" stroke="#6494be" stroke-width="2" opacity="0.7"/>
+      <polygon points="-40,-5 -30,0 -40,5" fill="#f0883e"/>
+      <line x1="30" y1="0" x2="60" y2="0" stroke="#6494be" stroke-width="2" opacity="0.7"/>
+      <polygon points="60,-5 70,0 60,5" fill="#6494be"/>
+    </g>
+    <text x="0" y="60" text-anchor="middle" style="font-family: Georgia, serif; font-size: 11px; fill: #c9d1d9; opacity: 0.55; font-style: italic;">no persistence</text>
+  </g>
+  <text x="450" y="350" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; letter-spacing: 2px; opacity: 0.75;">the pipe</text>
+
+  <!-- WORLD (right) -->
+  <g transform="translate(780, 220)">
+    <circle cx="0" cy="0" r="85" fill="url(#world-g)"/>
+    <text x="0" y="-6" text-anchor="middle" style="font-family: Georgia, serif; font-size: 24px; fill: #0a1220; font-weight: 700;">world</text>
+    <text x="0" y="16" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 11px; fill: #0a1220; opacity: 0.75;">browser · fs · tty</text>
+    <text x="0" y="32" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 10px; fill: #0a1220; opacity: 0.65;">user's machine</text>
+  </g>
+  <text x="780" y="350" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; letter-spacing: 2px; opacity: 0.75;">the hands</text>
+
+  <!-- Connection lines + flow labels -->
+  <g>
+    <!-- agent → relay -->
+    <line x1="205" y1="220" x2="340" y2="220" stroke="#6494be" stroke-width="1.5" opacity="0.55"/>
+    <text x="272" y="205" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 10px; fill: #f0883e; opacity: 0.85;">commands</text>
+    <text x="272" y="243" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 10px; fill: #6494be; opacity: 0.75;">results</text>
+    <!-- relay → world -->
+    <line x1="560" y1="220" x2="695" y2="220" stroke="#6494be" stroke-width="1.5" opacity="0.55"/>
+    <text x="627" y="205" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 10px; fill: #f0883e; opacity: 0.85;">commands</text>
+    <text x="627" y="243" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 10px; fill: #6494be; opacity: 0.75;">results</text>
+  </g>
+
+  <!-- Bottom notes -->
+  <g transform="translate(60, 400)">
+    <text x="0" y="0" style="font-family: Georgia, serif; font-size: 14px; fill: #c9d1d9; opacity: 0.8; font-style: italic;">Nothing crosses the relay in long-term storage. Your data stays on your machine.</text>
+    <text x="0" y="22" style="font-family: Georgia, serif; font-size: 14px; fill: #c9d1d9; opacity: 0.65; font-style: italic;">The relay became the platform — Team Soma, workspace plugins, Somadian all plug in here.</text>
+  </g>
+</svg>

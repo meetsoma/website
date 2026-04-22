@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" width="900" height="440" role="img" aria-label="Three copies of the work — where the backup lived.">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#131b28"/>
+      <stop offset="100%" stop-color="#0a0e17"/>
+    </linearGradient>
+    <linearGradient id="card-ok" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3e5c78"/>
+      <stop offset="100%" stop-color="#2a4459"/>
+    </linearGradient>
+    <linearGradient id="card-gone" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a2628"/>
+      <stop offset="100%" stop-color="#251618"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="440" fill="url(#bg)"/>
+
+  <text x="450" y="38" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6494be; letter-spacing: 5px; opacity: 0.75;">WHERE THE COPY LIVED</text>
+
+  <!-- 3 file cards, horizontal -->
+  <g transform="translate(50, 90)">
+    <!-- Card 1: the one that was LOST -->
+    <g>
+      <rect x="0" y="0" width="255" height="220" rx="10" fill="url(#card-gone)" stroke="#6a3238" stroke-width="1.5"/>
+      <text x="20" y="40" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #e67979; letter-spacing: 3px; opacity: 0.75;">LOST</text>
+      <text x="20" y="78" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #c9d1d9; text-decoration: line-through; opacity: 0.7;">repos/agent/scripts/</text>
+      <text x="20" y="104" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #c9d1d9; text-decoration: line-through; opacity: 0.7;">_dev/soma-doctor.sh</text>
+      <!-- git checkout label -->
+      <g transform="translate(20, 140)">
+        <rect x="0" y="0" width="175" height="28" rx="4" fill="#1a0f10" stroke="#6a3238" stroke-width="1"/>
+        <text x="10" y="19" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #e67979;">git checkout -- .</text>
+      </g>
+      <text x="20" y="190" style="font-family: Georgia, serif; font-size: 12px; fill: #c9d1d9; opacity: 0.55; font-style: italic;">Uncommitted fixes wiped</text>
+      <text x="20" y="205" style="font-family: Georgia, serif; font-size: 12px; fill: #c9d1d9; opacity: 0.55; font-style: italic;">at 2am in a hurry.</text>
+    </g>
+
+    <!-- Card 2: safe copy at the installed location -->
+    <g transform="translate(275, 0)">
+      <rect x="0" y="0" width="255" height="220" rx="10" fill="url(#card-ok)" stroke="#6494be" stroke-width="1.5"/>
+      <text x="20" y="40" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #7ed7a8; letter-spacing: 3px; opacity: 0.9;">INSTALLED</text>
+      <circle cx="235" cy="36" r="11" fill="#28c840"/>
+      <text x="235" y="41" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #0a1210; font-weight: 700;">✓</text>
+      <text x="20" y="78" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #c9d1d9; opacity: 0.9;">~/.soma/agent/scripts/</text>
+      <text x="20" y="104" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #c9d1d9; opacity: 0.9;">_dev/soma-doctor.sh</text>
+      <g transform="translate(20, 140)">
+        <rect x="0" y="0" width="175" height="28" rx="4" fill="#0f1a22" stroke="#30506e" stroke-width="1"/>
+        <text x="10" y="19" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #7ed7a8;">from last soma init</text>
+      </g>
+      <text x="20" y="190" style="font-family: Georgia, serif; font-size: 12px; fill: #c9d1d9; opacity: 0.55; font-style: italic;">Installed copy held the</text>
+      <text x="20" y="205" style="font-family: Georgia, serif; font-size: 12px; fill: #c9d1d9; opacity: 0.55; font-style: italic;">last-shipped fixes.</text>
+    </g>
+
+    <!-- Card 3: seed copy at ~/.soma/seed -->
+    <g transform="translate(550, 0)">
+      <rect x="0" y="0" width="255" height="220" rx="10" fill="url(#card-ok)" stroke="#6494be" stroke-width="1.5"/>
+      <text x="20" y="40" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #7ed7a8; letter-spacing: 3px; opacity: 0.9;">SEEDED</text>
+      <circle cx="235" cy="36" r="11" fill="#28c840"/>
+      <text x="235" y="41" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #0a1210; font-weight: 700;">✓</text>
+      <text x="20" y="78" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #c9d1d9; opacity: 0.9;">~/.soma/seed/scripts/</text>
+      <text x="20" y="104" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #c9d1d9; opacity: 0.9;">_dev/soma-doctor.sh</text>
+      <g transform="translate(20, 140)">
+        <rect x="0" y="0" width="175" height="28" rx="4" fill="#0f1a22" stroke="#30506e" stroke-width="1"/>
+        <text x="10" y="19" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #7ed7a8;">from npm package</text>
+      </g>
+      <text x="20" y="190" style="font-family: Georgia, serif; font-size: 12px; fill: #c9d1d9; opacity: 0.55; font-style: italic;">Third copy we didn't</text>
+      <text x="20" y="205" style="font-family: Georgia, serif; font-size: 12px; fill: #c9d1d9; opacity: 0.55; font-style: italic;">know to count on.</text>
+    </g>
+  </g>
+
+  <!-- Below: lesson -->
+  <text x="450" y="360" text-anchor="middle" style="font-family: Georgia, serif; font-size: 17px; fill: #c9d1d9; opacity: 0.8; font-style: italic;">We built three copies of the distribution pipeline.</text>
+  <text x="450" y="387" text-anchor="middle" style="font-family: Georgia, serif; font-size: 17px; fill: #c9d1d9; opacity: 0.8; font-style: italic;">Two of them saved us.</text>
+  <text x="450" y="420" text-anchor="middle" style="font-family: Georgia, serif; font-size: 14px; fill: #c9d1d9; opacity: 0.55; font-style: italic;">Good distribution systems create redundancy you don't plan for.</text>
+</svg>

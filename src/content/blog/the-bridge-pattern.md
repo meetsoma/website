@@ -25,6 +25,8 @@ The third attempt was studio-verse, rebuilt from scratch using React, Zustand, a
 
 Four iterations. Each one carried forward what worked and shed what didn't. The bridge followed the same pattern — except it never needed a rewrite. It just kept growing. That's interesting. The workspace needed to be torn down and rebuilt because the UI surface is opinionated — layout engines have strong opinions about how things should work. But the bridge is a pipe. Pipes don't have opinions. They just carry things. And when a pipe starts carrying more kinds of things, it doesn't break — it becomes more useful.
 
+![Architecture diagram — agent, bridge relay, world. Commands flow one way; results flow back. Nothing persists in the pipe.](/images/blog/bridge-architecture.svg)
+
 ---
 
 ## The relay

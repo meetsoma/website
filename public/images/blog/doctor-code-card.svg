@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="900" height="380" role="img" aria-label="The bug: string version comparison vs semver comparison.">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#131b28"/>
+      <stop offset="100%" stop-color="#0a0e17"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="380" fill="url(#bg)"/>
+
+  <text x="450" y="38" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6494be; letter-spacing: 6px; opacity: 0.75;">THE BUG — ONE LINE, LONG TRAIL</text>
+
+  <!-- ═══ LEFT: the broken one ═══ -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="380" height="230" rx="10" fill="#0d1621" stroke="#5a2a2a" stroke-width="1.5"/>
+    <!-- Title bar -->
+    <rect x="0" y="0" width="380" height="34" rx="10" fill="#1a1015"/>
+    <rect x="0" y="18" width="380" height="16" fill="#1a1015"/>
+    <circle cx="17" cy="17" r="5" fill="#c84242"/>
+    <text x="32" y="22" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #c84242; letter-spacing: 2px; font-weight: 600;">BROKEN</text>
+
+    <!-- Code -->
+    <g font-family="'SF Mono', monospace" font-size="15">
+      <text x="22" y="75" fill="#6e7681">// doctor.js</text>
+      <text x="22" y="105" fill="#c9d1d9">if (<tspan fill="#8bb9e0">version</tspan> &lt; <tspan fill="#c8a564">"0.12.0"</tspan>) {</text>
+      <text x="22" y="130" fill="#c9d1d9">  <tspan fill="#8bb9e0">backfill</tspan>();</text>
+      <text x="22" y="155" fill="#c9d1d9">}</text>
+    </g>
+
+    <!-- Annotation -->
+    <g transform="translate(22, 180)">
+      <path d="M 70 0 L 70 -20" stroke="#c84242" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="0" y="18" style="font-family: Georgia, serif; font-size: 14px; fill: #e67979; font-style: italic;">String comparison.</text>
+      <text x="0" y="38" style="font-family: Georgia, serif; font-size: 13px; fill: #c9d1d9; opacity: 0.65;">"0.2.0" &lt; "0.12.0" == false.</text>
+    </g>
+  </g>
+
+  <!-- Arrow -->
+  <g transform="translate(455, 175)" opacity="0.8">
+    <line x1="0" y1="0" x2="30" y2="0" stroke="#f0883e" stroke-width="2"/>
+    <polygon points="25,-6 38,0 25,6" fill="#f0883e"/>
+  </g>
+
+  <!-- ═══ RIGHT: the fix ═══ -->
+  <g transform="translate(510, 80)">
+    <rect x="0" y="0" width="380" height="230" rx="10" fill="#0d2118" stroke="#2a5a3a" stroke-width="1.5"/>
+    <rect x="0" y="0" width="380" height="34" rx="10" fill="#0f1d14"/>
+    <rect x="0" y="18" width="380" height="16" fill="#0f1d14"/>
+    <circle cx="17" cy="17" r="5" fill="#28c840"/>
+    <text x="32" y="22" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #28c840; letter-spacing: 2px; font-weight: 600;">FIXED</text>
+
+    <g font-family="'SF Mono', monospace" font-size="15">
+      <text x="22" y="75" fill="#6e7681">// doctor.js</text>
+      <text x="22" y="105" fill="#c9d1d9">if (<tspan fill="#8bb9e0">semver.lt</tspan>(<tspan fill="#8bb9e0">version</tspan>, <tspan fill="#c8a564">"0.12.0"</tspan>)) {</text>
+      <text x="22" y="130" fill="#c9d1d9">  <tspan fill="#8bb9e0">backfill</tspan>();</text>
+      <text x="22" y="155" fill="#c9d1d9">}</text>
+    </g>
+
+    <g transform="translate(22, 180)">
+      <path d="M 70 0 L 70 -20" stroke="#28c840" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="0" y="18" style="font-family: Georgia, serif; font-size: 14px; fill: #7ed7a8; font-style: italic;">Semver comparison.</text>
+      <text x="0" y="38" style="font-family: Georgia, serif; font-size: 13px; fill: #c9d1d9; opacity: 0.65;">Intent-semantic, not lexical.</text>
+    </g>
+  </g>
+
+  <!-- Below, lesson -->
+  <text x="450" y="355" text-anchor="middle" style="font-family: Georgia, serif; font-size: 15px; fill: #c9d1d9; opacity: 0.7; font-style: italic;">The doctor ran for eight months and always said "you're fine."</text>
+</svg>

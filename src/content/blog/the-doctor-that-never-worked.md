@@ -31,6 +31,8 @@ The bug only manifests when versions *differ* — which is the entire point of t
 
 We had tests. They tested that the doctor ran, that it found files, that it wrote the right output. None of them created a synthetic version mismatch. None of them tested the actual gate.
 
+![The bug shown side by side — string comparison on the left, semver comparison on the right](/images/blog/doctor-code-card.svg)
+
 ## The fix
 
 ```javascript
