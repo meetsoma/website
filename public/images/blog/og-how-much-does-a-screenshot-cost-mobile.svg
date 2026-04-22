@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="goldNum" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0b254"/>
+      <stop offset="1" stop-color="#d18f2a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f0b254" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#f0b254" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bg)"/>
+  <circle cx="300" cy="510" r="330" fill="url(#glow)"/>
+
+  <text x="300" y="240" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="18" letter-spacing="6" fill="#8b949e">O&#8239;N&#8239;E &#160;&#160; S&#8239;C&#8239;R&#8239;E&#8239;E&#8239;N&#8239;S&#8239;H&#8239;O&#8239;T</text>
+
+  <text x="300" y="560" text-anchor="middle" font-size="195" font-weight="700" fill="url(#goldNum)">$1.10</text>
+
+  <text x="300" y="680" text-anchor="middle" font-size="48" font-style="italic" fill="#c9d1d9">one hundred turns</text>
+  <text x="300" y="735" text-anchor="middle" font-size="48" font-style="italic" fill="#c9d1d9">later.</text>
+
+  <line x1="180" y1="790" x2="420" y2="790" stroke="#30363d" stroke-width="1"/>
+
+  <text x="300" y="855" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="18" letter-spacing="2" fill="#6b7280">not the image tokens.</text>
+  <text x="300" y="895" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="18" letter-spacing="2" fill="#6b7280">the cache rewrite</text>
+  <text x="300" y="935" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="18" letter-spacing="2" fill="#6b7280">it triggered.</text>
+
+  <text x="300" y="985" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" letter-spacing="4" fill="#4b5563">&#963;&#969;&#956;&#945; &#160;·&#160; M&#8239;E&#8239;E&#8239;T&#8239;S&#8239;O&#8239;M&#8239;A</text>
+</svg>

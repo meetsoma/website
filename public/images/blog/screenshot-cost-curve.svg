@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" width="900" height="440" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0b254" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#f0b254" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="440" fill="url(#bg)"/>
+
+  <!-- title -->
+  <text x="450" y="40" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="13" letter-spacing="4" fill="#8b949e">C&#8239;O&#8239;N&#8239;V&#8239;E&#8239;R&#8239;S&#8239;A&#8239;T&#8239;I&#8239;O&#8239;N &#160;&#160;&#160; S&#8239;I&#8239;Z&#8239;E &#160;&#160;&#160; P&#8239;E&#8239;R &#160;&#160;&#160; T&#8239;U&#8239;R&#8239;N</text>
+
+  <!-- axes: y = 0..700KB maps to 360..80 ; x = 0..175 turns maps to 80..820 -->
+  <line x1="80" y1="360" x2="820" y2="360" stroke="#30363d" stroke-width="1"/>
+  <line x1="80" y1="360" x2="80" y2="80"   stroke="#30363d" stroke-width="1"/>
+
+  <!-- y gridlines + labels (0, 200KB, 400KB, 600KB) -->
+  <g font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#6b7280">
+    <line x1="80" y1="280" x2="820" y2="280" stroke="#1f242c" stroke-width="1"/>
+    <text x="68" y="284" text-anchor="end">200KB</text>
+    <line x1="80" y1="200" x2="820" y2="200" stroke="#1f242c" stroke-width="1"/>
+    <text x="68" y="204" text-anchor="end">400KB</text>
+    <line x1="80" y1="120" x2="820" y2="120" stroke="#1f242c" stroke-width="1"/>
+    <text x="68" y="124" text-anchor="end">600KB</text>
+    <text x="68" y="364" text-anchor="end">0</text>
+  </g>
+
+  <!-- x tick labels: turn 0, 60, 80, 120, 160 -->
+  <g font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#6b7280">
+    <text x="80"  y="380" text-anchor="middle">turn 0</text>
+    <text x="333" y="380" text-anchor="middle">60</text>
+    <text x="418" y="380" text-anchor="middle">80</text>
+    <text x="587" y="380" text-anchor="middle">120</text>
+    <text x="756" y="380" text-anchor="middle">160</text>
+  </g>
+
+  <!-- curve fill: from turn 0 (80,360) linear to turn 60 (333,318) then jump at 80 (418,150) then gentle slope to 175 (820,100) -->
+  <path d="M 80,360 L 333,318 L 375,298 L 400,258 L 418,150 L 500,140 L 600,125 L 700,112 L 820,100 L 820,360 Z" fill="url(#fillGrad)"/>
+
+  <!-- curve line (below-spike portion) -->
+  <path d="M 80,360 L 333,318 L 375,298 L 400,258 L 418,150" fill="none" stroke="#f0b254" stroke-width="2.5"/>
+  <!-- post-spike gentle slope -->
+  <path d="M 418,150 L 500,140 L 600,125 L 700,112 L 820,100" fill="none" stroke="#f0b254" stroke-width="2.5"/>
+
+  <!-- screenshot marker at turn 75 (x=397, spike zone) -->
+  <line x1="397" y1="360" x2="397" y2="155" stroke="#f85149" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+  <circle cx="397" cy="258" r="5" fill="#f85149"/>
+  <text x="397" y="246" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#f85149">screenshot pasted</text>
+  <text x="397" y="232" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#f85149">turn 75 · 500KB</text>
+
+  <!-- cache rewrite marker at turn ~165 -->
+  <circle cx="745" cy="108" r="5" fill="#f0b254"/>
+  <text x="755" y="95" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#f0b254">cache rewrite</text>
+  <text x="755" y="80" font-family="ui-monospace, 'SF Mono', monospace" font-size="11" fill="#f0b254">176K tokens · $1.10</text>
+
+  <!-- annotation line between -->
+  <path d="M 397,258 Q 570,160 745,108" fill="none" stroke="#30363d" stroke-width="1" stroke-dasharray="2,4"/>
+
+  <!-- caption -->
+  <text x="450" y="415" text-anchor="middle" font-style="italic" font-size="14" fill="#8b949e">The image was cheap. What it did to the cache was not.</text>
+</svg>

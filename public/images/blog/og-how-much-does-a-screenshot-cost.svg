@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="ui-serif, 'Iowan Old Style', Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="goldNum" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0b254"/>
+      <stop offset="1" stop-color="#d18f2a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f0b254" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#f0b254" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="295" r="280" fill="url(#glow)"/>
+
+  <!-- kicker -->
+  <text x="600" y="130" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="16" letter-spacing="5" fill="#8b949e">O&#8239;N&#8239;E &#160;&#160; S&#8239;C&#8239;R&#8239;E&#8239;E&#8239;N&#8239;S&#8239;H&#8239;O&#8239;T</text>
+
+  <!-- hero number -->
+  <text x="600" y="380" text-anchor="middle" font-size="260" font-weight="700" fill="url(#goldNum)">$1.10</text>
+
+  <!-- subhead -->
+  <text x="600" y="470" text-anchor="middle" font-size="40" font-style="italic" fill="#c9d1d9">one hundred turns later.</text>
+
+  <!-- mechanism line -->
+  <text x="600" y="540" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="18" letter-spacing="1.5" fill="#6b7280">not&#8239; the&#8239; image&#8239; tokens &#160;·&#160; the&#8239; cache&#8239; rewrite&#8239; it&#8239; triggered</text>
+
+  <!-- brand -->
+  <text x="600" y="595" text-anchor="middle" font-family="ui-monospace, 'SF Mono', monospace" font-size="14" letter-spacing="3" fill="#4b5563">&#963;&#969;&#956;&#945; &#160;·&#160; M&#8239;E&#8239;E&#8239;T&#8239;S&#8239;O&#8239;M&#8239;A&#8239;.&#8239;A&#8239;I</text>
+</svg>
