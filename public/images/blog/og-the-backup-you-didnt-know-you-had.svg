@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="The backup you didn't know you had — redundancy as a side effect.">
+  <defs>
+    <radialGradient id="bg-g" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#131b28"/>
+      <stop offset="100%" stop-color="#070a10"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="20" cy="20" r="0.4" fill="#6494be" opacity="0.07"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- ═══ THREE FILE COPIES — one struck through, two surviving ═══ -->
+  <!-- The deleted one (faded, struck) -->
+  <g transform="translate(150, 240)">
+    <rect x="0" y="0" width="200" height="240" rx="10" fill="#1a2535" stroke="#30363d" stroke-width="1.5" opacity="0.4"/>
+    <path d="M 168 0 L 200 32 L 168 32 Z" fill="#0e1520" stroke="#30363d" stroke-width="1" opacity="0.4"/>
+    <text x="20" y="48" font-family="'SF Mono', monospace" font-size="11" fill="#6e7681" letter-spacing="2" opacity="0.5">REPO SOURCE</text>
+    <text x="20" y="135" font-family="Georgia, serif" font-size="22" fill="#6e7681" font-weight="600" opacity="0.6">soma-github</text>
+    <text x="20" y="160" font-family="'SF Mono', monospace" font-size="13" fill="#6e7681" opacity="0.5">v1.1.0</text>
+    <!-- Strikethrough -->
+    <line x1="-15" y1="125" x2="220" y2="155" stroke="#c84230" stroke-width="3" opacity="0.85"/>
+    <!-- "deleted" tag -->
+    <text x="100" y="220" text-anchor="middle" font-family="'SF Mono', monospace" font-size="11" fill="#c84230" letter-spacing="2" opacity="0.85">git checkout --</text>
+  </g>
+
+  <!-- Surviving copy 1 (full color) -->
+  <g transform="translate(490, 200)">
+    <rect x="0" y="0" width="220" height="260" rx="10" fill="#1a2a3e" stroke="#6494be" stroke-width="2"/>
+    <path d="M 188 0 L 220 32 L 188 32 Z" fill="#0e1c2e" stroke="#6494be" stroke-width="1.5"/>
+    <text x="22" y="50" font-family="'SF Mono', monospace" font-size="12" fill="#6494be" letter-spacing="2.5" font-weight="600">INSTALLED COPY</text>
+    <text x="22" y="145" font-family="Georgia, serif" font-size="24" fill="#e4eaf4" font-weight="600">soma-github</text>
+    <text x="22" y="170" font-family="'SF Mono', monospace" font-size="14" fill="#6494be">v1.1.0</text>
+    <text x="22" y="245" font-family="'SF Mono', monospace" font-size="11" fill="#6494be" letter-spacing="1.5" opacity="0.85">~/.soma/agent/scripts/</text>
+    <!-- Survived badge -->
+    <circle cx="190" cy="42" r="13" fill="#28c840" opacity="0.85"/>
+    <path d="M 184 42 L 188 46 L 196 38" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Surviving copy 2 (full color) -->
+  <g transform="translate(800, 240)">
+    <rect x="0" y="0" width="220" height="240" rx="10" fill="#1a2a3e" stroke="#6494be" stroke-width="2"/>
+    <path d="M 188 0 L 220 32 L 188 32 Z" fill="#0e1c2e" stroke="#6494be" stroke-width="1.5"/>
+    <text x="22" y="50" font-family="'SF Mono', monospace" font-size="12" fill="#6494be" letter-spacing="2.5" font-weight="600">SEEDED COPY</text>
+    <text x="22" y="135" font-family="Georgia, serif" font-size="24" fill="#e4eaf4" font-weight="600">soma-github</text>
+    <text x="22" y="160" font-family="'SF Mono', monospace" font-size="14" fill="#6494be">v1.1.0</text>
+    <text x="22" y="225" font-family="'SF Mono', monospace" font-size="11" fill="#6494be" letter-spacing="1.5" opacity="0.85">.soma/amps/scripts/</text>
+    <circle cx="190" cy="42" r="13" fill="#28c840" opacity="0.85"/>
+    <path d="M 184 42 L 188 46 L 196 38" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Connecting hint lines (survived) -->
+  <line x1="600" y1="180" x2="910" y2="220" stroke="#6494be" stroke-width="1" opacity="0.25" stroke-dasharray="4 6"/>
+
+  <!-- Hero text -->
+  <text x="600" y="100" text-anchor="middle" style="font-family: Georgia, serif; font-size: 64px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">The Backup You</text>
+  <text x="600" y="160" text-anchor="middle" style="font-family: Georgia, serif; font-size: 64px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -2px;">Didn't Know You Had.</text>
+
+  <!-- Bottom line -->
+  <text x="600" y="540" text-anchor="middle" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">Good distribution systems create redundancy you don't plan for.</text>
+
+  <!-- Brand -->
+  <line x1="60" y1="575" x2="520" y2="575" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="60" y="605" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="605" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 12px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

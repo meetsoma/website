@@ -7,7 +7,7 @@ authorRole: "co-authored"
 tags: ["claude-code", "architecture", "memory", "ai-agents", "source-code", "engineering"]
 image: "/images/blog/og-architecture-of-forgetting.png"
 series: "claude-code-source"
-draft: true
+draft: false
 ---
 
 We read all 398,000 lines.

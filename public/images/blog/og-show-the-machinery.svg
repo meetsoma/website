@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Show the machinery — Soma's identity is readable.">
+  <defs>
+    <radialGradient id="bg-g" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#0e1620"/>
+      <stop offset="100%" stop-color="#050810"/>
+    </radialGradient>
+    <!-- Mascot — but rendered in technical/wireframe style -->
+    <radialGradient id="body-faint" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#3a5570" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#2a3e54" stop-opacity="0.35"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+
+  <!-- Subtle blueprint grid -->
+  <pattern id="bp-grid" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+    <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#6494be" stroke-width="1" opacity="0.06"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#bp-grid)"/>
+
+  <!-- ═══ MASCOT — wireframe / X-ray version, centered right ═══ -->
+  <g transform="translate(640, 90) scale(0.72)">
+    <!-- Wireframe-only body (no fill, just stroke) -->
+    <circle cx="256" cy="280" r="148" fill="url(#body-faint)" stroke="#6494be" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.85"/>
+    <!-- Construction lines through center -->
+    <line x1="256" y1="100" x2="256" y2="460" stroke="#6494be" stroke-width="0.8" opacity="0.3" stroke-dasharray="2 4"/>
+    <line x1="76" y1="280" x2="436" y2="280" stroke="#6494be" stroke-width="0.8" opacity="0.3" stroke-dasharray="2 4"/>
+    <!-- Eyes — outlined -->
+    <circle cx="218" cy="262" r="28" fill="none" stroke="#c9d1d9" stroke-width="1.5"/>
+    <circle cx="294" cy="260" r="28" fill="none" stroke="#c9d1d9" stroke-width="1.5"/>
+    <circle cx="224" cy="258" r="14" fill="#c9d1d9" opacity="0.85"/>
+    <circle cx="300" cy="256" r="14" fill="#c9d1d9" opacity="0.85"/>
+    <!-- Smile (faint) -->
+    <path d="M240,310 Q258,324 276,310" fill="none" stroke="#c9d1d9" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    <!-- Moon — wireframe -->
+    <circle cx="374" cy="158" r="54" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.7"/>
+    <!-- Arms — wireframe -->
+    <circle cx="106" cy="284" r="34" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"/>
+    <circle cx="406" cy="284" r="34" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"/>
+    <!-- Legs - dashed boxes -->
+    <rect x="214" y="414" width="24" height="36" rx="12" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"/>
+    <rect x="276" y="414" width="24" height="36" rx="12" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"/>
+
+    <!-- ANNOTATION ARROWS pointing at body -->
+    <!-- arrow to "soul.md" -->
+    <line x1="40" y1="140" x2="180" y2="230" stroke="#f0883e" stroke-width="1.2" opacity="0.85" marker-end="url(#arrow)"/>
+    <text x="40" y="125" font-family="'SF Mono', monospace" font-size="15" fill="#f0883e" font-weight="600" letter-spacing="1.5">soul.md</text>
+    <text x="40" y="145" font-family="'SF Mono', monospace" font-size="11" fill="#c9d1d9" opacity="0.65">identity</text>
+
+    <!-- arrow to "voice.md" (mouth area) -->
+    <line x1="40" y1="500" x2="230" y2="330" stroke="#f0883e" stroke-width="1.2" opacity="0.85" marker-end="url(#arrow)"/>
+    <text x="40" y="520" font-family="'SF Mono', monospace" font-size="15" fill="#f0883e" font-weight="600" letter-spacing="1.5">voice.md</text>
+    <text x="40" y="540" font-family="'SF Mono', monospace" font-size="11" fill="#c9d1d9" opacity="0.65">how I sound</text>
+
+    <!-- arrow to "body.md" (legs) -->
+    <line x1="540" y1="500" x2="320" y2="430" stroke="#f0883e" stroke-width="1.2" opacity="0.85" marker-end="url(#arrow)"/>
+    <text x="540" y="520" font-family="'SF Mono', monospace" font-size="15" fill="#f0883e" font-weight="600" letter-spacing="1.5">body.md</text>
+    <text x="540" y="540" font-family="'SF Mono', monospace" font-size="11" fill="#c9d1d9" opacity="0.65">working context</text>
+
+    <!-- arrow to "journal.md" (moon — where she sees from) -->
+    <line x1="540" y1="125" x2="400" y2="165" stroke="#f0883e" stroke-width="1.2" opacity="0.85" marker-end="url(#arrow)"/>
+    <text x="540" y="110" font-family="'SF Mono', monospace" font-size="15" fill="#f0883e" font-weight="600" letter-spacing="1.5">journal.md</text>
+    <text x="540" y="130" font-family="'SF Mono', monospace" font-size="11" fill="#c9d1d9" opacity="0.65">what she noticed</text>
+  </g>
+
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#f0883e"/>
+    </marker>
+  </defs>
+
+  <!-- HERO TEXT — left, smaller because of annotations on right -->
+  <text x="60" y="120" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 8px; opacity: 0.7; font-weight: 600;">DESIGN PHILOSOPHY</text>
+
+  <text x="60" y="220" style="font-family: Georgia, serif; font-size: 86px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2.5px;">Show the</text>
+  <text x="60" y="310" style="font-family: Georgia, serif; font-size: 86px; fill: #f0883e; font-weight: 700; letter-spacing: -2.5px;">Machinery.</text>
+
+  <text x="60" y="380" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">Trust isn't built by promises.</text>
+  <text x="60" y="412" style="font-family: Georgia, serif; font-size: 22px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">It's built by legibility.</text>
+
+  <!-- Brand -->
+  <line x1="60" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="60" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

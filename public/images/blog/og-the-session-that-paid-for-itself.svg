@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="The session that paid for itself — 6% weekly budget, full release shipped.">
+  <defs>
+    <linearGradient id="bg-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e1622"/>
+      <stop offset="100%" stop-color="#060910"/>
+    </linearGradient>
+    <linearGradient id="bar-g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#28c840"/>
+      <stop offset="100%" stop-color="#6494be"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+
+  <!-- Supra label -->
+  <text x="600" y="100" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 12px; opacity: 0.7; font-weight: 600;">RELEASE ECONOMICS · v0.12.2</text>
+
+  <!-- ═══ HERO NUMBER — $79.29 ═══ -->
+  <text x="600" y="270" text-anchor="middle" style="font-family: Georgia, serif; font-size: 200px; fill: #e4eaf4; font-weight: 700; letter-spacing: -6px;">$79.<tspan fill="#28c840">29</tspan></text>
+
+  <!-- Tag underneath -->
+  <text x="600" y="320" text-anchor="middle" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #6494be; letter-spacing: 6px; opacity: 0.85;">FULL RELEASE · 2h 43m · 597 MESSAGES</text>
+
+  <!-- ═══ BUDGET BAR — visual proof "6% weekly" ═══ -->
+  <g transform="translate(160, 380)">
+    <text x="0" y="0" font-family="'SF Mono', monospace" font-size="13" fill="#6e7681" letter-spacing="3">WEEKLY BUDGET</text>
+    <!-- Background bar -->
+    <rect x="0" y="20" width="880" height="38" rx="6" fill="#1a2535"/>
+    <!-- Filled portion: 6% -->
+    <rect x="0" y="20" width="53" height="38" rx="6" fill="url(#bar-g)"/>
+    <!-- 6% label inside bar -->
+    <text x="62" y="46" font-family="'SF Mono', monospace" font-size="22" fill="#28c840" font-weight="700">6%</text>
+    <!-- 100% label at end -->
+    <text x="880" y="46" text-anchor="end" font-family="'SF Mono', monospace" font-size="14" fill="#6e7681" opacity="0.7">100%</text>
+  </g>
+
+  <!-- Hero line below bar -->
+  <text x="600" y="510" text-anchor="middle" style="font-family: Georgia, serif; font-size: 30px; fill: #e4eaf4; font-style: italic; font-weight: 400; letter-spacing: -0.5px;">Same dev. Same model. Different cache.</text>
+
+  <!-- Brand -->
+  <line x1="60" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="60" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="1145" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>
