@@ -5,35 +5,56 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 
-const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; blogPost?: string }[] = [
+// Each arc corresponds to a shipped milestone; the version + date give temporal
+// context so the same grid doubles as a history-at-a-glance. Order = newest first.
+const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string }[] = [
   {
     name: 'Children Control Panel + tmux',
     icon: 'automations',
-    description: 'Background delegation shipped for every user. `delegate(background:true)` spawns children in detached tmux sessions; `children list/tail/steer/kill/harvest` is the full control surface. tmux is the shipping baseline driver; attach-on-demand to watch a child work. cmux stays as dev-mode fallback.',
+    description: 'Background delegation for every user. `delegate(background:true)` spawns children in detached tmux sessions; `children list/tail/steer/kill/harvest` is the full control surface. Attach-on-demand via `tmux attach` to watch a child work. cmux stays as the dev-mode fallback.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.21.1',
+    date: '2026-04-22',
     blogPost: 'four-commands-after-an-update',
   },
   {
-    name: 'Identity & First Run',
+    name: 'Cache Economics',
     icon: 'protocols',
-    description: 'soul.md replaces SOMA.md. Minimal first-run boot -- the agent discovers through use instead of loading everything at once. 11 bundled scripts, extension allowlist, distribution tiers.',
+    description: 'Cached prompt prefix shrunk ~25% per boot. Recent Ancestry auto-injects the last three session-log entries so the next-self sees continuity without paying the cache cost. Declarative migration replay makes settings-backfill data-driven.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.21.0',
+    date: '2026-04-22',
   },
   {
-    name: 'Doctor & Migration',
+    name: 'Cache Stickiness',
     icon: 'protocols',
-    description: 'Project health check with auto-fix on boot. 13 migration phases from v0.6.1 to v0.11.0. Critical semver fix ensures upgrades actually run. Your customizations are never touched.',
+    description: 'Iterating on your setup is free. Reload your extensions as often as you want — your session’s cached memory stays warm, so there’s no dollar cost for rapid iteration. Body edits apply on your terms with a new `/rebuild` command.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.20.3',
+    date: '2026-04-20',
+    blogPost: 'why-your-claude-bill-spiked',
   },
   {
-    name: 'Image & Error Guard',
+    name: 'Model Switching & Opus 4.7',
+    icon: 'scripts',
+    description: '`soma model` command — switch default models from CLI with fuzzy matching. 23 providers, 842+ models. Claude Opus 4.7 with adaptive thinking. Smarter prompt caching — tool changes no longer invalidate your cache.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.20.0',
+    date: '2026-04-15',
+  },
+  {
+    name: 'Somaverse',
     icon: 'extensions',
-    description: 'Auto-strips old images when they accumulate. Human-readable API errors instead of raw JSON. Billing notices handled gracefully. Keepalive auto-pause on rate limits.',
-    status: 'Shipped',
+    description: 'Visual workspace at somaverse.ai — 33 plugins, 28 agent tools. `soma login` pairs your agent. Hub relay routes data through your machine, never stores it. Per-user isolation with Argon2 device keys. Your browser is the UI, your machine is the brain.',
+    status: 'Live',
     statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.12.0',
+    date: '2026-03-20',
+    blogPost: 'the-operating-system',
   },
   {
     name: 'Distribution Tiers',
@@ -41,36 +62,55 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     description: 'Free scripts ship readable. Pro scripts compile to protected JavaScript. Extensions obfuscated with auth-gate. Open-source pledge: core Soma stays open forever.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Somaverse',
-    icon: 'extensions',
-    description: 'Visual workspace at somaverse.ai — 33 plugins, 28 agent tools. soma login pairs your agent. Hub relay routes data through your machine, never stores it. Per-user isolation with Argon2 device keys. Your browser is the UI, your machine is the brain.',
-    status: 'Live',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Model Switching & Opus 4.7',
-    icon: 'scripts',
-    description: 'soma model command — switch default models from CLI with fuzzy matching. 23 providers, 842+ models. Claude Opus 4.7 with adaptive thinking. Smarter prompt caching — tool changes no longer invalidate your cache.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.12.0',
+    date: '2026-03-18',
+    blogPost: 'why-source-available',
   },
   {
     name: 'Shipping Integrity',
     icon: 'protocols',
-    description: 'Fresh `npm install -g meetsoma` now actually works (was broken since the npm/ reorg). Pi runtime is locked to the Soma version that tested it — no more silent drift. `soma update` actually updates; `soma init` is for projects. Periodic update nudge appears in the statusline so you see new releases within minutes of starting a session. Pre-publish smoke test prevents broken tarballs from shipping.',
+    description: 'Fresh `npm install -g meetsoma` now actually works. Pi runtime locked to the Soma version that tested it — no silent drift. `soma update` actually updates; `soma init` is for projects. Periodic update nudge in the statusline. Pre-publish smoke test prevents broken tarballs from shipping.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.11.4',
+    date: '2026-03-10',
   },
   {
-    name: 'Cache Stickiness',
+    name: 'Doctor & Migration',
     icon: 'protocols',
-    description: 'Iterating on your setup is free. Reload your extensions as often as you want — your session’s cached memory stays warm, so there’s no dollar cost for rapid iteration. Body edits apply on your terms with a new /rebuild command — run it to pick up changes mid-session, skip it and they land naturally on your next start. The statusline quietly tells you what each file change actually needs, so you never guess.',
+    description: 'Project health check with auto-fix on boot. Declarative migration phases from v0.6.1 onward. Critical semver fix ensures upgrades actually run. Your customizations are never touched.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.11.0',
+    date: '2026-03-01',
+    blogPost: 'the-doctor-that-never-worked',
+  },
+  {
+    name: 'Identity & First Run',
+    icon: 'protocols',
+    description: '`soul.md` replaces `SOMA.md`. Minimal first-run boot — the agent discovers through use instead of loading everything at once. 11 bundled scripts, extension allowlist, distribution tiers.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.10.0',
+    date: '2026-02-15',
+  },
+  {
+    name: 'Image & Error Guard',
+    icon: 'extensions',
+    description: 'Auto-strips old images when they accumulate. Human-readable API errors instead of raw JSON. Billing notices handled gracefully. Keepalive auto-pauses on rate limits.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.9.0',
+    date: '2026-02-01',
   },
 ];
+
+function formatDate(d?: string): string {
+  if (!d) return '';
+  const date = new Date(d);
+  if (Number.isNaN(+date)) return d;
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
 ---
 
 <Layout
@@ -92,7 +132,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
       <SectionHeader title="Recently Shipped" />
       <div class="upcoming-grid">
         {upcoming.map((feature, i) => (
-          <div class="feature-card" style={`animation-delay: ${i * 0.08}s`}>
+          <div class={`feature-card ${i === 0 ? 'feature-card--latest' : ''}`} style={`animation-delay: ${i * 0.08}s`}>
             <div class="feature-head">
               <span class="feature-icon"><Icon name={feature.icon as any} size={22} /></span>
               <h3 class="feature-name">{feature.name}</h3>
@@ -100,9 +140,17 @@ const upcoming: { name: string; icon: string; description: string; status: strin
                 {feature.status}
               </span>
             </div>
-            <p class="feature-desc">{feature.description}</p>
+            {(feature.version || feature.date) && (
+              <div class="feature-meta">
+                {feature.version && <span class="feature-version">{feature.version}</span>}
+                {feature.date && <span class="feature-date">{formatDate(feature.date)}</span>}
+              </div>
+            )}
+            <p class="feature-desc" set:html={feature.description} />
             {feature.blogPost && (
-              <a class="feature-link" href={`/blog/${feature.blogPost}`}>read the story →</a>
+              <a class="feature-link" href={`/blog/${feature.blogPost}`}>
+                <span class="feature-link-icon" aria-hidden="true">›</span> read the story
+              </a>
             )}
           </div>
         ))}
@@ -243,12 +291,39 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     backdrop-filter: blur(8px);
     transition: all 0.25s ease;
     animation: fadeUp 0.6s ease-out both;
+    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   .feature-card:hover {
     border-color: var(--border-accent);
     transform: translateY(-3px);
     box-shadow: 0 13px 34px var(--shadow-accent-soft);
+  }
+
+  /* Latest card — subtle accent ring so the eye lands on it first */
+  .feature-card--latest {
+    border-color: var(--border-accent, rgba(124, 178, 212, 0.3));
+    background: linear-gradient(
+      180deg,
+      rgba(124, 178, 212, 0.035) 0%,
+      var(--surface-card) 80%
+    );
+  }
+  .feature-card--latest::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--accent-bright, #7cb2d4) 50%,
+      transparent 100%
+    );
+    opacity: 0.7;
   }
 
   .feature-head {
@@ -286,24 +361,69 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     flex-shrink: 0;
   }
 
+  /* Version + date pill row, sits between head and description */
+  .feature-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: calc(-1 * var(--space-md)) 0 var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+  .feature-version {
+    color: var(--accent-bright, #7cb2d4);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .feature-date {
+    color: var(--text-tertiary, #6e7681);
+  }
+  .feature-date::before {
+    content: "·";
+    margin-right: var(--space-sm);
+    color: var(--text-tertiary, #6e7681);
+  }
+
   .feature-desc {
     font-family: var(--font-body);
     font-size: var(--body-text);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
     margin: 0 0 var(--space-md) 0;
+    flex-grow: 1;
+  }
+  .feature-desc :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    color: var(--text-primary);
+    padding: 0.1em 0.4em;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
   }
 
   .feature-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
     margin-top: auto;
+    padding-top: var(--space-sm);
     font-size: 0.88rem;
     color: var(--accent, #7cb2d4);
     text-decoration: none;
     font-weight: 500;
-    transition: opacity 0.15s;
+    transition: transform 0.2s ease, color 0.15s;
+    align-self: flex-start;
   }
-  .feature-link:hover { opacity: 0.75; }
+  .feature-link:hover {
+    color: var(--accent-bright, #8fc4e6);
+    transform: translateX(3px);
+  }
+  .feature-link-icon {
+    font-family: var(--font-mono);
+    font-size: 1.2em;
+    line-height: 1;
+    opacity: 0.7;
+  }
 
   /* ── Changelog Link ── */
   .changelog-link {
