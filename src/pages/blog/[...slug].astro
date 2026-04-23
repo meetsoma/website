@@ -75,7 +75,7 @@ const blogJsonLd = {
 
       <p class="article-lede">{post.data.description}</p>
 
-      <ListenToPost slug={post.id.replace(/\.mdx?$/, '')} />
+      <ListenToPost slug={post.id.replace(/\.mdx?$/, '')} title={post.data.title} />
 
       <div class="article-content">
         <Content />

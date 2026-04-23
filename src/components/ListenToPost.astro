@@ -1,100 +1,328 @@
 ---
 /**
- * ListenToPost — "narrated by Nova" audio player.
+ * ListenToPost — host component for the NovaPlayer island.
  *
- * Renders an <audio> element + caption if a matching MP3 exists at
- * `public/audio/blog/<slug>.mp3`. Otherwise renders nothing (graceful
- * fallback so posts without audio just look normal).
+ * Does build-time existence + size check; renders the Preact island
+ * (client:idle) only if the MP3 is present. Posts without audio render
+ * nothing (graceful fallback).
  *
  * Audio source of truth: meetsoma/media/blog/audio/<slug>.mp3
  * Generated via: meetsoma/media/tools/voice/render-blog.py <slug>
  * Synced via:    meetsoma/media/tools/voice/sync-audio.sh
  *
- * s01-8c5230 — initial.
+ * s01-8c5230 — initial (v2 with Preact island).
  */
 import { existsSync, statSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { resolve } from 'node:path';
+import NovaPlayer from './islands/NovaPlayer.tsx';
 
 export interface Props {
-  /** Blog post slug (filename without .md). */
   slug: string;
+  title: string;
 }
 
-const { slug } = Astro.props;
+const { slug, title } = Astro.props;
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-// components/ → src/ → repos/website/ → public/audio/blog/<slug>.mp3
-const audioPath = resolve(__dirname, '../../public/audio/blog', `${slug}.mp3`);
+// Build-time fs check. process.cwd() is the Astro project root (repos/website/).
+const audioPath = resolve(process.cwd(), 'public/audio/blog', `${slug}.mp3`);
 
 const hasAudio = existsSync(audioPath);
-let sizeKB: number | null = null;
+let sizeKB: number | undefined;
 if (hasAudio) {
-  try {
-    sizeKB = Math.round(statSync(audioPath).size / 1024);
-  } catch {
-    sizeKB = null;
-  }
+  try { sizeKB = Math.round(statSync(audioPath).size / 1024); } catch {}
 }
 
 const src = `/audio/blog/${slug}.mp3`;
 ---
 
 {hasAudio && (
-  <figure class="listen-to-post">
-    <figcaption class="listen-caption">
-      <span class="listen-label">🎧 Listen</span>
-      <span class="listen-by">narrated by Nova</span>
-      {sizeKB !== null && <span class="listen-size">· {sizeKB < 1024 ? `${sizeKB} KB` : `${(sizeKB/1024).toFixed(1)} MB`}</span>}
-    </figcaption>
-    <audio controls preload="none" src={src}>
-      <a href={src}>Download audio</a>
-    </audio>
-  </figure>
+  <div class="nova-player-host">
+    <NovaPlayer client:idle src={src} title={title} sizeKB={sizeKB} />
+  </div>
 )}
 
-<style>
-  .listen-to-post {
+<style is:global>
+  /* ── Host + card ───────────────────────────────────────────────── */
+  .nova-player-host {
     margin: 2rem 0 2.5rem;
-    padding: 1rem 1.25rem;
-    border: 1px solid rgba(100, 148, 190, 0.2);
-    border-radius: 10px;
-    background: rgba(20, 25, 34, 0.4);
-    backdrop-filter: blur(8px);
   }
 
-  .listen-caption {
+  .nova-player {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(100, 148, 190, 0.22);
+    border-radius: 14px;
+    background:
+      radial-gradient(circle at 0% 0%, rgba(124, 178, 212, 0.08) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(20, 25, 34, 0.55) 0%, rgba(13, 17, 23, 0.55) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+  .nova-player.is-playing {
+    border-color: rgba(240, 136, 62, 0.35);
+    box-shadow:
+      0 0 0 1px rgba(240, 136, 62, 0.05),
+      0 8px 32px -12px rgba(100, 148, 190, 0.25);
+  }
+
+  /* Thin orange accent bar on the left edge when playing */
+  .nova-player::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 15%;
+    width: 2px; height: 70%;
+    background: linear-gradient(180deg, transparent, #f0883e, transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 2px;
+  }
+  .nova-player.is-playing::before { opacity: 0.9; }
+
+  /* ── σ mark button ─────────────────────────────────────────────── */
+  .nova-play-btn {
+    width: 64px; height: 64px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+  }
+  .nova-play-btn:hover { transform: scale(1.04); }
+  .nova-play-btn:active { transform: scale(0.97); }
+  .nova-play-btn:focus-visible {
+    outline: 2px solid #7cb2d4;
+    outline-offset: 4px;
+  }
+  .nova-play-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+
+  .nova-mark { width: 64px; height: 64px; }
+
+  /* Breathing halo when paused — tied to Soma's breath cycle
+     (slow 4s cycle, inhale–hold–exhale). Steady on play. */
+  .nova-mark-halo {
+    transform-origin: center;
+    animation: nova-breathe 4s ease-in-out infinite;
+  }
+  .is-playing .nova-mark-halo {
+    animation: nova-breathe 1.6s ease-in-out infinite;
+  }
+  @keyframes nova-breathe {
+    0%, 100% { opacity: 0.35; transform: scale(0.92); }
+    50%      { opacity: 0.85; transform: scale(1.04); }
+  }
+
+  .nova-mark-ring {
+    transform-origin: center;
+    transition: stroke 0.3s ease;
+  }
+  .is-playing .nova-mark-ring { stroke: #f0883e; }
+
+  /* Subtle bars pulse while playing */
+  .nova-mark-bars rect {
+    transform-origin: center bottom;
+    animation: nova-bar 1.2s ease-in-out infinite;
+  }
+  .nova-mark-bars rect:nth-of-type(2) {
+    animation-delay: -0.6s;
+    animation-duration: 0.9s;
+  }
+  @keyframes nova-bar {
+    0%, 100% { transform: scaleY(0.55); }
+    50%      { transform: scaleY(1.0); }
+  }
+
+  /* ── Body (labels + rail + meta) ───────────────────────────────── */
+  .nova-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-width: 0;
+  }
+
+  .nova-labels {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .nova-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7cb2d4;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .nova-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #7cb2d4;
+    box-shadow: 0 0 6px rgba(124, 178, 212, 0.6);
+    animation: nova-breathe 4s ease-in-out infinite;
+  }
+  .is-playing .nova-dot {
+    background: #f0883e;
+    box-shadow: 0 0 8px rgba(240, 136, 62, 0.8);
+    animation-duration: 1.6s;
+  }
+  .nova-title {
+    font-size: 0.875rem;
+    color: #c9d1d9;
+    font-style: italic;
+    opacity: 0.85;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    flex: 1;
+  }
+
+  /* Progress rail */
+  .nova-rail {
+    position: relative;
+    height: 4px;
+    background: rgba(100, 148, 190, 0.18);
+    border-radius: 2px;
+    cursor: pointer;
+    touch-action: none;
+  }
+  .nova-rail:focus-visible {
+    outline: 2px solid #7cb2d4;
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+  .nova-rail-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: linear-gradient(90deg, #6494be, #f0883e);
+    border-radius: 2px;
+    transition: width 0.1s linear;
+  }
+  .nova-rail-head {
+    position: absolute;
+    top: 50%;
+    width: 10px; height: 10px;
+    margin: -5px 0 0 -5px;
+    border-radius: 50%;
+    background: #c9d1d9;
+    box-shadow: 0 0 0 2px rgba(13, 17, 23, 0.9);
+    opacity: 0;
+    transition: opacity 0.2s ease, left 0.1s linear;
+  }
+  .nova-player:hover .nova-rail-head,
+  .is-playing .nova-rail-head { opacity: 1; }
+
+  /* Time + controls row */
+  .nova-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    font-size: 0.75rem;
+    color: #9dafc4;
+  }
+  .nova-time { font-variant-numeric: tabular-nums; }
+  .nova-time-sep { opacity: 0.4; }
+  .nova-time-total { color: #647080; }
+
+  .nova-controls {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 0.75rem;
-    font-size: 0.875rem;
-    font-family: 'SF Mono', ui-monospace, monospace;
-    color: #9dafc4;
   }
-
-  .listen-label {
-    color: #7cb2d4;
-    font-weight: 600;
-  }
-
-  .listen-by {
+  .nova-speed {
+    font-family: inherit;
+    font-size: 0.75rem;
     color: #c9d1d9;
-    font-style: italic;
+    background: rgba(100, 148, 190, 0.12);
+    border: 1px solid rgba(100, 148, 190, 0.2);
+    border-radius: 999px;
+    padding: 2px 10px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    font-variant-numeric: tabular-nums;
+    min-width: 46px;
+  }
+  .nova-speed:hover {
+    background: rgba(124, 178, 212, 0.2);
+    border-color: rgba(124, 178, 212, 0.4);
+  }
+  .nova-speed:focus-visible {
+    outline: 2px solid #7cb2d4;
+    outline-offset: 2px;
   }
 
-  .listen-size {
-    color: #647080;
-    font-size: 0.8125rem;
+  .nova-download {
+    display: grid;
+    place-items: center;
+    width: 26px; height: 26px;
+    color: #9dafc4;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .nova-download:hover {
+    color: #7cb2d4;
+    background: rgba(124, 178, 212, 0.1);
+  }
+  .nova-download:focus-visible {
+    outline: 2px solid #7cb2d4;
+    outline-offset: 2px;
   }
 
-  .listen-to-post audio {
-    width: 100%;
-    height: 36px;
+  .nova-error {
+    color: #f0883e;
+    font-size: 0.75rem;
+    font-family: 'SF Mono', ui-monospace, monospace;
+    margin-top: 0.25rem;
   }
 
-  /* Style the native audio controls on WebKit — at least the outer shell */
-  .listen-to-post audio::-webkit-media-controls-panel {
-    background: rgba(13, 17, 23, 0.8);
+  /* Loading skeleton */
+  .nova-player.is-loading .nova-time-total { opacity: 0.4; }
+
+  /* ── Mobile ────────────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .nova-player {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+    }
+    .nova-play-btn {
+      width: 56px;
+      height: 56px;
+      justify-self: start;
+    }
+    .nova-mark { width: 56px; height: 56px; }
+    .nova-labels { gap: 0.35rem; flex-direction: column; align-items: flex-start; }
+    .nova-title {
+      white-space: normal;
+      font-size: 0.8125rem;
+      line-height: 1.3;
+    }
+    .nova-meta { flex-wrap: wrap; }
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .nova-mark-halo,
+    .nova-mark-bars rect,
+    .nova-dot {
+      animation: none !important;
+    }
   }
 </style>
