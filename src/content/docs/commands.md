@@ -235,6 +235,14 @@ When screenshots accumulate in a session, the JSONL file grows large (10-20MB) a
 | `soma children watch [N]` | Flicker-free monitor dashboard, refresh every N seconds (default 2). Ctrl+C to stop. |
 | `soma children tail <id>` | Tail a specific child's pane. |
 | `soma children kill <id>` | Terminate a child. |
+| `soma terminals list` | Show all terminal drivers with availability (tmux, cmux). |
+| `soma terminals detect` | Same as list + recommended driver for this machine. |
+| `soma terminals status` | Current configured driver (from `~/.soma/settings.json`). |
+| `soma terminals prefer <driver>` | Persist driver preference to settings.json. |
+| `soma terminals setup [<driver>]` | Walkthrough install + configure. No arg = detect first. |
+| `soma terminals doctor [<driver>]` | Diagnose why a driver isn't working + suggest fixes. |
+| `soma model-sync` | Audit `defaultModel` across global + project scopes. Read-only without `--set`. |
+| `soma model-sync --set <id> [--crawl] [--yes]` | Set `defaultModel` at global + current project (and optionally all crawled `.soma/` dirs). `--yes` skips confirmation. |
 
 ### Installing More Scripts
 

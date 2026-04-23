@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="ui-sans-serif, 'SF Pro Text', 'Helvetica Neue', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="terminal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2128"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- subtle grid -->
+  <g stroke="#30363d" stroke-width="0.5" opacity="0.25">
+    <line x1="0" y1="105" x2="1200" y2="105"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="525" x2="1200" y2="525"/>
+  </g>
+
+  <!-- Terminal window -->
+  <g transform="translate(80, 130)">
+    <rect x="0" y="0" width="1040" height="420" rx="12" fill="url(#terminal)" stroke="#30363d" stroke-width="1"/>
+
+    <!-- chrome -->
+    <circle cx="28" cy="28" r="7" fill="#ff5f56"/>
+    <circle cx="52" cy="28" r="7" fill="#ffbd2e"/>
+    <circle cx="76" cy="28" r="7" fill="#27c93f"/>
+    <text x="520" y="34" text-anchor="middle" fill="#6e7681" font-size="14" font-family="ui-monospace, Menlo, monospace">σ  soma</text>
+
+    <line x1="0" y1="56" x2="1040" y2="56" stroke="#30363d"/>
+
+    <!-- Command lines -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22">
+      <text x="30" y="110" fill="#6e7681">$</text>
+      <text x="54" y="110" fill="#c9d1d9">npm install -g </text>
+      <text x="248" y="110" fill="#d2a8ff">meetsoma@latest</text>
+      <text x="448" y="110" fill="#6e7681"> &amp;&amp; </text>
+      <text x="498" y="110" fill="#7ee787">soma</text>
+      <text x="554" y="110" fill="#c9d1d9">update</text>
+
+      <text x="30" y="180" fill="#6e7681">$</text>
+      <text x="54" y="180" fill="#7ee787">soma</text>
+      <text x="112" y="180" fill="#c9d1d9">doctor</text>
+
+      <text x="30" y="250" fill="#6e7681">$</text>
+      <text x="54" y="250" fill="#7ee787">soma</text>
+      <text x="112" y="250" fill="#c9d1d9">model-sync</text>
+      <text x="260" y="250" fill="#79c0ff">--set</text>
+      <text x="328" y="250" fill="#d2a8ff">claude-opus-4-7</text>
+      <text x="540" y="250" fill="#79c0ff">--crawl --yes</text>
+
+      <text x="30" y="320" fill="#6e7681">$</text>
+      <text x="54" y="320" fill="#7ee787">soma</text>
+      <text x="112" y="320" fill="#c9d1d9">terminals</text>
+      <text x="244" y="320" fill="#c9d1d9">prefer</text>
+      <text x="328" y="320" fill="#d2a8ff">tmux</text>
+    </g>
+
+    <line x1="30" y1="355" x2="1010" y2="355" stroke="#30363d"/>
+    <text x="30" y="390" fill="#8b949e" font-size="17" font-family="ui-monospace, Menlo, monospace">
+      four lines. every project on the latest.
+    </text>
+  </g>
+
+  <!-- Top label -->
+  <text x="80" y="80" fill="#c9d1d9" font-size="34" font-weight="600" letter-spacing="-0.01em">
+    After the update
+  </text>
+  <text x="80" y="112" fill="#8b949e" font-size="17">
+    a walkthrough — σ soma
+  </text>
+
+  <!-- Brand -->
+  <text x="1120" y="600" text-anchor="end" fill="#6e7681" font-size="14" font-family="ui-monospace, Menlo, monospace">
+    meetsoma.ai
+  </text>
+</svg>

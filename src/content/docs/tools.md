@@ -121,8 +121,8 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 
 | Tool | Extension | Purpose |
 |---|---|---|
-| `delegate` | `soma-delegate.ts` | Spawn a focused child agent for a bounded task. **Hardwired.** |
-| `children` | `soma-delegate.ts` | Inspect/manage background children spawned via `delegate(background:true)`. |
+| `delegate` | `soma-delegate.ts` | Spawn a focused child agent for a bounded task. Synchronous by default; set `background:true` for a detached terminal session. **Hardwired.** See [guides/background-delegation.md](guides/background-delegation.md). |
+| `children` | `soma-delegate.ts` | Inspect/manage background children spawned via `delegate(background:true)`. Ops: `list` / `tail` / `steer` / `kill` / `harvest`. See [guides/background-delegation.md](guides/background-delegation.md). |
 | `capabilities` | `soma-capabilities.ts` | Introspect the tool registry. `op:'list'` — all tools; `op:'detail', name:'<tool>'` — full guidance. |
 | `code_find` | `soma-code-tools.ts` | Grep with `file:line` output. Respects `.gitignore`. |
 | `code_map` | `soma-code-tools.ts` | Function/class/method index for one file (TS/JS/CSS/Bash). |
