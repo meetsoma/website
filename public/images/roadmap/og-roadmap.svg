@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Soma roadmap — where it's going. Where it's been.">
+  <defs>
+    <radialGradient id="bg-glow" cx="55%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#182030"/>
+      <stop offset="100%" stop-color="#0b0f15"/>
+    </radialGradient>
+    <radialGradient id="body-g" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#6898be"/>
+      <stop offset="50%" stop-color="#5282a8"/>
+      <stop offset="100%" stop-color="#3e6c92"/>
+    </radialGradient>
+    <radialGradient id="spec-g" cx="28%" cy="24%" r="16%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="moon-g" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#7cb2d4"/>
+      <stop offset="50%" stop-color="#669cc0"/>
+      <stop offset="100%" stop-color="#5086aa"/>
+    </radialGradient>
+    <radialGradient id="moon-spec-g" cx="28%" cy="24%" r="18%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-glow)"/>
+  <pattern id="dots" x="0" y="0" width="34" height="34" patternUnits="userSpaceOnUse">
+    <circle cx="17" cy="17" r="0.4" fill="#6494be" opacity="0.08"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- ═══ TRAJECTORY — faint arc suggesting direction, upper-right ═══ -->
+  <!-- Starts low-left behind mascot, curves up past the moon -->
+  <path d="M 560 420 Q 780 200 1020 40"
+        fill="none" stroke="#6494be" stroke-width="1.2" opacity="0.25"
+        stroke-dasharray="3 8" stroke-linecap="round"/>
+  <!-- Tiny arrowhead at trajectory end -->
+  <g transform="translate(1020, 40) rotate(-28)" opacity="0.4">
+    <path d="M 0 0 L -10 3 M 0 0 L -10 -3" fill="none" stroke="#6494be" stroke-width="1.4" stroke-linecap="round"/>
+  </g>
+
+  <!-- ═══ MASCOT — right, looking upper-right (moon is the trajectory endpoint) ═══ -->
+  <g transform="translate(580, 45) scale(1.85)">
+    <!-- Planet body -->
+    <circle cx="190" cy="175" r="130" fill="url(#body-g)"/>
+    <circle cx="190" cy="175" r="130" fill="url(#spec-g)"/>
+
+    <!-- Sunglasses — nudged slightly up-right to suggest gaze direction -->
+    <rect x="108" y="138" width="78" height="48" rx="10" fill="#0e1a26" stroke="#080f18" stroke-width="3"/>
+    <rect x="198" y="136" width="78" height="48" rx="10" fill="#0e1a26" stroke="#080f18" stroke-width="3"/>
+    <path d="M186,160 Q193,148 198,160" fill="none" stroke="#080f18" stroke-width="4"/>
+    <line x1="108" y1="157" x2="68" y2="147" stroke="#080f18" stroke-width="4" stroke-linecap="round"/>
+    <line x1="276" y1="155" x2="311" y2="145" stroke="#080f18" stroke-width="4" stroke-linecap="round"/>
+    <rect x="116" y="145" width="22" height="10" rx="4" fill="white" opacity="0.06"/>
+    <rect x="206" y="143" width="22" height="10" rx="4" fill="white" opacity="0.06"/>
+
+    <!-- Smirk — slightly lifted right corner (anticipation) -->
+    <path d="M158,222 Q190,248 234,210" fill="none" stroke="white" stroke-width="5.5" stroke-linecap="round" opacity="0.55"/>
+
+    <!-- Moon with tiny shades — the "next" -->
+    <circle cx="302" cy="50" r="50" fill="url(#moon-g)"/>
+    <circle cx="302" cy="50" r="50" fill="url(#moon-spec-g)"/>
+    <rect x="278" y="40" width="22" height="16" rx="4" fill="#0e1a26" stroke="#080f18" stroke-width="1.5"/>
+    <rect x="304" y="39" width="22" height="16" rx="4" fill="#0e1a26" stroke="#080f18" stroke-width="1.5"/>
+    <path d="M300,47 Q302,43 304,47" fill="none" stroke="#080f18" stroke-width="2"/>
+    <line x1="278" y1="47" x2="265" y2="43" stroke="#080f18" stroke-width="2" stroke-linecap="round"/>
+    <line x1="326" y1="46" x2="338" y2="42" stroke="#080f18" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- ═══ SUPRA LABEL — "roadmap" top left ═══ -->
+  <text x="60" y="80" style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 18px; fill: #6494be; letter-spacing: 4px; opacity: 0.7; font-weight: 600;">ROADMAP</text>
+
+  <!-- ═══ MAIN TEXT — Georgia serif ═══ -->
+  <!-- Two-line couplet — first line neutral, second accent (orange) -->
+  <text x="55" y="240" style="font-family: Georgia, 'Times New Roman', serif; font-size: 86px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">Where it’s going.</text>
+  <text x="55" y="350" style="font-family: Georgia, 'Times New Roman', serif; font-size: 86px; fill: #f0883e; font-weight: 700; letter-spacing: -2px;">Where it’s been.</text>
+
+  <!-- Sub-line — version trail, hints at real history + real forward motion -->
+  <text x="58" y="420" style="font-family: 'SF Mono', monospace; font-size: 17px; fill: #6494be; opacity: 0.65; letter-spacing: 1px;">v0.12  →  v0.21.1.1  →</text>
+
+  <!-- ═══ BRAND BAR ═══ -->
+  <line x1="55" y1="565" x2="520" y2="565" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="55" y="597" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; opacity: 0.65; letter-spacing: 3px;">SOMA</text>
+  <text x="520" y="597" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>
