@@ -1,3 +1,10 @@
+---
+title: "Background delegation"
+description: "Spawn Soma child agents that work in the background while you (or the parent Soma) keep going."
+section: "Guide"
+order: 29
+---
+
 # Background delegation
 
 *How to spawn Soma child agents that work in the background while you (or the parent Soma) keep going.*

@@ -3,13 +3,13 @@ name: plan-lifecycle
 type: muscle
 status: active
 description: "end-to-end flow from idea to shipped to consolidated. (1) **Idea** → capture in `docs/ideas/`, link from kanban. (2) **Revise** → read against current state, strip what's done/stale, extract survi"
-heat: 15
+heat: 0
 triggers: [plan, idea, pre-flight, kanban, preload, consolidation, lifecycle, planning, execution, preloads]
 applies-to: [any]
 created: 2026-03-14
-updated: 2026-04-12
+updated: 2026-04-22
 tools: [soma-plans.sh]
-loads: 64
+loads: 0
 seams: [s01-3498d3]
 version: 1.0.0
 author: meetsoma

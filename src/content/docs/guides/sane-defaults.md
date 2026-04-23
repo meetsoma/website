@@ -1,3 +1,10 @@
+---
+title: "Sane defaults"
+description: "Three commands that set up Soma the way most people want it — model, terminal driver, project structure — without per-project hand-editing."
+section: "Guide"
+order: 30
+---
+
 # Sane defaults
 
 *Three commands that set up Soma the way most people want it, without you having to think about terminal vs TUI, global vs project, or which Opus is the latest.*

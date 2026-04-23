@@ -3,12 +3,12 @@ name: safe-file-ops
 type: muscle
 status: active
 description: "Safe file operations — read before write, verify after edit, never delete without scanning dependencies."
-heat: 4
+heat: 0
 triggers: [write, delete, file-ops, overwrite, safety, file-operations, read, edit, archive, backup, guard, replace, sed, surgical, precise, oldtext, match, whitespace, precision]
 tags: [safety, files, editing, guard, precision]
 applies-to: [any]
 created: 2026-03-10
-updated: 2026-04-12
+updated: 2026-04-22
 tools: [soma-refactor.sh, soma-code.sh, soma-verify.sh]
 version: 1.0.0
 author: meetsoma

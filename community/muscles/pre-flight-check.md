@@ -3,13 +3,13 @@ name: pre-flight-check
 type: muscle
 status: active
 description: ""we already have X, want to extend it?" This is how senior engineers prevent duplication. Execute requests thoughtfully, not reflexively."
-heat: 15
+heat: 0
 triggers: [exists, duplicate, already, check, prior-art, awareness, quality, meta]
 applies-to: [any]
 created: 2026-03-12
-updated: 2026-04-12
+updated: 2026-04-22
 tools: [soma-verify.sh, soma-plans.sh]
-loads: 35
+loads: 0
 seams: [s01-3498d3]
 version: 1.0.0
 author: meetsoma

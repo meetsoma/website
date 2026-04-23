@@ -4,7 +4,7 @@ type: muscle
 status: active
 version: 1.0.0
 description: "Structured reflection technique for AI agents — surface connections the tactical mind misses by tracing concepts through memory, then retracing backwards with new perception."
-heat: 5
+heat: 0
 triggers: [reflect, mlr, exhale, preload, context, memory, recall, reflection, thought, seams, patterns, brainstorm, deep-context, introspection]
 applies-to: [any]
 tier: official
@@ -12,7 +12,7 @@ author: meetsoma
 license: MIT
 tags: [reflection, memory, patterns, introspection, preload]
 created: 2026-03-16
-updated: 2026-04-12
+updated: 2026-04-22
 tools: [soma-seam.sh, soma-reflect.sh]
 heat-default: warm
 ---

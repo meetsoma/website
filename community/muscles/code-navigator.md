@@ -3,12 +3,12 @@ name: code-navigator
 type: muscle
 status: active
 description: "soma-code.sh — 11 commands for codebase navigation. map before editing, refs before renaming, find before grep."
-heat: 15
+heat: 0
 triggers: [find, map, refs, structure, grep, navigate, codebase, navigation, search, tsc-errors, css-vars]
 tags: [tooling, search, refactor, shell]
 applies-to: [any]
 created: 2026-03-15
-updated: 2026-04-12
+updated: 2026-04-22
 tools: [soma-code.sh]
 related: [incremental-refactor, task-tooling]
 version: 1.0.0
