@@ -10,7 +10,7 @@ import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 // hero carousel (one card at a time). The full history lives in the timeline
 // island below this section, so the carousel stays focused on the standout
 // stories, not comprehensive coverage.
-const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string }[] = [
+const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string; image?: string }[] = [
   {
     name: 'Children Control Panel + tmux',
     icon: 'automations',
@@ -20,6 +20,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     version: 'v0.21.1',
     date: '2026-04-22',
     blogPost: 'four-commands-after-an-update',
+    image: '/images/blog/og-four-commands-after-an-update.svg',
   },
   {
     name: 'Cache Economics',
@@ -29,6 +30,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     statusColor: 'var(--green-bright, #4ade80)',
     version: 'v0.21.0',
     date: '2026-04-22',
+    image: '/images/blog/og-cache-and-self-knowing-agent.svg',
   },
   {
     name: 'Cache Stickiness',
@@ -39,6 +41,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     version: 'v0.20.3',
     date: '2026-04-20',
     blogPost: 'why-your-claude-bill-spiked',
+    image: '/images/blog/og-cache-costs.svg',
   },
   {
     name: 'Model Switching & Opus 4.7',
@@ -58,6 +61,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     version: 'v0.12.0',
     date: '2026-03-20',
     blogPost: 'the-operating-system',
+    image: '/images/blog/og-the-operating-system.svg',
   },
   {
     name: 'Doctor & Migration',
@@ -68,6 +72,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     version: 'v0.11.0',
     date: '2026-03-01',
     blogPost: 'the-doctor-that-never-worked',
+    image: '/images/blog/og-the-doctor-that-never-worked.svg',
   },
 ];
 
@@ -130,6 +135,18 @@ function formatDate(d?: string): string {
                 <span class="hero-watermark" aria-hidden="true">{feature.version}</span>
               )}
 
+              {/* Decorative art layer — OG image from the related blog post, */}
+              {/* clipped + faded so it tints the background without competing. */}
+              {feature.image && (
+                <img
+                  class="hero-art"
+                  src={feature.image}
+                  alt=""
+                  loading="lazy"
+                  aria-hidden="true"
+                />
+              )}
+
               <div class="hero-content">
                 <div class="hero-head">
                   <span class="hero-icon"><Icon name={feature.icon as any} size={28} /></span>
@@ -137,6 +154,10 @@ function formatDate(d?: string): string {
                     {feature.version && <span class="hero-version">{feature.version}</span>}
                     {feature.date && <span class="hero-date">{formatDate(feature.date)}</span>}
                   </div>
+                </div>
+
+                <div class="hero-titlebar">
+                  <h3 class="hero-title">{feature.name}</h3>
                   <span
                     class="hero-status"
                     style={`color: ${feature.statusColor}; border-color: ${feature.statusColor}`}
@@ -145,7 +166,6 @@ function formatDate(d?: string): string {
                   </span>
                 </div>
 
-                <h3 class="hero-title">{feature.name}</h3>
                 <p class="hero-desc" set:html={feature.description} />
 
                 {feature.blogPost && (
@@ -159,7 +179,7 @@ function formatDate(d?: string): string {
           ))}
         </div>
 
-        <!-- Dot indicators + progress bar -->
+        <!-- Dot indicators -->
         <div class="hero-controls">
           <div class="hero-dots" role="tablist" aria-label="Select feature">
             {upcoming.map((feature, i) => (
@@ -173,9 +193,6 @@ function formatDate(d?: string): string {
               ></button>
             ))}
           </div>
-          <div class="hero-progress" aria-hidden="true">
-            <div class="hero-progress-bar" data-carousel-progress></div>
-          </div>
         </div>
       </div>
     </section>
@@ -187,14 +204,13 @@ function formatDate(d?: string): string {
       // Accessible: prev/next buttons, dot tabs, ArrowLeft/ArrowRight keys
       // (when carousel is focused-within), aria-hidden on non-active slides.
       (function () {
-        const ADVANCE_MS = 7000;
+        const ADVANCE_MS = 9000;
         const carousel = document.querySelector('[data-carousel]') as HTMLElement | null;
         if (!carousel) return;
 
         const slides = Array.from(carousel.querySelectorAll<HTMLElement>('[data-carousel-slide]'));
         const dots = Array.from(carousel.querySelectorAll<HTMLElement>('[data-carousel-dot]'));
         const indexEl = carousel.querySelector<HTMLElement>('[data-carousel-index]');
-        const progressEl = carousel.querySelector<HTMLElement>('[data-carousel-progress]');
         const prevBtn = carousel.querySelector<HTMLElement>('[data-carousel-prev]');
         const nextBtn = carousel.querySelector<HTMLElement>('[data-carousel-next]');
         const count = slides.length;
@@ -215,17 +231,6 @@ function formatDate(d?: string): string {
             d.setAttribute('aria-selected', idx === current ? 'true' : 'false');
           });
           if (indexEl) indexEl.textContent = String(current + 1);
-          restartProgress();
-        }
-
-        function restartProgress() {
-          if (!progressEl) return;
-          progressEl.style.transition = 'none';
-          progressEl.style.width = '0%';
-          // Force reflow so the transition restarts cleanly
-          void progressEl.offsetWidth;
-          progressEl.style.transition = `width ${ADVANCE_MS}ms linear`;
-          progressEl.style.width = paused ? progressEl.style.width : '100%';
         }
 
         function schedule() {
@@ -233,7 +238,6 @@ function formatDate(d?: string): string {
           timer = window.setInterval(() => {
             if (!paused) setActive(current + 1);
           }, ADVANCE_MS);
-          restartProgress();
         }
 
         // ── Events ────────────────────────────────────────────────────
@@ -254,18 +258,8 @@ function formatDate(d?: string): string {
         });
 
         // Pause on hover/focus, resume on leave/blur
-        carousel.addEventListener('pointerenter', () => {
-          paused = true;
-          if (progressEl) {
-            const computed = getComputedStyle(progressEl);
-            progressEl.style.width = computed.width;
-            progressEl.style.transition = 'none';
-          }
-        });
-        carousel.addEventListener('pointerleave', () => {
-          paused = false;
-          restartProgress();
-        });
+        carousel.addEventListener('pointerenter', () => { paused = true; });
+        carousel.addEventListener('pointerleave', () => { paused = false; });
 
         // Keyboard nav when the carousel or any of its children has focus
         carousel.addEventListener('keydown', (e) => {
@@ -275,8 +269,7 @@ function formatDate(d?: string): string {
 
         // Pause when the tab goes hidden (no background burn)
         document.addEventListener('visibilitychange', () => {
-          if (document.hidden) paused = true;
-          else { paused = false; restartProgress(); }
+          paused = document.hidden;
         });
 
         setActive(0);
@@ -515,6 +508,43 @@ function formatDate(d?: string): string {
     z-index: 0;
   }
 
+  /* Decorative art layer — pulled from the related blog's OG image.
+   * Sits on top of the version watermark but under the content. Fades
+   * via a linear gradient mask so the text never has to compete. */
+  .hero-art {
+    position: absolute;
+    top: 50%;
+    right: -6%;
+    transform: translateY(-50%);
+    width: 58%;
+    max-width: 680px;
+    height: auto;
+    opacity: 0.22;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      black 35%,
+      black 85%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      black 35%,
+      black 85%,
+      transparent 100%
+    );
+    filter: saturate(0.85) contrast(1.05);
+    animation: artDrift 22s ease-in-out infinite;
+  }
+  @keyframes artDrift {
+    0%, 100% { transform: translate(0, -50%); }
+    50%      { transform: translate(-1%, -51%); }
+  }
+
   .hero-content {
     position: relative;
     z-index: 1;
@@ -543,6 +573,14 @@ function formatDate(d?: string): string {
     gap: var(--space-sm);
     flex: 1;
     font-family: var(--font-mono);
+  }
+
+  /* Title + status pill on one line — pill sits flush-right of the title */
+  .hero-titlebar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
   }
   .hero-version {
     font-size: 0.95rem;
@@ -580,6 +618,9 @@ function formatDate(d?: string): string {
     margin: 0;
     line-height: var(--leading-tight);
     letter-spacing: -0.015em;
+  }
+  .hero-titlebar .hero-status {
+    align-self: center;
   }
 
   .hero-desc {
@@ -656,31 +697,14 @@ function formatDate(d?: string): string {
     border-radius: 4px;
   }
 
-  .hero-progress {
-    height: 2px;
-    background: var(--border-subtle, #30363d);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .hero-progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(
-      90deg,
-      var(--accent, #7cb2d4) 0%,
-      var(--accent-bright, #8fc4e6) 100%
-    );
-    border-radius: 2px;
-  }
-
   /* Respect reduced-motion preferences */
   @media (prefers-reduced-motion: reduce) {
     .hero-slide {
       transition: opacity 0.1s linear;
       transform: none !important;
     }
-    .hero-progress-bar {
-      transition: none !important;
+    .hero-art {
+      animation: none !important;
     }
   }
 
@@ -700,6 +724,15 @@ function formatDate(d?: string): string {
     .hero-meta {
       flex: 1 0 100%;
       order: 3;
+    }
+    /* On narrow screens the OG image would compete with text — scale way down */
+    .hero-art {
+      width: 80%;
+      right: -15%;
+      opacity: 0.12;
+    }
+    .hero-titlebar {
+      gap: 0.65rem;
     }
   }
 
