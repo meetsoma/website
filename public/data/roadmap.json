@@ -31,7 +31,9 @@
           "Unused shEscape helper removed; import order tidied on two files.",
           "`.gitignore` now excludes `__pycache__/` + `*.pyc` — an accidentally-tracked `.pyc` file in v0.21.1 dev commits confirmed not to have shipped to users (release-ignore filtered)."
         ]
-      }
+      },
+      "blogPost": "four-commands-after-an-update",
+      "tagline": "Audit-cycle patch: tmux quoting, model-sync injection fix, and the four-command post-update flow."
     },
     {
       "version": "0.21.1",
@@ -55,7 +57,9 @@
           "pi-tui: tall clipboard screenshots no longer cover the TUI (inline image height capped via `PI_TUI_MAX_IMAGE_ROWS`).",
           "Compaction summaries no longer accumulate macOS clipboard paste-temp and `/tmp` screenshot paths across turns."
         ]
-      }
+      },
+      "blogPost": "four-commands-after-an-update",
+      "tagline": "Background delegation for every user — tmux as the shipping baseline, full control panel (tail/steer/kill/harvest)."
     },
     {
       "version": "0.21.0",
@@ -79,7 +83,8 @@
           "13 settings keys backfilled idempotently for projects upgrading from any version since v0.11. User customizations preserved.",
           "5 Pro scripts (soma seam, refactor, scrape, github, browser) work for every install during the v0.21.x beta — no friction."
         ]
-      }
+      },
+      "tagline": "Cache economics + discoverability + self-knowledge. ~25% smaller cached prefix, callable tool registry, one-command muscle scaffolding."
     },
     {
       "version": "0.20.3",
@@ -95,7 +100,9 @@
           "`soma update --yes` for scripted upgrades — the documented `npm install -g meetsoma@latest && soma update --yes` one-liner now truly works unattended.",
           "CHANGELOG.md ships with every install — read what's new without leaving your terminal."
         ]
-      }
+      },
+      "blogPost": "why-your-claude-bill-spiked",
+      "tagline": "Cache stickiness: /reload keeps your session warm. No dollar cost for rapid iteration."
     },
     {
       "version": "0.20.2",
@@ -228,7 +235,9 @@
           "28 workspace + browser tools through the hub proxy.",
           "Device-key auth for automatic hub mode."
         ]
-      }
+      },
+      "blogPost": "the-operating-system",
+      "tagline": "Somaverse Edition — the visual workspace where AI agents live."
     },
     {
       "version": "0.11.4",
@@ -298,7 +307,9 @@
         "changed": [
           "Intentional preloads — `soma inhale` loads memory on purpose, not automatically."
         ]
-      }
+      },
+      "blogPost": "the-doctor-that-never-worked",
+      "tagline": "Doctor & Migration — projects upgrade cleanly across versions."
     },
     {
       "version": "0.10.0",

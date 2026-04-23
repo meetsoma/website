@@ -12,7 +12,7 @@ author: meetsoma
 license: MIT
 tags: [reflection, memory, patterns, introspection, preload]
 created: 2026-03-16
-updated: 2026-04-22
+updated: 2026-04-23
 tools: [soma-seam.sh, soma-reflect.sh]
 heat-default: warm
 ---

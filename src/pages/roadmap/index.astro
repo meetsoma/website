@@ -2,178 +2,233 @@
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
-import Icon from '../../components/icons/SomaIcons.astro';
 import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
+import { getCollection } from 'astro:content';
 
-const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string }[] = [
-  {
-    name: 'Identity & First Run',
-    icon: 'protocols',
-    description: 'soul.md replaces SOMA.md. Minimal first-run boot -- the agent discovers through use instead of loading everything at once. 11 bundled scripts, extension allowlist, distribution tiers.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Doctor & Migration',
-    icon: 'protocols',
-    description: 'Project health check with auto-fix on boot. 13 migration phases from v0.6.1 to v0.11.0. Critical semver fix ensures upgrades actually run. Your customizations are never touched.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Image & Error Guard',
-    icon: 'extensions',
-    description: 'Auto-strips old images when they accumulate. Human-readable API errors instead of raw JSON. Billing notices handled gracefully. Keepalive auto-pause on rate limits.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Distribution Tiers',
-    icon: 'scripts',
-    description: 'Free scripts ship readable. Pro scripts compile to protected JavaScript. Extensions obfuscated with auth-gate. Open-source pledge: core Soma stays open forever.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Somaverse',
-    icon: 'extensions',
-    description: 'Visual workspace at somaverse.ai — 33 plugins, 28 agent tools. soma login pairs your agent. Hub relay routes data through your machine, never stores it. Per-user isolation with Argon2 device keys. Your browser is the UI, your machine is the brain.',
-    status: 'Live',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Model Switching & Opus 4.7',
-    icon: 'scripts',
-    description: 'soma model command — switch default models from CLI with fuzzy matching. 23 providers, 842+ models. Claude Opus 4.7 with adaptive thinking. Smarter prompt caching — tool changes no longer invalidate your cache.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Shipping Integrity',
-    icon: 'protocols',
-    description: 'Fresh `npm install -g meetsoma` now actually works (was broken since the npm/ reorg). Pi runtime is locked to the Soma version that tested it — no more silent drift. `soma update` actually updates; `soma init` is for projects. Periodic update nudge appears in the statusline so you see new releases within minutes of starting a session. Pre-publish smoke test prevents broken tarballs from shipping.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Cache Stickiness',
-    icon: 'protocols',
-    description: 'Iterating on your setup is free. Reload your extensions as often as you want — your session’s cached memory stays warm, so there’s no dollar cost for rapid iteration. Body edits apply on your terms with a new /rebuild command — run it to pick up changes mid-session, skip it and they land naturally on your next start. The statusline quietly tells you what each file change actually needs, so you never guess.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-  },
-  {
-    name: 'Recall',
-    icon: 'automations',
-    description: 'Persistent memory via graph store. Cross-session, cross-project knowledge that survives context windows. The agent remembers what matters and forgets what does not.',
-    status: 'In Progress',
-    statusColor: 'var(--promo)',
-  },
-];
+// ─── Data ───────────────────────────────────────────────────────────────
+// Pull everything from public/data/roadmap.json so the page is one source
+// of truth. Blog-post links resolve via a lookup against the content
+// collection — no dead links when a post id changes.
+
+import roadmapData from '../../../public/data/roadmap.json';
+
+type Release = {
+  version: string;
+  date?: string;
+  title?: string;
+  tagline?: string;
+  blogPost?: string;
+  features?: {
+    added?: string[];
+    changed?: string[];
+    fixed?: string[];
+  };
+};
+
+const timeline: Release[] = roadmapData.timeline || [];
+const next = timeline.find((t) => t.version === 'Next') ?? null;
+const recent = timeline.filter((t) => t.version !== 'Next').slice(0, 3);
+const latestRelease = recent[0];
+
+// Blog collection for post-resolution + latest-post lookup
+const blogPosts = await getCollection('blog', (p) => !p.data.draft);
+blogPosts.sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
+const blogById = new Map(blogPosts.map((p) => [p.id.replace(/\.md$/, ''), p]));
+const latestPost = blogPosts[0];
+
+// Helper to resolve a blog reference from a release
+function blogLinkFor(release: Release): { href: string; title: string } | null {
+  if (!release.blogPost) return null;
+  const post = blogById.get(release.blogPost);
+  if (!post) return null;
+  return {
+    href: `/blog/${release.blogPost}`,
+    title: post.data.title,
+  };
+}
+
+// Format a date like "Apr 22, 2026"
+function formatDate(d?: string): string {
+  if (!d) return '';
+  const date = new Date(d);
+  if (Number.isNaN(+date)) return d;
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
+// Days since last release (for header freshness indicator)
+function daysSince(d?: string): number | null {
+  if (!d) return null;
+  const date = new Date(d);
+  if (Number.isNaN(+date)) return null;
+  return Math.floor((+new Date() - +date) / (1000 * 60 * 60 * 24));
+}
+
+const lastShipDays = daysSince(latestRelease?.date);
 ---
 
 <Layout
   title="Roadmap — σ"
-  description="Where Soma has been and where it's going. Timeline of shipped features and what's next."
+  description="What Soma is shipping next and what shipped recently. Every release linked to its story."
   canonicalUrl="https://soma.gravicity.ai/roadmap"
 >
   <main class="container">
     <header class="hero">
       <Breadcrumbs items={[{ label: 'Roadmap', href: '/roadmap' }]} />
       <h1 class="title">Roadmap</h1>
-      <p class="subtitle">
-        Where it's going. Where it's been.
-      </p>
+      <p class="subtitle">What we're shipping. What just shipped. The story of each.</p>
+
+      <!-- ─── Release badges ─────────────────────────────────────── -->
+      <div class="badges" aria-label="Release status">
+        {latestRelease && (
+          <a class="badge badge-latest" href="/docs/changelog" title="View full changelog">
+            <span class="badge-label">Latest</span>
+            <span class="badge-value">v{latestRelease.version}</span>
+            {latestRelease.date && (
+              <span class="badge-meta">{formatDate(latestRelease.date)}</span>
+            )}
+          </a>
+        )}
+        {lastShipDays !== null && (
+          <span class="badge badge-ship">
+            <span class="badge-label">Shipped</span>
+            <span class="badge-value">
+              {lastShipDays === 0 ? 'today' : lastShipDays === 1 ? 'yesterday' : `${lastShipDays}d ago`}
+            </span>
+          </span>
+        )}
+        {next && next.features?.added && (
+          <span class="badge badge-next">
+            <span class="badge-label">Next</span>
+            <span class="badge-value">{next.features.added.length} items in flight</span>
+          </span>
+        )}
+      </div>
     </header>
 
-    <!-- On the Horizon -->
-    <section class="section">
-      <SectionHeader title="On the Horizon" />
-      <div class="upcoming-grid">
-        {upcoming.map((feature, i) => (
-          <div class="feature-card" style={`animation-delay: ${i * 0.08}s`}>
-            <div class="feature-head">
-              <span class="feature-icon"><Icon name={feature.icon as any} size={22} /></span>
-              <h3 class="feature-name">{feature.name}</h3>
-              <span class="feature-status" style={`color: ${feature.statusColor}; border-color: ${feature.statusColor}`}>
-                {feature.status}
-              </span>
-            </div>
-            <p class="feature-desc">{feature.description}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+    <!-- ─── Section 1: Shipping Next ──────────────────────────── -->
+    {next && next.features?.added && next.features.added.length > 0 && (
+      <section class="section">
+        <SectionHeader title="Shipping Next" />
+        <p class="section-sub">
+          What's in flight. Unordered — priorities shift. Run
+          <code>soma vote &lt;feature&gt;</code> to weigh in (coming soon).
+        </p>
+        <ul class="next-list">
+          {next.features.added.map((item) => (
+            <li class="next-item">
+              <span class="next-dot" aria-hidden="true"></span>
+              <span class="next-body" set:html={item} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
-    <!-- In Progress -->
-    <section class="section">
-      <SectionHeader title="Shipping Soon" />
-      <div class="progress-list">
-        <div class="progress-item">
-          <span class="progress-dot active"></span>
-          <div>
-            <strong>Somaverse public beta</strong>
-            <p>Open registration, team workspaces, pane drag-and-drop. Visual workspace for your agent — already live at somaverse.ai.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot active"></span>
-          <div>
-            <strong>Niche templates</strong>
-            <p>Next.js, Rust, Python ML shipped. Go, Laravel, Astro, React Native, Monorepo planned. Each template shapes the agent for your stack.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot active"></span>
-          <div>
-            <strong>CLI convergence</strong>
-            <p>Reduce wrapping around the Pi engine. Let upstream flags pass through cleanly. Persistent model switching already shipped — more commands coming.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot"></span>
-          <div>
-            <strong>Recall memory</strong>
-            <p>Graph-backed persistent memory. Cross-session knowledge. The agent remembers patterns, decisions, and context across projects.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot"></span>
-          <div>
-            <strong>Content versioning</strong>
-            <p>Know when hub protocols update. Diff before upgrading. Never lose your customizations to a hub sync.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot"></span>
-          <div>
-            <strong>Async agent comms</strong>
-            <p>Soma reaches you when decisions are needed. File-based inbox already works. Push notifications coming.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- ─── Section 2: Recently Shipped ───────────────────────── -->
+    {recent.length > 0 && (
+      <section class="section">
+        <SectionHeader title="Recently Shipped" />
+        <p class="section-sub">
+          The last three releases. Each links to its changelog entry — some also link to the post that tells the story.
+        </p>
+        <div class="recent-grid">
+          {recent.map((release) => {
+            const blog = blogLinkFor(release);
+            return (
+              <article class="recent-card">
+                <header class="recent-head">
+                  <div class="recent-version">
+                    <span class="recent-v">v{release.version}</span>
+                    <span class="recent-date">{formatDate(release.date)}</span>
+                  </div>
+                  {release.title && <h3 class="recent-title">{release.title}</h3>}
+                </header>
 
-    <!-- Shipped Timeline -->
+                {release.tagline && <p class="recent-tagline">{release.tagline}</p>}
+
+                {release.features && (
+                  <div class="recent-features">
+                    {release.features.added && release.features.added.length > 0 && (
+                      <div class="feat-group">
+                        <span class="feat-label feat-added">Added</span>
+                        <ul>
+                          {release.features.added.slice(0, 3).map((f) => (
+                            <li set:html={f} />
+                          ))}
+                          {release.features.added.length > 3 && (
+                            <li class="feat-more">+{release.features.added.length - 3} more</li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                    {release.features.fixed && release.features.fixed.length > 0 && (
+                      <div class="feat-group">
+                        <span class="feat-label feat-fixed">Fixed</span>
+                        <ul>
+                          {release.features.fixed.slice(0, 2).map((f) => (
+                            <li set:html={f} />
+                          ))}
+                          {release.features.fixed.length > 2 && (
+                            <li class="feat-more">+{release.features.fixed.length - 2} more</li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <footer class="recent-foot">
+                  <a href="/docs/changelog" class="recent-link">changelog</a>
+                  {blog && (
+                    <a href={blog.href} class="recent-link recent-link-blog" title={blog.title}>
+                      read the story →
+                    </a>
+                  )}
+                </footer>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    <!-- ─── Section 3: Release History (timeline) ────────────── -->
     <section class="section">
-      <SectionHeader title="Shipped" />
+      <SectionHeader title="Release History" />
+      <p class="section-sub">
+        Every release Soma has shipped. Collapsible entries — click a version to expand.
+      </p>
       <RoadmapTimeline client:load />
     </section>
 
-    <!-- Changelog link -->
-    <div class="changelog-link">
-      <p>
-        Every commit, every fix, every feature — the full history lives in the
-        <a href="/docs/changelog">changelog</a>.
-      </p>
-    </div>
-
-    <!-- Voting Teaser -->
-    <div class="voting-teaser">
-      <p>
-        <strong>Feature voting coming soon.</strong> Run <code>soma vote &lt;feature&gt;</code> to 
-        shape what ships next.
-      </p>
+    <!-- ─── Footer callouts ────────────────────────────────────── -->
+    <div class="callouts">
+      <div class="callout">
+        <strong>Every commit is in the changelog.</strong>
+        <p>
+          The full history of fixes, features, and refactors lives at
+          <a href="/docs/changelog">/docs/changelog</a>.
+        </p>
+      </div>
+      {latestPost && (
+        <div class="callout">
+          <strong>Latest from the blog:</strong>
+          <p>
+            <a href={`/blog/${latestPost.id.replace(/\.md$/, '')}`}>{latestPost.data.title}</a>
+            <span class="callout-date">{formatDate(latestPost.data.date as any)}</span>
+          </p>
+        </div>
+      )}
+      <div class="callout">
+        <strong>Feature voting coming soon.</strong>
+        <p>
+          Run <code>soma vote &lt;feature&gt;</code> from any session to shape what ships next.
+        </p>
+      </div>
     </div>
   </main>
 </Layout>
@@ -182,13 +237,13 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   .container {
     position: relative;
     z-index: 1;
-    max-width: 890px;
+    max-width: 920px;
     margin: 0 auto;
     padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
     min-height: 100vh;
   }
 
-  /* ── Hero ── */
+  /* ── Hero ────────────────────────────────────────────────── */
   .hero {
     text-align: center;
     margin-bottom: var(--section-gap);
@@ -201,357 +256,332 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   }
 
   .title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 6vw, 2.625rem);
-    font-weight: 800;
-    margin: var(--space-md) 0;
-    background: linear-gradient(135deg, var(--hero-title-start) 0%, var(--hero-title-end) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: var(--space-lg) 0 var(--space-md);
+    color: var(--text-primary);
   }
 
   .subtitle {
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
     color: var(--text-secondary);
-    max-width: 34rem;
-    margin: var(--space-md) auto 0;
-    line-height: var(--leading-relaxed);
+    max-width: 540px;
+    margin: 0 auto var(--space-xl);
+    line-height: 1.6;
   }
 
-  .section {
-    margin-bottom: var(--section-gap);
-  }
-
-  /* ── Upcoming Grid ── */
-  .upcoming-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--grid-gap);
-  }
-
-  .feature-card {
-    padding: var(--card-pad-y) var(--card-pad-x);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
-    background: var(--surface-card);
-    backdrop-filter: blur(8px);
-    transition: all 0.25s ease;
-    animation: fadeUp 0.6s ease-out both;
-  }
-
-  .feature-card:hover {
-    border-color: var(--border-accent);
-    transform: translateY(-3px);
-    box-shadow: 0 13px 34px var(--shadow-accent-soft);
-  }
-
-  .feature-head {
+  .badges {
     display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    margin-bottom: var(--space-lg);
-  }
-
-  .feature-icon {
-    display: flex;
-    align-items: center;
-    color: var(--accent-bright);
-  }
-
-  .feature-name {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 600;
-    color: var(--text-primary);
-    flex: 1;
-    margin: 0;
-    line-height: var(--leading-tight);
-  }
-
-  .feature-status {
-    font-family: var(--font-mono);
-    font-size: var(--badge-text);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-full);
-    border: 1px solid;
-    background: transparent;
-    flex-shrink: 0;
-  }
-
-  .feature-desc {
-    font-family: var(--font-body);
-    font-size: var(--body-text);
-    color: var(--text-secondary);
-    line-height: var(--leading-relaxed);
-    margin: 0;
-  }
-
-  /* ── Changelog Link ── */
-  .changelog-link {
-    margin-bottom: var(--space-xl);
-    text-align: center;
-  }
-
-  .changelog-link p {
-    font-family: var(--font-body);
-    font-size: var(--body-text);
-    color: var(--text-muted);
-    line-height: var(--leading-relaxed);
-    margin: 0;
-  }
-
-  .changelog-link a {
-    color: var(--accent-bright);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s ease;
-  }
-
-  .changelog-link a:hover {
-    border-bottom-color: var(--accent-bright);
-  }
-
-  /* ── Voting Teaser ── */
-  .voting-teaser {
-    margin-bottom: var(--section-gap);
-    padding: var(--space-xl);
-    background: var(--surface-accent-soft);
-    border: 1px solid var(--border-accent);
-    border-radius: var(--radius-lg);
-    text-align: center;
-  }
-
-  .voting-teaser p {
-    font-family: var(--font-body);
-    font-size: var(--body-text);
-    color: var(--text-secondary);
-    line-height: var(--leading-relaxed);
-    margin: 0;
-  }
-
-  .voting-teaser code {
-    font-family: var(--font-mono);
-    font-size: var(--label-text);
-    color: var(--accent-bright);
-    background: var(--surface-interactive);
-    padding: 2px var(--space-md);
-    border-radius: var(--radius-sm);
-  }
-
-  /* ── Shipping Soon ── */
-  .progress-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .progress-item {
-    display: flex;
-    gap: var(--space-lg);
-    padding: var(--space-lg) var(--space-xl);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
-    background: var(--surface-card);
-    transition: border-color 0.2s ease;
-  }
-
-  .progress-item:hover {
-    border-color: var(--border-accent);
-  }
-
-  .progress-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border-subtle);
-    margin-top: 8px;
-    flex-shrink: 0;
-  }
-
-  .progress-dot.active {
-    background: var(--accent-bright);
-    box-shadow: 0 0 6px var(--accent-bright);
-  }
-
-  .progress-dot.shipped {
-    background: var(--promo);
-    box-shadow: 0 0 6px var(--promo);
-  }
-
-  .progress-item strong {
-    font-family: var(--font-display);
-    font-size: var(--body-text);
-    color: var(--text-primary);
-    display: block;
-    margin-bottom: var(--space-xs);
-  }
-
-  .progress-item p {
-    font-size: var(--body-secondary);
-    color: var(--text-muted);
-    line-height: var(--leading-relaxed);
-    margin: 0;
-  }
-
-  @media (max-width: 768px) {
-    .upcoming-grid { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 640px) {
-    .container { padding: var(--space-2xl) var(--space-lg) var(--space-xl); }
-  }
-</style>
-
-<style is:global>
-  /* ── Timeline ── */
-  .timeline {
-    position: relative;
-    padding-left: var(--space-2xl);
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 7px;
-    top: calc(var(--space-xl) + 8px);
-    bottom: 5px;
-    width: 2px;
-    background: linear-gradient(to bottom, var(--border-accent), var(--border-subtle));
-  }
-
-  .timeline-entry {
-    position: relative;
-    margin-bottom: var(--space-3xl);
-    padding: var(--space-xl);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
-    background: var(--surface-card);
-    transition: all 0.25s ease;
-    animation: fadeUp 0.6s ease-out both;
-  }
-
-  .timeline-entry:hover {
-    border-color: var(--border-accent);
-    box-shadow: 0 8px 24px var(--shadow-accent-soft);
-  }
-
-  .timeline-entry:first-child {
-    border-color: var(--border-accent);
-  }
-
-  .timeline-dot {
-    position: absolute;
-    left: calc(-1 * var(--space-2xl) + 1px);
-    top: calc(var(--space-xl) + 3px);
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--bg-deep);
-    border: 2px solid var(--accent-bright);
-    z-index: 1;
-  }
-
-  .timeline-entry:first-child .timeline-dot {
-    background: var(--accent-bright);
-    box-shadow: 0 0 8px var(--accent-bright);
-  }
-
-  .timeline-head {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-lg);
     flex-wrap: wrap;
-    margin-bottom: var(--space-lg);
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: var(--space-lg);
   }
 
-  .timeline .version {
-    font-family: var(--font-mono);
-    font-size: var(--text-lg);
-    color: var(--accent-bright);
-    font-weight: 700;
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border-subtle, #30363d);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    background: var(--bg-elevated, rgba(22, 27, 34, 0.5));
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
   }
-
-  .timeline .label {
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
-    font-weight: 600;
+  .badge:hover {
+    border-color: var(--accent, #7cb2d4);
     color: var(--text-primary);
-    margin: 0;
-    line-height: var(--leading-tight);
   }
 
-  .timeline .date {
-    font-family: var(--font-mono);
-    font-size: var(--label-text);
-    color: var(--text-muted);
-    margin-left: auto;
+  .badge-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary, #6e7681);
   }
 
-  .timeline-items {
+  .badge-value {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .badge-meta {
+    font-size: 0.78rem;
+    color: var(--text-tertiary, #6e7681);
+  }
+
+  .badge-latest .badge-value {
+    color: var(--accent, #7cb2d4);
+  }
+
+  /* ── Sections ────────────────────────────────────────────── */
+  .section {
+    margin-bottom: var(--section-gap, 4rem);
+    animation: fadeUp 0.9s ease-out 0.15s both;
+  }
+
+  .section-sub {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: -0.5rem 0 var(--space-xl);
+    line-height: 1.55;
+  }
+  .section-sub code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.88em;
+    padding: 0.12em 0.45em;
+    background: var(--bg-elevated, rgba(22, 27, 34, 0.5));
+    border: 1px solid var(--border-subtle, #30363d);
+    border-radius: 4px;
+  }
+
+  /* ── Shipping Next ───────────────────────────────────────── */
+  .next-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: grid;
-    gap: var(--space-sm);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.5rem;
   }
-
-  .timeline-items li {
-    font-family: var(--font-body);
-    font-size: var(--body-text);
-    color: var(--text-secondary);
-    line-height: var(--leading-relaxed);
-    padding: var(--space-xs) 0;
-    padding-left: var(--space-xl);
-    position: relative;
+  .next-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 1.1rem;
+    background: var(--bg-elevated, rgba(22, 27, 34, 0.45));
+    border: 1px solid var(--border-subtle, #30363d);
+    border-radius: 10px;
+    line-height: 1.55;
   }
-
-  .timeline-items li::before {
-    content: '';
-    position: absolute;
-    left: var(--space-md);
-    top: 0.7em;
-    width: 4px;
-    height: 4px;
+  .next-dot {
+    flex-shrink: 0;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-top: 0.45em;
     border-radius: 50%;
-    background: var(--accent-bright);
-    opacity: 0.5;
+    background: var(--accent, #7cb2d4);
+    opacity: 0.85;
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.85; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+  .next-body {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+  .next-body :global(code) {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.88em;
+    color: var(--text-primary);
   }
 
-  .timeline-entry.latest {
-    border-color: var(--border-accent);
-    background: linear-gradient(135deg, var(--surface-card) 0%, rgba(104, 152, 190, 0.04) 100%);
+  /* ── Recently Shipped ────────────────────────────────────── */
+  .recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
   }
 
-  .latest-badge {
-    font-family: var(--font-mono);
-    font-size: var(--badge-text);
+  .recent-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.3rem 1.4rem;
+    background: var(--bg-elevated, rgba(22, 27, 34, 0.5));
+    border: 1px solid var(--border-subtle, #30363d);
+    border-radius: 12px;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .recent-card:hover {
+    border-color: var(--accent-muted, rgba(124, 178, 212, 0.4));
+    transform: translateY(-1px);
+  }
+
+  .recent-head {
+    margin-bottom: 0.65rem;
+  }
+
+  .recent-version {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.3rem;
+  }
+  .recent-v {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 1.15rem;
     font-weight: 600;
+    color: var(--accent, #7cb2d4);
+  }
+  .recent-date {
+    font-size: 0.82rem;
+    color: var(--text-tertiary, #6e7681);
+  }
+  .recent-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  .recent-tagline {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0 0 1rem;
+  }
+
+  .recent-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 0 0 1rem;
+    flex-grow: 1;
+  }
+
+  .feat-group {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.86rem;
+  }
+  .feat-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    flex-grow: 1;
+  }
+  .feat-group ul li {
+    padding-left: 0.7em;
+    text-indent: -0.7em;
+  }
+  .feat-group ul li::before {
+    content: "· ";
+    color: var(--text-tertiary, #6e7681);
+    margin-right: 0.35em;
+  }
+  .feat-group :global(code) {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.88em;
+    color: var(--text-primary);
+  }
+  .feat-more {
+    font-style: italic;
+    color: var(--text-tertiary, #6e7681) !important;
+  }
+  .feat-more::before { content: none !important; }
+
+  .feat-label {
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--bg-deep);
-    background: var(--accent-bright);
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-full);
-    line-height: 1;
-  }
-
-  .timeline-loading,
-  .timeline-error {
+    letter-spacing: 0.07em;
+    padding: 0.15em 0.55em;
+    border-radius: 4px;
+    border: 1px solid currentColor;
+    flex-shrink: 0;
+    min-width: 54px;
     text-align: center;
-    padding: var(--space-2xl);
-    color: var(--text-muted);
-    font-family: var(--font-body);
+    height: fit-content;
+    margin-top: 0.15rem;
+  }
+  .feat-added { color: #7ee787; border-color: rgba(126, 231, 135, 0.3); }
+  .feat-fixed { color: #ffa657; border-color: rgba(255, 166, 87, 0.3); }
+
+  .recent-foot {
+    display: flex;
+    gap: 1.1rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--border-subtle, #30363d);
+  }
+  .recent-link {
+    font-size: 0.88rem;
+    color: var(--text-tertiary, #6e7681);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .recent-link:hover {
+    color: var(--accent, #7cb2d4);
+  }
+  .recent-link-blog {
+    margin-left: auto;
+    color: var(--accent, #7cb2d4);
+    font-weight: 500;
   }
 
+  /* ── Callouts (footer strip) ────────────────────────────── */
+  .callouts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: var(--section-gap, 4rem);
+    padding-top: var(--space-2xl);
+    border-top: 1px solid var(--border-subtle, #30363d);
+  }
+  .callout {
+    padding: 1rem 1.2rem;
+    background: var(--bg-elevated, rgba(22, 27, 34, 0.45));
+    border: 1px solid var(--border-subtle, #30363d);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .callout strong {
+    display: block;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+    font-weight: 500;
+  }
+  .callout p {
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  .callout a {
+    color: var(--accent, #7cb2d4);
+    text-decoration: none;
+  }
+  .callout a:hover { text-decoration: underline; }
+  .callout code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.85em;
+    padding: 0.1em 0.35em;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+  }
+  .callout-date {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-tertiary, #6e7681);
+    margin-top: 0.25rem;
+  }
+
+  /* ── Mobile ───────────────────────────────────────────────── */
   @media (max-width: 640px) {
-    .timeline { padding-left: var(--space-xl); }
-    .timeline-dot { left: calc(-1 * var(--space-xl) - 4px); }
-    .timeline-entry { padding: var(--space-lg); }
-    .timeline-head { flex-direction: column; gap: var(--space-xs); }
-    .timeline .date { margin-left: 0; }
+    .container {
+      padding: var(--space-xl) var(--space-lg) var(--space-xl);
+    }
+    .badges {
+      gap: 0.35rem;
+    }
+    .badge {
+      font-size: 0.76rem;
+      padding: 0.3rem 0.65rem;
+    }
+    .recent-grid, .next-list, .callouts {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

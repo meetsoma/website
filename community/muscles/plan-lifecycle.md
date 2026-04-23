@@ -7,7 +7,7 @@ heat: 0
 triggers: [plan, idea, pre-flight, kanban, preload, consolidation, lifecycle, planning, execution, preloads]
 applies-to: [any]
 created: 2026-03-14
-updated: 2026-04-22
+updated: 2026-04-23
 tools: [soma-plans.sh]
 loads: 0
 seams: [s01-3498d3]

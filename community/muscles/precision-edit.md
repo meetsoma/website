@@ -8,7 +8,7 @@ triggers: [edit, replace, sed, line, surgical, precise, oldtext, exact, match, w
 tags: [editing, workflow, copy, website]
 applies-to: [any]
 created: 2026-03-14
-updated: 2026-04-22
+updated: 2026-04-23
 tools: []
 scripts: [soma-verify.sh copy, soma-verify-styles.sh]
 version: 1.0.0
