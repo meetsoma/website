@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-22T22:00:00Z",
+  "generated": "2026-04-22T23:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -14,6 +14,22 @@
           "Child MLR writing — background children persist a Memory Lane Reflection on exit, so `harvest` returns the real reflection instead of a placeholder.",
           "Statusline children-count + cost badge — at-a-glance visibility into background fleet and spend.",
           "AppleScript terminal drivers (ghostty, iTerm, Terminal.app) — macOS-native background panes for users who want OS-level windows."
+        ]
+      }
+    },
+    {
+      "version": "0.21.1.1",
+      "date": "2026-04-22",
+      "title": "Same-cycle audit patches",
+      "features": {
+        "added": [
+          "`soma model-sync` — audit + set `defaultModel` across global + project + any crawled `.soma/` dirs. `--set <id> --crawl --yes` puts every project on the current model in one command. Bundled default is claude-opus-4-7."
+        ],
+        "fixed": [
+          "TmuxDriver shell-quoting — `$(...)` and backticks in task text used to expand on the parent shell before tmux saw them. Tasks now arrive at children as literal text.",
+          "soma-model-sync apostrophe in model id no longer breaks the python write path (env-pass instead of shell-interpolation).",
+          "Unused shEscape helper removed; import order tidied on two files.",
+          "`.gitignore` now excludes `__pycache__/` + `*.pyc` — an accidentally-tracked `.pyc` file in v0.21.1 dev commits confirmed not to have shipped to users (release-ignore filtered)."
         ]
       }
     },
