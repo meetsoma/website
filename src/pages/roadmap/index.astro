@@ -5,8 +5,11 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 
-// Each arc corresponds to a shipped milestone; the version + date give temporal
-// context so the same grid doubles as a history-at-a-glance. Order = newest first.
+// ─── Recently Shipped ────────────────────────────────────────────────
+// Strategic top-6 landmark releases, newest first. Shown as an auto-advancing
+// hero carousel (one card at a time). The full history lives in the timeline
+// island below this section, so the carousel stays focused on the standout
+// stories, not comprehensive coverage.
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string }[] = [
   {
     name: 'Children Control Panel + tmux',
@@ -57,25 +60,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     blogPost: 'the-operating-system',
   },
   {
-    name: 'Distribution Tiers',
-    icon: 'scripts',
-    description: 'Free scripts ship readable. Pro scripts compile to protected JavaScript. Extensions obfuscated with auth-gate. Open-source pledge: core Soma stays open forever.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-    version: 'v0.12.0',
-    date: '2026-03-18',
-    blogPost: 'why-source-available',
-  },
-  {
-    name: 'Shipping Integrity',
-    icon: 'protocols',
-    description: 'Fresh `npm install -g meetsoma` now actually works. Pi runtime locked to the Soma version that tested it — no silent drift. `soma update` actually updates; `soma init` is for projects. Periodic update nudge in the statusline. Pre-publish smoke test prevents broken tarballs from shipping.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-    version: 'v0.11.4',
-    date: '2026-03-10',
-  },
-  {
     name: 'Doctor & Migration',
     icon: 'protocols',
     description: 'Project health check with auto-fix on boot. Declarative migration phases from v0.6.1 onward. Critical semver fix ensures upgrades actually run. Your customizations are never touched.',
@@ -84,24 +68,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     version: 'v0.11.0',
     date: '2026-03-01',
     blogPost: 'the-doctor-that-never-worked',
-  },
-  {
-    name: 'Identity & First Run',
-    icon: 'protocols',
-    description: '`soul.md` replaces `SOMA.md`. Minimal first-run boot — the agent discovers through use instead of loading everything at once. 11 bundled scripts, extension allowlist, distribution tiers.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-    version: 'v0.10.0',
-    date: '2026-02-15',
-  },
-  {
-    name: 'Image & Error Guard',
-    icon: 'extensions',
-    description: 'Auto-strips old images when they accumulate. Human-readable API errors instead of raw JSON. Billing notices handled gracefully. Keepalive auto-pauses on rate limits.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-    version: 'v0.9.0',
-    date: '2026-02-01',
   },
 ];
 
@@ -127,35 +93,196 @@ function formatDate(d?: string): string {
       </p>
     </header>
 
-    <!-- Recently Shipped -->
+    <!-- Recently Shipped (auto-advancing hero carousel) -->
     <section class="section">
       <SectionHeader title="Recently Shipped" />
-      <div class="upcoming-grid">
-        {upcoming.map((feature, i) => (
-          <div class={`feature-card ${i === 0 ? 'feature-card--latest' : ''}`} style={`animation-delay: ${i * 0.08}s`}>
-            <div class="feature-head">
-              <span class="feature-icon"><Icon name={feature.icon as any} size={22} /></span>
-              <h3 class="feature-name">{feature.name}</h3>
-              <span class="feature-status" style={`color: ${feature.statusColor}; border-color: ${feature.statusColor}`}>
-                {feature.status}
-              </span>
-            </div>
-            {(feature.version || feature.date) && (
-              <div class="feature-meta">
-                {feature.version && <span class="feature-version">{feature.version}</span>}
-                {feature.date && <span class="feature-date">{formatDate(feature.date)}</span>}
-              </div>
-            )}
-            <p class="feature-desc" set:html={feature.description} />
-            {feature.blogPost && (
-              <a class="feature-link" href={`/blog/${feature.blogPost}`}>
-                <span class="feature-link-icon" aria-hidden="true">›</span> read the story
-              </a>
-            )}
+      <div
+        class="hero-carousel"
+        data-carousel
+        data-count={upcoming.length}
+        aria-roledescription="carousel"
+        aria-label="Recently shipped features"
+      >
+        <!-- Header strip: counter + nav -->
+        <div class="hero-top">
+          <span class="hero-counter">
+            <span data-carousel-index>1</span> / <span>{upcoming.length}</span>
+          </span>
+          <div class="hero-nav">
+            <button class="hero-btn" data-carousel-prev aria-label="Previous feature">‹</button>
+            <button class="hero-btn" data-carousel-next aria-label="Next feature">›</button>
           </div>
-        ))}
+        </div>
+
+        <!-- Slides viewport -->
+        <div class="hero-viewport" data-carousel-viewport>
+          {upcoming.map((feature, i) => (
+            <article
+              class="hero-slide"
+              data-carousel-slide
+              data-index={i}
+              aria-roledescription="slide"
+              aria-label={`${i + 1} of ${upcoming.length}: ${feature.name}`}
+              aria-hidden={i === 0 ? 'false' : 'true'}
+            >
+              {/* Oversized version watermark — drifts behind content */}
+              {feature.version && (
+                <span class="hero-watermark" aria-hidden="true">{feature.version}</span>
+              )}
+
+              <div class="hero-content">
+                <div class="hero-head">
+                  <span class="hero-icon"><Icon name={feature.icon as any} size={28} /></span>
+                  <div class="hero-meta">
+                    {feature.version && <span class="hero-version">{feature.version}</span>}
+                    {feature.date && <span class="hero-date">{formatDate(feature.date)}</span>}
+                  </div>
+                  <span
+                    class="hero-status"
+                    style={`color: ${feature.statusColor}; border-color: ${feature.statusColor}`}
+                  >
+                    {feature.status}
+                  </span>
+                </div>
+
+                <h3 class="hero-title">{feature.name}</h3>
+                <p class="hero-desc" set:html={feature.description} />
+
+                {feature.blogPost && (
+                  <a class="hero-link" href={`/blog/${feature.blogPost}`}>
+                    <span aria-hidden="true">›</span>
+                    <span>read the story</span>
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <!-- Dot indicators + progress bar -->
+        <div class="hero-controls">
+          <div class="hero-dots" role="tablist" aria-label="Select feature">
+            {upcoming.map((feature, i) => (
+              <button
+                class="hero-dot"
+                data-carousel-dot
+                data-index={i}
+                role="tab"
+                aria-selected={i === 0 ? 'true' : 'false'}
+                aria-label={`Go to feature ${i + 1}: ${feature.name}`}
+              ></button>
+            ))}
+          </div>
+          <div class="hero-progress" aria-hidden="true">
+            <div class="hero-progress-bar" data-carousel-progress></div>
+          </div>
+        </div>
       </div>
     </section>
+
+    <script>
+      // ─── Auto-advancing carousel ─────────────────────────────────────
+      // One slide visible at a time; crossfade between slides. Auto-advance
+      // every ADVANCE_MS (pauses on pointer hover + when document is hidden).
+      // Accessible: prev/next buttons, dot tabs, ArrowLeft/ArrowRight keys
+      // (when carousel is focused-within), aria-hidden on non-active slides.
+      (function () {
+        const ADVANCE_MS = 7000;
+        const carousel = document.querySelector('[data-carousel]') as HTMLElement | null;
+        if (!carousel) return;
+
+        const slides = Array.from(carousel.querySelectorAll<HTMLElement>('[data-carousel-slide]'));
+        const dots = Array.from(carousel.querySelectorAll<HTMLElement>('[data-carousel-dot]'));
+        const indexEl = carousel.querySelector<HTMLElement>('[data-carousel-index]');
+        const progressEl = carousel.querySelector<HTMLElement>('[data-carousel-progress]');
+        const prevBtn = carousel.querySelector<HTMLElement>('[data-carousel-prev]');
+        const nextBtn = carousel.querySelector<HTMLElement>('[data-carousel-next]');
+        const count = slides.length;
+        if (!count) return;
+
+        let current = 0;
+        let timer: number | null = null;
+        let paused = false;
+
+        function setActive(i: number) {
+          current = ((i % count) + count) % count;
+          slides.forEach((s, idx) => {
+            const active = idx === current;
+            s.classList.toggle('is-active', active);
+            s.setAttribute('aria-hidden', active ? 'false' : 'true');
+          });
+          dots.forEach((d, idx) => {
+            d.setAttribute('aria-selected', idx === current ? 'true' : 'false');
+          });
+          if (indexEl) indexEl.textContent = String(current + 1);
+          restartProgress();
+        }
+
+        function restartProgress() {
+          if (!progressEl) return;
+          progressEl.style.transition = 'none';
+          progressEl.style.width = '0%';
+          // Force reflow so the transition restarts cleanly
+          void progressEl.offsetWidth;
+          progressEl.style.transition = `width ${ADVANCE_MS}ms linear`;
+          progressEl.style.width = paused ? progressEl.style.width : '100%';
+        }
+
+        function schedule() {
+          if (timer !== null) window.clearInterval(timer);
+          timer = window.setInterval(() => {
+            if (!paused) setActive(current + 1);
+          }, ADVANCE_MS);
+          restartProgress();
+        }
+
+        // ── Events ────────────────────────────────────────────────────
+        dots.forEach((d) => {
+          d.addEventListener('click', () => {
+            const i = Number(d.getAttribute('data-index') || 0);
+            setActive(i);
+            schedule();
+          });
+        });
+        prevBtn?.addEventListener('click', () => {
+          setActive(current - 1);
+          schedule();
+        });
+        nextBtn?.addEventListener('click', () => {
+          setActive(current + 1);
+          schedule();
+        });
+
+        // Pause on hover/focus, resume on leave/blur
+        carousel.addEventListener('pointerenter', () => {
+          paused = true;
+          if (progressEl) {
+            const computed = getComputedStyle(progressEl);
+            progressEl.style.width = computed.width;
+            progressEl.style.transition = 'none';
+          }
+        });
+        carousel.addEventListener('pointerleave', () => {
+          paused = false;
+          restartProgress();
+        });
+
+        // Keyboard nav when the carousel or any of its children has focus
+        carousel.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') { setActive(current - 1); schedule(); }
+          else if (e.key === 'ArrowRight') { setActive(current + 1); schedule(); }
+        });
+
+        // Pause when the tab goes hidden (no background burn)
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) paused = true;
+          else { paused = false; restartProgress(); }
+        });
+
+        setActive(0);
+        schedule();
+      })();
+    </script>
 
     <!-- In Progress -->
     <section class="section">
@@ -276,80 +403,164 @@ function formatDate(d?: string): string {
     margin-bottom: var(--section-gap);
   }
 
-  /* ── Upcoming Grid ── */
-  .upcoming-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--grid-gap);
-  }
-
-  .feature-card {
-    padding: var(--card-pad-y) var(--card-pad-x);
+  /* ─── Hero carousel ──────────────────────────────────────────────── */
+  .hero-carousel {
+    position: relative;
+    padding: var(--space-lg) var(--space-xl) var(--space-xl);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--surface-card);
     backdrop-filter: blur(8px);
-    transition: all 0.25s ease;
+    overflow: hidden;
     animation: fadeUp 0.6s ease-out both;
-    position: relative;
-    display: flex;
-    flex-direction: column;
   }
 
-  .feature-card:hover {
-    border-color: var(--border-accent);
-    transform: translateY(-3px);
-    box-shadow: 0 13px 34px var(--shadow-accent-soft);
-  }
-
-  /* Latest card — subtle accent ring so the eye lands on it first */
-  .feature-card--latest {
-    border-color: var(--border-accent, rgba(124, 178, 212, 0.3));
-    background: linear-gradient(
-      180deg,
-      rgba(124, 178, 212, 0.035) 0%,
-      var(--surface-card) 80%
-    );
-  }
-  .feature-card--latest::before {
+  .hero-carousel::before {
+    /* Soft accent wash on the top edge, like the "latest" feel on every slide */
     content: "";
     position: absolute;
-    top: 0; left: 0; right: 0;
+    inset: 0 0 auto 0;
     height: 2px;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     background: linear-gradient(
       90deg,
       transparent 0%,
       var(--accent-bright, #7cb2d4) 50%,
       transparent 100%
     );
-    opacity: 0.7;
+    opacity: 0.55;
   }
 
-  .feature-head {
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-counter {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-tertiary, #6e7681);
+    letter-spacing: 0.06em;
+  }
+  .hero-counter [data-carousel-index] {
+    color: var(--accent-bright, #7cb2d4);
+    font-weight: 500;
+  }
+
+  .hero-nav {
+    display: flex;
+    gap: 0.35rem;
+  }
+  .hero-btn {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 0;
+  }
+  .hero-btn:hover {
+    border-color: var(--accent, #7cb2d4);
+    color: var(--accent-bright, #7cb2d4);
+  }
+  .hero-btn:active {
+    transform: scale(0.94);
+  }
+
+  /* Slides viewport — stacked; active one fades in over the others */
+  .hero-viewport {
+    position: relative;
+    min-height: 340px;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .hero-slide.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Oversized version watermark drifting behind content */
+  .hero-watermark {
+    position: absolute;
+    right: -0.05em;
+    bottom: -0.25em;
+    font-family: var(--font-mono);
+    font-size: clamp(7rem, 18vw, 13rem);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: rgba(124, 178, 212, 0.06);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 68ch;
+  }
+
+  .hero-head {
     display: flex;
     align-items: center;
     gap: var(--space-md);
-    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
   }
 
-  .feature-icon {
+  .hero-icon {
     display: flex;
     align-items: center;
     color: var(--accent-bright);
   }
 
-  .feature-name {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 600;
-    color: var(--text-primary);
+  .hero-meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
     flex: 1;
-    margin: 0;
-    line-height: var(--leading-tight);
+    font-family: var(--font-mono);
+  }
+  .hero-version {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--accent-bright, #7cb2d4);
+    letter-spacing: 0.01em;
+  }
+  .hero-date {
+    font-size: 0.82rem;
+    color: var(--text-tertiary, #6e7681);
+  }
+  .hero-date::before {
+    content: "·";
+    margin-right: var(--space-sm);
+    color: var(--text-tertiary, #6e7681);
   }
 
-  .feature-status {
+  .hero-status {
     font-family: var(--font-mono);
     font-size: var(--badge-text);
     text-transform: uppercase;
@@ -361,38 +572,24 @@ function formatDate(d?: string): string {
     flex-shrink: 0;
   }
 
-  /* Version + date pill row, sits between head and description */
-  .feature-meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    margin: calc(-1 * var(--space-md)) 0 var(--space-md);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-  }
-  .feature-version {
-    color: var(--accent-bright, #7cb2d4);
-    font-weight: 500;
-    letter-spacing: 0.01em;
-  }
-  .feature-date {
-    color: var(--text-tertiary, #6e7681);
-  }
-  .feature-date::before {
-    content: "·";
-    margin-right: var(--space-sm);
-    color: var(--text-tertiary, #6e7681);
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: var(--leading-tight);
+    letter-spacing: -0.015em;
   }
 
-  .feature-desc {
+  .hero-desc {
     font-family: var(--font-body);
-    font-size: var(--body-text);
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
-    margin: 0 0 var(--space-md) 0;
-    flex-grow: 1;
+    margin: 0;
   }
-  .feature-desc :global(code) {
+  .hero-desc :global(code) {
     font-family: var(--font-mono);
     font-size: 0.88em;
     color: var(--text-primary);
@@ -401,28 +598,109 @@ function formatDate(d?: string): string {
     border-radius: 4px;
   }
 
-  .feature-link {
+  .hero-link {
     display: inline-flex;
     align-items: center;
     gap: 0.4em;
-    margin-top: auto;
-    padding-top: var(--space-sm);
-    font-size: 0.88rem;
+    margin-top: var(--space-sm);
+    font-size: 0.92rem;
     color: var(--accent, #7cb2d4);
     text-decoration: none;
     font-weight: 500;
     transition: transform 0.2s ease, color 0.15s;
     align-self: flex-start;
   }
-  .feature-link:hover {
+  .hero-link:hover {
     color: var(--accent-bright, #8fc4e6);
     transform: translateX(3px);
   }
-  .feature-link-icon {
+  .hero-link span:first-child {
     font-family: var(--font-mono);
     font-size: 1.2em;
     line-height: 1;
     opacity: 0.7;
+  }
+
+  /* Dots + progress bar */
+  .hero-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-dots {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .hero-dot {
+    width: 8px;
+    height: 8px;
+    border: none;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--border-subtle, #30363d);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .hero-dot:hover {
+    background: var(--text-tertiary, #6e7681);
+  }
+  .hero-dot[aria-selected="true"] {
+    background: var(--accent-bright, #7cb2d4);
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  .hero-progress {
+    height: 2px;
+    background: var(--border-subtle, #30363d);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .hero-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(
+      90deg,
+      var(--accent, #7cb2d4) 0%,
+      var(--accent-bright, #8fc4e6) 100%
+    );
+    border-radius: 2px;
+  }
+
+  /* Respect reduced-motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide {
+      transition: opacity 0.1s linear;
+      transform: none !important;
+    }
+    .hero-progress-bar {
+      transition: none !important;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero-carousel {
+      padding: var(--space-md) var(--space-lg) var(--space-lg);
+    }
+    .hero-viewport {
+      min-height: 380px;
+    }
+    .hero-watermark {
+      font-size: 7rem;
+    }
+    .hero-head {
+      gap: 0.65rem;
+    }
+    .hero-meta {
+      flex: 1 0 100%;
+      order: 3;
+    }
   }
 
   /* ── Changelog Link ── */
