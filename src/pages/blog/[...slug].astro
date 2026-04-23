@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ListenToPost from '../../components/ListenToPost.astro';
 import { formatDate, authorBadge, blogPostUrl, estimateReadTime } from '../../lib/blog';
 
 export async function getStaticPaths() {
@@ -73,6 +74,8 @@ const blogJsonLd = {
       </header>
 
       <p class="article-lede">{post.data.description}</p>
+
+      <ListenToPost slug={post.id.replace(/\.mdx?$/, '')} />
 
       <div class="article-content">
         <Content />

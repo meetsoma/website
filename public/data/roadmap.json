@@ -23,13 +23,11 @@
       "title": "Same-cycle audit patches",
       "features": {
         "added": [
-          "`soma model-sync` — audit + set `defaultModel` across global + project + any crawled `.soma/` dirs. `--set <id> --crawl --yes` puts every project on the current model in one command. Bundled default is claude-opus-4-7."
+          "**soma model-sync** — one command puts every project on the current model. Audits global + project + any crawled `.soma/` dirs and bumps them together. Bundled default is `claude-opus-4-7`."
         ],
         "fixed": [
-          "TmuxDriver shell-quoting — `$(...)` and backticks in task text used to expand on the parent shell before tmux saw them. Tasks now arrive at children as literal text.",
-          "soma-model-sync apostrophe in model id no longer breaks the python write path (env-pass instead of shell-interpolation).",
-          "Unused shEscape helper removed; import order tidied on two files.",
-          "`.gitignore` now excludes `__pycache__/` + `*.pyc` — an accidentally-tracked `.pyc` file in v0.21.1 dev commits confirmed not to have shipped to users (release-ignore filtered)."
+          "Task text with shell characters (`$(…)`, backticks, apostrophes) now arrives at background children exactly as written. Previously a literal task string could be interpreted before the child saw it.",
+          "`soma model-sync` no longer chokes on model ids containing an apostrophe — the write path takes values through the environment instead of interpolating them into shell."
         ]
       },
       "blogPost": "four-commands-after-an-update",
@@ -41,21 +39,21 @@
       "title": "Children control panel + tmux baseline",
       "features": {
         "added": [
-          "Background children now work for every user — tmux is the shipping baseline driver. Detached sessions by default; attach on demand with `tmux attach -t soma-child-<id>` to watch a child work.",
-          "`children tail / steer / kill / harvest` — completes the control panel. Peek a child's pane without focusing it, inject a steering message, abort a stuck child, or read the MLR + auto-cleanup the registry entry.",
-          "`soma terminals` CLI — detect, configure, and diagnose terminal drivers. `soma terminals prefer tmux` persists your choice to `~/.soma/settings.json`.",
-          "`[Soma Boot — /reloaded]` boot message — when you run `/reload`, the agent immediately knows the cache was just busted and any 'needs /reload' work from the prior turn is now live.",
-          "Background-delegation guide (`docs/guides/background-delegation.md`) — full user-facing walkthrough with install hints, attach-on-demand pattern, and troubleshooting."
+          "**Background children work for every user** — tmux is the shipping baseline. `delegate(background:true)` spawns a child in a detached session; attach any time with `tmux attach -t soma-child-<id>` to watch it work.",
+          "**children tail / steer / kill / harvest** — the full control panel. Peek a child's pane without focusing it, inject a steering message, stop a stuck child, or read its reflection and clean up.",
+          "**soma terminals CLI** — pick your terminal driver. `soma terminals prefer tmux` saves your choice for every future delegation.",
+          "`/reload` greets you with `[Soma Boot — /reloaded]` so you know the reload took effect and any \"needs /reload\" work from last turn is live.",
+          "Background-delegation guide with install hints, the attach-on-demand pattern, and troubleshooting."
         ],
         "changed": [
-          "Model aliases (`haiku`, `sonnet`, `opus`) pre-resolve to fully-qualified ids before spawning children — no more accidental bedrock routing in the child's environment.",
-          "`children list` auto-reconciles against driver state on every call — a closed pane flips to `completed` without needing an explicit `kill`."
+          "Model aliases (`haiku`, `sonnet`, `opus`) resolve to full model ids before a child spawns, so children always launch with the model you asked for.",
+          "`children list` keeps itself honest — a closed pane flips to `completed` without needing an explicit `kill`."
         ],
         "fixed": [
-          "`delegate(background:true)` was broken since Phase A shipped — cmux path resolution never resolved in the extension context. Fixed; driver-backed spawn now works end-to-end.",
-          "Boot resume delta-diff branch was silently dead since written — filter read the wrong field (`.content` vs `.data`). Resume with changes now actually shows the delta.",
-          "pi-tui: tall clipboard screenshots no longer cover the TUI (inline image height capped via `PI_TUI_MAX_IMAGE_ROWS`).",
-          "Compaction summaries no longer accumulate macOS clipboard paste-temp and `/tmp` screenshot paths across turns."
+          "`delegate(background:true)` now works end-to-end. It had been silently broken since Phase A shipped.",
+          "`/reload` on a session with changes shows the actual delta again, instead of reporting \"no changes.\"",
+          "Tall screenshots pasted into the TUI no longer cover the conversation.",
+          "Compaction summaries no longer accumulate stray temp-file paths across turns."
         ]
       },
       "blogPost": "four-commands-after-an-update",
@@ -67,21 +65,21 @@
       "title": "Cache Economics + Discoverability + Self-Knowledge",
       "features": {
         "added": [
-          "Recent Ancestry auto-injects the last 3 session-log entries into the preload, so the next-self sees continuity without paying the cached-prefix cost.",
-          "`soma tool` from the shell + `capabilities()` from inside a session — two callable ways to discover what tools the agent has registered.",
-          "`soma new muscle <name>` and `soma new protocol <name>` — scaffold a new muscle or protocol in one command, frontmatter pre-filled.",
-          "Background delegation: `delegate(background:true)` spawns a child soma in a new pane and returns immediately; `children list` shows status across sessions.",
-          "`soma children spawn / list / watch / tail / kill` shipped to all users — shell-side and in-session views share one registry."
+          "**Recent Ancestry** — the preload auto-injects your last three session-log entries, so the next self sees continuity without paying the cached-prefix cost.",
+          "**soma tool** from the shell + **`capabilities()`** inside a session — two ways to see what tools the agent actually has available.",
+          "**soma new muscle** and **soma new protocol** — scaffold a new skill or rule in one command, frontmatter pre-filled.",
+          "**Background delegation**: `delegate(background:true)` spawns a child and returns immediately; `children list` shows status across sessions.",
+          "`soma children spawn / list / watch / tail / kill` available to all users — shell-side and in-session views share one registry."
         ],
         "changed": [
-          "Agent Notes moved out of `body/ecosystem.md` to `memory/notes/soma-log.md`. Cached prompt prefix shrank ~25% per boot.",
-          "Migration system became data-driven — `## Doctor Actions` blocks in the migration map declare what doctor should backfill. New settings additions no longer need CLI changes.",
-          "Terminal tab title now reads `σ - <session> - <cwd>`."
+          "Cached prompt prefix shrank ~25% per boot. Agent Notes moved to `memory/notes/soma-log.md` where they're read, not carried in the cached context.",
+          "Migration system is data-driven — `## Doctor Actions` blocks in the migration map declare what doctor should backfill. New settings additions no longer need CLI changes.",
+          "Terminal tab title reads `σ — <session> — <cwd>`, so you can tell two Soma sessions apart at a glance."
         ],
         "fixed": [
-          "Pi's preventive OAuth-billing boot warning suppressed — real billing errors are still caught at runtime and shown contextually.",
-          "13 settings keys backfilled idempotently for projects upgrading from any version since v0.11. User customizations preserved.",
-          "5 Pro scripts (soma seam, refactor, scrape, github, browser) work for every install during the v0.21.x beta — no friction."
+          "Pi's preventive OAuth-billing warning no longer fires on boot. Real billing errors are still caught at runtime and shown with context.",
+          "13 settings keys backfilled idempotently for projects upgrading from any version since v0.11 — your customizations are preserved.",
+          "Five Pro scripts (`soma seam / refactor / scrape / github / browser`) work for every install during the v0.21.x beta."
         ]
       },
       "tagline": "Cache economics + discoverability + self-knowledge. ~25% smaller cached prefix, callable tool registry, one-command muscle scaffolding."

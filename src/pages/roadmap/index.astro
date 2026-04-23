@@ -153,18 +153,16 @@ function formatDate(d?: string): string {
                   <div class="hero-meta">
                     {feature.version && <span class="hero-version">{feature.version}</span>}
                     {feature.date && <span class="hero-date">{formatDate(feature.date)}</span>}
+                    <span
+                      class="hero-status"
+                      style={`color: ${feature.statusColor}; border-color: ${feature.statusColor}`}
+                    >
+                      {feature.status}
+                    </span>
                   </div>
                 </div>
 
-                <div class="hero-titlebar">
-                  <h3 class="hero-title">{feature.name}</h3>
-                  <span
-                    class="hero-status"
-                    style={`color: ${feature.statusColor}; border-color: ${feature.statusColor}`}
-                  >
-                    {feature.status}
-                  </span>
-                </div>
+                <h3 class="hero-title">{feature.name}</h3>
 
                 <p class="hero-desc" set:html={feature.description} />
 
@@ -556,10 +554,11 @@ function formatDate(d?: string): string {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    /* Text column wraps to ~3/5 of the card so the extracted visual
-     * has the remaining ~2/5 to live in without fighting the prose. */
-    width: 60%;
-    max-width: 60%;
+    /* Content column is full-width structurally — individual children
+     * (.hero-desc, .hero-link) clamp themselves to ~3/5 so the art
+     * layer on the right stays breathable. The title row escapes that
+     * clamp so SHIPPED always floats right of the title. */
+    width: 100%;
   }
 
   .hero-head {
@@ -580,16 +579,12 @@ function formatDate(d?: string): string {
     align-items: baseline;
     gap: var(--space-sm);
     flex: 1;
+    flex-wrap: wrap;
     font-family: var(--font-mono);
+    row-gap: 0.35rem;
   }
 
-  /* Title + status pill on one line — pill sits flush-right of the title */
-  .hero-titlebar {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    flex-wrap: wrap;
-  }
+  /* (hero-titlebar removed — status moved into hero-meta) */
   .hero-version {
     font-size: 0.95rem;
     font-weight: 500;
@@ -606,16 +601,22 @@ function formatDate(d?: string): string {
     color: var(--text-tertiary, #6e7681);
   }
 
+  /* Status pill — small, sits inline with version · date in the meta row. */
   .hero-status {
     font-family: var(--font-mono);
-    font-size: var(--badge-text);
+    font-size: 0.68rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: var(--space-xs) var(--space-md);
+    letter-spacing: 0.08em;
+    padding: 0.12em 0.6em;
     border-radius: var(--radius-full);
     border: 1px solid;
     background: transparent;
     flex-shrink: 0;
+    line-height: 1.5;
+  }
+  /* Pill sits after date; flex gap on .hero-meta provides the visual break. */
+  .hero-meta .hero-status {
+    margin-left: 0.1rem;
   }
 
   .hero-title {
@@ -627,9 +628,6 @@ function formatDate(d?: string): string {
     line-height: var(--leading-tight);
     letter-spacing: -0.015em;
   }
-  .hero-titlebar .hero-status {
-    align-self: center;
-  }
 
   .hero-desc {
     font-family: var(--font-body);
@@ -637,6 +635,8 @@ function formatDate(d?: string): string {
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
     margin: 0;
+    /* Prose stops at ~3/5 so the hero art has room on the right */
+    max-width: 60%;
   }
   .hero-desc :global(code) {
     font-family: var(--font-mono);
@@ -658,6 +658,7 @@ function formatDate(d?: string): string {
     font-weight: 500;
     transition: transform 0.2s ease, color 0.15s;
     align-self: flex-start;
+    max-width: 60%;
   }
   .hero-link:hover {
     color: var(--accent-bright, #8fc4e6);
@@ -733,9 +734,10 @@ function formatDate(d?: string): string {
       flex: 1 0 100%;
       order: 3;
     }
-    /* On narrow screens the visual drops behind the text at low opacity */
-    .hero-content {
-      width: 100%;
+    /* On narrow screens the visual drops behind the text at low opacity.
+     * Description relaxes to full width since the art is no longer a
+     * side-by-side peer — it's a background tint. */
+    .hero-desc, .hero-link {
       max-width: 100%;
     }
     .hero-art {
