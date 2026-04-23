@@ -1,0 +1,62 @@
+{
+  "birthday-release": {
+    "durationSec": 423.11,
+    "sizeKB": 1653
+  },
+  "cache-and-the-self-knowing-agent": {
+    "durationSec": 195.79,
+    "sizeKB": 765
+  },
+  "eating-our-own-memory": {
+    "durationSec": 523.37,
+    "sizeKB": 2044
+  },
+  "five-things-had-to-go-wrong": {
+    "durationSec": 386.84,
+    "sizeKB": 1511
+  },
+  "four-commands-after-an-update": {
+    "durationSec": 416.37,
+    "sizeKB": 1626
+  },
+  "how-much-does-a-screenshot-cost": {
+    "durationSec": 311.3,
+    "sizeKB": 1216
+  },
+  "introducing-soma": {
+    "durationSec": 365.61,
+    "sizeKB": 1428
+  },
+  "let-pi-compile": {
+    "durationSec": 129.12,
+    "sizeKB": 756
+  },
+  "memory-is-not-a-feature": {
+    "durationSec": 563.58,
+    "sizeKB": 2201
+  },
+  "show-the-machinery": {
+    "durationSec": 188.13,
+    "sizeKB": 735
+  },
+  "somaverse-preview": {
+    "durationSec": 518.78,
+    "sizeKB": 2026
+  },
+  "team-soma": {
+    "durationSec": 277.41,
+    "sizeKB": 1084
+  },
+  "tests-that-bailed-silently": {
+    "durationSec": 314.25,
+    "sizeKB": 1227
+  },
+  "the-archaeology-session": {
+    "durationSec": 523.96,
+    "sizeKB": 2047
+  },
+  "the-backup-you-didnt-know-you-had": {
+    "durationSec": 221.14,
+    "sizeKB": 864
+  }
+}

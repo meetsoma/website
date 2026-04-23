@@ -16,6 +16,13 @@ interface Props {
   src: string;
   title: string;
   sizeKB?: number;
+  /**
+   * Pre-computed duration (seconds). Edge TTS MP3s often lack Xing/Info
+   * headers, so browsers can't determine total duration from metadata.
+   * Passing this as a build-time prop makes "5:32" show immediately.
+   * Falls back to client-side audio.duration if omitted.
+   */
+  durationSec?: number;
 }
 
 const SPEEDS = [1, 1.25, 1.5, 1.75, 2] as const;
@@ -28,13 +35,13 @@ function fmtTime(s: number): string {
   return `${m}:${sec.toString().padStart(2, '0')}`;
 }
 
-export default function NovaPlayer({ src, title, sizeKB }: Props) {
+export default function NovaPlayer({ src, title, sizeKB, durationSec }: Props) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(durationSec != null);
   const [current, setCurrent] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(durationSec ?? 0);
   const [speed, setSpeed] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
@@ -106,7 +113,11 @@ export default function NovaPlayer({ src, title, sizeKB }: Props) {
         onEnded={() => setPlaying(false)}
         onLoadedMetadata={(e) => {
           const a = e.currentTarget as HTMLAudioElement;
-          setDuration(a.duration);
+          // Only use client-side duration if we didn't receive a build-time one
+          // OR the client value is finite (Edge TTS MP3s often report Infinity).
+          if (durationSec == null && isFinite(a.duration) && a.duration > 0) {
+            setDuration(a.duration);
+          }
           setReady(true);
         }}
         onTimeUpdate={(e) => setCurrent((e.currentTarget as HTMLAudioElement).currentTime)}
