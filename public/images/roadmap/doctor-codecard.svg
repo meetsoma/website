@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.00 0.00 928.00 288.00" role="img" aria-hidden="true">
+<defs>
+    <linearGradient id="bg-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#12161f"></stop>
+      <stop offset="100%" stop-color="#060910"></stop>
+    </linearGradient>
+  </defs>
+<g>
+    <rect x="0" y="0" width="920" height="280" rx="14" fill="#0d131f" stroke="#1a2535" stroke-width="1.5"></rect>
+    <!-- line numbers column -->
+    <rect x="0" y="0" width="56" height="280" rx="14" fill="#0a0f18"></rect>
+    <rect x="44" y="0" width="12" height="280" fill="#0a0f18"></rect>
+
+    <!-- Line numbers -->
+    <g font-family="'SF Mono', monospace" font-size="15px" fill="#30363d" text-anchor="end">
+      <text x="42" y="52">47</text>
+      <text x="42" y="95">48</text>
+      <text x="42" y="138">49</text>
+      <text x="42" y="181">50</text>
+      <text x="42" y="224">51</text>
+    </g>
+
+    <!-- Code -->
+    <g font-family="'SF Mono', monospace" font-size="22px">
+      <!-- Comment -->
+      <text x="78" y="52" fill="#6e7681" font-style="italic">// check if project needs upgrade</text>
+      <!-- The bug line -->
+      <text x="78" y="95">
+        <tspan fill="#f0883e">if</tspan>
+        <tspan fill="#c9d1d9"> (projectV </tspan>
+        <tspan fill="#f05e5e" font-weight="700">&lt;</tspan>
+        <tspan fill="#c9d1d9"> agentV) { </tspan>
+        <tspan fill="#6494be">upgrade</tspan>
+        <tspan fill="#c9d1d9">(); }</tspan>
+      </text>
+
+      <!-- blank -->
+      <!-- REPL demonstration -->
+      <text x="78" y="181" fill="#6e7681">&gt; </text>
+      <text x="102" y="181" fill="#c9d1d9">"0.6.2" &lt; "0.10.0"</text>
+      <text x="78" y="224" fill="#c9d1d9">&lt; </text>
+      <text x="102" y="224" fill="#f05e5e" font-weight="700">false</text>
+
+      <!-- Annotation pointing at the result -->
+      <text x="260" y="224" fill="#f0883e" font-style="italic" font-size="17px">  ← wrong.</text>
+    </g>
+  </g>
+</svg>

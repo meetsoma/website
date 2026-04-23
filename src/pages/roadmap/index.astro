@@ -20,7 +20,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     version: 'v0.21.1',
     date: '2026-04-22',
     blogPost: 'four-commands-after-an-update',
-    image: '/images/blog/og-four-commands-after-an-update.svg',
+    image: '/images/roadmap/children-terminal.svg',
   },
   {
     name: 'Cache Economics',
@@ -30,7 +30,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     statusColor: 'var(--green-bright, #4ade80)',
     version: 'v0.21.0',
     date: '2026-04-22',
-    image: '/images/blog/og-cache-and-self-knowing-agent.svg',
+    image: '/images/roadmap/cache-economics-mascot.svg',
   },
   {
     name: 'Cache Stickiness',
@@ -41,7 +41,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     version: 'v0.20.3',
     date: '2026-04-20',
     blogPost: 'why-your-claude-bill-spiked',
-    image: '/images/blog/og-cache-costs.svg',
+    image: '/images/roadmap/cache-stickiness-brokenclaw.svg',
   },
   {
     name: 'Model Switching & Opus 4.7',
@@ -61,7 +61,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     version: 'v0.12.0',
     date: '2026-03-20',
     blogPost: 'the-operating-system',
-    image: '/images/blog/og-the-operating-system.svg',
+    image: '/images/roadmap/somaverse-terminal.svg',
   },
   {
     name: 'Doctor & Migration',
@@ -72,7 +72,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     version: 'v0.11.0',
     date: '2026-03-01',
     blogPost: 'the-doctor-that-never-worked',
-    image: '/images/blog/og-the-doctor-that-never-worked.svg',
+    image: '/images/roadmap/doctor-codecard.svg',
   },
 ];
 
@@ -501,48 +501,53 @@ function formatDate(d?: string): string {
     font-weight: 700;
     line-height: 0.85;
     letter-spacing: -0.04em;
-    color: rgba(124, 178, 212, 0.06);
+    color: rgba(124, 178, 212, 0.035);
     pointer-events: none;
     user-select: none;
     white-space: nowrap;
     z-index: 0;
   }
 
-  /* Decorative art layer — pulled from the related blog's OG image.
-   * Sits on top of the version watermark but under the content. Fades
-   * via a linear gradient mask so the text never has to compete. */
+  /* Decorative art layer — a single hero component extracted from the
+   * related blog's OG SVG (via scripts/svg-extract-component.mjs).
+   * Sits in the right ~40% of the card. Intentionally allowed to crop
+   * past the right edge: cutoff signals this is a slice from a larger
+   * story, not a contained image. Left edge fades into the prose. */
   .hero-art {
     position: absolute;
     top: 50%;
-    right: -6%;
+    right: 0;
     transform: translateY(-50%);
-    width: 58%;
-    max-width: 680px;
+    /* Component lives in the right pane, oversized so it crops */
+    width: 52%;
+    max-width: 560px;
     height: auto;
-    opacity: 0.22;
+    /* Cap height so tall components (the mascot) don't blow the card */
+    max-height: 88%;
+    object-fit: contain;
+    object-position: right center;
+    opacity: 0.7;
     pointer-events: none;
     user-select: none;
     z-index: 0;
     mask-image: linear-gradient(
       90deg,
       transparent 0%,
-      black 35%,
-      black 85%,
-      transparent 100%
+      black 22%,
+      black 100%
     );
     -webkit-mask-image: linear-gradient(
       90deg,
       transparent 0%,
-      black 35%,
-      black 85%,
-      transparent 100%
+      black 22%,
+      black 100%
     );
-    filter: saturate(0.85) contrast(1.05);
-    animation: artDrift 22s ease-in-out infinite;
+    filter: saturate(0.95);
+    animation: artDrift 18s ease-in-out infinite;
   }
   @keyframes artDrift {
     0%, 100% { transform: translate(0, -50%); }
-    50%      { transform: translate(-1%, -51%); }
+    50%      { transform: translate(-0.8%, -51%); }
   }
 
   .hero-content {
@@ -551,7 +556,10 @@ function formatDate(d?: string): string {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    max-width: 68ch;
+    /* Text column wraps to ~3/5 of the card so the extracted visual
+     * has the remaining ~2/5 to live in without fighting the prose. */
+    width: 60%;
+    max-width: 60%;
   }
 
   .hero-head {
@@ -725,11 +733,16 @@ function formatDate(d?: string): string {
       flex: 1 0 100%;
       order: 3;
     }
-    /* On narrow screens the OG image would compete with text — scale way down */
+    /* On narrow screens the visual drops behind the text at low opacity */
+    .hero-content {
+      width: 100%;
+      max-width: 100%;
+    }
     .hero-art {
       width: 80%;
-      right: -15%;
-      opacity: 0.12;
+      max-height: 60%;
+      right: -10%;
+      opacity: 0.18;
     }
     .hero-titlebar {
       gap: 0.65rem;
