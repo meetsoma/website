@@ -39,29 +39,27 @@ When a scoped call returns nothing, it prints a `💡 Try instead` hint for the 
 Function/class/section index with line numbers. Use this **before editing any file you haven't read recently**.
 
 ```bash
-$ soma code map somaverse/builds/local/extensions/workspace-tools.ts
+$ soma code map repos/agent/extensions/soma-addons/code.ts
 
- 48 │ const MAX_IMAGE_DIM = 1568;
-171 │ const SOMADIAN_URL = process.env.SOMADIAN_URL || ...
-176 │ function getSomadianToken(): string | null {
-244 │ export default function workspaceToolsExtension(pi: ExtensionAPI) {
-250 │   pi.registerTool({
-251 │       name: "workspace_status",
-309 │   pi.registerTool({
-310 │       name: "workspace_send",
-...
+ 30 │   // ── ANSI-stripping + soma code subprocess helper ──────────────────────────
+ 32 │ const ANSI_RE = /\u001b\[[0-9;]*m/g;
+ 35 │ function runCode(args: string[]): string {
+ 48 │ function cap(text: string, limit: number, hint: string): string {
+ 54 │   // ── Implementation functions ──────────────────────────────────────────
+134 │   // ── Route registration ───────────────────────────────────────────────
+136 │ export function register(route: any): void {
 ```
 
 What it picks up (per-language):
 
 | Language | Captures |
 |---|---|
-| TypeScript/JavaScript | `export {function,class,const,let,interface,type,enum}`, unexported top-level declarations, class methods, `pi.registerTool`/`pi.registerCommand`/`somaRegisterTool` blocks (with their `name:` line), `===` and `───` section dividers |
+| TypeScript/JavaScript | `export {function,class,const,let,interface,type,enum}`, unexported top-level declarations, class methods, `pi.registerTool`/`pi.registerCommand`/`somaRegisterTool`/`route.provide` blocks (with their `name:` / cap-string line), `===` and `───` section dividers |
 | Bash | `foo()` function definitions, `case` branches, `CMD=…` dispatchers, `# ──` section headers |
 | CSS/SCSS | Selectors (`.class`, `#id`, `@media`, pseudos) and section comments |
 | Astro/Svelte/Vue | Frontmatter fences, `<script>`/`<style>`/`<template>` tags, imports, exports, top-level consts |
 
-`map` is also smart enough to show tool-registration blocks as green section markers with the tool name on the next line — so a 1,500-line extension like `workspace-tools.ts` with 28 tools becomes browsable in 60 lines of output.
+`map` is also smart enough to show tool-registration blocks as green section markers with the tool name on the next line — so a multi-hundred-line addon file like `somaverse-addons/workspace.ts` (10 `route.provide("somaverse:workspace.*")` caps) becomes browsable in under 30 lines of output.
 
 ### `soma code find <pattern> [path] [ext]`
 
@@ -116,7 +114,7 @@ extensions/
 ├── _tool-template.ts         2.1K
 ├── soma-boot.ts            132.0K
 ├── soma-breathe.ts          45.1K
-├── soma-code-tools.ts       18.7K
+├── soma-addons/             10.2K  (code, body, browser, docs)
 ...
 ```
 
@@ -138,13 +136,16 @@ TypeScript errors with surrounding code context. One-line summary per error + th
 
 ## Agent-side usage
 
-The same tools are exposed to the agent as Pi tools (via `extensions/soma-code-tools.ts`):
+The same tools are exposed to the agent via the `soma` meta-tool (from `extensions/soma-addons/code.ts`, v0.22.0+):
 
-- `code_find` — same as `soma code find`
-- `code_map` — same as `soma code map`
-- `code_refs` — same as `soma code refs`
-- `code_structure` — same as `soma code structure`
-- `code_blast` — symbol-blast-radius analysis (which files touch a symbol, severity-weighted)
+- `soma(op='call', cap='soma:code.find', args={pattern, path?, ext?, limit?})` — same as `soma code find`
+- `soma(op='call', cap='soma:code.map', args={file})` — same as `soma code map`
+- `soma(op='call', cap='soma:code.refs', args={symbol, path?, limit?})` — same as `soma code refs`
+- `soma(op='call', cap='soma:code.structure', args={path?})` — same as `soma code structure`
+- `soma(op='call', cap='soma:code.blast', args={symbol, path?})` — symbol-blast-radius analysis (which files touch a symbol, severity-weighted)
+- `soma(op='call', cap='soma:code.outline', args={path})` — markdown/text heading outline (was `file_outline`)
+
+Legacy flat names (`code_find`, `code_refs`, `code_map`, `code_structure`, `code_blast`, `file_outline`) were archived in v0.22.0; call via the namespaced `soma:*` caps now.
 
 Agents should prefer these over `Bash` running raw grep, for the same cache reasons that apply to humans: unbounded grep output bloats context.
 
@@ -174,7 +175,7 @@ Extension: **nothing to install** — `soma code` ships with every `soma init` i
 - The target is in `.gitignore` (often the right answer — don't un-ignore without reason).
 - The pattern has special regex characters. Escape or simplify.
 
-**Map shows nothing for my file type** — `soma code map` supports TS/JS/Bash/CSS/Astro/Svelte/Vue. For other languages, a `Read` with `file_outline` (for markdown) or just `cat` is the fallback.
+**Map shows nothing for my file type** — `soma code map` supports TS/JS/Bash/CSS/Astro/Svelte/Vue. For other languages, `soma code outline <file>` (markdown/text headings) or just `cat` is the fallback.
 
 **`pi.registerTool` blocks not appearing in map** — ensure the registration starts at column 0 or with standard indentation; the awk pattern matches common cases but can miss unusual formatting.
 

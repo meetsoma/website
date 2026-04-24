@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via _tools.md, and the bundled set
 status: active
-updated: 2026-04-22
+updated: 2026-04-19
 ---
 
 # Tools
@@ -124,12 +124,31 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 | `delegate` | `soma-delegate.ts` | Spawn a focused child agent for a bounded task. Synchronous by default; set `background:true` for a detached terminal session. **Hardwired.** See [guides/background-delegation.md](guides/background-delegation.md). |
 | `children` | `soma-delegate.ts` | Inspect/manage background children spawned via `delegate(background:true)`. Ops: `list` / `tail` / `steer` / `kill` / `harvest`. See [guides/background-delegation.md](guides/background-delegation.md). |
 | `capabilities` | `soma-capabilities.ts` | Introspect the tool registry. `op:'list'` — all tools; `op:'detail', name:'<tool>'` — full guidance. |
-| `code_find` | `soma-code-tools.ts` | Grep with `file:line` output. Respects `.gitignore`. |
-| `code_map` | `soma-code-tools.ts` | Function/class/method index for one file (TS/JS/CSS/Bash). |
-| `code_refs` | `soma-code-tools.ts` | Symbol references split into DEF (definition) vs USE (usage). |
-| `code_structure` | `soma-code-tools.ts` | Directory tree with sizes. Respects `.gitignore`. |
-| `code_blast` | `soma-code-tools.ts` | Every file touching a symbol with severity — pre-deletion check. |
-| `file_outline` | `soma-code-tools.ts` | Markdown/text headings with line numbers — cheap orientation. |
+| `soma` (`cap='soma:code.find'`) | `soma-addons/code.ts` | Grep with `file:line` output. Respects `.gitignore`. |
+| `soma` (`cap='soma:code.map'`) | `soma-addons/code.ts` | Function/class/method index for one file (TS/JS/CSS/Bash). |
+| `soma` (`cap='soma:code.refs'`) | `soma-addons/code.ts` | Symbol references split into DEF (definition) vs USE (usage). |
+| `soma` (`cap='soma:code.structure'`) | `soma-addons/code.ts` | Directory tree with sizes. Respects `.gitignore`. |
+| `soma` (`cap='soma:code.blast'`) | `soma-addons/code.ts` | Every file touching a symbol with severity — pre-deletion check. |
+| `soma` (`cap='soma:code.outline'`) | `soma-addons/code.ts` | Markdown/text headings with line numbers — cheap orientation. (Was `file_outline`.) |
+| `soma` (`cap='soma:body.slots'`) | `soma-addons/body.ts` | Slot map of `_mind.md` with per-slot cache-impact. Run before editing body templates. |
+| `soma` (`cap='soma:body.cost'`) | `soma-addons/body.ts` | Cache-invalidation cost of editing a specific slot. args: `{slot}`. |
+| `soma` (`cap='soma:body.audit'`) | `soma-addons/body.ts` | Heuristic audit of the body compile: duplicate slots, missing files, cache-unfriendly ordering. |
+| `soma` (`cap='soma:docs.list|show|search'`) | `soma-addons/docs.ts` | Bundled docs: list, read by name, full-text search. |
+| `soma` (`cap='soma:browser.*'`) | `soma-addons/browser.ts` | Browser automation via CDP: 20 caps (navigate, screenshot, tabs, evaluate, setup, config, status, …). Works direct-CDP or via bridge. |
+| `soma` (`cap='soma:agent.delegate'`) | `soma-addons/agent.ts` | Spawn a child agent. args: `{task, role?, model?, background?, terminal?}`. Sync by default; `background:true` returns immediately + registers in children.json. |
+| `soma` (`cap='soma:agent.list|tail|steer|kill|harvest|focus'`) | `soma-addons/agent.ts` | Manage background children. `focus` = cmux focus-pane / tmux attach hint. |
+| `soma` (`cap='soma:focus.show|set|clear|dry_run'`) | `soma-addons/focus.ts` | Boot-focus primer. `set <keyword>` seam-traces + primes next session's MAP + muscles. |
+| `soma` (`cap='soma:new.muscle|protocol'`) | `soma-addons/new.ts` | Crystallize a pattern. Scaffolds `.soma/amps/muscles/<name>.md` or `.../protocols/<name>.md` with frontmatter. args: `{name, description?, tags?, global?, force?}`. |
+| `soma` (`cap='soma:terminals.list|detect|status|prefer|doctor'`) | `soma-addons/terminals.ts` | Terminal-driver management for `soma:agent.delegate(background:true)`. Detect + prefer a driver (tmux/cmux/ghostty/iterm/terminal). |
+| `somaverse` (`cap='somaverse:workspace.*'`) | `somaverse-addons/workspace.ts` | Panes / channels / seams (status, send, connect, snapshot, add_pane, remove_pane, list_plugins, …). Requires bridge + paired hub. |
+| `somaverse` (`cap='somaverse:plugin.read|write'`) | `somaverse-addons/plugin.ts` | Plugin-state persistence (Somadian-backed). |
+| `somaverse` (`cap='somaverse:ai.*'`) | `somaverse-addons/ai.ts` | Local semantic search: load model, index, search, embed. |
+| `somaverse` (`cap='somaverse:bridge.status|config|setup|start|stop|restart|logs'`) | `somaverse-addons/bridge.ts` | Local bridge daemon lifecycle from within the agent. Wraps `soma bridge` CLI. |
+| `somaverse` (`cap='somaverse:auth.status|start|logout'`) | `somaverse-addons/auth.ts` | Device pairing with the Somaverse hub. Long-running `start` opens browser + polls; `logout` removes `~/.soma/device-key`. |
+
+> **Namespace migration (v0.22.0, SX-594):** flat `code_*` / `file_outline` / `workspace_*` / `plugin_state_*` / `browser_*` / `ai_*` / `dev:body.*` / `delegate` / `children` tools were folded into the `soma:*` + `somaverse:*` meta-tools. Call via `soma(op='call', cap='soma:code.find', args={...})` or `somaverse(op='call', cap='somaverse:workspace.status')`. Use `soma(op='list')` / `somaverse(op='list')` to discover the full catalog. Legacy flat names archived to `extensions/_archive/sx594-flat-wrappers/`.
+>
+> **Cache math:** 1 meta-tool registration costs 1 tool slot in the prompt; addons are free (discovered at runtime via the factory). Flat tools cost linear: N tools = N slots. Post-SX-594 + SX-609, the prompt registers `soma` / `somaverse` / `dev` / `capabilities`, plus Pi builtins (`bash` / `read` / `write` / `edit`), plus the 10 `office_*` still parked as flat (SX-606). Approximately 19 slots for 100+ reachable caps.
 | `context_status` | `soma-context.ts` | Current context usage `{percent, tokens, contextWindow}`. |
 | `search` | `soma-search.ts` | Unified search — local ripgrep (default), Brave API, semantic (v0.20.3.1). |
 
@@ -218,16 +237,16 @@ With `somaRegisterTool` + the Soma compiler:
 
 ```
 Available tools:
-- code_find: code_find: grep with file:line output across a codebase, respects .gitignore (cap 500)
-- code_map: code_map: function/class/method index for a single file with line numbers
+- soma:code.find: grep with file:line output across a codebase, respects .gitignore (cap 500)
+- soma:code.map: function/class/method index for a single file with line numbers
 - ...
 
 In addition to the tools above, you may have access to other custom tools depending on the project.
 
 Guidelines:
-- [code_find] code_find output is file:line:text — chain with read(path, offset=line) to pull surrounding context
-- [code_find] If code_find returns 'capped at 500', narrow via path or ext params instead of raising limit
-- [code_map] Run code_map BEFORE editing a file you haven't read recently — shows structure at a glance
+- [soma:code.find] output is file:line:text — chain with read(path, offset=line) to pull surrounding context
+- [soma:code.find] If it returns 'capped at 500', narrow via path or ext params instead of raising limit
+- [soma:code.map] Run before editing a file you haven't read recently — shows structure at a glance
 - ...
 - Use bash for file operations like ls, rg, find
 - Be concise in your responses

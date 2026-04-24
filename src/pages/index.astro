@@ -4,6 +4,7 @@ import SectionHeader from '../components/SectionHeader.astro';
 import Icon from '../components/icons/SomaIcons.astro';
 import TemplateCarousel from '../components/islands/TemplateCarousel.tsx';
 import { getPublishedBlogPosts, blogPostUrl } from '../lib/blog';
+import somaVersion from '../data/soma-version.json';
 
 const posts = await getPublishedBlogPosts();
 const recentPosts = posts.slice(0, 3);
@@ -24,7 +25,7 @@ const recentPosts = posts.slice(0, 3);
 
       <h1 class="title">
         <span class="title-main">S<span class="title-sigma">σ</span>ma</span>
-        <a href="/verse/" class="beta-badge">verse</a>
+        <a href="/roadmap" class="beta-badge" title={`Soma ${somaVersion.badge} · released ${somaVersion.releaseDate} on the ${somaVersion.channel} channel — click for roadmap`}>{somaVersion.badge}</a>
       </h1>
 
       <p class="tagline">An AI agent that grows with you</p>

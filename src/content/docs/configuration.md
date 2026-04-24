@@ -776,8 +776,9 @@ Configure an allowlist of approved extension filenames. Extensions not on the li
       "soma-route.ts",
       "soma-scratch.ts",
       "soma-statusline.ts",
+      "soma-tools.ts",
       "bridge-connect.ts",
-      "workspace-tools.ts"
+      "somaverse-tools.ts"
     ],
     "warnOnUnlisted": true
   }

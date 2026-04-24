@@ -1,0 +1,8 @@
+{
+  "version": "0.22.0",
+  "badge": "v0.22.0",
+  "channel": "soma-beta",
+  "releaseDate": "2026-04-24",
+  "releaseNotes": "/blog/",
+  "_note": "Bumped on each public release. Update via soma-release.sh or manually when publishing to soma-beta/stable npm. Stable npm tracks a lagging version (currently v0.12.4) — this is the CURRENT version users get from `soma install` on the beta channel."
+}
