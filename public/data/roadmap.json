@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-22T23:00:00Z",
+  "generated": "2026-04-25T14:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -16,6 +16,27 @@
           "AppleScript terminal drivers (ghostty, iTerm, Terminal.app) — macOS-native background panes for users who want OS-level windows."
         ]
       }
+    },
+    {
+      "version": "0.22.0",
+      "date": "2026-04-24",
+      "title": "Namespaced meta-tools end-to-end + bridge CLI + init hardening",
+      "features": {
+        "added": [
+          "**soma bridge CLI** — start, stop, restart, status, logs, config, setup. First-class bridge daemon lifecycle that works standalone without Somaverse.",
+          "**Unified meta-tools** — `soma:agent.*` (delegate/children/harvest), `soma:focus.*`, `soma:new.*`, `soma:terminals.*`, `soma:docs.*`, `soma:body.*` — 40+ capabilities through a consistent namespace.",
+          "**Family-level discovery** — call any `soma:*` prefix bare to see what's available. Every meta-tool family has built-in help.",
+          "**Hash-based template refresh** — doctor auto-refreshes pristine body templates to current bundled versions; warns with diff path for customized files.",
+          "**Pi runtime 0.69.0** — 42 upstream commits including symlink session resolution, skills dedup, and prompt caching improvements."
+        ],
+        "fixed": [
+          "Pairing flow hardened — secret in header, umask, curl --fail, device-key shape-check.",
+          "Agent version reads from dist manifest instead of package.json — no more stale version stamps.",
+          "TUI no longer crashes after /reload — stale-context guard on footer render.",
+          "Smart partial-state handling on soma init — no more bail on edge cases."
+        ]
+      },
+      "tagline": "Namespaced meta-tools, bridge CLI, and init hardening — 40+ capabilities through a consistent namespace."
     },
     {
       "version": "0.21.1.1",
