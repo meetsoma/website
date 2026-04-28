@@ -1,8 +1,8 @@
 ---
 title: "Keybindings"
-description: "Keyboard shortcuts and how to customize them."
+description: "Keyboard shortcuts for Soma's terminal interface."
 section: "Reference"
-order: 6.2
+order: 18
 ---
 
 <!-- tldr -->

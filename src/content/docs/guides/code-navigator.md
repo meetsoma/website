@@ -1,14 +1,13 @@
 ---
 title: "Code Navigator"
-description: "soma code — map, find, refs, structure, lines, replace. Fast codebase navigation that saves context and prevents cache-busting raw greps."
+description: "soma code — agent-first codebase navigator with auto-detect, progressive scan, hard timeouts, and 12-language map support. (s01-4d36c6: missing-from-manifest fix)"
 section: "Guide"
 order: 28
 ---
 
-# Code Navigator
 
 <!-- tldr -->
-`soma code` is the codebase navigator both you and the agent should reach for first. Maps file structure (functions, classes, tool registrations), finds patterns with scoped grep, classifies symbol references as DEF vs USE, shows targeted line ranges. Works across TypeScript, JavaScript, Bash, CSS, Astro. Respects `.gitignore` by default — so you never accidentally dump minified `dist/` or `node_modules/` into your terminal (or your agent's context).
+`soma code` is the codebase navigator both you and the agent should reach for first. Maps file structure across **12 languages** (TS/JS, Rust, Python, Bash, CSS, Astro/Svelte/Vue, TOML, YAML, JSON, Markdown), auto-detects the project type from `cwd` markers (Cargo.toml → Rust, package.json → TS/JS, etc.), respects `.gitignore`, and never hangs the agent's session — every long search has a hard wall-clock timeout (30s default) plus stutter detection. Uses `ripgrep` when installed, falls back to `grep` transparently. **v3.1+ (s01-4d36c6)** adds rg type aliases (`type=rust` / `t=cpp` delegates to ripgrep's 215 built-in language types), per-command help with examples, fuzzy command correction (`fnd → find`), and three new subcommands: `stats` (count without listing), `files` (what would be searched), `types` (list aliases).
 <!-- /tldr -->
 
 ## Why it exists
@@ -55,23 +54,37 @@ What it picks up (per-language):
 | Language | Captures |
 |---|---|
 | TypeScript/JavaScript | `export {function,class,const,let,interface,type,enum}`, unexported top-level declarations, class methods, `pi.registerTool`/`pi.registerCommand`/`somaRegisterTool`/`route.provide` blocks (with their `name:` / cap-string line), `===` and `───` section dividers |
+| Rust | `pub fn` / `fn` / `async fn`, `struct` / `enum` / `trait` / `union`, `impl` / `impl T for U`, `mod`, `type`, `const` / `static`, `macro_rules!`, section dividers |
+| Python | `class`, `def` / `async def` (top-level + nested), `@decorator` lines, `UPPER_CASE = ...` constants, section dividers |
 | Bash | `foo()` function definitions, `case` branches, `CMD=…` dispatchers, `# ──` section headers |
 | CSS/SCSS | Selectors (`.class`, `#id`, `@media`, pseudos) and section comments |
 | Astro/Svelte/Vue | Frontmatter fences, `<script>`/`<style>`/`<template>` tags, imports, exports, top-level consts |
+| TOML | `[section]` and `[[array.section]]` headers, top-level `key = value` pairs |
+| YAML | top-level keys, `- name:` / `- id:` list items, section dividers |
+| JSON | top-level `"key":` pairs, nested object/array entry lines |
+| Markdown | `---` frontmatter delimiters, `#`/`##`/`###`/`####` heading hierarchy with indent |
 
 `map` is also smart enough to show tool-registration blocks as green section markers with the tool name on the next line — so a multi-hundred-line addon file like `somaverse-addons/workspace.ts` (10 `route.provide("somaverse:workspace.*")` caps) becomes browsable in under 30 lines of output.
 
-### `soma code find <pattern> [path] [ext]`
+### `soma code find <pattern> [path] [ext_or_type]`
 
-Scoped grep with `file:line:match` output. Respects `.gitignore`.
+Scoped grep with `file:line:match` output. Respects `.gitignore`. Uses `rg` (ripgrep) if installed, falls back to `grep`.
 
 ```bash
-soma code find "sendUserMessage"                        # all TS/JS/MD/Rust/etc in cwd
-soma code find "cache_control" node_modules ts          # scoped to a dir + ext
-soma code find "invalidateCompiledPrompt" repos/agent   # specific project
+soma code find "sendUserMessage"                  # auto-detects ext from cwd
+soma code find "fn main" . rs                     # ext list (Rust files only)
+soma code find "fn main" . type=rust              # rg type alias (delegates to ripgrep's --type)
+soma code find "console.log" . t=js               # short form
+soma code find "TODO" src                         # narrow path; default ext
 ```
 
-**Important behavior:** the pattern is a POSIX grep regex (not PCRE), and pipe-alternation like `foo|bar` requires the `-E` flag internally — use separate calls or a character class. If you need rich regex, pass it through and read the output carefully.
+**Auto-detect:** when `ext_or_type` is omitted, the script walks up from `cwd` looking for project markers (`Cargo.toml`, `package.json`, `pyproject.toml`, `go.mod`, `Gemfile`, `CMakeLists.txt`) and picks a sensible default. Monorepo case (`somadian/bins/<bin>/Cargo.toml`) is handled by also probing immediate children. Generic fallback covers all 12 supported languages.
+
+**Type aliases (v3.1+):** when ripgrep is installed, `type=NAME` delegates directly to rg's 215 built-in `--type` (`rust`, `cpp`, `cmake`, `bazel`, etc.). Run `soma code types` to list them. For grep-only fallback, a small built-in subset covers the common cases (`rust`, `py`, `ts`, `js`, `sh`, `cpp`, `c`, `go`, `ruby`, `md`, `toml`, `yaml`, `json`).
+
+**Regex flavor:** when backed by `rg`, you get Rust regex (use `|` for alternation, no escape). When backed by `grep`, it's POSIX BRE (escape as `\|`). The script's hint message tells you which engine is active.
+
+**Progressive scan with timeouts:** long searches print a heartbeat every 3 seconds (`scanning ... 6s • N matches`), enforce a hard 30-second wall-clock timeout, and abort gracefully if no progress for 9 seconds. Override via `SOMA_CODE_TIMEOUT=N`, `SOMA_CODE_STUTTER=N`, or `SOMA_CODE_QUIET=1`. **Result: the agent's session never hangs on a bad query.**
 
 When it finds zero matches, it prints three `💡 Try instead` suggestions — usually "broaden scope" or "try refs." Take them.
 
@@ -118,6 +131,57 @@ extensions/
 ...
 ```
 
+### `soma code blast <symbol> [path]`
+
+Blast radius before deletion or rename. Counts references per file, classifies risk (low/med/high), shows the first occurrence per file. Run before deleting any exported symbol.
+
+```bash
+$ soma code blast getAgentDir core/
+
+Files affected: 2
+
+  low  core/discovery.ts  (2 refs)
+       :14  import { getAgentDir } from "@mariozechner/pi-coding-agent";
+  low  core/prompt.ts  (1 refs)
+       :805  * @param agentDir - Agent installation directory (from getAgentDir())
+```
+
+Risk: `low` (≤3 refs), `med` (4-10), `high` (>10). For deeper analysis, pair with `soma refactor scan`.
+
+### `soma code stats <pattern> [path] [ext_or_type]`
+
+Count matches per file without listing them. Useful for "how many TODOs in the Rust crates?" without flooding context.
+
+```bash
+$ soma code stats TODO . type=rust
+crates/core/messages.rs:6
+crates/core/search.rs:22
+crates/printer/src/color.rs:3
+```
+
+### `soma code files [path] [ext_or_type]`
+
+Debug helper — shows which files **would** be searched if you ran `find` with the same scope. Useful when a search returns 0 matches and you suspect glob/ignore filtering is too tight.
+
+```bash
+$ soma code files . type=rust
+bins/cloud/crates/bin/src/main.rs
+bins/cloud/crates/sdk/src/capability.rs
+...
+```
+
+### `soma code types [name]`
+
+List ripgrep's 215 known type aliases (rust, cpp, bazel, cmake, ...). With `[name]`, show the globs for one type.
+
+```bash
+$ soma code types rust
+rust: *.rs
+
+$ soma code types cmake
+cmake: *.cmake, CMakeLists.txt
+```
+
 ### `soma code tsc-errors [path]`
 
 TypeScript errors with surrounding code context. One-line summary per error + the 3-line code window around it.
@@ -128,11 +192,45 @@ TypeScript errors with surrounding code context. One-line summary per error + th
 |---|---|
 | Understand a file's shape before editing | `soma code map <file>` |
 | Find all places a function is used | `soma code refs <name>` |
+| Check blast radius before deleting | `soma code blast <name>` |
 | Find a string in the codebase | `soma code find <pattern>` |
+| Same, but only counts (no listing) | `soma code stats <pattern>` |
+| Debug "why is my search empty?" | `soma code files [path] [type=...]` |
+| List supported language type aliases | `soma code types` |
 | See a specific line range | `soma code lines <file> <start> <end>` |
 | Survey a directory | `soma code structure <path>` |
 | See TypeScript errors | `soma code tsc-errors` |
 | Replace a specific line | `soma code replace <file> <line> <old> <new>` |
+
+## Help discovery
+
+Every command has its own `--help` with usage + 3 working examples + notes:
+
+```bash
+soma code --help              # top-level: detected project + engine + timeout + limit
+soma code find --help         # examples + auto-detect notes + regex flavor
+soma code map --help          # languages + per-file vs per-dir behavior
+soma code blast --help        # output explanation
+```
+
+**Fuzzy correct:** typo a command name and the script tells you what you meant.
+
+```bash
+$ soma code fnd
+✗ Unknown command: 'fnd'
+  Did you mean: find?
+  Run: soma-code find --help
+```
+
+## Environment knobs
+
+| Variable | Default | Effect |
+|---|---|---|
+| `SOMA_CODE_TIMEOUT` | 30 | Hard wall-clock timeout in seconds |
+| `SOMA_CODE_STUTTER` | 9 | Abort after N seconds without progress |
+| `SOMA_CODE_LIMIT` | 100 | Max hits to display (then suggests narrowing) |
+| `SOMA_CODE_HEARTBEAT` | 3 | Status interval in seconds |
+| `SOMA_CODE_QUIET` | 0 | Set to `1` to silence heartbeats (useful in scripts) |
 
 ## Agent-side usage
 
@@ -158,14 +256,17 @@ Every unscoped `grep -rn` that returns a large result adds its whole output to t
 
 ## Implementation
 
-Single bash script: `repos/agent/scripts/soma-code.sh` (~600 lines).
+Single bash script: `repos/agent/scripts/soma-code.sh` (~990 lines, v3.1).
 
 Core techniques:
 
-- `grep -rn` with auto-generated `--include=*.ext` flags derived from a default set (TS/JS/MD/Rust/Python/Go/Bash/CSS/Astro).
-- `--exclude-dir=node_modules` and similar, plus `.gitignore`-awareness via `git ls-files` filtering on the grep result.
-- Language-specific `awk` programs for `map` (see the map fn around `cmd_map`).
-- Consistent ANSI coloring and a uniform `file:line` output format.
+- **Engine detection:** `rg` if available (faster, smart-case, native `.gitignore` handling), `grep` fallback transparent.
+- **Args as arrays, not strings:** `--glob` / `--include` patterns built into bash arrays to prevent cwd-glob expansion before reaching the engine. (v3.0 had a real positional-shift bug in the cap impl; v3.1 uses arrays + auto-defaults to fix.)
+- **Project detection:** walks up from `cwd` for marker files (`Cargo.toml`, `package.json`, `pyproject.toml`, `go.mod`, `Gemfile`, `CMakeLists.txt`); falls back to immediate-children probe for monorepos; generic fallback for unrecognized projects.
+- **Progressive monitoring:** background subshell + watchdog loop tracks tmpfile line count. Heartbeat every `SOMA_CODE_HEARTBEAT`s, hard kill at `SOMA_CODE_TIMEOUT`, stutter abort at `SOMA_CODE_STUTTER` no-progress.
+- **Per-language map:** `awk` programs select section dividers + signature lines per file extension (`case ... esac` in `cmd_map`). 12 languages currently.
+- **Type alias delegation:** `type=NAME` is passed through to `rg --type NAME` (zero duplication of ripgrep's 215-entry table). Grep fallback maps a small subset manually.
+- **Pipefail-safe:** `set -uo pipefail` (no `-e`) since `grep`/`rg` exit 1 on no-match. Functions return 0 explicitly.
 
 Extension: **nothing to install** — `soma code` ships with every `soma init` in `.soma/amps/scripts/soma-code.sh` and is auto-discovered by the `soma <name>` router.
 
@@ -176,7 +277,7 @@ Extension: **nothing to install** — `soma code` ships with every `soma init` i
 - The target is in `.gitignore` (often the right answer — don't un-ignore without reason).
 - The pattern has special regex characters. Escape or simplify.
 
-**Map shows nothing for my file type** — `soma code map` supports TS/JS/Bash/CSS/Astro/Svelte/Vue. For other languages, `soma code outline <file>` (markdown/text headings) or just `cat` is the fallback.
+**Map shows nothing for my file type** — v3.1 supports TS/JS/JSX/MJS/MTS, Rust, Python, Bash, CSS/SCSS, Astro/Svelte/Vue, TOML, YAML, JSON, Markdown. For other languages, `soma code outline <file>` (markdown/text headings) or just `cat` is the fallback. To add a language, edit the `cmd_map` `case` block in `scripts/soma-code.sh` — each case is a self-contained `awk` program.
 
 **`pi.registerTool` blocks not appearing in map** — ensure the registration starts at column 0 or with standard indentation; the awk pattern matches common cases but can miss unusual formatting.
 

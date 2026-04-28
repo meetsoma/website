@@ -1,8 +1,8 @@
 ---
 title: "Skills"
-description: "Install and create skills — self-contained capability packages loaded on demand."
-section: "Extending"
-order: 5.3
+description: "Installable capabilities — from the hub or hand-crafted. Lazy-loaded on demand."
+section: "Customization"
+order: 15
 ---
 
 <!-- tldr -->
