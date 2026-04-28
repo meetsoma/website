@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-28T02:15:00Z",
+  "generated": "2026-04-28T02:30:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -158,6 +158,23 @@
       },
       "blogPost": "why-your-claude-bill-spiked",
       "tagline": "Cache stickiness: /reload keeps your session warm. No dollar cost for rapid iteration."
+    },
+    {
+      "version": "0.20.2.1",
+      "date": "2026-04-19",
+      "title": "Tool registry + three new tools",
+      "features": {
+        "added": [
+          "**`context_status` tool** \u2014 the agent can ground runway decisions on real numbers instead of estimating. Returns `{percent, tokens, contextWindow}`.",
+          "**`file_outline` tool** \u2014 markdown/text headings with line numbers. 10-15\u00d7 cheaper than reading the whole file when you just need orientation.",
+          "**`search` tool** (MVP) \u2014 unified search with pluggable backends. Default ripgrep over cwd; opt in to Brave web search by setting `BRAVE_API_KEY`.",
+          "**`_tools.md` configuration** in your body chain \u2014 disable bundled tools, override field defaults, declare custom tools. Project \u2192 parent \u2192 global, like the rest."
+        ],
+        "fixed": [
+          "Restart alert is calmer \u2014 quiet statusline tag instead of a banner when an extension changes."
+        ]
+      },
+      "tagline": "Tool registry + three new tools (`context_status`, `file_outline`, `search`); `_tools.md` opens the bundled set up to your control."
     },
     {
       "version": "0.20.2",
@@ -620,6 +637,19 @@
           "Settings system \u2014 JSON configuration for behavior tuning."
         ]
       }
+    },
+    {
+      "version": "0.1.0",
+      "date": "2026-03-08",
+      "title": "First breath",
+      "features": {
+        "added": [
+          "\u03c3\u1ff6\u03bc\u03b1 (s\u014dma) \u2014 *Greek for \"body.\"* Built on Pi with `piConfig.configDir: \".soma\"`. Identity from `.soma/identity.md` \u2014 discovered, not configured.",
+          "Memory structure \u2014 `.soma/memory/` for muscles, sessions, preloads.",
+          "Breath cycle \u2014 sessions exhale what was learned; next session inhales it."
+        ]
+      },
+      "tagline": "Soma's first breath \u2014 9 core modules, 4 extensions, logo through 36 SVG iterations."
     }
   ]
 }
