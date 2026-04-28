@@ -101,6 +101,9 @@ Settings files can exist at any level in the Soma chain:
     "graceSeconds": 30,
     "maxTokens": 0
   },
+  "cache": {
+    "retention": null
+  },
   "imageBudget": {
     "softAt": 8,
     "hardAt": 10
@@ -430,6 +433,8 @@ The key insight: the notice at 50% is *not* a shutdown signal. It's awareness. T
 
 **Why enable auto-breathe:** Without it, sessions run until the 85% emergency — which is too late for a clean handoff. Auto-breathe produces better preloads because the agent has time to write them thoughtfully instead of in a panic.
 
+**Status (auto-breathe + cache busting):** ⚠️ *Auto-breathe at the 70% rotate phase has been observed live to invalidate the full cached prompt prefix (~$4 per event) on at least one workspace (SX-709). The mechanism is not yet root-caused. Workaround: `breathe.auto: false`, which leaves the 85% safety net active. Once SX-709 is fixed, re-enable.*
+
 **Example: enable with defaults:**
 ```json
 {
@@ -575,6 +580,51 @@ Two-track version control: Soma's own `.soma/` state and your project code are c
   }
 }
 ```
+
+### Cache
+
+Controls Anthropic prompt-cache TTL.
+
+```json
+{
+  "cache": {
+    "retention": null
+  }
+}
+```
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `retention` | `null` | One of `null`, `"long"`, `"short"`, `"none"`. Controls how long Anthropic holds your cached prompt prefix. `null` inherits the `PI_CACHE_RETENTION` env var if set, otherwise Pi's default (`"short"`). |
+
+**Retention modes:**
+
+| Mode | TTL | Cost shape | When useful |
+|------|-----|-----------|-------------|
+| `"short"` (Pi default) | 5 minutes | 1.25× cache write, then read-discounted | Short bursts of activity; idle gaps shorter than ~5 min |
+| `"long"` | 1 hour | 2× cache write, then read-discounted | Sessions with idle gaps 5-60 min (e.g. you `soma -c` after a coffee break); breaks even with one re-hit within the hour |
+| `"none"` | n/a | No caching | Diagnostic only |
+| `null` | inherit shell `PI_CACHE_RETENTION`, else Pi default | varies | Default — zero behavior change |
+
+**Status (validation):** ⚠️ *The schema and injection wiring shipped in v0.21.0 (SX-544 Phase A). The 1-hour TTL behavior is **not yet validated end-to-end** — SX-545 (Phase B) is the empirical test that confirms Anthropic respects `cacheRetention: "long"`. The estimated cost reduction (~70-80% of "first-5-minutes" cache rebuilds) comes from the SX-705 audit and is **modeled, not measured**. Opt in if you want to try it; we'd love a usage report.*
+
+**Example: opt in to long retention (recommended path):**
+```json
+{
+  "cache": {
+    "retention": "long"
+  }
+}
+```
+
+**Example: opt in via shell env var (legacy / inherited path):**
+```bash
+# In ~/.zshrc, ~/.bashrc, or ~/.soma/env
+export PI_CACHE_RETENTION=long
+```
+The env-var route works because `cache.retention: null` (the default) inherits from shell. Use the settings path when you can — it's project-scoped and survives shell changes.
+
+**Tradeoff:** `"long"` charges 2× the per-write cost on a fresh cache vs `"short"`'s 1.25×. You break even with one cache *re-hit* within the hour. For typical session rhythms (`soma -c` repeatedly during a workday), net positive most of the time — but the magnitude is unmeasured.
 
 ### Keepalive
 

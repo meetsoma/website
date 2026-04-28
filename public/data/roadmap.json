@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-28T01:00:00Z",
+  "generated": "2026-04-28T01:45:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -20,11 +20,10 @@
     {
       "version": "0.23.0",
       "date": "2026-04-27",
-      "title": "Cache stays warm an hour",
+      "title": "Stray files don't leak; cache levers documented",
       "features": {
         "added": [
-          "**`PI_CACHE_RETENTION=long`** \u2014 cache stays warm an hour instead of five minutes. The \"I closed Soma 8 minutes ago, now I'm paying full cache cost\" moment is the most expensive in any session. This catches ~80% of them.",
-          "**Auto-breathe opt-out** \u2014 prefer zero cache busts to proactive rotation? Set `breathe.auto: false` in settings. Soma will still rotate at 85% as a safety net, just not pre-emptively at 50% or 70%.",
+          "**Cache-retention + auto-breathe documented honestly** \u2014 two levers exist for cutting cache cost: `cache.retention: \"long\"` flips Anthropic TTL from 5 min to 1 hour (shipped v0.21.0, schema + wiring), and `breathe.auto: false` opts out of proactive rotation that's been observed to bust the cache. Both work; neither is fully validated end-to-end. New `Configuration \u2192 Cache` doc explains where you stand and how to opt in. *(untested in production fleet \u2014 see [docs/configuration#cache](/docs/configuration#cache).)*",
           "**Voice switching** \u2014 pick a voice for your session and the say-cap routes through it. Voice persists across `/reload`.",
           "**Filter children by role** \u2014 `soma:agent.list` accepts `{role: \"researcher\"}` and friends, so you can narrow your background fleet view to just the role you care about."
         ],
@@ -32,7 +31,7 @@
           "**Release pipeline catches stray files** \u2014 logs, scratch files, or unreviewed edits sitting in the agent worktree won't leak into the published runtime. The pipeline halts before publishing if the tree isn't clean."
         ]
       },
-      "tagline": "Cache stays warm an hour instead of five minutes \u2014 the most expensive moment of any session, gone for ~80% of cases."
+      "tagline": "Release pipeline gets stricter; cache-retention + auto-breathe levers documented honestly (untested but available). Voice + child-role filter ship clean."
     },
     {
       "version": "0.22.1",
