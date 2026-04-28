@@ -5,7 +5,6 @@ section: "Reference"
 order: 7
 ---
 
-# Commands
 
 <!-- tldr -->
 CLI: `soma` (fresh), `soma inhale` (fresh + preload), `soma -c` (continue full history), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts). Body: `/body check`, `/body vars`, `/body map`, `/body render`. Script commands: `soma code` (codebase navigator), `soma verify` (structural checks), `soma refactor` (dependency analysis), `soma seam` (concept tracing), `soma session` (maintenance — strip images, list, stats). Scripts discovered via chain: bundled → project → global.

@@ -1,11 +1,10 @@
 ---
 title: "Doctor & Migration"
-description: "Project health checks, version migration, and how Soma keeps your .soma/ current."
+description: "Project health checks, version migration, keeping .soma/ current."
 section: "Reference"
 order: 8.5
 ---
 
-# Doctor & Migration
 
 <!-- tldr -->
 `soma doctor` from CLI for a quick health check. `/soma doctor` inside the TUI for interactive migration with agent assistance. Tier 1 (silent, every boot): adds missing settings, body files, protocols, converts legacy formats. Tier 2+ (interactive): compares templates, walks migration phases, handles breaking changes. Your customizations are never overwritten.

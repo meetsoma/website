@@ -1,8 +1,8 @@
 ---
 title: "Sessions"
-description: "Session management — tree navigation, forking, compaction, and branch summarization."
-section: "Core Concepts"
-order: 3.2
+description: "Session logs, preloads, the exhale cycle, and cross-session memory."
+section: "Workflows"
+order: 13
 ---
 
 <!-- tldr -->

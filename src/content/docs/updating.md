@@ -1,11 +1,10 @@
 ---
-title: "Updating & Migration"
-description: "Keep Soma up to date across your projects."
+title: "Updating"
+description: "How to keep Soma up to date across projects."
 section: "Reference"
 order: 20
 ---
 
-# Updating & Migration
 
 <!-- UPDATE WHEN: update flow changes, doctor behavior changes, migration phases added -->
 <!-- SEAMS: install-architecture.md, doctor.md, getting-started.md, changelog.md -->

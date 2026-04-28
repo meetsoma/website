@@ -1,8 +1,8 @@
 ---
 title: "Terminal Setup"
-description: "Recommended terminal configuration for the best Soma experience."
-section: "Reference"
-order: 6.5
+description: "Font, terminal emulator, and shell configuration for the best Soma experience."
+section: "First Steps"
+order: 1.5
 ---
 
 <!-- tldr -->
