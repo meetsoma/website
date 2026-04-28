@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-28T01:45:00Z",
+  "generated": "2026-04-28T02:15:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -23,7 +23,8 @@
       "title": "Stray files don't leak; cache levers documented",
       "features": {
         "added": [
-          "**Cache-retention + auto-breathe documented honestly** \u2014 two levers exist for cutting cache cost: `cache.retention: \"long\"` flips Anthropic TTL from 5 min to 1 hour (shipped v0.21.0, schema + wiring), and `breathe.auto: false` opts out of proactive rotation that's been observed to bust the cache. Both work; neither is fully validated end-to-end. New `Configuration \u2192 Cache` doc explains where you stand and how to opt in. *(untested in production fleet \u2014 see [docs/configuration#cache](/docs/configuration#cache).)*",
+          "**`cache.retention: \"long\"`** \u2014 flip Anthropic cache TTL from 5 min to 1 hour for `soma -c` after coffee-break gaps. Schema shipped v0.21.0; behavior not yet validated. *(see [docs/configuration#cache](/docs/configuration#cache))*",
+          "**`breathe.auto: false`** \u2014 opt out of proactive rotation at 50/70% if it's busting your cache. The 85% safety net still fires. *(workaround pending root-cause \u2014 see [docs/configuration#auto-breathe](/docs/configuration#auto-breathe))*",
           "**Voice switching** \u2014 pick a voice for your session and the say-cap routes through it. Voice persists across `/reload`.",
           "**Filter children by role** \u2014 `soma:agent.list` accepts `{role: \"researcher\"}` and friends, so you can narrow your background fleet view to just the role you care about."
         ],
@@ -31,7 +32,7 @@
           "**Release pipeline catches stray files** \u2014 logs, scratch files, or unreviewed edits sitting in the agent worktree won't leak into the published runtime. The pipeline halts before publishing if the tree isn't clean."
         ]
       },
-      "tagline": "Release pipeline gets stricter; cache-retention + auto-breathe levers documented honestly (untested but available). Voice + child-role filter ship clean."
+      "tagline": "Release pipeline gets stricter; cache + auto-breathe levers documented honestly. Voice + child-role filter ship clean."
     },
     {
       "version": "0.22.1",
