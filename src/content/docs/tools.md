@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via _tools.md, and the bundled set
 status: active
-updated: 2026-04-19
+updated: 2026-04-27
 ---
 
 # Tools
@@ -130,6 +130,7 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 | `soma` (`cap='soma:code.structure'`) | `soma-addons/code.ts` | Directory tree with sizes. Respects `.gitignore`. |
 | `soma` (`cap='soma:code.blast'`) | `soma-addons/code.ts` | Every file touching a symbol with severity — pre-deletion check. |
 | `soma` (`cap='soma:code.outline'`) | `soma-addons/code.ts` | Markdown/text headings with line numbers — cheap orientation. (Was `file_outline`.) |
+| `soma` (`cap='soma:code.history'`) | `soma-addons/code.ts` | `git log` for a file as structured output (sha + date + author + subject). Replaces raw `git log --format` shell calls. (v0.23.0+, SX-700.) |
 | `soma` (`cap='soma:body.slots'`) | `soma-addons/body.ts` | Slot map of `_mind.md` with per-slot cache-impact. Run before editing body templates. |
 | `soma` (`cap='soma:body.cost'`) | `soma-addons/body.ts` | Cache-invalidation cost of editing a specific slot. args: `{slot}`. |
 | `soma` (`cap='soma:body.audit'`) | `soma-addons/body.ts` | Heuristic audit of the body compile: duplicate slots, missing files, cache-unfriendly ordering. |

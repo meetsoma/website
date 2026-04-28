@@ -144,6 +144,7 @@ The same tools are exposed to the agent via the `soma` meta-tool (from `extensio
 - `soma(op='call', cap='soma:code.structure', args={path?})` — same as `soma code structure`
 - `soma(op='call', cap='soma:code.blast', args={symbol, path?})` — symbol-blast-radius analysis (which files touch a symbol, severity-weighted)
 - `soma(op='call', cap='soma:code.outline', args={path})` — markdown/text heading outline (was `file_outline`)
+- `soma(op='call', cap='soma:code.history', args={file, limit?})` — git log for a file (sha + date + author + subject). v0.23.0+ (SX-700).
 
 Legacy flat names (`code_find`, `code_refs`, `code_map`, `code_structure`, `code_blast`, `file_outline`) were archived in v0.22.0; call via the namespaced `soma:*` caps now.
 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-25T18:00:00Z",
+  "generated": "2026-04-28T00:00:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -16,6 +16,27 @@
           "AppleScript terminal drivers (ghostty, iTerm, Terminal.app) \u2014 macOS-native background panes for users who want OS-level windows."
         ]
       }
+    },
+    {
+      "version": "0.23.0",
+      "date": "2026-04-27",
+      "title": "Cache hygiene + release pipeline hardening",
+      "features": {
+        "added": [
+          "**`PI_CACHE_RETENTION=long`** \u2014 set this env var and Anthropic cache TTL flips from 5 minutes to 1 hour. Cuts an estimated 70-80% of \"first-5-minutes\" cache rebuilds when you `soma -c` shortly after closing a session. The single highest-leverage cost fix this release.",
+          "**Auto-breathe opt-out** \u2014 `breathe.auto: false` in settings disables proactive 50%/70% rotation, which has been observed to invalidate the full cached prefix (~$4 per event). Passive 85% safety net still fires. Workaround live; root-cause fix scheduled.",
+          "**Tree-hygiene gate** in the release pipeline \u2014 `soma-release-prepare.sh` now halts on uncommitted state in the agent worktree before anything ships. Catches agent-spawned files (logs, scratch, draft edits) before they leak into the published runtime.",
+          "**`dev:audit` + `dev:hub` meta-tools** \u2014 release-side and content-side introspection through namespaced caps, no cache-busting top-level tools added.",
+          "**`soma:agent.list` role filter** \u2014 `{role: \"researcher\"}` etc. narrows the children registry view; defaults to last 7 days.",
+          "**Voice switching** (W-3c) \u2014 say-cap routes through your selected voice at session level; voice persists across `/reload`.",
+          "**Drift discipline for Somadian** \u2014 verify / mirror / install-hooks / pre-commit gate keep the 4 bins (cloud/enterprise/local/sidecar) byte-identical for shared code."
+        ],
+        "fixed": [
+          "Five latent bugs caught during pre-flight and shipped in this release: STATE.md template was never bundled (SX-669); orchestrator commit-msg lint regex didn't match dotted scopes (SX-702); `soma-sandbox.sh --main` pointed at a dead worktree path; `soma-dev sandbox` wrapper redirected to a moved file; sandbox tests asserted a legacy STATE.md path. None caught by type-check or unit tests \u2014 the structural-audit discipline is what surfaced them.",
+          "CHANGELOG `[Unreleased]` \u2192 `[X.Y.Z]` promotion regex in the orchestrator (was a silent no-op \u2014 manual fix this release; permanent fix on dev for v0.23.1)."
+        ]
+      },
+      "tagline": "Cache economics + release pipeline hardening. PI_CACHE_RETENTION=long is the single biggest cost fix; tree-hygiene gate stops agent-spawned files leaking into the runtime."
     },
     {
       "version": "0.22.1",

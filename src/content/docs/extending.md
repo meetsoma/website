@@ -262,8 +262,41 @@ Soma ships with these extensions:
 | `soma-route.ts` | Capability router — inter-extension communication via capabilities and signals |
 | `soma-scratch.ts` | Scratch pad — /scratch save, /scratch list, cross-session snippet storage |
 | `soma-statusline.ts` | Footer with model, context %, cost, git status, auth type |
+| `soma-tools.ts` | `soma:*` namespace meta-tool — user-facing capability surface |
 
 These install to `~/.soma/agent/extensions/` and can be customized or replaced.
+
+## Namespaces
+
+Soma uses three top-level meta-tools to organize capabilities. Each is a single Pi tool registration with multiple addons routed through `soma-route`:
+
+| Namespace | Audience | Distribution | Caps |
+|-----------|----------|--------------|------|
+| `soma:*` | Every Soma install | Ships in npm tarball | `soma:agent.*`, `soma:body.*`, `soma:browser.*`, `soma:code.*`, `soma:docs.*`, `soma:focus.*`, `soma:github.*`, `soma:new.*`, `soma:terminals.*` |
+| `somaverse:*` | Somaverse-licensed | Proprietary, separate install | workspace ops, plugin builder, AI helpers |
+| `dev:*` | **Agent contributors only** | Build-excluded from npm + soma-beta | `dev:hub.*` (hub introspection), `dev:audit.*` (deps + CI) |
+
+### When to add a new cap
+
+1. **Pick the namespace.** If end users would benefit → `soma:*`. If only people working ON the agent need it → `dev:*`. If it's part of the proprietary tier → `somaverse:*`.
+2. **Pick the family.** Group by domain (`code`, `docs`, `hub`, etc.). New family = new file under the namespace's addon dir.
+3. **Implement.** Mirror an existing addon (e.g. `soma-addons/docs.ts`). Each cap is an `*Impl` async function + a `route.provide` registration. The meta-tool factory auto-discovers files under `<namespace>-addons/` at session-start.
+4. **No `pi.registerTool` for new top-level tools.** That cache-busts the prompt prefix (~$1-2/session). Always add as an addon under an existing meta-tool.
+5. **Test with `<namespace>(op='list')` and `<namespace>(op='call', cap='<namespace>:<family>.<action>', args={...})`.**
+
+### `dev:*` namespace (agent-contributor only)
+
+The `dev:*` namespace is for tools that audit, lint, or inspect the agent itself — things only people working on Soma need. It's intentionally NOT shipped to end users:
+
+- `extensions/dev-tools.ts` registers the meta-tool
+- `extensions/dev-addons/*.ts` are the cap families
+- `build-dist.mjs` builds them locally for dogfood
+- `soma-release.sh § Step 3` strips them from the soma-beta copy
+- `verify-bootstrap-clean.sh § Test 5` asserts the strip code is in place
+
+Result: dev contributors can call `dev:hub.audit` to verify hub state; end users running `npm install meetsoma` never see the namespace.
+
+For the full design + reasoning: `.soma/releases/plans/active/dev-meta-tool/README.md`.
 
 ### soma-route.ts
 
