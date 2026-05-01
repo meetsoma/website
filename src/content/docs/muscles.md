@@ -1,10 +1,11 @@
 ---
 title: "Muscles"
-description: "Learned patterns, digest system, heat tiers, writing your own."
+description: "Learned patterns, TL;DR system, heat tiers, writing your own."
 section: "Core Concepts"
 order: 5.5
 ---
 
+# Muscles
 
 <!-- tldr -->
 Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = TL;DR only, cold = name listed. Add a `## TL;DR` section — it's what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
@@ -96,6 +97,22 @@ Like protocols, muscles use the [heat system](heat-system.md) to decide what loa
 Loading respects a **token budget** (default: 2000 estimated tokens). Hot muscles load first (up to `maxFull`, default: 2), then warm muscles fill remaining budget (up to `maxDigest`, default: 8). Cold muscles are listed by name so the agent knows they exist.
 
 All thresholds are configurable in [settings.json](/docs/configuration#muscles).
+
+### Cold-start boost (the first 48 hours)
+
+A muscle you just wrote loads as a TL;DR digest **even if no usage has triggered it yet**. The heat system applies a temporary floor for items younger than 48 hours:
+
+```
+effective_heat = max(raw_heat, digestThreshold + 3)   # if created < 48h ago
+```
+
+With default thresholds, that puts a brand-new muscle at effective heat 4 — above the digest threshold (loads as warm) but below the full-load threshold. After 48 hours, the boost lifts and your actual usage takes over.
+
+**Why:** without the boost, a muscle written Tuesday wouldn't be visible to the agent until a Wednesday correction triggered it — by which point the moment has passed. The boost makes "my just-written context shows up next session" the default.
+
+**Caveat — budget overflow:** the boost gets you into the warm tier; whether you actually load depends on whether `maxDigest` (default: 8) hotter muscles already filled the budget. If 8 hotter muscles are loaded, the new one falls to cold (name-only) until usage promotes it. Same for hot → warm: if `maxFull` (default: 2) is filled by hotter muscles, a new heat-5+ muscle falls to warm digest.
+
+For the full picture (including how to verify a specific muscle's tier): [heat-system.md § New Muscle Visibility](heat-system.md#new-muscle-visibility-cold-start-boost).
 
 ## Writing a Muscle
 

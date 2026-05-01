@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via _tools.md, and the bundled set
 status: active
-updated: 2026-04-27
+updated: 2026-05-01
 ---
 
 # Tools
@@ -131,10 +131,11 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 | `soma` (`cap='soma:code.blast'`) | `soma-addons/code.ts` | Every file touching a symbol with severity — pre-deletion check. |
 | `soma` (`cap='soma:code.outline'`) | `soma-addons/code.ts` | Markdown/text headings with line numbers — cheap orientation. (Was `file_outline`.) |
 | `soma` (`cap='soma:code.history'`) | `soma-addons/code.ts` | `git log` for a file as structured output (sha + date + author + subject). Replaces raw `git log --format` shell calls. (v0.23.0+, SX-700.) |
+| `soma` (`cap='soma:github.meta|files|search|refs|blast|audit|releases|diff|compare|file_diff|local_path|local_map|local_find|local_refs|local_blast|local_structure|cache_list|cache_clean'`) | `scripts/soma-github.js` | GitHub repo tools. API-mode: metadata, file tree, search, symbol refs, releases, diffs. Local-mode: fetch repo tarball (~1–5s) to `~/.soma/cache/gh/`, then run `soma-code` against it — treats any public repo like a local codebase. (v0.24.0+, SX-720.) |
 | `soma` (`cap='soma:body.slots'`) | `soma-addons/body.ts` | Slot map of `_mind.md` with per-slot cache-impact. Run before editing body templates. |
 | `soma` (`cap='soma:body.cost'`) | `soma-addons/body.ts` | Cache-invalidation cost of editing a specific slot. args: `{slot}`. |
 | `soma` (`cap='soma:body.audit'`) | `soma-addons/body.ts` | Heuristic audit of the body compile: duplicate slots, missing files, cache-unfriendly ordering. |
-| `soma` (`cap='soma:docs.list|show|search'`) | `soma-addons/docs.ts` | Bundled docs: list, read by name, full-text search. |
+| `soma` (`cap='soma:docs.list|show|search|whats_new|guide'`) | `soma-addons/docs.ts` | Bundled docs: list, read by name, full-text search. `whats_new({version?})` reads the agent-facing changelog; `guide({name})` resolves guides + dev guides. (v0.24.0+, SX-720.) |
 | `soma` (`cap='soma:browser.*'`) | `soma-addons/browser.ts` | Browser automation via CDP: 20 caps (navigate, screenshot, tabs, evaluate, setup, config, status, …). Works direct-CDP or via bridge. |
 | `soma` (`cap='soma:agent.delegate'`) | `soma-addons/agent.ts` | Spawn a child agent. args: `{task, role?, model?, background?, terminal?}`. Sync by default; `background:true` returns immediately + registers in children.json. |
 | `soma` (`cap='soma:agent.list|tail|steer|kill|harvest|focus'`) | `soma-addons/agent.ts` | Manage background children. `focus` = cmux focus-pane / tmux attach hint. |
