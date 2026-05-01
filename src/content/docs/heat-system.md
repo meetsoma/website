@@ -1,10 +1,11 @@
 ---
 title: "Heat System"
-description: "How Soma decides what to load — temperature-based relevance that adapts through use."
+description: "How Soma decides what to load — temperature-based relevance."
 section: "Core Concepts"
 order: 3.5
 ---
 
+# Heat System
 
 <!-- UPDATE WHEN: heat thresholds change, new tier added, decay/boost logic changes -->
 <!-- SEAMS: configuration.md#heat, protocols.md#heat-tracking, muscles.md#heat, how-it-works.md#heat -->
@@ -172,6 +173,46 @@ prompt-config:
 ```
 
 These overrides don't change the persisted heat — they apply only to the session's system prompt compilation.
+
+## New Muscle Visibility (cold-start boost)
+
+A muscle or automation you just wrote should be loaded **even if it's never been triggered yet**. The heat tier system handles this with a **cold-start boost**: any item created in the last 48 hours gets a temporary heat floor.
+
+The rule (`core/utils.ts` `tierByHeat`):
+
+```
+effective_heat = max(raw_heat, digestThreshold + 3)   # if item.created < 48h old
+effective_heat = raw_heat                              # otherwise
+```
+
+With default `digestThreshold = 1`, that means a brand-new muscle starts at **effective heat 4** (above the digest threshold, just below the full-load threshold). It loads as a TL;DR digest in the system prompt for the first 48 hours, even if nothing has triggered it. After 48 hours, the boost lifts and the item's actual usage takes over.
+
+**Why:** without this, a muscle written Tuesday wouldn't be visible to the agent until Wednesday's correction triggered it. The boost ensures "my just-written context shows up next session." After the window, the heat system's normal usage-based promotion takes over.
+
+**Scope:** the boost applies to **muscles** and **automations** (anything tiered through `tierByHeat`). **Protocols** use different logic (always-on for warm-tier, no time-based boost).
+
+### Budget overflow
+
+Even boosted, items can fall to a lower tier if the **token budget** doesn't accommodate them.
+
+- **`maxFull`** caps how many items load fully expanded in the hot tier (default: 2 muscles).
+- **`maxDigest`** caps how many items load as TL;DR digests in the warm tier (default: 8 muscles).
+- **`tokenBudget`** caps total muscle tokens (default: 2000).
+
+When a muscle qualifies for hot by heat (heat ≥ 5) but `maxFull` is already filled by hotter items, it **falls to warm** (TL;DR digest) instead. Same logic for warm → cold (just the name).
+
+Result: heat is necessary, not sufficient. A new muscle gets the cold-start boost into the warm tier; whether it actually loads depends on whether 8 hotter muscles already filled the budget.
+
+### Verifying it for a specific muscle
+
+If a just-written muscle isn't loading, check the order:
+
+1. **Created < 48h ago?** Frontmatter `created:` field. If older, it's not a cold-start case — it needs heat from usage or an explicit `pin` bump.
+2. **Above digest threshold?** With `digestThreshold = 1` and the boost of `+3`, effective heat is at least `1 + 3 = 4` for new items. Should clear `digestThreshold` easily.
+3. **Within `maxDigest`?** If 8 hotter muscles are loaded, the new one falls to cold (name-only).
+4. **Within `tokenBudget`?** Even within `maxDigest`, if total digest tokens exceed `tokenBudget`, items get truncated.
+
+For protocols (different logic): they always load if any of: heat ≥ `hotThreshold` (full content), heat ≥ `warmThreshold` (digest), referenced by an active automation, or explicitly pinned.
 
 ## The Big Picture
 
