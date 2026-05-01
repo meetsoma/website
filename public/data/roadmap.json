@@ -18,6 +18,24 @@
       }
     },
     {
+      "version": "0.24.0",
+      "date": "2026-05-01",
+      "title": "Any GitHub repo is a local codebase. Auto-breathe goes opt-in.",
+      "features": {
+        "added": [
+          "**Treat any GitHub repo like a local codebase** — fetch a tarball in 1–5 seconds, then run full symbol search, blast-radius analysis, and structure maps against it. No cloning required.",
+          "**Ask the agent what changed** — `soma:docs.whats_new` pulls the agent-facing changelog on demand. `soma:docs.guide` resolves any guide by name."
+        ],
+        "changed": [
+          "**Auto-breathe is now opt-in** — proactive context rotation at 70% was busting the cached prompt. The 85% safety net still fires. Re-enable when ready."
+        ],
+        "fixed": [
+          "**Security advisory cleared** — Anthropic SDK bumped past CVE-2026-41686. No action required — upgrade to v0.24.0."
+        ]
+      },
+      "tagline": "GitHub repos become local codebases in 5 seconds. Auto-breathe goes opt-in. CVE cleared."
+    },
+    {
       "version": "0.23.0",
       "date": "2026-04-27",
       "title": "Stray files don't leak; cache levers documented",
