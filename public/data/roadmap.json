@@ -18,24 +18,6 @@
       }
     },
     {
-      "version": "0.24.0",
-      "date": "2026-05-01",
-      "title": "Any GitHub repo is now a local codebase; security advisory cleared",
-      "features": {
-        "added": [
-          "**Treat any GitHub repo like a local codebase** — `soma:github.local_*` fetches a tarball in 1–5s, extracts it to a local cache, then runs the full `soma-code` toolchain against it. Symbol search, blast radius, structure maps — all without cloning. (SX-720)",
-          "**`soma:docs.whats_new`** — ask the agent “what changed in v0.24.0” and get a structured answer from the agent-facing changelog. `soma:docs.guide` resolves named guides by name. (SX-720)"
-        ],
-        "changed": [
-          "**Auto-breathe is now opt-in** — `breathe.auto` defaults to `false`. Proactive rotation at 70% was observed to bust the full prompt cache (∼$4/event). The 85% safety net still fires regardless. Re-enable when ready: `breathe.auto: true`. (SX-718)"
-        ],
-        "fixed": [
-          "**Security advisory cleared** — `@anthropic-ai/sdk` bumped to 0.91.1+, resolving GHSA-p7fg-763f-g4gf (CVE-2026-41686). Transitive dep via pi-ai 0.71.0."
-        ]
-      },
-      "tagline": "GitHub repos become local codebases in 5 seconds. Auto-breathe goes opt-in. CVE cleared."
-    },
-    {
       "version": "0.23.0",
       "date": "2026-04-27",
       "title": "Stray files don't leak; cache levers documented",
