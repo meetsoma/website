@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Let Pi Compile — we didn't. A post-mortem of the night the refactor reverted itself.">
+  <defs>
+    <radialGradient id="bg-glow" cx="55%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#182030"/>
+      <stop offset="100%" stop-color="#0b0f15"/>
+    </radialGradient>
+    <radialGradient id="body-g" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#6898be"/>
+      <stop offset="50%" stop-color="#5282a8"/>
+      <stop offset="100%" stop-color="#3e6c92"/>
+    </radialGradient>
+    <radialGradient id="spec-g" cx="28%" cy="24%" r="16%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-glow)"/>
+  <pattern id="dots" x="0" y="0" width="34" height="34" patternUnits="userSpaceOnUse">
+    <circle cx="17" cy="17" r="0.4" fill="#6494be" opacity="0.08"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- ═══ MASCOT — right side, smirking ═══ -->
+  <g transform="translate(820, 110) scale(1.6)">
+    <!-- Planet body -->
+    <circle cx="120" cy="140" r="110" fill="url(#body-g)"/>
+    <circle cx="120" cy="140" r="110" fill="url(#spec-g)"/>
+
+    <!-- Sunglasses -->
+    <rect x="48" y="113" width="66" height="40" rx="9" fill="#0e1a26" stroke="#080f18" stroke-width="2.5"/>
+    <rect x="124" y="111" width="66" height="40" rx="9" fill="#0e1a26" stroke="#080f18" stroke-width="2.5"/>
+    <path d="M114,131 Q120,121 124,131" fill="none" stroke="#080f18" stroke-width="3.4"/>
+    <line x1="48" y1="129" x2="14" y2="121" stroke="#080f18" stroke-width="3.4" stroke-linecap="round"/>
+    <line x1="190" y1="128" x2="220" y2="120" stroke="#080f18" stroke-width="3.4" stroke-linecap="round"/>
+    <rect x="55" y="119" width="18" height="9" rx="3" fill="white" opacity="0.06"/>
+    <rect x="131" y="118" width="18" height="9" rx="3" fill="white" opacity="0.06"/>
+
+    <!-- Smirk -->
+    <path d="M88,184 Q120,210 156,178" fill="none" stroke="white" stroke-width="4.6" stroke-linecap="round" opacity="0.55"/>
+  </g>
+
+  <!-- ═══ TOP-LEFT category label ═══ -->
+  <text x="80" y="78" style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 14px; fill: #6494be; letter-spacing: 5.5px; opacity: 0.8; font-weight: 600;">ARCHITECTURE · POST-MORTEM</text>
+
+  <!-- ═══ HERO TEXT ═══ -->
+  <!-- Line 1: "Let Pi Compile." — STRUCK THROUGH with orange crack -->
+  <g>
+    <text x="80" y="220" style="font-family: Georgia, 'Times New Roman', serif; font-size: 92px; font-weight: 700; letter-spacing: -2px; fill: #c9d1d9; opacity: 0.55;">Let Pi Compile.</text>
+    <!-- Strike-through — orange, slightly thicker -->
+    <line x1="76" y1="195" x2="700" y2="195" stroke="#f0883e" stroke-width="6" stroke-linecap="round" opacity="0.85"/>
+    <!-- Crack lines drawing through the strike -->
+    <path d="M180,170 L190,200 L175,215" fill="none" stroke="#f0883e" stroke-width="2" opacity="0.65"/>
+    <path d="M340,165 L350,200 L335,225 L345,240" fill="none" stroke="#f0883e" stroke-width="1.8" opacity="0.55"/>
+    <path d="M510,172 L505,215" fill="none" stroke="#f0883e" stroke-width="1.4" opacity="0.4"/>
+    <path d="M620,178 L630,210" fill="none" stroke="#f0883e" stroke-width="1.4" opacity="0.4"/>
+  </g>
+
+  <!-- Line 2: "We didn't." — italic, full-bright -->
+  <text x="80" y="320" style="font-family: Georgia, 'Times New Roman', serif; font-size: 92px; font-weight: 700; font-style: italic; letter-spacing: -2px; fill: #f0883e;">We didn't.</text>
+
+  <!-- ═══ TIMELINE — three timestamps, mono, left-aligned ═══ -->
+  <g transform="translate(80, 410)">
+    <!-- 21:18 — shipped -->
+    <text x="0" y="0" style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 22px; font-weight: 600; fill: #6494be; letter-spacing: 1px;">21:18</text>
+    <text x="115" y="0" style="font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 22px; fill: #c9d1d9;">shipped Pi-native default.</text>
+
+    <!-- 23:15 — reverted (orange — the pivot) -->
+    <text x="0" y="42" style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 22px; font-weight: 600; fill: #f0883e; letter-spacing: 1px;">23:15</text>
+    <text x="115" y="42" style="font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 22px; fill: #c9d1d9;">Curtis reverted.</text>
+
+    <!-- 23:17 — restored -->
+    <text x="0" y="84" style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 22px; font-weight: 600; fill: #6494be; letter-spacing: 1px;">23:17</text>
+    <text x="115" y="84" style="font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 22px; fill: #c9d1d9;">_mind.md restored as source of truth.</text>
+  </g>
+
+  <!-- ═══ Brand bar ═══ -->
+  <line x1="80" y1="575" x2="1120" y2="575" stroke="#30363d" stroke-width="1"/>
+  <text x="80" y="605" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 2px; opacity: 0.85;">SOMA</text>
+  <text x="1120" y="605" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6494be; letter-spacing: 1.5px; opacity: 0.7;">soma.gravicity.ai</text>
+  <text x="600" y="605" text-anchor="middle" style="font-family: Georgia, serif; font-size: 18px; fill: #6494be; opacity: 0.5;">σ</text>
+</svg>
