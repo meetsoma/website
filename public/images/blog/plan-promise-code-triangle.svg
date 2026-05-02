@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" fill="none" role="img" aria-label="Three layers — plan, promise, code. Plan-promise and plan-code aligned. Promise-code broken.">
+  <style>
+    .label-mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; fill: #c9d1d9; }
+    .label-sans { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 12px; fill: #6e7681; }
+    .label-italic { font-family: -apple-system, sans-serif; font-size: 11px; fill: #8bb9e0; font-style: italic; }
+    .node-title { font-family: 'SF Mono', monospace; font-size: 16px; font-weight: 700; fill: #c9d1d9; letter-spacing: 1.5px; }
+    .node-sub { font-family: -apple-system, sans-serif; font-size: 12px; fill: #8bb9e0; }
+    .edge-aligned { stroke: #6494be; stroke-width: 2; fill: none; }
+    .edge-broken { stroke: #f0883e; stroke-width: 2.5; stroke-dasharray: 8,5; fill: none; }
+    .edge-label-aligned { font-family: 'SF Mono', monospace; font-size: 11px; fill: #6494be; letter-spacing: 1px; font-weight: 600; }
+    .edge-label-broken { font-family: 'SF Mono', monospace; font-size: 11px; fill: #f0883e; letter-spacing: 1px; font-weight: 600; }
+    .node-box { stroke: #30363d; stroke-width: 1.5; fill: rgba(22,27,34,0.85); rx: 10; }
+    .node-box-broken-side { stroke: #f0883e; stroke-width: 1.5; fill: rgba(240,136,62,0.04); rx: 10; }
+    .title-text { font-family: -apple-system, sans-serif; font-size: 22px; fill: #c9d1d9; font-weight: 600; }
+    .subtitle-text { font-family: -apple-system, sans-serif; font-size: 14px; fill: #6e7681; }
+    .sigma { font-family: Georgia, serif; font-size: 18px; fill: #6494be; opacity: 0.6; }
+  </style>
+
+  <!-- Title -->
+  <text x="450" y="45" text-anchor="middle" class="title-text">Three layers, two seams aligned, one broken.</text>
+  <text x="450" y="68" text-anchor="middle" class="subtitle-text">The plan said X. The promise said X. The code said something else.</text>
+
+  <!-- ═══ PLAN node (top, centered) ═══ -->
+  <g>
+    <rect x="350" y="110" width="200" height="68" class="node-box"/>
+    <text x="450" y="138" text-anchor="middle" class="node-title">PLAN</text>
+    <text x="450" y="160" text-anchor="middle" class="node-sub">refactor → Pi-native</text>
+  </g>
+
+  <!-- ═══ PROMISE node (bottom-left) ═══ -->
+  <g>
+    <rect x="80" y="335" width="240" height="80" class="node-box-broken-side"/>
+    <text x="200" y="365" text-anchor="middle" class="node-title">PROMISE</text>
+    <text x="200" y="388" text-anchor="middle" class="node-sub">_mind.md is editable</text>
+    <text x="200" y="406" text-anchor="middle" class="label-italic">your edits apply</text>
+  </g>
+
+  <!-- ═══ CODE node (bottom-right) ═══ -->
+  <g>
+    <rect x="580" y="335" width="240" height="80" class="node-box-broken-side"/>
+    <text x="700" y="365" text-anchor="middle" class="node-title">CODE</text>
+    <text x="700" y="388" text-anchor="middle" class="node-sub">shortcut bypasses _mind.md</text>
+    <text x="700" y="406" text-anchor="middle" class="label-italic">tests still pass</text>
+  </g>
+
+  <!-- ═══ EDGES ═══ -->
+  <!-- PLAN ↔ PROMISE (left edge — aligned, blue) -->
+  <line x1="380" y1="178" x2="240" y2="335" class="edge-aligned"/>
+  <!-- Edge label, on the slope -->
+  <g transform="translate(280, 250) rotate(-48)">
+    <rect x="-44" y="-12" width="88" height="20" rx="4" fill="#0d1117"/>
+    <text x="0" y="2" text-anchor="middle" class="edge-label-aligned">aligned ✓</text>
+  </g>
+
+  <!-- PLAN ↔ CODE (right edge — aligned, blue) -->
+  <line x1="520" y1="178" x2="660" y2="335" class="edge-aligned"/>
+  <g transform="translate(620, 250) rotate(48)">
+    <rect x="-44" y="-12" width="88" height="20" rx="4" fill="#0d1117"/>
+    <text x="0" y="2" text-anchor="middle" class="edge-label-aligned">aligned ✓</text>
+  </g>
+
+  <!-- PROMISE ↔ CODE (bottom edge — BROKEN, orange dashed) -->
+  <line x1="320" y1="375" x2="580" y2="375" class="edge-broken"/>
+  <g transform="translate(450, 375)">
+    <rect x="-50" y="-12" width="100" height="22" rx="4" fill="#0d1117"/>
+    <text x="0" y="3" text-anchor="middle" class="edge-label-broken">BROKEN ✕</text>
+  </g>
+
+  <!-- Annotation: arrow from PROMISE-CODE seam down to caption -->
+  <line x1="450" y1="392" x2="450" y2="445" stroke="#f0883e" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+  <text x="450" y="465" text-anchor="middle" class="label-italic" style="fill: #f0883e; font-style: italic; font-size: 12px;">no test asserted the promise — only the function</text>
+
+  <!-- σ watermark -->
+  <text x="870" y="485" text-anchor="end" class="sigma">σ</text>
+</svg>
