@@ -18,6 +18,21 @@
       }
     },
     {
+      "version": "0.24.1",
+      "date": "2026-05-03",
+      "title": "Releases can't ship half-done anymore",
+      "features": {
+        "fixed": [
+          "**Releases now verify they actually completed** — v0.24.0 silently shipped to npm with the runtime worktree stuck at v0.23.0 because the dev→main pull failure was being swallowed. The release script now exits loudly if the runtime didn't actually advance to the new version.",
+          "**Web-scrape now creates the destination folder before writing** — quietly losing fetched docs because a parent directory was missing won't bite again."
+        ],
+        "added": [
+          "**Two regression tests for the release pipeline itself** — the cap-bus surface (every shipped capability has a floor count) and release-completeness (CHANGELOG ↔ git tag ↔ dev ↔ main ↔ dist all line up). These run on every prepare; if a previous release was incomplete, the next one fails fast before any new bump."
+        ]
+      },
+      "tagline": "When a fix is invisible, it ships incomplete. Now it's visible."
+    },
+    {
       "version": "0.24.0",
       "date": "2026-05-01",
       "title": "Any GitHub repo is a local codebase. Auto-breathe goes opt-in.",
