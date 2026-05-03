@@ -27,7 +27,41 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ---
 
-## v0.23.1 — April 2026 (latest)
+## v0.24.1 — May 2026 (latest)
+
+The "releases verify they actually completed" patch arc: protect the release pipeline from silently incomplete ships, and lock the cap-bus surface against accidental drift.
+
+### \U0001f6e0 New tests you can run
+
+- **`tests/test-release-completeness.sh`** — asserts CHANGELOG ↔ git tag parity, `dev` ↔ `main` ff-merge reachability, `dist/manifest.json` ↔ `package.json`, `npm/package.json` ↔ `package.json` (SX-659 collapsed train). Auto-runs in orchestrator Phase 1 (tests gate). If a previous release was incomplete, the next prepare fails CONFLICT-HARD before any new bump.
+- **`tests/test-namespaced-caps.sh`** — static-analysis floor for the ~92-cap soma:/dev:/somaverse: bus surface. Per-family minimums, named-cap presence (18 specific from CHANGELOG), duplicate-registration detection, namespace hygiene. Catches accidental cap deletion or rename.
+
+Both run as part of `npm test`; both fail loud if real drift exists.
+
+### \U0001f504 Behavior changes
+
+- **`soma-release-ship.sh` Step 7 now verifies post-pull** (was silent on failure). Reads `~/.soma/agent/package.json` after `git pull --ff-only` and asserts version matches `NEW_VERSION`; on mismatch prints diagnostic + manual fix path + exits 1. Fixes SX-722 (v0.24.0 silently shipped to npm with the runtime worktree stuck at v0.23.0 because pull failure was being swallowed).
+- **`tests/test-doctor.sh`, `test-release-completeness.sh`, `test-release-surfaces.sh`, and `test-version-truth.sh` are now in-flight aware**: detect HEAD subject `chore(release): vX.Y.Z` and skip transient assertions during the ship window. Without this, `npm test` fails mid-ship because `dist/manifest.json` lags the bumped `package.json`. Re-run post-ship to confirm the assertion holds.
+
+### \U0001f9f0 Workflows
+
+- **Anti-accretion sweep** (governed by `amps/protocols/atlas.md` v1.1.0): when `body/STATE.md` exceeds 6KB, run an anti-accretion sweep — session-history paragraphs ("sNN-XXXXXX shipped...") belong in `memory/sessions/` and `memory/journal/`, not in STATE. STATE holds *current state + pointers*; history references the actual session log. Fired live s01-f1230f: cut `body/STATE.md` 18,148 → 5,513 bytes (-70%) without losing any current state.
+- **Phase 6 (Reflect) step 4 expanded** (`releases/cycles/soma-dev/phases/6-reflect.md`): post-release body+state audit now mechanical. Run `soma:body.audit` (catches duplicate slot interpolations, lazy-frontmatter lies) + `soma:body.slots` (token budget per slot) + the size gate on STATE.md. Plus stale-state scan: pulse.md, _recent-lessons.md, ecosystem.md, journal.md "Latest".
+- **In-flight test detection pattern** (for any future test asserting build artifacts or release-pipeline state): detect `chore(release): vX.Y.Z` HEAD subject; if matches, skip the transient assertion with a SKIP not FAIL. Re-run post-ship for verification. Pattern lives in `body/_recent-lessons.md § In-flight test detection`.
+
+### \U0001f4c1 New files / locations
+
+- `body/STATE.md` frontmatter `governed-by: amps/protocols/atlas.md` field — makes the protocol discoverable from the file.
+- `releases/v0.24.x/plans/cycle-cross-check-audit.md` — audit doc surfacing five Curtis-decision items from the cycle MAP cross-check (e.g., should `5-release.md` Steps 4-13 be split into orchestrator-internal vs human-action sections?).
+
+### \U0001f41b Bugs you can stop stepping around
+
+- **`soma-scrape.sh` lost fetched docs silently** when `_website/` dest dir didn't exist. Now `mkdir -p` before write. (`scripts/_pro/*` is gitignored from soma-beta release — dev/main only.)
+- **`tsconfig.json` was type-checking `extensions/_archive/**`** — cleared 15 TS7006 errors from `_archive/sx594-flat-wrappers/`. `npm run check` now exit 0.
+
+---
+
+## v0.24.0 — May 2026
 
 The "audit + scan + remember" patch arc: tooling for auditing your own kanban, scanning third-party repos as if they were local, and protecting your input from auto-rotation.
 
