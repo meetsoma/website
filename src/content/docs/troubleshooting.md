@@ -11,6 +11,45 @@ order: 22
 Most issues: `soma init` (fixes broken install), `soma doctor` (fixes project version), restart the session (picks up changes). Below: organized by symptom. Check here before filing an issue.
 <!-- /tldr -->
 
+## Startup Prompts
+
+### "⬆ Soma update available—… (c)ontinue (u)pdate now (s)kip this version"
+
+Preflight prompt (introduced v0.25.0, s01-86b0fd) gates `soma` startup when an
+update is cached as available. The check is **read-only and zero-network** at
+boot — `soma-statusline` updates `~/.soma/config.json:updateAvailable` on a
+periodic background check while you work, so the prompt fires from cache.
+
+| Key | Action |
+|-----|--------|
+| `c` or Enter | Continue boot at current version. |
+| `u` | Run `soma update` synchronously, then exit so you can re-run `soma` fresh. |
+| `s` | Skip this update batch. Won't re-prompt until newer commits arrive. |
+
+**Skip persistence:** pressing `s` writes `skipUpdateUntilTs` to
+`~/.soma/config.json` matching the update batch's check timestamp. The next
+time `soma-statusline` detects newer commits, the timestamp advances and the
+prompt re-fires — you'll never get stuck on a frozen reminder.
+
+**To reset a skip:** delete the `skipUpdateUntilTs` field from
+`~/.soma/config.json`.
+
+### "Warning: Project tools/ directory contains custom tools…" (legacy, removed)
+
+This was Pi-inherited deprecation noise that fired on `.soma/tools/`,
+`.soma/hooks/`, and `.soma/commands/` directories. Soma never adopted any of
+those as extension conventions — our extension dir is `.soma/extensions/` and
+our script bucket is `.soma/amps/scripts/`. The warning was removed in
+v0.25.0 (s01-86b0fd) because it misfired on legitimate user content (Python
+workflow scripts in `.soma/tools/` etc.).
+
+If you want to align with Soma conventions:
+```bash
+mv .soma/tools/ .soma/amps/scripts/   # if your tools/ has scripts
+```
+But this is purely cosmetic now — nothing in Soma reads `.soma/tools/`
+specifically.
+
 ## Installation
 
 ### "Soma not installed" after npm install

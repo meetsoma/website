@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-28T02:30:00Z",
+  "generated": "2026-05-04T07:35:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -16,6 +16,26 @@
           "AppleScript terminal drivers (ghostty, iTerm, Terminal.app) — macOS-native background panes for users who want OS-level windows."
         ]
       }
+    },
+    {
+      "version": "0.25.0",
+      "date": "2026-05-04",
+      "title": "Update on your schedule. No surprise stalls.",
+      "features": {
+        "added": [
+          "**Soma asks before updating** — when a new version is available, you get an interactive prompt at startup: `(c)ontinue` with what you have, `(u)pdate now`, or `(s)kip` this version. Skip persists until new commits arrive. The check is cached; zero network at boot."
+        ],
+        "changed": [
+          "**Body migrations always run, idempotently** — sentinel-tracked migrations now apply on every boot regardless of project-vs-agent version state. New users on the current version still get safety migrations applied; veterans don't get re-applied work. Foundation for cleaner shipping going forward.",
+          "**Body template (`_mind.md`) cleaned** — three redundant interpolation slots (`{{protocol_summaries}}`, `{{muscle_digests}}`, `{{scripts_table}}`) stripped, since `compileFrontalCortex` prepends them automatically. Existing user edits backed up to `_mind.md.bak-v0.25.0` before migration."
+        ],
+        "fixed": [
+          "**`/inhale` works again on Pi 0.71.0** — the inhale handler had redundant context calls that triggered Pi's expanded stale-context guard. Cleaned up; routed warnings through the route plumbing.",
+          "**Spurious deprecated-extensions warnings removed** — the inherited Pi-cruft check was nagging about `.soma/tools/`, `.soma/hooks/`, and `.soma/commands/` directories that aren't Soma conventions. Gone.",
+          "**Default mind-template fallback aligned with shipped template** — test environments and `/soma debug` now produce the same template as a fresh init (previously interpolated removed slots)."
+        ]
+      },
+      "tagline": "Update on your schedule. Migrations always run. Pi-cruft warnings retired."
     },
     {
       "version": "0.24.1",

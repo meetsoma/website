@@ -84,29 +84,33 @@ Any `.md` without a `_` prefix becomes a variable. Dashes become underscores:
 Controls the system prompt layout. Compiled by `compileFullSystemPrompt()` on the first turn, cached for subsequent turns.
 
 ```markdown
-{{core_rules}}
-
-# Identity
+# Who I Am
 {{soul}}
 
+{{voice}}
+
 {{#body}}
-## Where I Am
+# Where I Am
 {{body}}
 {{/body}}
 
-## How to Behave
-{{protocol_summaries}}
-
-## What I've Learned
-{{muscle_digests}}
-
-## My Tools
+# Tools & Context
+<tool_guidance>
 {{tools_section}}
+</tool_guidance>
+
+{{guard_section}}
 {{docs_section}}
 {{skills_block}}
+
+<rules>
+{{core_rules}}
+</rules>
 ```
 
 No `_mind.md`? The agent uses a built-in default. Every variable is optional — missing variables produce empty sections that disappear.
+
+**Why no `{{protocol_summaries}}` / `{{muscle_digests}}` / `{{scripts_table}}`?** They were removed from the shipped template in `fcd32bd` (SX-600, 2026-04-23 — cache economics). The compiler **already prepends** protocol summaries + muscle digests as a static block via `compileFrontalCortex()` (in `core/prompt.ts`) BEFORE the template renders. Interpolating them again in `_mind.md` causes double injection — same content twice, wasted tokens, and the volatile slot ends up in a cache position that invalidates ~80% of the prefix below it on every edit. The variables are still populated for backwards compatibility, but the canonical pattern is to rely on the prepend and let the template render only what's specific to your project.
 
 ### _memory.md — Preload Format
 

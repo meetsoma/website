@@ -44,6 +44,12 @@ soma
 
 On first run, Soma will ask to create a `.soma/` directory. Say yes.
 
+**Note:** Subsequent startups may show a short preflight prompt if a Soma
+update is available — `(c)ontinue / (u)pdate now / (s)kip this version`. The
+check is cached + read-only at boot, so it costs nothing. See
+[Troubleshooting → Startup Prompts](/docs/troubleshooting#startup-prompts)
+for full UX details.
+
 **Smart init** detects your project automatically and tailors the setup:
 
 | What's Detected | How | Effect |
