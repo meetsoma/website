@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.00 12.13 424.31 166.00" role="img" aria-hidden="true">
+<defs>
+    <radialGradient id="bg-g" cx="50%" cy="55%" r="80%">
+      <stop offset="0%" stop-color="#1a1620"></stop>
+      <stop offset="100%" stop-color="#080510"></stop>
+    </radialGradient>
+    <linearGradient id="fail-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f0a06a"></stop>
+      <stop offset="100%" stop-color="#c84230"></stop>
+    </linearGradient>
+  </defs>
+<g>
+    <!-- 5 falling dominoes — diagonal stack -->
+    <g font-family="'SF Mono', monospace">
+      <!-- Domino 1 -->
+      <rect x="0" y="20" width="62" height="92" rx="4" fill="#1a2535" stroke="url(#fail-g)" stroke-width="2" transform="rotate(-8 31 66)"></rect>
+      <text x="31" y="76" text-anchor="middle" font-size="36" fill="#f0a06a" font-weight="700" transform="rotate(-8 31 66)">1</text>
+
+      <!-- Domino 2 -->
+      <rect x="78" y="40" width="62" height="92" rx="4" fill="#1a2535" stroke="url(#fail-g)" stroke-width="2" transform="rotate(-4 109 86)"></rect>
+      <text x="109" y="96" text-anchor="middle" font-size="36" fill="#f0a06a" font-weight="700" transform="rotate(-4 109 86)">2</text>
+
+      <!-- Domino 3 -->
+      <rect x="160" y="56" width="62" height="92" rx="4" fill="#1a2535" stroke="url(#fail-g)" stroke-width="2" transform="rotate(2 191 102)"></rect>
+      <text x="191" y="112" text-anchor="middle" font-size="36" fill="#f0a06a" font-weight="700" transform="rotate(2 191 102)">3</text>
+
+      <!-- Domino 4 -->
+      <rect x="246" y="68" width="62" height="92" rx="4" fill="#1a2535" stroke="url(#fail-g)" stroke-width="2" transform="rotate(8 277 114)"></rect>
+      <text x="277" y="124" text-anchor="middle" font-size="36" fill="#f0a06a" font-weight="700" transform="rotate(8 277 114)">4</text>
+
+      <!-- Domino 5 — fully fallen -->
+      <rect x="338" y="76" width="62" height="92" rx="4" fill="#c84230" stroke="#f0a06a" stroke-width="2.5" transform="rotate(14 369 122)"></rect>
+      <text x="369" y="132" text-anchor="middle" font-size="36" fill="#fff" font-weight="700" transform="rotate(14 369 122)">5</text>
+    </g>
+  </g>
+</svg>
