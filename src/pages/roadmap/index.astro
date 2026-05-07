@@ -21,7 +21,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Stop crashing on compaction',
     icon: 'protocols',
-    description: 'Pi tool-runner shape fix + a transition-only preload state machine. Bare-string returns from older extensions are auto-lifted into the canonical envelope before persistence — the malformed-toolResult crash class that surfaced during compaction is closed. The preload notify goes yellow on stale (5+ tool calls since save), green on refresh — no more every-turn green spam. 42 new regression gates lock all 7 runtime patches against future Pi bumps.',
+    description: 'Your soma keeps running through compaction. Older extensions that returned bare strings (the pattern `_tool-template.ts` shipped for years) now just work — Soma lifts them into the right envelope before they hit Pi. The preload notify goes yellow when stale (`5+ tool calls since save`), green when refreshed — one notification per state change, not every turn.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
     version: 'v0.26.0',
@@ -30,7 +30,7 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'The warning that meant something else',
     icon: 'protocols',
-    description: 'A misfiring deprecation warning fired on every soma startup for weeks. The fix wasn\'t to remove it — it was to repurpose what it interrupted us for. v0.25.0 ships a one-screen preflight prompt: "you\'re behind, want to update?" before each session, with one-keystroke `npm install -g meetsoma@latest`. Migrations now run unconditionally so the upgrade actually lands.',
+    description: 'Soma checks for updates before each session: `⬆ (c)ontinue   (u)pdate now   (s)kip this version`. One keystroke installs the latest — no remembering `npm i -g meetsoma@latest`. Migrations now run on every boot, so the fix actually lands instead of silently skipping.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
     version: 'v0.25.0',
@@ -40,20 +40,22 @@ const upcoming: { name: string; icon: string; description: string; status: strin
   {
     name: 'Any GitHub repo is a local codebase',
     icon: 'extensions',
-    description: 'Treat any GitHub repo as a local codebase — fetch a tarball in 1–5 seconds, then run full symbol search, blast-radius, DEF/USE classification, and structure maps against it. 12 languages (Go, Java, C/C++, Ruby, more than the API map\'s 3). Cache by SHA at `~/.soma/cache/gh/`. Plus `dev:kanban.*` audit caps that triangulate ticket status across kanban + git + code + sessions, and an upgraded `soma:docs.*` surface (`whats_new` + `guide`). v0.26.1 closed the runtime ship gap that briefly held the local-mode caps to schema-only — now functional end-to-end on every install.',
+    description: 'Survey any OSS repo before you write your version. `soma github tj/commander.js local find module.exports` fetches a tarball in 1–5s, then runs full ripgrep regex, DEF/USE refs, and blast-radius against the cached extract — 12 languages, far past the API search\'s 3. Plus `dev:kanban.*` for batch ticket audits across kanban + git + sessions, and `soma:docs.whats_new` for an agent-facing changelog. (v0.26.1 closed the bundling gap that briefly held local-mode to schema-only.)',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
     version: 'v0.24.0',
     date: '2026-05-01',
+    image: '/images/roadmap/github-tools-chips.svg',
   },
   {
     name: 'Meta-tools land',
     icon: 'extensions',
-    description: 'The progressive-awareness era. New family-level meta-tools — `soma:agent.*` (delegate + children collapsed), `soma:focus.*`, `soma:new.*`, `soma:terminals.*`, `soma:browser.*` (17 caps), `soma:docs.*`, `soma:body.*` — register through a cache-safe route bus instead of inflating the system prompt per cap. Iterating your tool surface no longer churns the prompt cache. `soma bridge` CLI ships alongside.',
+    description: 'Add tools without busting your prompt cache. Family meta-tools — `soma:agent.*`, `soma:browser.*`, `soma:docs.*`, `soma:body.*`, `soma:focus.*`, `soma:new.*`, `soma:terminals.*` — register via a route bus, not as top-level Pi tools. Iterating extensions no longer invalidates Anthropic\'s cache (the per-edit tax is gone). `soma bridge` CLI ships alongside for somaverse pairing.',
     status: 'Shipped',
     statusColor: 'var(--green-bright, #4ade80)',
     version: 'v0.22.0',
     date: '2026-04-25',
+    image: '/images/roadmap/meta-tools-mascot.svg',
   },
   {
     name: 'Children Control Panel + tmux',

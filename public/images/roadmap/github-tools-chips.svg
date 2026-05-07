@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="76.00 421.00 848.00 116.00" role="img" aria-hidden="true">
+<defs>
+    <radialGradient id="bg" cx="55%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#182030"></stop>
+      <stop offset="100%" stop-color="#0b0f15"></stop>
+    </radialGradient>
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.7" fill="#6494be" opacity="0.08"></circle>
+    </pattern>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0c866"></stop>
+      <stop offset="1" stop-color="#d18f2a"></stop>
+    </linearGradient>
+  </defs>
+<g font-family="'SF Mono', 'Fira Code', monospace" font-size="18">
+    <rect x="80" y="425" width="240" height="46" rx="6" fill="rgba(100,148,190,0.12)" stroke="rgba(100,148,190,0.4)" stroke-width="1"></rect>
+    <text x="98" y="454" fill="#8bb9e0">soma trace</text>
+
+    <rect x="340" y="425" width="280" height="46" rx="6" fill="rgba(100,148,190,0.12)" stroke="rgba(100,148,190,0.4)" stroke-width="1"></rect>
+    <text x="358" y="454" fill="#8bb9e0">soma concepts</text>
+
+    <rect x="640" y="425" width="280" height="46" rx="6" fill="rgba(100,148,190,0.12)" stroke="rgba(100,148,190,0.4)" stroke-width="1"></rect>
+    <text x="658" y="454" fill="#8bb9e0">soma blog-graph</text>
+
+    <rect x="80" y="487" width="280" height="46" rx="6" fill="rgba(240,200,102,0.15)" stroke="rgba(240,200,102,0.5)" stroke-width="1"></rect>
+    <text x="98" y="516" fill="#f0c866">soma blog-audit</text>
+  </g>
+</svg>

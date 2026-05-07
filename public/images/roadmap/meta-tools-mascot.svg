@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="36.00 92.11 613.90 454.67" role="img" aria-hidden="true">
+<defs>
+    <radialGradient id="bg-g" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#0e1620"></stop>
+      <stop offset="100%" stop-color="#050810"></stop>
+    </radialGradient>
+    <!-- Mascot — but rendered in technical/wireframe style -->
+    <radialGradient id="body-faint" cx="36%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#3a5570" stop-opacity="0.5"></stop>
+      <stop offset="100%" stop-color="#2a3e54" stop-opacity="0.35"></stop>
+    </radialGradient>
+  </defs>
+<g>
+    <!-- Wireframe-only body (no fill, just stroke) -->
+    <circle cx="256" cy="280" r="148" fill="url(#body-faint)" stroke="#6494be" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.85"></circle>
+    <!-- Construction lines through center -->
+    <line x1="256" y1="100" x2="256" y2="460" stroke="#6494be" stroke-width="0.8" opacity="0.3" stroke-dasharray="2 4"></line>
+    <line x1="76" y1="280" x2="436" y2="280" stroke="#6494be" stroke-width="0.8" opacity="0.3" stroke-dasharray="2 4"></line>
+    <!-- Eyes — outlined -->
+    <circle cx="218" cy="262" r="28" fill="none" stroke="#c9d1d9" stroke-width="1.5"></circle>
+    <circle cx="294" cy="260" r="28" fill="none" stroke="#c9d1d9" stroke-width="1.5"></circle>
+    <circle cx="224" cy="258" r="14" fill="#c9d1d9" opacity="0.85"></circle>
+    <circle cx="300" cy="256" r="14" fill="#c9d1d9" opacity="0.85"></circle>
+    <!-- Smile (faint) -->
+    <path d="M240,310 Q258,324 276,310" fill="none" stroke="#c9d1d9" stroke-width="2" stroke-linecap="round" opacity="0.5"></path>
+    <!-- Moon — wireframe -->
+    <circle cx="374" cy="158" r="54" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.7"></circle>
+    <!-- Arms — wireframe -->
+    <circle cx="106" cy="284" r="34" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"></circle>
+    <circle cx="406" cy="284" r="34" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"></circle>
+    <!-- Legs - dashed boxes -->
+    <rect x="214" y="414" width="24" height="36" rx="12" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"></rect>
+    <rect x="276" y="414" width="24" height="36" rx="12" fill="none" stroke="#6494be" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"></rect>
+
+    <!-- ANNOTATION ARROWS pointing at body -->
+    <!-- arrow to "soul.md" -->
+    <line x1="40" y1="140" x2="180" y2="230" stroke="#f0883e" stroke-width="1.2" opacity="0.85" marker-end="url(#arrow)"></line>
+    <text x="40" y="125" font-family="'SF Mono', monospace" font-size="15" fill="#f0883e" font-weight="600" letter-spacing="1.5">soul.md</text>
+    <text x="40" y="145" font-family="'SF Mono', monospace" font-size="11" fill="#c9d1d9" opacity="0.65">identity</text>
+
+    <!-- arrow to "voice.md" (mouth area) -->
+    <line x1="40" y1="500" x2="230" y2="330" stroke="#f0883e" stroke-width="1.2" opacity="0.85" marker-end="url(#arrow)"></line>
+    <text x="40" y="520" font-family="'SF Mono', monospace" font-size="15" fill="#f0883e" font-weight="600" letter-spacing="1.5">voice.md</text>
+    <text x="40" y="540" font-family="'SF Mono', monospace" font-size="11" fill="#c9d1d9" opacity="0.65">how I sound</text>
+
+    <!-- arrow to "body.md" (legs) -->
+    <line x1="540" y1="500" x2="320" y2="430" stroke="#f0883e" stroke-width="1.2" opacity="0.85" marker-end="url(#arrow)"></line>
+    <text x="540" y="520" font-family="'SF Mono', monospace" font-size="15" fill="#f0883e" font-weight="600" letter-spacing="1.5">body.md</text>
+    <text x="540" y="540" font-family="'SF Mono', monospace" font-size="11" fill="#c9d1d9" opacity="0.65">working context</text>
+
+    <!-- arrow to "journal.md" (moon — where she sees from) -->
+    <line x1="540" y1="125" x2="400" y2="165" stroke="#f0883e" stroke-width="1.2" opacity="0.85" marker-end="url(#arrow)"></line>
+    <text x="540" y="110" font-family="'SF Mono', monospace" font-size="15" fill="#f0883e" font-weight="600" letter-spacing="1.5">journal.md</text>
+    <text x="540" y="130" font-family="'SF Mono', monospace" font-size="11" fill="#c9d1d9" opacity="0.65">what she noticed</text>
+  </g>
+</svg>
