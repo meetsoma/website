@@ -18,6 +18,17 @@
       }
     },
     {
+      "version": "0.26.2",
+      "date": "2026-05-07",
+      "title": "Soft-recovery from Anthropic's extra-usage notice",
+      "features": {
+        "added": [
+          "**Quiet auto-continue when Anthropic flags an extra-usage notice on the first turn after `/inhale`.** New `extraUsageRecovery` setting (default `\"auto\"`). When the first API call after a session rotation comes back with an extra-usage notice, Soma surfaces a single info notice and continues — no manual keystroke needed. Three modes: `auto` (notify + continue), `notify` (notice only, you continue), `off` (silent). Strictly fenced to first-call-after-rotation; harmless on every other turn."
+        ]
+      },
+      "tagline": "When Anthropic flags a notice, Soma reads it, surfaces it, and keeps going."
+    },
+    {
       "version": "0.26.1",
       "date": "2026-05-07",
       "title": "Two small fixes that close a quiet gap",
