@@ -6,11 +6,55 @@ import Icon from '../../components/icons/SomaIcons.astro';
 import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 
 // ─── Recently Shipped ────────────────────────────────────────────────
-// Strategic top-6 landmark releases, newest first. Shown as an auto-advancing
-// hero carousel (one card at a time). The full history lives in the timeline
-// island below this section, so the carousel stays focused on the standout
-// stories, not comprehensive coverage.
+// Strategic landmark releases, newest first. Shown as an auto-advancing
+// hero carousel (one card at a time). Cap: 10 cards. When adding the 11th,
+// archive the oldest entry to a separate `archive` array (or move to the
+// timeline island below) — NEVER delete. The full history lives in the
+// timeline island below this section, so the carousel stays focused on the
+// standout stories, not comprehensive coverage.
+//
+// Hero images: optional. Authoring rule lives at `media/roadmap/README.md`
+// + `svg-extract-component.mjs` (extracts a hero component from a blog OG).
+// Cards without an OG-paired blog post leave `image` undefined; the carousel
+// still renders cleanly (see v0.20.0 / v0.22.0 / v0.24.0 / v0.26.0 below).
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string; image?: string }[] = [
+  {
+    name: 'Stop crashing on compaction',
+    icon: 'protocols',
+    description: 'Pi tool-runner shape fix + a transition-only preload state machine. Bare-string returns from older extensions are auto-lifted into the canonical envelope before persistence — the malformed-toolResult crash class that surfaced during compaction is closed. The preload notify goes yellow on stale (5+ tool calls since save), green on refresh — no more every-turn green spam. 42 new regression gates lock all 7 runtime patches against future Pi bumps.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.26.0',
+    date: '2026-05-07',
+  },
+  {
+    name: 'The warning that meant something else',
+    icon: 'protocols',
+    description: 'A misfiring deprecation warning fired on every soma startup for weeks. The fix wasn\'t to remove it — it was to repurpose what it interrupted us for. v0.25.0 ships a one-screen preflight prompt: "you\'re behind, want to update?" before each session, with one-keystroke `npm install -g meetsoma@latest`. Migrations now run unconditionally so the upgrade actually lands.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.25.0',
+    date: '2026-05-04',
+    blogPost: 'the-warning-curtis-saw-every-startup',
+  },
+  {
+    name: 'Any GitHub repo is a local codebase',
+    icon: 'extensions',
+    description: 'Treat any GitHub repo as a local codebase — fetch a tarball in 1–5 seconds, then run full symbol search, blast-radius, DEF/USE classification, and structure maps against it. 12 languages (Go, Java, C/C++, Ruby, more than the API map\'s 3). Cache by SHA at `~/.soma/cache/gh/`. Plus `dev:kanban.*` audit caps that triangulate ticket status across kanban + git + code + sessions, and an upgraded `soma:docs.*` surface (`whats_new` + `guide`). v0.26.1 closed the runtime ship gap that briefly held the local-mode caps to schema-only — now functional end-to-end on every install.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.24.0',
+    date: '2026-05-01',
+  },
+  {
+    name: 'Meta-tools land',
+    icon: 'extensions',
+    description: 'The progressive-awareness era. New family-level meta-tools — `soma:agent.*` (delegate + children collapsed), `soma:focus.*`, `soma:new.*`, `soma:terminals.*`, `soma:browser.*` (17 caps), `soma:docs.*`, `soma:body.*` — register through a cache-safe route bus instead of inflating the system prompt per cap. Iterating your tool surface no longer churns the prompt cache. `soma bridge` CLI ships alongside.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.22.0',
+    date: '2026-04-25',
+  },
   {
     name: 'Children Control Panel + tmux',
     icon: 'automations',
