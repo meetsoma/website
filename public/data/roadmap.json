@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-04T07:35:00Z",
+  "generated": "2026-05-07T04:12:00Z",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -16,6 +16,23 @@
           "AppleScript terminal drivers (ghostty, iTerm, Terminal.app) — macOS-native background panes for users who want OS-level windows."
         ]
       }
+    },
+    {
+      "version": "0.26.0",
+      "date": "2026-05-07",
+      "title": "Custom tools just work. Terminals self-heal.",
+      "features": {
+        "added": [
+          "**Custom tool template fixed** — the canonical `_tool-template.ts` example was teaching a broken shape that quietly produced malformed records. Now it matches what Pi's runtime actually expects.",
+          "**Stale-preload pings you once** — when your preload drifts (5+ writes since save), you get a one-time `🟡 Preload now stale` notify, and a `🟢 Preload refreshed` after `/exhale`. No more every-turn green spam."
+        ],
+        "fixed": [
+          "**Tool extensions can't crash sessions** — if a custom tool returns the wrong shape, Soma wraps it safely instead of letting the malformation cascade through the renderer and the cache.",
+          "**Terminals recover after a crash** — the TUI now restores terminal modes on exit, so your shell returns to normal instead of stuck emitting key-response sequences.",
+          "**Session restore works on `soma -c`** — sessions with malformed tool history reload cleanly instead of erroring on the input line."
+        ]
+      },
+      "tagline": "Custom tools work. Stale preloads ping once. Crashed terminals self-heal."
     },
     {
       "version": "0.25.0",

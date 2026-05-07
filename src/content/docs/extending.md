@@ -130,6 +130,67 @@ export default function myExtension(pi: ExtensionAPI) {
 the process. `core/*.ts` changes *may* hot-reload through the chain; `dist/`
 changes require a full restart.
 
+### Cache-safe registration vs hot-reload (don't conflate)
+
+Four separate concerns. Each lever covers a different layer.
+
+| Concern | What it means | Layer |
+|---|---|---|
+| **Cache-safe registration** | Capability is added without busting Anthropic's prompt cache (~$1-2/session saved). Lives in soma-route's runtime registry, not in the system prompt. | Anthropic API |
+| **Module hot-reload (`/reload`)** | Edits to an extension's `.ts` file take effect after `/reload`. Pi re-imports every extension via fresh jiti (`moduleCache: false`), so source changes are picked up. | Node module cache |
+| **Prompt rebuild (`/rebuild`)** | The compiled system prompt is restored from disk cache on `/reload`. To regenerate it from current `body/*.md` and current tool definitions, you need `/rebuild`. | System prompt |
+| **Subprocess pickup (zero ceremony)** | Tool wrappers that `exec`/`spawn` an external script pick up edits to the script on the next invocation. The wrapper is JS-in-memory; the script is a fresh subprocess each call. | OS process |
+
+**Authority for each, verified:**
+- `agent-session.js:1894` — `session.reload()` shutdown→buildRuntime→session_start
+- `extensions/loader.js:271` — `loadExtensionModule` creates fresh jiti per reload (`moduleCache: false`)
+- `soma-boot.js` cache-stickiness — system prompt restored from disk on reload (avoids cache write)
+- Pi changelog **0.56.0** (March 2026, #1720) — "Runtime tool registration now applies immediately in active sessions. Tools registered via `pi.registerTool()` after startup are available to `pi.getAllTools()` and the LLM without `/reload`."
+- `extensions/_shared/meta-tool-factory.ts:96-130` — addons auto-discovered via `readdirSync` + dynamic `import()` on `session_start`
+- `extensions/soma-addons/code.ts:38` — canonical "thin wrapper around CLI" pattern (`runCode()` shells out via `execSync`)
+
+Decision matrix for what to run after editing:
+
+| What you edited | Cache impact | What to run |
+|---|---|---|
+| **New `pi.registerTool({name: "foo", ...})`** added at runtime (any time after session start) | **Busts cache** on next compile (def goes into system prompt) | Nothing immediate — Pi 0.56.0+ makes the tool live without `/reload`. The system prompt stays stale until `/rebuild` (so the model sees your new tool's description on next rebuild, not now). |
+| **`pi.registerTool` `execute` body** of an existing tool (e.g. komodo.ts) | None (definition unchanged in prompt) | `/reload` — the executor function lives in JS memory and won't change without re-import. |
+| **`pi.registerTool` `description` / `parameters` / `promptSnippet`** of an existing tool | **Busts cache** on next compile | `/reload` (updates registry) + `/rebuild` (so the model actually sees the new fields). Without `/rebuild`, registry has new fields but prompt instructs the model to use old ones — tool calls fail with parameter-validation errors. |
+| **New `route.provide("soma:foo.bar", impl)` cap** (e.g. dropping a new file in `soma-addons/`) | **Cache-safe** — caps live in soma-route's registry, not in prompt | `/reload` — the meta-tool's `session_start` handler scans `*-addons/` and dynamic-imports new files. (No file watcher; rescan only fires on session_start.) |
+| **`route.provide` cap impl body** | **Cache-safe** — caps not in prompt | `/reload` — same Node-memory rule as `pi.registerTool` execute. |
+| **CLI script behind a wrapper** (e.g. `repos/agent/scripts/soma-code.sh` while `soma-addons/code.ts` shells out to it via `execSync`) | None | **Nothing.** Each cap invocation spawns a fresh subprocess; the OS reads the script at exec time. Edit the script, save, next call uses the new code. |
+| **`amps/scripts/*` drop-in** (e.g. `soma <name>` script discovery) | None | **Nothing for the script itself.** `/reload` only if you also edited `soma-boot.ts`'s discovery logic. |
+| **`body/*.md`** (identity, soul, voice, mind template) | **Busts cache** on next compile | `/rebuild` if you want it live now; otherwise skip till next session. |
+
+**Why prompt-visible-field edits need `/rebuild` too:** the system prompt is
+compiled at session start and cached to disk (`state/<id>`). `/reload`
+rebuilds the extension runner and tool registry, but soma-boot's
+`before_agent_start` handler restores the cached prompt to avoid a per-reload
+cache write. Result: the LOCAL tool registry has the new fields but the
+SYSTEM PROMPT sent to Anthropic still has the old ones. Renaming a parameter
+mid-session without `/rebuild` is the classic break.
+
+**Why `route.provide` is exempt:** cap names + descriptions live in
+soma-route's runtime registry. The system prompt only describes the meta-tool
+(`soma`, `dev`, etc.) — a stable description that doesn't change when
+individual caps do. Cap details are returned at runtime by `op:'list'` /
+`op:'help'` invocations, fetched fresh from the registry each call.
+
+**Why CLI scripts behind wrappers need nothing:** the wrapper (`*.ts`) does
+`execSync("soma code ...")` or `spawn("bash", [scriptPath, ...])`. The
+subprocess loads the script's bytes from disk at exec time — not from any
+Node cache. Edit, save, next invocation runs the new code. This is the
+"tooling tied to CLI" pattern Curtis verified previously: e.g. editing
+`scripts/_dev/soma-audit-tickets.sh` doesn't need `/reload` because
+`dev-addons/audit.ts` only spawns it; the bash script itself isn't in JS
+memory.
+
+**Don't conflate the four concepts:** "cache-safe" doesn't mean "hot-reloads
+automatically." `/reload` doesn't mean "the model sees your new tool
+description." Pi 0.56.0's runtime registration doesn't mean "editing a tool's
+code takes effect without /reload" — it means "adding a new tool at runtime
+doesn't need /reload."
+
 ### Modifying the System Prompt
 
 The `before_agent_start` event is the hook for prompt modification. Return
