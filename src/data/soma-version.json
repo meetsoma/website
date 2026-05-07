@@ -1,8 +1,8 @@
 {
-  "version": "0.22.0",
-  "badge": "v0.22.0",
+  "version": "0.26.1",
+  "badge": "v0.26.1",
   "channel": "soma-beta",
-  "releaseDate": "2026-04-24",
+  "releaseDate": "2026-05-07",
   "releaseNotes": "/blog/",
-  "_note": "Bumped on each public release. Update via soma-release.sh or manually when publishing to soma-beta/stable npm. Stable npm tracks a lagging version (currently v0.12.4) — this is the CURRENT version users get from `soma install` on the beta channel."
+  "_note": "Bumped on each public release. Authoritative homepage version badge (`src/pages/index.astro` imports this). Pair with: roadmap.json timeline entry + roadmap card in `roadmap/index.astro` if release is featurable. Should be part of the W2/W3 release-flow checklist; if you see this stale, update on the next ship."
 }
