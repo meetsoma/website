@@ -18,6 +18,18 @@
       }
     },
     {
+      "version": "0.26.1",
+      "date": "2026-05-07",
+      "title": "Two small fixes that close a quiet gap",
+      "features": {
+        "fixed": [
+          "**Any GitHub repo as a local codebase — actually works now.** The 8 local-mode caps (`local_path`, `local_find`, `local_blast`, etc.) shipped in v0.24.0 with the schema right but a bundling gap quietly held them at \"registered, not runnable\" on every install. v0.26.1 inlines the cache helper into the bundled tool so the runtime path resolves cleanly. The `tj/commander.js local find …` flow that the v0.24.0 roadmap promised now runs end-to-end.",
+          "**Release pipeline self-check no longer cries wolf during ship.** `test-release-completeness.sh` Section 4 (npm/package.json drift) now respects the same in-flight detection the rest of the suite uses — skips cleanly while a release is in motion instead of failing on transient state that resolves seconds later."
+        ]
+      },
+      "tagline": "When a feature is shipped but quietly broken, the fix isn't drama — it's the line that says \"and now it runs.\""
+    },
+    {
       "version": "0.26.0",
       "date": "2026-05-07",
       "title": "Custom tools just work. Terminals self-heal.",
