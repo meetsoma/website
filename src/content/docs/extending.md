@@ -345,6 +345,72 @@ Soma uses three top-level meta-tools to organize capabilities. Each is a single 
 4. **No `pi.registerTool` for new top-level tools.** That cache-busts the prompt prefix (~$1-2/session). Always add as an addon under an existing meta-tool.
 5. **Test with `<namespace>(op='list')` and `<namespace>(op='call', cap='<namespace>:<family>.<action>', args={...})`.**
 
+### Project-local caps (route.provide, no factory)
+
+The `createMetaTool` factory only auto-discovers addons in the **global**
+`~/.soma/agent/extensions/<namespace>-addons/` directory. For caps that
+should only load when CWD is in a specific project (e.g. project-specific
+tooling like the Gravicity cycle audit), register directly in a
+project-local extension at `<project>/.soma/extensions/<name>.ts`:
+
+```typescript
+import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+
+export default function myProjectAddon(pi: ExtensionAPI) {
+  // Defer to session_start so __somaRoute is initialized.
+  pi.on("session_start", async () => {
+    const route = (globalThis as any).__somaRoute;
+    if (!route) return;
+
+    route.provide(
+      "soma:myfamily.action",
+      async (args: any = {}) => {
+        // Your logic. Return a string (or JSON-serializable value).
+        return `Processed: ${args.input ?? "(nothing)"}`;
+      },
+      {
+        provider: "myaddon (project-local)",
+        description: "What this cap does. args: {input?:string}.",
+      },
+    );
+  });
+}
+```
+
+**Same cache-safety as factory-discovered addons.** Cap lives in soma-route's
+runtime registry, not the system prompt. Zero cost.
+
+**Same invocation surface.** `soma(op='call', cap='soma:myfamily.action', args={...})`
+just works — no UI difference between project-local and global addons.
+
+**Why session_start, not module top-level:** the route singleton is
+initialized when soma-route's `session_start` handler fires. Registering
+before that is racey. The `pi.on("session_start", ...)` defer pattern
+is the same discipline `createMetaTool` uses internally.
+
+**Pattern: thin addon, fat CLI.** For non-trivial logic, put the body in
+a CLI script (`.mjs` / `.sh` / any subprocess-runnable file) and shell
+out from the cap via `execSync`. Edits to the script are picked up next
+invocation — no `/reload` needed. Reference: `soma-addons/code.ts` shells
+out to `soma code` CLI; `a peer project/.soma/extensions/meta-addon.ts`
+shells out to `meta.mjs`.
+
+**When to use this vs. global factory addon:**
+
+| Concern | Project-local route.provide | Global factory addon |
+|---|---|---|
+| Where it loads | Only when CWD is in this project | Everywhere |
+| Where to put the file | `<project>/.soma/extensions/*.ts` | `~/.soma/agent/extensions/<ns>-addons/*.ts` |
+| Auto-discovered? | No — manual `route.provide` call | Yes — factory scans the dir |
+| Need `register(route)` export? | No — default-export an `(pi) => void` | Yes — factory expects it |
+| Cache impact | Zero | Zero |
+| Hot-reload edits | `/reload` for the .ts; subprocess pickup for any shelled-out script | Same |
+
+Project-local caps are the right call when the cap is genuinely
+project-specific (operates on this project's files, this project's
+secrets, this project's structure). Promote to global when a second
+project would benefit from the same cap.
+
 ### `dev:*` namespace (agent-contributor only)
 
 The `dev:*` namespace is for tools that audit, lint, or inspect the agent itself — things only people working on Soma need. It's intentionally NOT shipped to end users:
