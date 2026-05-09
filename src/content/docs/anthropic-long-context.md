@@ -5,7 +5,9 @@ description: How Sonnet 4.6's 1M context tier works under OAuth, and what to ena
 
 # Anthropic Long-Context (1M) Billing
 
-Sonnet 4.6 supports up to 1M token context. Above ~200K, requests bill at the "extra usage" tier and require explicit account-side enrollment + client-side opt-in. Get either out of order and the API rejects every request.
+Sonnet 4.6 supports up to 1M token context. Above some account-specific threshold below the full window, requests bill at the "extra usage" tier and require explicit account-side enrollment + client-side opt-in. Get either out of order and the API rejects every request.
+
+**The exact threshold isn't documented in a place we've sourced.** Empirically on Curtis's Claude Max plan, the wall hit at ~40-48% of Sonnet 4.6's reported 1M context window (~400-480K tokens). Your account may be different. Watch for the `extra usage required for long context` 429 to detect yours.
 
 ## The two switches
 
@@ -53,17 +55,17 @@ The patch is **disabled by default** (s01-a54f21, SX-727 reversed). To enable:
 
 | Model | Native context | 1M opt-in needed? |
 |---|---|---|
-| Sonnet 4.6 | 200K under OAuth | YES — `context-1m-2025-08-07` header + account billing |
+| Sonnet 4.6 | Standard tier under OAuth (account-specific cap below 1M) | YES — `context-1m-2025-08-07` header + account billing |
 | Opus 4.7 | 1M under OAuth | NO — Anthropic granted Claude Code OAuth clients native 1M |
 | Sonnet/Opus via API key | Same model defaults; per-token billing instead of plan | Header + account billing still apply |
 
-If you're routing long-context work to Opus, none of this applies. If you're on Sonnet and want past 200K, both switches.
+If you're routing long-context work to Opus, none of this applies. If you're on Sonnet and want past your account's standard-tier cap, both switches.
 
 ## Practical patterns
 
 **Don't flip the client setting until the account is enrolled.** Order of operations matters more than anything else here. Flipping the setting first will lock you out of every session.
 
-**Watch the 200K mark on Sonnet.** Above that, even with both switches on, you're paying long-context rates. Many workflows are cleaner with two 150K Sonnet sessions chained via `/exhale` + `/inhale` than one 400K session.
+**Watch your account's threshold on Sonnet.** Above it, even with both switches on, you're paying long-context rates. Many workflows are cleaner with two shorter Sonnet sessions chained via `/exhale` + `/inhale` than one long one. Soma's auto-breathe (when configured per-model) wraps the session before the wall.
 
 **Use Opus for the actually-long stretches.** Native 1M, no opt-in dance, no billing-tier surprises.
 
