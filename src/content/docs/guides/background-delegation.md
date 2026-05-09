@@ -72,10 +72,10 @@ Running `tmux attach -t soma-child-7f3a91` in any terminal attaches you to the c
 ```
 delegate(task: "...", background: true, model: "sonnet")
 delegate(task: "...", background: true, model: "opus")
-delegate(task: "...", background: true, model: "claude-sonnet-4-5")
+delegate(task: "...", background: true, model: "claude-sonnet-4-6")
 ```
 
-Aliases (`sonnet`, `haiku`, `opus`) are resolved before launch, so the child uses the same provider as the parent. Pass a fully-qualified id (`claude-sonnet-4-5`, `anthropic/claude-opus-4-5`, etc.) if you want explicit control.
+Aliases (`sonnet`, `haiku`, `opus`) are resolved before launch, so the child uses the same provider as the parent. Pass a fully-qualified id (`claude-sonnet-4-6`, `anthropic/claude-opus-4-7`, etc.) if you want explicit control.
 
 ## Monitoring
 

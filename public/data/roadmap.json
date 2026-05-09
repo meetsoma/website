@@ -18,29 +18,6 @@
       }
     },
     {
-      "version": "0.26.3",
-      "date": "2026-05-09",
-      "title": "Autonomous Dev Loop \u2014 Pi monitoring, nightly CI, self-healing pipeline",
-      "features": {
-        "added": [
-          "**Pi upstream gap lives in every session.** `{{pi_gap}}` body var reads `PI_UPSTREAM.md` (auto-updated every 6hrs by GitHub Actions) and injects the live version gap into the system prompt. `soma-dev status` surfaces flagged commits in yellow. No more manually tracking Pi drift.",
-          "**Nightly CI loop with auto-filed issues.** 24 portable tests run at 4am UTC and on every push to dev. On failure, a structured GitHub issue is auto-filed with failing tests, error excerpts, Pi version, last 5 commits, and a fix brief for the next session.",
-          "**`soma-dev delegate` \u2014 multi-agent workflow orchestrator.** Composes child agents into end-to-end pipelines: `pr` (brief \u2192 pr_author + changelog_curator + doc_writer + verifier), `ci-fix <url>` (investigator \u2192 builder \u2192 verifier), `changelog`, `doc-update`, `audit`.",
-          "**Autonomous PR pipeline.** `soma-pr-brief.sh` generates a structured brief from commits (git-cliff CHANGELOG, affected files, semver bump). Agent reads brief \u2192 writes rich PR description, CHANGELOG section, docs updates, roadmap entry. `gh pr create` completes the loop.",
-          "**git-cliff CHANGELOG generation.** `cliff.toml` converts conventional commits to Keep A Changelog format. `npx git-cliff --unreleased` generates the structured `[Unreleased]` section automatically.",
-          "**release-please auto-proposes version bumps.** Activated on push to dev \u2014 opens version-bump PRs with structured CHANGELOG generated from conventional commits.",
-          "**`soma-dev check-phases` pre-release gate.** 30-second check (upstream sync + tests + tsc) before running the full 5-minute `soma-release-prepare.sh` orchestrator.",
-          "**3 new child roles:** `pr_author` (writes rich PR descriptions), `issue_investigator` (traces root cause of CI failures), `changelog_curator` (writes CHANGELOG narrative)."
-        ],
-        "fixed": [
-          "**Pi 0.72.1 \u2192 0.73.1 bump.** All 4 pi-* packages bumped together (pi-coding-agent, pi-ai, pi-agent-core, pi-tui). All 7 runtime patches apply cleanly. Lesson: the 4 packages must always be bumped as a unit.",
-          "**Release flow consolidated.** `soma-ship.sh` archived \u2014 it referenced `repos/agent-stable` (dead since worktree topology landed). `soma-dev ship` is now a clean `git push meetsoma dev`. `soma-dev release` routes to `prepare/ship/beta`.",
-          "**pr-check.yml hardened.** TypeScript typecheck job added. Changelog check is now a failure (not warning). Conventional commit format validated on all PR commits.",
-          "**18 tests with CI skip guards.** Workspace-dependent and dist-dependent tests self-skip in GHA via `CI=true` environment check. Both nightly and pr-check benefit automatically."
-        ]
-      }
-    },
-    {
       "version": "0.26.2",
       "date": "2026-05-07",
       "title": "Soft-recovery from Anthropic's extra-usage notice",
