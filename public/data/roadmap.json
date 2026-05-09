@@ -18,24 +18,6 @@
       }
     },
     {
-      "version": "0.27.0",
-      "date": "2026-05-09",
-      "title": "Soma now ships its own pull requests",
-      "features": {
-        "added": [
-          "**Autonomous CI/CD pipeline.** Nightly tests fire on every push and on schedule (4am UTC). When a test fails, a structured GitHub issue is auto-filed with the failing assertion, last 5 commits, Pi version, and a fix brief for the next agent. Dedupe holds — a second failure on the same regression doesn't open a second issue. End-to-end smoke validated.",
-          "**`soma-dev delegate` — multi-agent workflow orchestrator.** Compose child agents into named pipelines: `pr` (brief → changelog_curator + pr_author + doc_writer + verifier), `ci-fix <issue-url>` (issue_investigator → builder → verifier), `changelog`, `doc-update`, `audit`. The walk-away-for-20-min pattern.",
-          "**Pi upstream gap lives in every prompt.** A `{{pi_gap}}` body var reads `PI_UPSTREAM.md` (auto-updated every 6h by GitHub Actions watching `badlogic/pi-mono`) and injects the live version-behind count into the system prompt. `soma-dev status` surfaces flagged commits in yellow. No more silent Pi drift.",
-          "**`soma-dev check-phases` 30-second pre-release gate.** Catches upstream desync, broken tests, or tsc errors before you commit to the 5-minute `soma-release-prepare.sh` orchestrator."
-        ],
-        "changed": [
-          "**Pi runtime: 0.72.1 → 0.73.1.** All 4 pi-* packages bumped together (the lockstep rule). All 7 runtime patches apply cleanly.",
-          "**`docs/anthropic-long-context.md` corrected.** Earlier prose claimed the long-context tier triggers at ‘~200K’ — unsourced and wrong on Curtis's plan, where the wall hits ~40-48% of Sonnet 4-6's 1M window. Hedged with empirical observation; users probe their own threshold."
-        ]
-      },
-      "tagline": "The agent files its own issues, fixes its own bugs, ships its own pull requests — and remembers it did."
-    },
-    {
       "version": "0.26.2",
       "date": "2026-05-07",
       "title": "Soft-recovery from Anthropic's extra-usage notice",
