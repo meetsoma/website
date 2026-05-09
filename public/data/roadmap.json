@@ -18,6 +18,23 @@
       }
     },
     {
+      "version": "0.27.0",
+      "date": "2026-05-09",
+      "title": "Pi 0.73.1 — and Soma now sees Pi updates in every prompt",
+      "features": {
+        "added": [
+          "**Pi update gap lives in your system prompt.** When `pi-coding-agent` gets a new release, the version-behind count appears in every session — no more discovering upstream is four versions ahead by accident."
+        ],
+        "changed": [
+          "**Pi runtime: 0.72.1 → 0.73.1.** All four pi-* packages bumped together (the lockstep rule). All seven of Soma's runtime patches apply cleanly."
+        ],
+        "fixed": [
+          "**Long-context wall doc honest about the threshold.** Earlier prose claimed Anthropic's long-context tier triggers at ~200K tokens; that didn't match actual behavior. Hedged with empirical observation — users probe their own account threshold via the `extra usage required` notice."
+        ]
+      },
+      "tagline": "Pi gap visible in every session. The wall is real; now the docs say so."
+    },
+    {
       "version": "0.26.2",
       "date": "2026-05-07",
       "title": "Soft-recovery from Anthropic's extra-usage notice",
