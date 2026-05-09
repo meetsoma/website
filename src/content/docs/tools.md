@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via _tools.md, and the bundled set
 status: active
-updated: 2026-04-19
+updated: 2026-05-09
 ---
 
 # Tools
@@ -232,6 +232,16 @@ the gate that makes `_tools.md` work, preserves `promptSnippet` and
 `promptGuidelines` in the compiled prompt, and supports overrides.
 Third-party tools that call `pi.registerTool` directly still work (Pi
 registers them, they're invokable) but miss the rich prompt surface.
+
+**For NEW caps (not top-level tools), prefer `route.provide` via
+`session_start`.** The cap lives in soma-route's runtime registry — zero
+cache cost, surfaced via the existing `soma`/`dev`/`somaverse` meta-tools.
+See [extending.md § When to add a new cap](extending.md#when-to-add-a-new-cap)
+and [extending.md § Project-local caps](extending.md#project-local-caps-routeprovide-no-factory).
+`somaRegisterTool` remains the right call for **rich top-level tools**
+(legacy or genuinely tier-1) where you want `promptSnippet` /
+`promptGuidelines` in the compiled prompt; `route.provide` is for
+everything else.
 
 ## How tools render in the system prompt
 
