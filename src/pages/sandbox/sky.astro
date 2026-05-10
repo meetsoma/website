@@ -111,88 +111,104 @@ import Layout from '../../layouts/Layout.astro';
     inset: 0;
     z-index: -1;
     background:
-      /* Warm sun leak — bottom-right corner, faint */
+      /* Warm sun breaking through from lower-right (sun still low at dawn) */
       radial-gradient(
-        ellipse 60% 50% at 105% 110%,
-        rgba(255, 210, 140, 0.35) 0%,
-        rgba(220, 170, 90, 0.12) 40%,
-        transparent 70%
+        ellipse 55% 45% at 108% 108%,
+        rgba(255, 205, 120, 0.40) 0%,
+        rgba(230, 165, 70, 0.14) 38%,
+        transparent 65%
       ),
-      /* Sky gradient: zenith blue → pale horizon */
+      /* Real sky gradient — derived from Pexels deep-blue clear sky reference.
+       * Zenith #1a5ba0 (true deep blue) → pale diffuse horizon.
+       * The richness at top is the key missing piece vs earlier iterations. */
       linear-gradient(
         to bottom,
-        #4e85b5 0%,      /* zenith — proper overcast sky blue */
-        #6fa3c8 18%,     /* upper sky */
-        #95bfd8 38%,     /* mid sky, diffused through cloud layer */
-        #bdd7e9 58%,     /* lower mid, getting milky */
-        #d8ecf5 78%,     /* near horizon, very pale */
-        #e8f4f9 100%     /* horizon, almost white */
+        #1a5ba0 0%,    /* zenith — real sky blue (from pexels clear sky ref) */
+        #2e70b0 10%,   /* upper sky */
+        #4a8dc4 25%,   /* upper-mid */
+        #6aa8d4 40%,   /* mid sky, cloud layer starts diffusing */
+        #92c0da 55%,   /* lower mid — progressively paler */
+        #bbd6e8 70%,   /* near horizon, milky */
+        #d8ecf4 85%,   /* horizon diffuse */
+        #e8f5fa 100%   /* horizon, near white */
       );
   }
 
   /* Card/surface tokens for this palette */
   html[data-theme='light'] body:has(.sandbox-main) {
-    /* Tincture token overrides for this sky palette */
-    --bg:      #a8c9dd;   /* sky mid — tincture --bg alias */
-    --bg-card: #e8f3fa;   /* cloud white — cards */
-    --bg-elev: #d0e5f0;   /* cloud shadow — elevated */
-    --ink:          #091829;
-    --ink-soft:     #1e3a56;
-    --ink-muted:    #3a5872;
-    --accent:       #1e5f9e;
-    --border:       rgba(9, 24, 41, 0.12);
-    --border-accent: rgba(30, 95, 158, 0.35);
-    --shadow-accent: rgba(30, 95, 158, 0.18);
-    --shadow-card:  0 2px 8px rgba(9,24,41,0.10), 0 6px 20px rgba(9,24,41,0.07);
+    /* Tincture token overrides — tuned for saturated blue sky bg */
+    --bg:      #92c0da;
+    --bg-card: #e4f2f9;   /* cloud-white, clearly lighter than sky */
+    --bg-elev: #cce2f0;   /* cloud shadow — slightly deeper */
+    --ink:          #081624;
+    --ink-soft:     #172e48;
+    --ink-muted:    #2e4d6a;
+    --accent:       #1555a0;
+    --border:       rgba(8, 22, 36, 0.14);
+    --border-accent: rgba(21, 85, 160, 0.38);
+    --shadow-accent: rgba(21, 85, 160, 0.20);
+    --shadow-card:  0 2px 10px rgba(8,22,36,0.12), 0 8px 24px rgba(8,22,36,0.08);
 
     /* Legacy aliases */
     --accent-bright: var(--accent);
     --border-subtle: var(--border);
     --shadow-accent-soft: var(--shadow-accent);
-    --shadow-accent-mid: rgba(30, 95, 158, 0.28);
-    --moon-bright:  #3878a8;
-    --moon-glow:    rgba(30, 95, 158, 0.25);
-    --warm-bright:  #b06030;
-    --logo-glow:    rgba(30, 95, 158, 0.22);
-    --logo-glow-hover: rgba(30, 95, 158, 0.38);
+    --shadow-accent-mid: rgba(21, 85, 160, 0.30);
+    --moon-bright:  #2870b0;
+    --moon-glow:    rgba(21, 85, 160, 0.28);
+    --warm-bright:  #c0682a;
+    --logo-glow:    rgba(21, 85, 160, 0.24);
+    --logo-glow-hover: rgba(21, 85, 160, 0.42);
 
-    /* Surface overrides for glass-card feel against the sky bg */
-    --surface-card:              rgba(235, 248, 255, 0.88);
-    --surface-card-strong:       rgba(242, 251, 255, 0.96);
-    --surface-interactive:       rgba(9, 24, 41, 0.06);
-    --surface-interactive-hover: rgba(9, 24, 41, 0.11);
-    --surface-accent-soft:       rgba(30, 95, 158, 0.09);
+    /* Glass-card feel: white-blue at high opacity so cards pop from the sky */
+    --surface-card:              rgba(232, 246, 252, 0.90);
+    --surface-card-strong:       rgba(240, 250, 255, 0.97);
+    --surface-interactive:       rgba(8, 22, 36, 0.07);
+    --surface-interactive-hover: rgba(8, 22, 36, 0.13);
+    --surface-accent-soft:       rgba(21, 85, 160, 0.10);
   }
 
   /* ── 2. EXISTING GLOW ORBS — mid-altitude cloud layers ───────────────────
    * Repurposed from Layout's circular nebula orbs into horizontal cloud streaks.
    * orb-1 = altostratus (mid-high)  orb-2 = stratus (mid)  orb-3 = sunlit edge */
   html[data-theme='light'] body:has(.sandbox-main) .glow-orbs {
-    opacity: 1;  /* full — depth is tuned per-orb */
+    opacity: 1;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb {
     mix-blend-mode: multiply;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-1 {
-    /* Altostratus — mid-high altitude. Wide blue-grey band, slow drift. */
-    background: radial-gradient(ellipse, rgba(100, 148, 190, 0.22) 0%, rgba(80, 130, 175, 0.06) 55%, transparent 80%);
-    transform: scale(3.8, 0.18) rotate(-4deg);
-    animation-duration: 38s;
+    /* Altostratus band — mid-high, wide, blue-grey, slow.
+     * From pexels ref: cloud bodies are darker than sky on a clear blue day.
+     * These clouds are slightly darker than the #4a8dc4 mid-sky zone. */
+    background: radial-gradient(ellipse,
+      rgba(90, 130, 170, 0.28) 0%,
+      rgba(70, 112, 155, 0.10) 50%,
+      transparent 78%);
+    transform: scale(4.0, 0.16) rotate(-4deg);
+    animation-duration: 42s;
     opacity: 0.9;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-2 {
-    /* Stratus — mid altitude, slightly lower, wider + fatter streak. */
-    background: radial-gradient(ellipse, rgba(80, 130, 175, 0.18) 0%, rgba(60, 110, 160, 0.04) 60%, transparent 82%);
-    transform: scale(4.2, 0.22) rotate(3deg);
-    animation-duration: 28s;
+    /* Stratus layer — slightly lower, wider sweep, fractionally warmer. */
+    background: radial-gradient(ellipse,
+      rgba(75, 118, 160, 0.24) 0%,
+      rgba(55, 98, 145, 0.06) 55%,
+      transparent 80%);
+    transform: scale(4.6, 0.20) rotate(3deg);
+    animation-duration: 30s;
     opacity: 0.85;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-3 {
-    /* Sunlit cloud edge — warm tint where sun light bleeds through. */
-    background: radial-gradient(ellipse, rgba(220, 165, 90, 0.14) 0%, rgba(200, 145, 70, 0.04) 55%, transparent 80%);
-    transform: scale(2.8, 0.26) rotate(-10deg);
-    animation-duration: 22s;
-    opacity: 0.8;
+    /* Low sun-gilded cloud edge — warm amber tint from light below horizon.
+     * Positioned low on screen, warm, slow breathing. */
+    background: radial-gradient(ellipse,
+      rgba(235, 185, 100, 0.20) 0%,
+      rgba(210, 155, 65, 0.06) 50%,
+      transparent 78%);
+    transform: scale(3.0, 0.30) rotate(-9deg);
+    animation-duration: 20s;
+    opacity: 0.85;
   }
 
   /* ── 3. NEW CLOUD DEPTH LAYERS — sandbox-only fixed elements ───────────── */
@@ -213,61 +229,79 @@ import Layout from '../../layouts/Layout.astro';
     mix-blend-mode: multiply;
   }
 
-  /* Cirrus — very high altitude. Hairline thin, barely visible.
-   * Fastest angular drift because smallest scale = most responsive to wind.
-   * Tinted very pale blue-grey. */
+  /* Cirrus — very high, very thin ice clouds. Hairline streaks almost lost
+   * in the deep blue zenith. Drift fastest (wind is strong up high). */
   .sb-cloud-cirrus {
-    top: 8%;
-    left: 15%;
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(ellipse, rgba(160, 195, 220, 0.18) 0%, rgba(140, 180, 210, 0.04) 50%, transparent 75%);
-    transform: scale(5.5, 0.07) rotate(-2deg);
-    animation: sbCloudCirrus 52s ease-in-out infinite;
+    top: 5%;
+    left: 5%;
+    width: 800px;
+    height: 800px;
+    /* Blue-white, slightly cooler than sky so they read as ice-crystal wisps */
+    background: radial-gradient(ellipse,
+      rgba(195, 220, 240, 0.22) 0%,
+      rgba(175, 208, 230, 0.06) 45%,
+      transparent 72%);
+    transform: scale(6.0, 0.06) rotate(-2deg);
+    animation: sbCloudCirrus 55s ease-in-out infinite;
   }
   @keyframes sbCloudCirrus {
-    0%, 100% { transform: scale(5.5, 0.07) rotate(-2deg) translate(0, 0); }
-    33%       { transform: scale(5.5, 0.07) rotate(-1.5deg) translate(60px, 4px); }
-    66%       { transform: scale(5.5, 0.07) rotate(-2.5deg) translate(-30px, 8px); }
+    0%, 100% { transform: scale(6.0, 0.06) rotate(-2deg) translate(0px, 0px); }
+    33%       { transform: scale(6.0, 0.06) rotate(-1.5deg) translate(70px, 5px); }
+    66%       { transform: scale(6.0, 0.06) rotate(-2.5deg) translate(-35px, 10px); }
   }
 
-  /* Near cumulus — lowest altitude, closest to viewer.
-   * THICKER (high scaleY), more opaque, but moves SLOWEST (low angular speed
-   * for close objects). Positioned low on screen where low clouds would appear. */
+  /* Near cumulus — the WHITE PUFFY clouds of the pexels center reference.
+   * Close = large apparent size, thick, BRIGHT (lit by sun), slowest angular speed.
+   * Positioned lower-right as if floating past. Cloud-white with blue shadow. */
   .sb-cloud-cumulus {
-    bottom: 25%;
-    right: 10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(ellipse, rgba(220, 238, 248, 0.55) 0%, rgba(200, 225, 240, 0.20) 40%, transparent 70%);
-    transform: scale(2.2, 0.45) rotate(5deg);
-    animation: sbCloudCumulus 18s ease-in-out infinite;
+    bottom: 20%;
+    right: 5%;
+    width: 550px;
+    height: 550px;
+    /* Bright cloud-white top, blue-grey shadow underneath — layered radials */
+    background:
+      radial-gradient(ellipse 60% 40% at 40% 30%,
+        rgba(238, 248, 255, 0.80) 0%,
+        rgba(215, 238, 250, 0.45) 45%,
+        transparent 70%),
+      radial-gradient(ellipse 80% 60% at 50% 65%,
+        rgba(165, 200, 225, 0.40) 0%,
+        rgba(140, 180, 210, 0.12) 50%,
+        transparent 75%);
+    transform: scale(2.0, 0.50) rotate(4deg);
+    animation: sbCloudCumulus 20s ease-in-out infinite;
   }
   @keyframes sbCloudCumulus {
-    0%, 100% { transform: scale(2.2, 0.45) rotate(5deg) translate(0, 0); }
-    50%       { transform: scale(2.2, 0.45) rotate(4.5deg) translate(-18px, 6px); }
+    0%, 100% { transform: scale(2.0, 0.50) rotate(4deg) translate(0px, 0px); }
+    50%       { transform: scale(2.0, 0.50) rotate(3.5deg) translate(-20px, 8px); }
   }
 
-  /* Horizon haze — warm diffuse band at the bottom where sun leaks through.
-   * Not a cloud — atmospheric scattering at low angle. Static-ish. */
+  /* Horizon haze — warm atmospheric scatter where sun is low.
+   * The golden warmth that bleeds up from below the horizon line. */
   .sb-cloud-haze {
     bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
-    height: 400px;
+    height: 380px;
     border-radius: 0;
-    background: radial-gradient(
-      ellipse 80% 100% at 70% 100%,
-      rgba(255, 200, 120, 0.22) 0%,
-      rgba(240, 170, 80, 0.08) 35%,
-      transparent 65%
-    );
-    animation: sbCloudHaze 40s ease-in-out infinite;
+    background:
+      radial-gradient(
+        ellipse 70% 100% at 75% 100%,
+        rgba(255, 195, 100, 0.28) 0%,
+        rgba(240, 160, 60, 0.10) 40%,
+        transparent 68%
+      ),
+      radial-gradient(
+        ellipse 100% 60% at 50% 100%,
+        rgba(255, 220, 160, 0.14) 0%,
+        transparent 60%
+      );
+    animation: sbCloudHaze 45s ease-in-out infinite;
   }
   @keyframes sbCloudHaze {
     0%, 100% { opacity: 1; }
-    50%       { opacity: 0.7; }
+    50%       { opacity: 0.75; }
   }
 
   /* ── 4. STARFIELD — repurpose as tiny far-away birds/particles ──────────
