@@ -1,0 +1,345 @@
+{
+  "schemaVersion": "2.0",
+  "registry": {
+    "version": "0.1.0",
+    "name": "soma/tincture",
+    "doc": "Token registry for soma.gravicity.ai. Deep-space dark / cloud-cover-at-dawn light. Two surfaces, one substrate."
+  },
+  "axes": [
+    "surface",
+    "flavor",
+    "tone",
+    "elevation"
+  ],
+  "tokens": {
+    "accent": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Primary accent — soma blue. Canonical #7cb2d4 on dark, deeper on light for contrast.",
+      "defaultValue": "#7cb2d4",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#7cb2d4",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#2e6094",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "accent-fg": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Ink on accent surface.",
+      "defaultValue": "#0C0F16",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#0C0F16",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#ffffff",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "accent-warm": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Warm signal accent — CTAs, highlights. Complements the blue accent.",
+      "defaultValue": "#e8a87c",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#e8a87c",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#a85a2a",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "bg": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Page background. Deep space on dark, pale dawn sky on light.",
+      "defaultValue": "#0C0F16",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#0C0F16",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#e8eef5",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "bg-card": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Card / panel surface. Slightly elevated from page bg.",
+      "defaultValue": "#0b1018",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#0b1018",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#fafbfc",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "bg-elev": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Elevated surface — modals, popovers, raised cards.",
+      "defaultValue": "#121a28",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#121a28",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#dde5f0",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "border": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Default border. Low alpha ink tint on both surfaces.",
+      "defaultValue": "rgba(132, 148, 170, 0.12)",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "rgba(132, 148, 170, 0.12)",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "rgba(10, 15, 26, 0.18)",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "border-accent": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Accent-tinted border. Used on interactive cards, focused inputs.",
+      "defaultValue": "rgba(104, 152, 190, 0.3)",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "rgba(104, 152, 190, 0.3)",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "rgba(46, 96, 148, 0.35)",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "brand-sigma": {
+      "kind": "brand-lock",
+      "axes": [],
+      "locked": true,
+      "doc": "Soma σ mark blue. Immutable — the canonical brand anchor. Moods cannot override.",
+      "defaultValue": "#7cb2d4",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#7cb2d4",
+          "selector": ":root"
+        }
+      ]
+    },
+    "font-body": {
+      "kind": "typography",
+      "axes": [],
+      "locked": false,
+      "doc": "Body copy — Satoshi. System fallback.",
+      "defaultValue": "'Satoshi', system-ui, sans-serif",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "'Satoshi', system-ui, sans-serif",
+          "selector": ":root"
+        }
+      ]
+    },
+    "font-display": {
+      "kind": "typography",
+      "axes": [],
+      "locked": false,
+      "doc": "Display headlines — Manrope. System fallback.",
+      "defaultValue": "'Manrope', system-ui, sans-serif",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "'Manrope', system-ui, sans-serif",
+          "selector": ":root"
+        }
+      ]
+    },
+    "font-mono": {
+      "kind": "typography",
+      "axes": [],
+      "locked": false,
+      "doc": "Monospace — code blocks, terminal output.",
+      "defaultValue": "'SF Mono', 'Fira Code', 'JetBrains Mono', monospace",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "'SF Mono', 'Fira Code', 'JetBrains Mono', monospace",
+          "selector": ":root"
+        }
+      ]
+    },
+    "ink": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Primary text. High contrast on both surfaces.",
+      "defaultValue": "#e4eaf4",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#e4eaf4",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#0a0f1a",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "ink-muted": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Tertiary text. Metadata, timestamps, captions.",
+      "defaultValue": "#647080",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#647080",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#4a5a70",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "ink-soft": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Secondary text. Body copy, descriptions.",
+      "defaultValue": "#9dafc4",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#9dafc4",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#2a3648",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "shadow-accent": {
+      "kind": "shadow",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Accent-tinted glow shadow — used on focused/featured elements.",
+      "defaultValue": "rgba(104, 152, 190, 0.15)",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "rgba(104, 152, 190, 0.15)",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "rgba(46, 96, 148, 0.2)",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "shadow-card": {
+      "kind": "shadow",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Default card shadow.",
+      "defaultValue": "0 1px 3px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.12)",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "0 1px 3px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.12)",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "0 1px 4px rgba(0,0,0,0.08), 0 4px 14px rgba(0,0,0,0.05)",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    }
+  }
+}

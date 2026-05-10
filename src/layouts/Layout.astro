@@ -52,7 +52,7 @@ const schemaData = jsonLd || defaultJsonLd;
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-surface="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -97,6 +97,7 @@ const schemaData = jsonLd || defaultJsonLd;
         const theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
         document.documentElement.classList.add('no-transition');
         document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.surface = theme;
         document.documentElement.style.colorScheme = theme;
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
@@ -107,6 +108,8 @@ const schemaData = jsonLd || defaultJsonLd;
     </script>
 
     <style is:global>
+      @import '../styles/tincture/_generated/foundation.css';
+
       :root {
         /* ── Design System Tokens ── */
 
@@ -162,125 +165,72 @@ const schemaData = jsonLd || defaultJsonLd;
         --radius-xl: 21px;
         --radius-full: 9999px;
 
-        /* Soma deep space palette */
-        --bg-deep: #0C0F16;
-        --bg-surface: #0b1018;
-        --bg-elevated: #121a28;
-
-        /* Soma accent — canonical #7cb2d4, aligned with Somaverse workspace */
-        --accent-bright: #7cb2d4;
-        --accent-mid: #5282a8;
+        /* ── Brand palette (not surface-aware — stays in :root) ─────────── */
+        --accent-mid:  #5282a8;
         --accent-dark: #3e6c92;
 
-        /* Moon accent — warm complement */
         --moon-bright: #7cb2d4;
-        --moon-mid: #669cc0;
-        --moon-glow: rgba(124, 178, 212, 0.4);
+        --moon-mid:    #669cc0;
+        --moon-glow:   rgba(124, 178, 212, 0.4);
 
-        /* Signal warmth — for CTAs, highlights */
         --warm-bright: #e8a87c;
-        --warm-mid: #d4926a;
-        --warm-glow: rgba(232, 168, 124, 0.3);
+        --warm-mid:    #d4926a;
+        --warm-glow:   rgba(232, 168, 124, 0.3);
 
-        /* Promo / Genesis — golden accent, may evolve */
-        --promo: #f0c866;
-        --promo-dim: #c4a24e;
-        --promo-glow: rgba(240, 200, 102, 0.15);
+        --promo:        #f0c866;
+        --promo-dim:    #c4a24e;
+        --promo-glow:   rgba(240, 200, 102, 0.15);
         --promo-border: rgba(240, 200, 102, 0.25);
 
-        /* Text */
-        --text-primary: #e4eaf4;
-        --text-secondary: #9dafc4;
-        --blog-body: #94a3b8;
-        --text-muted: #647080;
-
-        /* Borders */
-        --border-subtle: rgba(132, 148, 170, 0.12);
-        --border-accent: rgba(104, 152, 190, 0.3);
-
-        /* Surfaces */
-        --surface-card: rgba(11, 16, 24, 0.7);
-        --surface-card-strong: rgba(11, 16, 24, 0.85);
-        --surface-overlay: rgba(0, 0, 0, 0.3);
-        --surface-interactive: rgba(255, 255, 255, 0.06);
+        /* ── Translucent surface utilities (rgba — tincture uses solid) ─── */
+        --surface-card:              rgba(11, 16, 24, 0.7);
+        --surface-card-strong:       rgba(11, 16, 24, 0.85);
+        --surface-overlay:           rgba(0, 0, 0, 0.3);
+        --surface-interactive:       rgba(255, 255, 255, 0.06);
         --surface-interactive-hover: rgba(255, 255, 255, 0.12);
-        --surface-accent-soft: rgba(104, 152, 190, 0.12);
-        --surface-warm-soft: rgba(232, 168, 124, 0.1);
-        --surface-inset-highlight: rgba(255, 255, 255, 0.04);
+        --surface-accent-soft:       rgba(104, 152, 190, 0.12);
+        --surface-warm-soft:         rgba(232, 168, 124, 0.1);
+        --surface-inset-highlight:   rgba(255, 255, 255, 0.04);
 
-        /* Shadows */
+        /* ── Shadow utilities ────────────────────────────────────────────── */
         --shadow-accent-soft: rgba(104, 152, 190, 0.15);
-        --shadow-accent-mid: rgba(104, 152, 190, 0.25);
-        --shadow-warm-soft: rgba(232, 168, 124, 0.15);
+        --shadow-accent-mid:  rgba(104, 152, 190, 0.25);
+        --shadow-warm-soft:   rgba(232, 168, 124, 0.15);
 
-        /* Hero gradient */
-        --hero-title-start: #e4eaf4;
-        --hero-title-end: #7cb2d4;
-
-        /* Logo */
-        --logo-glow: rgba(104, 152, 190, 0.35);
-        --logo-glow-hover: rgba(124, 178, 212, 0.5);
-
-        /* Fonts */
-        --font-display: 'Manrope', system-ui, sans-serif;
-        --font-body: 'Satoshi', system-ui, sans-serif;
-        --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+        /* ── Hero / logo ─────────────────────────────────────────────────── */
+        --hero-title-start: var(--ink);
+        --hero-title-end:   var(--accent);
+        --logo-glow:        rgba(104, 152, 190, 0.35);
+        --logo-glow-hover:  rgba(124, 178, 212, 0.5);
       }
 
-      html[data-theme='light'] {
-        /* Light theme: "cloud cover at dawn" — daytime counterpart to the
-         * dark theme's "deep space." Pale sky + soft warm undertone, not
-         * stark office-white. Cycle 17 (s01-7b287c) palette rework:
-         * Old #f4f6f9 was a cool gray with no atmosphere. New palette mixes
-         * pale dawn blue with a hint of warmth so cards (off-white) read as
-         * "sun on snow" against a sky-mist background. */
-        --bg-deep: #e8eef5;       /* pale dawn sky — base atmosphere */
-        --bg-surface: #fafbfc;    /* near-white cloud, with cool undertone */
-        --bg-elevated: #dde5f0;   /* deeper cloud edge */
-
-        /* Deeper accent tones for readability */
-        --accent-bright: #2e6094;
-        --accent-mid: #245080;
+      /* Light surface — translucent utilities that foundation.css can't emit */
+      [data-surface="light"] {
+        --accent-mid:  #245080;
         --accent-dark: #1a3d66;
 
         --moon-bright: #3878a0;
-        --moon-mid: #2d6888;
-        --moon-glow: rgba(46, 96, 148, 0.2);
+        --moon-mid:    #2d6888;
+        --moon-glow:   rgba(46, 96, 148, 0.2);
 
         --warm-bright: #a85a2a;
-        --warm-mid: #8e4820;
-        --warm-glow: rgba(168, 90, 42, 0.18);
+        --warm-mid:    #8e4820;
+        --warm-glow:   rgba(168, 90, 42, 0.18);
 
-        /* Dark text for real contrast */
-        --text-primary: #0a0f1a;
-        --text-secondary: #2a3648;
-        --blog-body: #3a4d63;
-        --text-muted: #4a5a70;
-
-        /* Visible borders */
-        --border-subtle: rgba(10, 15, 26, 0.18);
-        --border-accent: rgba(46, 96, 148, 0.35);
-
-        /* Cards: warm cloud-white. Off-white not stark white — cards
-         * feel like sun on snow against the pale sky bg. */
-        --surface-card: rgba(252, 253, 254, 0.92);
-        --surface-card-strong: rgba(250, 252, 253, 1);
-        --surface-overlay: rgba(100, 120, 145, 0.22);
-        --surface-interactive: rgba(10, 15, 26, 0.08);
+        --surface-card:              rgba(252, 253, 254, 0.92);
+        --surface-card-strong:       rgba(250, 252, 253, 1);
+        --surface-overlay:           rgba(100, 120, 145, 0.22);
+        --surface-interactive:       rgba(10, 15, 26, 0.08);
         --surface-interactive-hover: rgba(10, 15, 26, 0.14);
-        --surface-accent-soft: rgba(46, 96, 148, 0.1);
-        --surface-warm-soft: rgba(168, 90, 42, 0.08);
-        --surface-inset-highlight: rgba(10, 15, 26, 0.06);
+        --surface-accent-soft:       rgba(46, 96, 148, 0.1);
+        --surface-warm-soft:         rgba(168, 90, 42, 0.08);
+        --surface-inset-highlight:   rgba(10, 15, 26, 0.06);
 
-        /* Visible shadows */
         --shadow-accent-soft: rgba(46, 96, 148, 0.2);
-        --shadow-accent-mid: rgba(46, 96, 148, 0.32);
-        --shadow-warm-soft: rgba(168, 90, 42, 0.18);
+        --shadow-accent-mid:  rgba(46, 96, 148, 0.32);
+        --shadow-warm-soft:   rgba(168, 90, 42, 0.18);
 
-        --hero-title-start: #1a3d66;
-        --hero-title-end: #2e6094;
-
-        --logo-glow: rgba(46, 96, 148, 0.15);
+        --logo-glow:       rgba(46, 96, 148, 0.15);
         --logo-glow-hover: rgba(46, 96, 148, 0.28);
       }
 
@@ -298,8 +248,8 @@ const schemaData = jsonLd || defaultJsonLd;
 
       body {
         font-family: var(--font-body);
-        background: var(--bg-deep);
-        color: var(--text-primary);
+        background: var(--bg);
+        color: var(--ink);
         line-height: var(--leading-relaxed);
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
@@ -325,8 +275,8 @@ const schemaData = jsonLd || defaultJsonLd;
       }
 
       ::selection {
-        background: var(--accent-bright);
-        color: var(--bg-deep);
+        background: var(--accent);
+        color: var(--bg);
       }
 
       /* ── Noise overlay ── */
@@ -456,7 +406,7 @@ const schemaData = jsonLd || defaultJsonLd;
       html[data-theme='light'] pre.astro-code,
       html[data-theme='light'] pre[class*="language-"] {
         background-color: #f6f8fa !important;
-        border: 1px solid var(--border-subtle);
+        border: 1px solid var(--border);
       }
 
       /* Content offset for fixed nav */
@@ -471,8 +421,8 @@ const schemaData = jsonLd || defaultJsonLd;
         left: var(--space-lg);
         z-index: 200;
         padding: var(--space-md) var(--space-xl);
-        background: var(--accent-bright);
-        color: var(--bg-deep);
+        background: var(--accent);
+        color: var(--bg);
         font-family: var(--font-body);
         font-size: var(--label-text);
         font-weight: 600;
@@ -566,6 +516,7 @@ const schemaData = jsonLd || defaultJsonLd;
       function applyTheme(theme: string) {
         const root = document.documentElement;
         root.dataset.theme = theme;
+        root.dataset.surface = theme; // tincture: dark → data-surface="dark", light → "light"
         (root.style as any).colorScheme = theme;
         const toggle = document.querySelector('.theme-toggle');
         toggle?.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');

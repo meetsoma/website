@@ -20,9 +20,9 @@ interface ChangelogData {
 
 const sectionConfig: Record<string, { label: string; color: string }> = {
   added: { label: 'Added', color: '#a8e8a8' },
-  changed: { label: 'Changed', color: 'var(--accent-bright)' },
+  changed: { label: 'Changed', color: 'var(--accent)' },
   fixed: { label: 'Fixed', color: 'var(--promo)' },
-  born: { label: 'Born', color: 'var(--accent-bright)' },
+  born: { label: 'Born', color: 'var(--accent)' },
 };
 
 // Editorial labels per version
@@ -94,7 +94,7 @@ export default function ChangelogIsland() {
             {/* Stats bar */}
             <div class="version-stats">
               {sections.map(([section, items]) => {
-                const config = sectionConfig[section] || { label: section, color: 'var(--text-muted)' };
+                const config = sectionConfig[section] || { label: section, color: 'var(--ink-muted)' };
                 return (
                   <div class="stat" key={section}>
                     <span class="stat-dot" style={`background: ${config.color}`} />
@@ -106,7 +106,7 @@ export default function ChangelogIsland() {
             </div>
 
             {sections.map(([section, items]) => {
-              const config = sectionConfig[section] || { label: section, color: 'var(--text-muted)' };
+              const config = sectionConfig[section] || { label: section, color: 'var(--ink-muted)' };
               return (
                 <div class="changelog-section" key={section}>
                   <h3 class="section-label" style={`color: ${config.color}`}>

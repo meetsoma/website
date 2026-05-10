@@ -30,7 +30,7 @@
   flex: 0 0 280px;
   padding: var(--space-2xl) var(--space-xl);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border);
   background: var(--surface-card);
   backdrop-filter: blur(8px);
   transition: all 0.35s ease;
@@ -52,7 +52,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: var(--space-lg);
-  color: var(--card-accent, var(--accent-bright));
+  color: var(--card-accent, var(--accent));
   opacity: 0.8;
 }
 
@@ -67,13 +67,13 @@
   font-weight: 600;
   margin-bottom: var(--space-lg);
   line-height: var(--leading-tight);
-  color: var(--text-primary);
+  color: var(--ink);
 }
 
 .card-voice {
   font-family: var(--font-body);
   font-size: var(--body-secondary);
-  color: var(--text-secondary);
+  color: var(--ink-soft);
   line-height: var(--leading-relaxed);
   font-style: italic;
   margin-bottom: var(--space-xl);
@@ -119,23 +119,23 @@
 
 .badge-muscle {
   background: rgba(104, 152, 190, 0.08);
-  color: var(--accent-bright);
+  color: var(--accent);
   border: 1px solid rgba(104, 152, 190, 0.12);
 }
 
 .badge-muscle .badge-dot {
-  background: var(--accent-bright);
+  background: var(--accent);
 }
 
 .card-install {
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border);
 }
 
 .card-install code {
   font-family: var(--font-mono);
   font-size: var(--badge-text);
-  color: var(--text-muted);
+  color: var(--ink-muted);
   letter-spacing: 0.02em;
 }
 

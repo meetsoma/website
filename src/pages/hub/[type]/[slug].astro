@@ -387,7 +387,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     display: inline-block;
     font-size: var(--label-text);
     font-family: var(--font-mono);
-    color: var(--accent-bright);
+    color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-bottom: var(--space-md);
@@ -402,7 +402,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   }
 
   .breadcrumb {
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     font-size: var(--body-secondary);
     line-height: var(--leading-relaxed);
     margin-bottom: var(--space-lg);
@@ -417,7 +417,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   .meta-item {
     font-family: var(--font-mono);
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
   }
 
   .meta-item.heat { color: var(--promo); }
@@ -434,7 +434,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
 
   .tier-core {
     background: rgba(124, 178, 212, 0.2);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   .tier-official {
@@ -465,7 +465,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     padding: 2px var(--space-md);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   /* Stats Bar */
@@ -475,7 +475,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     gap: var(--space-md);
     padding: var(--space-lg) var(--space-xl);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     margin-bottom: var(--space-xl);
   }
@@ -485,7 +485,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     flex-direction: column;
     gap: var(--space-xs);
     padding-right: var(--space-xl);
-    border-right: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border);
     text-decoration: none;
     color: inherit;
   }
@@ -498,7 +498,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   .stat-label {
     font-family: var(--font-mono);
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
@@ -507,7 +507,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     font-family: var(--font-display);
     font-size: var(--body-secondary);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--ink);
   }
 
   .stat-heat { color: var(--promo); }
@@ -521,13 +521,13 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   }
 
   .stat-link:hover { opacity: 0.7; }
-  .stat-link .stat-value { color: var(--accent-bright); }
+  .stat-link .stat-value { color: var(--accent); }
 
   /* Install */
   .install-section {
     padding: var(--space-xl);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     margin-bottom: var(--space-xl);
   }
@@ -536,7 +536,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     display: flex;
     gap: var(--space-sm);
     margin-bottom: var(--space-lg);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border);
     padding-bottom: var(--space-md);
   }
 
@@ -550,18 +550,18 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     border-radius: var(--radius-sm);
     border: none;
     background: transparent;
-    color: var(--text-muted);
+    color: var(--ink-muted);
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .install-tab:hover {
-    color: var(--text-primary);
+    color: var(--ink);
     background: var(--surface-interactive);
   }
 
   .install-tab.active {
-    color: var(--accent-bright);
+    color: var(--accent);
     background: var(--surface-accent-soft);
   }
 
@@ -579,20 +579,20 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     font-size: var(--body-secondary);
     padding: var(--space-lg);
     border-radius: var(--radius-md);
-    background: var(--bg-elevated);
-    color: var(--accent-bright);
+    background: var(--bg-elev);
+    color: var(--accent);
     margin-bottom: var(--space-md);
     overflow-x: auto;
   }
 
   .install-hint {
     font-size: var(--label-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     line-height: var(--leading-relaxed);
   }
 
   .install-hint a {
-    color: var(--accent-bright);
+    color: var(--accent);
     text-decoration: none;
   }
 
@@ -604,7 +604,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     padding: 1px var(--space-sm);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   /* Tags */
@@ -625,7 +625,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   .tag-label {
     font-family: var(--font-mono);
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     min-width: 5rem;
@@ -639,12 +639,12 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     padding: 2px var(--space-md);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   .tag-dim {
     background: var(--surface-interactive);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
   }
 
   /* Version selector */
@@ -654,13 +654,13 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     gap: var(--space-md);
     margin-bottom: var(--space-xl);
     padding-bottom: var(--space-lg);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border);
   }
 
   .version-selector label {
     font-family: var(--font-mono);
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -670,9 +670,9 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     font-size: var(--label-text);
     padding: var(--space-sm) var(--space-lg);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-elevated);
-    color: var(--text-primary);
+    border: 1px solid var(--border);
+    background: var(--bg-elev);
+    color: var(--ink);
     cursor: pointer;
     outline: none;
   }
@@ -682,7 +682,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   }
 
   .version-selector select:focus {
-    border-color: var(--accent-bright);
+    border-color: var(--accent);
     box-shadow: 0 0 0 2px var(--shadow-accent-soft);
   }
 
@@ -690,7 +690,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   .body-section {
     padding: var(--space-2xl);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     margin-bottom: var(--space-xl);
   }
@@ -701,7 +701,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     font-weight: 600;
     margin: var(--space-xl) 0 var(--space-lg);
     padding-top: var(--space-lg);
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border);
   }
 
   .body-section :global(h2:first-child) {
@@ -718,14 +718,14 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   }
 
   .body-section :global(p) {
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-relaxed);
     margin-bottom: var(--space-lg);
     font-size: var(--body-secondary);
   }
 
   .body-section :global(ul), .body-section :global(ol) {
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     padding-left: var(--space-xl);
     margin-bottom: var(--space-lg);
     font-size: var(--body-secondary);
@@ -739,11 +739,11 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     padding: 1px var(--space-sm);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   .body-section :global(pre) {
-    background: var(--bg-elevated);
+    background: var(--bg-elev);
     padding: var(--space-lg);
     border-radius: var(--radius-md);
     overflow-x: auto;
@@ -755,7 +755,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   .body-section :global(pre code) {
     background: none;
     padding: 0;
-    color: var(--text-secondary);
+    color: var(--ink-soft);
   }
 
   .body-section :global(table) {
@@ -768,7 +768,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   .body-section :global(th) {
     text-align: left;
     padding: var(--space-md);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border);
     font-family: var(--font-display);
     font-weight: 600;
     font-size: var(--label-text);
@@ -776,19 +776,19 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
 
   .body-section :global(td) {
     padding: var(--space-md);
-    border-bottom: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-soft);
   }
 
-  .body-section :global(strong) { color: var(--text-primary); }
+  .body-section :global(strong) { color: var(--ink); }
 
-  .body-section :global(em) { color: var(--text-secondary); }
+  .body-section :global(em) { color: var(--ink-soft); }
 
   .body-section :global(blockquote) {
-    border-left: 3px solid var(--accent-bright);
+    border-left: 3px solid var(--accent);
     padding-left: var(--space-lg);
     margin: var(--space-lg) 0;
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     font-style: italic;
   }
 
@@ -800,7 +800,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
 
   .source-link {
     font-size: var(--body-secondary);
-    color: var(--accent-bright);
+    color: var(--accent);
     text-decoration: none;
   }
 
@@ -831,12 +831,12 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     flex-direction: column;
     padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--ink);
     transition: all 0.2s ease;
-    border-left: 3px solid var(--card-accent, var(--border-subtle));
+    border-left: 3px solid var(--card-accent, var(--border));
   }
 
   .inc-card:hover {
@@ -862,12 +862,12 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   .inc-version {
     font-family: var(--font-mono);
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
   }
 
   .inc-desc {
     font-size: var(--body-text);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-normal);
     flex: 1;
     margin-bottom: var(--space-lg);
@@ -905,7 +905,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   }
 
   .inc-tag {
-    color: var(--accent-bright);
+    color: var(--accent);
     font-family: var(--font-mono);
     font-size: var(--badge-text);
     padding: 1px var(--space-sm);
@@ -914,7 +914,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   }
 
   .inc-author {
-    color: var(--text-muted);
+    color: var(--ink-muted);
     font-size: var(--badge-text);
     margin-top: var(--space-sm);
   }
@@ -927,7 +927,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
 
   /* Core section — compact variant */
   .core-section {
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border);
     padding-top: var(--space-xl);
   }
 
@@ -935,13 +935,13 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     font-family: var(--font-display);
     font-size: var(--body-text);
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     margin-bottom: var(--space-sm);
   }
 
   .core-subtext {
     font-size: var(--label-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     margin-bottom: var(--space-lg);
   }
 
@@ -952,7 +952,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   .inc-card-core {
     padding: var(--space-lg) var(--card-pad-x);
     background: transparent;
-    border-color: var(--border-subtle);
+    border-color: var(--border);
     border-left-width: 2px;
     opacity: 0.8;
   }
@@ -983,7 +983,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     border: 1px solid rgba(190, 152, 232, 0.25);
     margin-bottom: var(--space-xl);
     font-size: var(--body-secondary);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
   }
 
   .fork-icon {
@@ -992,7 +992,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
   }
 
   .fork-banner a {
-    color: var(--accent-bright);
+    color: var(--accent);
     text-decoration: none;
     font-weight: 600;
   }
@@ -1023,26 +1023,26 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     gap: var(--space-lg);
     padding: var(--space-md) var(--space-lg);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
   }
 
   .contributor-name {
     font-family: var(--font-mono);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--ink);
     font-size: var(--body-secondary);
   }
 
   .contributor-version {
     font-family: var(--font-mono);
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
   }
 
   .contributor-desc {
     font-size: var(--label-text);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     flex: 1;
   }
 
@@ -1060,7 +1060,7 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
 
   .forks-subtext {
     font-size: var(--label-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     margin-bottom: var(--space-lg);
   }
 
@@ -1076,10 +1076,10 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     align-items: center;
     padding: var(--space-md) var(--space-lg);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--ink);
     transition: all 0.15s ease;
   }
 
@@ -1092,12 +1092,12 @@ const compat = item.manifest?.stats?.compat ?? null as number | null;
     font-family: var(--font-mono);
     font-weight: 600;
     font-size: var(--body-secondary);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   .fork-card-meta {
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
   }
 
   @media (max-width: 480px) {

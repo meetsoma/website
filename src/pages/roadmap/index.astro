@@ -433,7 +433,7 @@ function formatDate(d?: string): string {
   .subtitle {
     font-family: var(--font-body);
     font-size: var(--text-lg);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     max-width: 34rem;
     margin: var(--space-md) auto 0;
     line-height: var(--leading-relaxed);
@@ -448,7 +448,7 @@ function formatDate(d?: string): string {
     position: relative;
     padding: var(--space-lg) var(--space-xl) var(--space-xl);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     backdrop-filter: blur(8px);
     overflow: hidden;
@@ -500,10 +500,10 @@ function formatDate(d?: string): string {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     border-radius: 6px;
     background: transparent;
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     font-size: 1.25rem;
     line-height: 1;
     cursor: pointer;
@@ -620,7 +620,7 @@ function formatDate(d?: string): string {
   .hero-icon {
     display: flex;
     align-items: center;
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   .hero-meta {
@@ -672,7 +672,7 @@ function formatDate(d?: string): string {
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--ink);
     margin: 0;
     line-height: var(--leading-tight);
     letter-spacing: -0.015em;
@@ -681,7 +681,7 @@ function formatDate(d?: string): string {
   .hero-desc {
     font-family: var(--font-body);
     font-size: clamp(0.95rem, 1.2vw, 1.05rem);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-relaxed);
     margin: 0;
     /* Prose stops at ~3/5 so the hero art has room on the right */
@@ -690,7 +690,7 @@ function formatDate(d?: string): string {
   .hero-desc :global(code) {
     font-family: var(--font-mono);
     font-size: 0.88em;
-    color: var(--text-primary);
+    color: var(--ink);
     padding: 0.1em 0.4em;
     background: rgba(0, 0, 0, 0.25);
     border-radius: 4px;
@@ -809,20 +809,20 @@ function formatDate(d?: string): string {
   .changelog-link p {
     font-family: var(--font-body);
     font-size: var(--body-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     line-height: var(--leading-relaxed);
     margin: 0;
   }
 
   .changelog-link a {
-    color: var(--accent-bright);
+    color: var(--accent);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     transition: border-color 0.2s ease;
   }
 
   .changelog-link a:hover {
-    border-bottom-color: var(--accent-bright);
+    border-bottom-color: var(--accent);
   }
 
   /* ── Voting Teaser ── */
@@ -838,7 +838,7 @@ function formatDate(d?: string): string {
   .voting-teaser p {
     font-family: var(--font-body);
     font-size: var(--body-text);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-relaxed);
     margin: 0;
   }
@@ -846,7 +846,7 @@ function formatDate(d?: string): string {
   .voting-teaser code {
     font-family: var(--font-mono);
     font-size: var(--label-text);
-    color: var(--accent-bright);
+    color: var(--accent);
     background: var(--surface-interactive);
     padding: 2px var(--space-md);
     border-radius: var(--radius-sm);
@@ -864,7 +864,7 @@ function formatDate(d?: string): string {
     gap: var(--space-lg);
     padding: var(--space-lg) var(--space-xl);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     transition: border-color 0.2s ease;
   }
@@ -877,14 +877,14 @@ function formatDate(d?: string): string {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--border-subtle);
+    background: var(--border);
     margin-top: 8px;
     flex-shrink: 0;
   }
 
   .progress-dot.active {
-    background: var(--accent-bright);
-    box-shadow: 0 0 6px var(--accent-bright);
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
   }
 
   .progress-dot.shipped {
@@ -895,14 +895,14 @@ function formatDate(d?: string): string {
   .progress-item strong {
     font-family: var(--font-display);
     font-size: var(--body-text);
-    color: var(--text-primary);
+    color: var(--ink);
     display: block;
     margin-bottom: var(--space-xs);
   }
 
   .progress-item p {
     font-size: var(--body-secondary);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     line-height: var(--leading-relaxed);
     margin: 0;
   }
@@ -930,7 +930,7 @@ function formatDate(d?: string): string {
     top: calc(var(--space-xl) + 8px);
     bottom: 5px;
     width: 2px;
-    background: linear-gradient(to bottom, var(--border-accent), var(--border-subtle));
+    background: linear-gradient(to bottom, var(--border-accent), var(--border));
   }
 
   .timeline-entry {
@@ -938,7 +938,7 @@ function formatDate(d?: string): string {
     margin-bottom: var(--space-3xl);
     padding: var(--space-xl);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     transition: all 0.25s ease;
     animation: fadeUp 0.6s ease-out both;
@@ -960,14 +960,14 @@ function formatDate(d?: string): string {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: var(--bg-deep);
-    border: 2px solid var(--accent-bright);
+    background: var(--bg);
+    border: 2px solid var(--accent);
     z-index: 1;
   }
 
   .timeline-entry:first-child .timeline-dot {
-    background: var(--accent-bright);
-    box-shadow: 0 0 8px var(--accent-bright);
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
   }
 
   .timeline-head {
@@ -981,7 +981,7 @@ function formatDate(d?: string): string {
   .timeline .version {
     font-family: var(--font-mono);
     font-size: var(--text-lg);
-    color: var(--accent-bright);
+    color: var(--accent);
     font-weight: 700;
   }
 
@@ -989,7 +989,7 @@ function formatDate(d?: string): string {
     font-family: var(--font-display);
     font-size: var(--text-xl);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--ink);
     margin: 0;
     line-height: var(--leading-tight);
   }
@@ -997,7 +997,7 @@ function formatDate(d?: string): string {
   .timeline .date {
     font-family: var(--font-mono);
     font-size: var(--label-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     margin-left: auto;
   }
 
@@ -1012,7 +1012,7 @@ function formatDate(d?: string): string {
   .timeline-items li {
     font-family: var(--font-body);
     font-size: var(--body-text);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-relaxed);
     padding: var(--space-xs) 0;
     padding-left: var(--space-xl);
@@ -1027,7 +1027,7 @@ function formatDate(d?: string): string {
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: var(--accent-bright);
+    background: var(--accent);
     opacity: 0.5;
   }
 
@@ -1042,8 +1042,8 @@ function formatDate(d?: string): string {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--bg-deep);
-    background: var(--accent-bright);
+    color: var(--bg);
+    background: var(--accent);
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-full);
     line-height: 1;
@@ -1053,7 +1053,7 @@ function formatDate(d?: string): string {
   .timeline-error {
     text-align: center;
     padding: var(--space-2xl);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     font-family: var(--font-body);
   }
 

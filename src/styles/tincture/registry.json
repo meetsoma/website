@@ -1,0 +1,157 @@
+{
+  "version": "0.1.0",
+  "name": "soma/tincture",
+  "doc": "Token registry for soma.gravicity.ai. Deep-space dark / cloud-cover-at-dawn light. Two surfaces, one substrate.",
+  "tokens": {
+    "bg": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Page background. Deep space on dark, pale dawn sky on light.",
+      "values": {
+        "default":       "#0C0F16",
+        "surface=light": "#e8eef5"
+      }
+    },
+    "bg-card": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Card / panel surface. Slightly elevated from page bg.",
+      "values": {
+        "default":       "#0b1018",
+        "surface=light": "#fafbfc"
+      }
+    },
+    "bg-elev": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Elevated surface — modals, popovers, raised cards.",
+      "values": {
+        "default":       "#121a28",
+        "surface=light": "#dde5f0"
+      }
+    },
+    "ink": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Primary text. High contrast on both surfaces.",
+      "values": {
+        "default":       "#e4eaf4",
+        "surface=light": "#0a0f1a"
+      }
+    },
+    "ink-soft": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Secondary text. Body copy, descriptions.",
+      "values": {
+        "default":       "#9dafc4",
+        "surface=light": "#2a3648"
+      }
+    },
+    "ink-muted": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Tertiary text. Metadata, timestamps, captions.",
+      "values": {
+        "default":       "#647080",
+        "surface=light": "#4a5a70"
+      }
+    },
+    "accent": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Primary accent — soma blue. Canonical #7cb2d4 on dark, deeper on light for contrast.",
+      "values": {
+        "default":       "#7cb2d4",
+        "surface=light": "#2e6094"
+      }
+    },
+    "accent-fg": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Ink on accent surface.",
+      "values": {
+        "default":       "#0C0F16",
+        "surface=light": "#ffffff"
+      }
+    },
+    "accent-warm": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Warm signal accent — CTAs, highlights. Complements the blue accent.",
+      "values": {
+        "default":       "#e8a87c",
+        "surface=light": "#a85a2a"
+      }
+    },
+    "border": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Default border. Low alpha ink tint on both surfaces.",
+      "values": {
+        "default":       "rgba(132, 148, 170, 0.12)",
+        "surface=light": "rgba(10, 15, 26, 0.18)"
+      }
+    },
+    "border-accent": {
+      "kind": "color",
+      "axes": ["surface"],
+      "doc": "Accent-tinted border. Used on interactive cards, focused inputs.",
+      "values": {
+        "default":       "rgba(104, 152, 190, 0.3)",
+        "surface=light": "rgba(46, 96, 148, 0.35)"
+      }
+    },
+    "font-display": {
+      "kind": "typography",
+      "axes": [],
+      "doc": "Display headlines — Manrope. System fallback.",
+      "values": {
+        "default": "'Manrope', system-ui, sans-serif"
+      }
+    },
+    "font-body": {
+      "kind": "typography",
+      "axes": [],
+      "doc": "Body copy — Satoshi. System fallback.",
+      "values": {
+        "default": "'Satoshi', system-ui, sans-serif"
+      }
+    },
+    "font-mono": {
+      "kind": "typography",
+      "axes": [],
+      "doc": "Monospace — code blocks, terminal output.",
+      "values": {
+        "default": "'SF Mono', 'Fira Code', 'JetBrains Mono', monospace"
+      }
+    },
+    "shadow-card": {
+      "kind": "shadow",
+      "axes": ["surface"],
+      "doc": "Default card shadow.",
+      "values": {
+        "default":       "0 1px 3px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.12)",
+        "surface=light": "0 1px 4px rgba(0,0,0,0.08), 0 4px 14px rgba(0,0,0,0.05)"
+      }
+    },
+    "shadow-accent": {
+      "kind": "shadow",
+      "axes": ["surface"],
+      "doc": "Accent-tinted glow shadow — used on focused/featured elements.",
+      "values": {
+        "default":       "rgba(104, 152, 190, 0.15)",
+        "surface=light": "rgba(46, 96, 148, 0.2)"
+      }
+    },
+    "brand-sigma": {
+      "kind": "brand-lock",
+      "axes": [],
+      "locked": true,
+      "doc": "Soma σ mark blue. Immutable — the canonical brand anchor. Moods cannot override.",
+      "values": {
+        "default": "#7cb2d4"
+      }
+    }
+  }
+}

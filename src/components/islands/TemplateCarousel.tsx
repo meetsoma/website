@@ -27,7 +27,7 @@ const templates: Template[] = [
     name: 'core', icon: 'sigma', title: 'The Foundation',
     voice: "I start simple. Breathe, remember, grow. Everything else builds on this.",
     protocols: ['breath-cycle', 'heat-tracking', 'pattern-evolution'], muscles: [],
-    color: 'var(--accent-bright)',
+    color: 'var(--accent)',
   },
   {
     name: 'architect', icon: 'ruler', title: 'The Architect',
