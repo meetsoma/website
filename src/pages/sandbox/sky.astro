@@ -337,19 +337,19 @@ import Layout from '../../layouts/Layout.astro';
    *   — hard shadow falls FORWARD / below (toward the viewer)
    * Result reads as contre-jour / backlit photography. */
   html[data-theme='light'] body:has(.sandbox-main) .sandbox-hero h1 {
-    /* Dark silhouette gradient — deepest at base (shadow side),
-     * slightly warm-dark at top (edge catching rim of sun glow) */
+    /* Dark silhouette — contre-jour against bright sky.
+     * Rich dark navy so the letter shapes read clearly against the blue. */
     background: linear-gradient(
-      180deg,
-      #0d2040 0%,   /* top — dark with the faintest warm cast */
-      #091628 100%  /* base — deepest silhouette */
+      175deg,
+      #142a4e 0%,   /* slightly lighter top (catching rim glow) */
+      #0a1c38 100%  /* deep base silhouette */
     ) !important;
-    /* Sun-behind: warm halo above + forward shadow below.
-     * drop-shadow works on the composited text (including background-clip). */
+    /* Sun-behind effect — WARM halo radiates from behind/above the letters,
+     * forward shadow is SOFT (not hard box) so letters stay legible. */
     filter:
-      drop-shadow(0 -8px 24px rgba(255, 215, 130, 0.60))   /* warm sun halo behind/above */
-      drop-shadow(0 -3px 10px rgba(255, 230, 160, 0.35))   /* secondary rim glow */
-      drop-shadow(0 10px 20px rgba(6, 18, 45, 0.55));      /* hard shadow TOWARD viewer */
+      drop-shadow(0 -10px 28px rgba(255, 210, 110, 0.65))   /* primary sun halo above */
+      drop-shadow(0 -4px 14px rgba(255, 230, 155, 0.40))    /* secondary warm rim */
+      drop-shadow(0 7px 14px rgba(6, 16, 40, 0.38));        /* soft forward shadow */
   }
 
   /* Nav sigma in light sky — deep blue silhouette + sun halo */
