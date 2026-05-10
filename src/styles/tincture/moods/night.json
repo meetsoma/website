@@ -1,0 +1,22 @@
+{
+  "id": "night",
+  "name": "Night",
+  "doc": "Starlit silence. Dark surface always. The body gradient does not render in dark surface (Layout.astro body::before only fires for data-surface=light), but mood vars are still set so any consumer reading --sky-* has dark-friendly defaults.",
+  "base": "default",
+  "sky": {
+    "dark": {
+      "top":         "#050810",
+      "upper":       "#0a1024",
+      "mid":         "#101830",
+      "transition":  "#161e3c",
+      "warm-start":  "#20264a",
+      "warm":        "#1a2040",
+      "horizon":     "#0c1024",
+      "bleed-color": "rgba(20, 30, 60, 0.30)",
+      "bleed-mid":   "rgba(15, 22, 44, 0.18)",
+      "cloud-low":   "rgba(60, 80, 110, 0.18)",
+      "cloud-mid":   "rgba(80, 100, 140, 0.14)",
+      "cloud-high":  "rgba(120, 150, 200, 0.10)"
+    }
+  }
+}

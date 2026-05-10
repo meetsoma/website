@@ -35,8 +35,9 @@ import Layout from '../../layouts/Layout.astro';
   <main class="sandbox-main">
     <!-- Mood switcher -->
     <div class="mood-row" id="mood-row">
-      <button class="mood-btn active" data-mood="dawn-dusk">Dawn / Dusk</button>
-      <button class="mood-btn" data-mood="day">Day</button>
+      <button class="mood-btn" data-mood="night">🌙 Night</button>
+      <button class="mood-btn active" data-mood="mid">🌅 Mid</button>
+      <button class="mood-btn" data-mood="day">☀️ Day</button>
     </div>
 
     <header class="sandbox-hero">
@@ -329,20 +330,33 @@ import Layout from '../../layouts/Layout.astro';
     const btns = document.querySelectorAll('.mood-btn');
     const title = document.getElementById('sandbox-title');
     const TITLES: Record<string, string> = {
-      'dawn-dusk': 'cloud cover at dawn',
-      'day':       'clear day',
+      'night': 'starlit silence',
+      'mid':   'baby blue meets soft ember',
+      'day':   'wispy clouds, sun at peak',
+    };
+    // Each mood implies a surface + theme — flip atomically so the page
+    // doesn't half-transition between dark/light states.
+    const SURFACE_FOR: Record<string, 'dark' | 'light'> = {
+      'night': 'dark',
+      'mid':   'light',
+      'day':   'light',
     };
     function setMood(mood: string) {
-      document.documentElement.dataset.mood = mood;
+      const html = document.documentElement;
+      const surface = SURFACE_FOR[mood] || 'light';
+      html.dataset.mood = mood;
+      html.dataset.surface = surface;
+      html.dataset.theme = surface; // theme tracks surface for now
       localStorage.setItem('soma-sky-mood', mood);
+      localStorage.setItem('soma-theme', surface);
       btns.forEach(b => (b as HTMLElement).classList.toggle('active', (b as HTMLElement).dataset.mood === mood));
       if (title) title.textContent = TITLES[mood] || mood;
     }
     btns.forEach(btn => {
-      (btn as HTMLElement).addEventListener('click', () => setMood((btn as HTMLElement).dataset.mood || 'dawn-dusk'));
+      (btn as HTMLElement).addEventListener('click', () => setMood((btn as HTMLElement).dataset.mood || 'mid'));
     });
     // Sync to current state
-    const current = document.documentElement.dataset.mood || 'dawn-dusk';
+    const current = document.documentElement.dataset.mood || 'mid';
     setMood(current);
   }
   initMoodSwitcher();

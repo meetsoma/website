@@ -10,7 +10,7 @@
      3. Translucent surface utilities — rgba-based, can't live in codegen.
 
    DO NOT add :root semantic tokens here — _generated/foundation.css owns those.
-   Updated: s01-b73653 (two moods: dawn-dusk + day)
+   Updated: s01-b73653 (three moods: night + mid + day)
    ─────────────────────────────────────────────────────────────────────────── */
 
 /* ── Default sky vars (fallback — dawn/dusk is the light-mode default) ─── */
@@ -29,80 +29,95 @@
   --sky-cloud-high: rgba(70, 110, 155, 0.30);
 }
 
-/* ── Mood: dawn-dusk ─────────────────────────────────────────────────────
-   Twilight. Deep blue zenith, orange-red cloud undersides from sun below
-   horizon. The --sky-* values drive the body::before gradient in Layout. */
-[data-mood="dawn-dusk"] {
-  --sky-top:        #1a4a80;
-  --sky-upper:      #2a6aa8;
-  --sky-mid:        #5898cc;
-  --sky-transition: #8898a8;
-  --sky-warm-start: #8a6050;
-  --sky-warm:       #783028;
-  --sky-horizon:    #602018;
-  --sky-bleed:      rgba(190, 55, 20, 0.55);
-  --sky-bleed-mid:  rgba(160, 40, 15, 0.30);
-  --sky-cloud-low:  rgba(195, 60, 22, 0.42);
-  --sky-cloud-mid:  rgba(120, 80, 55, 0.28);
-  --sky-cloud-high: rgba(70, 110, 155, 0.30);
+/* ── Mood: night ──────────────────────────────────────────────────────────
+   Dark surface. Sky gradient doesn't render (body::before only fires for
+   data-surface=light), but we still set vars so any consumer reading them
+   has dark-friendly defaults. */
+[data-mood="night"] {
+  --sky-top:         #050810;
+  --sky-upper:       #0a1024;
+  --sky-mid:         #101830;
+  --sky-transition:  #161e3c;
+  --sky-warm-start:  #20264a;
+  --sky-warm:        #1a2040;
+  --sky-horizon:     #0c1024;
+  --sky-bleed:       rgba(20, 30, 60, 0.30);
+  --sky-bleed-mid:   rgba(15, 22, 44, 0.18);
+  --sky-cloud-low:   rgba(60, 80, 110, 0.18);
+  --sky-cloud-mid:   rgba(80, 100, 140, 0.14);
+  --sky-cloud-high:  rgba(120, 150, 200, 0.10);
 }
 
-/* ── Mood: day ───────────────────────────────────────────────────────────
-   Clear daytime. Rich saturated blue at zenith, pale clean horizon,
-   clouds lit white from above. No sunset warmth. Pure sky. */
+/* ── Mood: mid (morning / evening) ────────────────────────────────────────
+   Default values are tuned for DARK surface (deep navy → ember).
+   Light surface override below. */
+[data-mood="mid"] {
+  --sky-top:         #1a4a80;
+  --sky-upper:       #2a6aa8;
+  --sky-mid:         #5898cc;
+  --sky-transition:  #8898a8;
+  --sky-warm-start:  #8a6050;
+  --sky-warm:        #783028;
+  --sky-horizon:     #602018;
+  --sky-bleed:       rgba(190, 55, 20, 0.55);
+  --sky-bleed-mid:   rgba(160, 40, 15, 0.30);
+  --sky-cloud-low:   rgba(195, 60, 22, 0.42);
+  --sky-cloud-mid:   rgba(120, 80, 55, 0.28);
+  --sky-cloud-high:  rgba(70, 110, 155, 0.30);
+}
+
+/* mid + light surface — airy: baby blue → cream → soft orange horizon */
+[data-mood="mid"][data-surface="light"],
+[data-mood="mid"] [data-surface="light"] {
+  --sky-top:         #c5dceb;
+  --sky-upper:       #d4e7f0;
+  --sky-mid:         #e6eef5;
+  --sky-transition:  #f0e8dc;
+  --sky-warm-start:  #f5dac4;
+  --sky-warm:        #f5c8a0;
+  --sky-horizon:     #f0bc8e;
+  --sky-bleed:       rgba(245, 180, 130, 0.32);
+  --sky-bleed-mid:   rgba(240, 200, 160, 0.18);
+  --sky-cloud-low:   rgba(255, 240, 220, 0.65);
+  --sky-cloud-mid:   rgba(248, 252, 255, 0.55);
+  --sky-cloud-high:  rgba(225, 238, 248, 0.40);
+}
+
+/* ── Mood: day ────────────────────────────────────────────────────────────
+   Full daylight. NO orange. Wispy clouds, baby blue, sun at peak. */
 [data-mood="day"] {
-  --sky-top:        #0e5cb0;
-  --sky-upper:      #1a78c8;
-  --sky-mid:        #3a98d8;
-  --sky-transition: #5aaee0;
-  --sky-warm-start: #8acce8;
-  --sky-warm:       #b8dff0;
-  --sky-horizon:    #d8eef8;
-  --sky-bleed:      rgba(180, 220, 245, 0.35);
-  --sky-bleed-mid:  rgba(160, 210, 238, 0.18);
-  --sky-cloud-low:  rgba(240, 248, 255, 0.75);  /* bright white cumulus */
-  --sky-cloud-mid:  rgba(200, 230, 248, 0.40);
-  --sky-cloud-high: rgba(160, 205, 232, 0.25);
+  --sky-top:         #0e5cb0;
+  --sky-upper:       #1a78c8;
+  --sky-mid:         #3a98d8;
+  --sky-transition:  #5aaee0;
+  --sky-warm-start:  #8acce8;
+  --sky-warm:        #b8dff0;
+  --sky-horizon:     #d8eef8;
+  --sky-bleed:       rgba(180, 220, 245, 0.35);
+  --sky-bleed-mid:   rgba(160, 210, 238, 0.18);
+  --sky-cloud-low:   rgba(240, 248, 255, 0.75);
+  --sky-cloud-mid:   rgba(200, 230, 248, 0.40);
+  --sky-cloud-high:  rgba(160, 205, 232, 0.25);
 }
 
-/* ── Translucent surface utilities ─────────────────────────────────────── */
-/* DARK values declared here so source-order lets [data-surface="light"]
- * override them — Layout.astro :root can't win the specificity fight. */
-[data-surface="dark"] {
-  --surface-card:              rgba(11, 16, 24, 0.70);
-  --surface-card-strong:       rgba(11, 16, 24, 0.85);
-  --surface-overlay:           rgba(0, 0, 0, 0.30);
-  --surface-interactive:       rgba(255, 255, 255, 0.06);
-  --surface-interactive-hover: rgba(255, 255, 255, 0.12);
-  --surface-accent-soft:       rgba(104, 152, 190, 0.12);
-  --surface-warm-soft:         rgba(232, 168, 124, 0.10);
-  --surface-inset-highlight:   rgba(255, 255, 255, 0.04);
-  --shadow-accent-soft:        rgba(104, 152, 190, 0.15);
-  --shadow-accent-mid:         rgba(104, 152, 190, 0.25);
-}
-
-[data-surface="light"] {
-  --surface-card:              rgba(235, 248, 255, 0.90);
-  --surface-card-strong:       rgba(242, 251, 255, 0.97);
-  --surface-overlay:           rgba(8, 22, 36, 0.22);
-  --surface-interactive:       rgba(8, 22, 36, 0.07);
-  --surface-interactive-hover: rgba(8, 22, 36, 0.13);
-  --surface-accent-soft:       rgba(21, 85, 160, 0.10);
-  --surface-warm-soft:         rgba(200, 90, 40, 0.08);
-  --surface-inset-highlight:   rgba(255, 255, 255, 0.55);
-  --shadow-accent-soft:        rgba(21, 85, 160, 0.18);
-  --shadow-accent-mid:         rgba(21, 85, 160, 0.30);
-}
-
-/* Day mood overrides for surface utilities — brighter, less glass */
+/* day + light surface — even airier, white wispy clouds, no warm tint */
 [data-mood="day"][data-surface="light"],
 [data-mood="day"] [data-surface="light"] {
-  --surface-card:              rgba(242, 251, 255, 0.92);
-  --surface-card-strong:       rgba(248, 254, 255, 0.98);
-  --shadow-accent-soft:        rgba(10, 80, 144, 0.15);
-  --shadow-accent-mid:         rgba(10, 80, 144, 0.26);
+  --sky-top:         #b3d3e8;
+  --sky-upper:       #c5ddee;
+  --sky-mid:         #d8e7f1;
+  --sky-transition:  #e8eff5;
+  --sky-warm-start:  #eef3f7;
+  --sky-warm:        #f3f7fa;
+  --sky-horizon:     #e8eef4;
+  --sky-bleed:       rgba(220, 235, 248, 0.18);
+  --sky-bleed-mid:   rgba(220, 235, 248, 0.10);
+  --sky-cloud-low:   rgba(255, 255, 255, 0.80);
+  --sky-cloud-mid:   rgba(248, 252, 255, 0.60);
+  --sky-cloud-high:  rgba(225, 238, 248, 0.45);
 }
 
 /* ── Debug ───────────────────────────────────────────────────────────── */
-.tincture-debug [data-mood="dawn-dusk"] { outline: 2px dashed #d04020; }
-.tincture-debug [data-mood="day"]       { outline: 2px dashed #1a78c8; }
+.tincture-debug [data-mood="night"]      { outline: 2px dashed #4a5a90; }
+.tincture-debug [data-mood="mid"]        { outline: 2px dashed #d04020; }
+.tincture-debug [data-mood="day"]        { outline: 2px dashed #1a78c8; }

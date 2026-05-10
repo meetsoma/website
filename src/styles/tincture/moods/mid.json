@@ -1,0 +1,36 @@
+{
+  "id": "mid",
+  "name": "Mid (eve / morning)",
+  "doc": "Morning or evening sky. Baby blue zenith fading through cream to a soft orange horizon glow. Wispy white clouds. The transitional mood — sun just below or rising. Light surface.",
+  "base": "default",
+  "sky": {
+    "dark": {
+      "top":         "#1a4a80",
+      "upper":       "#2a6aa8",
+      "mid":         "#5898cc",
+      "transition":  "#8898a8",
+      "warm-start":  "#8a6050",
+      "warm":        "#783028",
+      "horizon":     "#602018",
+      "bleed-color": "rgba(190, 55, 20, 0.55)",
+      "bleed-mid":   "rgba(160, 40, 15, 0.30)",
+      "cloud-low":   "rgba(195, 60, 22, 0.42)",
+      "cloud-mid":   "rgba(120, 80, 55, 0.28)",
+      "cloud-high":  "rgba(70, 110, 155, 0.30)"
+    },
+    "light": {
+      "top":         "#c5dceb",
+      "upper":       "#d4e7f0",
+      "mid":         "#e6eef5",
+      "transition":  "#f0e8dc",
+      "warm-start":  "#f5dac4",
+      "warm":        "#f5c8a0",
+      "horizon":     "#f0bc8e",
+      "bleed-color": "rgba(245, 180, 130, 0.32)",
+      "bleed-mid":   "rgba(240, 200, 160, 0.18)",
+      "cloud-low":   "rgba(255, 240, 220, 0.65)",
+      "cloud-mid":   "rgba(248, 252, 255, 0.55)",
+      "cloud-high":  "rgba(225, 238, 248, 0.40)"
+    }
+  }
+}
