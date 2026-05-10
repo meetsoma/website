@@ -65,7 +65,22 @@
   --sky-cloud-high: rgba(160, 205, 232, 0.25);
 }
 
-/* ── Translucent surface utilities (light mode, not codegen-able) ─────── */
+/* ── Translucent surface utilities ─────────────────────────────────────── */
+/* DARK values declared here so source-order lets [data-surface="light"]
+ * override them — Layout.astro :root can't win the specificity fight. */
+[data-surface="dark"] {
+  --surface-card:              rgba(11, 16, 24, 0.70);
+  --surface-card-strong:       rgba(11, 16, 24, 0.85);
+  --surface-overlay:           rgba(0, 0, 0, 0.30);
+  --surface-interactive:       rgba(255, 255, 255, 0.06);
+  --surface-interactive-hover: rgba(255, 255, 255, 0.12);
+  --surface-accent-soft:       rgba(104, 152, 190, 0.12);
+  --surface-warm-soft:         rgba(232, 168, 124, 0.10);
+  --surface-inset-highlight:   rgba(255, 255, 255, 0.04);
+  --shadow-accent-soft:        rgba(104, 152, 190, 0.15);
+  --shadow-accent-mid:         rgba(104, 152, 190, 0.25);
+}
+
 [data-surface="light"] {
   --surface-card:              rgba(235, 248, 255, 0.90);
   --surface-card-strong:       rgba(242, 251, 255, 0.97);
