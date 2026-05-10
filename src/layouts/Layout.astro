@@ -253,30 +253,12 @@ const schemaData = jsonLd || defaultJsonLd;
       }
       html[data-surface='light'] body::before { opacity: 1; }
 
-      /* Layer 2: warm bleed glow at the bottom + lower-right.
-         Delayed 0.5s and longer duration — warmth ramps in gently after
-         the sky has already started lightening. Color is mood-aware:
-         orange in mid, cool wash in day, dark in night. */
-      body::after {
-        content: '';
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 2.2s ease 0.5s, background 1.8s ease;
-        background:
-          radial-gradient(ellipse 90% 60% at 50% 100%,
-            var(--sky-bleed) 0%, var(--sky-bleed-mid) 28%, transparent 55%),
-          radial-gradient(ellipse 50% 70% at 105% 80%,
-            var(--sky-bleed) 0%, transparent 65%);
-        pointer-events: none;
-      }
-      html[data-surface='light'] body::after { opacity: 1; }
+      /* Layer 2 (warm bleed) moved to Sky.astro .sky-warmth so it can fade
+       * independently when crossing mid ↔ day. body::after is therefore
+       * unused for sky purposes — left empty for future use. */
 
       @media (prefers-reduced-motion: reduce) {
-        body::before, body::after {
-          transition: opacity 0.2s linear !important;
-        }
+        body::before { transition: opacity 0.2s linear !important; }
       }
 
       *, *::before, *::after {

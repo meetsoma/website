@@ -385,12 +385,23 @@ const recentPosts = posts.slice(0, 3);
   .title-main {
     font-family: 'Manrope', system-ui, sans-serif;
     font-weight: 800;
+    /* Dark surface: pale gradient (silvery sheen on dark sky) */
     background: linear-gradient(135deg, #f0f4fa 0%, #e4eaf4 40%, #a8c4d8 80%, #e4eaf4 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: gradientShift 8s ease infinite;
+  }
+  /* Light surface: deeper blue — sun behind the letters, so they read as
+   * silhouette/silvery-shadow against the bright sky. Curtis (s01-b73653):
+   * "the Soma white/blue text should get a little deeper blue (since the
+   * sun is shining from behind it would make sense)." */
+  html[data-surface='light'] .title-main {
+    background: linear-gradient(135deg, #1a3258 0%, #2a4f80 40%, #4878a8 80%, #2a4f80 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
   }
 
   .title-sigma {
