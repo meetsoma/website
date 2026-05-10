@@ -1050,6 +1050,16 @@ const recentPosts = posts.slice(0, 3);
     backdrop-filter: blur(12px);
     box-shadow: 0 0 30px rgba(124, 178, 212, 0.08);
   }
+  /* Light surface: glass aesthetic (somaverse-like). Translucent white,
+     subtle white border, soft shadow. Curtis (s01-b73653): "lighten the
+     card -- not sure maybe near glass or something kinda how like it is
+     on the somaverse." */
+  html[data-surface='light'] .verse-pane-single {
+    background: rgba(255, 255, 255, 0.50);
+    border: 1px solid rgba(255, 255, 255, 0.70);
+    box-shadow: 0 8px 32px rgba(8, 22, 36, 0.10),
+                0 1px 3px rgba(8, 22, 36, 0.06);
+  }
 
   .verse-pane-header {
     display: flex;
@@ -1069,6 +1079,10 @@ const recentPosts = posts.slice(0, 3);
     width: 4px; height: 4px; border-radius: 1px;
     background: rgba(124, 178, 212, 0.35);
   }
+  /* Light: grip dots darker so they read against the glass card */
+  html[data-surface='light'] .verse-pane-grip span {
+    background: rgba(46, 96, 148, 0.65);
+  }
 
   .verse-pane-title {
     font-size: 11px;
@@ -1077,12 +1091,14 @@ const recentPosts = posts.slice(0, 3);
     letter-spacing: 0.4px;
     flex: 1;
   }
+  html[data-surface='light'] .verse-pane-title { color: #1a3258; }
 
   .verse-pane-mono {
     font-family: var(--font-mono);
     font-size: 10.5px;
     color: rgba(157, 175, 196, 0.6);
   }
+  html[data-surface='light'] .verse-pane-mono { color: rgba(26, 50, 88, 0.75); }
 
   .verse-pane-body {
     padding: 18px 18px 14px;
@@ -1105,6 +1121,11 @@ const recentPosts = posts.slice(0, 3);
     border-radius: 4px;
     color: #7cb2d4;
   }
+  html[data-surface='light'] .verse-msg code {
+    background: rgba(255, 255, 255, 0.65);
+    border-color: rgba(46, 96, 148, 0.30);
+    color: #1a3d66;
+  }
   .verse-msg-prefix {
     display: inline-block;
     margin-right: 8px;
@@ -1116,6 +1137,9 @@ const recentPosts = posts.slice(0, 3);
   }
   .verse-msg.user .verse-msg-prefix { color: rgba(157, 175, 196, 0.55); }
   .verse-msg.agent .verse-msg-prefix { color: #f0c866; }
+  html[data-surface='light'] .verse-msg-prefix { color: #2a4f80; }
+  html[data-surface='light'] .verse-msg.user .verse-msg-prefix { color: rgba(46, 96, 148, 0.70); }
+  html[data-surface='light'] .verse-msg.agent .verse-msg-prefix { color: #b8841a; }
 
   .verse-pane-pips {
     display: flex;
@@ -1135,6 +1159,17 @@ const recentPosts = posts.slice(0, 3);
     background: var(--surface-interactive);
   }
   .pip.more { color: #f0c866; border-color: rgba(240, 200, 102, 0.3); }
+  /* Light: pip pills get a glass treatment + darker text */
+  html[data-surface='light'] .pip {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(46, 96, 148, 0.32);
+    color: #2a4f80;
+  }
+  html[data-surface='light'] .pip.more {
+    color: #b8841a;
+    border-color: rgba(184, 132, 26, 0.45);
+    background: rgba(255, 245, 220, 0.55);
+  }
 
   @media (max-width: 768px) {
     .verse-content { grid-template-columns: 1fr; }

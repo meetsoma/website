@@ -9,19 +9,21 @@
   gap: var(--space-xl);
   overflow-x: hidden;
   padding: var(--space-lg) var(--space-2xl);
-  /* Fade edges */
+  /* Tightened edge fade — was 8%/92%, dropped to 2%/98% so the visible
+   * cards stay crisp at their edges. Curtis (s01-b73653): "tighten up
+   * the fading on these cards." */
   mask-image: linear-gradient(
     90deg,
     transparent 0%,
-    black 8%,
-    black 92%,
+    black 2%,
+    black 98%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent 0%,
-    black 8%,
-    black 92%,
+    black 2%,
+    black 98%,
     transparent 100%
   );
 }
@@ -125,6 +127,22 @@
 
 .badge-muscle .badge-dot {
   background: var(--accent);
+}
+
+/* Light surface: gold/orange + blue need to read against white cards.
+ * Curtis (s01-b73653): "improve the contrast of the gold/orange". */
+html[data-surface="light"] .badge-protocol {
+  background: rgba(184, 132, 26, 0.10);
+  color: #8a5e10;
+  border-color: rgba(184, 132, 26, 0.32);
+}
+html[data-surface="light"] .badge-protocol .badge-dot {
+  background: #b8841a;
+}
+html[data-surface="light"] .badge-muscle {
+  background: rgba(46, 96, 148, 0.10);
+  border-color: rgba(46, 96, 148, 0.32);
+  /* color comes from --accent which is already #2e6094 in light surface */
 }
 
 .card-install {
