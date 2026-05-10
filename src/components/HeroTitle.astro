@@ -1,0 +1,92 @@
+---
+/**
+ * HeroTitle — page hero h1 with the canonical σ-for-o swap.
+ *
+ * Curtis (s01-b73653): "all of the headers that have a word with an o
+ * should use the body/soma symbol (and same font)". This centralizes the
+ * pattern so every page hero is consistent — same font, same sigma color,
+ * same swap rule.
+ *
+ * Usage:
+ *   <HeroTitle text="Roadmap" />               → R<σ>admap
+ *   <HeroTitle text="Documentation" />         → D<σ>cumentation
+ *   <HeroTitle text="Hub" />                   → Hub (no swap if no o)
+ *   <HeroTitle text="The Somaverse" prefix="The " /> → The S<σ>maverse
+ *   <HeroTitle text="Blog" align="center" />   → centered
+ *
+ * Behavior:
+ *   - First lowercase 'o' in the text gets replaced (case-preserving — the
+ *     σ inherits color/font; for an uppercase 'O' we still emit lowercase σ).
+ *   - If a `prefix` prop is given (e.g. "The "), the swap happens on the
+ *     remainder so "The Somaverse" → "The S<σ>maverse" not "The S<σ>maverse"
+ *     vs random earlier o.
+ *   - No o anywhere → renders as plain text.
+ */
+
+interface Props {
+  text: string;
+  /** Optional prefix that's rendered as plain text before the σ-able word. */
+  prefix?: string;
+  /** Class hook for parent positioning. */
+  class?: string;
+  /** 'left' (default) | 'center' */
+  align?: 'left' | 'center';
+  /** h1 (default) or h2 */
+  level?: 1 | 2;
+}
+
+const { text, prefix = '', class: extraClass = '', align = 'left', level = 1 } = Astro.props;
+
+// Find the FIRST 'o' or 'O' in the text. If found, split into [before, after].
+const idx = text.search(/o/i);
+const before = idx >= 0 ? text.slice(0, idx) : text;
+const after  = idx >= 0 ? text.slice(idx + 1) : '';
+const Tag = level === 1 ? 'h1' : 'h2';
+---
+
+<Tag class={`hero-title ${align === 'center' ? 'is-center' : ''} ${extraClass}`}>
+  {prefix && <span class="hero-prefix">{prefix}</span>}
+  <span class="hero-main">{before}{idx >= 0 && <span class="hero-sigma" aria-hidden="true">σ</span>}{after}</span>
+  {idx < 0 && /* if no σ swap happened, embed an aria-label is not needed; the text is the text */ null}
+</Tag>
+
+<style>
+  .hero-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    letter-spacing: -0.025em;
+    line-height: var(--leading-tight);
+    color: var(--ink);
+    margin: 0;
+  }
+  .hero-title.is-center { text-align: center; }
+
+  .hero-prefix {
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-right: 0.2em;
+  }
+
+  .hero-main {
+    /* Ensures kerning around the σ behaves */
+    letter-spacing: inherit;
+  }
+
+  /* The signature σ — same family as the body Soma logo. Color comes from
+   * --promo (bright sun-orange in light, gold in dark). The sigma carries
+   * the brand glow + slight optical weight bump so it reads as a glyph,
+   * not just a colored letter. */
+  .hero-sigma {
+    color: var(--promo);
+    font-family: var(--font-display);
+    font-weight: 800;
+    /* Slight visual lift so the sigma sits like a logo mark, not a regular letter */
+    display: inline-block;
+    transform: translateY(-0.03em);
+    text-shadow: 0 0 18px var(--promo-glow);
+  }
+
+  /* Subtle focus state if title becomes a link in the future */
+  .hero-title:focus-within { outline: none; }
+</style>

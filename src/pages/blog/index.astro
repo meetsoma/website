@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import { getPublishedBlogPosts, formatDate, estimateReadTime, authorBadge, blogPostUrl } from '../../lib/blog';
+import HeroTitle from '../../components/HeroTitle.astro';
 
 const posts = await getPublishedBlogPosts();
 
@@ -44,7 +45,7 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
   <main class="container">
     <header class="header">
       <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }]} />
-      <h1 class="title">Blog</h1>
+      <HeroTitle text="Blog" align="center" />
       <p class="subtitle">
         Building Soma in public — the dev log, the incidents, the lessons learned 
         from giving AI agents persistent memory.

@@ -5,6 +5,7 @@ import Icon from '../../components/icons/SomaIcons.astro';
 import HubFilters from '../../components/islands/HubFilters';
 import HubGrid from '../../components/islands/HubGrid';
 import { getProtocols, getMuscles, getSkills, getTemplates, getAutomations, getScripts } from '../../lib/hub';
+import HeroTitle from '../../components/HeroTitle.astro';
 
 const protocols = getProtocols();
 const muscles = getMuscles();
@@ -60,7 +61,7 @@ const hubJsonLd = {
     ]} />
 
     <header class="header">
-      <h1 class="title">SomaHub</h1>
+      <HeroTitle text="SomaHub" align="center" />
       <p class="subtitle">
         {total} community AMPS for Soma agents. Skills bring expertise.
         Muscles learn from repetition. Protocols enforce behavior.

@@ -5,6 +5,7 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import { getCollection } from 'astro:content';
 import { docUrl } from '../../lib/blog';
+import HeroTitle from '../../components/HeroTitle.astro';
 
 const allDocs = (await getCollection('docs'))
   .filter(doc => !doc.data.draft)
@@ -49,7 +50,7 @@ const sectionMeta: Record<string, { icon: string; desc: string }> = {
     ]} />
 
     <header class="header">
-      <h1 class="title">Documentation</h1>
+      <HeroTitle text="Documentation" align="center" />
       <p class="subtitle">
         Everything you need to use Soma — from first install to building custom extensions.
       </p>

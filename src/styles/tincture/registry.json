@@ -180,8 +180,8 @@
     "sun-text": {
       "kind": "color",
       "axes": [],
-      "doc": "Deepest readable orange that still reads ORANGE (not brown). For TEXT in the promo hue against pale bg. Calibrated to feel like the sun's deepest warmth without sliding into brown territory.",
-      "values": { "default": "#b04518" }
+      "doc": "Deepest readable ORANGE — high saturation so it doesn't slide into brown/bronze. HSL(20°, 86%, 42%). For TEXT in the promo hue against pale bg.",
+      "values": { "default": "#c4520e" }
     },
     "sun-shadow": {
       "kind": "color",
@@ -192,28 +192,28 @@
     "promo": {
       "kind": "color",
       "axes": ["surface"],
-      "doc": "Promo accent. Gold-yellow on dark (#f0c866 against deep space). On light, this is the BRIGHT sun-orange (--sun-warm) used for icons, dots, lines, glows, and the σ sigma. For TEXT use --promo-text.",
+      "doc": "Promo accent. Gold-yellow on dark (#f0c866 against deep space). On light: vivid orange (HSL ~26°, 88%, 53%) used for icons, dots, lines, glows, the σ sigma, version badge bg. For TEXT use --promo-text.",
       "values": {
         "default":       "#f0c866",
-        "surface=light": "#f0a868"
+        "surface=light": "#ec8430"
       }
     },
     "promo-text": {
       "kind": "color",
       "axes": ["surface"],
-      "doc": "Readable text variant of --promo. On dark: bright gold pops. On light: deep readable orange (--sun-text), calibrated to feel ORANGE not brown.",
+      "doc": "Readable text variant of --promo. On dark: bright gold pops. On light: vivid deep orange (--sun-text). High saturation so it doesn't read as brown/bronze.",
       "values": {
         "default":       "#f0c866",
-        "surface=light": "#b04518"
+        "surface=light": "#c4520e"
       }
     },
     "promo-dim": {
       "kind": "color",
       "axes": ["surface"],
-      "doc": "Dimmed promo — secondary text, hover-leave state. Light: a touch deeper than --promo-text for tonal hierarchy.",
+      "doc": "Dimmed promo — secondary text, hover-leave state. Light: deeper than --promo-text but still saturated orange (no brown).",
       "values": {
         "default":       "#c4a24e",
-        "surface=light": "#8e3a14"
+        "surface=light": "#a04210"
       }
     },
     "promo-glow": {
