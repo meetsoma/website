@@ -104,8 +104,13 @@
       radial-gradient(ellipse 55% 70% at 105% 85%,
         rgba(245, 175, 120, 0.38) 0%,
         transparent 62%);
-    /* Slow fade so mid↔day mood crossings feel like sunset rolling in/out. */
-    transition: opacity 2.2s ease;
+    /* Curtis (s01-b73653): "appear from almost full transparency and
+     * increase quickly, not come in at like instant 50 percent."
+     * `ease` front-loads movement (~40% progress in first quarter —
+     * exactly the pop he was seeing). cubic-bezier with strong ease-in
+     * shape keeps opacity near 0 for the first ~40% of duration, then
+     * ramps fast — truly fades up from invisible. */
+    transition: opacity 1.8s cubic-bezier(0.7, 0, 0.84, 0.4);
   }
 
   html[data-mood='mid'][data-surface='light'] .sky-warmth { opacity: 1; }
