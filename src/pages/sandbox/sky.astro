@@ -111,26 +111,35 @@ import Layout from '../../layouts/Layout.astro';
     inset: 0;
     z-index: -1;
     background:
-      /* Warm sun breaking through from lower-right (sun still low at dawn) */
+      /* Sunset-lit cloud layer — bleeds up from bottom.
+       * Reference: Pexels twilight photo — orange-red cloud undersides,
+       * deep blue sky above, crescent moon visible mid-sky. */
       radial-gradient(
-        ellipse 55% 45% at 108% 108%,
-        rgba(255, 205, 120, 0.40) 0%,
-        rgba(230, 165, 70, 0.14) 38%,
-        transparent 65%
+        ellipse 90% 60% at 50% 100%,
+        rgba(190, 55, 20, 0.55) 0%,
+        rgba(160, 40, 15, 0.30) 28%,
+        rgba(120, 30, 12, 0.10) 52%,
+        transparent 72%
       ),
-      /* Real sky gradient — derived from Pexels deep-blue clear sky reference.
-       * Zenith #1a5ba0 (true deep blue) → pale diffuse horizon.
-       * The richness at top is the key missing piece vs earlier iterations. */
+      /* Warm side-light from right (sun setting there) */
+      radial-gradient(
+        ellipse 50% 70% at 105% 80%,
+        rgba(210, 80, 25, 0.40) 0%,
+        rgba(180, 60, 20, 0.15) 40%,
+        transparent 68%
+      ),
+      /* Sky: deep blue zenith → clear blue mid → gives way to warm at bottom */
       linear-gradient(
         to bottom,
-        #1a5ba0 0%,    /* zenith — real sky blue (from pexels clear sky ref) */
-        #2e70b0 10%,   /* upper sky */
-        #4a8dc4 25%,   /* upper-mid */
-        #6aa8d4 40%,   /* mid sky, cloud layer starts diffusing */
-        #92c0da 55%,   /* lower mid — progressively paler */
-        #bbd6e8 70%,   /* near horizon, milky */
-        #d8ecf4 85%,   /* horizon diffuse */
-        #e8f5fa 100%   /* horizon, near white */
+        #1a4a80 0%,    /* zenith — deep twilight blue (reference: #1B4A7A) */
+        #2a6aa8 12%,   /* upper sky */
+        #3e82be 26%,   /* mid-upper */
+        #5898cc 40%,   /* clear blue (crescent moon zone) */
+        #72a8cc 52%,   /* start of transition */
+        #8898a8 62%,   /* neutral — blue gives way */
+        #8a6050 72%,   /* warm starts dominating */
+        #783028 84%,   /* deep sunset red-orange */
+        #602018 100%   /* horizon — deep ember */
       );
   }
 
@@ -178,37 +187,35 @@ import Layout from '../../layouts/Layout.astro';
     mix-blend-mode: multiply;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-1 {
-    /* Altostratus band — mid-high, wide, blue-grey, slow.
-     * From pexels ref: cloud bodies are darker than sky on a clear blue day.
-     * These clouds are slightly darker than the #4a8dc4 mid-sky zone. */
+    /* Upper cloud band — still blue, mid-high altitude. */
     background: radial-gradient(ellipse,
-      rgba(90, 130, 170, 0.28) 0%,
-      rgba(70, 112, 155, 0.10) 50%,
+      rgba(70, 110, 155, 0.30) 0%,
+      rgba(50, 90, 138, 0.08) 52%,
       transparent 78%);
-    transform: scale(4.0, 0.16) rotate(-4deg);
-    animation-duration: 42s;
+    transform: scale(4.2, 0.15) rotate(-4deg);
+    animation-duration: 44s;
     opacity: 0.9;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-2 {
-    /* Stratus layer — slightly lower, wider sweep, fractionally warmer. */
+    /* Mid cloud band — beginning to pick up warm tones from below. */
     background: radial-gradient(ellipse,
-      rgba(75, 118, 160, 0.24) 0%,
-      rgba(55, 98, 145, 0.06) 55%,
+      rgba(120, 80, 55, 0.28) 0%,
+      rgba(90, 55, 35, 0.08) 52%,
       transparent 80%);
-    transform: scale(4.6, 0.20) rotate(3deg);
-    animation-duration: 30s;
-    opacity: 0.85;
+    transform: scale(4.5, 0.22) rotate(4deg);
+    animation-duration: 32s;
+    opacity: 0.88;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-3 {
-    /* Low sun-gilded cloud edge — warm amber tint from light below horizon.
-     * Positioned low on screen, warm, slow breathing. */
+    /* Low cloud — fully lit by sunset. Orange-red undersides like the reference.
+     * Positioned at ~bottom third of screen. */
     background: radial-gradient(ellipse,
-      rgba(235, 185, 100, 0.20) 0%,
-      rgba(210, 155, 65, 0.06) 50%,
-      transparent 78%);
-    transform: scale(3.0, 0.30) rotate(-9deg);
-    animation-duration: 20s;
-    opacity: 0.85;
+      rgba(195, 60, 22, 0.42) 0%,
+      rgba(165, 42, 15, 0.14) 45%,
+      transparent 72%);
+    transform: scale(3.2, 0.35) rotate(-8deg);
+    animation-duration: 22s;
+    opacity: 0.90;
   }
 
   /* ── 3. NEW CLOUD DEPTH LAYERS — sandbox-only fixed elements ───────────── */
@@ -250,58 +257,63 @@ import Layout from '../../layouts/Layout.astro';
     66%       { transform: scale(6.0, 0.06) rotate(-2.5deg) translate(-35px, 10px); }
   }
 
-  /* Near cumulus — the WHITE PUFFY clouds of the pexels center reference.
-   * Close = large apparent size, thick, BRIGHT (lit by sun), slowest angular speed.
-   * Positioned lower-right as if floating past. Cloud-white with blue shadow. */
+  /* Near cumulus — lit from below by sunset. Cloud bodies dark-blue/purple on
+   * top (shadow side, away from sun), vivid orange-red on undersides.
+   * Like the reference: the cloud tops are silhouettes, bottoms are fire. */
   .sb-cloud-cumulus {
-    bottom: 20%;
+    bottom: 15%;
     right: 5%;
-    width: 550px;
-    height: 550px;
-    /* Bright cloud-white top, blue-grey shadow underneath — layered radials */
+    width: 600px;
+    height: 600px;
     background:
-      radial-gradient(ellipse 60% 40% at 40% 30%,
-        rgba(238, 248, 255, 0.80) 0%,
-        rgba(215, 238, 250, 0.45) 45%,
-        transparent 70%),
-      radial-gradient(ellipse 80% 60% at 50% 65%,
-        rgba(165, 200, 225, 0.40) 0%,
-        rgba(140, 180, 210, 0.12) 50%,
-        transparent 75%);
-    transform: scale(2.0, 0.50) rotate(4deg);
-    animation: sbCloudCumulus 20s ease-in-out infinite;
+      /* Lit underside — vivid orange-red like the reference photo */
+      radial-gradient(ellipse 70% 40% at 50% 75%,
+        rgba(210, 65, 22, 0.60) 0%,
+        rgba(180, 48, 16, 0.28) 40%,
+        transparent 68%),
+      /* Shadow top — deep blue-grey like the cloud bodies in the ref */
+      radial-gradient(ellipse 80% 50% at 45% 30%,
+        rgba(42, 55, 80, 0.50) 0%,
+        rgba(30, 42, 65, 0.18) 45%,
+        transparent 70%);
+    transform: scale(2.2, 0.55) rotate(4deg);
+    animation: sbCloudCumulus 22s ease-in-out infinite;
   }
   @keyframes sbCloudCumulus {
-    0%, 100% { transform: scale(2.0, 0.50) rotate(4deg) translate(0px, 0px); }
-    50%       { transform: scale(2.0, 0.50) rotate(3.5deg) translate(-20px, 8px); }
+    0%, 100% { transform: scale(2.2, 0.55) rotate(4deg) translate(0px, 0px); }
+    50%       { transform: scale(2.2, 0.55) rotate(3.5deg) translate(-22px, 8px); }
   }
 
-  /* Horizon haze — warm atmospheric scatter where sun is low.
-   * The golden warmth that bleeds up from below the horizon line. */
+  /* Horizon ember — the deep red-orange glow at the very bottom where
+   * the sun just set. Radiates upward, most intense at the edges. */
   .sb-cloud-haze {
     bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
-    height: 380px;
+    height: 420px;
     border-radius: 0;
     background:
+      /* Central deep red glow */
       radial-gradient(
-        ellipse 70% 100% at 75% 100%,
-        rgba(255, 195, 100, 0.28) 0%,
-        rgba(240, 160, 60, 0.10) 40%,
-        transparent 68%
+        ellipse 80% 100% at 50% 100%,
+        rgba(175, 40, 14, 0.55) 0%,
+        rgba(145, 28, 10, 0.25) 30%,
+        rgba(100, 20, 8, 0.08) 55%,
+        transparent 72%
       ),
+      /* Right-side warmth — sun setting to the right */
       radial-gradient(
-        ellipse 100% 60% at 50% 100%,
-        rgba(255, 220, 160, 0.14) 0%,
-        transparent 60%
+        ellipse 50% 80% at 90% 100%,
+        rgba(200, 55, 18, 0.45) 0%,
+        rgba(165, 38, 12, 0.15) 45%,
+        transparent 70%
       );
-    animation: sbCloudHaze 45s ease-in-out infinite;
+    animation: sbCloudHaze 38s ease-in-out infinite;
   }
   @keyframes sbCloudHaze {
     0%, 100% { opacity: 1; }
-    50%       { opacity: 0.75; }
+    50%       { opacity: 0.80; }
   }
 
   /* ── 4. STARFIELD — repurpose as tiny far-away birds/particles ──────────
@@ -312,20 +324,19 @@ import Layout from '../../layouts/Layout.astro';
 
   /* ── 5. SKY HORIZON — transition overlay + idle state ───────────────── */
   html[data-theme='light'] body:has(.sandbox-main) .sky-horizon {
-    /* Warm sun coming through overcast from lower-right.
-     * Blue wash from upper-left as counterpoint. */
+    /* Sunset ember radiating up from below — matches the body gradient. */
     background:
       radial-gradient(
-        ellipse 50% 60% at 100% 100%,
-        rgba(255, 195, 110, 0.28) 0%,
-        rgba(240, 165, 70, 0.10) 45%,
-        transparent 70%
+        ellipse 80% 80% at 50% 110%,
+        rgba(180, 45, 15, 0.45) 0%,
+        rgba(140, 30, 10, 0.18) 35%,
+        transparent 62%
       ),
       radial-gradient(
-        ellipse 80% 40% at 0% 0%,
-        rgba(80, 130, 190, 0.12) 0%,
-        rgba(60, 110, 170, 0.04) 55%,
-        transparent 80%
+        ellipse 50% 60% at 92% 105%,
+        rgba(200, 60, 20, 0.35) 0%,
+        rgba(165, 42, 14, 0.10) 40%,
+        transparent 68%
       );
   }
 
@@ -337,33 +348,50 @@ import Layout from '../../layouts/Layout.astro';
    *   — hard shadow falls FORWARD / below (toward the viewer)
    * Result reads as contre-jour / backlit photography. */
   html[data-theme='light'] body:has(.sandbox-main) .sandbox-hero h1 {
-    /* Dark silhouette — contre-jour against bright sky.
-     * Rich dark navy so the letter shapes read clearly against the blue. */
-    background: linear-gradient(
-      175deg,
-      #142a4e 0%,   /* slightly lighter top (catching rim glow) */
-      #0a1c38 100%  /* deep base silhouette */
-    ) !important;
-    /* Sun-behind effect — WARM halo radiates from behind/above the letters,
-     * forward shadow is SOFT (not hard box) so letters stay legible. */
-    filter:
-      drop-shadow(0 -10px 28px rgba(255, 210, 110, 0.65))   /* primary sun halo above */
-      drop-shadow(0 -4px 14px rgba(255, 230, 155, 0.40))    /* secondary warm rim */
-      drop-shadow(0 7px 14px rgba(6, 16, 40, 0.38));        /* soft forward shadow */
+    /* IMPORTANT: filter: + background-clip:text breaks in Chrome (compositing
+     * layer conflict). Use text-shadow + solid fill instead.
+     * Dark navy silhouette against the bright sky. */
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: #0f2040 !important;   /* dark navy — the silhouette */
+    color: #0f2040 !important;
+    /* Sun-behind: warm halo ABOVE (sun radiating from behind),
+     * soft shadow BELOW (falling toward the viewer / ground). */
+    text-shadow:
+      0 -12px 32px rgba(255, 205, 100, 0.80),   /* primary warm halo above */
+      0 -5px 16px rgba(255, 230, 150, 0.55),    /* secondary golden rim */
+      0 8px 18px rgba(5, 14, 38, 0.42);         /* forward cast — toward viewer */
+    filter: none;
   }
 
-  /* Nav sigma in light sky — deep blue silhouette + sun halo */
+  /* Nav sigma — deep blue silhouette against the blue-top sky */
   html[data-theme='light'] body:has(.sandbox-main) .nav-sigma {
-    color: #0d2040;
+    color: #0a1e3a;
     text-shadow:
-      0 -4px 14px rgba(255, 215, 130, 0.55),
-      0 4px 8px rgba(6, 18, 45, 0.40);
+      0 -3px 12px rgba(210, 65, 22, 0.35),
+      0 3px 8px rgba(5, 12, 30, 0.45);
   }
   html[data-theme='light'] body:has(.sandbox-main) .nav-brand:hover .nav-sigma {
-    color: #0a1832;
+    color: #081628;
     text-shadow:
-      0 -5px 18px rgba(255, 220, 140, 0.70),
-      0 4px 10px rgba(6, 18, 45, 0.45);
+      0 -4px 16px rgba(210, 65, 22, 0.55),
+      0 3px 10px rgba(5, 12, 30, 0.50);
+  }
+
+  /* Sun disk repositioned — lower, redder, closer to the horizon (setting sun) */
+  html[data-theme='light'] body:has(.sandbox-main) .sky-sun {
+    background: radial-gradient(
+      circle at 40% 40%,
+      rgba(255, 220, 150, 0.95) 0%,
+      rgba(230, 120, 50, 0.85) 40%,
+      rgba(200, 65, 20, 0.35) 70%,
+      transparent 100%
+    );
+    box-shadow:
+      0 0 60px rgba(210, 80, 25, 0.50),
+      0 0 130px rgba(180, 55, 18, 0.28),
+      0 0 260px rgba(160, 40, 14, 0.12);
   }
 </style>
 
