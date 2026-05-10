@@ -152,13 +152,17 @@
 
   /* Promo gold → sun-warm orange in light mode. Curtis (s01-b73653):
    * "the gold on the day mode should turn a bit more orangey, similar
-   * to the lighter part of the sun" — these now match the sun's mid
-   * tones (#ffd88a / #f0a868) so the badges, sigma, NEW pills, etc.
-   * read as "of the sun" instead of yellow against blue sky. */
-  --promo:        #e89048;   /* warm sun-orange (deeper than #f0a868 for legibility) */
-  --promo-dim:    #c47030;
-  --promo-glow:   rgba(232, 144, 72, 0.18);
-  --promo-border: rgba(232, 144, 72, 0.32);
+   * to the lighter part of the sun" + follow-up: "deeper orange for
+   * darker text". --promo is the bright sun mid-tone (icon, dot, glow);
+   * --promo-dim is the readable deep orange used for pill TEXT, much
+   * deeper than the bright tone for legibility against pale bg. */
+  --promo:        #e89048;   /* sun mid-orange (icon / dot / glow) */
+  --promo-dim:    #7a3010;   /* deep burnt orange (text) */
+  --promo-glow:   rgba(232, 144, 72, 0.20);
+  --promo-border: rgba(232, 144, 72, 0.40);
+  /* Pill bg — slightly more saturated than --surface-warm-soft so it
+   * feels orange, not just neutral-warm. */
+  --surface-warm-soft: rgba(232, 144, 72, 0.12);
 }
 
 /* ── Debug ───────────────────────────────────────────────────────────── */
