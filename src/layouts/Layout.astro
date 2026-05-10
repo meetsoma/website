@@ -99,9 +99,11 @@ const schemaData = jsonLd || defaultJsonLd;
         document.documentElement.dataset.theme = theme;
         document.documentElement.dataset.surface = theme;
         document.documentElement.style.colorScheme = theme;
-        // Sky mood — defaults to mid (eve/morning); night|mid|day
+        // Sky mood — GLOBAL toggle is night ↔ day. 'mid' (orange/cream)
+        // is sandbox-only for now — setting it as default kept showing the
+        // orange overlay when users just wanted plain daylight.
         const savedMood = localStorage.getItem('soma-sky-mood');
-        const mood = (savedMood === 'night' || savedMood === 'mid' || savedMood === 'day') ? savedMood : 'mid';
+        const mood = (savedMood === 'night' || savedMood === 'mid' || savedMood === 'day') ? savedMood : 'day';
         if (theme === 'light') document.documentElement.dataset.mood = mood;
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
@@ -552,9 +554,11 @@ const schemaData = jsonLd || defaultJsonLd;
         root.dataset.theme = theme;
         root.dataset.surface = theme;
         (root.style as any).colorScheme = theme;
-        // Apply/clear sky mood
+        // Apply/clear sky mood. Default 'day' (clear sky, no warm overlay).
+        // Sandbox switcher is the place to opt into 'mid' (the eve/morning
+        // orange overlay) — the global toggle stays night ↔ day.
         if (theme === 'light') {
-          const mood = localStorage.getItem('soma-sky-mood') || 'mid';
+          const mood = localStorage.getItem('soma-sky-mood') || 'day';
           root.dataset.mood = mood;
         } else {
           delete root.dataset.mood;
