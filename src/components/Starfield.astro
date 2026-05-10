@@ -17,7 +17,8 @@
   }
 
   html[data-theme='light'] .starfield {
-    opacity: 0.15;
+    /* Cycle 17: bumped from 0.15 — dark stars on light bg need more presence */
+    opacity: 0.35;
   }
 </style>
 
@@ -35,12 +36,25 @@
     const STAR_DENSITY = 0.00018; // stars per pixel² — visible but not crowded
     const DRIFT_SPEED = 0.06;     // px/frame base — gentle drift
 
-    const COLORS: [number, number, number][] = [
+    // Cycle 17 (s01-7b287c): light-mode-aware palette. Dark stars (white-blue,
+    // blue) are invisible on a near-white background — the canvas just shows as
+    // empty. In light mode, INVERT to use deeper saturated colors that read
+    // against #eaeef4. Light mode opacity also bumps in CSS (was 0.15 ghost,
+    // now 0.35 visible). Re-detected on theme toggle via 'soma-theme' event.
+    const COLORS_DARK: [number, number, number][] = [
       [228, 234, 244],  // text-primary (white-blue)
       [124, 178, 212],  // moon-bright (blue)
       [104, 152, 190],  // accent-bright (deeper blue)
       [240, 200, 102],  // promo gold — rare
     ];
+    const COLORS_LIGHT: [number, number, number][] = [
+      [46, 96, 148],    // accent-bright dark (deep blue)
+      [26, 61, 102],    // accent-dark (deeper blue)
+      [42, 54, 72],     // text-secondary dark (slate)
+      [168, 90, 42],    // warm-bright dark (rare bronze)
+    ];
+    const isLight = () => document.documentElement.dataset.theme === 'light';
+    let COLORS: [number, number, number][] = isLight() ? COLORS_LIGHT : COLORS_DARK;
 
     function resize() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);

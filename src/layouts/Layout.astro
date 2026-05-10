@@ -227,10 +227,15 @@ const schemaData = jsonLd || defaultJsonLd;
       }
 
       html[data-theme='light'] {
-        /* Light theme: "darkened lights" — strong contrast against white */
-        --bg-deep: #f4f6f9;
-        --bg-surface: #ffffff;
-        --bg-elevated: #e8ecf2;
+        /* Light theme: "cloud cover at dawn" — daytime counterpart to the
+         * dark theme's "deep space." Pale sky + soft warm undertone, not
+         * stark office-white. Cycle 17 (s01-7b287c) palette rework:
+         * Old #f4f6f9 was a cool gray with no atmosphere. New palette mixes
+         * pale dawn blue with a hint of warmth so cards (off-white) read as
+         * "sun on snow" against a sky-mist background. */
+        --bg-deep: #e8eef5;       /* pale dawn sky — base atmosphere */
+        --bg-surface: #fafbfc;    /* near-white cloud, with cool undertone */
+        --bg-elevated: #dde5f0;   /* deeper cloud edge */
 
         /* Deeper accent tones for readability */
         --accent-bright: #2e6094;
@@ -255,9 +260,10 @@ const schemaData = jsonLd || defaultJsonLd;
         --border-subtle: rgba(10, 15, 26, 0.18);
         --border-accent: rgba(46, 96, 148, 0.35);
 
-        /* Cards with subtle warmth, not invisible */
-        --surface-card: rgba(255, 255, 255, 0.95);
-        --surface-card-strong: rgba(248, 250, 252, 1);
+        /* Cards: warm cloud-white. Off-white not stark white — cards
+         * feel like sun on snow against the pale sky bg. */
+        --surface-card: rgba(252, 253, 254, 0.92);
+        --surface-card-strong: rgba(250, 252, 253, 1);
         --surface-overlay: rgba(100, 120, 145, 0.22);
         --surface-interactive: rgba(10, 15, 26, 0.08);
         --surface-interactive-hover: rgba(10, 15, 26, 0.14);
@@ -333,7 +339,9 @@ const schemaData = jsonLd || defaultJsonLd;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       }
 
-      html[data-theme='light'] .noise-overlay { opacity: 0.02; }
+      /* Cloud-puff noise: bumped + multiply blend so it textures the
+       * pale sky as overcast atmosphere, not flat paper (cycle 17). */
+      html[data-theme='light'] .noise-overlay { opacity: 0.05; mix-blend-mode: multiply; }
 
       /* ── Glow orbs ── */
       .glow-orbs {
@@ -394,10 +402,49 @@ const schemaData = jsonLd || defaultJsonLd;
         50% { transform: translate(-35px, 25px); }
       }
 
-      html[data-theme='light'] .glow-orbs { opacity: 0.3; }
+      /* Cycle 17 (s01-7b287c): glow orbs become atmospheric cloud-puffs in
+       * light mode — the daytime counterpart to the dark theme's nebula glows.
+       * Screen blend doesn't work on light bg (lightens transparent to invisible);
+       * multiply darkens the bg in tinted patches, simulating cloud cover.
+       * Palette: warm sun-haze (orb 1), cool overcast (orb 2), pearl (orb 3). */
+      html[data-theme='light'] .glow-orbs { opacity: 0.55; }
+      html[data-theme='light'] .glow-orb { mix-blend-mode: multiply; }
+      html[data-theme='light'] .glow-orb-1 {
+        /* warm sun haze — morning peach */
+        background: radial-gradient(circle, rgba(232, 168, 124, 0.16) 0%, transparent 70%);
+      }
+      html[data-theme='light'] .glow-orb-2 {
+        /* cool overcast cumulus */
+        background: radial-gradient(circle, rgba(46, 96, 148, 0.12) 0%, transparent 70%);
+      }
+      html[data-theme='light'] .glow-orb-3 {
+        /* soft pearl drift */
+        background: radial-gradient(circle, rgba(132, 148, 170, 0.10) 0%, transparent 70%);
+      }
+
 
       @media (prefers-reduced-motion: reduce) {
         .glow-orb { animation: none !important; }
+      }
+
+      /* Cycle 17 (s01-7b287c): Shiki dual-theme hook. astro.config.mjs ships
+       * code blocks with CSS vars (--shiki-light, --shiki-dark) on every span.
+       * Default render uses the dark color (we set in dark theme). In light
+       * theme, swap each color var. Without this, code blocks stay dark on a
+       * near-white page background — jarring slabs of darkness. */
+      html[data-theme='light'] code,
+      html[data-theme='light'] code span {
+        color: var(--shiki-light) !important;
+        background-color: var(--shiki-light-bg, transparent) !important;
+        font-style: var(--shiki-light-font-style) !important;
+        font-weight: var(--shiki-light-font-weight) !important;
+        text-decoration: var(--shiki-light-text-decoration) !important;
+      }
+      /* The pre wrapper around code blocks gets its own bg from Shiki */
+      html[data-theme='light'] pre.astro-code,
+      html[data-theme='light'] pre[class*="language-"] {
+        background-color: #f6f8fa !important;
+        border: 1px solid var(--border-subtle);
       }
 
       /* Content offset for fixed nav */
