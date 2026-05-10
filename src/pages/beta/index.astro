@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
+import HeroTitle from '../../components/HeroTitle.astro';
 
 const title = "Source Access — Soma";
 const description = "Soma is free to use. Register for source access to read the code, run the tests, and contribute.";
@@ -12,7 +13,7 @@ const description = "Soma is free to use. Register for source access to read the
   <main class="container">
     <header class="hero">
       <Breadcrumbs items={[{ label: 'Source Access', href: '/beta' }]} />
-      <h1 class="title">Source Access</h1>
+      <HeroTitle text="Source Access" align="center" />
       <p class="subtitle">Use Soma free. Read the source. Help build what's next.</p>
     </header>
 

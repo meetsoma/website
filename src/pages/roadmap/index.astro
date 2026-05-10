@@ -4,6 +4,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
+import HeroTitle from '../../components/HeroTitle.astro';
 
 // ─── Recently Shipped ────────────────────────────────────────────────
 // Strategic landmark releases, newest first. Shown as an auto-advancing
@@ -141,7 +142,7 @@ function formatDate(d?: string): string {
   <main class="container">
     <header class="hero">
       <Breadcrumbs items={[{ label: 'Roadmap', href: '/roadmap' }]} />
-      <h1 class="title">Roadmap</h1>
+      <HeroTitle text="Roadmap" align="center" />
       <p class="subtitle">
         Where it's going. Where it's been.
       </p>

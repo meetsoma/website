@@ -5,6 +5,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import OrbitalPhysics from '../../components/islands/OrbitalPhysics.tsx';
 import CommunityStats from '../../components/islands/CommunityStats.tsx';
+import HeroTitle from '../../components/HeroTitle.astro';
 ---
 
 <Layout
@@ -18,7 +19,7 @@ import CommunityStats from '../../components/islands/CommunityStats.tsx';
     ]} />
 
     <header class="header">
-      <h1 class="title">The S<span style="color:var(--promo-text);">σ</span>maverse</h1>
+      <HeroTitle text="Somaverse" prefix="The " align="center" />
       <p class="subtitle">
         <strong>AMPS</strong> — automations, muscles, protocols, and scripts — the content system 
         that gives an AI agent learned patterns, adaptive behavior, and persistent memory.

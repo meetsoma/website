@@ -305,7 +305,7 @@
         "surface"
       ],
       "locked": false,
-      "doc": "Promo accent. Gold-yellow on dark (#f0c866 against deep space). On light, this is the BRIGHT sun-orange (--sun-warm) used for icons, dots, lines, glows, and the σ sigma. For TEXT use --promo-text.",
+      "doc": "Promo accent. Gold-yellow on dark (#f0c866 against deep space). On light: vivid orange (HSL ~26°, 88%, 53%) used for icons, dots, lines, glows, the σ sigma, version badge bg. For TEXT use --promo-text.",
       "defaultValue": "#f0c866",
       "cells": [
         {
@@ -315,7 +315,7 @@
         },
         {
           "cell": "surface=light",
-          "value": "#f0a868",
+          "value": "#ec8430",
           "selector": "[data-surface=\"light\"]"
         }
       ]
@@ -347,7 +347,7 @@
         "surface"
       ],
       "locked": false,
-      "doc": "Dimmed promo — secondary text, hover-leave state. Light: a touch deeper than --promo-text for tonal hierarchy.",
+      "doc": "Dimmed promo — secondary text, hover-leave state. Light: deeper than --promo-text but still saturated orange (no brown).",
       "defaultValue": "#c4a24e",
       "cells": [
         {
@@ -357,7 +357,7 @@
         },
         {
           "cell": "surface=light",
-          "value": "#8e3a14",
+          "value": "#a04210",
           "selector": "[data-surface=\"light\"]"
         }
       ]
@@ -389,7 +389,7 @@
         "surface"
       ],
       "locked": false,
-      "doc": "Readable text variant of --promo. On dark: bright gold pops. On light: deep readable orange (--sun-text), calibrated to feel ORANGE not brown.",
+      "doc": "Readable text variant of --promo. On dark: bright gold pops. On light: vivid deep orange (--sun-text). High saturation so it doesn't read as brown/bronze.",
       "defaultValue": "#f0c866",
       "cells": [
         {
@@ -399,7 +399,7 @@
         },
         {
           "cell": "surface=light",
-          "value": "#b04518",
+          "value": "#c4520e",
           "selector": "[data-surface=\"light\"]"
         }
       ]
@@ -506,12 +506,12 @@
       "kind": "color",
       "axes": [],
       "locked": false,
-      "doc": "Deepest readable orange that still reads ORANGE (not brown). For TEXT in the promo hue against pale bg. Calibrated to feel like the sun's deepest warmth without sliding into brown territory.",
-      "defaultValue": "#b04518",
+      "doc": "Deepest readable ORANGE — high saturation so it doesn't slide into brown/bronze. HSL(20°, 86%, 42%). For TEXT in the promo hue against pale bg.",
+      "defaultValue": "#c4520e",
       "cells": [
         {
           "cell": "default",
-          "value": "#b04518",
+          "value": "#c4520e",
           "selector": ":root"
         }
       ]
