@@ -1,0 +1,34 @@
+{
+  "id": "dawn-dusk",
+  "name": "Dawn / Dusk",
+  "doc": "Twilight sky. Deep blue zenith, orange-red cloud undersides lit by sun below the horizon. Crescent-moon energy. The 'light mode' default.",
+  "base": "default",
+  "tokens": {
+    "bg": {
+      "values": { "surface=light": "#92c0da" }
+    },
+    "bg-card": {
+      "values": { "surface=light": "#e4f2f9" }
+    },
+    "bg-elev": {
+      "values": { "surface=light": "#cce2f0" }
+    },
+    "accent": {
+      "values": { "surface=light": "#1555a0" }
+    }
+  },
+  "sky": {
+    "top":         "#1a4a80",
+    "upper":       "#2a6aa8",
+    "mid":         "#5898cc",
+    "transition":  "#8898a8",
+    "warm-start":  "#8a6050",
+    "warm":        "#783028",
+    "horizon":     "#602018",
+    "bleed-color": "rgba(190, 55, 20, 0.55)",
+    "bleed-mid":   "rgba(160, 40, 15, 0.30)",
+    "cloud-low":   "rgba(195, 60, 22, 0.42)",
+    "cloud-mid":   "rgba(120, 80, 55, 0.28)",
+    "cloud-high":  "rgba(70, 110, 155, 0.30)"
+  }
+}

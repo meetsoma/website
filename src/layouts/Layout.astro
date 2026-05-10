@@ -99,6 +99,10 @@ const schemaData = jsonLd || defaultJsonLd;
         document.documentElement.dataset.theme = theme;
         document.documentElement.dataset.surface = theme;
         document.documentElement.style.colorScheme = theme;
+        // Sky mood (light mode only) — defaults to dawn-dusk
+        const savedMood = localStorage.getItem('soma-sky-mood');
+        const mood = (savedMood === 'dawn-dusk' || savedMood === 'day') ? savedMood : 'dawn-dusk';
+        if (theme === 'light') document.documentElement.dataset.mood = mood;
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             document.documentElement.classList.remove('no-transition');
@@ -113,14 +117,17 @@ const schemaData = jsonLd || defaultJsonLd;
       document.addEventListener('astro:before-swap', (e) => {
         const theme = document.documentElement.dataset.theme || 'dark';
         const surface = document.documentElement.dataset.surface || 'dark';
+        const mood = document.documentElement.dataset.mood || '';
         e.newDocument.documentElement.dataset.theme = theme;
         e.newDocument.documentElement.dataset.surface = surface;
         e.newDocument.documentElement.style.colorScheme = theme;
+        if (mood) e.newDocument.documentElement.dataset.mood = mood;
       });
     </script>
 
     <style is:global>
       @import '../styles/tincture/_generated/foundation.css';
+      @import '../styles/tincture/surface-extensions.css';
 
       :root {
         /* ── Design System Tokens ── */
@@ -216,34 +223,47 @@ const schemaData = jsonLd || defaultJsonLd;
         --logo-glow-hover:  rgba(124, 178, 212, 0.5);
       }
 
-      /* Light surface — translucent utilities that foundation.css can't emit */
+      /* Light surface — translucent utilities live in surface-extensions.css.
+         Non-translucent brand values that don't vary by sky mood stay here. */
       [data-surface="light"] {
         --accent-mid:  #245080;
         --accent-dark: #1a3d66;
+        --moon-bright: #2870b0;
+        --moon-mid:    #1e5a98;
+        --moon-glow:   rgba(21, 85, 160, 0.25);
+        --warm-bright: #c0682a;
+        --warm-mid:    #a05222;
+        --warm-glow:   rgba(200, 90, 40, 0.22);
+        --logo-glow:       rgba(21, 85, 160, 0.22);
+        --logo-glow-hover: rgba(21, 85, 160, 0.40);
+      }
 
-        --moon-bright: #3878a0;
-        --moon-mid:    #2d6888;
-        --moon-glow:   rgba(46, 96, 148, 0.2);
-
-        --warm-bright: #a85a2a;
-        --warm-mid:    #8e4820;
-        --warm-glow:   rgba(168, 90, 42, 0.18);
-
-        --surface-card:              rgba(252, 253, 254, 0.92);
-        --surface-card-strong:       rgba(250, 252, 253, 1);
-        --surface-overlay:           rgba(100, 120, 145, 0.22);
-        --surface-interactive:       rgba(10, 15, 26, 0.08);
-        --surface-interactive-hover: rgba(10, 15, 26, 0.14);
-        --surface-accent-soft:       rgba(46, 96, 148, 0.1);
-        --surface-warm-soft:         rgba(168, 90, 42, 0.08);
-        --surface-inset-highlight:   rgba(10, 15, 26, 0.06);
-
-        --shadow-accent-soft: rgba(46, 96, 148, 0.2);
-        --shadow-accent-mid:  rgba(46, 96, 148, 0.32);
-        --shadow-warm-soft:   rgba(168, 90, 42, 0.18);
-
-        --logo-glow:       rgba(46, 96, 148, 0.15);
-        --logo-glow-hover: rgba(46, 96, 148, 0.28);
+      /* Sky atmosphere — mood-driven gradient on the light-theme body.
+         Reads --sky-* vars from surface-extensions.css [data-mood] blocks.
+         data-mood is set from localStorage 'soma-sky-mood' by is:inline script. */
+      html[data-surface='light'] body {
+        background: none !important;
+      }
+      html[data-surface='light'] body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background:
+          /* Bleed from bottom — warm in dawn-dusk, cool in day */
+          radial-gradient(ellipse 90% 60% at 50% 100%,
+            var(--sky-bleed) 0%, var(--sky-bleed-mid) 28%, rgba(0,0,0,0) 55%),
+          radial-gradient(ellipse 50% 70% at 105% 80%,
+            var(--sky-bleed) 0%, rgba(0,0,0,0) 65%),
+          /* Main sky gradient — top to bottom */
+          linear-gradient(to bottom,
+            var(--sky-top)        0%,
+            var(--sky-upper)      12%,
+            var(--sky-mid)        32%,
+            var(--sky-transition) 52%,
+            var(--sky-warm-start) 68%,
+            var(--sky-warm)       82%,
+            var(--sky-horizon)    100%);
       }
 
       *, *::before, *::after {
@@ -528,8 +548,15 @@ const schemaData = jsonLd || defaultJsonLd;
       function applyTheme(theme: string) {
         const root = document.documentElement;
         root.dataset.theme = theme;
-        root.dataset.surface = theme; // tincture: dark → data-surface="dark", light → "light"
+        root.dataset.surface = theme;
         (root.style as any).colorScheme = theme;
+        // Apply/clear sky mood
+        if (theme === 'light') {
+          const mood = localStorage.getItem('soma-sky-mood') || 'dawn-dusk';
+          root.dataset.mood = mood;
+        } else {
+          delete root.dataset.mood;
+        }
         const toggle = document.querySelector('.theme-toggle');
         toggle?.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
         localStorage.setItem(KEY, theme);
