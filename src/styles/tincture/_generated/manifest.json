@@ -446,6 +446,48 @@
         }
       ]
     },
+    "shadow-elevated": {
+      "kind": "shadow",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Multi-layer drop shadow for cards that need to feel like they're floating. Subtle on dark, pronounced on light (cards need to lift off the page bg).",
+      "defaultValue": "0 1px 2px rgba(0,0,0,0.20), 0 4px 12px rgba(0,0,0,0.12), 0 12px 28px rgba(0,0,0,0.08)",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "0 1px 2px rgba(0,0,0,0.20), 0 4px 12px rgba(0,0,0,0.12), 0 12px 28px rgba(0,0,0,0.08)",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "0 1px 2px rgba(8,22,36,0.06), 0 6px 16px rgba(8,22,36,0.08), 0 18px 36px rgba(8,22,36,0.10), 0 32px 64px rgba(46,96,148,0.06)",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "shadow-elevated-hover": {
+      "kind": "shadow",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Hover lift — deeper than --shadow-elevated, pairs with translateY(-4px) on hovered cards.",
+      "defaultValue": "0 2px 4px rgba(0,0,0,0.25), 0 8px 20px rgba(0,0,0,0.16), 0 20px 44px rgba(0,0,0,0.12)",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "0 2px 4px rgba(0,0,0,0.25), 0 8px 20px rgba(0,0,0,0.16), 0 20px 44px rgba(0,0,0,0.12)",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "0 2px 4px rgba(8,22,36,0.08), 0 12px 24px rgba(8,22,36,0.12), 0 28px 56px rgba(8,22,36,0.14), 0 48px 96px rgba(46,96,148,0.08)",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
     "sun-core": {
       "kind": "color",
       "axes": [],
@@ -526,6 +568,76 @@
         {
           "cell": "default",
           "value": "#f0a868",
+          "selector": ":root"
+        }
+      ]
+    },
+    "weight-bold": {
+      "kind": "typography",
+      "axes": [],
+      "locked": false,
+      "doc": "Strong emphasis / button labels / page titles.",
+      "defaultValue": "700",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "700",
+          "selector": ":root"
+        }
+      ]
+    },
+    "weight-display": {
+      "kind": "typography",
+      "axes": [],
+      "locked": false,
+      "doc": "Hero / display titles — the heaviest weight we ship.",
+      "defaultValue": "800",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "800",
+          "selector": ":root"
+        }
+      ]
+    },
+    "weight-medium": {
+      "kind": "typography",
+      "axes": [],
+      "locked": false,
+      "doc": "Slightly emphasized body / nav links.",
+      "defaultValue": "500",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "500",
+          "selector": ":root"
+        }
+      ]
+    },
+    "weight-regular": {
+      "kind": "typography",
+      "axes": [],
+      "locked": false,
+      "doc": "Body / default text weight.",
+      "defaultValue": "400",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "400",
+          "selector": ":root"
+        }
+      ]
+    },
+    "weight-semibold": {
+      "kind": "typography",
+      "axes": [],
+      "locked": false,
+      "doc": "Section headings / labels.",
+      "defaultValue": "600",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "600",
           "selector": ":root"
         }
       ]
