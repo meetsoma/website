@@ -132,12 +132,12 @@
 /* Light surface: gold/orange + blue need to read against white cards.
  * Curtis (s01-b73653): "improve the contrast of the gold/orange". */
 html[data-surface="light"] .badge-protocol {
-  background: rgba(184, 132, 26, 0.10);
-  color: #8a5e10;
-  border-color: rgba(184, 132, 26, 0.32);
+  background: var(--surface-warm-soft);
+  color: var(--promo-dim);
+  border-color: var(--promo-border);
 }
 html[data-surface="light"] .badge-protocol .badge-dot {
-  background: #b8841a;
+  background: var(--promo);
 }
 html[data-surface="light"] .badge-muscle {
   background: rgba(46, 96, 148, 0.10);
