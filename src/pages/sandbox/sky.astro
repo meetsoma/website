@@ -21,6 +21,17 @@ import Layout from '../../layouts/Layout.astro';
   description="Design iteration sandbox — light theme palette tuning."
   path="/sandbox/sky"
 >
+  <!-- Extra cloud depth layers — sandbox only. The 3 glow-orbs from Layout
+       handle mid-altitude. These add the near + far extremes. -->
+  <div class="sb-clouds" aria-hidden="true">
+    <!-- Cirrus — very high, hairline thin, barely there -->
+    <div class="sb-cloud sb-cloud-cirrus"></div>
+    <!-- Near cumulus — low, chunkier, moves slower visually -->
+    <div class="sb-cloud sb-cloud-cumulus"></div>
+    <!-- Horizon haze — diffuse warm band where sun leaks through -->
+    <div class="sb-cloud sb-cloud-haze"></div>
+  </div>
+
   <main class="sandbox-main">
     <header class="sandbox-hero">
       <h1>cloud cover at dawn</h1>
@@ -73,112 +84,252 @@ import Layout from '../../layouts/Layout.astro';
 </Layout>
 
 <style is:global>
-  /* Sandbox palette override — light theme bluer + cloudier per Curtis (s01-7b287c).
-   * "still not blue or sky feeling enough" + "more blue and the whispy touch of clouds."
-   * Scoped to .sandbox-main subtree so other routes are unaffected. */
-  .sandbox-main {
-    /* Push light palette deeper into "sky" territory */
-  }
+  /* ==========================================================================
+   * SANDBOX SKY — iter 3 (s01-b73653)
+   * Curtis: "needs to feel like it has depth — light mode is lacking that,
+   * the blue feel of a sky, some clouds close others farther, slightly moving."
+   * + "Soma title shadow is now on the front of it (sun behind)."
+   *
+   * Architecture:
+   *   body gradient  — zenith deep blue → pale diffuse horizon
+   *   .glow-orb-1/2  — mid-altitude altostratus layers (tuned from Layout)
+   *   .glow-orb-3    — low warm wisp / sunlit cloud edge
+   *   .sb-cloud-cirrus  — high cirrus, hairline, barely there, fast drift
+   *   .sb-cloud-cumulus — near low cumulus, thicker, slowest angular speed
+   *   .sb-cloud-haze    — horizon warm band (sun leaking through overcast)
+   * ==========================================================================*/
 
+  /* ── 1. SKY GRADIENT — real zenith→horizon gradient ──────────────────────
+   * Overcast dawn: blue comes through cloud layer diffused — saturated but
+   * not blazing. Warm amber bleeds in from bottom-right (sun below horizon). */
   html[data-theme='light'] body:has(.sandbox-main) {
-    /* Iter 2 (s01-7b287c): touch more blue per Curtis. Deeper saturation,
-     * still pale enough to feel like 'cloud cover at dawn,' not 'corporate
-     * blue.' The bg now reads as actual sky bouncing off cloud floor. */
-    --bg-deep: #cfdef0;          /* deeper pale dawn sky (was #d6e4f2) */
-    --bg-surface: #ecf2fa;       /* cloud-white with stronger cool undertone (was #f0f5fb) */
-    --bg-elevated: #bccfe5;      /* deeper cloud-base (was #c5d6ea) */
-
-    /* Accent: pull saturation up so it feels like ocean reflecting sky */
-    --accent-bright: #2867a8;    /* brighter saturated blue (was #2e6094) */
-    --accent-mid: #1f5290;
-    --accent-dark: #133e72;
-
-    --moon-bright: #4a8cba;      /* brighter moon-blue (was #3878a0) */
-    --moon-mid: #357aaa;
-    --moon-glow: rgba(40, 103, 168, 0.22);
-
-    /* Text: slightly warmer slate so it doesn't compete with sky */
-    --text-primary: #0d1929;     /* deep navy ink */
-    --text-secondary: #2a3a52;
-    --blog-body: #354860;
-    --text-muted: #4a5b75;
-
-    --border-subtle: rgba(13, 25, 41, 0.14);
-    --border-accent: rgba(40, 103, 168, 0.4);
-
-    /* Cards: warm cloud-white with stronger separation from bg */
-    --surface-card: rgba(248, 251, 254, 0.96);
-    --surface-card-strong: rgba(244, 249, 253, 1);
-    --surface-overlay: rgba(40, 103, 168, 0.18);
-    --surface-interactive: rgba(13, 25, 41, 0.07);
-    --surface-interactive-hover: rgba(13, 25, 41, 0.13);
-    --surface-accent-soft: rgba(40, 103, 168, 0.10);
-    --surface-warm-soft: rgba(232, 168, 124, 0.07);
-    --surface-inset-highlight: rgba(255, 255, 255, 0.6);
-
-    --shadow-accent-soft: rgba(40, 103, 168, 0.18);
-    --shadow-accent-mid: rgba(40, 103, 168, 0.30);
-    --shadow-warm-soft: rgba(232, 168, 124, 0.15);
-
-    --hero-title-start: #133e72;
-    --hero-title-end: #2867a8;
-
-    --logo-glow: rgba(40, 103, 168, 0.20);
-    --logo-glow-hover: rgba(40, 103, 168, 0.35);
+    background: none !important;
+  }
+  html[data-theme='light'] body:has(.sandbox-main)::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      /* Warm sun leak — bottom-right corner, faint */
+      radial-gradient(
+        ellipse 60% 50% at 105% 110%,
+        rgba(255, 210, 140, 0.35) 0%,
+        rgba(220, 170, 90, 0.12) 40%,
+        transparent 70%
+      ),
+      /* Sky gradient: zenith blue → pale horizon */
+      linear-gradient(
+        to bottom,
+        #4e85b5 0%,      /* zenith — proper overcast sky blue */
+        #6fa3c8 18%,     /* upper sky */
+        #95bfd8 38%,     /* mid sky, diffused through cloud layer */
+        #bdd7e9 58%,     /* lower mid, getting milky */
+        #d8ecf5 78%,     /* near horizon, very pale */
+        #e8f4f9 100%     /* horizon, almost white */
+      );
   }
 
-  /* Logo color in light mode — was --promo (gold), but on a blue sky bg the
-   * gold sigma reads as detached/wrong. Switch to deep accent blue so it
-   * feels like part of the sky stack. */
-  html[data-theme='light'] body:has(.sandbox-main) .nav-sigma {
-    color: var(--accent);
-    text-shadow: 0 0 12px var(--logo-glow);
-  }
-  html[data-theme='light'] body:has(.sandbox-main) .nav-brand:hover .nav-sigma {
-    color: var(--moon-bright);
-    text-shadow: 0 0 16px var(--moon-glow);
+  /* Card/surface tokens for this palette */
+  html[data-theme='light'] body:has(.sandbox-main) {
+    /* Tincture token overrides for this sky palette */
+    --bg:      #a8c9dd;   /* sky mid — tincture --bg alias */
+    --bg-card: #e8f3fa;   /* cloud white — cards */
+    --bg-elev: #d0e5f0;   /* cloud shadow — elevated */
+    --ink:          #091829;
+    --ink-soft:     #1e3a56;
+    --ink-muted:    #3a5872;
+    --accent:       #1e5f9e;
+    --border:       rgba(9, 24, 41, 0.12);
+    --border-accent: rgba(30, 95, 158, 0.35);
+    --shadow-accent: rgba(30, 95, 158, 0.18);
+    --shadow-card:  0 2px 8px rgba(9,24,41,0.10), 0 6px 20px rgba(9,24,41,0.07);
+
+    /* Legacy aliases */
+    --accent-bright: var(--accent);
+    --border-subtle: var(--border);
+    --shadow-accent-soft: var(--shadow-accent);
+    --shadow-accent-mid: rgba(30, 95, 158, 0.28);
+    --moon-bright:  #3878a8;
+    --moon-glow:    rgba(30, 95, 158, 0.25);
+    --warm-bright:  #b06030;
+    --logo-glow:    rgba(30, 95, 158, 0.22);
+    --logo-glow-hover: rgba(30, 95, 158, 0.38);
+
+    /* Surface overrides for glass-card feel against the sky bg */
+    --surface-card:              rgba(235, 248, 255, 0.88);
+    --surface-card-strong:       rgba(242, 251, 255, 0.96);
+    --surface-interactive:       rgba(9, 24, 41, 0.06);
+    --surface-interactive-hover: rgba(9, 24, 41, 0.11);
+    --surface-accent-soft:       rgba(30, 95, 158, 0.09);
   }
 
-  /* Iter 2 (s01-7b287c): LONG wispy hue overlays — 'whispy clouds you can
-   * barely see but gives depth.' Push transform.scaleX dramatically (3-4x)
-   * + drop scaleY thinner (0.12-0.18) + reduce opacity so they're DEPTH,
-   * not detail. Each orb tinted slightly different blue/warm so the eye
-   * registers atmospheric layers, not 3 distinct shapes. */
+  /* ── 2. EXISTING GLOW ORBS — mid-altitude cloud layers ───────────────────
+   * Repurposed from Layout's circular nebula orbs into horizontal cloud streaks.
+   * orb-1 = altostratus (mid-high)  orb-2 = stratus (mid)  orb-3 = sunlit edge */
   html[data-theme='light'] body:has(.sandbox-main) .glow-orbs {
-    opacity: 0.55;
+    opacity: 1;  /* full — depth is tuned per-orb */
+  }
+  html[data-theme='light'] body:has(.sandbox-main) .glow-orb {
+    mix-blend-mode: multiply;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-1 {
-    /* upper streak — cool blue cirrus, longest + thinnest */
-    background: radial-gradient(ellipse, rgba(40, 103, 168, 0.13) 0%, rgba(40, 103, 168, 0.02) 55%, transparent 80%);
-    transform: scale(3.6, 0.13) rotate(-3deg);
+    /* Altostratus — mid-high altitude. Wide blue-grey band, slow drift. */
+    background: radial-gradient(ellipse, rgba(100, 148, 190, 0.22) 0%, rgba(80, 130, 175, 0.06) 55%, transparent 80%);
+    transform: scale(3.8, 0.18) rotate(-4deg);
+    animation-duration: 38s;
+    opacity: 0.9;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-2 {
-    /* mid-band streak — deeper blue, very wide */
-    background: radial-gradient(ellipse, rgba(40, 103, 168, 0.10) 0%, rgba(40, 103, 168, 0.02) 60%, transparent 82%);
-    transform: scale(4.0, 0.16) rotate(2deg);
+    /* Stratus — mid altitude, slightly lower, wider + fatter streak. */
+    background: radial-gradient(ellipse, rgba(80, 130, 175, 0.18) 0%, rgba(60, 110, 160, 0.04) 60%, transparent 82%);
+    transform: scale(4.2, 0.22) rotate(3deg);
+    animation-duration: 28s;
+    opacity: 0.85;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-3 {
-    /* lower wisp — sun-touched warmth, fainter still */
-    background: radial-gradient(ellipse, rgba(232, 168, 124, 0.08) 0%, rgba(232, 168, 124, 0.02) 65%, transparent 82%);
-    transform: scale(3.2, 0.14) rotate(-8deg);
+    /* Sunlit cloud edge — warm tint where sun light bleeds through. */
+    background: radial-gradient(ellipse, rgba(220, 165, 90, 0.14) 0%, rgba(200, 145, 70, 0.04) 55%, transparent 80%);
+    transform: scale(2.8, 0.26) rotate(-10deg);
+    animation-duration: 22s;
+    opacity: 0.8;
   }
 
-  /* Bluer horizon idle on this page */
+  /* ── 3. NEW CLOUD DEPTH LAYERS — sandbox-only fixed elements ───────────── */
+  .sb-clouds {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    /* Only show in light mode — dark mode has stars for depth */
+    display: none;
+  }
+  html[data-theme='light'] body:has(.sandbox-main) .sb-clouds { display: block; }
+
+  .sb-cloud {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+  }
+
+  /* Cirrus — very high altitude. Hairline thin, barely visible.
+   * Fastest angular drift because smallest scale = most responsive to wind.
+   * Tinted very pale blue-grey. */
+  .sb-cloud-cirrus {
+    top: 8%;
+    left: 15%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(ellipse, rgba(160, 195, 220, 0.18) 0%, rgba(140, 180, 210, 0.04) 50%, transparent 75%);
+    transform: scale(5.5, 0.07) rotate(-2deg);
+    animation: sbCloudCirrus 52s ease-in-out infinite;
+  }
+  @keyframes sbCloudCirrus {
+    0%, 100% { transform: scale(5.5, 0.07) rotate(-2deg) translate(0, 0); }
+    33%       { transform: scale(5.5, 0.07) rotate(-1.5deg) translate(60px, 4px); }
+    66%       { transform: scale(5.5, 0.07) rotate(-2.5deg) translate(-30px, 8px); }
+  }
+
+  /* Near cumulus — lowest altitude, closest to viewer.
+   * THICKER (high scaleY), more opaque, but moves SLOWEST (low angular speed
+   * for close objects). Positioned low on screen where low clouds would appear. */
+  .sb-cloud-cumulus {
+    bottom: 25%;
+    right: 10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(220, 238, 248, 0.55) 0%, rgba(200, 225, 240, 0.20) 40%, transparent 70%);
+    transform: scale(2.2, 0.45) rotate(5deg);
+    animation: sbCloudCumulus 18s ease-in-out infinite;
+  }
+  @keyframes sbCloudCumulus {
+    0%, 100% { transform: scale(2.2, 0.45) rotate(5deg) translate(0, 0); }
+    50%       { transform: scale(2.2, 0.45) rotate(4.5deg) translate(-18px, 6px); }
+  }
+
+  /* Horizon haze — warm diffuse band at the bottom where sun leaks through.
+   * Not a cloud — atmospheric scattering at low angle. Static-ish. */
+  .sb-cloud-haze {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 400px;
+    border-radius: 0;
+    background: radial-gradient(
+      ellipse 80% 100% at 70% 100%,
+      rgba(255, 200, 120, 0.22) 0%,
+      rgba(240, 170, 80, 0.08) 35%,
+      transparent 65%
+    );
+    animation: sbCloudHaze 40s ease-in-out infinite;
+  }
+  @keyframes sbCloudHaze {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.7; }
+  }
+
+  /* ── 4. STARFIELD — repurpose as tiny far-away birds/particles ──────────
+   * In dark mode = stars. In light sky = tiny distant specks of life. */
+  html[data-theme='light'] body:has(.sandbox-main) .starfield {
+    opacity: 0.25;  /* subtle — depth, not distraction */
+  }
+
+  /* ── 5. SKY HORIZON — transition overlay + idle state ───────────────── */
   html[data-theme='light'] body:has(.sandbox-main) .sky-horizon {
+    /* Warm sun coming through overcast from lower-right.
+     * Blue wash from upper-left as counterpoint. */
     background:
       radial-gradient(
-        ellipse 70% 80% at 100% 100%,
-        rgba(232, 168, 124, 0.08) 0%,
-        rgba(40, 103, 168, 0.18) 25%,
-        rgba(40, 103, 168, 0.08) 55%,
-        transparent 75%
+        ellipse 50% 60% at 100% 100%,
+        rgba(255, 195, 110, 0.28) 0%,
+        rgba(240, 165, 70, 0.10) 45%,
+        transparent 70%
       ),
       radial-gradient(
-        ellipse 100% 50% at 50% 100%,
-        rgba(40, 103, 168, 0.16) 0%,
-        rgba(40, 103, 168, 0.06) 45%,
-        transparent 75%
+        ellipse 80% 40% at 0% 0%,
+        rgba(80, 130, 190, 0.12) 0%,
+        rgba(60, 110, 170, 0.04) 55%,
+        transparent 80%
       );
+  }
+
+  /* ── 6. SOMA TITLE — backlit / sun-behind effect ─────────────────────
+   * Curtis: "Soma title shadow is now on the front of it (sun behind)."
+   * The title is a SILHOUETTE — dark against bright sky. The sun is
+   * BEHIND it, so:
+   *   — warm halo radiates OUTWARD from behind the letters (above)
+   *   — hard shadow falls FORWARD / below (toward the viewer)
+   * Result reads as contre-jour / backlit photography. */
+  html[data-theme='light'] body:has(.sandbox-main) .sandbox-hero h1 {
+    /* Dark silhouette gradient — deepest at base (shadow side),
+     * slightly warm-dark at top (edge catching rim of sun glow) */
+    background: linear-gradient(
+      180deg,
+      #0d2040 0%,   /* top — dark with the faintest warm cast */
+      #091628 100%  /* base — deepest silhouette */
+    ) !important;
+    /* Sun-behind: warm halo above + forward shadow below.
+     * drop-shadow works on the composited text (including background-clip). */
+    filter:
+      drop-shadow(0 -8px 24px rgba(255, 215, 130, 0.60))   /* warm sun halo behind/above */
+      drop-shadow(0 -3px 10px rgba(255, 230, 160, 0.35))   /* secondary rim glow */
+      drop-shadow(0 10px 20px rgba(6, 18, 45, 0.55));      /* hard shadow TOWARD viewer */
+  }
+
+  /* Nav sigma in light sky — deep blue silhouette + sun halo */
+  html[data-theme='light'] body:has(.sandbox-main) .nav-sigma {
+    color: #0d2040;
+    text-shadow:
+      0 -4px 14px rgba(255, 215, 130, 0.55),
+      0 4px 8px rgba(6, 18, 45, 0.40);
+  }
+  html[data-theme='light'] body:has(.sandbox-main) .nav-brand:hover .nav-sigma {
+    color: #0a1832;
+    text-shadow:
+      0 -5px 18px rgba(255, 220, 140, 0.70),
+      0 4px 10px rgba(6, 18, 45, 0.45);
   }
 </style>
 
