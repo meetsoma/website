@@ -27,7 +27,99 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ---
 
-## v0.24.1 — May 2026 (latest)
+## v0.27.1 — May 2026 (latest)
+
+The "first end-to-end autonomous PR ship" patch. Cycles 16 + 17 land together: Sonnet's long-context wall now triggers warn/exhale BEFORE the wall hits, `/inhale` no longer double-injects preload, and `release-please` becomes the canonical ship pipeline.
+
+### 🆕 New caps & workflows
+
+- **`soma-dev delegate cycle <brief>`** — full implementation pipeline for any markdown brief (cycle.md, inbox/*.md, plans/*.md). Pipeline: `intern` (investigate, 80-call) → `intern` (build, 80-call) → `verifier` (25-call) → `pr_author` (30-call). Total ~215 tool calls / ~$2.50 per cycle. Outputs `/tmp/soma-cycle-investigation.md`, `/tmp/soma-cycle-impl-summary.md`, `/tmp/soma-pr-description.md`. Flags: `--no-pr`, `--no-verify`. Use this when `builder`'s 25-call default is too small for a multi-step cycle.
+- **`/auto-breathe model-aware`** — NEW subcommand. The auto-breathe enum is now tri-state: `off` / `global` / `model-aware`. `model-aware` reads `ctx.model.id` and selects per-glob thresholds from `breathe.thresholds` map. Default install ships `model-aware`. Backward-compat: boolean still parses (true → "global", false → "off") via migration `breathe-tri-state-v0.27.0`.
+- **`tokens_input` now includes cache_read** in `runDelegation()` results. Previously reported only the uncached delta (showing `tokens_input: 3` for repeated calls with stable prefix). New fields: `tokens_input_uncached` + `tokens_input_cached` for transparency. Was *NOT* a delegation-degraded bug — was a metric-display bug. The model received the full prompt all along.
+- **`route.provide("preload:wasInjected", ...)`** — new route cap exposing whether `session_start`'s "new"/"resume" branch already injected the preload. `/inhale` post-await queries this and skips its own send if true. Available cycle-17+.
+
+### 🔄 Behavior changes
+
+- **Sonnet thresholds:** model-aware default for `*sonnet*` is `warnRange [28,33] / exhaleRange [34,50]` — fires BEFORE the empirical ~48% "extra usage required for long context" wall. Opus: `[60,74] / [75,90]`. Default fallback: `[50,64] / [65,85]`. If you're on Sonnet and were used to 50/70 thresholds, you'll see notifications much earlier now — by design.
+- **`/inhale` no longer produces double preload** in rotated sessions. Previously, every `/inhale` triggered TWO preload-injection user messages (`[Soma Boot — rotated session]` from `session_start` + `[Soma Inhale — Loading Preload]` from `/inhale` post-await). ~8K tokens duplicated per rotation, verified across 10 sessions. Now: single inject from `session_start`, `/inhale` skips when `wasInjected=true`. Print-mode safety preserved (when `ctx.hasUI=false`, `/inhale` falls back to direct send).
+- **Auto-breathe notify text changed:** `🪵 Auto-breathe: rotating at N%` → `🪵 Preload requested at N% — rotating after agent writes it`. Honest about the request-vs-rotation distinction. Other branch (preload-already-written, immediate `.rotate-signal`) keeps `Rotating — preload already written`.
+- **`soma-release-ship.sh` now bumps `.github/.release-please-manifest.json`** in lockstep with `package.json`. Without this, release-please's view of "current version" stays stuck and the next push to dev files a confused PR (caught when v0.27.0 ship left manifest at 0.26.2 → release-please filed PR #18 "release 0.26.3" with conflicts everywhere).
+- **Catch-block fallback in `/inhale` is race-safe:** the previous `catch (err)` block always sent the fallback preload regardless of state. Now checks `route.get("preload:wasInjected")` — if `session_start` already injected (rare race where `newSession()` throws AFTER emitting), catch suppresses its send.
+
+### 🤖 Release flow now PR-driven (canonical)
+
+**PRIMARY (cycle-17, v0.27.1+):** Push commits to dev with conventional-commit messages (`feat:`, `fix:`, `chore:`, etc.) → `release-please` GHA auto-files release PR with versioned CHANGELOG → review + amend the PR (move rich `[Unreleased]` narratives into `[X.Y.Z]` if release-please's auto-bullets are too thin) → merge → build dist + publish draft GH release + npm publish + force-push main + rsync.
+
+**FALLBACK (high-stakes):** `soma-release-prepare.sh` (10 checklog gates) → `soma-release-ship.sh`. Use for major bumps, breaking changes, or mid-flight rescues. Both flows now bump the manifest in lockstep.
+
+### 🐛 Bugs you can stop stepping around
+
+- **`pr-check.yml` silent test-failure** — GHA's `bash -e {0}` shell exited the test loop on the first failing test BEFORE logging which one. Now uses `set +e` inside the loop + captures failed names + logs them at the end.
+- **In-flight detection robustness** — 4 tests had brittle `chore(release): vX.Y.Z` regex that broke on release-please's `chore(dev): release X.Y.Z` format AND on amendment commits. Switched to NO-TAG-YET detection (`if package.json bumped to vX.Y.Z but no git tag v$PKG_VERSION exists, we're in-flight`). Robust against ALL release-commit shapes.
+- **`test-preload-notify-state-machine` runtime-mirror gate** failed on CI runners (no `~/.soma/agent` install dir). Now skips on `CI=true` OR when install dir absent.
+- **Release-please `Summarize` step bash-escape** — the PR JSON output contains parens (`v0.27.0...v0.27.1`) which broke `echo "... ${{ steps.release.outputs.pr }}"` interpolation. Moved interpolation to env block.
+
+### 📁 New files / locations
+
+- `.soma/cycles/audit-improve/16-model-aware-breathe-collapse/cycle.md` — full plan for tri-state + per-model thresholds.
+- `.soma/cycles/audit-improve/17-rotation-mechanism-repair/cycle.md` — 5-bug rotation-mechanism audit + fixes.
+- `migrations/phases/v0.26.2-to-v0.27.0.md` — the breathe-tri-state migration journal.
+- 5 new test files: `test-breathe-tri-state.sh`, `test-breathe-migration.sh`, `test-breathe-model-thresholds.sh`, `test-breathe-warn-range.sh`, `test-breathe-exhale-once.sh`. 81 new test cases covering the tri-state + per-model paths.
+
+### 🧠 Architecture notes worth knowing
+
+- **`{{skills_block}}` is a transplant, not a duplicate.** `core/body.ts:775` extracts `<available_skills>...</available_skills>` from Pi's compiled prompt, then re-injects it into soma's templated prompt via the `{{skills_block}}` slot. Soma's compiled output FULLY REPLACES Pi's prompt (when Pi's is the default-shape — the normal case), so the slot is the ONLY copy of the skills XML in the final prompt. Removing the slot from `_mind.md` would lose skills entirely. (The earlier `muscle_digests` removal was different: muscle_digests was rendered by soma + ALSO injected by Pi compiler-prepend — a true double. Skills are not.)
+- **Auto-rotation Path A (`.rotate-signal` + process re-exec) is canonical.** Per Pi types (`pi-coding-agent/dist/core/extensions/types.d.ts`), `newSession` lives on `ExtensionCommandContext`, not on the base `ExtensionContext` event handlers receive. The route cap `"session:new"` is therefore only registered when a user explicitly invokes `/breathe`/`/inhale`/`/auto-breathe` (`provideCommandCapabilities` runs from those handlers). Auto-breathe's `performRotation` falling back to `.rotate-signal` (Path A) is correct by design — Pi treats process re-exec as the safer auto-path. In-process Path B is a happy-path optimization available only after a command was invoked.
+
+---
+
+## v0.27.0 — May 2026
+
+The "autonomous CI/PR pipeline" minor. Three layers ship together: nightly tests + auto-issue-filing + delegate-driven fix orchestration.
+
+### 🆕 New caps & workflows
+
+- **`soma-dev delegate <workflow>`** — multi-agent orchestrator. Workflows: `pr` (full PR pipeline), `pr-brief` (brief only), `ci-fix <url>` (issue → fix → verify), `changelog` (rich CHANGELOG), `doc-update`, `audit [tickets...]`. Composes `changelog_curator + pr_author + doc_writer + verifier` (or `issue_investigator + builder + verifier` for ci-fix).
+- **`dev:issue.{create,list}`** — GitHub issues from inside soma sessions. `create` files structured nightly-failure issues with dedupe gate (skip if open issue exists for same failure).
+- **`soma-dev check-phases`** — 30-second pre-release gate (upstream sync + tests + tsc) before the full 5-min `soma-release-prepare.sh`.
+- **`soma-pr-brief.sh`** — generates structured PR brief (git-cliff CHANGELOG diff, affected files, semver bump type, docs to update, roadmap suggestion). Used as input to delegate workflows.
+- **`{{pi_gap}}` body var** — reads `PI_UPSTREAM.md` at session start, injects live Pi version-gap into the system prompt. Updated by 6h GitHub Actions monitor.
+- **3 new child role bodies** — `pr_author` (rich PR descriptions), `issue_investigator` (root-cause tracer for nightly failures), `changelog_curator` (rich `[Unreleased]` narratives, replaces auto-bullet noise).
+
+### 🔄 Behavior changes
+
+- **Pi 0.72.1 → 0.73.1 lockstep bump.** All 4 pi-* packages move together (`pi-coding-agent`, `pi-ai`, `pi-agent-core`, `pi-tui`). Bumping only one causes silent API mismatches.
+- **`MODEL_ALIASES` reverted to 4-5** (NOT bumped to 4-6) — default-tier safety. Bumping aliases would silently force users onto 1M-context variants.
+- **Nightly test failures auto-file GitHub issues** with `nightly-failure` label. Dedupe gate prevents floods. Issue body includes failing tests, error excerpts, Pi version, last 5 commits, and a fix brief for the next agent.
+- **18 tests gained `CI=true` skip guards** — workspace/dist-dependent tests self-skip on CI runners.
+
+### 🧰 Release flow consolidation
+
+- Archived stale `soma-ship.sh`. Wired `soma-dev ship/release/beta` subcommands.
+- `pr-check.yml` hardened: tsc typecheck job + changelog blocking + conventional-commit format validation.
+- `cliff.toml` added — git-cliff configured for Keep-A-Changelog format from conventional commits (feat→Added, fix→Fixed, ci/chore/test filtered).
+- `release-please` auto-trigger enabled on push to dev (proposes; release-please takes over as canonical in v0.27.1).
+
+### 📁 New files / locations
+
+- `PI_UPSTREAM.md` (auto-updated by 6h GHA) — live Pi version gap + flagged commits relevant to Soma (33 Pi API usages tracked).
+- `tests/test-children-roles-exist.sh` — drift-prevention regression test: every `_run_role` reference in `delegate.sh` must have a matching `body/children/<role>.md`.
+
+---
+
+## v0.26.x — May 2026
+
+Maintenance arc: cache-invalidation hardening, Pi runtime bump rehearsals, soma-github local-mode runtime ship gap fix, body audit + state slimming, anti-accretion discipline. Two reverted patches (SX-727 long-context, briefly enabled) that were rolled back when they broke arzadon billing wall — documented in `docs/anthropic-long-context.md` with the `anthropic.enableLongContext` opt-in setting as the durable replacement.
+
+---
+
+## v0.25.x — May 2026
+
+The `/inhale` stale-ctx fix family + preflight update prompt + sentinel migrations made unconditional + body-template migration `mind-prepend-cleanup-v0.25.0` with backup safety + Pi-cruft startup warnings removed. Cycle 12 (preload notify state machine) shipped — transitions only fire once per state change (none→saved, saved→stale, stale→saved). `breathe:detail` cap added.
+
+---
+
+## v0.24.1 — May 2026
 
 The "releases verify they actually completed" patch arc: protect the release pipeline from silently incomplete ships, and lock the cap-bus surface against accidental drift.
 

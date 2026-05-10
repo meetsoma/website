@@ -327,6 +327,24 @@ Soma ships with these extensions:
 
 These install to `~/.soma/agent/extensions/` and can be customized or replaced.
 
+## Multi-agent Workflows (`soma-dev delegate`)
+
+Developers can compose child agents into named pipelines via `soma-dev delegate <workflow>`:
+
+| Workflow | Pipeline | Use when |
+|---|---|---|
+| `pr` | brief → `changelog_curator + pr_author + doc_writer + verifier` | About to open a PR; want rich CHANGELOG narrative + PR description auto-drafted |
+| `pr-brief` | `soma-pr-brief.sh` only (no agents, instant) | Just the structured brief for manual PR writing |
+| `ci-fix <url>` | `issue_investigator → builder → verifier` | A nightly test failed and filed a GitHub issue |
+| `cycle <brief.md>` | `intern (investigate) → intern (build) → verifier → pr_author` | Multi-step cycle that exceeds builder's 25-call default budget |
+| `changelog` | `changelog_curator` | Just the rich `[Unreleased]` section |
+| `doc-update` | `doc_writer` | Recent code changes need doc sync |
+| `audit [tickets...]` | `auditor` | Batch verdict on kanban tickets (SHIPPED / STALE / STILL-VALID) |
+
+Each role has a budget cap (`max-tool-calls` + `max-cost-usd`) defined in `body/children/<role>.md` frontmatter. The `intern` role has the largest budget (80 calls / $0.80) for complex investigations + builds; `builder` is bounded for surgical edits (25 calls / $0.50).
+
+For a deep cycle (cycle 16's 9-step model-aware-breathe implementation took ~80+ tool calls), use `soma-dev delegate cycle <brief.md>` to chain investigate → build → verify → PR-author. See `scripts/_dev/soma-dev/commands/delegate.sh`.
+
 ## Namespaces
 
 Soma uses three top-level meta-tools to organize capabilities. Each is a single Pi tool registration with multiple addons routed through `soma-route`:
