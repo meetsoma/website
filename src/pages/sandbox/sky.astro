@@ -81,10 +81,12 @@ import Layout from '../../layouts/Layout.astro';
   }
 
   html[data-theme='light'] body:has(.sandbox-main) {
-    /* Bluer, more saturated — actual sky-feel */
-    --bg-deep: #d6e4f2;          /* pale dawn sky — DEEPER blue (was #e8eef5) */
-    --bg-surface: #f0f5fb;       /* cloud-white with strong cool undertone (was #fafbfc) */
-    --bg-elevated: #c5d6ea;      /* deeper cloud-base (was #dde5f0) */
+    /* Iter 2 (s01-7b287c): touch more blue per Curtis. Deeper saturation,
+     * still pale enough to feel like 'cloud cover at dawn,' not 'corporate
+     * blue.' The bg now reads as actual sky bouncing off cloud floor. */
+    --bg-deep: #cfdef0;          /* deeper pale dawn sky (was #d6e4f2) */
+    --bg-surface: #ecf2fa;       /* cloud-white with stronger cool undertone (was #f0f5fb) */
+    --bg-elevated: #bccfe5;      /* deeper cloud-base (was #c5d6ea) */
 
     /* Accent: pull saturation up so it feels like ocean reflecting sky */
     --accent-bright: #2867a8;    /* brighter saturated blue (was #2e6094) */
@@ -137,21 +139,28 @@ import Layout from '../../layouts/Layout.astro';
     text-shadow: 0 0 16px var(--moon-glow);
   }
 
-  /* Wispier clouds on this page — wider/thinner ovals */
+  /* Iter 2 (s01-7b287c): LONG wispy hue overlays — 'whispy clouds you can
+   * barely see but gives depth.' Push transform.scaleX dramatically (3-4x)
+   * + drop scaleY thinner (0.12-0.18) + reduce opacity so they're DEPTH,
+   * not detail. Each orb tinted slightly different blue/warm so the eye
+   * registers atmospheric layers, not 3 distinct shapes. */
   html[data-theme='light'] body:has(.sandbox-main) .glow-orbs {
-    opacity: 0.75;
+    opacity: 0.55;
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-1 {
-    background: radial-gradient(ellipse, rgba(40, 103, 168, 0.18) 0%, rgba(40, 103, 168, 0.04) 50%, transparent 75%);
-    transform: scale(2.2, 0.22) rotate(-4deg);
+    /* upper streak — cool blue cirrus, longest + thinnest */
+    background: radial-gradient(ellipse, rgba(40, 103, 168, 0.13) 0%, rgba(40, 103, 168, 0.02) 55%, transparent 80%);
+    transform: scale(3.6, 0.13) rotate(-3deg);
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-2 {
-    background: radial-gradient(ellipse, rgba(40, 103, 168, 0.15) 0%, rgba(40, 103, 168, 0.03) 55%, transparent 80%);
-    transform: scale(2.6, 0.25) rotate(3deg);
+    /* mid-band streak — deeper blue, very wide */
+    background: radial-gradient(ellipse, rgba(40, 103, 168, 0.10) 0%, rgba(40, 103, 168, 0.02) 60%, transparent 82%);
+    transform: scale(4.0, 0.16) rotate(2deg);
   }
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-3 {
-    background: radial-gradient(ellipse, rgba(232, 168, 124, 0.10) 0%, rgba(232, 168, 124, 0.02) 60%, transparent 80%);
-    transform: scale(1.8, 0.20) rotate(-10deg);
+    /* lower wisp — sun-touched warmth, fainter still */
+    background: radial-gradient(ellipse, rgba(232, 168, 124, 0.08) 0%, rgba(232, 168, 124, 0.02) 65%, transparent 82%);
+    transform: scale(3.2, 0.14) rotate(-8deg);
   }
 
   /* Bluer horizon idle on this page */
