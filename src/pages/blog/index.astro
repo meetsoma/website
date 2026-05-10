@@ -201,22 +201,23 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
     font-size: 0.8rem;
     padding: 6px 14px;
     border-radius: 999px;
-    background: rgba(22, 27, 34, 0.65);
-    border: 1px solid rgba(124, 178, 212, 0.18);
+    background: var(--surface-card);
+    border: 1px solid var(--border-accent);
     color: var(--ink-soft);
     cursor: pointer;
     transition: all 0.18s ease;
     white-space: nowrap;
+    backdrop-filter: blur(6px);
   }
   .filter-chip:hover {
-    border-color: rgba(124, 178, 212, 0.5);
+    border-color: var(--accent);
     color: var(--ink);
-    background: rgba(100, 148, 190, 0.15);
+    background: var(--surface-accent-soft);
   }
   .filter-chip.active {
-    background: rgba(240, 200, 102, 0.15);
-    border-color: rgba(240, 200, 102, 0.55);
-    color: #f0c866;
+    background: var(--surface-accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
   }
   .filter-count { display: inline-block; margin-left: 4px; opacity: 0.6; font-size: 0.72rem; }
 

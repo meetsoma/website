@@ -14,11 +14,19 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    /* Smooth fade between dark (full stars) and light (faint stars) */
+    transition: opacity 1.4s ease;
   }
 
   html[data-theme='light'] .starfield {
-    /* Cycle 17: bumped from 0.15 — dark stars on light bg need more presence */
-    opacity: 0.35;
+    /* Cycle 17: bumped from 0.15 — dark stars on light bg need more presence.
+     * s01-b73653: down to 0.18 — with the new airy mid mood the stars feel
+     * busy. Faint constellation hint, not full starfield. */
+    opacity: 0.18;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .starfield { transition: opacity 0.2s linear !important; }
   }
 </style>
 

@@ -114,8 +114,13 @@
       0 0 200px rgba(232, 168, 124, 0.08);
     opacity: 0;
     /* Dark idle: sun is offstage to the lower-right (translateX out of frame) */
-    transform: translate(120px, 40px) rotate(-25deg);
-    transition: opacity 0.9s ease, transform 1.4s cubic-bezier(0.34, 1.2, 0.4, 1);
+    transform: translate(140px, 60px) rotate(-30deg);
+    /* Staggered fade: sky gradient starts at 0s, sun delays so it doesn't
+     * pop in alongside. Opacity ramps slow + late; transform a touch earlier
+     * so motion + brightness feel separate. */
+    transition:
+      opacity 1.8s ease 0.7s,
+      transform 2.6s cubic-bezier(0.34, 1.0, 0.4, 1) 0.4s;
   }
 
   html[data-theme='light'] .sky-sun {
