@@ -305,7 +305,7 @@
         "surface"
       ],
       "locked": false,
-      "doc": "Promo accent. Bright on dark (gold-yellow against deep space), bright sun-orange on light (line/dot/icon accent). Pairs with --promo-text for legible TEXT.",
+      "doc": "Promo accent. Gold-yellow on dark (#f0c866 against deep space). On light, this is the BRIGHT sun-orange (--sun-warm) used for icons, dots, lines, glows, and the σ sigma. For TEXT use --promo-text.",
       "defaultValue": "#f0c866",
       "cells": [
         {
@@ -315,7 +315,7 @@
         },
         {
           "cell": "surface=light",
-          "value": "#e89048",
+          "value": "#f0a868",
           "selector": "[data-surface=\"light\"]"
         }
       ]
@@ -347,7 +347,7 @@
         "surface"
       ],
       "locked": false,
-      "doc": "Dimmed promo — secondary text when --promo-text is too loud, or hover-leave state.",
+      "doc": "Dimmed promo — secondary text, hover-leave state. Light: a touch deeper than --promo-text for tonal hierarchy.",
       "defaultValue": "#c4a24e",
       "cells": [
         {
@@ -357,7 +357,7 @@
         },
         {
           "cell": "surface=light",
-          "value": "#7a3010",
+          "value": "#8e3a14",
           "selector": "[data-surface=\"light\"]"
         }
       ]
@@ -389,7 +389,7 @@
         "surface"
       ],
       "locked": false,
-      "doc": "Readable text variant of --promo. Bright gold on dark (pops on dark bg), deep burnt orange on light (legible on pale bg). Use this anywhere promo color is applied to TEXT (color: var(--promo-text)). For dots/lines/borders/icons keep --promo.",
+      "doc": "Readable text variant of --promo. On dark: bright gold pops. On light: deep readable orange (--sun-text), calibrated to feel ORANGE not brown.",
       "defaultValue": "#f0c866",
       "cells": [
         {
@@ -399,7 +399,7 @@
         },
         {
           "cell": "surface=light",
-          "value": "#7a3010",
+          "value": "#b04518",
           "selector": "[data-surface=\"light\"]"
         }
       ]
@@ -443,6 +443,90 @@
           "cell": "surface=light",
           "value": "0 1px 4px rgba(0,0,0,0.08), 0 4px 14px rgba(0,0,0,0.05)",
           "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "sun-core": {
+      "kind": "color",
+      "axes": [],
+      "locked": false,
+      "doc": "Brightest sun center — near-white peach. Surface-invariant (sun is the same character across themes).",
+      "defaultValue": "#fff5d4",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#fff5d4",
+          "selector": ":root"
+        }
+      ]
+    },
+    "sun-deep": {
+      "kind": "color",
+      "axes": [],
+      "locked": false,
+      "doc": "Sun deep — copper orange. Sun outer body, rays' end-of-fade.",
+      "defaultValue": "#c47852",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#c47852",
+          "selector": ":root"
+        }
+      ]
+    },
+    "sun-mid": {
+      "kind": "color",
+      "axes": [],
+      "locked": false,
+      "doc": "Sun mid-tone — warm gold. The 'happy daylight' color.",
+      "defaultValue": "#ffd88a",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#ffd88a",
+          "selector": ":root"
+        }
+      ]
+    },
+    "sun-shadow": {
+      "kind": "color",
+      "axes": [],
+      "locked": false,
+      "doc": "Sun's underside shadow. Used for the smirk in the mascot SVG and very dark warm accents.",
+      "defaultValue": "#6a2818",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#6a2818",
+          "selector": ":root"
+        }
+      ]
+    },
+    "sun-text": {
+      "kind": "color",
+      "axes": [],
+      "locked": false,
+      "doc": "Deepest readable orange that still reads ORANGE (not brown). For TEXT in the promo hue against pale bg. Calibrated to feel like the sun's deepest warmth without sliding into brown territory.",
+      "defaultValue": "#b04518",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#b04518",
+          "selector": ":root"
+        }
+      ]
+    },
+    "sun-warm": {
+      "kind": "color",
+      "axes": [],
+      "locked": false,
+      "doc": "Sun warm-mid — honey orange. Mid-orange that reads as 'sun' not 'fire'.",
+      "defaultValue": "#f0a868",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#f0a868",
+          "selector": ":root"
         }
       ]
     }

@@ -35,20 +35,32 @@
   --ink-muted: #647080;
   /* Secondary text. Body copy, descriptions. */
   --ink-soft: #9dafc4;
-  /* Promo accent. Bright on dark (gold-yellow against deep space), bright sun-orange on light (line/dot/icon accent). Pairs with --promo-text for legible TEXT. */
+  /* Promo accent. Gold-yellow on dark (#f0c866 against deep space). On light, this is the BRIGHT sun-orange (--sun-warm) used for icons, dots, lines, glows, and the σ sigma. For TEXT use --promo-text. */
   --promo: #f0c866;
   /* Promo border ring — visible outline around badges, chips, version pills. */
   --promo-border: rgba(240, 200, 102, 0.25);
-  /* Dimmed promo — secondary text when --promo-text is too loud, or hover-leave state. */
+  /* Dimmed promo — secondary text, hover-leave state. Light: a touch deeper than --promo-text for tonal hierarchy. */
   --promo-dim: #c4a24e;
   /* Translucent promo wash for backgrounds and soft surfaces. */
   --promo-glow: rgba(240, 200, 102, 0.15);
-  /* Readable text variant of --promo. Bright gold on dark (pops on dark bg), deep burnt orange on light (legible on pale bg). Use this anywhere promo color is applied to TEXT (color: var(--promo-text)). For dots/lines/borders/icons keep --promo. */
+  /* Readable text variant of --promo. On dark: bright gold pops. On light: deep readable orange (--sun-text), calibrated to feel ORANGE not brown. */
   --promo-text: #f0c866;
   /* Accent-tinted glow shadow — used on focused/featured elements. */
   --shadow-accent: rgba(104, 152, 190, 0.15);
   /* Default card shadow. */
   --shadow-card: 0 1px 3px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.12);
+  /* Brightest sun center — near-white peach. Surface-invariant (sun is the same character across themes). */
+  --sun-core: #fff5d4;
+  /* Sun deep — copper orange. Sun outer body, rays' end-of-fade. */
+  --sun-deep: #c47852;
+  /* Sun mid-tone — warm gold. The 'happy daylight' color. */
+  --sun-mid: #ffd88a;
+  /* Sun's underside shadow. Used for the smirk in the mascot SVG and very dark warm accents. */
+  --sun-shadow: #6a2818;
+  /* Deepest readable orange that still reads ORANGE (not brown). For TEXT in the promo hue against pale bg. Calibrated to feel like the sun's deepest warmth without sliding into brown territory. */
+  --sun-text: #b04518;
+  /* Sun warm-mid — honey orange. Mid-orange that reads as 'sun' not 'fire'. */
+  --sun-warm: #f0a868;
 
   --tincture-foundation-version: "0.1.0";
 }
@@ -90,11 +102,11 @@
   --ink: #0a0f1a;
   --ink-muted: #4a5a70;
   --ink-soft: #2a3648;
-  --promo: #e89048;
+  --promo: #f0a868;
   --promo-border: rgba(232, 144, 72, 0.40);
-  --promo-dim: #7a3010;
+  --promo-dim: #8e3a14;
   --promo-glow: rgba(232, 144, 72, 0.20);
-  --promo-text: #7a3010;
+  --promo-text: #b04518;
   --shadow-accent: rgba(46, 96, 148, 0.2);
   --shadow-card: 0 1px 4px rgba(0,0,0,0.08), 0 4px 14px rgba(0,0,0,0.05);
 }
