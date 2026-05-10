@@ -480,7 +480,7 @@ export default function OrbitalPhysics() {
           cx="50%" cy="50%"
           r="38%"
           fill="none"
-          stroke="var(--border-subtle)"
+          stroke="var(--border)"
           stroke-width="1"
         />
         {/* Inner orbit ring */}
@@ -506,7 +506,7 @@ export default function OrbitalPhysics() {
           <line
             key={`tether-${def.id}`}
             ref={el => { if (el) tetherElsRef.current.set(def.id, el); }}
-            stroke="var(--accent-bright)"
+            stroke="var(--accent)"
             stroke-width="1"
             stroke-dasharray="4 4"
             style={{ display: 'none', opacity: 0, transition: 'opacity 0.15s' }}
@@ -557,7 +557,7 @@ export default function OrbitalPhysics() {
             fontFamily: "'Manrope', system-ui, sans-serif",
             fontSize: 'var(--text-xl)',
             fontWeight: 800,
-            color: 'var(--text-primary)',
+            color: 'var(--ink)',
             letterSpacing: '-0.01em',
           }}
         >
@@ -618,11 +618,11 @@ export default function OrbitalPhysics() {
                 display: 'grid',
                 placeItems: 'center',
                 borderRadius: '50%',
-                border: `1px solid ${isActive ? 'var(--border-accent)' : 'var(--border-subtle)'}`,
+                border: `1px solid ${isActive ? 'var(--border-accent)' : 'var(--border)'}`,
                 background: 'var(--surface-card-strong)',
                 backdropFilter: 'blur(8px)',
                 color: def.color === 'warm' ? 'var(--promo)' :
-                       def.color === 'muted' ? 'var(--text-muted)' : 'var(--accent-bright)',
+                       def.color === 'muted' ? 'var(--ink-muted)' : 'var(--accent)',
                 boxShadow: isActive ? '0 0 21px var(--shadow-accent-soft)' : 'none',
                 transition: 'border-color 0.2s, box-shadow 0.2s',
               }}
@@ -645,7 +645,7 @@ export default function OrbitalPhysics() {
                 fontFamily: 'var(--font-display)',
                 fontSize: isOuter ? '0.9rem' : '0.84rem',
                 fontWeight: 600,
-                color: 'var(--text-primary)',
+                color: 'var(--ink)',
                 whiteSpace: 'nowrap',
               }}
             >
@@ -657,7 +657,7 @@ export default function OrbitalPhysics() {
                 style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.7rem',
-                  color: 'var(--text-muted)',
+                  color: 'var(--ink-muted)',
                   whiteSpace: 'nowrap',
                   marginTop: '-2px',
                 }}
@@ -704,7 +704,7 @@ export default function OrbitalPhysics() {
           transform: 'translateX(-50%)',
           fontFamily: 'var(--font-mono)',
           fontSize: '0.7rem',
-          color: 'var(--text-muted)',
+          color: 'var(--ink-muted)',
           opacity: activeNode ? 0 : 0.6,
           transition: 'opacity 0.3s',
           whiteSpace: 'nowrap',

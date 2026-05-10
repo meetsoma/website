@@ -140,7 +140,7 @@ const total = allItems.length;
   }
 
   .subtitle {
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     font-size: var(--text-lg);
     max-width: var(--content-narrow);
     margin: 0 auto;
@@ -153,7 +153,7 @@ const total = allItems.length;
     margin-bottom: var(--space-2xl);
     padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
   }
 
@@ -164,17 +164,17 @@ const total = allItems.length;
     padding: var(--space-md) 16px;
     border-radius: var(--radius-md);
     background: var(--surface-accent-soft);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   .install-note {
     margin-top: var(--space-md);
     font-size: var(--body-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
   }
 
   .install-note a {
-    color: var(--accent-bright);
+    color: var(--accent);
     text-decoration: none;
   }
 
@@ -185,7 +185,7 @@ const total = allItems.length;
     margin-bottom: var(--section-gap);
     padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
   }
 
@@ -229,12 +229,12 @@ const total = allItems.length;
 
   .evo-desc {
     font-size: var(--body-secondary);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-relaxed);
   }
 
   .evo-arrow {
-    color: var(--text-muted);
+    color: var(--ink-muted);
     font-size: var(--text-xl);
     align-self: center;
     margin-top: -12px;
@@ -242,13 +242,13 @@ const total = allItems.length;
 
   .evo-note {
     font-size: var(--body-text);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     text-align: center;
     line-height: var(--leading-normal);
   }
 
   .evo-note em {
-    color: var(--accent-bright);
+    color: var(--accent);
     font-style: normal;
     font-weight: 500;
   }
@@ -274,9 +274,9 @@ const total = allItems.length;
     gap: var(--space-sm);
     padding: var(--space-sm) var(--space-lg);
     border-radius: var(--radius-full);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     font-family: var(--font-body);
     font-size: var(--label-text);
     cursor: pointer;
@@ -285,13 +285,13 @@ const total = allItems.length;
 
   :global(.pill:hover) {
     border-color: var(--border-accent);
-    color: var(--text-primary);
+    color: var(--ink);
   }
 
   :global(.pill.active) {
     background: var(--surface-accent-soft);
-    border-color: var(--accent-bright);
-    color: var(--accent-bright);
+    border-color: var(--accent);
+    color: var(--accent);
     font-weight: 500;
   }
 
@@ -310,9 +310,9 @@ const total = allItems.length;
   :global(.tier-select) {
     padding: var(--space-sm) var(--space-lg);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
-    color: var(--text-primary);
+    color: var(--ink);
     font-family: var(--font-body);
     font-size: var(--label-text);
     cursor: pointer;
@@ -328,20 +328,20 @@ const total = allItems.length;
     width: 100%;
     padding: var(--space-sm) var(--space-2xl) var(--space-sm) var(--space-lg);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
-    color: var(--text-primary);
+    color: var(--ink);
     font-family: var(--font-body);
     font-size: var(--label-text);
   }
 
   :global(.search-input::placeholder) {
-    color: var(--text-muted);
+    color: var(--ink-muted);
   }
 
   :global(.search-input:focus) {
     outline: none;
-    border-color: var(--accent-bright);
+    border-color: var(--accent);
   }
 
   :global(.search-clear) {
@@ -351,7 +351,7 @@ const total = allItems.length;
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: var(--text-muted);
+    color: var(--ink-muted);
     font-size: var(--text-lg);
     cursor: pointer;
     padding: 2px;
@@ -361,9 +361,9 @@ const total = allItems.length;
   :global(.reset-btn) {
     padding: var(--space-sm) var(--space-lg);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: transparent;
-    color: var(--text-muted);
+    color: var(--ink-muted);
     font-family: var(--font-body);
     font-size: var(--badge-text);
     cursor: pointer;
@@ -379,7 +379,7 @@ const total = allItems.length;
   :global(.hub-empty) {
     text-align: center;
     padding: var(--space-3xl) var(--space-xl);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     font-size: var(--body-secondary);
   }
 
@@ -391,7 +391,7 @@ const total = allItems.length;
     gap: var(--space-lg);
     margin-bottom: var(--space-xl);
     padding-bottom: var(--space-lg);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border);
   }
 
   :global(.section-glyph) {
@@ -407,14 +407,14 @@ const total = allItems.length;
 
   :global(.section-desc) {
     font-size: var(--body-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
   }
 
   :global(.section-count) {
     margin-left: auto;
     font-family: var(--font-mono);
     font-size: var(--label-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     background: var(--surface-interactive);
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-full);
@@ -431,12 +431,12 @@ const total = allItems.length;
     flex-direction: column;
     padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--ink);
     transition: all 0.2s ease;
-    border-left: 3px solid var(--card-accent, var(--border-subtle));
+    border-left: 3px solid var(--card-accent, var(--border));
   }
 
   :global(.hub-card:hover) {
@@ -462,12 +462,12 @@ const total = allItems.length;
   :global(.card-version) {
     font-family: var(--font-mono);
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
   }
 
   :global(.card-desc) {
     font-size: var(--body-text);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-normal);
     flex: 1;
     margin-bottom: var(--space-lg);
@@ -486,7 +486,7 @@ const total = allItems.length;
   }
 
   :global(.card-author) {
-    color: var(--text-muted);
+    color: var(--ink-muted);
     font-size: var(--badge-text);
     margin-top: var(--space-sm);
   }
@@ -500,7 +500,7 @@ const total = allItems.length;
   }
 
   :global(.card-tag) {
-    color: var(--accent-bright);
+    color: var(--accent);
     font-family: var(--font-mono);
     font-size: var(--badge-text);
     padding: 1px var(--space-sm);
@@ -520,7 +520,7 @@ const total = allItems.length;
 
   :global(.tier-core) {
     background: rgba(124, 178, 212, 0.2);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   :global(.tier-official) {
@@ -543,7 +543,7 @@ const total = allItems.length;
     text-align: center;
     padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-xl);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     margin-bottom: var(--section-gap);
   }
@@ -556,7 +556,7 @@ const total = allItems.length;
   }
 
   .contribute p {
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     font-size: var(--body-text);
     margin-bottom: var(--space-lg);
   }
@@ -565,8 +565,8 @@ const total = allItems.length;
     display: inline-block;
     padding: var(--space-md) var(--space-xl);
     border-radius: var(--radius-md);
-    background: var(--accent-bright);
-    color: var(--bg-deep);
+    background: var(--accent);
+    color: var(--bg);
     font-weight: 600;
     font-size: var(--body-secondary);
     text-decoration: none;

@@ -220,7 +220,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     height: 100vh;
     overflow-y: auto;
     padding: var(--space-xl) var(--space-xl);
-    border-right: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border);
     background: var(--surface-card);
     backdrop-filter: blur(12px);
     display: flex;
@@ -233,13 +233,13 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     align-items: center;
     gap: var(--space-md);
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--ink);
     font-family: var(--font-display);
     font-weight: 600;
     font-size: var(--body-text);
     margin-bottom: var(--space-xl);
     padding-bottom: var(--space-lg);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border);
   }
 
   .sidebar-brand img {
@@ -263,7 +263,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--text-muted);
+    color: var(--ink-muted);
     padding: var(--space-sm) var(--space-md);
     cursor: pointer;
     display: flex;
@@ -278,12 +278,12 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
   .nav-section-title::-webkit-details-marker { display: none; }
 
   .nav-section-title:hover {
-    color: var(--text-primary);
+    color: var(--ink);
     background: var(--surface-interactive);
   }
 
   .nav-section-title.section-active {
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   .nav-section-title span { flex: 1; }
@@ -316,37 +316,37 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     padding: 6px var(--space-md);
     border-radius: var(--radius-md);
     font-size: var(--body-secondary);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     text-decoration: none;
     transition: all 0.15s ease;
   }
 
   .nav-link:hover {
-    color: var(--text-primary);
+    color: var(--ink);
     background: var(--surface-interactive);
   }
 
   .nav-link.active {
-    color: var(--accent-bright);
+    color: var(--accent);
     background: var(--surface-accent-soft);
     font-weight: 500;
   }
 
   .sidebar-footer {
     padding-top: var(--space-lg);
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border);
     font-size: var(--label-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     display: flex;
     gap: var(--space-sm);
   }
 
   .sidebar-footer a {
-    color: var(--accent-bright);
+    color: var(--accent);
     text-decoration: none;
   }
   .sidebar-footer a:hover { color: var(--moon-bright); }
-  .sep { color: var(--text-muted); }
+  .sep { color: var(--ink-muted); }
 
   /* Content */
   .docs-content {
@@ -359,7 +359,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
   .docs-header {
     margin-bottom: var(--space-2xl);
     padding-bottom: var(--space-xl);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border);
   }
 
   .docs-header h1 {
@@ -370,7 +370,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
   }
 
   .docs-description {
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     font-size: var(--body-text);
   }
 
@@ -396,7 +396,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--text-muted);
+    color: var(--ink-muted);
     margin-bottom: var(--space-lg);
   }
 
@@ -404,7 +404,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     list-style: none;
     padding: 0;
     margin: 0;
-    border-left: 1px solid var(--border-subtle);
+    border-left: 1px solid var(--border);
   }
 
   .toc-sidebar :global(.toc-item) {
@@ -419,7 +419,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     display: block;
     padding: var(--space-xs) 0 var(--space-xs) var(--space-lg);
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     text-decoration: none;
     transition: all 0.15s;
     border-left: 2px solid transparent;
@@ -428,19 +428,19 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
   }
 
   .toc-sidebar :global(.toc-link:hover) {
-    color: var(--text-primary);
+    color: var(--ink);
   }
 
   .toc-sidebar :global(.toc-link.active) {
-    color: var(--accent-bright);
-    border-left-color: var(--accent-bright);
+    color: var(--accent);
+    border-left-color: var(--accent);
   }
 
   /* Prose styling */
   .prose {
     font-size: var(--body-secondary);
     line-height: var(--leading-loose);
-    color: var(--text-primary);
+    color: var(--ink);
   }
 
   .prose :global(h2) {
@@ -450,7 +450,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     margin-top: var(--space-3xl);
     margin-bottom: var(--space-lg);
     padding-bottom: var(--space-md);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border);
   }
 
   .prose :global(h3) {
@@ -477,14 +477,14 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     padding: 2px var(--space-sm);
     border-radius: var(--radius-sm);
     background: var(--surface-accent-soft);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   .prose :global(pre) {
     position: relative;
     padding: var(--space-xl);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card-strong) !important;
     overflow-x: auto;
     margin: var(--space-xl) 0;
@@ -493,7 +493,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
   .prose :global(pre code) {
     padding: 0;
     background: none;
-    color: var(--text-primary);
+    color: var(--ink);
     font-size: var(--label-text);
     line-height: var(--leading-relaxed);
   }
@@ -504,10 +504,10 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     top: var(--space-md);
     right: var(--space-md);
     padding: var(--space-sm);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
     background: var(--surface-card);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     cursor: pointer;
     opacity: 0;
     transition: all 0.15s;
@@ -519,7 +519,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
   }
 
   :global(.code-copy-btn:hover) {
-    color: var(--accent-bright);
+    color: var(--accent);
     border-color: var(--border-accent);
   }
 
@@ -533,18 +533,18 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
   .prose :global(th) {
     text-align: left;
     padding: var(--space-md) var(--space-lg);
-    border-bottom: 2px solid var(--border-subtle);
+    border-bottom: 2px solid var(--border);
     font-family: var(--font-display);
     font-weight: 600;
     font-size: var(--label-text);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--text-muted);
+    color: var(--ink-muted);
   }
 
   .prose :global(td) {
     padding: var(--space-md) var(--space-lg);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border);
   }
 
   .prose :global(ul), .prose :global(ol) {
@@ -555,16 +555,16 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
   .prose :global(li) { margin-bottom: var(--space-sm); }
 
   .prose :global(blockquote) {
-    border-left: 3px solid var(--accent-bright);
+    border-left: 3px solid var(--accent);
     padding: var(--space-lg) var(--space-xl);
     margin: var(--space-xl) 0;
     background: var(--surface-accent-soft);
     border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    color: var(--text-secondary);
+    color: var(--ink-soft);
   }
 
   .prose :global(a) {
-    color: var(--accent-bright);
+    color: var(--accent);
     text-decoration: none;
     border-bottom: 1px solid var(--border-accent);
     transition: color 0.2s;
@@ -579,7 +579,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     gap: var(--space-lg);
     margin-top: var(--space-3xl);
     padding-top: var(--space-xl);
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border);
   }
 
   .pager-link {
@@ -588,10 +588,10 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     gap: var(--space-sm);
     padding: var(--space-lg) var(--space-xl);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--ink);
     transition: all 0.2s;
     min-width: 0;
   }
@@ -606,7 +606,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
 
   .pager-label {
     font-size: var(--badge-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
@@ -615,7 +615,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     font-family: var(--font-display);
     font-weight: 600;
     font-size: var(--body-secondary);
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   /* Mobile */
@@ -630,7 +630,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
       width: 100%;
       height: auto;
       border-right: none;
-      border-bottom: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border);
     }
     .docs-content { padding: var(--space-xl) var(--space-xl) var(--space-3xl); }
   }

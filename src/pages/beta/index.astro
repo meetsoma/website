@@ -139,7 +139,7 @@ const description = "Soma is free to use. Register for source access to read the
         <li><strong>Boot customisation</strong> — the boot sequence is hardcoded. We're extracting it into a user-editable MAP.</li>
       </ul>
       <p class="section-desc" style="margin-top: var(--space-lg);">
-        Full progress on the <a href="/roadmap" style="color: var(--accent-bright);">roadmap</a>.
+        Full progress on the <a href="/roadmap" style="color: var(--accent);">roadmap</a>.
       </p>
     </section>
 
@@ -192,7 +192,7 @@ const description = "Soma is free to use. Register for source access to read the
   .subtitle {
     font-family: var(--font-body);
     font-size: var(--text-lg);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     max-width: 34rem;
     margin: var(--space-md) auto 0;
     line-height: var(--leading-relaxed);
@@ -205,7 +205,7 @@ const description = "Soma is free to use. Register for source access to read the
   .section-desc {
     font-family: var(--font-body);
     font-size: var(--body-text);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-relaxed);
     max-width: 38rem;
   }
@@ -213,7 +213,7 @@ const description = "Soma is free to use. Register for source access to read the
   .section-desc code {
     font-family: var(--font-mono);
     font-size: var(--label-text);
-    color: var(--accent-bright);
+    color: var(--accent);
     background: var(--surface-interactive);
     padding: 2px var(--space-sm);
     border-radius: var(--radius-sm);
@@ -235,20 +235,20 @@ const description = "Soma is free to use. Register for source access to read the
     font-family: var(--font-display);
     font-size: var(--text-lg);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--ink);
     margin: 0 0 var(--space-xs);
   }
 
   .install-left p {
     font-size: var(--body-secondary);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     margin: 0;
   }
 
   .install-right code {
     font-family: var(--font-mono);
     font-size: var(--body-text);
-    color: var(--accent-bright);
+    color: var(--accent);
     background: var(--surface-interactive);
     padding: var(--space-sm) var(--space-lg);
     border-radius: var(--radius-md);
@@ -265,7 +265,7 @@ const description = "Soma is free to use. Register for source access to read the
   .tier-card {
     padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
     transition: all 0.25s ease;
     animation: fadeUp 0.6s ease-out both;
@@ -287,14 +287,14 @@ const description = "Soma is free to use. Register for source access to read the
   .tier-icon {
     display: flex;
     align-items: center;
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 
   .tier-name {
     font-family: var(--font-display);
     font-size: var(--text-lg);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--ink);
     flex: 1;
     margin: 0;
   }
@@ -310,18 +310,18 @@ const description = "Soma is free to use. Register for source access to read the
   }
 
   .tier-badge.free { color: var(--success); border-color: var(--success); }
-  .tier-badge.contributor { color: var(--accent-bright); border-color: var(--accent-bright); }
+  .tier-badge.contributor { color: var(--accent); border-color: var(--accent); }
   .tier-badge.sponsor { color: var(--promo); border-color: var(--promo); }
 
   .tier-desc {
     font-size: var(--body-secondary);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-relaxed);
     margin: 0;
   }
 
   .tier-desc a {
-    color: var(--accent-bright);
+    color: var(--accent);
     text-decoration: none;
   }
 
@@ -331,7 +331,7 @@ const description = "Soma is free to use. Register for source access to read the
   .form-card {
     padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card);
   }
 
@@ -343,7 +343,7 @@ const description = "Soma is free to use. Register for source access to read the
     display: block;
     font-family: var(--font-body);
     font-size: var(--label-text);
-    color: var(--text-muted);
+    color: var(--ink-muted);
     margin-bottom: var(--space-sm);
   }
 
@@ -353,9 +353,9 @@ const description = "Soma is free to use. Register for source access to read the
     width: 100%;
     padding: var(--space-md) var(--space-lg);
     background: var(--surface-interactive);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    color: var(--text-primary);
+    color: var(--ink);
     font-size: var(--body-text);
     font-family: inherit;
     transition: border-color 0.15s ease;
@@ -370,14 +370,14 @@ const description = "Soma is free to use. Register for source access to read the
   .form-field select:focus,
   .form-field textarea:focus {
     outline: none;
-    border-color: var(--accent-bright);
+    border-color: var(--accent);
   }
 
   .submit-btn {
     width: 100%;
     padding: var(--space-lg);
     background: var(--accent-mid);
-    color: var(--text-primary);
+    color: var(--ink);
     border: none;
     border-radius: var(--radius-md);
     font-size: var(--body-text);
@@ -392,13 +392,13 @@ const description = "Soma is free to use. Register for source access to read the
   /* ── Steps ── */
   .steps-list {
     padding-left: var(--space-xl);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: 2;
     font-size: var(--body-text);
   }
 
   .steps-list li::marker {
-    color: var(--accent-bright);
+    color: var(--accent);
     font-weight: 600;
   }
 
@@ -417,19 +417,19 @@ const description = "Soma is free to use. Register for source access to read the
     margin-bottom: var(--space-lg);
   }
 
-  .coming-icon { color: var(--accent-bright); display: flex; }
+  .coming-icon { color: var(--accent); display: flex; }
 
   .coming-head h3 {
     font-family: var(--font-display);
     font-size: var(--text-lg);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--ink);
     margin: 0;
   }
 
   .coming-soon-card > p {
     font-size: var(--body-text);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-relaxed);
     margin: 0 0 var(--space-lg);
   }
@@ -443,8 +443,8 @@ const description = "Soma is free to use. Register for source access to read the
   .hint-tag {
     font-family: var(--font-mono);
     font-size: var(--badge-text);
-    color: var(--text-muted);
-    border: 1px solid var(--border-subtle);
+    color: var(--ink-muted);
+    border: 1px solid var(--border);
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-full);
   }
@@ -457,15 +457,15 @@ const description = "Soma is free to use. Register for source access to read the
 
   .gaps-list li {
     padding: var(--space-md) 0;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border);
     font-size: var(--body-text);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     line-height: var(--leading-relaxed);
   }
 
   .gaps-list li:last-child { border-bottom: none; }
-  .gaps-list li strong { color: var(--text-primary); }
-  .gaps-list li a { color: var(--accent-bright); text-decoration: none; }
+  .gaps-list li strong { color: var(--ink); }
+  .gaps-list li a { color: var(--accent); text-decoration: none; }
   .gaps-list li a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
@@ -498,7 +498,7 @@ const description = "Soma is free to use. Register for source access to read the
     }
 
     ghCheck.textContent = '...';
-    ghCheck.style.color = 'var(--text-muted)';
+    ghCheck.style.color = 'var(--ink-muted)';
 
     ghTimer = setTimeout(() => {
       const img = new Image();
@@ -546,7 +546,7 @@ const description = "Soma is free to use. Register for source access to read the
       status.style.display = 'block';
       if (data.success) {
         status.innerHTML = data.issueUrl
-          ? '✓ ' + data.message + '<br><a href="' + data.issueUrl + '" target="_blank" rel="noopener" style="color: var(--accent-bright); text-decoration: underline;">Track your request →</a>'
+          ? '✓ ' + data.message + '<br><a href="' + data.issueUrl + '" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Track your request →</a>'
           : '✓ ' + data.message;
         status.style.color = '#4ade80';
         form.reset();

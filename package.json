@@ -7,7 +7,9 @@
     "prebuild": "bash ../../.soma/amps/scripts/soma-verify-islands.sh . || true",
     "build": "node scripts/fetch-community.mjs && astro build && npx pagefind --site dist",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "tincture:codegen": "node /Users/user/Gravicity/personal/tincture-css/src/cli/codegen-v2.mjs --registry src/styles/tincture/registry.json --out src/styles/tincture/_generated",
+    "tincture:scan": "node /Users/user/Gravicity/personal/tincture-css/src/cli/scan-surfaces.mjs --root src"
   },
   "dependencies": {
     "@astrojs/preact": "4",

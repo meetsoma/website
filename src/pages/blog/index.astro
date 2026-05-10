@@ -160,14 +160,14 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
     font-size: clamp(2rem, 6vw, 2.625rem);
     font-weight: 800;
     margin-bottom: var(--space-lg);
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-bright) 100%);
+    background: linear-gradient(135deg, var(--ink) 0%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .subtitle {
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     font-size: var(--text-lg);
     max-width: var(--content-narrow);
     margin: 0 auto 12px;
@@ -175,7 +175,7 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
   }
 
   .stats {
-    color: var(--text-muted);
+    color: var(--ink-muted);
     font-size: 0.82rem;
     font-family: var(--font-mono);
     letter-spacing: 0.02em;
@@ -203,14 +203,14 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
     border-radius: 999px;
     background: rgba(22, 27, 34, 0.65);
     border: 1px solid rgba(124, 178, 212, 0.18);
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     cursor: pointer;
     transition: all 0.18s ease;
     white-space: nowrap;
   }
   .filter-chip:hover {
     border-color: rgba(124, 178, 212, 0.5);
-    color: var(--text-primary);
+    color: var(--ink);
     background: rgba(100, 148, 190, 0.15);
   }
   .filter-chip.active {
@@ -220,17 +220,17 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
   }
   .filter-count { display: inline-block; margin-left: 4px; opacity: 0.6; font-size: 0.72rem; }
 
-  .filter-empty { text-align: center; color: var(--text-muted); margin: 60px 0; font-style: italic; }
+  .filter-empty { text-align: center; color: var(--ink-muted); margin: 60px 0; font-style: italic; }
   .reset-filter {
-    background: none; border: none; color: var(--accent-bright);
+    background: none; border: none; color: var(--accent);
     cursor: pointer; font-family: inherit; font-size: inherit;
     text-decoration: underline;
   }
 
   .empty-state { text-align: center; padding: 100px var(--space-xl); }
-  .empty-icon { color: var(--accent-bright); margin-bottom: 18px; animation: pulse 3s ease-in-out infinite; }
+  .empty-icon { color: var(--accent); margin-bottom: 18px; animation: pulse 3s ease-in-out infinite; }
   @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-  .empty-text { color: var(--text-muted); font-size: var(--body-text); font-style: italic; }
+  .empty-text { color: var(--ink-muted); font-size: var(--body-text); font-style: italic; }
 
   /* ── masonry grid ───────────────────────────────────── */
   /* CSS columns for true masonry. Cards have break-inside: avoid so they
@@ -251,14 +251,14 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
     break-inside: avoid;
     display: block;
     border-radius: 14px;
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border);
     background: var(--surface-card-strong);
     transition: all 0.22s ease;
     overflow: hidden;
     margin-bottom: 20px;
   }
   .m-card:hover {
-    border-color: var(--accent-bright);
+    border-color: var(--accent);
     transform: translateY(-3px);
     box-shadow: 0 12px 36px var(--shadow-accent-soft);
   }
@@ -305,7 +305,7 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
   .m-meta {
     display: flex; align-items: center; gap: 7px;
     font-size: 0.72rem;
-    color: var(--text-muted);
+    color: var(--ink-muted);
     font-family: var(--font-mono);
     flex-wrap: wrap;
   }
@@ -316,7 +316,7 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
     padding: 2px 7px;
     border-radius: 5px;
     background: var(--surface-accent-soft);
-    color: var(--accent-bright);
+    color: var(--accent);
     letter-spacing: 0.05em;
   }
   .author-badge[data-role="human"] {
@@ -330,15 +330,15 @@ const firstPostDateStr = firstPostDate ? formatDate(firstPostDate) : '';
     font-weight: 700;
     line-height: 1.3;
     margin: 4px 0 2px;
-    color: var(--text-primary);
+    color: var(--ink);
     transition: color 0.18s;
   }
-  .m-card:hover .m-title { color: var(--accent-bright); }
+  .m-card:hover .m-title { color: var(--accent); }
 
   .m-desc {
     font-size: 0.85rem;
     line-height: 1.5;
-    color: var(--text-secondary);
+    color: var(--ink-soft);
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
