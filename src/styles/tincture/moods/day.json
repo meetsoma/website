@@ -1,0 +1,34 @@
+{
+  "id": "day",
+  "name": "Day",
+  "doc": "Clear daytime sky. Rich blue zenith, pale horizon, clouds lit white from above by overhead sun. No warmth, just pure sky.",
+  "base": "default",
+  "tokens": {
+    "bg": {
+      "values": { "surface=light": "#7ab8d8" }
+    },
+    "bg-card": {
+      "values": { "surface=light": "#eef7fc" }
+    },
+    "bg-elev": {
+      "values": { "surface=light": "#d0e8f4" }
+    },
+    "accent": {
+      "values": { "surface=light": "#0a5090" }
+    }
+  },
+  "sky": {
+    "top":         "#0e5cb0",
+    "upper":       "#1a78c8",
+    "mid":         "#3a98d8",
+    "transition":  "#5aaee0",
+    "warm-start":  "#8acce8",
+    "warm":        "#b8dff0",
+    "horizon":     "#d8eef8",
+    "bleed-color": "rgba(180, 220, 245, 0.35)",
+    "bleed-mid":   "rgba(160, 210, 238, 0.18)",
+    "cloud-low":   "rgba(240, 248, 255, 0.75)",
+    "cloud-mid":   "rgba(200, 230, 248, 0.40)",
+    "cloud-high":  "rgba(160, 205, 232, 0.25)"
+  }
+}

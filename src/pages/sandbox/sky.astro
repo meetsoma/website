@@ -33,8 +33,14 @@ import Layout from '../../layouts/Layout.astro';
   </div>
 
   <main class="sandbox-main">
+    <!-- Mood switcher -->
+    <div class="mood-row" id="mood-row">
+      <button class="mood-btn active" data-mood="dawn-dusk">Dawn / Dusk</button>
+      <button class="mood-btn" data-mood="day">Day</button>
+    </div>
+
     <header class="sandbox-hero">
-      <h1>cloud cover at dawn</h1>
+      <h1 id="sandbox-title">cloud cover at dawn</h1>
       <p class="sandbox-lead">
         A sky that breathes. Pale blue overcast with thin wisps of cirrus,
         a sun just out of frame casting warmth from one side. Toggle theme
@@ -99,85 +105,7 @@ import Layout from '../../layouts/Layout.astro';
    *   .sb-cloud-haze    — horizon warm band (sun leaking through overcast)
    * ==========================================================================*/
 
-  /* ── 1. SKY GRADIENT — real zenith→horizon gradient ──────────────────────
-   * Overcast dawn: blue comes through cloud layer diffused — saturated but
-   * not blazing. Warm amber bleeds in from bottom-right (sun below horizon). */
-  html[data-theme='light'] body:has(.sandbox-main) {
-    background: none !important;
-  }
-  html[data-theme='light'] body:has(.sandbox-main)::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background:
-      /* Sunset-lit cloud layer — bleeds up from bottom.
-       * Reference: Pexels twilight photo — orange-red cloud undersides,
-       * deep blue sky above, crescent moon visible mid-sky. */
-      radial-gradient(
-        ellipse 90% 60% at 50% 100%,
-        rgba(190, 55, 20, 0.55) 0%,
-        rgba(160, 40, 15, 0.30) 28%,
-        rgba(120, 30, 12, 0.10) 52%,
-        transparent 72%
-      ),
-      /* Warm side-light from right (sun setting there) */
-      radial-gradient(
-        ellipse 50% 70% at 105% 80%,
-        rgba(210, 80, 25, 0.40) 0%,
-        rgba(180, 60, 20, 0.15) 40%,
-        transparent 68%
-      ),
-      /* Sky: deep blue zenith → clear blue mid → gives way to warm at bottom */
-      linear-gradient(
-        to bottom,
-        #1a4a80 0%,    /* zenith — deep twilight blue (reference: #1B4A7A) */
-        #2a6aa8 12%,   /* upper sky */
-        #3e82be 26%,   /* mid-upper */
-        #5898cc 40%,   /* clear blue (crescent moon zone) */
-        #72a8cc 52%,   /* start of transition */
-        #8898a8 62%,   /* neutral — blue gives way */
-        #8a6050 72%,   /* warm starts dominating */
-        #783028 84%,   /* deep sunset red-orange */
-        #602018 100%   /* horizon — deep ember */
-      );
-  }
-
-  /* Card/surface tokens for this palette */
-  html[data-theme='light'] body:has(.sandbox-main) {
-    /* Tincture token overrides — tuned for saturated blue sky bg */
-    --bg:      #92c0da;
-    --bg-card: #e4f2f9;   /* cloud-white, clearly lighter than sky */
-    --bg-elev: #cce2f0;   /* cloud shadow — slightly deeper */
-    --ink:          #081624;
-    --ink-soft:     #172e48;
-    --ink-muted:    #2e4d6a;
-    --accent:       #1555a0;
-    --border:       rgba(8, 22, 36, 0.14);
-    --border-accent: rgba(21, 85, 160, 0.38);
-    --shadow-accent: rgba(21, 85, 160, 0.20);
-    --shadow-card:  0 2px 10px rgba(8,22,36,0.12), 0 8px 24px rgba(8,22,36,0.08);
-
-    /* Legacy aliases */
-    --accent-bright: var(--accent);
-    --border-subtle: var(--border);
-    --shadow-accent-soft: var(--shadow-accent);
-    --shadow-accent-mid: rgba(21, 85, 160, 0.30);
-    --moon-bright:  #2870b0;
-    --moon-glow:    rgba(21, 85, 160, 0.28);
-    --warm-bright:  #c0682a;
-    --logo-glow:    rgba(21, 85, 160, 0.24);
-    --logo-glow-hover: rgba(21, 85, 160, 0.42);
-
-    /* Glass-card feel: white-blue at high opacity so cards pop from the sky */
-    --surface-card:              rgba(232, 246, 252, 0.90);
-    --surface-card-strong:       rgba(240, 250, 255, 0.97);
-    --surface-interactive:       rgba(8, 22, 36, 0.07);
-    --surface-interactive-hover: rgba(8, 22, 36, 0.13);
-    --surface-accent-soft:       rgba(21, 85, 160, 0.10);
-  }
-
-  /* ── 2. EXISTING GLOW ORBS — mid-altitude cloud layers ───────────────────
+  /* ── SKY GLOW ORBS — mid-altitude cloud layers ───────────────────
    * Repurposed from Layout's circular nebula orbs into horizontal cloud streaks.
    * orb-1 = altostratus (mid-high)  orb-2 = stratus (mid)  orb-3 = sunlit edge */
   html[data-theme='light'] body:has(.sandbox-main) .glow-orbs {
@@ -189,8 +117,8 @@ import Layout from '../../layouts/Layout.astro';
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-1 {
     /* Upper cloud band — still blue, mid-high altitude. */
     background: radial-gradient(ellipse,
-      rgba(70, 110, 155, 0.30) 0%,
-      rgba(50, 90, 138, 0.08) 52%,
+      var(--sky-cloud-high) 0%,
+      rgba(50, 90, 138, 0.06) 52%,
       transparent 78%);
     transform: scale(4.2, 0.15) rotate(-4deg);
     animation-duration: 44s;
@@ -199,8 +127,8 @@ import Layout from '../../layouts/Layout.astro';
   html[data-theme='light'] body:has(.sandbox-main) .glow-orb-2 {
     /* Mid cloud band — beginning to pick up warm tones from below. */
     background: radial-gradient(ellipse,
-      rgba(120, 80, 55, 0.28) 0%,
-      rgba(90, 55, 35, 0.08) 52%,
+      var(--sky-cloud-mid) 0%,
+      rgba(90, 55, 35, 0.06) 52%,
       transparent 80%);
     transform: scale(4.5, 0.22) rotate(4deg);
     animation-duration: 32s;
@@ -210,8 +138,8 @@ import Layout from '../../layouts/Layout.astro';
     /* Low cloud — fully lit by sunset. Orange-red undersides like the reference.
      * Positioned at ~bottom third of screen. */
     background: radial-gradient(ellipse,
-      rgba(195, 60, 22, 0.42) 0%,
-      rgba(165, 42, 15, 0.14) 45%,
+      var(--sky-cloud-low) 0%,
+      rgba(90, 30, 10, 0.10) 45%,
       transparent 72%);
     transform: scale(3.2, 0.35) rotate(-8deg);
     animation-duration: 22s;
@@ -395,7 +323,64 @@ import Layout from '../../layouts/Layout.astro';
   }
 </style>
 
+<script>
+  // Mood switcher — updates data-mood on <html> and localStorage
+  function initMoodSwitcher() {
+    const btns = document.querySelectorAll('.mood-btn');
+    const title = document.getElementById('sandbox-title');
+    const TITLES: Record<string, string> = {
+      'dawn-dusk': 'cloud cover at dawn',
+      'day':       'clear day',
+    };
+    function setMood(mood: string) {
+      document.documentElement.dataset.mood = mood;
+      localStorage.setItem('soma-sky-mood', mood);
+      btns.forEach(b => (b as HTMLElement).classList.toggle('active', (b as HTMLElement).dataset.mood === mood));
+      if (title) title.textContent = TITLES[mood] || mood;
+    }
+    btns.forEach(btn => {
+      (btn as HTMLElement).addEventListener('click', () => setMood((btn as HTMLElement).dataset.mood || 'dawn-dusk'));
+    });
+    // Sync to current state
+    const current = document.documentElement.dataset.mood || 'dawn-dusk';
+    setMood(current);
+  }
+  initMoodSwitcher();
+  document.addEventListener('astro:page-load', initMoodSwitcher);
+</script>
+
 <style>
+  /* Mood switcher */
+  .mood-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  .mood-btn {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-accent);
+    background: var(--surface-card);
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .mood-btn.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .mood-btn:hover:not(.active) {
+    color: var(--ink);
+    border-color: var(--accent);
+  }
+
   .sandbox-main {
     max-width: 980px;
     margin: 0 auto;
