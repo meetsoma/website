@@ -295,6 +295,39 @@ const schemaData = jsonLd || defaultJsonLd;
         transition: background-color 0.8s ease, color 0.6s ease;
       }
 
+      /* Global heading typography — one source of truth.
+       * Every h1/h2/h3/h4 across every page picks up the display family +
+       * weight + leading from these rules. Per-page CSS only needs to
+       * specify alignment / margin / size deltas, not redeclare typography.
+       *
+       * Add a per-page override only when a page genuinely needs a
+       * different style (e.g. hero title's clamp() size). Body text
+       * inherits font-family from `body`, so paragraphs / spans / li
+       * are already right. */
+      h1, h2, h3, h4 {
+        font-family: var(--font-display);
+        color: var(--ink);
+        line-height: var(--leading-tight);
+        letter-spacing: -0.02em;
+      }
+      h1 {
+        font-weight: var(--weight-display);
+        font-size: clamp(2.25rem, 6vw, 3.5rem);
+        letter-spacing: -0.025em;
+      }
+      h2 {
+        font-weight: var(--weight-bold);
+        font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+      }
+      h3 {
+        font-weight: var(--weight-semibold);
+        font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+      }
+      h4 {
+        font-weight: var(--weight-semibold);
+        font-size: var(--text-lg);
+      }
+
       /* Theme transition on all surfaces */
       *:not(script):not(style) {
         transition:
