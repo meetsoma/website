@@ -403,24 +403,35 @@ const schemaData = jsonLd || defaultJsonLd;
         50% { transform: translate(-35px, 25px); }
       }
 
-      /* Cycle 17 (s01-7b287c): glow orbs become atmospheric cloud-puffs in
-       * light mode — the daytime counterpart to the dark theme's nebula glows.
-       * Screen blend doesn't work on light bg (lightens transparent to invisible);
-       * multiply darkens the bg in tinted patches, simulating cloud cover.
-       * Palette: warm sun-haze (orb 1), cool overcast (orb 2), pearl (orb 3). */
-      html[data-theme='light'] .glow-orbs { opacity: 0.55; }
-      html[data-theme='light'] .glow-orb { mix-blend-mode: multiply; }
+      /* Cycle 17 (s01-7b287c) refined per Curtis: "more blue and the whispy
+       * touch of clouds a bit like the highlights in dark but different
+       * shaped thin wide ovalish."
+       *
+       * Glow orbs become WISPY HORIZONTAL CLOUD STREAKS in light mode.
+       * Where dark theme has circular nebula orbs, light theme stretches them
+       * into thin wide ellipses (like cirrus clouds drawn across the sky).
+       * Bluer palette overall — cool-dominant with one rare warm wisp. */
+      html[data-theme='light'] .glow-orbs { opacity: 0.65; }
+      html[data-theme='light'] .glow-orb {
+        mix-blend-mode: multiply;
+        /* Stretch circles into wide ellipses — wispy cloud streaks */
+        border-radius: 50%;
+        transform: scale(1.6, 0.35) rotate(-8deg);
+      }
       html[data-theme='light'] .glow-orb-1 {
-        /* warm sun haze — morning peach */
-        background: radial-gradient(circle, rgba(232, 168, 124, 0.16) 0%, transparent 70%);
+        /* main blue cirrus — upper sky */
+        background: radial-gradient(ellipse, rgba(46, 96, 148, 0.16) 0%, rgba(46, 96, 148, 0.04) 50%, transparent 75%);
+        transform: scale(1.7, 0.3) rotate(-6deg);
       }
       html[data-theme='light'] .glow-orb-2 {
-        /* cool overcast cumulus */
-        background: radial-gradient(circle, rgba(46, 96, 148, 0.12) 0%, transparent 70%);
+        /* deeper blue mid — wider streak */
+        background: radial-gradient(ellipse, rgba(46, 96, 148, 0.14) 0%, rgba(46, 96, 148, 0.03) 55%, transparent 80%);
+        transform: scale(2.0, 0.32) rotate(4deg);
       }
       html[data-theme='light'] .glow-orb-3 {
-        /* soft pearl drift */
-        background: radial-gradient(circle, rgba(132, 148, 170, 0.10) 0%, transparent 70%);
+        /* warm wisp — sun-touched cloud edge, RARE accent */
+        background: radial-gradient(ellipse, rgba(232, 168, 124, 0.10) 0%, rgba(232, 168, 124, 0.02) 60%, transparent 80%);
+        transform: scale(1.5, 0.28) rotate(-12deg);
       }
 
 
@@ -518,15 +529,17 @@ const schemaData = jsonLd || defaultJsonLd;
       // Cycle 17 (s01-7b287c): theme toggle as a CINEMATIC TIME-LAPSE.
       // Curtis's vision: "stars could slide out of view and in comes the
       // orange/blue then daylight hue of the sky as if time just
-      // fast-forwarded to day." Replaces the prior snap-CSS-class swap with
-      // a GSAP-orchestrated 3-phase sequence (with reverse for sunset).
+      // fast-forwarded to day." Refactored per gsap-skills (gsap-core +
+      // gsap-timeline) — uses autoAlpha (not opacity), transform aliases,
+      // gsap.matchMedia for reduced-motion, position parameter with labels.
       //
-      // Phase 1 (0–0.4s): stars fade + drift up (dispatching event for canvas)
-      // Phase 2 (0.3–1.0s): horizon glow sweeps (sunrise: warm; sunset: indigo)
-      // Phase 3 (0.7–1.4s): theme palette swaps; sun/moon disk slides into place
-      // Settle (1.4–1.8s): horizon glow fades back to idle hint
+      // Timeline labels:
+      //   stars-buzz   (0.0): stars warp out / settle in (lateral + vertical drift boost)
+      //   sky-sweep    (0.2): horizon glow sweeps from one side, sun spins in/out
+      //   palette-swap (0.7): data-theme swap mid-sequence, dispatch settled event
+      //   settle       (1.0): horizon clears inline, idle CSS rule resumes
       //
-      // Honors prefers-reduced-motion (instant swap, no orchestration).
+      // Honors prefers-reduced-motion via gsap.matchMedia.
       import { gsap } from 'gsap';
 
       const KEY = 'soma-theme';
@@ -550,21 +563,6 @@ const schemaData = jsonLd || defaultJsonLd;
         newToggle.addEventListener('click', handleToggle);
       }
 
-      function handleToggle() {
-        if (transitioning) return;
-        const root = document.documentElement;
-        const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        if (reduced) {
-          // Instant swap — no cinematic
-          applyTheme(next);
-          return;
-        }
-
-        runTransition(next);
-      }
-
       function applyTheme(theme: string) {
         const root = document.documentElement;
         root.dataset.theme = theme;
@@ -572,8 +570,28 @@ const schemaData = jsonLd || defaultJsonLd;
         const toggle = document.querySelector('.theme-toggle');
         toggle?.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
         localStorage.setItem(KEY, theme);
-        // Notify other components (Starfield, etc.) the static theme is settled
         window.dispatchEvent(new CustomEvent('soma-theme', { detail: { theme } }));
+      }
+
+      function handleToggle() {
+        if (transitioning) return;
+        const root = document.documentElement;
+        const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+
+        // gsap.matchMedia handles reduced-motion declaratively per skill guidance.
+        const mm = gsap.matchMedia();
+        mm.add({
+          fullCinematic: '(prefers-reduced-motion: no-preference)',
+          reduced: '(prefers-reduced-motion: reduce)'
+        }, (ctx) => {
+          const { reduced } = ctx.conditions!;
+          if (reduced) {
+            applyTheme(next);
+          } else {
+            runTransition(next);
+          }
+          return () => mm.revert();
+        });
       }
 
       function runTransition(toTheme: string) {
@@ -582,53 +600,56 @@ const schemaData = jsonLd || defaultJsonLd;
         const horizon = document.querySelector('.sky-horizon') as HTMLElement | null;
         const isSunrise = toTheme === 'light';
 
-        // Sunrise: deep indigo → red → orange → pale yellow at horizon.
-        // Sunset: pale yellow → red/orange → deep indigo.
-        const dawnGradient = isSunrise
-          ? 'radial-gradient(ellipse 90% 55% at 50% 100%, rgba(255, 196, 130, 0.55) 0%, rgba(232, 124, 90, 0.4) 25%, rgba(124, 80, 140, 0.3) 55%, rgba(46, 80, 124, 0.18) 80%, transparent 100%)'
-          : 'radial-gradient(ellipse 90% 55% at 50% 100%, rgba(232, 124, 90, 0.4) 0%, rgba(124, 80, 140, 0.35) 35%, rgba(46, 60, 100, 0.3) 65%, rgba(20, 30, 60, 0.2) 90%, transparent 100%)';
+        // Sunrise: warm yellow → orange → red → indigo, anchored to bottom-right.
+        // Sunset: orange → violet → deep indigo, same anchor (light setting on the right).
+        // Side-anchored per Curtis: "light fading in heavier from one side, like
+        // as if spinning out of view."
+        const sweepGradient = isSunrise
+          ? 'radial-gradient(ellipse 90% 100% at 105% 100%, rgba(255, 196, 130, 0.7) 0%, rgba(232, 124, 90, 0.5) 22%, rgba(124, 80, 140, 0.32) 50%, rgba(46, 60, 110, 0.18) 78%, transparent 100%)'
+          : 'radial-gradient(ellipse 90% 100% at 105% 100%, rgba(232, 124, 90, 0.45) 0%, rgba(124, 80, 140, 0.4) 30%, rgba(46, 56, 100, 0.32) 60%, rgba(16, 22, 48, 0.22) 88%, transparent 100%)';
 
-        // Notify Starfield to start fade animation
+        // Notify Starfield to play its warp animation (it owns its own GSAP tween).
         window.dispatchEvent(new CustomEvent('soma-theme:transitioning', {
           detail: { fromTheme: root.dataset.theme, toTheme, isSunrise }
         }));
         root.classList.add('sky-transitioning');
 
         const tl = gsap.timeline({
-          defaults: { ease: 'power2.inOut' },
+          defaults: { ease: 'power2.inOut', duration: 0.6 },
           onComplete: () => {
             transitioning = false;
             root.classList.remove('sky-transitioning');
           }
         });
 
+        // Labels for readability per gsap-timeline skill guidance
+        tl.addLabel('stars-buzz', 0)
+          .addLabel('sky-sweep', 0.2)
+          .addLabel('palette-swap', 0.7)
+          .addLabel('settle', 1.0);
+
         if (horizon) {
-          // Phase 2: sunrise/sunset glow sweeps in
-          tl.fromTo(horizon, {
-            opacity: 1,
-          }, {
-            opacity: 1,
+          // Sweep horizon at the sky-sweep label — GSAP can't tween background-image
+          // gradient strings directly, so we set it via onStart and use autoAlpha on
+          // the wrapper for the visual ramp.
+          tl.to(horizon, {
+            autoAlpha: 1,
             duration: 0.5,
             ease: 'power1.in',
-            onStart: () => {
-              horizon.style.background = dawnGradient;
-            }
-          }, 0.2);
+            onStart: () => { horizon.style.background = sweepGradient; }
+          }, 'sky-sweep');
 
-          // Settle: horizon fades back to idle (which the CSS rule supplies via theme swap)
+          // Clear inline override at settle so CSS theme rule resumes
           tl.to(horizon, {
-            opacity: 1,
+            autoAlpha: 1,
             duration: 0.8,
             ease: 'power2.out',
-            onStart: () => {
-              // Clear inline override so CSS theme rule takes back over
-              horizon.style.background = '';
-            }
-          }, 1.0);
+            onStart: () => { horizon.style.background = ''; }
+          }, 'settle');
         }
 
-        // Phase 3: actually swap the theme palette mid-sequence
-        tl.call(() => applyTheme(toTheme), [], 0.7);
+        // Theme palette swap mid-sequence
+        tl.call(applyTheme, [toTheme], 'palette-swap');
       }
 
       // Run on initial load + Astro view transitions

@@ -89,29 +89,46 @@
       }
     }
 
-    // Cycle 17 (s01-7b287c): canvas-level alpha multiplier so the theme
-    // toggle's GSAP timeline can fade the WHOLE starfield in/out as part of
-    // the day-night cinematic. 1.0 = fully visible; 0 = invisible.
-    let canvasAlpha = 1;
-    // Drift boost during transition — stars seem to "sweep away" faster
-    // when day arrives, then "settle in" when night returns.
-    let driftMultiplier = 1;
+    // Cycle 17 (s01-7b287c, refined): state object tweened by GSAP rather
+    // than raw rAF loops. Per gsap-core skill: GSAP can tween any object
+    // property. Cleaner + composable into the toggle's master timeline
+    // later if needed. Per gsap-core: stick to documented eases + matchMedia
+    // for prefers-reduced-motion.
+    //
+    // canvasAlpha: full-starfield opacity multiplier (1 = visible, 0 = gone)
+    // driftMultiplier: vertical drift speed (1 = idle, 8+ = warp during transition)
+    // lateralBoost: ADDITIONAL horizontal sweep — stars 'buzz by' diagonally
+    //   during sunrise (Curtis's specific ask: "i'd like to see those stars buzz by")
+    const state = { canvasAlpha: 1, driftMultiplier: 1, lateralBoost: 0 };
+
+    // Lazy-load GSAP for non-critical interactivity (theme transitions only).
+    // Imported dynamically inside the listener to avoid blocking initial render.
+    let gsapLib: any = null;
+    async function getGsap() {
+      if (!gsapLib) {
+        const mod = await import('gsap');
+        gsapLib = mod.gsap;
+      }
+      return gsapLib;
+    }
 
     let time = 0;
     function draw() {
       ctx!.clearRect(0, 0, w, h);
       time++;
 
-      if (canvasAlpha <= 0.001) {
-        // Stars effectively gone — still rAF so we can resume on theme flip
+      if (state.canvasAlpha <= 0.001) {
         animId = requestAnimationFrame(draw);
         return;
       }
 
       for (const s of stars) {
-        // Drift: slow upward + slight rightward (boosted during transitions)
-        s.y -= s.drift * driftMultiplier;
-        s.x += s.drift * 0.3 * driftMultiplier;
+        // Vertical drift (slow upward) + lateral boost during transitions.
+        // The lateralBoost is what creates the 'buzz by' streaking effect:
+        // during sunrise, stars not only fade but ALSO rip diagonally
+        // across the screen as if blown away by the incoming day.
+        s.y -= s.drift * state.driftMultiplier;
+        s.x += s.drift * (0.3 + state.lateralBoost) * state.driftMultiplier;
 
         // Wrap around
         if (s.y < -5) { s.y = h + 5; s.x = Math.random() * w; }
@@ -119,7 +136,7 @@
 
         // Twinkle
         const twinkle = Math.sin(time * s.twinkleSpeed + s.twinklePhase);
-        const alpha = (s.alpha + twinkle * 0.2) * canvasAlpha;
+        const alpha = (s.alpha + twinkle * 0.2) * state.canvasAlpha;
         if (alpha <= 0) continue;
 
         const [r, g, b] = s.color;
@@ -132,61 +149,44 @@
       animId = requestAnimationFrame(draw);
     }
 
-    // Theme transition listener: dim/restore stars to choreograph with the
-    // sky cinematic. Sunrise (→ light): fade out + drift faster (stars sweep
-    // away as day arrives). Sunset (→ dark): fade IN + drift settles
-    // (stars emerge as night falls). On settled palette change, restore
-    // canvas color palette (already handled inline isLight check).
-    function animateAlpha(target: number, durMs: number) {
-      const start = canvasAlpha;
-      const startTime = performance.now();
-      function step() {
-        const t = Math.min(1, (performance.now() - startTime) / durMs);
-        // ease-out-cubic
-        const eased = 1 - Math.pow(1 - t, 3);
-        canvasAlpha = start + (target - start) * eased;
-        if (t < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    }
-    function animateDrift(target: number, durMs: number) {
-      const start = driftMultiplier;
-      const startTime = performance.now();
-      function step() {
-        const t = Math.min(1, (performance.now() - startTime) / durMs);
-        const eased = 1 - Math.pow(1 - t, 2);
-        driftMultiplier = start + (target - start) * eased;
-        if (t < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    }
-
-    window.addEventListener('soma-theme:transitioning', (e: any) => {
+    // Theme-transition listener: stars BUZZ BY during sunrise (warp speed +
+    // lateral sweep), settle back in at night. Per gsap-core skill: tween
+    // arbitrary object properties; the draw loop reads state every frame.
+    window.addEventListener('soma-theme:transitioning', async (e: any) => {
       const isSunrise = e.detail?.isSunrise === true;
+      const gsap = await getGsap();
+      gsap.killTweensOf(state); // overwrite any in-flight transition
+
       if (isSunrise) {
-        // Stars dim and drift away as day arrives
-        animateDrift(4, 700);
-        animateAlpha(0, 800);
+        // Stars warp out: ramp drift HARD + add lateral sweep, then fade.
+        // The buzz-by effect = high driftMultiplier (8x) + lateralBoost (1.2)
+        // so stars streak diagonally across before disappearing.
+        gsap.timeline()
+          .to(state, { driftMultiplier: 8, duration: 0.45, ease: 'power3.in' }, 0)
+          .to(state, { lateralBoost: 1.2, duration: 0.45, ease: 'power2.in' }, 0)
+          .to(state, { canvasAlpha: 0, duration: 0.7, ease: 'power2.out' }, 0.15)
+          // Reset drift values to idle so when stars come back next sunset,
+          // they're not still warping. canvasAlpha stays at 0 in light mode.
+          .set(state, { driftMultiplier: 1, lateralBoost: 0 });
       } else {
-        // Stars emerge from the night sky
-        animateDrift(2.5, 400);
-        // Hold low briefly so the dark palette settles, then re-fade in
-        setTimeout(() => animateAlpha(1, 900), 600);
-        setTimeout(() => animateDrift(1, 800), 900);
+        // Stars emerge from the night sky: fade in slowly, no warp.
+        // Brief hold at 0 so the dark palette settles first, then drift in.
+        gsap.timeline({ defaults: { ease: 'power2.out' } })
+          .set(state, { driftMultiplier: 2, lateralBoost: 0 }, 0.2)
+          .to(state, { canvasAlpha: 1, duration: 1.0 }, 0.5)
+          .to(state, { driftMultiplier: 1, duration: 0.8 }, 0.7);
       }
     });
     window.addEventListener('soma-theme', (e: any) => {
-      // Theme settled — swap palette + restore color choice for re-init.
+      // Theme settled — swap palette + ensure stars are dim in light mode.
       COLORS = e.detail?.theme === 'light' ? COLORS_LIGHT : COLORS_DARK;
-      // Re-color existing stars (rotate through palette by index)
       for (let i = 0; i < stars.length; i++) {
         const roll = (i * 17) % 100;
         const colorIdx = roll < 80 ? 0 : roll < 95 ? 1 : roll < 99 ? 2 : 3;
         stars[i].color = COLORS[colorIdx];
       }
-      // If we're now LIGHT, hold stars dim. If DARK, ensure they're at full alpha.
       if (e.detail?.theme === 'light') {
-        canvasAlpha = 0;
+        state.canvasAlpha = 0;
       }
     });
 
