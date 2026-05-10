@@ -3,6 +3,7 @@ import { ViewTransitions } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Starfield from '../components/Starfield.astro';
+import Sky from '../components/Sky.astro';
 
 interface Props {
   title: string;
@@ -493,6 +494,7 @@ const schemaData = jsonLd || defaultJsonLd;
 
     <!-- Atmospheric layers -->
     <Starfield />
+    <Sky />
     <div class="noise-overlay"></div>
     <div class="glow-orbs" aria-hidden="true">
       <div class="glow-orb glow-orb-1"></div>
@@ -512,37 +514,125 @@ const schemaData = jsonLd || defaultJsonLd;
       inject();
     </script>
 
-    <script is:inline>
+    <script>
+      // Cycle 17 (s01-7b287c): theme toggle as a CINEMATIC TIME-LAPSE.
+      // Curtis's vision: "stars could slide out of view and in comes the
+      // orange/blue then daylight hue of the sky as if time just
+      // fast-forwarded to day." Replaces the prior snap-CSS-class swap with
+      // a GSAP-orchestrated 3-phase sequence (with reverse for sunset).
+      //
+      // Phase 1 (0–0.4s): stars fade + drift up (dispatching event for canvas)
+      // Phase 2 (0.3–1.0s): horizon glow sweeps (sunrise: warm; sunset: indigo)
+      // Phase 3 (0.7–1.4s): theme palette swaps; sun/moon disk slides into place
+      // Settle (1.4–1.8s): horizon glow fades back to idle hint
+      //
+      // Honors prefers-reduced-motion (instant swap, no orchestration).
+      import { gsap } from 'gsap';
+
+      const KEY = 'soma-theme';
+      let transitioning = false;
+
       function initThemeToggle() {
-        const key = 'soma-theme';
         const root = document.documentElement;
         const toggle = document.querySelector('.theme-toggle');
         if (!toggle) return;
 
-        const apply = (theme, save = true) => {
-          root.dataset.theme = theme;
-          root.style.colorScheme = theme;
-          toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-          if (save) localStorage.setItem(key, theme);
-        };
+        // Apply saved theme on first load (no transition — instant)
+        const saved = localStorage.getItem(KEY);
+        const initial = saved === 'light' || saved === 'dark' ? saved : (root.dataset.theme || 'dark');
+        root.dataset.theme = initial;
+        (root.style as any).colorScheme = initial;
+        toggle.setAttribute('aria-label', initial === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
 
-        // Remove old listener (view transitions re-run this)
-        const newToggle = toggle.cloneNode(true);
-        toggle.parentNode.replaceChild(newToggle, toggle);
-
-        newToggle.addEventListener('click', () => {
-          apply(root.dataset.theme === 'light' ? 'dark' : 'light');
-        });
-
-        // Apply saved or default theme
-        const saved = localStorage.getItem(key);
-        const theme = saved === 'light' || saved === 'dark' ? saved : (root.dataset.theme || 'dark');
-        apply(theme, false);
+        // Remove old listener (view transitions re-run init)
+        const newToggle = toggle.cloneNode(true) as HTMLElement;
+        toggle.parentNode!.replaceChild(newToggle, toggle);
+        newToggle.addEventListener('click', handleToggle);
       }
 
-      // Run on initial load
+      function handleToggle() {
+        if (transitioning) return;
+        const root = document.documentElement;
+        const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (reduced) {
+          // Instant swap — no cinematic
+          applyTheme(next);
+          return;
+        }
+
+        runTransition(next);
+      }
+
+      function applyTheme(theme: string) {
+        const root = document.documentElement;
+        root.dataset.theme = theme;
+        (root.style as any).colorScheme = theme;
+        const toggle = document.querySelector('.theme-toggle');
+        toggle?.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        localStorage.setItem(KEY, theme);
+        // Notify other components (Starfield, etc.) the static theme is settled
+        window.dispatchEvent(new CustomEvent('soma-theme', { detail: { theme } }));
+      }
+
+      function runTransition(toTheme: string) {
+        transitioning = true;
+        const root = document.documentElement;
+        const horizon = document.querySelector('.sky-horizon') as HTMLElement | null;
+        const isSunrise = toTheme === 'light';
+
+        // Sunrise: deep indigo → red → orange → pale yellow at horizon.
+        // Sunset: pale yellow → red/orange → deep indigo.
+        const dawnGradient = isSunrise
+          ? 'radial-gradient(ellipse 90% 55% at 50% 100%, rgba(255, 196, 130, 0.55) 0%, rgba(232, 124, 90, 0.4) 25%, rgba(124, 80, 140, 0.3) 55%, rgba(46, 80, 124, 0.18) 80%, transparent 100%)'
+          : 'radial-gradient(ellipse 90% 55% at 50% 100%, rgba(232, 124, 90, 0.4) 0%, rgba(124, 80, 140, 0.35) 35%, rgba(46, 60, 100, 0.3) 65%, rgba(20, 30, 60, 0.2) 90%, transparent 100%)';
+
+        // Notify Starfield to start fade animation
+        window.dispatchEvent(new CustomEvent('soma-theme:transitioning', {
+          detail: { fromTheme: root.dataset.theme, toTheme, isSunrise }
+        }));
+        root.classList.add('sky-transitioning');
+
+        const tl = gsap.timeline({
+          defaults: { ease: 'power2.inOut' },
+          onComplete: () => {
+            transitioning = false;
+            root.classList.remove('sky-transitioning');
+          }
+        });
+
+        if (horizon) {
+          // Phase 2: sunrise/sunset glow sweeps in
+          tl.fromTo(horizon, {
+            opacity: 1,
+          }, {
+            opacity: 1,
+            duration: 0.5,
+            ease: 'power1.in',
+            onStart: () => {
+              horizon.style.background = dawnGradient;
+            }
+          }, 0.2);
+
+          // Settle: horizon fades back to idle (which the CSS rule supplies via theme swap)
+          tl.to(horizon, {
+            opacity: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+            onStart: () => {
+              // Clear inline override so CSS theme rule takes back over
+              horizon.style.background = '';
+            }
+          }, 1.0);
+        }
+
+        // Phase 3: actually swap the theme palette mid-sequence
+        tl.call(() => applyTheme(toTheme), [], 0.7);
+      }
+
+      // Run on initial load + Astro view transitions
       initThemeToggle();
-      // Run on Astro view transitions
       document.addEventListener('astro:page-load', initThemeToggle);
     </script>
   </body>

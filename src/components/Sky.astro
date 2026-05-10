@@ -1,0 +1,164 @@
+---
+/**
+ * Sky — atmospheric horizon overlay for theme transitions.
+ *
+ * Renders below content (z-index: 0.5) but above the bg / starfield.
+ *   - Horizon gradient: a bottom-anchored radial that goes
+ *     indigo → red → orange → pale-yellow during sunrise, reverses for sunset.
+ *   - Sun/moon disk: small SVG that drifts up (sunrise) or down (sunset).
+ *
+ * Idle (post-transition): minimal opacity, just a soft horizon hint that
+ * varies by theme. Daytime shows a faint warm haze at the bottom. Nighttime
+ * shows a faint indigo glow.
+ *
+ * Cycle 17 (s01-7b287c) — Curtis's vision: "stars could slide out of view
+ * and in comes the orange/blue then daylight hue of the sky as if time just
+ * fast-forwarded to day."
+ *
+ * Animation lives in Layout.astro's theme toggle script, which uses GSAP
+ * to drive the timeline. This component is the canvas; toggle is the projector.
+ */
+---
+
+<div class="sky" aria-hidden="true">
+  <div class="sky-horizon"></div>
+  <div class="sky-celestial">
+    <!-- Sun disk — visible in light, hidden in dark -->
+    <div class="sky-sun"></div>
+    <!-- Moon disk — visible in dark, hidden in light -->
+    <div class="sky-moon">
+      <div class="sky-moon-crater sky-moon-crater-1"></div>
+      <div class="sky-moon-crater sky-moon-crater-2"></div>
+      <div class="sky-moon-crater sky-moon-crater-3"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Horizon: bottom-anchored radial gradient, idle state.
+   * Theme-specific overrides below + GSAP-driven during transition. */
+  .sky-horizon {
+    position: absolute;
+    inset: 0;
+    /* Dark theme idle: subtle indigo near bottom (deep night sky) */
+    background: radial-gradient(
+      ellipse 80% 40% at 50% 100%,
+      rgba(46, 80, 124, 0.08) 0%,
+      transparent 60%
+    );
+    opacity: 1;
+    transition: opacity 1.2s ease, background 1.2s ease;
+  }
+
+  html[data-theme='light'] .sky-horizon {
+    /* Light theme idle: warm horizon glow (cloud cover at dawn settled) */
+    background: radial-gradient(
+      ellipse 90% 50% at 50% 100%,
+      rgba(232, 168, 124, 0.18) 0%,
+      rgba(124, 178, 212, 0.06) 40%,
+      transparent 70%
+    );
+  }
+
+  /* Celestial layer — sun + moon. Position at top-right corner area. */
+  .sky-celestial {
+    position: absolute;
+    top: 12%;
+    right: 8%;
+    width: 160px;
+    height: 160px;
+    pointer-events: none;
+  }
+
+  /* Sun: warm gold disk with halo. Visible in light, slides up from below in dark→light. */
+  .sky-sun {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 35% 35%,
+      rgba(255, 230, 170, 0.95) 0%,
+      rgba(232, 168, 124, 0.8) 40%,
+      rgba(232, 168, 124, 0.2) 70%,
+      transparent 100%
+    );
+    box-shadow:
+      0 0 40px rgba(255, 200, 130, 0.25),
+      0 0 80px rgba(232, 168, 124, 0.15),
+      0 0 160px rgba(232, 168, 124, 0.08);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html[data-theme='light'] .sky-sun {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Moon: pale silver-blue disk. Visible in dark, slides down in light→dark. */
+  .sky-moon {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 65% 35%,
+      rgba(228, 234, 244, 0.92) 0%,
+      rgba(180, 198, 222, 0.75) 50%,
+      rgba(124, 152, 188, 0.3) 80%,
+      transparent 100%
+    );
+    box-shadow:
+      0 0 30px rgba(124, 178, 212, 0.2),
+      0 0 60px rgba(124, 178, 212, 0.1);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html[data-theme='light'] .sky-moon {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+
+  /* Moon craters — tiny darker spots */
+  .sky-moon-crater {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(80, 100, 130, 0.18);
+  }
+  .sky-moon-crater-1 { top: 30%; left: 35%; width: 14px; height: 14px; }
+  .sky-moon-crater-2 { top: 55%; left: 50%; width: 9px; height: 9px; }
+  .sky-moon-crater-3 { top: 42%; left: 62%; width: 6px; height: 6px; }
+
+  /* During transition, GSAP adds .sky-transitioning to <html> — we use it
+   * to expose the sky layer more aggressively and make the horizon "swept by sunrise". */
+  html.sky-transitioning .sky-horizon {
+    /* GSAP overrides background + opacity directly during the transition. */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sky-sun,
+    .sky-moon {
+      transition: opacity 0.2s linear !important;
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .sky-celestial {
+      width: 100px;
+      height: 100px;
+      top: 10%;
+      right: 6%;
+    }
+  }
+</style>

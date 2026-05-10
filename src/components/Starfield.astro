@@ -89,15 +89,29 @@
       }
     }
 
+    // Cycle 17 (s01-7b287c): canvas-level alpha multiplier so the theme
+    // toggle's GSAP timeline can fade the WHOLE starfield in/out as part of
+    // the day-night cinematic. 1.0 = fully visible; 0 = invisible.
+    let canvasAlpha = 1;
+    // Drift boost during transition — stars seem to "sweep away" faster
+    // when day arrives, then "settle in" when night returns.
+    let driftMultiplier = 1;
+
     let time = 0;
     function draw() {
       ctx!.clearRect(0, 0, w, h);
       time++;
 
+      if (canvasAlpha <= 0.001) {
+        // Stars effectively gone — still rAF so we can resume on theme flip
+        animId = requestAnimationFrame(draw);
+        return;
+      }
+
       for (const s of stars) {
-        // Drift: slow upward + slight rightward
-        s.y -= s.drift;
-        s.x += s.drift * 0.3;
+        // Drift: slow upward + slight rightward (boosted during transitions)
+        s.y -= s.drift * driftMultiplier;
+        s.x += s.drift * 0.3 * driftMultiplier;
 
         // Wrap around
         if (s.y < -5) { s.y = h + 5; s.x = Math.random() * w; }
@@ -105,7 +119,7 @@
 
         // Twinkle
         const twinkle = Math.sin(time * s.twinkleSpeed + s.twinklePhase);
-        const alpha = s.alpha + twinkle * 0.2;
+        const alpha = (s.alpha + twinkle * 0.2) * canvasAlpha;
         if (alpha <= 0) continue;
 
         const [r, g, b] = s.color;
@@ -117,6 +131,64 @@
 
       animId = requestAnimationFrame(draw);
     }
+
+    // Theme transition listener: dim/restore stars to choreograph with the
+    // sky cinematic. Sunrise (→ light): fade out + drift faster (stars sweep
+    // away as day arrives). Sunset (→ dark): fade IN + drift settles
+    // (stars emerge as night falls). On settled palette change, restore
+    // canvas color palette (already handled inline isLight check).
+    function animateAlpha(target: number, durMs: number) {
+      const start = canvasAlpha;
+      const startTime = performance.now();
+      function step() {
+        const t = Math.min(1, (performance.now() - startTime) / durMs);
+        // ease-out-cubic
+        const eased = 1 - Math.pow(1 - t, 3);
+        canvasAlpha = start + (target - start) * eased;
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    function animateDrift(target: number, durMs: number) {
+      const start = driftMultiplier;
+      const startTime = performance.now();
+      function step() {
+        const t = Math.min(1, (performance.now() - startTime) / durMs);
+        const eased = 1 - Math.pow(1 - t, 2);
+        driftMultiplier = start + (target - start) * eased;
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    window.addEventListener('soma-theme:transitioning', (e: any) => {
+      const isSunrise = e.detail?.isSunrise === true;
+      if (isSunrise) {
+        // Stars dim and drift away as day arrives
+        animateDrift(4, 700);
+        animateAlpha(0, 800);
+      } else {
+        // Stars emerge from the night sky
+        animateDrift(2.5, 400);
+        // Hold low briefly so the dark palette settles, then re-fade in
+        setTimeout(() => animateAlpha(1, 900), 600);
+        setTimeout(() => animateDrift(1, 800), 900);
+      }
+    });
+    window.addEventListener('soma-theme', (e: any) => {
+      // Theme settled — swap palette + restore color choice for re-init.
+      COLORS = e.detail?.theme === 'light' ? COLORS_LIGHT : COLORS_DARK;
+      // Re-color existing stars (rotate through palette by index)
+      for (let i = 0; i < stars.length; i++) {
+        const roll = (i * 17) % 100;
+        const colorIdx = roll < 80 ? 0 : roll < 95 ? 1 : roll < 99 ? 2 : 3;
+        stars[i].color = COLORS[colorIdx];
+      }
+      // If we're now LIGHT, hold stars dim. If DARK, ensure they're at full alpha.
+      if (e.detail?.theme === 'light') {
+        canvasAlpha = 0;
+      }
+    });
 
     // Pause when tab hidden
     function handleVisibility() {
