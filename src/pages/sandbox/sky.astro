@@ -1,0 +1,330 @@
+---
+/**
+ * /sandbox/sky — design iteration sandbox for the light theme.
+ *
+ * Cycle 17 (s01-7b287c). Curtis: "we'd have to get it right first tho on a
+ * test page" before adopting Tincture sitewide. This page renders the
+ * full atmospheric stack (Starfield + Sky + glow-orbs + nav + content
+ * blocks) but with EXPERIMENTAL palette overrides scoped to this route.
+ *
+ * Iterate the palette here. When the look is locked, copy the winning
+ * --token values into src/layouts/Layout.astro (or migrate the whole
+ * stack to Tincture per personal/tincture-css/tincture.skill.md).
+ *
+ * NOT for users — sitemap-excluded, robots-noindex.
+ */
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Sandbox · Sky · σ"
+  description="Design iteration sandbox — light theme palette tuning."
+  path="/sandbox/sky"
+>
+  <main class="sandbox-main">
+    <header class="sandbox-hero">
+      <h1>cloud cover at dawn</h1>
+      <p class="sandbox-lead">
+        A sky that breathes. Pale blue overcast with thin wisps of cirrus,
+        a sun just out of frame casting warmth from one side. Toggle theme
+        in the nav to see the time-lapse.
+      </p>
+    </header>
+
+    <section class="sandbox-grid">
+      <article class="sandbox-card">
+        <h2>Card on cloud-white</h2>
+        <p>Body text against a pale sky. Should read crisply but feel soft.</p>
+        <p>Inline <code>code</code> token, <a href="#">a link</a>, and a button.</p>
+        <button class="sandbox-btn">Action</button>
+      </article>
+
+      <article class="sandbox-card sandbox-card-elevated">
+        <h2>Elevated card</h2>
+        <p>Subtly raised — slightly more saturated background, soft shadow.</p>
+        <code class="sandbox-code-inline">soma:body.audit</code>
+      </article>
+
+      <article class="sandbox-card">
+        <h2>Code block</h2>
+        <pre class="sandbox-code-block"><code>{`async function dawnBreaks(theme) {
+  const sky = await getSky();
+  return sky.transition(theme, {
+    stars: 'buzz',
+    horizon: 'sweep',
+    sun: 'spin-in'
+  });
+}`}</code></pre>
+      </article>
+    </section>
+
+    <section class="sandbox-tones">
+      <h2>Tone scale</h2>
+      <div class="sandbox-swatches">
+        <div class="swatch" style="background: var(--bg-deep)">bg-deep</div>
+        <div class="swatch" style="background: var(--bg-surface)">bg-surface</div>
+        <div class="swatch" style="background: var(--bg-elevated)">bg-elevated</div>
+        <div class="swatch" style="background: var(--accent-bright); color: white">accent</div>
+        <div class="swatch" style="background: var(--moon-bright); color: white">moon</div>
+        <div class="swatch" style="background: var(--warm-bright); color: white">warm</div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style is:global>
+  /* Sandbox palette override — light theme bluer + cloudier per Curtis (s01-7b287c).
+   * "still not blue or sky feeling enough" + "more blue and the whispy touch of clouds."
+   * Scoped to .sandbox-main subtree so other routes are unaffected. */
+  .sandbox-main {
+    /* Push light palette deeper into "sky" territory */
+  }
+
+  html[data-theme='light'] body:has(.sandbox-main) {
+    /* Bluer, more saturated — actual sky-feel */
+    --bg-deep: #d6e4f2;          /* pale dawn sky — DEEPER blue (was #e8eef5) */
+    --bg-surface: #f0f5fb;       /* cloud-white with strong cool undertone (was #fafbfc) */
+    --bg-elevated: #c5d6ea;      /* deeper cloud-base (was #dde5f0) */
+
+    /* Accent: pull saturation up so it feels like ocean reflecting sky */
+    --accent-bright: #2867a8;    /* brighter saturated blue (was #2e6094) */
+    --accent-mid: #1f5290;
+    --accent-dark: #133e72;
+
+    --moon-bright: #4a8cba;      /* brighter moon-blue (was #3878a0) */
+    --moon-mid: #357aaa;
+    --moon-glow: rgba(40, 103, 168, 0.22);
+
+    /* Text: slightly warmer slate so it doesn't compete with sky */
+    --text-primary: #0d1929;     /* deep navy ink */
+    --text-secondary: #2a3a52;
+    --blog-body: #354860;
+    --text-muted: #4a5b75;
+
+    --border-subtle: rgba(13, 25, 41, 0.14);
+    --border-accent: rgba(40, 103, 168, 0.4);
+
+    /* Cards: warm cloud-white with stronger separation from bg */
+    --surface-card: rgba(248, 251, 254, 0.96);
+    --surface-card-strong: rgba(244, 249, 253, 1);
+    --surface-overlay: rgba(40, 103, 168, 0.18);
+    --surface-interactive: rgba(13, 25, 41, 0.07);
+    --surface-interactive-hover: rgba(13, 25, 41, 0.13);
+    --surface-accent-soft: rgba(40, 103, 168, 0.10);
+    --surface-warm-soft: rgba(232, 168, 124, 0.07);
+    --surface-inset-highlight: rgba(255, 255, 255, 0.6);
+
+    --shadow-accent-soft: rgba(40, 103, 168, 0.18);
+    --shadow-accent-mid: rgba(40, 103, 168, 0.30);
+    --shadow-warm-soft: rgba(232, 168, 124, 0.15);
+
+    --hero-title-start: #133e72;
+    --hero-title-end: #2867a8;
+
+    --logo-glow: rgba(40, 103, 168, 0.20);
+    --logo-glow-hover: rgba(40, 103, 168, 0.35);
+  }
+
+  /* Logo color in light mode — was --promo (gold), but on a blue sky bg the
+   * gold sigma reads as detached/wrong. Switch to deep accent blue so it
+   * feels like part of the sky stack. */
+  html[data-theme='light'] body:has(.sandbox-main) .nav-sigma {
+    color: var(--accent-bright);
+    text-shadow: 0 0 12px var(--logo-glow);
+  }
+  html[data-theme='light'] body:has(.sandbox-main) .nav-brand:hover .nav-sigma {
+    color: var(--moon-bright);
+    text-shadow: 0 0 16px var(--moon-glow);
+  }
+
+  /* Wispier clouds on this page — wider/thinner ovals */
+  html[data-theme='light'] body:has(.sandbox-main) .glow-orbs {
+    opacity: 0.75;
+  }
+  html[data-theme='light'] body:has(.sandbox-main) .glow-orb-1 {
+    background: radial-gradient(ellipse, rgba(40, 103, 168, 0.18) 0%, rgba(40, 103, 168, 0.04) 50%, transparent 75%);
+    transform: scale(2.2, 0.22) rotate(-4deg);
+  }
+  html[data-theme='light'] body:has(.sandbox-main) .glow-orb-2 {
+    background: radial-gradient(ellipse, rgba(40, 103, 168, 0.15) 0%, rgba(40, 103, 168, 0.03) 55%, transparent 80%);
+    transform: scale(2.6, 0.25) rotate(3deg);
+  }
+  html[data-theme='light'] body:has(.sandbox-main) .glow-orb-3 {
+    background: radial-gradient(ellipse, rgba(232, 168, 124, 0.10) 0%, rgba(232, 168, 124, 0.02) 60%, transparent 80%);
+    transform: scale(1.8, 0.20) rotate(-10deg);
+  }
+
+  /* Bluer horizon idle on this page */
+  html[data-theme='light'] body:has(.sandbox-main) .sky-horizon {
+    background:
+      radial-gradient(
+        ellipse 70% 80% at 100% 100%,
+        rgba(232, 168, 124, 0.08) 0%,
+        rgba(40, 103, 168, 0.18) 25%,
+        rgba(40, 103, 168, 0.08) 55%,
+        transparent 75%
+      ),
+      radial-gradient(
+        ellipse 100% 50% at 50% 100%,
+        rgba(40, 103, 168, 0.16) 0%,
+        rgba(40, 103, 168, 0.06) 45%,
+        transparent 75%
+      );
+  }
+</style>
+
+<style>
+  .sandbox-main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .sandbox-hero {
+    margin-bottom: 4rem;
+  }
+
+  .sandbox-hero h1 {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, var(--hero-title-start), var(--hero-title-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.25rem;
+  }
+
+  .sandbox-lead {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  .sandbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .sandbox-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 1.75rem;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px var(--shadow-accent-soft);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .sandbox-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--shadow-accent-mid);
+  }
+
+  .sandbox-card-elevated {
+    background: var(--surface-card-strong);
+    box-shadow: 0 8px 32px var(--shadow-accent-mid);
+  }
+
+  .sandbox-card h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .sandbox-card p {
+    color: var(--blog-body);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .sandbox-card code,
+  .sandbox-code-inline {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--surface-interactive);
+    color: var(--accent-bright);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+  }
+
+  .sandbox-card a {
+    color: var(--accent-bright);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .sandbox-card a:hover {
+    color: var(--moon-bright);
+  }
+
+  .sandbox-btn {
+    margin-top: 0.5rem;
+    background: var(--accent-bright);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+  }
+  .sandbox-btn:hover {
+    background: var(--moon-bright);
+  }
+
+  .sandbox-code-block {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-top: 0.75rem;
+  }
+
+  .sandbox-tones {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 2rem;
+    backdrop-filter: blur(6px);
+  }
+
+  .sandbox-tones h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+  }
+
+  .sandbox-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .swatch {
+    height: 80px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+  }
+</style>
