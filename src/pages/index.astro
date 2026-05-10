@@ -405,7 +405,7 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .title-sigma {
-    -webkit-text-fill-color: var(--promo);
+    -webkit-text-fill-color: var(--promo-text);
     filter: drop-shadow(0 0 12px var(--promo-glow));
   }
 
@@ -511,7 +511,7 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .recent-post-promo:hover {
-    border-color: var(--promo);
+    border-color: var(--promo-text);
     box-shadow: 0 var(--space-md) var(--space-xl) rgba(240, 200, 102, 0.08), inset 0 0 0 1px var(--promo-border);
   }
 
@@ -1025,7 +1025,7 @@ const recentPosts = posts.slice(0, 3);
   }
 
   .verse-link {
-    color: var(--promo);
+    color: var(--promo-text);
     text-decoration: none;
     font-weight: 600;
     font-size: var(--body-text);
@@ -1136,7 +1136,8 @@ const recentPosts = posts.slice(0, 3);
     letter-spacing: 0.3px;
   }
   .verse-msg.user .verse-msg-prefix { color: rgba(157, 175, 196, 0.55); }
-  .verse-msg.agent .verse-msg-prefix { color: var(--promo); }
+  .verse-msg.agent .verse-msg-prefix { color: var(--promo-text); }
+  html[data-surface='light'] .verse-msg.agent .verse-msg-prefix { color: var(--promo-dim); }
   html[data-surface='light'] .verse-msg-prefix { color: #2a4f80; }
   html[data-surface='light'] .verse-msg.user .verse-msg-prefix { color: rgba(46, 96, 148, 0.70); }
 
@@ -1157,7 +1158,8 @@ const recentPosts = posts.slice(0, 3);
     border-radius: 999px;
     background: var(--surface-interactive);
   }
-  .pip.more { color: var(--promo); border-color: var(--promo-border); }
+  .pip.more { color: var(--promo-text); border-color: var(--promo-border); }
+  html[data-surface='light'] .pip.more { color: var(--promo-dim); }
   /* Light: pip pills get a glass treatment + darker text */
   html[data-surface='light'] .pip {
     background: rgba(255, 255, 255, 0.55);
@@ -1165,7 +1167,7 @@ const recentPosts = posts.slice(0, 3);
     color: #2a4f80;
   }
   html[data-surface='light'] .pip.more {
-    color: var(--promo);
+    color: var(--promo-text);
     border-color: var(--promo-border);
     background: var(--surface-warm-soft);
   }

@@ -206,10 +206,11 @@ const schemaData = jsonLd || defaultJsonLd;
         --warm-mid:    #d4926a;
         --warm-glow:   rgba(232, 168, 124, 0.3);
 
-        --promo:        #f0c866;
-        --promo-dim:    #c4a24e;
-        --promo-glow:   rgba(240, 200, 102, 0.15);
-        --promo-border: rgba(240, 200, 102, 0.25);
+        /* --promo / --promo-text / --promo-dim / --promo-glow /
+         * --promo-border now live in registry.json (codegen). See
+         * src/styles/tincture/_generated/foundation.css. Removed from
+         * :root s01-b73653 once we adopted the surface-axis pattern
+         * (mirrors arzadon: the same pattern handles --bg, --ink, etc). */
         /* ── Shadow utilities ────────────────────────────────────────────── */
         --shadow-accent-soft: rgba(104, 152, 190, 0.15);
         --shadow-accent-mid:  rgba(104, 152, 190, 0.25);

@@ -18,7 +18,7 @@ import CommunityStats from '../../components/islands/CommunityStats.tsx';
     ]} />
 
     <header class="header">
-      <h1 class="title">The S<span style="color:var(--promo);">σ</span>maverse</h1>
+      <h1 class="title">The S<span style="color:var(--promo-text);">σ</span>maverse</h1>
       <p class="subtitle">
         <strong>AMPS</strong> — automations, muscles, protocols, and scripts — the content system 
         that gives an AI agent learned patterns, adaptive behavior, and persistent memory.
@@ -530,12 +530,12 @@ import CommunityStats from '../../components/islands/CommunityStats.tsx';
   .coming-soon {
     margin-top: var(--space-lg);
     font-size: var(--body-text);
-    color: var(--promo);
+    color: var(--promo-text);
     font-style: italic;
   }
 
   .coming-soon a {
-    color: var(--promo);
+    color: var(--promo-text);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -752,18 +752,28 @@ import CommunityStats from '../../components/islands/CommunityStats.tsx';
     border-radius: 12px;
     padding: var(--space-lg) var(--space-xl);
   }
+  /* Light surface: glass aesthetic matching the homepage verse pane */
+  html[data-surface='light'] .verse-stat {
+    background: rgba(255, 255, 255, 0.50);
+    border: 1px solid rgba(255, 255, 255, 0.70);
+    box-shadow: 0 8px 32px rgba(8, 22, 36, 0.10),
+                0 1px 3px rgba(8, 22, 36, 0.06);
+  }
   .verse-stat-num {
     font-family: 'Manrope', system-ui, sans-serif;
     font-size: 36px;
     font-weight: 800;
-    color: var(--promo, #f0c866);
+    color: var(--promo-text);
     line-height: 1;
     margin-bottom: 4px;
   }
+  /* Light: deep burnt orange for the big number, more readable than bright */
+  html[data-surface='light'] .verse-stat-num { color: var(--promo-dim); }
   .verse-stat-label {
     font-size: 13px;
     color: var(--ink-muted);
   }
+  html[data-surface='light'] .verse-stat-label { color: var(--ink-soft); }
 
   @media (max-width: 768px) {
     .verse-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
