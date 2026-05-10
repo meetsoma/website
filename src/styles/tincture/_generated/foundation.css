@@ -49,6 +49,10 @@
   --shadow-accent: rgba(104, 152, 190, 0.15);
   /* Default card shadow. */
   --shadow-card: 0 1px 3px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.12);
+  /* Multi-layer drop shadow for cards that need to feel like they're floating. Subtle on dark, pronounced on light (cards need to lift off the page bg). */
+  --shadow-elevated: 0 1px 2px rgba(0,0,0,0.20), 0 4px 12px rgba(0,0,0,0.12), 0 12px 28px rgba(0,0,0,0.08);
+  /* Hover lift — deeper than --shadow-elevated, pairs with translateY(-4px) on hovered cards. */
+  --shadow-elevated-hover: 0 2px 4px rgba(0,0,0,0.25), 0 8px 20px rgba(0,0,0,0.16), 0 20px 44px rgba(0,0,0,0.12);
   /* Brightest sun center — near-white peach. Surface-invariant (sun is the same character across themes). */
   --sun-core: #fff5d4;
   /* Sun deep — copper orange. Sun outer body, rays' end-of-fade. */
@@ -61,6 +65,16 @@
   --sun-text: #c4520e;
   /* Sun warm-mid — honey orange. Mid-orange that reads as 'sun' not 'fire'. */
   --sun-warm: #f0a868;
+  /* Strong emphasis / button labels / page titles. */
+  --weight-bold: 700;
+  /* Hero / display titles — the heaviest weight we ship. */
+  --weight-display: 800;
+  /* Slightly emphasized body / nav links. */
+  --weight-medium: 500;
+  /* Body / default text weight. */
+  --weight-regular: 400;
+  /* Section headings / labels. */
+  --weight-semibold: 600;
 
   --tincture-foundation-version: "0.1.0";
 }
@@ -86,6 +100,8 @@
   --promo-text: #f0c866;
   --shadow-accent: rgba(104, 152, 190, 0.15);
   --shadow-card: 0 1px 3px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.12);
+  --shadow-elevated: 0 1px 2px rgba(0,0,0,0.20), 0 4px 12px rgba(0,0,0,0.12), 0 12px 28px rgba(0,0,0,0.08);
+  --shadow-elevated-hover: 0 2px 4px rgba(0,0,0,0.25), 0 8px 20px rgba(0,0,0,0.16), 0 20px 44px rgba(0,0,0,0.12);
 }
 
 /* surface=light */
@@ -109,4 +125,6 @@
   --promo-text: #c4520e;
   --shadow-accent: rgba(46, 96, 148, 0.2);
   --shadow-card: 0 1px 4px rgba(0,0,0,0.08), 0 4px 14px rgba(0,0,0,0.05);
+  --shadow-elevated: 0 1px 2px rgba(8,22,36,0.06), 0 6px 16px rgba(8,22,36,0.08), 0 18px 36px rgba(8,22,36,0.10), 0 32px 64px rgba(46,96,148,0.06);
+  --shadow-elevated-hover: 0 2px 4px rgba(8,22,36,0.08), 0 12px 24px rgba(8,22,36,0.12), 0 28px 56px rgba(8,22,36,0.14), 0 48px 96px rgba(46,96,148,0.08);
 }

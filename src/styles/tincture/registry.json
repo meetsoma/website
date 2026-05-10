@@ -102,6 +102,36 @@
         "surface=light": "rgba(46, 96, 148, 0.35)"
       }
     },
+    "weight-regular": {
+      "kind": "typography",
+      "axes": [],
+      "doc": "Body / default text weight.",
+      "values": { "default": "400" }
+    },
+    "weight-medium": {
+      "kind": "typography",
+      "axes": [],
+      "doc": "Slightly emphasized body / nav links.",
+      "values": { "default": "500" }
+    },
+    "weight-semibold": {
+      "kind": "typography",
+      "axes": [],
+      "doc": "Section headings / labels.",
+      "values": { "default": "600" }
+    },
+    "weight-bold": {
+      "kind": "typography",
+      "axes": [],
+      "doc": "Strong emphasis / button labels / page titles.",
+      "values": { "default": "700" }
+    },
+    "weight-display": {
+      "kind": "typography",
+      "axes": [],
+      "doc": "Hero / display titles — the heaviest weight we ship.",
+      "values": { "default": "800" }
+    },
     "font-display": {
       "kind": "typography",
       "axes": [],
@@ -142,6 +172,24 @@
       "values": {
         "default":       "rgba(104, 152, 190, 0.15)",
         "surface=light": "rgba(46, 96, 148, 0.2)"
+      }
+    },
+    "shadow-elevated": {
+      "kind": "shadow",
+      "axes": ["surface"],
+      "doc": "Multi-layer drop shadow for cards that need to feel like they're floating. Subtle on dark, pronounced on light (cards need to lift off the page bg).",
+      "values": {
+        "default":       "0 1px 2px rgba(0,0,0,0.20), 0 4px 12px rgba(0,0,0,0.12), 0 12px 28px rgba(0,0,0,0.08)",
+        "surface=light": "0 1px 2px rgba(8,22,36,0.06), 0 6px 16px rgba(8,22,36,0.08), 0 18px 36px rgba(8,22,36,0.10), 0 32px 64px rgba(46,96,148,0.06)"
+      }
+    },
+    "shadow-elevated-hover": {
+      "kind": "shadow",
+      "axes": ["surface"],
+      "doc": "Hover lift — deeper than --shadow-elevated, pairs with translateY(-4px) on hovered cards.",
+      "values": {
+        "default":       "0 2px 4px rgba(0,0,0,0.25), 0 8px 20px rgba(0,0,0,0.16), 0 20px 44px rgba(0,0,0,0.12)",
+        "surface=light": "0 2px 4px rgba(8,22,36,0.08), 0 12px 24px rgba(8,22,36,0.12), 0 28px 56px rgba(8,22,36,0.14), 0 48px 96px rgba(46,96,148,0.08)"
       }
     },
     "brand-sigma": {

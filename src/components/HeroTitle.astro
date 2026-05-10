@@ -51,9 +51,12 @@ const Tag = level === 1 ? 'h1' : 'h2';
 </Tag>
 
 <style>
+  /* Hero titles — SAME font / weight / size / leading on every page.
+   * Pulls from registry tokens so a typography-scale change ripples
+   * through every page hero in lockstep. */
   .hero-title {
     font-family: var(--font-display);
-    font-weight: 800;
+    font-weight: var(--weight-display);
     font-size: clamp(2.25rem, 6vw, 3.5rem);
     letter-spacing: -0.025em;
     line-height: var(--leading-tight);
@@ -64,29 +67,30 @@ const Tag = level === 1 ? 'h1' : 'h2';
 
   .hero-prefix {
     color: var(--ink-soft);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     margin-right: 0.2em;
   }
 
   .hero-main {
-    /* Ensures kerning around the σ behaves */
     letter-spacing: inherit;
   }
 
-  /* The signature σ — same family as the body Soma logo. Color comes from
-   * --promo (bright sun-orange in light, gold in dark). The sigma carries
-   * the brand glow + slight optical weight bump so it reads as a glyph,
-   * not just a colored letter. */
+  /* The signature σ — must read as the SAME glyph weight as its Latin
+   * siblings. Greek lowercase glyphs in most fonts are optically
+   * lighter than Latin caps/lowercase at the same numerical weight, so
+   * we bump the weight + scale slightly so it doesn't look anemic. */
   .hero-sigma {
     color: var(--promo);
     font-family: var(--font-display);
-    font-weight: 800;
-    /* Slight visual lift so the sigma sits like a logo mark, not a regular letter */
+    font-weight: 900;              /* +100 over surrounding text for optical match */
+    font-size: 1.06em;             /* tiny scale-up to match Latin x-height */
     display: inline-block;
-    transform: translateY(-0.03em);
-    text-shadow: 0 0 18px var(--promo-glow);
+    transform: translateY(-0.02em);
+    text-shadow: 0 0 24px var(--promo-glow),
+                 0 0 6px  var(--promo-glow);
+    /* Tracking adjustment so the sigma doesn't crowd its neighbors */
+    letter-spacing: -0.01em;
   }
 
-  /* Subtle focus state if title becomes a link in the future */
   .hero-title:focus-within { outline: none; }
 </style>

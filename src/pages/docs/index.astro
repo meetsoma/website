@@ -164,12 +164,13 @@ const sectionMeta: Record<string, { icon: string; desc: string }> = {
     text-decoration: none;
     color: var(--ink);
     transition: all 0.25s ease;
+    box-shadow: var(--shadow-elevated);
   }
 
   .quick-link:hover {
     border-color: var(--border-accent);
-    transform: translateY(-3px);
-    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elevated-hover);
   }
 
   .quick-link.primary {
@@ -245,6 +246,7 @@ const sectionMeta: Record<string, { icon: string; desc: string }> = {
   }
 
   .doc-card {
+    box-shadow: var(--shadow-card);
     padding: var(--card-pad-y) var(--card-pad-x);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
