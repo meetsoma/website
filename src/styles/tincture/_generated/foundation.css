@@ -35,6 +35,16 @@
   --ink-muted: #647080;
   /* Secondary text. Body copy, descriptions. */
   --ink-soft: #9dafc4;
+  /* Promo accent. Bright on dark (gold-yellow against deep space), bright sun-orange on light (line/dot/icon accent). Pairs with --promo-text for legible TEXT. */
+  --promo: #f0c866;
+  /* Promo border ring — visible outline around badges, chips, version pills. */
+  --promo-border: rgba(240, 200, 102, 0.25);
+  /* Dimmed promo — secondary text when --promo-text is too loud, or hover-leave state. */
+  --promo-dim: #c4a24e;
+  /* Translucent promo wash for backgrounds and soft surfaces. */
+  --promo-glow: rgba(240, 200, 102, 0.15);
+  /* Readable text variant of --promo. Bright gold on dark (pops on dark bg), deep burnt orange on light (legible on pale bg). Use this anywhere promo color is applied to TEXT (color: var(--promo-text)). For dots/lines/borders/icons keep --promo. */
+  --promo-text: #f0c866;
   /* Accent-tinted glow shadow — used on focused/featured elements. */
   --shadow-accent: rgba(104, 152, 190, 0.15);
   /* Default card shadow. */
@@ -57,6 +67,11 @@
   --ink: #e4eaf4;
   --ink-muted: #647080;
   --ink-soft: #9dafc4;
+  --promo: #f0c866;
+  --promo-border: rgba(240, 200, 102, 0.25);
+  --promo-dim: #c4a24e;
+  --promo-glow: rgba(240, 200, 102, 0.15);
+  --promo-text: #f0c866;
   --shadow-accent: rgba(104, 152, 190, 0.15);
   --shadow-card: 0 1px 3px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.12);
 }
@@ -75,6 +90,11 @@
   --ink: #0a0f1a;
   --ink-muted: #4a5a70;
   --ink-soft: #2a3648;
+  --promo: #e89048;
+  --promo-border: rgba(232, 144, 72, 0.40);
+  --promo-dim: #7a3010;
+  --promo-glow: rgba(232, 144, 72, 0.20);
+  --promo-text: #7a3010;
   --shadow-accent: rgba(46, 96, 148, 0.2);
   --shadow-card: 0 1px 4px rgba(0,0,0,0.08), 0 4px 14px rgba(0,0,0,0.05);
 }

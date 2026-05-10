@@ -299,6 +299,111 @@
         }
       ]
     },
+    "promo": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Promo accent. Bright on dark (gold-yellow against deep space), bright sun-orange on light (line/dot/icon accent). Pairs with --promo-text for legible TEXT.",
+      "defaultValue": "#f0c866",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#f0c866",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#e89048",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "promo-border": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Promo border ring — visible outline around badges, chips, version pills.",
+      "defaultValue": "rgba(240, 200, 102, 0.25)",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "rgba(240, 200, 102, 0.25)",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "rgba(232, 144, 72, 0.40)",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "promo-dim": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Dimmed promo — secondary text when --promo-text is too loud, or hover-leave state.",
+      "defaultValue": "#c4a24e",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#c4a24e",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#7a3010",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "promo-glow": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Translucent promo wash for backgrounds and soft surfaces.",
+      "defaultValue": "rgba(240, 200, 102, 0.15)",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "rgba(240, 200, 102, 0.15)",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "rgba(232, 144, 72, 0.20)",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
+    "promo-text": {
+      "kind": "color",
+      "axes": [
+        "surface"
+      ],
+      "locked": false,
+      "doc": "Readable text variant of --promo. Bright gold on dark (pops on dark bg), deep burnt orange on light (legible on pale bg). Use this anywhere promo color is applied to TEXT (color: var(--promo-text)). For dots/lines/borders/icons keep --promo.",
+      "defaultValue": "#f0c866",
+      "cells": [
+        {
+          "cell": "default",
+          "value": "#f0c866",
+          "selector": ":root"
+        },
+        {
+          "cell": "surface=light",
+          "value": "#7a3010",
+          "selector": "[data-surface=\"light\"]"
+        }
+      ]
+    },
     "shadow-accent": {
       "kind": "shadow",
       "axes": [

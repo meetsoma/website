@@ -111,7 +111,7 @@
 
 .badge-protocol {
   background: rgba(232, 168, 124, 0.08);
-  color: var(--promo);
+  color: var(--promo-text);
   border: 1px solid rgba(232, 168, 124, 0.12);
 }
 
