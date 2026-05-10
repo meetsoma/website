@@ -85,12 +85,39 @@ const coreCount = isTemplate ? templateData!.coreProtocols.length : 0;
 const installs = item.manifest?.stats?.installs ?? null as number | null;
 const likes = item.manifest?.stats?.likes ?? null as number | null;
 const compat = item.manifest?.stats?.compat ?? null as number | null;
+
+const hubItemUrl = `https://soma.gravicity.ai/hub/${item.type}/${item.slug}`;
+const hubItemJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareSourceCode',
+      name: item.name,
+      description: item.breadcrumb || item.description || `${item.name} ${item.type} for Soma agents.`,
+      url: hubItemUrl,
+      codeRepository: 'https://github.com/meetsoma/community',
+      programmingLanguage: item.type === 'script' ? 'Bash' : 'Markdown',
+      keywords: item.tags,
+      author: { '@type': 'Person', name: item.author },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://soma.gravicity.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Hub', item: 'https://soma.gravicity.ai/hub' },
+        { '@type': 'ListItem', position: 3, name: typeLabels[item.type] + 's', item: `https://soma.gravicity.ai/hub#${item.type}s` },
+        { '@type': 'ListItem', position: 4, name: item.name, item: hubItemUrl },
+      ],
+    },
+  ],
+};
 ---
 
 <Layout
   title={`${item.name} — ${typeLabels[item.type]} — SomaHub`}
   description={item.breadcrumb || item.description || `${item.name} ${item.type} for Soma agents.`}
-  canonicalUrl={`https://soma.gravicity.ai/hub/${item.type}/${item.slug}`}
+  canonicalUrl={hubItemUrl}
+  jsonLd={hubItemJsonLd}
 >
   <div class="stars"></div>
 
