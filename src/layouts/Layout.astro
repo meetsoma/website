@@ -105,6 +105,18 @@ const schemaData = jsonLd || defaultJsonLd;
           });
         });
       })();
+
+      // Preserve theme across Astro View Transitions.
+      // Without this, navigating between pages resets <html data-theme> back
+      // to the static default "dark" before the localStorage script runs —
+      // causing the nav icons to flash or get stuck on the wrong state.
+      document.addEventListener('astro:before-swap', (e) => {
+        const theme = document.documentElement.dataset.theme || 'dark';
+        const surface = document.documentElement.dataset.surface || 'dark';
+        e.newDocument.documentElement.dataset.theme = theme;
+        e.newDocument.documentElement.dataset.surface = surface;
+        e.newDocument.documentElement.style.colorScheme = theme;
+      });
     </script>
 
     <style is:global>
