@@ -1,0 +1,75 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0C0F16"/>
+      <stop offset="100%" style="stop-color:#0b1018"/>
+    </linearGradient>
+    <linearGradient id="terminalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a2033;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#121828;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle star field -->
+  <circle cx="120" cy="80" r="1" fill="#e4eaf4" opacity="0.4"/>
+  <circle cx="340" cy="45" r="1.5" fill="#e4eaf4" opacity="0.3"/>
+  <circle cx="680" cy="90" r="1" fill="#e4eaf4" opacity="0.5"/>
+  <circle cx="950" cy="60" r="1" fill="#e4eaf4" opacity="0.3"/>
+  <circle cx="1100" cy="110" r="1.5" fill="#e4eaf4" opacity="0.4"/>
+  <circle cx="80" cy="200" r="1" fill="#7cb2d4" opacity="0.3"/>
+  <circle cx="1050" cy="180" r="1" fill="#7cb2d4" opacity="0.25"/>
+  <circle cx="200" cy="520" r="1" fill="#e4eaf4" opacity="0.3"/>
+  <circle cx="1150" cy="490" r="1.5" fill="#e4eaf4" opacity="0.2"/>
+  <circle cx="500" cy="570" r="1" fill="#7cb2d4" opacity="0.3"/>
+
+  <!-- Terminal window — left side, large -->
+  <rect x="80" y="140" width="580" height="340" rx="10" fill="url(#terminalGrad)" stroke="rgba(124,178,212,0.18)" stroke-width="1"/>
+
+  <!-- Terminal chrome -->
+  <rect x="80" y="140" width="580" height="36" rx="10" fill="#1a2033"/>
+  <rect x="80" y="162" width="580" height="14" fill="#1a2033"/>
+  <circle cx="108" cy="158" r="6" fill="#ff5f57" opacity="0.85"/>
+  <circle cx="128" cy="158" r="6" fill="#febc2e" opacity="0.85"/>
+  <circle cx="148" cy="158" r="6" fill="#28c840" opacity="0.85"/>
+  <text x="340" y="162" font-family="SF Mono, monospace" font-size="11" fill="#6e7681" text-anchor="middle">terminal</text>
+
+  <!-- Warning block — orange glow -->
+  <rect x="100" y="196" width="540" height="108" rx="6" fill="rgba(240,136,62,0.08)" stroke="rgba(240,136,62,0.25)" stroke-width="1"/>
+  <text x="120" y="220" font-family="SF Mono, monospace" font-size="12" fill="#f0883e">Warning:</text>
+  <text x="120" y="240" font-family="SF Mono, monospace" font-size="11.5" fill="#c9d1d9">Project tools/ directory contains</text>
+  <text x="120" y="258" font-family="SF Mono, monospace" font-size="11.5" fill="#c9d1d9">custom tools. Custom tools have been</text>
+  <text x="120" y="276" font-family="SF Mono, monospace" font-size="11.5" fill="#c9d1d9">merged into extensions.</text>
+  <text x="120" y="295" font-family="SF Mono, monospace" font-size="11.5" fill="#6e7681">Move your extensions to extensions/</text>
+
+  <!-- Arrow: warning → repurposed -->
+  <line x1="340" y1="310" x2="340" y2="348" stroke="#7cb2d4" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+  <polygon points="340,354 334,344 346,344" fill="#7cb2d4" opacity="0.6"/>
+
+  <!-- Repurposed block — blue accent -->
+  <rect x="100" y="358" width="540" height="80" rx="6" fill="rgba(124,178,212,0.08)" stroke="rgba(124,178,212,0.25)" stroke-width="1"/>
+  <text x="120" y="383" font-family="SF Mono, monospace" font-size="12" fill="#7cb2d4">✓ Preflight check:</text>
+  <text x="120" y="403" font-family="SF Mono, monospace" font-size="11.5" fill="#c9d1d9">Update available → v0.25.0</text>
+  <text x="120" y="421" font-family="SF Mono, monospace" font-size="11.5" fill="#6e7681">Run: npm i -g meetsoma@latest</text>
+
+  <!-- Right side — headline text -->
+  <text x="720" y="230" font-family="Georgia, serif" font-size="19" fill="#7cb2d4" font-style="italic" letter-spacing="0.5">The Warning</text>
+  <text x="720" y="263" font-family="Georgia, serif" font-size="50" fill="#e4eaf4" font-weight="bold" letter-spacing="-1">Curtis Saw</text>
+  <text x="720" y="323" font-family="Georgia, serif" font-size="50" fill="#e4eaf4" font-weight="bold" letter-spacing="-1">Every</text>
+  <text x="720" y="383" font-family="Georgia, serif" font-size="50" fill="#7cb2d4" font-weight="bold" letter-spacing="-1">Startup</text>
+
+  <!-- Subtext -->
+  <text x="720" y="430" font-family="SF Mono, monospace" font-size="14" fill="#647080">A misfiring warning.</text>
+  <text x="720" y="452" font-family="SF Mono, monospace" font-size="14" fill="#647080">Repurposed, not removed.</text>
+
+  <!-- Brand bar -->
+  <rect x="0" y="590" width="1200" height="40" fill="rgba(11,16,24,0.9)"/>
+  <rect x="0" y="590" width="1200" height="1" fill="rgba(124,178,212,0.15)"/>
+  <text x="40" y="616" font-family="SF Mono, monospace" font-size="13" fill="#7cb2d4" font-weight="600" letter-spacing="2">SOMA</text>
+  <text x="1160" y="616" font-family="SF Mono, monospace" font-size="12" fill="#647080" text-anchor="end">soma.gravicity.ai</text>
+
+  <!-- σ watermark -->
+  <text x="1140" y="580" font-family="Georgia, serif" font-size="42" fill="#7cb2d4" opacity="0.08">σ</text>
+</svg>
