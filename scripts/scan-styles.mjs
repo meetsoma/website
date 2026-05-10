@@ -99,6 +99,36 @@ function contrastRatio(c1, c2) {
   const [a, b] = L1 > L2 ? [L1, L2] : [L2, L1];
   return (a + 0.05) / (b + 0.05);
 }
+
+// APCA contrast (Lc, perceptual — see Myndex/apca-w3, color.js).
+// Polarity-aware: negative for light-on-dark. |Lc| ranges roughly 0-110.
+// Thresholds (informally): ≥75 body text, ≥60 headings, ≥45 large text.
+function sRGBtoY([r, g, b]) {
+  const ch = c => Math.pow(c/255, 2.4);
+  return 0.2126729*ch(r) + 0.7151522*ch(g) + 0.0721750*ch(b);
+}
+function apcaContrast(txt, bg) {
+  const SA = {
+    blkThrs: 0.022, blkClmp: 1.414,
+    scaleBoW: 1.14, normBG: 0.56, normTXT: 0.57,
+    revTXT: 0.62, revBG: 0.65, scaleWoB: 1.14,
+    loBoWoffset: 0.027, loWoBoffset: 0.027,
+    deltaYmin: 0.0005, loClip: 0.1,
+  };
+  let txtY = sRGBtoY(txt), bgY = sRGBtoY(bg);
+  txtY = (txtY > SA.blkThrs) ? txtY : txtY + Math.pow(SA.blkThrs - txtY, SA.blkClmp);
+  bgY  = (bgY  > SA.blkThrs) ? bgY  : bgY  + Math.pow(SA.blkThrs - bgY,  SA.blkClmp);
+  if (Math.abs(bgY - txtY) < SA.deltaYmin) return 0.0;
+  let SAPC = 0, out = 0;
+  if (bgY > txtY) {
+    SAPC = (Math.pow(bgY, SA.normBG) - Math.pow(txtY, SA.normTXT)) * SA.scaleBoW;
+    out = SAPC < SA.loClip ? 0 : SAPC - SA.loBoWoffset;
+  } else {
+    SAPC = (Math.pow(bgY, SA.revBG) - Math.pow(txtY, SA.revTXT)) * SA.scaleWoB;
+    out = SAPC > -SA.loClip ? 0 : SAPC + SA.loWoBoffset;
+  }
+  return out * 100;
+}
 // Composite a translucent rgba over an opaque base
 function compositeOver(top, base) {
   const a = top[3] ?? 1;
@@ -496,13 +526,25 @@ function fmtContrast(agg, surface) {
       const bgRaw = resolved.get(bg);
       if (!bgRaw) return '_-_';
       const bgEff = compositeOver(bgRaw, baseBg);
-      const r = contrastRatio(fgRgb.slice(0,3), bgEff.slice(0,3));
-      const flag = r < 3 ? ' 🔴' : r < 4.5 ? ' 🟡' : ' ✅';
-      return `${r.toFixed(1)}${flag}`;
+      const fgRgb3 = fgRgb.slice(0,3);
+      const bgRgb3 = bgEff.slice(0,3);
+      const r = contrastRatio(fgRgb3, bgRgb3);
+      const lc = Math.abs(apcaContrast(fgRgb3, bgRgb3));
+      // Combined verdict: PASS if both meet threshold
+      const wcagPass = r >= 4.5;
+      const apcaPass = lc >= 75;
+      const flag = wcagPass && apcaPass ? ' ✅' :
+                   wcagPass || apcaPass ? ' 🟡' :
+                   r < 3 || lc < 45     ? ' 🔴' : ' 🟡';
+      return `${r.toFixed(1)} / Lc${lc.toFixed(0)}${flag}`;
     });
     out.push(`| \`${fg}\` | ${cells.join(' | ')} |`);
   }
-  out.push('\nLegend: ✅ ≥ 4.5  •  🟡 3.0–4.5 (large text only)  •  🔴 < 3.0 (fail)');
+  out.push('\nFormat: `WCAG / Lc<APCA>`');
+  out.push('Legend: ✅ both pass (WCAG ≥4.5, APCA |Lc|≥75)');
+  out.push('  •  🟡 only one passes (large text/heading might be ok)');
+  out.push('  •  🔴 both fail (WCAG <3 OR APCA |Lc|<45)');
+  out.push('\nWCAG 2.1: 4.5:1 body, 3:1 large. APCA (W3 draft): ≥75 body, ≥60 heading, ≥45 large.');
   return out.join('\n');
 }
 
