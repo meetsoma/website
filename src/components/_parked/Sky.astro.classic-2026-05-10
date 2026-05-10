@@ -1,0 +1,194 @@
+---
+/**
+ * Sky — atmospheric horizon overlay for theme transitions.
+ *
+ * Renders below content (z-index: 0.5) but above the bg / starfield.
+ *   - Horizon gradient: a bottom-anchored radial that goes
+ *     indigo → red → orange → pale-yellow during sunrise, reverses for sunset.
+ *   - Sun/moon disk: small SVG that drifts up (sunrise) or down (sunset).
+ *
+ * Idle (post-transition): minimal opacity, just a soft horizon hint that
+ * varies by theme. Daytime shows a faint warm haze at the bottom. Nighttime
+ * shows a faint indigo glow.
+ *
+ * Cycle 17 (s01-7b287c) — Curtis's vision: "stars could slide out of view
+ * and in comes the orange/blue then daylight hue of the sky as if time just
+ * fast-forwarded to day."
+ *
+ * Animation lives in Layout.astro's theme toggle script, which uses GSAP
+ * to drive the timeline. This component is the canvas; toggle is the projector.
+ */
+---
+
+<!--
+  Cycle 17 (s01-7b287c) refinement after Curtis's first-look feedback:
+  "save the planet — like in a sep file but remove it for now."
+  Moon disk parked at: src/components/_parked/MoonDisk.astro
+  To re-enable, import + render inside .sky-celestial.
+-->
+<div class="sky" aria-hidden="true">
+  <div class="sky-horizon"></div>
+  <!-- Warm overlay — lives separate from the sky gradient so it can fade
+       in/out independently when crossing mid ↔ day. mid=1, day=0, night=0. -->
+  <div class="sky-warmth"></div>
+  <div class="sky-celestial">
+    <!-- Sun disk — visible in light, slides into view from below-right in dark→light -->
+    <div class="sky-sun"></div>
+  </div>
+</div>
+
+<style>
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Horizon: ANGULAR / SIDE-ANCHORED gradient, idle state.
+   * Curtis's call (s01-7b287c): "light fading in heavier from one side,
+   * like as if spinning out of view." Anchor the radial off-screen to
+   * the lower-right so light pours diagonally into the frame.
+   * Theme-specific overrides below + GSAP-driven during transition. */
+  .sky-horizon {
+    position: absolute;
+    inset: 0;
+    /* Dark theme idle: very subtle indigo wash from lower-right */
+    background: radial-gradient(
+      ellipse 70% 90% at 110% 110%,
+      rgba(46, 80, 124, 0.10) 0%,
+      transparent 55%
+    );
+    opacity: 1;
+    transition: opacity 1.2s ease, background 1.2s ease;
+  }
+
+  html[data-theme='light'] .sky-horizon {
+    /* Light theme idle: BLUE-DOMINANT sky with a small warm wisp on the right.
+     * Per Curtis (s01-7b287c) refinement: "more blue." The horizon is mostly
+     * pale dawn blue with just a hint of sun-warm at the corner edge. */
+    background:
+      radial-gradient(
+        ellipse 80% 100% at 100% 100%,
+        rgba(232, 168, 124, 0.10) 0%,
+        rgba(124, 168, 200, 0.12) 25%,
+        rgba(124, 168, 200, 0.06) 55%,
+        transparent 75%
+      ),
+      radial-gradient(
+        ellipse 100% 60% at 50% 100%,
+        rgba(124, 168, 200, 0.10) 0%,
+        rgba(124, 178, 212, 0.04) 40%,
+        transparent 70%
+      );
+  }
+
+  /* Warm overlay — SEPARATE from the sky gradient so it can fade
+   * independently when crossing mid ↔ day. Curtis (s01-b73653): "the
+   * organg glow more gently increase as it gets brighter" + "shouldn't be
+   * gradiant -- should be more of an overlay that can fade out as it
+   * transitions to the day mood."
+   *
+   * Mid + light = full warmth. Day + light = 0 (clear sky). Night = 0. */
+  .sky-warmth {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background:
+      radial-gradient(ellipse 95% 55% at 50% 100%,
+        rgba(245, 175, 120, 0.42) 0%,
+        rgba(240, 195, 155, 0.22) 28%,
+        transparent 58%),
+      radial-gradient(ellipse 55% 70% at 105% 85%,
+        rgba(245, 175, 120, 0.38) 0%,
+        transparent 62%);
+    /* Curtis (s01-b73653): "appear from almost full transparency and
+     * increase quickly, not come in at like instant 50 percent."
+     * `ease` front-loads movement (~40% progress in first quarter —
+     * exactly the pop he was seeing). cubic-bezier with strong ease-in
+     * shape keeps opacity near 0 for the first ~40% of duration, then
+     * ramps fast — truly fades up from invisible. */
+    transition: opacity 1.8s cubic-bezier(0.7, 0, 0.84, 0.4);
+  }
+
+  html[data-mood='mid'][data-surface='light'] .sky-warmth { opacity: 1; }
+  html[data-mood='day'][data-surface='light'] .sky-warmth { opacity: 0; }
+  html[data-mood='night'] .sky-warmth { opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sky-warmth { transition: opacity 0.2s linear !important; }
+  }
+
+  /* Celestial layer — sun (moon parked). Position at upper-right.
+   * Smaller in this iteration — the sky is bluer and the sun is a softer accent,
+   * not the main focal element. */
+  .sky-celestial {
+    position: absolute;
+    top: 12%;
+    right: 8%;
+    width: 110px;
+    height: 110px;
+    pointer-events: none;
+  }
+
+  /* Sun: warm gold disk with halo. In dark, sits OFF-SCREEN to the right
+   * (translateX positive). On dark→light, sweeps in from the right edge
+   * with a slight upward arc — "spinning out of view" reversed: it's
+   * spinning INTO view from offstage. */
+  .sky-sun {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 35% 35%,
+      rgba(255, 230, 170, 0.95) 0%,
+      rgba(232, 168, 124, 0.8) 40%,
+      rgba(232, 168, 124, 0.2) 70%,
+      transparent 100%
+    );
+    box-shadow:
+      0 0 50px rgba(255, 200, 130, 0.3),
+      0 0 100px rgba(232, 168, 124, 0.18),
+      0 0 200px rgba(232, 168, 124, 0.08);
+    opacity: 0;
+    /* Dark idle: sun is offstage to the lower-right (translateX out of frame) */
+    transform: translate(140px, 60px) rotate(-30deg);
+    /* Staggered fade: sky gradient starts at 0s, sun delays so it doesn't
+     * pop in alongside. Opacity ramps slow + late; transform a touch earlier
+     * so motion + brightness feel separate. */
+    transition:
+      opacity 1.8s ease 0.7s,
+      transform 2.6s cubic-bezier(0.34, 1.0, 0.4, 1) 0.4s;
+  }
+
+  html[data-theme='light'] .sky-sun {
+    opacity: 1;
+    /* Light: sun rests in upper-right, slightly tilted (just "settled") */
+    transform: translate(0, 0) rotate(0);
+  }
+
+  /* During transition, GSAP adds .sky-transitioning to <html> — we use it
+   * to expose the sky layer more aggressively and make the horizon "swept by sunrise". */
+  html.sky-transitioning .sky-horizon {
+    /* GSAP overrides background + opacity directly during the transition. */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sky-sun,
+    .sky-moon {
+      transition: opacity 0.2s linear !important;
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .sky-celestial {
+      width: 75px;
+      height: 75px;
+      top: 10%;
+      right: 6%;
+    }
+  }
+</style>

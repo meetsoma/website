@@ -1136,10 +1136,9 @@ const recentPosts = posts.slice(0, 3);
     letter-spacing: 0.3px;
   }
   .verse-msg.user .verse-msg-prefix { color: rgba(157, 175, 196, 0.55); }
-  .verse-msg.agent .verse-msg-prefix { color: #f0c866; }
+  .verse-msg.agent .verse-msg-prefix { color: var(--promo); }
   html[data-surface='light'] .verse-msg-prefix { color: #2a4f80; }
   html[data-surface='light'] .verse-msg.user .verse-msg-prefix { color: rgba(46, 96, 148, 0.70); }
-  html[data-surface='light'] .verse-msg.agent .verse-msg-prefix { color: #b8841a; }
 
   .verse-pane-pips {
     display: flex;
@@ -1158,7 +1157,7 @@ const recentPosts = posts.slice(0, 3);
     border-radius: 999px;
     background: var(--surface-interactive);
   }
-  .pip.more { color: #f0c866; border-color: rgba(240, 200, 102, 0.3); }
+  .pip.more { color: var(--promo); border-color: var(--promo-border); }
   /* Light: pip pills get a glass treatment + darker text */
   html[data-surface='light'] .pip {
     background: rgba(255, 255, 255, 0.55);
@@ -1166,9 +1165,9 @@ const recentPosts = posts.slice(0, 3);
     color: #2a4f80;
   }
   html[data-surface='light'] .pip.more {
-    color: #b8841a;
-    border-color: rgba(184, 132, 26, 0.45);
-    background: rgba(255, 245, 220, 0.55);
+    color: var(--promo);
+    border-color: var(--promo-border);
+    background: var(--surface-warm-soft);
   }
 
   @media (max-width: 768px) {

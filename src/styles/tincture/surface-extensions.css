@@ -149,6 +149,16 @@
   --surface-inset-highlight:   rgba(255, 255, 255, 0.55);
   --shadow-accent-soft:        rgba(21, 85, 160, 0.18);
   --shadow-accent-mid:         rgba(21, 85, 160, 0.30);
+
+  /* Promo gold → sun-warm orange in light mode. Curtis (s01-b73653):
+   * "the gold on the day mode should turn a bit more orangey, similar
+   * to the lighter part of the sun" — these now match the sun's mid
+   * tones (#ffd88a / #f0a868) so the badges, sigma, NEW pills, etc.
+   * read as "of the sun" instead of yellow against blue sky. */
+  --promo:        #e89048;   /* warm sun-orange (deeper than #f0a868 for legibility) */
+  --promo-dim:    #c47030;
+  --promo-glow:   rgba(232, 144, 72, 0.18);
+  --promo-border: rgba(232, 144, 72, 0.32);
 }
 
 /* ── Debug ───────────────────────────────────────────────────────────── */
