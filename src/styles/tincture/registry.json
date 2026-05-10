@@ -153,31 +153,67 @@
         "default": "#7cb2d4"
       }
     },
+    "sun-core": {
+      "kind": "color",
+      "axes": [],
+      "doc": "Brightest sun center — near-white peach. Surface-invariant (sun is the same character across themes).",
+      "values": { "default": "#fff5d4" }
+    },
+    "sun-mid": {
+      "kind": "color",
+      "axes": [],
+      "doc": "Sun mid-tone — warm gold. The 'happy daylight' color.",
+      "values": { "default": "#ffd88a" }
+    },
+    "sun-warm": {
+      "kind": "color",
+      "axes": [],
+      "doc": "Sun warm-mid — honey orange. Mid-orange that reads as 'sun' not 'fire'.",
+      "values": { "default": "#f0a868" }
+    },
+    "sun-deep": {
+      "kind": "color",
+      "axes": [],
+      "doc": "Sun deep — copper orange. Sun outer body, rays' end-of-fade.",
+      "values": { "default": "#c47852" }
+    },
+    "sun-text": {
+      "kind": "color",
+      "axes": [],
+      "doc": "Deepest readable orange that still reads ORANGE (not brown). For TEXT in the promo hue against pale bg. Calibrated to feel like the sun's deepest warmth without sliding into brown territory.",
+      "values": { "default": "#b04518" }
+    },
+    "sun-shadow": {
+      "kind": "color",
+      "axes": [],
+      "doc": "Sun's underside shadow. Used for the smirk in the mascot SVG and very dark warm accents.",
+      "values": { "default": "#6a2818" }
+    },
     "promo": {
       "kind": "color",
       "axes": ["surface"],
-      "doc": "Promo accent. Bright on dark (gold-yellow against deep space), bright sun-orange on light (line/dot/icon accent). Pairs with --promo-text for legible TEXT.",
+      "doc": "Promo accent. Gold-yellow on dark (#f0c866 against deep space). On light, this is the BRIGHT sun-orange (--sun-warm) used for icons, dots, lines, glows, and the σ sigma. For TEXT use --promo-text.",
       "values": {
         "default":       "#f0c866",
-        "surface=light": "#e89048"
+        "surface=light": "#f0a868"
       }
     },
     "promo-text": {
       "kind": "color",
       "axes": ["surface"],
-      "doc": "Readable text variant of --promo. Bright gold on dark (pops on dark bg), deep burnt orange on light (legible on pale bg). Use this anywhere promo color is applied to TEXT (color: var(--promo-text)). For dots/lines/borders/icons keep --promo.",
+      "doc": "Readable text variant of --promo. On dark: bright gold pops. On light: deep readable orange (--sun-text), calibrated to feel ORANGE not brown.",
       "values": {
         "default":       "#f0c866",
-        "surface=light": "#7a3010"
+        "surface=light": "#b04518"
       }
     },
     "promo-dim": {
       "kind": "color",
       "axes": ["surface"],
-      "doc": "Dimmed promo — secondary text when --promo-text is too loud, or hover-leave state.",
+      "doc": "Dimmed promo — secondary text, hover-leave state. Light: a touch deeper than --promo-text for tonal hierarchy.",
       "values": {
         "default":       "#c4a24e",
-        "surface=light": "#7a3010"
+        "surface=light": "#8e3a14"
       }
     },
     "promo-glow": {

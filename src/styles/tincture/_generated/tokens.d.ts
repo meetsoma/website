@@ -2,7 +2,7 @@
 // Registry: soma/tincture v0.1.0
 
 /** Union of every token ID in the registry. */
-export type TokenId = "accent" | "accent-fg" | "accent-warm" | "bg" | "bg-card" | "bg-elev" | "border" | "border-accent" | "brand-sigma" | "font-body" | "font-display" | "font-mono" | "ink" | "ink-muted" | "ink-soft" | "promo" | "promo-border" | "promo-dim" | "promo-glow" | "promo-text" | "shadow-accent" | "shadow-card";
+export type TokenId = "accent" | "accent-fg" | "accent-warm" | "bg" | "bg-card" | "bg-elev" | "border" | "border-accent" | "brand-sigma" | "font-body" | "font-display" | "font-mono" | "ink" | "ink-muted" | "ink-soft" | "promo" | "promo-border" | "promo-dim" | "promo-glow" | "promo-text" | "shadow-accent" | "shadow-card" | "sun-core" | "sun-deep" | "sun-mid" | "sun-shadow" | "sun-text" | "sun-warm";
 
 /** All token IDs as a tuple (use `as const` for inference). */
-export const TOKEN_IDS = ["accent", "accent-fg", "accent-warm", "bg", "bg-card", "bg-elev", "border", "border-accent", "brand-sigma", "font-body", "font-display", "font-mono", "ink", "ink-muted", "ink-soft", "promo", "promo-border", "promo-dim", "promo-glow", "promo-text", "shadow-accent", "shadow-card"] as const;
+export const TOKEN_IDS = ["accent", "accent-fg", "accent-warm", "bg", "bg-card", "bg-elev", "border", "border-accent", "brand-sigma", "font-body", "font-display", "font-mono", "ink", "ink-muted", "ink-soft", "promo", "promo-border", "promo-dim", "promo-glow", "promo-text", "shadow-accent", "shadow-card", "sun-core", "sun-deep", "sun-mid", "sun-shadow", "sun-text", "sun-warm"] as const;

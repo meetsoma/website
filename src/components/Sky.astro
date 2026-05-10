@@ -39,28 +39,28 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" class="sky-sun-svg" aria-hidden="true">
         <defs>
           <radialGradient id="sun-body" cx="38%" cy="30%" r="60%">
-            <stop offset="0%" stop-color="#fff5d4"/>
-            <stop offset="35%" stop-color="#ffd88a"/>
-            <stop offset="70%" stop-color="#f0a868"/>
-            <stop offset="100%" stop-color="#c47852"/>
+            <stop offset="0%"   stop-color="var(--sun-core)"/>
+            <stop offset="35%"  stop-color="var(--sun-mid)"/>
+            <stop offset="70%"  stop-color="var(--sun-warm)"/>
+            <stop offset="100%" stop-color="var(--sun-deep)"/>
           </radialGradient>
           <radialGradient id="sun-ray" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#ffd88a"/>
-            <stop offset="100%" stop-color="#e8a87c" stop-opacity="0.55"/>
+            <stop offset="0%"   stop-color="var(--sun-mid)"/>
+            <stop offset="100%" stop-color="var(--sun-warm)" stop-opacity="0.55"/>
           </radialGradient>
           <radialGradient id="sun-ray-short" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#ffe6aa"/>
-            <stop offset="100%" stop-color="#e8a87c" stop-opacity="0.45"/>
+            <stop offset="0%"   stop-color="var(--sun-core)"/>
+            <stop offset="100%" stop-color="var(--sun-warm)" stop-opacity="0.45"/>
           </radialGradient>
           <radialGradient id="sun-spec" cx="30%" cy="22%" r="22%">
             <stop offset="0%" stop-color="white" stop-opacity="0.40"/>
             <stop offset="100%" stop-color="white" stop-opacity="0"/>
           </radialGradient>
           <radialGradient id="sun-halo" cx="50%" cy="50%" r="50%">
-            <stop offset="30%" stop-color="white"   stop-opacity="0.18"/>
-            <stop offset="45%" stop-color="#ffe6aa" stop-opacity="0.24"/>
-            <stop offset="65%" stop-color="#f0a868" stop-opacity="0.18"/>
-            <stop offset="100%" stop-color="#e8a87c" stop-opacity="0"/>
+            <stop offset="30%"  stop-color="white"             stop-opacity="0.18"/>
+            <stop offset="45%"  stop-color="var(--sun-core)"   stop-opacity="0.24"/>
+            <stop offset="65%"  stop-color="var(--sun-warm)"   stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="var(--sun-deep)"   stop-opacity="0"/>
           </radialGradient>
           <linearGradient id="sun-lens" x1="50%" y1="0%" x2="50%" y2="100%">
             <stop offset="0%" stop-color="#3a5a8c"/>
@@ -131,8 +131,8 @@
         <!-- Lens highlights -->
         <path d="M 100,196 Q 130,188 160,194" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.50"/>
         <path d="M 240,194 Q 270,188 300,196" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.50"/>
-        <!-- Dad smirk -->
-        <path d="M 162,288 Q 200,310 244,278" fill="none" stroke="#6a2818" stroke-width="6" stroke-linecap="round" opacity="0.80"/>
+        <!-- Dad smirk — sun-shadow color (deep warm umber) -->
+        <path d="M 162,288 Q 200,310 244,278" fill="none" stroke="var(--sun-shadow)" stroke-width="6" stroke-linecap="round" opacity="0.80"/>
       </svg>
     </div>
   </div>
