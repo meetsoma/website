@@ -132,7 +132,7 @@ Commands appear in `/soma status` output and tab completions. Install community 
 
 | Command | Description |
 |---------|-------------|
-| `/auto-breathe on\|off` | Toggle auto-breathe mode - proactive context management. Wraps up at configurable %, auto-rotates before 85%. Rotation uses the capability router when available, or CLI process restart as fallback. Default: off. |
+| `/auto-breathe off\|global\|model-aware\|status` | Tri-state proactive context management (cycle 16, v0.27.1). `off` = passive notifications only. `global` = fixed `triggerAt`/`rotateAt` percentages (legacy behavior). `model-aware` = per-glob thresholds from `breathe.thresholds` map (default install). `status` = show resolved thresholds for current model. Sonnet defaults: warn at 28-33%, exhale at 34-50% (BEFORE the empirical ~48% long-context wall). Boolean still parsed for back-compat (true → "global", false → "off") via migration `breathe-tri-state-v0.27.0`. |
 | `/auto-commit on\|off` | Toggle auto-commit of `.soma/` state on exhale/breathe. Default: on. |
 | `/keepalive on\|off` | Toggle cache keepalive. When enabled, sends periodic pings to prevent cache eviction during idle periods. |
 

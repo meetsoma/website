@@ -111,6 +111,22 @@ To reduce token usage:
 - Remove sections from `_mind.md` template
 - Move content from soul to body files (loaded on demand)
 
+## How `{{skills_block}}` works (transplant, not duplicate)
+
+The `{{skills_block}}` slot in `_mind.md` looks like a duplicate of Pi's native skill discovery, but it's actually a **transplant**:
+
+1. Pi natively generates the `<available_skills>...</available_skills>` XML via `formatSkillsForPrompt()` (loads from `~/.soma/agent/skills/`, `.soma/skills/`, and explicit paths).
+2. Pi fires `before_agent_start` with `event.systemPrompt` containing the XML.
+3. soma's `core/body.ts` extracts the block: `vars.skills_block = extractBlock(piSystemPrompt, "<available_skills>", "</available_skills>")`.
+4. soma's template renders, placing the extracted XML at the `{{skills_block}}` position.
+5. soma RETURNS the compiled prompt, which **fully replaces** Pi's prompt (when Pi's is the default-shape — the normal case).
+
+Net: skills XML appears **once** in the final prompt, at the soma-controlled position. NOT a double.
+
+**If you remove `{{skills_block}}` from the template, skills disappear** — because soma's full-replacement throws away Pi's prompt. Either keep the slot OR change soma's compile mode to PREPEND (so Pi's native injection flows through unmodified) AND remove the slot.
+
+This is a different shape from the earlier `muscle_digests` slot (s01-1dae05, 2026-04-29), which WAS a true double-load — Pi compiler-prepended muscle digests AND soma's template re-rendered them. That one was correctly removed; skills should not be.
+
 ## Identity Placement
 
 By default, identity loads into the system prompt between the static core and behavioral sections. This gives it high priority in the model's attention.

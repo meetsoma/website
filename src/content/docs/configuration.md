@@ -407,68 +407,56 @@ Disable git context entirely:
 
 ### Auto-Breathe
 
-Proactive context management. Instead of waiting until context is critical, auto-breathe gives the agent progressive awareness of context pressure and handles rotation gracefully.
+Proactive context management — fires warn + exhale notifications before sessions hit critical context levels, then handles rotation gracefully. Three modes:
+
+#### Quick reference
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `auto` | `false` | Enable auto-breathe mode |
-| `triggerAt` | `50` | Context % to send a gentle notice (agent keeps working, just stays aware) |
-| `rotateAt` | `70` | Context % to write preload and start countdown to rotation |
-| `graceSeconds` | `30` | Seconds to wait for preload before timing out — time-based, not turn-based |
-| `maxTokens` | `0` | Absolute token cap for threshold calculations. When set, percentages are calculated against this value instead of the model's full context window. Useful for large-context models where 50% of 1M tokens is impractically high. `0` = use model's native window. **Warning:** if you switch to a smaller model, this cap could exceed the actual context window. |
+| `auto` | `"model-aware"` | Mode: `"off"` \| `"global"` \| `"model-aware"` |
+| `triggerAt` | `50` | Warn % (used when `auto = "global"`) |
+| `rotateAt` | `70` | Exhale % (used when `auto = "global"`) |
+| `thresholds` | (see below) | Per-model ranges (used when `auto = "model-aware"`) |
+| `graceSeconds` | `30` | Seconds to wait for preload before timing out |
+| `maxTokens` | `0` | Absolute token cap for % calculations. `0` = use model's native window. |
 
-**How the phases work:**
+#### Tri-state mode
 
-| Phase | Default % | What happens |
-|-------|-----------|-------------|
-| Notice | `triggerAt` (50%) | Gentle heads-up. Agent keeps working. "Consider updating logs as you go." |
-| Rotate | `rotateAt` (70%) | Firm wrap-up. Agent writes preload, countdown starts. |
-| Grace period | (after rotate) | `graceSeconds` (default 30s) timer. Agent writes session log + preload within this window. If preload detected, rotation happens immediately. |
-| Rotation | (countdown = 0) | Session rotates to fresh context with preload auto-injected. |
-| Emergency | 85% (always on) | Safety net. Fires regardless of auto-breathe setting. "Stop all work, preload NOW." |
+| Mode | Behavior |
+|------|----------|
+| `"off"` | Passive notifications only (`context.*` thresholds). No proactive rotation. |
+| `"global"` | Proactive rotation at fixed `triggerAt`/`rotateAt` percentages (legacy behavior). |
+| `"model-aware"` | Proactive rotation using per-model `warnRange`/`exhaleRange` brackets. **Default for new installs.** |
 
-The key insight: the notice at 50% is *not* a shutdown signal. It's awareness. The agent should keep working on its current task — it just knows rotation is ahead and can start logging work incrementally.
+**Migration from boolean `auto`:** Existing settings with `auto: true` are migrated to `"global"` (legacy behavior preserved). `auto: false` → `"off"`. Unset installs get `"model-aware"` as the new default.
 
-**The grace period:** After rotation is triggered, the agent has `graceSeconds` (default 30) to write a preload. This is time-based, not turn-based — the agent can make as many tool calls as needed within the window. As soon as the preload file is detected, rotation happens immediately. If the timer expires without a preload, breathe times out and the user can retry with `/breathe`.
+**Toggle at runtime:** `/auto-breathe off | global | model-aware | status`
 
-**Why enable auto-breathe:** Without it, sessions run until the 85% emergency — which is too late for a clean handoff. Auto-breathe produces better preloads because the agent has time to write them thoughtfully instead of in a panic.
+#### Model-aware thresholds
 
-**Status (auto-breathe + cache busting):** ⚠️ *Auto-breathe at the 70% rotate phase has been observed live to invalidate the full cached prompt prefix (~$4 per event) on at least one workspace (SX-709). The mechanism is not yet root-caused. Workaround: `breathe.auto: false`, which leaves the 85% safety net active. Once SX-709 is fixed, re-enable.*
+In `"model-aware"` mode, the `thresholds` map resolves per-model warn and exhale ranges. Glob patterns match against `ctx.model.id` (case-insensitive, first match wins). `"default"` is the fallback.
 
-**Example: enable with defaults:**
+**Default thresholds map:**
 ```json
 {
   "breathe": {
-    "auto": true
+    "auto": "model-aware",
+    "thresholds": {
+      "default":  { "warnRange": [50, 64], "exhaleRange": [65, 85] },
+      "*sonnet*": { "warnRange": [28, 33], "exhaleRange": [34, 50] },
+      "*opus*":   { "warnRange": [60, 74], "exhaleRange": [75, 90] }
+    }
   }
 }
 ```
 
-**Example: later triggers for deep work sessions.**
-If your work involves reading many large files, context fills faster. Push triggers later so the agent doesn't get distracted by notices too early:
-```json
-{
-  "breathe": {
-    "auto": true,
-    "triggerAt": 60,
-    "rotateAt": 80
-  }
-}
-```
+The Sonnet thresholds (`warnRange: [28, 33]`, `exhaleRange: [34, 50]`) are calibrated against the empirical long-context billing tier wall (~40-48% context on standard Anthropic accounts). Warn fires **every turn** while in `warnRange`. Exhale fires **once per range entry** when pct enters `exhaleRange`, then resets if pct drops below `exhaleRange[0]`.
 
-**Example: tighter rotation for short focused tasks.**
-If you're doing quick iterations (fix a bug, ship, rotate), pull the triggers closer together:
-```json
-{
-  "breathe": {
-    "auto": true,
-    "triggerAt": 40,
-    "rotateAt": 55
-  }
-}
-```
+**Behavior flow (model-aware):**
 
-You can also toggle at runtime with `/auto-breathe on|off` — useful for switching between deep focus and quick iteration within the same project.
+| Phase | Trigger | What happens |
+|-------|---------|-------------|
+| Warn | pct ∈ warnRange | `ctx.ui.notify` every turn — 
 
 ### Context Warnings
 
