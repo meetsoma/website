@@ -57,7 +57,9 @@
             <stop offset="100%" stop-color="white" stop-opacity="0"/>
           </radialGradient>
           <radialGradient id="sun-halo" cx="50%" cy="50%" r="50%">
-            <stop offset="40%" stop-color="#e8a87c" stop-opacity="0.20"/>
+            <stop offset="30%" stop-color="white"   stop-opacity="0.18"/>
+            <stop offset="45%" stop-color="#ffe6aa" stop-opacity="0.24"/>
+            <stop offset="65%" stop-color="#f0a868" stop-opacity="0.18"/>
             <stop offset="100%" stop-color="#e8a87c" stop-opacity="0"/>
           </radialGradient>
           <linearGradient id="sun-lens" x1="50%" y1="0%" x2="50%" y2="100%">
@@ -221,31 +223,36 @@
   }
 
   /* Celestial layer — sun (moon parked). Position at upper-right.
-   * Smaller in this iteration — the sky is bluer and the sun is a softer accent,
-   * not the main focal element. */
+   * Sized at 170px so the SVG character + halo reads at full presence.
+   * Curtis (s01-b73653): "make the sun a bit bigger like it was before". */
   .sky-celestial {
     position: absolute;
-    top: 12%;
-    right: 8%;
-    width: 110px;
-    height: 110px;
+    top: 10%;
+    right: 7%;
+    width: 170px;
+    height: 170px;
     pointer-events: none;
+  }
+  @media (max-width: 640px) {
+    .sky-celestial { width: 110px; height: 110px; top: 9%; right: 5%; }
   }
 
   /* Sun: warm gold disk with halo. In dark, sits OFF-SCREEN to the right
    * (translateX positive). On dark→light, sweeps in from the right edge
    * with a slight upward arc — "spinning out of view" reversed: it's
    * spinning INTO view from offstage. */
-  /* Soma sun: SVG character. Wrapper handles position + dark→light fade.
-   * Halo bloom comes from box-shadow on the wrapper — the SVG provides
-   * the body, rays, aviators, smirk. */
+  /* Soma sun: SVG character. Wrapper handles position + dark→light fade
+   * + the EMANATING SHINE (white core → gold mid → warm orange outer).
+   * Three stacked drop-shadows give the layered glow Curtis asked for:
+   * "he's got to shine a bit — like a whiter hue, slightly of white
+   * maybe like white/gold/orange hue eminating from him." */
   .sky-sun {
     position: absolute;
     inset: 0;
-    /* Halo bloom — still drawn from the wrapper so it doesn't move with
-     * the SVG's internal padding (the rays sit inside the SVG viewBox). */
-    filter: drop-shadow(0 0 12px rgba(255, 200, 130, 0.18))
-            drop-shadow(0 0 32px rgba(232, 168, 124, 0.10));
+    filter:
+      drop-shadow(0 0 18px rgba(255, 248, 220, 0.55))    /* white core */
+      drop-shadow(0 0 38px rgba(255, 220, 150, 0.42))    /* gold mid */
+      drop-shadow(0 0 78px rgba(240, 168, 104, 0.28));   /* warm orange outer */
     opacity: 0;
     transform: translate(140px, 60px) rotate(-30deg);
     transition:
