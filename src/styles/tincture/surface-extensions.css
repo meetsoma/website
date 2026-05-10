@@ -66,18 +66,20 @@
   --sky-cloud-high:  rgba(70, 110, 155, 0.30);
 }
 
-/* mid + light surface — airy: baby blue → cream → soft orange horizon */
+/* mid + light surface — pure blue gradient, a touch deeper. Warmth lives
+   in the separate .sky-warmth overlay (Sky.astro) so it can fade out
+   independently when transitioning to day mood. */
 [data-mood="mid"][data-surface="light"],
 [data-mood="mid"] [data-surface="light"] {
-  --sky-top:         #c5dceb;
-  --sky-upper:       #d4e7f0;
-  --sky-mid:         #e6eef5;
-  --sky-transition:  #f0e8dc;
-  --sky-warm-start:  #f5dac4;
-  --sky-warm:        #f5c8a0;
-  --sky-horizon:     #f0bc8e;
-  --sky-bleed:       rgba(245, 180, 130, 0.32);
-  --sky-bleed-mid:   rgba(240, 200, 160, 0.18);
+  --sky-top:         #a3c5e0;
+  --sky-upper:       #b6d3e8;
+  --sky-mid:         #c8dfed;
+  --sky-transition:  #d6e7f0;
+  --sky-warm-start:  #e2ebf2;  /* cool, not warm — warmth is overlay */
+  --sky-warm:        #ecf2f7;
+  --sky-horizon:     #f3f7fa;
+  --sky-bleed:       rgba(220, 235, 248, 0.20);  /* cool wash if anything */
+  --sky-bleed-mid:   rgba(220, 235, 248, 0.10);
   --sky-cloud-low:   rgba(255, 240, 220, 0.65);
   --sky-cloud-mid:   rgba(248, 252, 255, 0.55);
   --sky-cloud-high:  rgba(225, 238, 248, 0.40);
@@ -100,21 +102,53 @@
   --sky-cloud-high:  rgba(160, 205, 232, 0.25);
 }
 
-/* day + light surface — even airier, white wispy clouds, no warm tint */
+/* day + light surface — clearer, slightly more saturated blue (full
+   daylight). NO warm overlay (.sky-warmth opacity goes to 0 in day). */
 [data-mood="day"][data-surface="light"],
 [data-mood="day"] [data-surface="light"] {
-  --sky-top:         #b3d3e8;
-  --sky-upper:       #c5ddee;
-  --sky-mid:         #d8e7f1;
-  --sky-transition:  #e8eff5;
-  --sky-warm-start:  #eef3f7;
-  --sky-warm:        #f3f7fa;
-  --sky-horizon:     #e8eef4;
-  --sky-bleed:       rgba(220, 235, 248, 0.18);
-  --sky-bleed-mid:   rgba(220, 235, 248, 0.10);
+  --sky-top:         #94bcda;
+  --sky-upper:       #a8caea;
+  --sky-mid:         #bdd9eb;
+  --sky-transition:  #cee2ee;
+  --sky-warm-start:  #dde9f3;
+  --sky-warm:        #e8f0f7;
+  --sky-horizon:     #f0f5f9;
+  --sky-bleed:       rgba(200, 225, 245, 0.15);
+  --sky-bleed-mid:   rgba(200, 225, 245, 0.08);
   --sky-cloud-low:   rgba(255, 255, 255, 0.80);
   --sky-cloud-mid:   rgba(248, 252, 255, 0.60);
   --sky-cloud-high:  rgba(225, 238, 248, 0.45);
+}
+
+/* ── Translucent surface utilities ─────────────────────────────────────── */
+/* DARK + LIGHT translucent surfaces. Defined here (not in :root) so source
+ * order lets [data-surface="light"] cleanly override the dark values
+ * — no specificity fight with Layout.astro's :root.
+ * Restored s01-b73653 after a regex rewrite swallowed them. */
+[data-surface="dark"] {
+  --surface-card:              rgba(11, 16, 24, 0.70);
+  --surface-card-strong:       rgba(11, 16, 24, 0.85);
+  --surface-overlay:           rgba(0, 0, 0, 0.30);
+  --surface-interactive:       rgba(255, 255, 255, 0.06);
+  --surface-interactive-hover: rgba(255, 255, 255, 0.12);
+  --surface-accent-soft:       rgba(104, 152, 190, 0.12);
+  --surface-warm-soft:         rgba(232, 168, 124, 0.10);
+  --surface-inset-highlight:   rgba(255, 255, 255, 0.04);
+  --shadow-accent-soft:        rgba(104, 152, 190, 0.15);
+  --shadow-accent-mid:         rgba(104, 152, 190, 0.25);
+}
+
+[data-surface="light"] {
+  --surface-card:              rgba(245, 250, 254, 0.92);
+  --surface-card-strong:       rgba(250, 253, 255, 0.97);
+  --surface-overlay:           rgba(8, 22, 36, 0.22);
+  --surface-interactive:       rgba(8, 22, 36, 0.07);
+  --surface-interactive-hover: rgba(8, 22, 36, 0.13);
+  --surface-accent-soft:       rgba(21, 85, 160, 0.10);
+  --surface-warm-soft:         rgba(200, 90, 40, 0.08);
+  --surface-inset-highlight:   rgba(255, 255, 255, 0.55);
+  --shadow-accent-soft:        rgba(21, 85, 160, 0.18);
+  --shadow-accent-mid:         rgba(21, 85, 160, 0.30);
 }
 
 /* ── Debug ───────────────────────────────────────────────────────────── */

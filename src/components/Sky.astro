@@ -28,6 +28,9 @@
 -->
 <div class="sky" aria-hidden="true">
   <div class="sky-horizon"></div>
+  <!-- Warm overlay — lives separate from the sky gradient so it can fade
+       in/out independently when crossing mid ↔ day. mid=1, day=0, night=0. -->
+  <div class="sky-warmth"></div>
   <div class="sky-celestial">
     <!-- Sun disk — visible in light, slides into view from below-right in dark→light -->
     <div class="sky-sun"></div>
@@ -79,6 +82,38 @@
         rgba(124, 178, 212, 0.04) 40%,
         transparent 70%
       );
+  }
+
+  /* Warm overlay — SEPARATE from the sky gradient so it can fade
+   * independently when crossing mid ↔ day. Curtis (s01-b73653): "the
+   * organg glow more gently increase as it gets brighter" + "shouldn't be
+   * gradiant -- should be more of an overlay that can fade out as it
+   * transitions to the day mood."
+   *
+   * Mid + light = full warmth. Day + light = 0 (clear sky). Night = 0. */
+  .sky-warmth {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background:
+      radial-gradient(ellipse 95% 55% at 50% 100%,
+        rgba(245, 175, 120, 0.42) 0%,
+        rgba(240, 195, 155, 0.22) 28%,
+        transparent 58%),
+      radial-gradient(ellipse 55% 70% at 105% 85%,
+        rgba(245, 175, 120, 0.38) 0%,
+        transparent 62%);
+    /* Slow fade so mid↔day mood crossings feel like sunset rolling in/out. */
+    transition: opacity 2.2s ease;
+  }
+
+  html[data-mood='mid'][data-surface='light'] .sky-warmth { opacity: 1; }
+  html[data-mood='day'][data-surface='light'] .sky-warmth { opacity: 0; }
+  html[data-mood='night'] .sky-warmth { opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sky-warmth { transition: opacity 0.2s linear !important; }
   }
 
   /* Celestial layer — sun (moon parked). Position at upper-right.
