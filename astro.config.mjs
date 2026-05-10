@@ -6,7 +6,9 @@ export default defineConfig({
   site: 'https://soma.gravicity.ai',
   output: 'static',
   integrations: [
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/sandbox/') && !page.includes('/verse/'),
+    }),
     preact({ compat: true }),
   ],
   build: {

@@ -24,12 +24,33 @@ const allItems = [
 ];
 
 const total = allItems.length;
+
+const hubJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      name: 'Soma Hub',
+      description: 'Community AMPS — Automations, Muscles, Protocols, Skills — and templates for Soma agents.',
+      url: 'https://soma.gravicity.ai/hub',
+      numberOfItems: total,
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://soma.gravicity.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Hub', item: 'https://soma.gravicity.ai/hub' },
+      ],
+    },
+  ],
+};
 ---
 
 <Layout
   title="Hub — σ"
   description="Browse and install community AMPS — Automations, Muscles, Protocols, Skills — and templates for Soma agents."
   canonicalUrl="https://soma.gravicity.ai/hub"
+  jsonLd={hubJsonLd}
 >
   <div class="stars"></div>
 
