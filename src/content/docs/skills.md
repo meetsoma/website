@@ -22,13 +22,20 @@ brave-search/
 
 ## Locations
 
-| Location | Scope |
-|----------|-------|
-| `.soma/skills/` | Project — available in this project |
-| `~/.soma/agent/skills/` | Global Soma skills |
-| `~/.agents/skills/` | Cross-agent skills (shared with other agents) |
+Skills are loaded from these locations:
 
-Skills are also discovered from ancestor directories (up to git root), making monorepo setups work naturally.
+| Location | Scope | Walk-up |
+|---|---|---|
+| `<cwd>/.soma/skills/` | Project-local — loads only in this project | No (cwd only) |
+| `~/.soma/skills/` | **User-global** — loads for all your Soma sessions | No |
+| `~/.soma/agent/skills/` | Runtime-bundled — ships with Soma; **do not write here** | No |
+| `~/.agents/skills/` | Cross-agent standard — shared with Claude Code, Cursor, etc. | **Yes** (ancestors) |
+
+**Where to put YOUR skills:** `~/.soma/skills/` for personal/global, or `<project>/.soma/skills/` for project-scoped. The `~/.soma/agent/skills/` location is the runtime install and is gated by soma-guard — writes there are blocked by default because they'd be lost on the next Soma update.
+
+**Opt-out:** `--no-skills` (or `-ns`) skips skill discovery for one session.
+
+**Migration tip:** if you have a setup with `~/.agents/skills/` symlinked to a single home (e.g. `ln -s ~/.soma/skills ~/.agents/skills`), that still works. Soma now also loads `~/.soma/skills/` natively, so the symlink isn't required.
 
 ## Using Skills
 
