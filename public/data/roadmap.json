@@ -21,19 +21,16 @@
       "date": "2026-05-14",
       "features": {
         "added": [
-          "User-global resource paths — drop your extensions, skills, prompts, and themes at ~/.soma/{extensions,skills,prompts,themes}/, separate from the runtime install. Your stuff survives Soma updates.",
-          "Smarter bash guards — writes to the runtime install + destructive ops on it require explicit confirm. Expensive ops (npm publish, docker push, rsync to remote, ssh sudo) now confirm. Plain `git push` shows a notice.",
-          "Three release entry points unified — `soma-dev release prepare/ship` (collab), `release-please.yml` GHA (proposer), and `soma-dev delegate release v$VER` (autonomous) all funnel through the same orchestrator → same artifacts."
+          "**Personal resource paths.** Drop extensions, skills, prompts, and themes at `~/.soma/{extensions,skills,prompts,themes}/` — separate from the runtime install. Your customizations survive Soma updates.",
+          "**Runtime safety guards.** Destructive operations on the Soma install now require explicit confirmation. Expensive ops (npm publish, docker push, remote rsync) prompt before running. Boot validates the runtime environment and prevents accidental downgrades."
         ],
         "fixed": [
-          "Gitignore inline-comment patterns now work correctly — `sessions/` and `settings.json` no longer show up as untracked in the runtime install.",
-          "CHANGELOG promotion ordering — `[Unreleased] → [X.Y.Z]` now lands at the top of the file consistently."
-        ],
-        "removed": [
-          "4 stale dev-only scripts retired with dated-suffix preserved-history rename (soma-somaverse-deploy, soma-workspace-migrate-legacy, soma-version-stamp-audit, soma-racecar)."
+          "Gitignore inline-comment patterns now work correctly — `sessions/` and `settings.json` no longer show as untracked."
         ]
       },
-      "version": "0.27.3"
+      "version": "0.27.3",
+      "title": "Personal resource paths + runtime safety guards",
+      "tagline": "Your extensions survive updates. The runtime protects itself."
     },
     {
       "version": "0.27.2",
