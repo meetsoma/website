@@ -69,10 +69,15 @@ Extensions are TypeScript files that hook into Soma's lifecycle events.
 
 ### Extension Locations
 
-| Location | Scope |
-|----------|-------|
-| `.soma/extensions/` | Project-local (loads when CWD is in this project) |
-| `~/.soma/agent/extensions/` | Global (loads for all projects) |
+| Location | Scope | Walk-up |
+|---|---|---|
+| `<cwd>/.soma/extensions/` | Project-local — loads only when CWD is in this project | No (cwd only) |
+| `~/.soma/extensions/` | **User-global** — loads for all your Soma sessions | No |
+| `~/.soma/agent/extensions/` | Runtime-bundled — ships with Soma; **do not write here** | No |
+
+**Where to put YOUR extensions:** `~/.soma/extensions/` for personal/global, or `<project>/.soma/extensions/` for project-scoped. The `~/.soma/agent/extensions/` location is the runtime install — writes there are protected by soma-guard and won't survive Soma updates.
+
+**Opt-out:** `--no-extensions` (or `-ne`) skips extension discovery for one session. Explicit `--extension <path>` always works.
 
 ### Extension Security
 
