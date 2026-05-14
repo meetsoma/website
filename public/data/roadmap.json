@@ -1,9 +1,8 @@
 {
-  "generated": "2026-05-10T09:31:00Z",
+  "generated": "2026-05-14",
   "source": "CHANGELOG.md",
   "timeline": [
     {
-      "version": "Next",
       "date": "",
       "features": {
         "added": [
@@ -15,7 +14,26 @@
           "Statusline children-count + cost badge — at-a-glance visibility into background fleet and spend.",
           "AppleScript terminal drivers (ghostty, iTerm, Terminal.app) — macOS-native background panes for users who want OS-level windows."
         ]
-      }
+      },
+      "version": "Next"
+    },
+    {
+      "date": "2026-05-14",
+      "features": {
+        "added": [
+          "User-global resource paths — drop your extensions, skills, prompts, and themes at ~/.soma/{extensions,skills,prompts,themes}/, separate from the runtime install. Your stuff survives Soma updates.",
+          "Smarter bash guards — writes to the runtime install + destructive ops on it require explicit confirm. Expensive ops (npm publish, docker push, rsync to remote, ssh sudo) now confirm. Plain `git push` shows a notice.",
+          "Three release entry points unified — `soma-dev release prepare/ship` (collab), `release-please.yml` GHA (proposer), and `soma-dev delegate release v$VER` (autonomous) all funnel through the same orchestrator → same artifacts."
+        ],
+        "fixed": [
+          "Gitignore inline-comment patterns now work correctly — `sessions/` and `settings.json` no longer show up as untracked in the runtime install.",
+          "CHANGELOG promotion ordering — `[Unreleased] → [X.Y.Z]` now lands at the top of the file consistently."
+        ],
+        "removed": [
+          "4 stale dev-only scripts retired with dated-suffix preserved-history rename (soma-somaverse-deploy, soma-workspace-migrate-legacy, soma-version-stamp-audit, soma-racecar)."
+        ]
+      },
+      "version": "0.27.3"
     },
     {
       "version": "0.27.2",
