@@ -1,7 +1,7 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 import SomaVerse from '../../components/islands/SomaVerse.tsx';
-import VerseNav from '../../components/islands/VerseNav.tsx';
+import Nav from '../../components/Nav.astro';
 
 const title = "SomaVerse — Explore the Bodies";
 const description = "An infinite procedural space of Soma bodies. Each one unique. Some legendary.";
@@ -9,7 +9,7 @@ const canonicalUrl = "https://soma.gravicity.ai/verse";
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-surface="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,6 +33,7 @@ const canonicalUrl = "https://soma.gravicity.ai/verse";
     <link rel="preconnect" href="https://api.fontshare.com">
     <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <title>{title}</title>
     <ViewTransitions />
@@ -43,6 +44,7 @@ const canonicalUrl = "https://soma.gravicity.ai/verse";
         const theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
         document.documentElement.classList.add('no-transition');
         document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.surface = theme;
         document.documentElement.style.colorScheme = theme;
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
@@ -50,11 +52,41 @@ const canonicalUrl = "https://soma.gravicity.ai/verse";
           });
         });
       })();
+
+      // Preserve theme across View Transitions (matching Layout.astro)
+      document.addEventListener('astro:before-swap', (e) => {
+        const theme = document.documentElement.dataset.theme || 'dark';
+        const surface = document.documentElement.dataset.surface || 'dark';
+        e.newDocument.documentElement.dataset.theme = theme;
+        e.newDocument.documentElement.dataset.surface = surface;
+        e.newDocument.documentElement.style.colorScheme = theme;
+      });
     </script>
+
+    <style is:global>
+      @import '../../styles/tincture/_generated/foundation.css';
+    </style>
   </head>
   <body>
     <SomaVerse client:load fullPage={true} />
-    <VerseNav client:load />
+    <Nav centeredTitle="SomaVerse">
+      <Fragment slot="nav-right-extra">
+        <!-- Soma Radio toggle — dispatches to SomaVerse island -->
+        <button
+          class="verse-audio-btn"
+          id="verse-audio-btn"
+          type="button"
+          aria-label="Enable Soma Radio"
+          title="Soma Radio"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+          </svg>
+        </button>
+      </Fragment>
+    </Nav>
 
     <div class="verse-hint">
       steer to explore · scroll to zoom · hover to identify · 🔊 enable soma radio
@@ -63,6 +95,20 @@ const canonicalUrl = "https://soma.gravicity.ai/verse";
     <script>
       import { inject } from '@vercel/analytics';
       inject();
+
+      // Audio toggle wiring (reconnect for the slot button
+      const audioBtn = document.getElementById('verse-audio-btn');
+      if (audioBtn) {
+        audioBtn.addEventListener('click', () => {
+          window.dispatchEvent(new Event('soma-audio-toggle'));
+        });
+        window.addEventListener('soma-audio-state', (e) => {
+          const enabled = e.detail.enabled;
+          audioBtn.classList.toggle('is-active', enabled);
+          audioBtn.setAttribute('aria-label', enabled ? 'Mute Soma Radio' : 'Enable Soma Radio');
+          audioBtn.setAttribute('title', enabled ? 'Soma Radio: On' : 'Soma Radio: Off');
+        });
+      }
     </script>
   </body>
 </html>
@@ -70,6 +116,7 @@ const canonicalUrl = "https://soma.gravicity.ai/verse";
 <style is:global>
   /* ── Verse page: full immersion ── */
   :root {
+    /* Keep Clash Display for SomaVerse canvas — Nav uses Manrope via foundation.css */
     --font-display: 'Clash Display', system-ui, sans-serif;
     --font-body: 'Satoshi', system-ui, sans-serif;
     --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
@@ -108,29 +155,34 @@ const canonicalUrl = "https://soma.gravicity.ai/verse";
   }
 
   html.no-transition,
-  html.no-transition *,
   html.no-transition *::before,
   html.no-transition *::after {
     transition: none !important;
   }
 
-  /* Theme icon visibility */
-  .verse-theme-sun { display: none; }
-  .verse-theme-moon { display: none; }
-  html[data-theme='dark'] .verse-theme-sun { display: block; }
-  html[data-theme='light'] .verse-theme-moon { display: block; }
-  html:not([data-theme]) .verse-theme-sun { display: block; }
-
-  /* Menu animation */
-  @keyframes verseMenuIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* ── Verse audio button in Nav slot ── */
+  .verse-audio-btn {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--ink-soft, #8494aa);
+    transition: color 0.15s, background 0.15s;
+    flex-shrink: 0;
   }
 
-  /* Soma Radio pulse */
-  @keyframes somaRadioPulse {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.3); }
+  .verse-audio-btn:hover {
+    color: var(--ink, #e4eaf4);
+    background: var(--surface-interactive, rgba(255,255,255,0.06));
+  }
+
+  .verse-audio-btn.is-active {
+    color: var(--accent, #7cb2d4);
+    background: rgba(104, 152, 190, 0.15);
   }
 
   /* Bottom hint — fades out after a few seconds */

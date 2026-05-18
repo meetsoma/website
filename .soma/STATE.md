@@ -2,7 +2,7 @@
 type: state
 method: atlas
 project: soma-website
-updated: 2026-03-11
+updated: 2026-05-18
 status: active
 ---
 
@@ -11,107 +11,106 @@ status: active
 ## Current
 
 - **Astro 5.18** static site on Vercel — `soma.gravicity.ai`
-- **Design system tokens** in Layout.astro `:root` — spacing (Fibonacci), typography (8-step), radii, line-heights
+- **Design tokens** in `src/styles/tincture/_generated/foundation.css` — codegen'd from tincture registry. 30+ color tokens (dark + light surface), Fibonacci spacing, 8-step typography, radii, line-heights
+- **`--font-display: 'Manrope'`** (display headlines), `--font-body: 'Satoshi'` (body), `--font-mono: 'SF Mono'` (code)
+- **Tincture codegen**: `pnpm tincture:codegen` → regenerates `foundation.css` from `_registry/`
+- **HeroTitle component** — centralized σ-for-o swap on every page hero h1. Uses `--promo-text` + `filter: drop-shadow` matching homepage sigma treatment
+- **Nav.astro** — accepts optional `centeredTitle` prop + `nav-right-extra` slot. Used by `/verse/` with `centeredTitle="SomaVerse"`. MobileMenu Preact island for tablet/mobile nav
 - **SomaIcons** — Lucide-based SVGs for core four + custom utility icons
 - Hub reads from community repo at build time (GitHub API + raw fetch)
 - Pagefind for client-side search
 - ViewTransitions enabled, theme toggle in nav bar
-- Preact islands for hub filters/grid (HubFilters, HubGrid)
+- Preact islands: HubFilters, HubGrid, MobileMenu, RoadmapTimeline, SomaVerse, OrbitalPhysics, CommunityStats, TemplateCarousel, NovaPlayer, TableOfContents, ChangelogIsland
 
 ## Branches
 
 | Branch | HEAD | Status |
 |--------|------|--------|
-| main | `5ffc37d` | Production — theme toggle, nav bar |
-| dev | `aa1bc59` | +4 ahead — design tokens, Lucide icons |
+| main | `5ffc37d` | Production |
+| dev | `d0b14c0` | v0.27.3 roadmap entry |
+
+## Headers (σ-for-o system)
+
+All sub-page heroes use the same `HeroTitle` component:
+
+| Page | Renders | Font |
+|------|---------|------|
+| /docs/ | Dσcumentation | Manrope |
+| /blog/ | Blσg | Manrope |
+| /ecosystem/ | The Sσmaverse | Manrope |
+| /hub/ | SσmaHub | Manrope |
+| /roadmap/ | Rσadmap | Manrope |
+| /404/ | Lost in the void (no o) | Manrope |
+| / (home) | Sσma (custom inline) | Manrope |
+| /verse/ | "SomaVerse" in Nav centeredTitle | Clash Display (verse scope) |
+
+HeroTitle sigma styling matches the homepage: `color: var(--promo-text)` + `filter: drop-shadow(0 0 12px var(--promo-glow))`, inheriting weight/size from parent.
 
 ## Design Tokens
 
-Defined in `src/layouts/Layout.astro` `:root`:
+### Nav.astro
+
+```astro
+<Nav centeredTitle="SomaVerse">
+  <Fragment slot="nav-right-extra">
+    <button class="verse-audio-btn">...</button>
+  </Fragment>
+</Nav>
+```
+
+- `centeredTitle` (optional) → replaces nav links → centered h1 with σ swap
+- `nav-right-extra` slot for extra icons (audio, etc.)
+- MobileMenu Preact island for <=768px
+
+## Design Tokens (foundation.css)
+
+Generated source: `src/styles/tincture/_generated/foundation.css`
 
 | Category | Tokens | Scale |
 |----------|--------|-------|
 | Spacing | `--space-xs` → `--space-4xl` | Fibonacci: 3,5,8,13,21,34,55,89px |
-| Typography | `--text-xs` → `--text-3xl` | 8 steps: 0.7→2.25rem |
+| Typography | `--text-xs` → `--text-3xl` | 8 steps: 0.813→2.25rem |
 | Radii | `--radius-sm/md/lg/xl/full` | 4,8,13,21,9999px |
 | Line-heights | `--leading-none/tight/normal/relaxed/loose` | 1,1.2,1.4,1.618,1.8 |
-| Colors | 30+ custom properties | Dark + light theme |
-| Fonts | `--font-display/body/mono` | Clash Display, Satoshi, SF Mono |
+| Colors | 30+ custom properties | Dark + light surface via `[data-surface]` |
+| Fonts | `--font-display/body/mono` | Manrope, Satoshi, SF Mono |
+| Weights | `--weight-regular/medium/semibold/bold/display` | 400,500,600,700,800 |
+
+Design system evolution doc: `.soma/plans/design/design-system.md`
 
 ## Icons
 
-`src/components/icons/SomaIcons.astro` — 25 icons:
-
-| Name | Source | Concept |
-|------|--------|---------|
-| extensions | Lucide/plug | System hooks, plugins |
-| skills | Lucide/book-open | Knowledge, expertise |
-| muscles | Lucide/zap | Learned patterns, reflex |
-| protocols | Lucide/dna | Behavioral DNA, rules |
-| memory | Lucide/atom | Persistent state, orbital |
-| sigma | Custom | Soma brand mark |
-| terminal | Custom | Command prompt |
-| you | Custom | User/person |
-| pi | Custom | Runtime framework |
-| dna | Alias→protocols | Backward compat |
-| wand | Lucide/wand-sparkles | Rituals, magic |
-| brain | Lucide/brain | Dynamic prompts, intelligence |
-| shield | Lucide/shield-check | Security, screening |
-| upload | Lucide/upload | Publishing |
-| link | Lucide/link | Vault sync, connections |
-| mic | Lucide/mic | Voice extension |
-| wrench | Lucide/wrench | DevOps, tools |
-| pen-line | Lucide/pen-line | Writing, content |
-| ruler | Lucide/ruler | Architecture, structure |
-| flask | Lucide/flask-conical | Experiments |
-| arrow-right | Lucide/arrow-right | Navigation, get started |
-| settings | Lucide/settings | Config, scripts |
-| layers | Lucide/layers | Templates, stacking |
-| circle-dot | Lucide/circle-dot | Target, default |
-| search | Lucide/search | Search |
-
-### Preact Island Icons
-
-`src/lib/icons.ts` — shared SVG string map for client-side islands (HubGrid, HubFilters).
-Contains: protocols, muscles, skills, templates, scripts, all.
-
-## Integrations
-
-| Integration | Status |
-|-------------|--------|
-| @astrojs/sitemap | ✅ Active |
-| @astrojs/rss | ✅ Active |
-| @vercel/analytics | ✅ Active |
-| @astrojs/preact | ✅ Active |
-| View Transitions | ✅ Active |
-| Pagefind | ✅ Active |
-| Content Collections (docs, blog) | ✅ Active |
-| Content Collections (hub) | ⬜ Planned |
-| Nano Stores | ⬜ Planned |
-| Server Islands | ⬜ Future |
+`src/components/icons/SomaIcons.astro` — 25 icons (Lucide + custom). See code or `design-system.md` for full list.
 
 ## Pages
 
-| Page | Path | Content |
-|------|------|---------|
-| Landing | `/` | Hero, four layers, features, ecosystem, CTA |
-| Docs index | `/docs/` | Section cards, quick links |
-| Docs detail | `/docs/[slug]` | MDX content, sidebar, TOC, breadcrumbs |
-| Blog index | `/blog/` | Post listing |
-| Blog detail | `/blog/[slug]` | Post content |
-| Hub index | `/hub/` | Evolution banner, filters, content grid |
-| Hub detail | `/hub/[type]/[slug]` | Content detail, version history, install |
-| Roadmap | `/roadmap/` | Wave-based public roadmap |
-| Ecosystem | `/ecosystem/` | Orbital diagram, four-layer deep dive |
+| Page | Path | Header |
+|------|------|--------|
+| Landing | `/` | Custom h1 with Sσma |
+| Docs index | `/docs/` | HeroTitle "Documentation" |
+| Docs detail | `/docs/[slug]` | h1 doc title (DocsLayout) |
+| Blog index | `/blog/` | HeroTitle "Blog" |
+| Blog detail | `/blog/[slug]` | h1 article title |
+| Hub index | `/hub/` | HeroTitle "SomaHub" |
+| Hub detail | `/hub/[type]/[slug]` | h1 item name |
+| Roadmap | `/roadmap/` | HeroTitle "Roadmap" |
+| Ecosystem | `/ecosystem/` | HeroTitle "The Somaverse" |
+| Verse | `/verse/` | Nav centeredTitle (h1) "SomaVerse" |
+| 404 | `/404/` | HeroTitle "Lost in the void" |
+| Changelog | `/docs/changelog` | Redirect from `/changelog/` |
+| Beta | `/beta/` | — |
 
 ## Key Files
 
 | File | Purpose |
 |------|---------|
-| `src/layouts/Layout.astro` | Root layout, design tokens, theme system |
+| `src/styles/tincture/_generated/foundation.css` | Generated design tokens (tincture codegen) |
+| `src/layouts/Layout.astro` | Root layout, theme system, global h1/h2/h3 typography |
 | `src/layouts/DocsLayout.astro` | Docs sidebar, TOC, prose styles |
-| `src/components/icons/SomaIcons.astro` | Icon component |
-| `src/components/Nav.astro` | Global nav bar + theme toggle |
+| `src/components/Nav.astro` | Global nav with optional centeredTitle + slot |
+| `src/components/HeroTitle.astro` | Page hero h1 with centralized σ-for-o swap |
+| `src/components/islands/MobileMenu.tsx` | Tablet/mobile hamburger menu |
+| `src/components/icons/SomaIcons.astro` | Icon component (25 icons) |
 | `src/lib/hub.ts` | Hub data loader |
 | `src/lib/blog.ts` | Blog/docs helpers |
 | `scripts/fetch-community.mjs` | Pre-build community repo sync |

@@ -83,7 +83,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     <aside class="sidebar">
       <a href="/docs" class="sidebar-brand">
         <img src="/media/soma-logo-animated.svg" alt="σ" width="28" height="28" />
-        <span>σ Docs</span>
+        <span><span class="sidebar-sigma">σ</span> Docs</span>
       </a>
 
       <Search />
@@ -250,6 +250,11 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
 
   .sidebar-brand img {
     filter: drop-shadow(0 0 var(--space-md) var(--logo-glow));
+  }
+
+  .sidebar-sigma {
+    color: var(--promo-text);
+    filter: drop-shadow(0 0 12px var(--promo-glow));
   }
 
   .sidebar-nav { flex: 1; }
