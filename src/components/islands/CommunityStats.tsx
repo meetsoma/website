@@ -72,7 +72,7 @@ export default function CommunityStats() {
     gap: 'var(--space-sm, 6px)',
     padding: 'var(--space-xl, 28px) var(--space-lg, 20px)',
     borderRadius: 'var(--radius-lg, 12px)',
-    border: '1px solid var(--border-subtle, rgba(132,148,170,0.12))',
+    border: '1px solid var(--border, rgba(132,148,170,0.12))',
     background: 'var(--surface-card, rgba(11,16,24,0.7))',
     textAlign: 'center' as const,
   };
@@ -89,13 +89,13 @@ export default function CommunityStats() {
     fontFamily: 'var(--font-display, system-ui)',
     fontSize: 'var(--body-text, 1rem)',
     fontWeight: 600,
-    color: 'var(--text-primary, #e4eaf4)',
+    color: 'var(--ink, #e4eaf4)',
   };
 
   const detailStyle = {
     fontFamily: 'var(--font-mono, monospace)',
     fontSize: 'var(--label-text, 0.75rem)',
-    color: 'var(--text-muted, #566478)',
+    color: 'var(--ink-muted, #566478)',
     lineHeight: 'var(--leading-normal, 1.5)',
   };
 
