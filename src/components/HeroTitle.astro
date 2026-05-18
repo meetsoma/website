@@ -15,8 +15,8 @@
  *   <HeroTitle text="Blog" align="center" />   → centered
  *
  * Behavior:
- *   - First lowercase 'o' in the text gets replaced (case-preserving — the
- *     σ inherits color/font; for an uppercase 'O' we still emit lowercase σ).
+ *   - First lowercase 'o' in the text gets replaced (case-preserving;
+ *     for an uppercase 'O' we still emit lowercase σ).
  *   - If a `prefix` prop is given (e.g. "The "), the swap happens on the
  *     remainder so "The Somaverse" → "The S<σ>maverse" not "The S<σ>maverse"
  *     vs random earlier o.
@@ -75,21 +75,12 @@ const Tag = level === 1 ? 'h1' : 'h2';
     letter-spacing: inherit;
   }
 
-  /* The signature σ — must read as the SAME glyph weight as its Latin
-   * siblings. Greek lowercase glyphs in most fonts are optically
-   * lighter than Latin caps/lowercase at the same numerical weight, so
-   * we bump the weight + scale slightly so it doesn't look anemic. */
+  /* The signature σ — inherits font-family, weight, and size from the
+   * surrounding text (.hero-title / .hero-main). Only the color and glow
+   * differ, override so it reads identically to the homepage's title-sigma. */
   .hero-sigma {
-    color: var(--promo);
-    font-family: var(--font-display);
-    font-weight: 900;              /* +100 over surrounding text for optical match */
-    font-size: 1.06em;             /* tiny scale-up to match Latin x-height */
-    display: inline-block;
-    transform: translateY(-0.02em);
-    text-shadow: 0 0 24px var(--promo-glow),
-                 0 0 6px  var(--promo-glow);
-    /* Tracking adjustment so the sigma doesn't crowd its neighbors */
-    letter-spacing: -0.01em;
+    color: var(--promo-text);
+    filter: drop-shadow(0 0 12px var(--promo-glow));
   }
 
   .hero-title:focus-within { outline: none; }

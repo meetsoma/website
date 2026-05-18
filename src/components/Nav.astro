@@ -1,4 +1,13 @@
 ---
+import MobileMenu from './islands/MobileMenu.tsx';
+
+interface Props {
+  /** Optional centered title (e.g. "SomaVerse"). When set, replaces the nav
+   *  link bar with a centered h1 heading and applies the σ-for-o swap. */
+  centeredTitle?: string;
+}
+
+const { centeredTitle = '' } = Astro.props as Props;
 const currentPath = Astro.url.pathname;
 
 const links = [
@@ -14,13 +23,25 @@ function isActive(href: string, current: string): boolean {
   if (href === '/') return current === '/';
   return current.startsWith(href);
 }
+
+// σ-for-o swap on centered title (matching HeroTitle pattern)
+const titleIdx = centeredTitle.search(/o/i);
+const titleBefore = titleIdx >= 0 ? centeredTitle.slice(0, titleIdx) : centeredTitle;
+const titleSigma = titleIdx >= 0;
+const titleAfter = titleIdx >= 0 ? centeredTitle.slice(titleIdx + 1) : '';
 ---
 
 <header class="site-nav-wrapper">
-  <nav class="site-nav" aria-label="Main navigation">
+  <nav class="site-nav" aria-label="Main navigation" class:list={{ 'has-centered-title': !!centeredTitle }}>
     <a href="/" class="nav-brand" aria-label="Soma home">
       <span class="nav-sigma">σ</span>
     </a>
+    <MobileMenu client:load />
+    {centeredTitle && (
+      <h1 class="nav-centered-title">
+        {titleBefore}{titleSigma && <span class="nav-cs-sigma" aria-hidden="true">σ</span>}{titleAfter}
+      </h1>
+    )}
     <div class="nav-links">
       {links.map(link => (
         <a
@@ -38,6 +59,7 @@ function isActive(href: string, current: string): boolean {
           <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
         </svg>
       </a>
+      <slot name="nav-right-extra" />
       <button class="theme-toggle" type="button" aria-label="Switch color theme">
         <svg class="theme-icon theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="4"/>
@@ -57,7 +79,6 @@ function isActive(href: string, current: string): boolean {
     </div>
   </nav>
 </header>
-
 <style>
   .site-nav-wrapper {
     position: fixed;
@@ -97,10 +118,11 @@ function isActive(href: string, current: string): boolean {
 
   .nav-sigma {
     font-family: var(--font-display);
-    font-size: var(--text-2xl);
+    font-size: 1.85rem;
     font-weight: 800;
     color: var(--promo-text);
-    line-height: var(--leading-none);
+    line-height: 0.85;
+    padding-bottom: 5px;
     transition: color 0.2s ease, text-shadow 0.2s ease;
   }
 
@@ -190,31 +212,100 @@ function isActive(href: string, current: string): boolean {
   /* Default to sun (dark mode is default) */
   :global(html:not([data-theme])) .theme-icon-sun { display: block; }
 
+  /* ── Mobile menu root (hidden on desktop) — :global because Preact island renders inside <astro-island> without scoped attr */
+  :global(.mobile-menu-root) {
+    display: none;
+  }
+
   /* ── Mobile ── */
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     .site-nav {
       padding: 0 var(--space-lg);
       height: 48px;
+      gap: 2px;
     }
 
-    .nav-link {
-      font-size: var(--label-text);
-      padding: var(--radius-sm) var(--space-md);
+    /* Kill the brand margin so σ and hamburger sit tight, same as /verse/ */
+    .nav-brand {
+      margin-right: 0;
     }
 
+    /* Hide desktop nav links on tablet/mobile */
     .nav-links {
-      gap: 1px;
+      display: none;
     }
 
-    .nav-external {
-      gap: var(--space-xs);
+    /* Show mobile hamburger menu — sits tight next to σ like /verse/ */
+    :global(.mobile-menu-root) {
+      display: flex;
+      align-items: center;
+    }
+
+    :global(.mobile-menu-trigger) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      width: 28px;
+      height: 28px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s;
+    }
+
+    :global(.mobile-menu-trigger:hover) {
+      background: var(--surface-interactive);
+    }
+
+    :global(.mobile-menu-dropdown) {
+      position: absolute;
+      top: 48px;
+      left: var(--space-lg);
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 6px;
+      min-width: 160px;
+      box-shadow: var(--shadow-card);
+      animation: mobileMenuIn 0.15s ease-out;
+    }
+
+    :global(.mobile-menu-link) {
+      display: block;
+      padding: 8px 14px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: color 0.12s, background 0.12s;
+    }
+
+    :global(.mobile-menu-link:hover) {
+      color: var(--ink);
+      background: var(--surface-interactive);
     }
   }
 
+  /* Mobile dropdown animation — keyframes are always global */
+  @keyframes mobileMenuIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Tight mobile ── */
   @media (max-width: 480px) {
-    .nav-link {
-      font-size: var(--badge-text);
-      padding: var(--radius-sm) var(--space-sm);
+    .site-nav {
+      padding: 0 var(--space-md);
+    }
+
+    :global(.mobile-menu-dropdown) {
+      left: var(--space-md);
     }
   }
 </style>
