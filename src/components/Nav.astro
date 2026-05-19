@@ -1,6 +1,28 @@
 ---
 import MobileMenu from './islands/MobileMenu.tsx';
 
+/**
+ * Nav — site navigation bar.
+ *
+ * Two modes:
+ *   1. DEFAULT: shows logo (σ) + desktop nav-links + external icons.
+ *      Mobile (<768px): hides nav-links, shows hamburger dropdown.
+ *
+ *   2. CENTERED-TITLE: pass `centeredTitle` prop (e.g. "Somaverse").
+ *      Desktop: hides nav-links, centers the title, shows hamburger for nav.
+ *      Mobile: same as default but with centered title.
+ *
+ * ARCHITECTURE NOTES for future editors:
+ *   - .mobile-menu-trigger, .mobile-menu-dropdown, .mobile-menu-link styles
+ *     live OUTSIDE @media queries — they must apply at all widths.
+ *     The mobile-menu-root's display:none on desktop prevents them from
+ *     rendering on the main nav; has-centered-title overrides to show them.
+ *   - Dropdown uses `top: 100%` (not hardcoded px) — nav height differs
+ *     between mobile (48px) and desktop (55px).
+ *   - Standalone pages (no Layout.astro) must define --space-* tokens.
+ *   - See design-system.md § Phase 7 for the full checklist.
+ */
+
 interface Props {
   /** Optional centered title (e.g. "SomaVerse"). When set, replaces the nav
    *  link bar with a centered h1 heading and applies the σ-for-o swap. */
@@ -212,9 +234,99 @@ const titleAfter = titleIdx >= 0 ? centeredTitle.slice(titleIdx + 1) : '';
   /* Default to sun (dark mode is default) */
   :global(html:not([data-theme])) .theme-icon-sun { display: block; }
 
+  /* ── Centered title mode ── */
+  .site-nav.has-centered-title {
+    position: relative;
+    gap: 2px;
+  }
+
+  .site-nav.has-centered-title .nav-links {
+    display: none;
+  }
+
+  /* Show hamburger on desktop too — centered-title hides the nav links */
+  .site-nav.has-centered-title :global(.mobile-menu-root) {
+    display: flex;
+    align-items: center;
+  }
+
+  .site-nav.has-centered-title .nav-brand {
+    margin-right: 0;
+  }
+
+  .nav-centered-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .nav-cs-sigma {
+    font-family: var(--font-display);
+    color: var(--promo-text);
+    font-size: inherit;
+  }
+
   /* ── Mobile menu root (hidden on desktop) — :global because Preact island renders inside <astro-island> without scoped attr */
   :global(.mobile-menu-root) {
     display: none;
+  }
+
+  /* Mobile menu trigger always needs these styles — they only show when .mobile-menu-root is visible */
+  :global(.mobile-menu-trigger) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+  }
+
+  :global(.mobile-menu-trigger:hover) {
+    background: var(--surface-interactive);
+  }
+
+  /* Dropdown menu — positioned below nav regardless of height */
+  :global(.mobile-menu-dropdown) {
+    position: absolute;
+    top: 100%;
+    left: var(--space-lg);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px;
+    min-width: 160px;
+    box-shadow: var(--shadow-card);
+    animation: mobileMenuIn 0.15s ease-out;
+  }
+
+  :global(.mobile-menu-link) {
+    display: block;
+    padding: 8px 14px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.12s, background 0.12s;
+  }
+
+  :global(.mobile-menu-link:hover) {
+    color: var(--ink);
+    background: var(--surface-interactive);
   }
 
   /* ── Mobile ── */
@@ -239,56 +351,6 @@ const titleAfter = titleIdx >= 0 ? centeredTitle.slice(titleIdx + 1) : '';
     :global(.mobile-menu-root) {
       display: flex;
       align-items: center;
-    }
-
-    :global(.mobile-menu-trigger) {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      width: 28px;
-      height: 28px;
-      background: transparent;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      padding: 0;
-      transition: background 0.2s;
-    }
-
-    :global(.mobile-menu-trigger:hover) {
-      background: var(--surface-interactive);
-    }
-
-    :global(.mobile-menu-dropdown) {
-      position: absolute;
-      top: 48px;
-      left: var(--space-lg);
-      background: var(--bg-elev);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 6px;
-      min-width: 160px;
-      box-shadow: var(--shadow-card);
-      animation: mobileMenuIn 0.15s ease-out;
-    }
-
-    :global(.mobile-menu-link) {
-      display: block;
-      padding: 8px 14px;
-      font-family: var(--font-body);
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--ink-soft);
-      text-decoration: none;
-      border-radius: 6px;
-      transition: color 0.12s, background 0.12s;
-    }
-
-    :global(.mobile-menu-link:hover) {
-      color: var(--ink);
-      background: var(--surface-interactive);
     }
   }
 

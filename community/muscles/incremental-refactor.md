@@ -7,7 +7,7 @@ heat: 0
 triggers: [migration, paths, rename, dependency, incremental, refactoring, code-quality]
 applies-to: [any]
 created: 2026-03-13
-updated: 2026-04-23
+updated: 2026-05-18
 loads: 0
 tools: [soma-refactor.sh, soma-code.sh]
 seams: [s01-7631fc, s01-3498d3]

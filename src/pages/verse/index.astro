@@ -69,7 +69,7 @@ const canonicalUrl = "https://soma.gravicity.ai/verse";
   </head>
   <body>
     <SomaVerse client:load fullPage={true} />
-    <Nav centeredTitle="SomaVerse">
+    <Nav centeredTitle="Somaverse">
       <Fragment slot="nav-right-extra">
         <!-- Soma Radio toggle — dispatches to SomaVerse island -->
         <button
@@ -116,6 +116,26 @@ const canonicalUrl = "https://soma.gravicity.ai/verse";
 <style is:global>
   /* ── Verse page: full immersion ── */
   :root {
+    /* Fibonacci spacing — same values as Layout.astro */
+    --space-xs: 0.188rem;   /* 3px */
+    --space-sm: 0.313rem;   /* 5px */
+    --space-md: 0.5rem;     /* 8px */
+    --space-lg: 0.813rem;   /* 13px */
+    --space-xl: 1.313rem;   /* 21px */
+    --space-2xl: 2.125rem;  /* 34px */
+    --space-3xl: 3.438rem;  /* 55px */
+
+    /* Radius */
+    --radius-md: 6px;
+
+    /* Body text sizes */
+    --body-secondary: 0.875rem;
+    --badge-text: 0.75rem;
+
+    /* Surfaces */
+    --surface-interactive: rgba(255,255,255,0.06);
+    --surface-accent-soft: rgba(104, 152, 190, 0.12);
+
     /* Keep Clash Display for SomaVerse canvas — Nav uses Manrope via foundation.css */
     --font-display: 'Clash Display', system-ui, sans-serif;
     --font-body: 'Satoshi', system-ui, sans-serif;

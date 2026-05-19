@@ -9,7 +9,7 @@ triggers: [icon-audit, svg, lucide, phosphor, comparison, visual-review, icon-li
 scope: hub
 tier: official
 created: 2026-03-11
-updated: 2026-04-23
+updated: 2026-05-18
 version: 1.0.0
 author: meetsoma
 license: MIT
