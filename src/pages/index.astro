@@ -1,0 +1,1188 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Icon from '../components/icons/SomaIcons.astro';
+import TemplateCarousel from '../components/islands/TemplateCarousel.tsx';
+import { getPublishedBlogPosts, blogPostUrl } from '../lib/blog';
+import somaVersion from '../data/soma-version.json';
+
+const posts = await getPublishedBlogPosts();
+const recentPosts = posts.slice(0, 3);
+---
+
+<Layout
+  title="σ — An AI agent that grows with you"
+  description="An AI coding agent with persistent memory, evolving identity, and the AMPS content system — automations, muscles, protocols, and scripts. Source-available under BSL 1.1."
+  canonicalUrl="https://soma.gravicity.ai"
+>
+  <main class="container">
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-icon">
+        <img src="/media/soma-logo-animated.svg" alt="Soma" width="144" height="144" />
+        <div class="moon-egg" onclick="window.location.href='/verse/'" title="✦"></div>
+      </div>
+
+      <h1 class="title">
+        <span class="title-main">S<span class="title-sigma">σ</span>ma</span>
+        <a href="/roadmap" class="beta-badge" title={`Soma ${somaVersion.badge} · released ${somaVersion.releaseDate} on the ${somaVersion.channel} channel — click for roadmap`}>{somaVersion.badge}</a>
+      </h1>
+
+      <p class="tagline">An AI agent that grows with you</p>
+
+      <p class="description">
+        Memory that persists across sessions. Identity that evolves through use.<br/>
+        Built on <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>. Extended with automations, muscles, protocols, and scripts. Yours to shape.
+      </p>
+    </header>
+
+    <!-- Recent Posts -->
+    {recentPosts.length > 0 && (
+      <section class="recent-posts">
+        {recentPosts.map((post, i) => (
+          <a href={blogPostUrl(post)} class:list={['recent-post-card', { 'recent-post-promo': i === 0 }]}>
+            {i === 0 && <span class="recent-post-badge">New</span>}
+            <span class="recent-post-title">{post.data.title}</span>
+            <span class="recent-post-arrow">→</span>
+          </a>
+        ))}
+      </section>
+    )}
+
+    <!-- Get Started -->
+    <section class="quickstart">
+      <SectionHeader title="Get Started" />
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-label">terminal</span>
+        </div>
+        <div class="code-body">
+          <div class="code-line">
+            <span class="code-comment"># Install Soma</span>
+          </div>
+          <div class="code-line">
+            <span class="code-prompt">$</span>
+            <span class="code-cmd">npm i -g meetsoma</span>
+          </div>
+          <div class="code-line">
+            <span class="code-comment"># Start a session — Soma learns who you are</span>
+          </div>
+          <div class="code-line">
+            <span class="code-prompt">$</span>
+            <span class="code-cmd">soma</span>
+          </div>
+          <div class="code-line">
+            <span class="code-comment"># Focus on a specific topic</span>
+          </div>
+          <div class="code-line">
+            <span class="code-prompt">$</span>
+            <span class="code-cmd">soma focus rust</span>
+            <button class="copy-btn" data-copy="soma inhale" title="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const text = (btn as HTMLElement).dataset.copy || '';
+          const copyIcon = btn.querySelector('.copy-icon') as HTMLElement;
+          const checkIcon = btn.querySelector('.check-icon') as HTMLElement;
+          try {
+            await navigator.clipboard.writeText(text);
+            copyIcon.style.display = 'none';
+            checkIcon.style.display = 'block';
+            setTimeout(() => { copyIcon.style.display = 'block'; checkIcon.style.display = 'none'; }, 2000);
+          } catch {}
+        });
+      });
+    </script>
+
+    <!-- The Breath — visual storytelling -->
+    <section class="breath">
+      <SectionHeader title="The Breath Cycle" subtitle="Every session has three phases" />
+      <div class="breath-track">
+        <div class="breath-phase">
+          <div class="breath-dot inhale-dot"></div>
+          <div class="breath-line"></div>
+          <h3 class="breath-name">Inhale</h3>
+          <p class="breath-desc">Identity loads. Memory restores. Protocols activate. The agent wakes up knowing who it is.</p>
+        </div>
+        <div class="breath-phase">
+          <div class="breath-dot hold-dot"></div>
+          <div class="breath-line"></div>
+          <h3 class="breath-name">Hold</h3>
+          <p class="breath-desc">Work. The agent tracks patterns, heats up what's used, cools what isn't. Context is managed automatically.</p>
+        </div>
+        <div class="breath-phase">
+          <div class="breath-dot exhale-dot"></div>
+          <h3 class="breath-name">Exhale</h3>
+          <p class="breath-desc">Session state saves. Preloads write. Muscles crystallize. Nothing learned is lost.</p>
+        </div>
+      </div>
+      <div class="breath-ambient">
+        <div class="breath-circle"></div>
+      </div>
+    </section>
+
+    <!-- AMPS — The Content System -->
+    <section class="layers">
+      <SectionHeader title="The AMPS System" subtitle="Four layers. One agent." link={{ href: "/ecosystem", text: "Explore →" }} />
+      <div class="layers-grid">
+        <a href="/ecosystem#automations" class="layer-card">
+          <div class="layer-icon"><Icon name="automations" size={34} /></div>
+          <h3 class="layer-name">Automations</h3>
+          <p class="layer-type">triggered actions</p>
+          <p class="layer-desc">
+            Flows that fire on triggers — session start, post-commit,
+            pre-deploy. The reflexes.
+          </p>
+        </a>
+
+        <a href="/ecosystem#muscles" class="layer-card">
+          <div class="layer-icon"><Icon name="muscles" size={34} /></div>
+          <h3 class="layer-name">Muscles</h3>
+          <p class="layer-type">learned patterns</p>
+          <p class="layer-desc">
+            Patterns learned from experience — deployment workflows, code conventions,
+            API recipes. The muscle memory.
+          </p>
+        </a>
+
+        <a href="/ecosystem#protocols" class="layer-card">
+          <div class="layer-icon"><Icon name="protocols" size={34} /></div>
+          <h3 class="layer-name">Protocols</h3>
+          <p class="layer-type">behavioral rules</p>
+          <p class="layer-desc">
+            Rules that shape how the agent thinks. Used ones heat up.
+            Unused ones fade. The value system.
+          </p>
+        </a>
+
+        <a href="/ecosystem#scripts" class="layer-card">
+          <div class="layer-icon"><Icon name="scripts" size={34} /></div>
+          <h3 class="layer-name">Scripts</h3>
+          <p class="layer-type">developer tools</p>
+          <p class="layer-desc">
+            Bash tools the agent builds and runs. Health checks, deployment
+            helpers, verification suites. The toolkit.
+          </p>
+        </a>
+      </div>
+
+      <div class="system-layers">
+        <a href="/ecosystem#extensions" class="system-card">
+          <span class="system-icon"><Icon name="extensions" size={20} /></span>
+          <span class="system-name">Extensions</span>
+          <span class="system-type">TypeScript runtime hooks</span>
+        </a>
+        <a href="/ecosystem#skills" class="system-card">
+          <span class="system-icon"><Icon name="skills" size={20} /></span>
+          <span class="system-name">Skills</span>
+          <span class="system-type">Pi-native knowledge sets</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Meet the Agents — Template Carousel -->
+    <section class="templates">
+      <SectionHeader title="Meet the Agents" subtitle="Every template is a personality" link={{ href: "/hub", text: "Browse hub →" }} />
+      <TemplateCarousel client:visible />
+    </section>
+
+    <!-- Why Soma — condensed from 8 to 4 -->
+    <section class="features">
+      <SectionHeader title="Why Soma" />
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3 class="feature-title">Memory Persists</h3>
+          <p class="feature-desc">
+            Sessions end. Memory doesn't. Preloads, muscles, identity — flushed to disk
+            and picked back up next time. <code>soma inhale</code> to continue.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-title">Identity Evolves</h3>
+          <p class="feature-desc">
+            Not pre-configured. Soma's identity grows through use —
+            voice, preferences, working patterns. Discovered, not assigned.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-title">Protocols Adapt</h3>
+          <p class="feature-desc">
+            Behavioral rules that heat up when used and fade when they don't.
+            The agent's value system tunes itself to how you work.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-title">Open &amp; Extensible</h3>
+          <p class="feature-desc">
+            Source-available under BSL 1.1. Built on <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>.
+            Extensions, skills, protocols — all swappable.
+            Works alongside CLAUDE.md and existing setups.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Somaverse teaser -->
+    <section class="verse-teaser">
+      <SectionHeader title="Somaverse" subtitle="Give your agent eyes and hands" />
+      <div class="verse-content">
+        <div class="verse-text">
+          <p>Soma lives in the terminal. Somaverse gives it a workspace.</p>
+          <p>A tiling workspace in your browser with 21 plugins. Terminal, files, editor, browser, chat, voice. Your agent sees every pane, sends commands, navigates the web.</p>
+          <p>Not a chatbot with plugins. A co-pilot with eyes.</p>
+          <div class="verse-cta">
+            <a href="/blog/somaverse-preview" class="verse-link">Read the preview &rarr;</a>
+            <span class="verse-status">Alpha &mdash; Genesis coming soon</span>
+          </div>
+        </div>
+        <div class="verse-visual">
+          <div class="verse-pane-single">
+            <div class="verse-pane-header">
+              <span class="verse-pane-grip" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </span>
+              <span class="verse-pane-title">CHAT · SOMA</span>
+              <span class="verse-pane-mono">workspace →</span>
+            </div>
+            <div class="verse-pane-body">
+              <div class="verse-msg user"><span class="verse-msg-prefix">you</span>what's in src/ that handles auth?</div>
+              <div class="verse-msg agent">
+                <span class="verse-msg-prefix">soma</span>I can see <code>src/</code> in the files pane.
+                Two files: <code>auth.ts</code> (token + refresh) and <code>session.ts</code> (cookie wrapper).
+                Want me to open <code>auth.ts</code> in the editor?
+              </div>
+              <div class="verse-pane-pips">
+                <span class="pip">terminal</span>
+                <span class="pip">files</span>
+                <span class="pip">editor</span>
+                <span class="pip">browser</span>
+                <span class="pip">voice</span>
+                <span class="pip more">+16</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA with ecosystem links -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2 class="cta-title">Start growing</h2>
+        <p class="cta-desc">Install Soma. Start a session. Let the memory build.</p>
+        <div class="cta-buttons">
+          <a href="https://github.com/meetsoma" target="_blank" rel="noopener" class="cta-primary">
+            View on GitHub →
+          </a>
+          <a href="/docs" class="cta-secondary">
+            Read the docs
+          </a>
+        </div>
+        <div class="cta-links">
+          <a href="/docs/getting-started" class="cta-link">
+            ⚡ Get Started
+          </a>
+          <span class="cta-sep">·</span>
+          <a href="/blog" class="cta-link">Blog</a>
+          <span class="cta-sep">·</span>
+          <a href="/hub" class="cta-link">Hub</a>
+          <span class="cta-sep">·</span>
+          <a href="https://github.com/meetsoma" target="_blank" rel="noopener" class="cta-link">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</Layout>
+
+<style>
+  /* Design tokens: see Layout.astro :root */
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 890px;
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    text-align: center;
+    margin-bottom: var(--section-gap);
+    padding-top: var(--space-2xl);
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(var(--space-xl)); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-icon {
+    position: relative;
+    width: 144px;
+    height: 144px;
+    margin: 0 auto var(--space-2xl);
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .moon-egg {
+    position: absolute;
+    top: 33px;
+    right: 9px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 3;
+  }
+
+  .hero-icon img {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 var(--space-xl) var(--logo-glow));
+    transition: filter 0.3s;
+  }
+
+  .hero-icon:hover img {
+    filter: drop-shadow(0 0 var(--space-2xl) var(--logo-glow-hover));
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .title {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 12vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: var(--leading-none);
+    margin-bottom: var(--space-lg);
+    transform: translateX(-1.5%);
+  }
+
+  .title-main {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 800;
+    /* Dark surface: pale gradient (silvery sheen on dark sky) */
+    background: linear-gradient(135deg, #f0f4fa 0%, #e4eaf4 40%, #a8c4d8 80%, #e4eaf4 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+  }
+  /* Light surface: deeper blue — sun behind the letters, so they read as
+   * silhouette/silvery-shadow against the bright sky. Curtis (s01-b73653):
+   * "the Soma white/blue text should get a little deeper blue (since the
+   * sun is shining from behind it would make sense)." */
+  html[data-surface='light'] .title-main {
+    background: linear-gradient(135deg, #1a3258 0%, #2a4f80 40%, #4878a8 80%, #2a4f80 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .title-sigma {
+    -webkit-text-fill-color: var(--promo-text);
+    filter: drop-shadow(0 0 12px var(--promo-glow));
+  }
+
+  .beta-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    font-weight: var(--weight-semibold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg);
+    /* Solid bright orange — the previous gradient slid into brown at the
+     * bottom-right stop. Vivid throughout reads like a brand sticker. */
+    background: var(--promo);
+    padding: var(--radius-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    margin-top: 0.15em;
+    -webkit-text-fill-color: var(--bg);
+    animation: badgeBob 3s ease-in-out infinite;
+    flex-shrink: 0;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 8px var(--promo-glow);
+  }
+
+  @keyframes badgeBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .tagline {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xl);
+  }
+
+  .description {
+    font-size: var(--text-lg);
+    color: var(--ink-soft);
+    max-width: var(--content-wide);
+    margin: 0 auto;
+    line-height: var(--leading-relaxed);
+  }
+
+  .description a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-accent);
+    transition: color 0.2s;
+  }
+
+  .description a:hover { color: var(--moon-bright); }
+
+  /* ── Recent Posts ── */
+  .recent-posts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out 0.1s both;
+  }
+
+  .recent-post-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-elevated);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.25s ease;
+  }
+
+  .recent-post-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
+  }
+
+  .recent-post-badge {
+    font-family: var(--font-display);
+    font-size: var(--badge-text);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--bg);
+    background: var(--promo);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+
+  .recent-post-promo {
+    border-color: var(--promo-border);
+    background: linear-gradient(135deg, var(--surface-card) 0%, rgba(240, 200, 102, 0.03) 100%);
+  }
+
+  .recent-post-promo:hover {
+    border-color: var(--promo-text);
+    box-shadow: 0 var(--space-md) var(--space-xl) rgba(240, 200, 102, 0.08), inset 0 0 0 1px var(--promo-border);
+  }
+
+  .recent-post-title {
+    flex: 1;
+    font-size: var(--body-text);
+    font-weight: 500;
+  }
+
+  .recent-post-arrow {
+    color: var(--ink-muted);
+    font-size: var(--text-lg);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .recent-post-card:hover .recent-post-arrow { transform: translateX(5px); }
+
+  /* ── Quick Start ── */
+  .quickstart {
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out 0.2s both;
+  }
+
+  .code-block {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface-card-strong);
+    overflow: hidden;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-xl);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--surface-interactive);
+  }
+
+  .code-label {
+    margin-left: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    color: var(--ink-muted);
+  }
+
+  .code-body {
+    padding: var(--space-xl);
+    font-family: var(--font-mono);
+    font-size: var(--body-secondary);
+    line-height: var(--leading-loose);
+  }
+
+  .code-line {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .code-prompt {
+    color: var(--accent);
+    user-select: none;
+  }
+
+  .code-cmd { color: var(--ink); }
+
+  .code-comment {
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+
+  .copy-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--ink-muted);
+    cursor: pointer;
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+    transition: color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+  }
+
+  .copy-btn:hover {
+    color: var(--accent);
+    background: var(--surface-interactive);
+  }
+
+  .copy-btn svg { width: 18px; height: 18px; }
+
+  /* ── Breath Cycle ── */
+  .breath {
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out 0.3s both;
+    position: relative;
+  }
+
+  .breath-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .breath-phase {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-lg);
+    position: relative;
+  }
+
+  .breath-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto var(--space-lg);
+    position: relative;
+    z-index: 2;
+  }
+
+  .inhale-dot {
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--moon-glow);
+    animation: breathPulse 4s ease-in-out infinite;
+  }
+
+  .hold-dot {
+    background: var(--promo);
+    box-shadow: 0 0 20px var(--warm-glow);
+    animation: breathPulse 4s ease-in-out 1.33s infinite;
+  }
+
+  .exhale-dot {
+    background: var(--moon-bright);
+    box-shadow: 0 0 20px var(--moon-glow);
+    animation: breathPulse 4s ease-in-out 2.66s infinite;
+  }
+
+  @keyframes breathPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.4); opacity: 1; }
+  }
+
+  .breath-line {
+    position: absolute;
+    top: calc(var(--space-2xl) + 8px);
+    left: calc(50% + 16px);
+    right: calc(-50% + 16px);
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-accent), var(--border));
+    z-index: 1;
+  }
+
+  .breath-name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-tight);
+  }
+
+  .breath-desc {
+    font-size: var(--body-secondary);
+    color: var(--ink-soft);
+    line-height: var(--leading-relaxed);
+  }
+
+  .breath-ambient {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-xl);
+  }
+
+  .breath-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid var(--border-accent);
+    animation: breathe 4s ease-in-out infinite;
+    opacity: 0.3;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.8); opacity: 0.15; }
+    50% { transform: scale(1.2); opacity: 0.4; }
+  }
+
+  /* ── AMPS Layers ── */
+  .layers {
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out 0.3s both;
+  }
+
+  .layers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--grid-gap);
+  }
+
+  .system-layers {
+    display: flex;
+    gap: var(--grid-gap);
+    margin-top: var(--space-lg);
+  }
+
+  .system-card {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-elevated);
+    backdrop-filter: blur(8px);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.25s ease;
+    opacity: 0.7;
+  }
+
+  .system-card:hover {
+    border-color: var(--border-accent);
+    opacity: 1;
+  }
+
+  .system-icon {
+    color: var(--ink-muted);
+    line-height: 1;
+  }
+
+  .system-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-base);
+  }
+
+  .system-type {
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    color: var(--ink-muted);
+    margin-left: auto;
+  }
+
+  .layer-card {
+    display: block;
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-elevated);
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .layer-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-5px);
+    box-shadow: 0 var(--space-lg) var(--space-2xl) var(--shadow-accent-soft);
+  }
+
+  .layer-icon {
+    font-size: var(--text-3xl);
+    color: var(--accent);
+    margin-bottom: var(--space-lg);
+    line-height: var(--leading-none);
+  }
+
+  .layer-name {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    line-height: var(--leading-tight);
+  }
+
+  .layer-type {
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-lg);
+  }
+
+  .layer-desc {
+    font-size: var(--body-text);
+    color: var(--ink-soft);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── Templates Carousel ── */
+  .templates {
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out 0.4s both;
+  }
+
+  /* ── Features ── */
+  .features {
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out 0.5s both;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--grid-gap);
+  }
+
+  .feature-card {
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-elevated);
+    transition: all 0.25s ease;
+  }
+
+  .feature-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
+  }
+
+  .feature-title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-tight);
+  }
+
+  .feature-desc {
+    font-size: var(--body-text);
+    color: var(--ink-soft);
+    line-height: var(--leading-relaxed);
+  }
+
+  .feature-desc code {
+    font-family: var(--font-mono);
+    font-size: var(--body-secondary);
+    padding: 2px var(--space-md);
+    border-radius: var(--radius-sm);
+    background: var(--surface-accent-soft);
+    color: var(--accent);
+  }
+
+  .feature-desc a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-accent);
+    transition: color 0.2s;
+  }
+
+  .feature-desc a:hover { color: var(--moon-bright); }
+
+  /* ── CTA ── */
+  .cta-section {
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out 0.6s both;
+  }
+
+  .cta-content {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-2xl);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(104,152,190,0.06) 0%, var(--surface-card-strong) 50%, rgba(232,168,124,0.04) 100%);
+  }
+
+  .cta-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-tight);
+  }
+
+  .cta-desc {
+    font-size: var(--text-lg);
+    color: var(--ink-soft);
+    margin-bottom: var(--space-2xl);
+    line-height: var(--leading-relaxed);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-lg) var(--space-2xl);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--body-text);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-mid);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-lg) var(--space-2xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--body-text);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .cta-secondary:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 var(--space-md) var(--space-xl) var(--shadow-accent-soft);
+  }
+
+  .cta-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border);
+    margin-top: var(--space-xl);
+  }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: var(--body-secondary);
+    transition: color 0.2s;
+  }
+
+  .cta-link:hover { color: var(--accent); }
+
+  .cta-sep {
+    color: var(--ink-muted);
+    opacity: 0.4;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .layers-grid { grid-template-columns: 1fr; }
+    .system-layers { flex-direction: column; }
+    .features-grid { grid-template-columns: 1fr; }
+    .breath-track { grid-template-columns: 1fr; }
+    .breath-line { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .container { padding: var(--space-2xl) var(--space-lg); }
+  }
+
+  /* ── Verse Teaser ── */
+  .verse-teaser {
+    margin-bottom: var(--section-gap);
+  }
+
+  .verse-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .verse-text p {
+    font-size: var(--body-text);
+    color: var(--ink-soft);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
+  }
+
+  .verse-text p:first-child {
+    color: var(--ink);
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+
+  .verse-cta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  .verse-link {
+    color: var(--promo-text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: var(--body-text);
+    transition: color 0.2s;
+  }
+
+  .verse-link:hover {
+    color: #f5d88a;
+  }
+
+  .verse-status {
+    font-size: var(--label-text);
+    color: var(--ink-muted);
+  }
+
+  /* Single Somaverse pane — somaverse-style PaneShell aesthetic */
+  .verse-pane-single {
+    background: rgba(20, 25, 34, 0.72);
+    border: 1px solid rgba(124, 178, 212, 0.35);
+    border-radius: 14px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 30px rgba(124, 178, 212, 0.08);
+  }
+  /* Light surface: glass aesthetic (somaverse-like). Translucent white,
+     subtle white border, soft shadow. Curtis (s01-b73653): "lighten the
+     card -- not sure maybe near glass or something kinda how like it is
+     on the somaverse." */
+  html[data-surface='light'] .verse-pane-single {
+    background: rgba(255, 255, 255, 0.50);
+    border: 1px solid rgba(255, 255, 255, 0.70);
+    box-shadow: 0 8px 32px rgba(8, 22, 36, 0.10),
+                0 1px 3px rgba(8, 22, 36, 0.06);
+  }
+
+  .verse-pane-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(124, 178, 212, 0.1);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .verse-pane-grip {
+    display: inline-grid;
+    grid-template-columns: repeat(3, 4px);
+    gap: 2px;
+  }
+  .verse-pane-grip span {
+    width: 4px; height: 4px; border-radius: 1px;
+    background: rgba(124, 178, 212, 0.35);
+  }
+  /* Light: grip dots darker so they read against the glass card */
+  html[data-surface='light'] .verse-pane-grip span {
+    background: rgba(46, 96, 148, 0.65);
+  }
+
+  .verse-pane-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9dafc4;
+    letter-spacing: 0.4px;
+    flex: 1;
+  }
+  html[data-surface='light'] .verse-pane-title { color: #1a3258; }
+
+  .verse-pane-mono {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: rgba(157, 175, 196, 0.6);
+  }
+  html[data-surface='light'] .verse-pane-mono { color: rgba(26, 50, 88, 0.75); }
+
+  .verse-pane-body {
+    padding: 18px 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .verse-msg {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .verse-msg code {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    background: var(--surface-card-strong);
+    border: 1px solid rgba(124, 178, 212, 0.18);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #7cb2d4;
+  }
+  html[data-surface='light'] .verse-msg code {
+    background: rgba(255, 255, 255, 0.65);
+    border-color: rgba(46, 96, 148, 0.30);
+    color: #1a3d66;
+  }
+  .verse-msg-prefix {
+    display: inline-block;
+    margin-right: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #9dafc4;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .verse-msg.user .verse-msg-prefix { color: rgba(157, 175, 196, 0.55); }
+  .verse-msg.agent .verse-msg-prefix { color: var(--promo-text); }
+  html[data-surface='light'] .verse-msg.agent .verse-msg-prefix { color: var(--promo-dim); }
+  html[data-surface='light'] .verse-msg-prefix { color: #2a4f80; }
+  html[data-surface='light'] .verse-msg.user .verse-msg-prefix { color: rgba(46, 96, 148, 0.70); }
+
+  .verse-pane-pips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(124, 178, 212, 0.08);
+  }
+  .pip {
+    font-size: 10.5px;
+    font-family: var(--font-mono);
+    color: #9dafc4;
+    padding: 3px 9px;
+    border: 1px solid rgba(124, 178, 212, 0.2);
+    border-radius: 999px;
+    background: var(--surface-interactive);
+  }
+  .pip.more { color: var(--promo-text); border-color: var(--promo-border); }
+  html[data-surface='light'] .pip.more { color: var(--promo-dim); }
+  /* Light: pip pills get a glass treatment + darker text */
+  html[data-surface='light'] .pip {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(46, 96, 148, 0.32);
+    color: #2a4f80;
+  }
+  html[data-surface='light'] .pip.more {
+    color: var(--promo-text);
+    border-color: var(--promo-border);
+    background: var(--surface-warm-soft);
+  }
+
+  @media (max-width: 768px) {
+    .verse-content { grid-template-columns: 1fr; }
+    .verse-pane-body { padding: 14px; }
+    .verse-msg { font-size: 13px; }
+  }
+</style>
