@@ -5,12 +5,13 @@ status: active
 description: "Before reporting work as done, verify it actually works. Run it. Not 'it looks correct' — run it. Recognize your own rationalizations for skipping checks."
 heat-default: cold
 tags: [quality, verification, anti-patterns, discipline]
+triggers: [verify, verification, run-it, before-shipping, claim-done, smoke-test, rationalization, anti-pattern, discipline, quality]
 applies-to: [development, shipping]
 scope: bundled
 tier: core
 created: 2026-04-03
-updated: 2026-04-23
-version: 1.0.0
+updated: 2026-05-18
+version: 1.0.1
 author: meetsoma
 license: MIT
 heat: 0
