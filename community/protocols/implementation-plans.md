@@ -6,7 +6,7 @@ version: 1.0.0
 author: Curtis Mercier
 license: CC BY 4.0
 created: 2026-04-12
-updated: 2026-05-18
+updated: 2026-05-22
 tier: core
 heat-default: cold
 scope: bundled
