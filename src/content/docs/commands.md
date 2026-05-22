@@ -250,10 +250,19 @@ Install community scripts from the hub:
 
 ```bash
 soma hub install script soma-refactor
-soma hub install script soma-browser
+soma hub install script soma-browser   # shell CLI; for agent use, prefer soma:browser.* (see browser-setup.md)
 ```
 
 Or drop any `soma-<name>.sh` into `.soma/amps/scripts/` — it becomes `soma <name>` immediately, no restart needed.
+
+**For agent-facing browser automation**, use `soma:browser.*` instead of the shell CLI. The cap surface auto-configures for any Chromium-family browser + Firefox via env or settings:
+
+```
+soma(op='call', cap='soma:browser.setup')      # first-run probe + configure
+soma(op='call', cap='soma:browser.navigate', args={url: '...'})
+```
+
+See `cli-tools.md` for the three-pattern model (when to use shell scripts vs caps), `browser-setup.md` for the multi-browser configuration, and `pro-tools.md` for the tier distinction.
 
 Run `soma --help scripts` to see all discovered scripts with descriptions.
 

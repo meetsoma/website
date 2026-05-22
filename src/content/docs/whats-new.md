@@ -27,7 +27,43 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ---
 
-## v0.27.1 — May 2026 (latest)
+## v0.27.2 — May 2026 (latest — in flight)
+
+The **`soma:seam.*`** family lands — archaeology caps for tracing concepts through your own writings.
+
+### 🆕 New caps
+
+- **`soma:seam.trace`** — walk a concept across docs + code + sessions + blog + kanban + soul-space. Use BEFORE raw grep for any *"where did X come from?"* question. args: `{term, limit?:200}`. **Free tier.**
+- **`soma:seam.ancestors`** — trace a concept through vault agents + Pi sessions + Claude sessions, **with agent attribution**. Returns who-said-what-and-when across the lineage. Closure test: `seam.ancestors "breathe"` returns `Zenith (openclaw-dev) — soma's daddy`. args: `{term, limit?:200}`. **PRO feature** (wraps `_pro/soma-seam.sh`).
+- **`soma:seam.timeline`** — chronological evolution of a concept. Optional `tag` filter. args: `{tag?, limit?:300}`. **PRO.**
+- **`soma:seam.sessions`** — search `.soma/memory/sessions/` + preloads + `~/.pi/agent/sessions/` JSONLs. args: `{query, limit?:200}`. **Dev tree only.**
+- **`soma:seam.seeds`** — forward pointers (frontmatter `seeds:` field). `{unplanted: true}` for ones not yet referenced. args: `{unplanted?:bool}`. **PRO.**
+- **`soma:seam.gaps`** — orphan documents (no inbound refs). Hygiene scan. No args. **PRO.**
+- **`soma:seam.web`** — **PERSISTENT** — writes markdown trace to `.soma/memory/webs/web-<term>-<date>.md`. Becomes a memory artifact next-self can read without re-running. args: `{term, output?:path}`. **PRO.**
+- **`soma:seam.stats`** — Pi JSONL session analytics: tool usage, errors, interrupts. args: `{mode?, limit?:200}`. **Dev tree only.**
+- **`soma:docs.related`** — frontmatter graph walk from a file (forward + back refs via `related:`, `seams:`, `seeds:`). args: `{file}`. **Dev tree only.**
+- **`soma:docs.impact`** — what docs/protocols/muscles reference this file? Run BEFORE renaming or deleting a doc. args: `{file}`. **Dev tree only.**
+
+### 🧰 New workflow: reach for `seam` before `grep`
+
+When the question shape is *"where did X come from?"* / *"who said X?"* / *"when did X evolve?"* — the seam family beats raw grep + find every time. PRO caps fail gracefully on free tier with a "PRO feature" message; dev-tree caps fail gracefully on user installs. Caps live in the route registry — zero cache cost at register-time.
+
+Tier breakdown:
+- **Free tier (everyone)**: `seam.trace` (wraps `amps/scripts/soma-trace.sh`).
+- **PRO tier (soma-beta tarball)**: `seam.ancestors`, `seam.timeline`, `seam.seeds`, `seam.gaps`, `seam.web`.
+- **Dev tree only (internal)**: `seam.sessions`, `seam.stats`, `docs.related`, `docs.impact`.
+
+### 📁 New files / locations
+
+- `extensions/_shared/script-resolver.ts` — shared helper for addons that wrap shell scripts. Path resolution + subprocess + graceful fallback messages.
+- `extensions/soma-addons/seam.ts` — the new family.
+- `.soma/memory/webs/` — where `seam.web` persists trace artifacts.
+
+Detail: `.soma/releases/v0.27.x/plans/seam-addon-family.md`.
+
+---
+
+## v0.27.1 — May 2026
 
 The "first end-to-end autonomous PR ship" patch. Cycles 16 + 17 land together: Sonnet's long-context wall now triggers warn/exhale BEFORE the wall hits, `/inhale` no longer double-injects preload, and `release-please` becomes the canonical ship pipeline.
 
