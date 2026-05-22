@@ -144,6 +144,19 @@ Settings files can exist at any level in the Soma chain:
 
 ## Settings Explained
 
+### Resource Paths (v0.27.3+)
+
+User-global resources live at `~/.soma/<type>/`, separate from the runtime install at `~/.soma/agent/`. This keeps your customizations safe across Soma updates.
+
+| Directory | What goes there |
+|-----------|----------------|
+| `~/.soma/extensions/` | Custom Pi extensions (`.ts` files) |
+| `~/.soma/skills/` | Skill directories the agent loads on boot |
+| `~/.soma/prompts/` | Prompt template files or directories |
+| `~/.soma/themes/` | Theme files or directories |
+
+**Opt out per session:** `soma --no-extensions`, `--no-skills`, `--no-prompt-templates`, `--no-themes`.
+
 ### Inheritance
 
 Controls what a child `.soma/` inherits from its parent chain. All default to `true` when a parent `.soma/` exists.
@@ -198,9 +211,14 @@ Protects core Soma files and git identity from accidental modification.
 | Key | Default | Description |
 |-----|---------|-------------|
 | `coreFiles` | `"warn"` | Protection for soul.md, SOMA.md, STATE.md, protocols/, settings.json. Options: `"allow"` (no guard), `"warn"` (notify on write), `"block"` (require confirmation) |
-| `bashCommands` | `"warn"` | Dangerous bash command guard (rm -rf, git push --force, etc.). `"allow"` = no prompts (power user), `"warn"` = confirm first, `"block"` = prevent entirely |
+| `bashCommands` | `"warn"` | Bash command guard. `"allow"` = no prompts, `"warn"` = confirm dangerous commands, `"block"` = prevent entirely. Protects against: `rm -rf`, `git push --force`, etc. |
+| `bashNotify` | `"notify"` | Non-blocking notifications for routine commands. Currently shows a notice on plain `git push`. Set to `"off"` to silence. |
 | `gitIdentity` | `null` | Expected git identity. `null` = only checks email is set. `{ email: "x@y.com" }` = warns on mismatch. `{ email: ["a@b.com", "c@d.com"] }` = accepts any in the list. |
 | `toolGates` | `{}` | Tool→muscle gating. Require reading a muscle before using certain bash commands. Keys are command substrings, values are `{ muscle, mode }`. |
+
+**v0.27.3+: Runtime install protection and expensive op confirmation:**
+
+The guard also intercepts destructive operations on `~/.soma/agent/` (the runtime install) and expensive operations (npm publish, docker push, remote rsync, ssh sudo). These always require explicit confirmation — can't be silenced via `bashCommands: allow`.
 
 **Example: tool→muscle gating:**
 ```json
@@ -502,8 +520,16 @@ Controls when context usage warnings fire during a session. These are the **pass
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `staleAfterHours` | `48` | Hours before a preload file is considered stale. Stale preloads still load but show a ⚠️ warning. |
-| `autoInject` | `false` | Automatically inject the most recent preload on every fresh session start. When `true`, `soma` behaves like `soma inhale`. Default is `false` — use `soma inhale` for intentional preload loading. |
+| `staleAfterHours` | `48` | Hours before a preload file is considered stale. |
+| `autoInject` | `false` | Auto-inject latest preload on every fresh boot. When `true`, `soma` = `soma inhale`. |
+
+### API Recovery
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `extraUsageRecovery` | `"auto"` | Handles Anthropic's "extra usage required for long context" 429 error on session boot. `"auto"` — auto-sends a keepalive `.` after 1s debounce (recovers silently). `"notify"` — surfaces a notice, waits for you to respond. `"off"` — lets the error propagate (manual recovery). |
+
+**Why this exists:** Anthropic's long-context tier charges extra. When Soma's context exceeds standard limits on the first turn, the API returns a 429 with "extra usage required." Auto mode quietly retries so sessions don't fail mysteriously.
 
 **Why adjust:** The stale threshold prevents the agent from acting on outdated context. If you work on a project daily, 48 hours is right — a preload from 2 days ago is probably stale. For side projects you touch weekly, set it higher so your preloads still auto-load after a few days away.
 
