@@ -275,7 +275,9 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 | Command | Description |
 |---------|-------------|
 | `soma` | **Fresh session** — runs the full boot sequence (identity, protocols, muscles, git context). By default does NOT load a preload (new projects have `preload.autoInject: false`). Use `soma inhale` to load your preload explicitly. |
-| `soma inhale` | **Fresh session + preload** — starts a new session and loads the most recent preload. The recommended daily workflow: `/exhale` → review/update preload → `soma inhale`. Explicit and intentional — you know exactly what context the agent starts with. |
+| `soma inhale` | **Fresh session + preload** — starts a new session and loads the most recent preload. The recommended daily workflow: `/exhale` → review/update preload → `soma inhale`. |
+| `soma inhale --list` | **Show available preloads** — lists all preloads with age and staleness. Stale (>48h) preloads are flagged with ⚠. Use to see what the agent will load. |
+| `soma inhale <name>` | **Load a specific preload** — partial name match (e.g. `soma inhale s01-19a716`). Useful when you want a specific session's context, not the latest. |
 | `soma -c` | **Continue session** - reopens the last session with full conversation history preserved. No new boot sequence - you're back in the same context. |
 | `soma -r` | **Resume picker** - choose from previous sessions to restore. |
 
