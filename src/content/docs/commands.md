@@ -250,10 +250,19 @@ Install community scripts from the hub:
 
 ```bash
 soma hub install script soma-refactor
-soma hub install script soma-browser
+soma hub install script soma-browser   # shell CLI; for agent use, prefer soma:browser.* (see browser-setup.md)
 ```
 
 Or drop any `soma-<name>.sh` into `.soma/amps/scripts/` — it becomes `soma <name>` immediately, no restart needed.
+
+**For agent-facing browser automation**, use `soma:browser.*` instead of the shell CLI. The cap surface auto-configures for any Chromium-family browser + Firefox via env or settings:
+
+```
+soma(op='call', cap='soma:browser.setup')      # first-run probe + configure
+soma(op='call', cap='soma:browser.navigate', args={url: '...'})
+```
+
+See `cli-tools.md` for the three-pattern model (when to use shell scripts vs caps), `browser-setup.md` for the multi-browser configuration, and `pro-tools.md` for the tier distinction.
 
 Run `soma --help scripts` to see all discovered scripts with descriptions.
 
@@ -266,7 +275,9 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 | Command | Description |
 |---------|-------------|
 | `soma` | **Fresh session** — runs the full boot sequence (identity, protocols, muscles, git context). By default does NOT load a preload (new projects have `preload.autoInject: false`). Use `soma inhale` to load your preload explicitly. |
-| `soma inhale` | **Fresh session + preload** — starts a new session and loads the most recent preload. The recommended daily workflow: `/exhale` → review/update preload → `soma inhale`. Explicit and intentional — you know exactly what context the agent starts with. |
+| `soma inhale` | **Fresh session + preload** — starts a new session and loads the most recent preload. The recommended daily workflow: `/exhale` → review/update preload → `soma inhale`. |
+| `soma inhale --list` | **Show available preloads** — lists all preloads with age and staleness. Stale (>48h) preloads are flagged with ⚠. Use to see what the agent will load. |
+| `soma inhale <name>` | **Load a specific preload** — partial name match (e.g. `soma inhale s01-19a716`). Useful when you want a specific session's context, not the latest. |
 | `soma -c` | **Continue session** - reopens the last session with full conversation history preserved. No new boot sequence - you're back in the same context. |
 | `soma -r` | **Resume picker** - choose from previous sessions to restore. |
 

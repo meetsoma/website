@@ -219,7 +219,9 @@ soma github <repo> stats             # repo statistics
 
 ### soma browser
 
-CDP-based browser automation for testing and scraping.
+CDP-based browser automation for testing and scraping (shell CLI).
+
+> **Note:** This is the **shell-CLI counterpart**. For agent-facing browser automation use `soma:browser.*` — the newer multi-browser configurable system that supports Chrome / Brave / Edge / Arc / Vivaldi / Chromium / Firefox via env + settings. See `browser-setup.md` for setup and `cli-tools.md` for the three-pattern model. The shell `soma browser` is kept for direct terminal use (bridge-proxied, hardcoded for Brave Beta on port 9333).
 
 ---
 
