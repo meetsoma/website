@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import preact from '@astrojs/preact';
+import remarkRemoveFirstH1 from './src/plugins/remark-remove-first-h1.mjs';
 
 export default defineConfig({
   site: 'https://soma.gravicity.ai',
@@ -15,6 +16,7 @@ export default defineConfig({
     assets: 'assets'
   },
   markdown: {
+    remarkPlugins: [remarkRemoveFirstH1],
     shikiConfig: {
       // Cycle 17 (s01-7b287c): dual-theme so code blocks adapt to dark/light.
       // Astro+Shiki render with CSS vars (`--shiki-light`, `--shiki-dark`) and

@@ -1,4 +1,26 @@
 ---
-// Redirect /changelog/ → /docs/changelog
-return Astro.redirect('/docs/changelog', 301);
+import Layout from '../../layouts/Layout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import ChangelogIsland from '../../components/islands/ChangelogIsland.tsx';
 ---
+
+<Layout title="Changelog — Soma" description="Every commit, every fix, every feature — the full history of Soma.">
+  <main>
+    <SectionHeader
+      title="Changelog"
+      description="Every commit, every fix, every feature — the full history of Soma."
+    />
+
+    <section class="changelog-page">
+      <ChangelogIsland client:load />
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .changelog-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: var(--card-pad-y) var(--card-pad-x);
+  }
+</style>
