@@ -9,7 +9,7 @@ triggers: [test, stale, dead-code, cleanup, validation, ci, suite, coverage, hyg
 scope: hub
 tier: official
 created: 2026-03-09
-updated: 2026-04-23
+updated: 2026-05-26
 version: 1.1.0
 author: meetsoma
 license: MIT
