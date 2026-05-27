@@ -1,6 +1,5 @@
 {
   "registryPath": "src/styles/tincture/registry.json",
-  "outDir":       "src/styles/tincture/_generated",
-  "moodsDir":     "src/styles/tincture/moods",
-  "brandName":    "soma"
+  "outDir": "src/styles/tincture/_generated",
+  "moodsDir": "src/styles/tincture/moods"
 }
