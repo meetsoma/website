@@ -3,6 +3,7 @@ title: "Dev Tools — the dev:* Meta-Tool"
 description: "The dev:* namespace: caps that ship with the Soma development tree, not with user installs. Audit, hub, issue, kanban families."
 section: "Reference"
 order: 13
+since: v0.27.2
 ---
 
 # Dev Tools — `dev:*`

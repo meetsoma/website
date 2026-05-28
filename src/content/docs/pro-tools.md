@@ -3,6 +3,7 @@ title: "Pro Tools — the _pro/ Tier"
 description: "Scripts and capabilities that ship in the soma-beta tarball (PRO) but not the public npm package. Tier model, distribution, and graceful degrade pattern."
 section: "Reference"
 order: 14
+since: v0.27.2
 ---
 
 # Pro Tools — `_pro/`

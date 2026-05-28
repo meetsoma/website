@@ -19,6 +19,7 @@ const { Content } = await render(doc);
 <DocsLayout
   title={doc.data.title}
   description={doc.data.description}
+  since={doc.data.since}
   currentSlug={doc.id.replace(/\.mdx?$/, '')}
 >
   <Content />

@@ -24,6 +24,7 @@ const docs = defineCollection({
     section: z.string().default('General'),
     order: z.number().default(99),
     draft: z.boolean().default(false),
+    since: z.string().optional(),
   }),
 });
 

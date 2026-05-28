@@ -3,6 +3,7 @@ title: "CLI Tools: How Soma Surfaces Tools to the Agent"
 description: "The three patterns for adding a tool. Pattern 1 (commands/.sh drop-in) is the answer most of the time. Decision flow ladder + reload semantics."
 section: "Reference"
 order: 12
+since: v0.27.2
 ---
 
 # CLI Tools — How Soma Surfaces Tools to the Agent

@@ -21,10 +21,11 @@ const sectionIcons: Record<string, string> = {
 interface Props {
   title: string;
   description?: string;
+  since?: string;
   currentSlug: string;
 }
 
-const { title, description, currentSlug } = Astro.props;
+const { title, description, since, currentSlug } = Astro.props;
 
 const thisDocUrl = `https://soma.gravicity.ai/docs/${currentSlug}`;
 const docJsonLd = {
@@ -134,6 +135,7 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
         ]} />
         <header class="docs-header">
           <h1>{title}</h1>
+          {since && <span class="docs-since-badge">Since {since}</span>}
           {description && <p class="docs-description">{description}</p>}
         </header>
 
@@ -377,6 +379,18 @@ const currentSection = allDocs.find(d => d.id.replace(/\.mdx?$/, '') === current
     font-family: var(--font-display);
     font-size: clamp(1.8rem, 5vw, 2.4rem);
     font-weight: 700;
+    margin-bottom: var(--space-md);
+  }
+
+  .docs-since-badge {
+    display: inline-block;
+    font-size: var(--badge-text);
+    font-weight: 500;
+    color: var(--promo-text);
+    background: color-mix(in srgb, var(--promo-glow) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--promo-glow) 30%, transparent);
+    border-radius: 4px;
+    padding: 2px 8px;
     margin-bottom: var(--space-md);
   }
 
