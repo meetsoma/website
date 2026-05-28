@@ -23,19 +23,13 @@
       "title": "Preload lifecycle state machine + _dev consolidation",
       "features": {
         "added": [
-          "**Preload lifecycle state machine.** A single shared module (`preload-lifecycle.ts`) replaces 7 independent let flags across breathe, boot, and statusline. /exhale, keepalive auto-exhale, and the 85% safety net now coordinate through one state model \u2014 no more competing rotation requests.",
-          "**Three-state auto-breath config.** `breathe.auto` now accepts `\"on\"` (proactive), `\"auto\"` (adaptive), `\"off\"` (passive). Backward-compat with boolean and `\"global\"` legacy values.",
-          "**Sandbox `--dummy` mode.** Simulated API responses, no API key needed. All 10 API-dependent tests run offline.",
-          "**Sandbox `--brief` mode.** Compact dot-progress output, details only on failures. Clean CI logs.",
-          "**dev-sync dist provenance indicator.** Statusline shows `(main +dev)` when running dev-synced dist on main branch. Cleared by rollback.",
-          "**Docs version badge.** Every doc page shows the version it was introduced in \u2014 at a glance, know if you\u2019re reading current or legacy guidance.",
-          "**Test shared helpers.** 7 test suites extract boilerplate into `_shared.sh`, reducing duplication and making new test suites trivial."
+          "**Testing overhaul \u2014 faster, keyless, cleaner.** 117 sandbox tests run offline with simulated responses. Shared boilerplate, clean CI logs, trivial new-test setup.",
+          "**Preload lifecycle unified.** /exhale, auto-rotate, and the context safety net coordinate through one state model. No more competing rotation requests \u2014 every session saves cleanly.",
+          "**Three-way auto-breath.** Soma adapts: proactive, adaptive, or manual. Context management that learns your rhythm."
         ],
         "fixed": [
-          "**85% safety net no longer overrides manual /exhale or keepalive auto-exhale** \u2014 checks lifecycle state before acting. If a preload is already requested, it notifies instead of competing.",
-          "**/exhale at high context no longer rotates without saving the preload** \u2014 the stale-preload immediate-rotation case is closed.",
-          "**Preload loads after auto-rotate** \u2014 `.rotate-signal` was cleaned too early; deferred cleanup to startup handler.",
-          "**Sandbox `--dev` timeout** \u2014 release dry-run ran the full test suite (55 scripts \u00d7 2 passes). Added `SKIP_TESTS=1`."
+          "**Safety net respects your choices.** Manual /exhale and keepalive auto-exhale are no longer overridden.",
+          "**Preload always saves before rotation.** High-context cycling no longer skips your session state."
         ]
       },
       "tagline": "Preload coordination unified. Three breath modes. Sandbox runs without API keys."
