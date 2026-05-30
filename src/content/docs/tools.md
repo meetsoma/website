@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via _tools.md, and the bundled set
 status: active
-updated: 2026-05-09
+updated: 2026-05-30
 ---
 
 # Tools
@@ -199,7 +199,7 @@ See [Extending Soma → Soma Tools](/docs/extending#soma-tools) for the full
 pattern. The shortest version:
 
 ```typescript
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "@sinclair/typebox";
 import { somaRegisterTool } from "../core/tool-registry.js";
 

@@ -142,7 +142,7 @@ $ soma code blast getAgentDir core/
 Files affected: 2
 
   low  core/discovery.ts  (2 refs)
-       :14  import { getAgentDir } from "@mariozechner/pi-coding-agent";
+       :14  import { getAgentDir } from "@earendil-works/pi-coding-agent";
   low  core/prompt.ts  (1 refs)
        :805  * @param agentDir - Agent installation directory (from getAgentDir())
 ```

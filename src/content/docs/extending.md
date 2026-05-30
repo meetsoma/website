@@ -96,7 +96,7 @@ See [Configuration → Extension Security](/docs/configuration#extension-securit
 ### Writing an Extension
 
 ```typescript
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 export default function myExtension(pi: ExtensionAPI) {
   // Register a command
@@ -252,7 +252,7 @@ prompt rendering.
 ### Writing a Soma tool
 
 ```typescript
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "@sinclair/typebox";
 import { somaRegisterTool } from "../core/tool-registry.js";
 
@@ -377,7 +377,7 @@ tooling like the Gravicity cycle audit), register directly in a
 project-local extension at `<project>/.soma/extensions/<name>.ts`:
 
 ```typescript
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 export default function myProjectAddon(pi: ExtensionAPI) {
   // Defer to session_start so __somaRoute is initialized.
@@ -553,7 +553,7 @@ Extensions can register custom model providers using `pi.registerProvider()`. Th
 Route requests through a proxy without losing the provider's model list:
 
 ```typescript
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 export default function (pi: ExtensionAPI) {
   pi.registerProvider("anthropic", {

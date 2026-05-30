@@ -43,7 +43,7 @@ All three are technically correct responses to a 429 — but the underlying prob
 
 ## How Soma injects the beta header
 
-The mechanism is `scripts/_dev/patches/apply-patches.sh` (build-time string injection into `node_modules/@mariozechner/pi-ai/dist/providers/anthropic.js`). It adds `context-1m-2025-08-07` to the OAuth `anthropic-beta` header.
+The mechanism is `scripts/_dev/patches/apply-patches.sh` (build-time string injection into `node_modules/@earendil-works/pi-ai/dist/providers/anthropic.js`). It adds `context-1m-2025-08-07` to the OAuth `anthropic-beta` header.
 
 The patch is **disabled by default** (s01-a54f21, SX-727 reversed). To enable:
 
@@ -78,7 +78,7 @@ If you're seeing the error and not sure which switch is the problem:
 python3 -c "import json; print(json.load(open('/path/to/.soma/settings.json')).get('anthropic'))"
 
 # 2. Check the Pi runtime — does it have the beta header injected?
-grep "context-1m-2025-08-07" $(dirname $(readlink -f $(which soma)))/../node_modules/@mariozechner/pi-ai/dist/providers/anthropic.js
+grep "context-1m-2025-08-07" $(dirname $(readlink -f $(which soma)))/../node_modules/@earendil-works/pi-ai/dist/providers/anthropic.js
 # Empty output = patch NOT applied (you should NOT see the error if account isn't enrolled)
 # Output present = patch IS applied (account MUST be enrolled or every request fails)
 ```
