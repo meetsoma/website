@@ -1,153 +1,148 @@
 /* ========================================
    Somaverse × Kanidm — custom auth theme
-   Loaded via [ui_config] custom_css
+   Brand: #0C0F16 deep space + #f0c866 gold
    ======================================== */
 
-/* ── Brand colors ────────────────────── */
+/* ── Brand palette ──────────────────── */
 :root {
-  --sv-primary: #3e6c92;
-  --sv-primary-light: #6898be;
-  --sv-primary-dark: #2a4a6a;
-  --sv-accent: #7cb2d4;
-  --sv-bg-dark: #0f1a24;
-  --sv-bg-card: #162634;
-  --sv-text: #e8edf0;
-  --sv-text-muted: #8a9ba8;
-  --sv-border: #2a4a6a;
+  --sv-bg: #0C0F16;
+  --sv-card: #131822;
+  --sv-gold: #f0c866;
+  --sv-copper: #e8a87c;
+  --sv-blue: #7cb2d4;
+  --sv-text: #e4eaf4;
+  --sv-text-muted: #8892a8;
+  --sv-border: rgba(124, 178, 212, 0.2);
+  --sv-border-focus: rgba(124, 178, 212, 0.4);
+  --sv-shadow: rgba(124, 178, 212, 0.08);
 }
 
 /* ── Page background ─────────────────── */
 body {
-  background: var(--sv-bg-dark) !important;
+  background: var(--sv-bg) !important;
   color: var(--sv-text);
+  font-family: ui-sans-serif, system-ui, sans-serif;
 }
 
-/* ── Main card / container ──────────── */
+/* ── Login card ─────────────────────── */
 main.form-signin {
-  background: var(--sv-bg-card);
+  background: var(--sv-card);
   border: 1px solid var(--sv-border);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 2.5rem 2rem !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  max-width: 400px;
+  box-shadow: 0 0 0 1px rgba(124, 178, 212, 0.06), 0 8px 32px rgba(0,0,0,0.5);
+  max-width: 380px;
   width: 100%;
 }
 
 /* ── Logo ────────────────────────────── */
 .kanidm_logo {
-  width: 72px;
-  height: 72px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+  filter: drop-shadow(0 0 12px rgba(124, 178, 212, 0.15));
 }
 
-/* ── Heading replacement ────────────── */
-/* Hide original "Gravicity" text, show "Somaverse" via pseudo */
+/* ── Heading ─────────────────────────── */
 main h3 {
-  font-size: 0 !important;
-  position: relative;
-  margin-bottom: 0.75rem !important;
-}
-main h3::after {
-  content: "Somaverse";
-  font-size: 1.5rem;
+  font-family: "Manrope", system-ui, sans-serif !important;
+  font-size: 1.35rem !important;
   font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--sv-text);
-  letter-spacing: -0.02em;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
+  margin-bottom: 1.25rem !important;
 }
 
-/* ── Alert box ──────────────────────── */
+/* ── "Authenticate to access" alert ─── */
 .alert.alert-info {
-  background: rgba(104, 152, 190, 0.12);
-  border: 1px solid rgba(104, 152, 190, 0.25);
-  color: var(--sv-accent);
-  border-radius: 10px;
-  font-size: 0.875rem;
-  padding: 0.75rem 1rem;
+  background: rgba(240, 200, 102, 0.06);
+  border: 1px solid rgba(240, 200, 102, 0.15);
+  color: var(--sv-gold);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1.25rem;
 }
 
 /* ── Form labels ────────────────────── */
 .form-label {
   color: var(--sv-text-muted);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   font-weight: 600;
 }
 
-/* ── Input fields ───────────────────── */
+/* ── Input ───────────────────────────── */
 .form-control {
-  background: var(--sv-bg-dark);
+  background: rgba(12, 15, 22, 0.6);
   border: 1px solid var(--sv-border);
   color: var(--sv-text);
   border-radius: 8px;
-  padding: 0.65rem 1rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .form-control:focus {
-  background: var(--sv-bg-dark);
-  border-color: var(--sv-primary-light);
+  background: rgba(12, 15, 22, 0.6);
+  border-color: var(--sv-blue);
   color: var(--sv-text);
-  box-shadow: 0 0 0 3px rgba(104, 152, 190, 0.2);
+  box-shadow: 0 0 0 2px rgba(124, 178, 212, 0.15);
 }
 .form-control::placeholder {
-  color: var(--sv-text-muted);
+  color: rgba(136, 146, 168, 0.4);
 }
 
 /* ── Checkbox / switch ──────────────── */
 .form-check-input {
-  background-color: var(--sv-bg-dark);
+  background-color: rgba(12, 15, 22, 0.6);
   border-color: var(--sv-border);
 }
 .form-check-input:checked {
-  background-color: var(--sv-primary-light);
-  border-color: var(--sv-primary-light);
+  background-color: var(--sv-blue);
+  border-color: var(--sv-blue);
 }
 .form-check-label {
   color: var(--sv-text-muted);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
 }
 
 /* ── Submit button ──────────────────── */
 .btn-primary {
-  background: linear-gradient(135deg, var(--sv-primary) 0%, var(--sv-primary-dark) 100%);
-  border: none;
-  color: white;
+  background: transparent;
+  border: 1px solid var(--sv-gold);
+  color: var(--sv-gold);
+  font-family: "Satoshi", system-ui, sans-serif;
   font-weight: 600;
-  padding: 0.6rem 2rem;
+  font-size: 0.8rem;
+  padding: 0.5rem 1.75rem;
   border-radius: 8px;
-  transition: all 0.2s ease;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  transition: all 0.15s ease;
 }
 .btn-primary:hover,
 .btn-primary:focus {
-  background: linear-gradient(135deg, var(--sv-primary-light) 0%, var(--sv-primary) 100%);
-  color: white;
-  box-shadow: 0 4px 16px rgba(104, 152, 190, 0.3);
-  transform: translateY(-1px);
-}
-.btn-primary:active {
-  transform: translateY(0);
+  background: rgba(240, 200, 102, 0.08);
+  color: var(--sv-gold);
+  border-color: var(--sv-gold);
+  box-shadow: 0 0 20px rgba(240, 200, 102, 0.08);
 }
 
 /* ── Footer ──────────────────────────── */
 footer.footer {
   background: transparent !important;
-  padding: 1rem !important;
+  padding: 0.75rem !important;
 }
 footer.footer .text-muted {
-  color: var(--sv-text-muted) !important;
-  font-size: 0.75rem;
+  color: rgba(136, 146, 168, 0.4) !important;
+  font-size: 0.7rem;
 }
 footer.footer a {
-  color: var(--sv-primary-light);
+  color: var(--sv-text-muted);
   text-decoration: none;
 }
 footer.footer a:hover {
-  text-decoration: underline;
+  color: var(--sv-blue);
 }
