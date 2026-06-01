@@ -115,7 +115,7 @@ Pick from previous sessions to resume.
 | Command | What it does |
 |---------|-------------|
 | `/breathe` | Save state + rotate into fresh session |
-| `/exhale ["note"]` | Save state, write preload, session ends. Optional: text after `/exhale` becomes a `### User's Note` in the preload — your directive for the next session. (v0.28.1) |
+| `/exhale ["note"]` | Save state, write preload, session ends. Optional: text after `/exhale` becomes a `### Note` directing the agent — scope this wrap or pass directives forward. (v0.28.1) |
 | `/rest` | Disable keepalive + exhale - for when you're done for the night |
 | `/inhale` | Reset session and load preload — fresh start with your most recent preload |
 | `/pin <name>` | Pin a protocol/muscle to hot (stays loaded) |

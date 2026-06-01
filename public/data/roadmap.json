@@ -24,7 +24,7 @@
       "features": {
         "fixed": [
           "**`soma inhale --model <model>` loads your preload.** The model name no longer steals the preload target — start fresh with any model and your full session context in one command.",
-          "**`/exhale <note>` passes your instruction through to the next session.** Type anything after `/exhale` and it becomes a `### User's Note` block in the preload — your directive sits at the top of Start Here, overriding inferred priorities. `--note` prefix and quotes stripped automatically. `/exhale` alone works the same as always.",
+          "**`/exhale <note>` directs the current agent during preload writing.** Text after `/exhale` is injected as a `### Note` in the EXHALE message. The agent uses it to scope the wrap (skip steps for \"quick\") and to pass directives forward to the next session's Start Here.",
           "**TUI respects your theme.** Header and statusline now render through Pi's theme system instead of hardcoded escape codes. Colors match what you chose.",
           "**Release can't half-ship anymore.** Main-sync is a hard gate — v0.28.0's \"published but stale runtime\" can never happen again."
         ]
