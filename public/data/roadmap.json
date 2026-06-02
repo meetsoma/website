@@ -18,6 +18,36 @@
       "version": "Next"
     },
     {
+      "version": "0.28.3",
+      "date": "2026-06-01",
+      "title": "Browser drives the web — xray, click, fill, wait",
+      "features": {
+        "added": [
+          "**Xray and click — survey before you act, then click through.** Xray walks the DOM as a compact tree. Click sends real CDP mouse events that bypass React Aria isTrusted — SPAs just work.",
+          "**Fill and wait — interact with forms and handle hydration.** Fill injects values with proper input/change events. Wait polls until the target element appears after page load.",
+          "**Navigate returns a tab ID you can chain.** Capture it from the response and pass it to subsequent ops — no more guessing which tab you're in.",
+          "**Screenshots save to disk for instant viewing.** No more invisible base64 — they land in /tmp and the response includes the read tool command."
+        ],
+        "fixed": [
+          "**Tab-not-found errors now give you actionable guidance** instead of raw CDP dumps. Pass `verbose:true` when you need the full diagnostic.",
+          "**The TUI no longer renders raw function source in the statusline.** A theme-color migration slipped a bare function reference into the branch display — fixed mid-release."
+        ]
+      },
+      "tagline": "Survey, click, fill, wait — your agent drives the browser like you do."
+    },
+    {
+      "version": "0.28.2",
+      "date": "2026-06-01",
+      "title": "Theme crash fix + migrations that never skip",
+      "features": {
+        "fixed": [
+          "**`/inhale --model` no longer crashes the TUI.** Theme colors that weren't in Pi's palette have been replaced — your header and statusline render cleanly.",
+          "**Migrations now run on every boot.** Three gap-safe sentinels ensure fixes land even when you skip versions — your settings stay current and your templates stay fresh."
+        ]
+      },
+      "tagline": "No more theme crash on inhale — migrations land on every boot."
+    },
+    {
       "version": "0.28.1",
       "date": "2026-06-01",
       "title": "Preload fix + exhale notes + theme colors + release gates",
