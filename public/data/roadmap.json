@@ -18,6 +18,25 @@
       "version": "Next"
     },
     {
+      "version": "0.29.0",
+      "date": "2026-06-02",
+      "title": "Tab Registry — stable browser IDs + body templates evolve",
+      "features": {
+        "added": [
+          "**Tab Registry — your browser tabs have stable names.** Every tab gets a UUID that survives CDP ID rotation. `tabs` returns friendly IDs, `navigate` returns them, `activate_tab` just works.",
+          "**core_rules.md ships with every new project.** Bookkeeping, Probe Before Reason, Search-Before-Build, Fix→Meta, Semantic Audit — the behavioral defaults we developed over months."
+        ],
+        "changed": [
+          "**Body templates evolved across 6 files.** `body.md` grew a routing table + librarian directive. `soul.md` learned How I Learn/Build/Communicate. `_memory.md` dropped 32% weight — sharper, lighter."
+        ],
+        "fixed": [
+          "**Preload fallback now matches the template.** The hardcoded fallback in `core/preload.ts` used old section names from months ago — now synced with the canonical `_memory.md` format.",
+          "**Roadmap staleness caught at ship time.** New `soma-roadmap-staleness-check.sh` compares CHANGELOG vs roadmap.json — wired into the release flow so the website never falls behind again."
+        ]
+      },
+      "tagline": "Browser tabs get stable names, body templates sharpen, releases can't go stale."
+    },
+    {
       "version": "0.28.5",
       "date": "2026-06-02",
       "title": "System-core ships + statusline preload fix + budget caps",
