@@ -1,6 +1,6 @@
 ---
 title: "The Body That Grew Around Us"
-description: "Soma's body architecture started as a handful of .md files that compiled into a system prompt. Eighteen months later, it runs release cycles, writes its own preloads, and evolved its own behavioral defaults. This is how the body grew — and why it matters for any AI agent that needs to remember."
+description: "Soma's body architecture started as a handful of .md files that compiled into a system prompt. Over dozens of releases, it grew into a system that runs release cycles, writes its own preloads, and evolved its own behavioral defaults. This is how the body grew — and why it matters for any AI agent that needs to remember."
 date: 2026-06-02T12:00:00
 image: /images/blog/og-body-that-grew.png
 author: "Curtis & Soma"
@@ -73,7 +73,7 @@ The 30-second read prevents the 30-minute mistake — and it compounds. Every ti
 
 ## Behavioral Defaults: core_rules.md
 
-For eighteen months, the only behavioral rules Soma had were in the muscle system — protocols you had to actively read. There was no "always loaded" set of defaults like "probe before you reason" or "bookkeeping IS the work."
+Before v0.29.0, the only behavioral rules Soma had were in the muscle system — protocols you had to actively read. There was no "always loaded" set of defaults like "probe before you reason" or "bookkeeping IS the work."
 
 v0.29.0 adds `core_rules.md` — a file that ships with every new project and loads into every session:
 
@@ -84,7 +84,7 @@ v0.29.0 adds `core_rules.md` — a file that ships with every new project and lo
 - **Semantic Audit Before Ship.** "Dry-run clean" ≠ "release truthful." Verify claims, not exit codes.
 - **Karpathy's Rubric.** Think before coding. Simplicity first. Surgical changes. Goal-driven execution.
 
-These aren't novel. They're the patterns we discovered across eighteen months of watching Soma make the same mistakes and building the tools that prevent them. What's new is that they ship to every user.
+These aren't novel. They're the patterns we discovered across many sessions of watching Soma make the same mistakes and building the tools that prevent them. What's new is that they ship to every user.
 
 ## The Template That Got Leaner
 
