@@ -18,6 +18,19 @@
       "version": "Next"
     },
     {
+      "version": "0.28.5",
+      "date": "2026-06-02",
+      "title": "System-core ships + statusline preload fix + budget caps",
+      "features": {
+        "fixed": [
+          "**system-core.md finally ships from the correct path.** The build was copying from the wrong source — the \"Structure-aware before raw\" guidance was compiled but never deployed. Now it lands in every session.",
+          "**Statusline detects manual exhale writes.** Polls the preload file on disk — no more stale SAVED-PREL state after you write notes directly.",
+          "**Body slots respect your token budget.** muscle_digests estimates are now capped by configured tokenBudget instead of assuming unlimited space."
+        ]
+      },
+      "tagline": "What you build finally deploys — statusline wakes, budgets hold."
+    },
+    {
       "version": "0.28.3",
       "date": "2026-06-01",
       "title": "Browser drives the web — xray, click, fill, wait",

@@ -4,6 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Starfield from '../components/Starfield.astro';
 import Sky from '../components/Sky.astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   title: string;
@@ -547,11 +548,11 @@ const schemaData = jsonLd || defaultJsonLd;
     </div>
     <Footer />
 
-    <!-- Vercel Analytics — privacy-respecting, no cookies -->
+    <!-- Vercel Analytics + Speed Insights -->
+    <SpeedInsights />
     <script>
       import { inject } from '@vercel/analytics';
       inject();
-    </script>
 
     <script>
       // Cycle 17 (s01-7b287c): theme toggle as a CINEMATIC TIME-LAPSE.
