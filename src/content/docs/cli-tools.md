@@ -147,7 +147,7 @@ Is it bootstrap-essential (like `capabilities`)?
 extensions/soma-addons/         Pattern 2 — soma:* family addons
   agent.ts        (7 caps)
   body.ts         (3 caps)
-  browser.ts      (17 caps)
+  browser.ts      (21 caps)
   code.ts         (7 caps)
   docs.ts         (7 caps)
   focus.ts        (4 caps)
