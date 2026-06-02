@@ -303,6 +303,34 @@ soul.md (30 lines) + voice.md + body.md + journal.md (lazy)
 
 The trigger: when you're loading 300 lines and only 20 matter per task. Lazy files cost zero at boot.
 
+## Template Versioning
+
+Starting in v0.29.0, every shipping template carries a `soma_template_version` field in its frontmatter:
+
+```yaml
+---
+soma_template_version: 0.29.0
+---
+```
+
+This enables version-aware updates. Your body files may also carry this field — if they were created from a template, the version tells you when they were last synced. If you customize a file, add `customized: true` to prevent accidental overwrites.
+
+## Updating Body Files
+
+When a new Soma release improves the templates, your existing body files are **never force-overwritten.** Run `/body update` to compare your files against the latest shipping templates:
+
+```
+/body update
+```
+
+The agent will:
+1. Compare your files against the latest templates using version numbers
+2. Show what's new, what changed, and which files you've customized
+3. Let you choose what to update — stock files can update automatically, customized files get a diff review
+4. Back up originals before writing anything
+
+Files marked `customized: true` are never auto-updated.
+
 ## Known Quirks
 
 - **`{{greeting}}` is narrative only** — session ID and file paths are separate variables
