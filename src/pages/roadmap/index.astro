@@ -20,6 +20,17 @@ import HeroTitle from '../../components/HeroTitle.astro';
 // still renders cleanly (see v0.20.0 / v0.22.0 / v0.24.0 / v0.26.0 below).
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string; image?: string }[] = [
   {
+    name: 'The body evolved — routing tables, core_rules, leaner preloads',
+    icon: 'extensions',
+    description: 'Six body templates upgraded after an 18-month audit. body.md grew a routing table + librarian directive. core_rules.md ships behavioral defaults (Bookkeeping, Probe Before Reason, Fix→Meta). _memory.md dropped 32% weight — Gaps/Unfinished replaces In-Flight/Key Decisions. soul.md learned How I Learn/Build/Communicate. The preload fallback in core/preload.ts now matches the template — no more drift between code and content.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.29.0',
+    date: '2026-06-02',
+    blogPost: 'the-body-that-grew-around-us',
+    image: '/images/roadmap/body-evolution.svg',
+  },
+  {
     name: 'Browser drives the web — xray, click, fill, wait',
     icon: 'extensions',
     description: 'Four new browser caps ported from the reference CLI. Xray walks the DOM as a compact layout tree so you can survey a page before acting. Click uses Input.dispatchMouseEvent to bypass React Aria isTrusted checks — SPAs just work. Fill injects value + focus/change events. Wait polls for element appearance after SPA hydration. Plus: screenshot writes to /tmp for read-tool display, navigate returns tabId for chaining, and setup messages now list 7 browsers with verified launch flags.',

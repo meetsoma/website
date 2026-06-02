@@ -8,7 +8,7 @@ triggers: [scripts, muscles, tools, tooling, plan, implementation, gap, extend, 
 tags: [workflow, planning, tools, scripts, awareness]
 applies-to: [any]
 created: 2026-03-13
-updated: 2026-05-26
+updated: 2026-06-02
 tools: [soma-query.sh, soma-find.sh, soma-plans.sh]
 version: 1.0.0
 author: meetsoma

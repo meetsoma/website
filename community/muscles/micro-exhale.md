@@ -9,7 +9,7 @@ triggers: [micro-exhale, daily-log, workflow-summary, session-memory, memory, wo
 scope: hub
 tier: official
 created: 2026-03-10
-updated: 2026-05-26
+updated: 2026-06-02
 version: 1.0.0
 author: meetsoma
 license: MIT
