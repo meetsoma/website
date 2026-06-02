@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="-apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(22,27,34,0.85)"/>
+      <stop offset="100%" stop-color="rgba(13,17,23,0.9)"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="420" fill="url(#bg)" rx="12"/>
+
+  <text x="400" y="38" text-anchor="middle" fill="#c9d1d9" font-size="18" font-weight="600" font-family="'SF Mono', monospace">_memory.md — Template Evolution</text>
+  <text x="400" y="58" text-anchor="middle" fill="#6e7681" font-size="11">How the preload template got leaner, sharper, and more useful over 6 releases</text>
+
+  <!-- Timeline axis -->
+  <line x1="80" y1="110" x2="720" y2="110" stroke="#30363d" stroke-width="2"/>
+
+  <!-- v0.22 — 6,723 bytes -->
+  <circle cx="120" cy="110" r="6" fill="#f0883e"/>
+  <text x="120" y="100" text-anchor="middle" fill="#6494be" font-family="'SF Mono', monospace" font-size="10">0.22</text>
+  <rect x="70" y="125" width="100" height="80" rx="6" fill="rgba(22,27,34,0.6)" stroke="#f0883e" stroke-width="1"/>
+  <text x="120" y="143" text-anchor="middle" fill="#f0883e" font-size="18" font-weight="600">6,723</text>
+  <text x="120" y="158" text-anchor="middle" fill="#c9d1d9" font-size="10">bytes</text>
+  <text x="120" y="175" text-anchor="middle" fill="#6e7681" font-size="9">Next Session</text>
+  <text x="120" y="192" text-anchor="middle" fill="#6e7681" font-size="9">In-Flight · Key Decisions</text>
+
+  <!-- v0.23 — 6,850 bytes (peak) -->
+  <circle cx="230" cy="110" r="6" fill="#f0883e"/>
+  <text x="230" y="100" text-anchor="middle" fill="#6494be" font-family="'SF Mono', monospace" font-size="10">0.23</text>
+  <rect x="180" y="135" width="100" height="65" rx="6" fill="rgba(22,27,34,0.6)" stroke="#30363d" stroke-width="1"/>
+  <text x="230" y="153" text-anchor="middle" fill="#6e7681" font-size="18" font-weight="600">6,850</text>
+  <text x="230" y="168" text-anchor="middle" fill="#c9d1d9" font-size="10">bytes</text>
+  <text x="230" y="185" text-anchor="middle" fill="#6e7681" font-size="9">Do NOT Re-Read</text>
+
+  <!-- v0.24–0.27 — gradual decline -->
+  <circle cx="370" cy="110" r="6" fill="#c9d1d9"/>
+  <text x="370" y="100" text-anchor="middle" fill="#6494be" font-family="'SF Mono', monospace" font-size="10">0.24–0.27</text>
+  <rect x="320" y="135" width="100" height="65" rx="6" fill="rgba(22,27,34,0.6)" stroke="#30363d" stroke-width="1"/>
+  <text x="370" y="153" text-anchor="middle" fill="#6e7681" font-size="18" font-weight="600">~6,200</text>
+  <text x="370" y="168" text-anchor="middle" fill="#c9d1d9" font-size="10">bytes</text>
+  <text x="370" y="185" text-anchor="middle" fill="#6e7681" font-size="9">Before You Start</text>
+
+  <!-- v0.28.3 — 6,250 -->
+  <circle cx="510" cy="110" r="6" fill="#c9d1d9"/>
+  <text x="510" y="100" text-anchor="middle" fill="#6494be" font-family="'SF Mono', monospace" font-size="10">0.28.3</text>
+  <rect x="460" y="135" width="100" height="65" rx="6" fill="rgba(22,27,34,0.6)" stroke="#30363d" stroke-width="1"/>
+  <text x="510" y="153" text-anchor="middle" fill="#6e7681" font-size="18" font-weight="600">6,250</text>
+  <text x="510" y="168" text-anchor="middle" fill="#c9d1d9" font-size="10">bytes</text>
+  <text x="510" y="185" text-anchor="middle" fill="#6e7681" font-size="9">Kanban Snapshot</text>
+
+  <!-- v0.29.0 — 4,597 bytes (WIN) -->
+  <circle cx="660" cy="110" r="8" fill="#6494be"/>
+  <text x="660" y="100" text-anchor="middle" fill="#6494be" font-family="'SF Mono', monospace" font-size="11" font-weight="600">0.29.0</text>
+  <rect x="610" y="120" width="100" height="85" rx="6" fill="rgba(100,148,190,0.08)" stroke="#6494be" stroke-width="1.5"/>
+  <text x="660" y="143" text-anchor="middle" fill="#6494be" font-size="22" font-weight="600">4,597</text>
+  <text x="660" y="160" text-anchor="middle" fill="#c9d1d9" font-size="11">bytes</text>
+  <text x="660" y="178" text-anchor="middle" fill="#8bb9e0" font-size="9">−32%</text>
+  <text x="660" y="195" text-anchor="middle" fill="#6e7681" font-size="9">Gaps · Unfinished</text>
+
+  <!-- Decline arrow -->
+  <path d="M120 200 Q390 260 660 200" fill="none" stroke="#30363d" stroke-width="1.5" stroke-dasharray="8,4"/>
+  <text x="390" y="245" text-anchor="middle" fill="#6e7681" font-size="10" font-family="'SF Mono', monospace">— fewer sections, sharper prompts —</text>
+
+  <!-- What was removed -->
+  <rect x="30" y="270" width="740" height="55" rx="6" fill="rgba(100,148,190,0.04)" stroke="#3a6890" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="50" y="290" fill="#f0883e" font-size="10" font-family="'SF Mono', monospace">REMOVED</text>
+  <text x="130" y="290" fill="#c9d1d9" font-size="11">Next Session: [Task Name]</text>
+  <text x="340" y="290" fill="#c9d1d9" font-size="11">In-Flight (not started)</text>
+  <text x="520" y="290" fill="#c9d1d9" font-size="11">Key Decisions</text>
+  <text x="640" y="290" fill="#c9d1d9" font-size="11">Do NOT Re-Read</text>
+  <text x="50" y="312" fill="#f0883e" font-size="10" font-family="'SF Mono', monospace"></text>
+  <text x="130" y="312" fill="#c9d1d9" font-size="11">Before You Start</text>
+  <text x="340" y="312" fill="#c9d1d9" font-size="11">Kanban Snapshot</text>
+  <text x="520" y="312" fill="#c9d1d9" font-size="11">files-changed field</text>
+  <text x="640" y="312" fill="#c9d1d9" font-size="11">tests field</text>
+
+  <!-- What was added -->
+  <rect x="30" y="335" width="740" height="40" rx="6" fill="rgba(100,148,190,0.06)" stroke="#6494be" stroke-width="1.5"/>
+  <text x="50" y="357" fill="#6494be" font-size="10" font-family="'SF Mono', monospace">ADDED</text>
+  <text x="120" y="357" fill="#8bb9e0" font-size="11">Start Here (amnesia-proof)</text>
+  <text x="340" y="357" fill="#8bb9e0" font-size="11">Gaps (system debt, not tasks)</text>
+  <text x="550" y="357" fill="#8bb9e0" font-size="11">Unfinished (continuations)</text>
+
+  <!-- Watermark -->
+  <text x="785" y="412" text-anchor="end" fill="rgba(100,148,190,0.12)" font-size="10" font-family="'SF Mono', monospace">σ</text>
+</svg>
