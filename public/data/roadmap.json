@@ -42,10 +42,10 @@
       "features": {
         "fixed": [
           "**`/inhale --model` no longer crashes the TUI.** Theme colors that weren't in Pi's palette have been replaced — your header and statusline render cleanly.",
-          "**Migrations now run on every boot.** Three gap-safe sentinels ensure fixes land even when you skip versions — your settings stay current and your templates stay fresh."
+          "**Migrations can't be skipped by version gaps.** Sentinel checks now run on every boot — even if you jump from v0.26.0 straight to v0.28.2, the settings backfill and template update still land on first launch."
         ]
       },
-      "tagline": "No more theme crash on inhale — migrations land on every boot."
+      "tagline": "No more theme crash on inhale — version-gap fixes land on first launch."
     },
     {
       "version": "0.28.1",
