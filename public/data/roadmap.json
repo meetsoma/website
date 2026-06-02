@@ -18,6 +18,18 @@
       "version": "Next"
     },
     {
+      "version": "0.29.1",
+      "date": "2026-06-02",
+      "title": "/body update command + doctor template suggestions",
+      "features": {
+        "added": [
+          "**`/body update` command — version-aware template updates.** Compares body files against latest templates, respects customizations, creates backups before any change.",
+          "**Doctor now suggests `/body update`.** Both the health-check and migration paths detect stale templates and point you at the guided update tool."
+        ]
+      },
+      "tagline": "Body templates evolve — now with version-aware comparison and guided updates."
+    },
+    {
       "version": "0.29.0",
       "date": "2026-06-02",
       "title": "Tab Registry — stable browser IDs + body templates evolve",
