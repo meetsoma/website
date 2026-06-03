@@ -52,6 +52,8 @@ Set an environment variable or add to `auth.json`:
 | **Hugging Face** | `HF_TOKEN` |
 | **Cerebras** | `CEREBRAS_API_KEY` |
 | **OpenCode** | `OPENCODE_API_KEY` |
+
+> 💡 **New to OpenCode?** Use our referral link to get **$5 credit** when you sign up for Go: [opencode.ai/go?ref=D86VYYWKT9](https://opencode.ai/go?ref=D86VYYWKT9). Works with the same `OPENCODE_API_KEY` setup — or you can use `/login opencode` inside a session. Their free models (DeepSeek V4 Flash Free, MiMo V2.5 Free, Big Pickle, and more) require no API key at all.
 | **Kimi Coding** | `KIMI_API_KEY` |
 | **Minimax** | `MINIMAX_API_KEY` |
 | **Z.ai** | `ZAI_API_KEY` |
