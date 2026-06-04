@@ -18,6 +18,17 @@
       "version": "Next"
     },
     {
+      "version": "0.30.1",
+      "date": "2026-06-04",
+      "title": "Reliable image reading",
+      "features": {
+        "fixed": [
+          "**Reading images works reliably again** — screenshots, diagrams, and generated cards resize and load correctly (a packaging issue could silently disable image reads on some installs). `soma update` picks up the fix."
+        ]
+      },
+      "tagline": "Show Soma a screenshot — it sees it."
+    },
+    {
       "version": "0.30.0",
       "date": "2026-06-04",
       "title": "Headless delegation — background sub-agents on free models",
