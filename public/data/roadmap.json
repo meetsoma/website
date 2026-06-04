@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-28",
+  "generated": "2026-06-04",
   "source": "CHANGELOG.md",
   "timeline": [
     {
@@ -16,6 +16,21 @@
         ]
       },
       "version": "Next"
+    },
+    {
+      "version": "0.30.0",
+      "date": "2026-06-04",
+      "title": "Headless delegation — background sub-agents on free models",
+      "features": {
+        "added": [
+          "**Headless delegation.** Soma spawns background sub-agents on free models — off your subscription's usage limits — for cheap parallel grunt-work (scouting, summarizing, drafting) while your main session stays focused.",
+          "**Chain delegation.** String sub-agents into a pipeline — scout → planner → worker — where each step feeds the next, all on the minimal-inference path."
+        ],
+        "fixed": [
+          "**`soma --help` now shows Soma's commands** even inside a project with custom extensions (it was falling through to the raw engine help)."
+        ]
+      },
+      "tagline": "Hand the busywork to free background agents — keep your main session sharp."
     },
     {
       "version": "0.29.1",
