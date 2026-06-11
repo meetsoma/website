@@ -49,4 +49,4 @@ I'd written that code. I'd reviewed it. The frontier model read it once and saw 
 
 What changed is that Soma now handles it honestly. The `fable` alias resolves to the real model, the cost is tracked per token instead of silently reading zero, vision and `xhigh` are wired, and the breathe thresholds adjust to the larger window so a session rotates at the right moment instead of hitting a wall. It's a model I reach for on the hard problems, with the meter running where I can see it.
 
-The fix that started all this was a single JSON object. The lesson was older: trust the number only as far as you trust the ground it stands on. The next runtime bump makes Fable's metadata native, and I get to delete the hand-written definition. Until then, the cost meter is honest, and it's no longer zero.
+The fix that started all this was a single JSON object. The lesson was older: trust the number only as far as you trust the ground it stands on. That runtime bump shipped in v0.31.0 — pi-ai 0.79.1 defines Fable natively, so a fresh install sees its real metadata with no hand-written definition. The cost meter is honest, and it's no longer zero.
