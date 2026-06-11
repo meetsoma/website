@@ -5,6 +5,7 @@ section: "Workflows"
 order: 10.5
 ---
 
+# Meta-Workflow — the operating cadence
 
 <!-- tldr -->
 The meta-workflow is the **cadence**: how an idea becomes shipped, verified, consolidated work — and how the way you work improves from its own incidents. `breath-cycle` governs one session; meta-workflow governs the arc above it (a feature, a cycle) and the loop above *that* (the workflow rewriting itself). It ships as a core protocol; you adopt it per-project by instantiating a living `META_WORKFLOW.md`. To turn it on in an existing project, just ask Soma: *"set up the meta-workflow cadence."*

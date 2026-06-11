@@ -5,6 +5,7 @@ section: "Reference"
 order: 22
 ---
 
+# Troubleshooting
 
 <!-- tldr -->
 Most issues: `soma init` (fixes broken install), `soma doctor` (fixes project version), restart the session (picks up changes). Below: organized by symptom. Check here before filing an issue.
@@ -32,6 +33,27 @@ prompt re-fires — you'll never get stuck on a frozen reminder.
 
 **To reset a skip:** delete the `skipUpdateUntilTs` field from
 `~/.soma/config.json`.
+
+### "Trust project folder?" prompt
+
+The engine (Pi 0.79+) gates loading of project-local configuration — `.soma/settings.json`,
+project extensions and packages — behind a one-time trust decision per project. Soma handles
+this transparently: a `project_trust` handler (added v0.31.0) **auto-trusts any genuine Soma
+project** (one with a `.soma/body/` directory), so you should never see a prompt for your own
+Soma projects, and non-interactive runs (`soma -p`, delegated agents) keep loading your project
+config instead of silently dropping it.
+
+You'd only see the prompt in a directory that is *not* a Soma project but still trips the engine's
+trust check (e.g. it sits under a `.agents/skills` ancestor). In that case:
+
+| Key | Action |
+|-----|--------|
+| Trust | Load this folder's project-local config for this and future sessions. |
+| Trust once | Load it for this run only. |
+| Don't trust | Skip project-local config (global config still loads). |
+
+If you'd rather decide globally, the engine setting `defaultProjectTrust` (`always` / `never` /
+`ask`) lives in `~/.soma/agent/settings.json`.
 
 ### "Warning: Project tools/ directory contains custom tools…" (legacy, removed)
 

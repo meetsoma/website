@@ -2,7 +2,7 @@
 title: Browser Setup for Soma
 description: Configure Soma to drive a browser via CDP — Chrome, Brave, Edge, Arc, Chromium, Firefox
 status: preflight
-updated: 2026-06-02
+updated: 2026-06-11
 ---
 
 # Browser Setup
@@ -17,13 +17,11 @@ Soma can drive a real browser to automate web workflows — navigating, taking s
 # 1. Launch your browser with CDP enabled
 chrome --remote-debugging-port=9222 --user-data-dir=/tmp/soma-chrome
 
-# 2. In Soma, auto-detect + configure
-soma(op='call', cap='soma:browser.setup')
+# 2. Ask Soma to configure itself
+soma browser setup
 ```
 
 Soma auto-detects the port, reads the browser identity from `/json/version`, and writes the config to `~/.soma/settings.json`. You're set.
-
-For advanced caps (xray, click, fill, wait, screenshot-to-file), the Somaverse bridge must be running — these caps use the bridge's CDP proxy for WebSocket support. See [bridge-setup.md](./bridge-setup.md).
 
 ## Manual configuration
 
@@ -85,17 +83,10 @@ export SOMA_BROWSER_CDP_PORT=9222
 ### 3. Verify
 
 ```bash
-# In Soma:
-soma(op='call', cap='soma:browser.status')
+soma browser status
 ```
 
 Should report the browser name + open tab count.
-
-To check if the bridge is available for advanced caps:
-
-```bash
-soma(op='call', cap='soma:browser.config')
-```
 
 ## How it works
 
@@ -128,10 +119,6 @@ Soma's `soma:browser.*` caps work on all Chromium browsers identically. Firefox 
 | `soma:browser.styles` — computed styles | ✅ | ⚠️ flaky | ❌ |
 | `soma:browser.emulate` — device emulation | ✅ | ⚠️ mobile flag unreliable | ❌ |
 | `soma:browser.performance` — perf metrics | ✅ | ❌ different API | ❌ |
-| `soma:browser.xray` — structured DOM walk | ✅ (bridge) | ⚠️ (bridge) | ❌ |
-| `soma:browser.click` — click element (Input.dispatchMouseEvent) | ✅ (bridge) | ⚠️ (bridge) | ❌ |
-| `soma:browser.fill` — fill input field | ✅ (bridge) | ⚠️ (bridge) | ❌ |
-| `soma:browser.wait` — wait for element to appear | ✅ (bridge) | ⚠️ (bridge) | ❌ |
 | `soma:browser.new_tab` / `close_tab` / `activate_tab` / `version` | ✅ | ✅ | ❌ |
 | `soma:browser.setup` — auto-configure | ✅ | ✅ | ❌ |
 | `soma:browser.config` — show current config | ✅ | ✅ | ✅ (shows "unsupported") |

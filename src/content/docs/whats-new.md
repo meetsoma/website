@@ -31,6 +31,20 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 The **`soma:seam.*`** family lands — archaeology caps for tracing concepts through your own writings.
 
+### 🆕 New — shared preload lifecycle (cycle 29)
+
+Preload state tracking across `/exhale`, `/breathe`, auto-rotation, and keepalive auto-exhale is now unified into a **single shared state machine** (`extensions/_shared/preload-lifecycle.ts`). Four states: `UNREQUESTED` → `REQUESTED` → `SAVED` → `STALE`. Three route caps for read/write/reset.
+
+**What changed:**
+- `/exhale` at high context (85%+) no longer causes the safety net to override and rotate immediately. The exhale handler signals `REQUESTED` → safety net defers.
+- Keepalive exhaustion no longer double-requests a preload if one is already in flight.
+- Statusline's `📝saved` / `📝stale` indicator now reads from the same state as the breathe extension — no drift.
+- 7 local `let` flags removed from `soma-breathe.ts`.
+
+**Route caps:** `preload:lifecycle`, `preload:transition`, `preload:reset`, `preload:noteToolCall`.
+
+Detail: `.soma/cycles/audit-improve/29-preload-lifecycle/cycle.md`
+
 ### 🆕 New caps
 
 - **`soma:seam.trace`** — walk a concept across docs + code + sessions + blog + kanban + soul-space. Use BEFORE raw grep for any *"where did X come from?"* question. args: `{term, limit?:200}`. **Free tier.**

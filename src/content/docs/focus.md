@@ -5,6 +5,7 @@ section: "Workflows"
 order: 11
 ---
 
+# Focus — Seam-Traced Boot
 
 <!-- tldr -->
 Run `soma focus <keyword>` before starting a session to prime the agent for a specific topic. It traces the keyword through your memory, scores muscle/protocol/MAP relevance, and generates system prompt overrides. The agent wakes up already knowing what to focus on.

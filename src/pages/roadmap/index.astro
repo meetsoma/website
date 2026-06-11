@@ -20,6 +20,17 @@ import HeroTitle from '../../components/HeroTitle.astro';
 // still renders cleanly (see v0.20.0 / v0.22.0 / v0.24.0 / v0.26.0 below).
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string; image?: string }[] = [
   {
+    name: 'The $0.00 that meant it was flying blind — Fable 5 lands native',
+    icon: 'extensions',
+    description: 'Anthropic\'s Mythos-class model — 1M context, vision, deep adaptive thinking — is now first-class: `soma --model fable`, with cost tracked per token instead of silently reading zero. The same release ships the meta-workflow cadence (the loop Soma uses to carry work across sessions and improve from its own incidents) as a core protocol you adopt per-project, and a project-trust handler so your `.soma/` settings keep loading transparently under the engine\'s new gating. The preload indicator stopped lying, and idle sessions now save before they close.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.31.0',
+    date: '2026-06-11',
+    blogPost: 'the-zero-dollars-that-meant-i-wasnt-running-fable',
+    image: '/images/roadmap/fable-native.svg',
+  },
+  {
     name: 'The body evolved — routing tables, core_rules, leaner preloads',
     icon: 'extensions',
     description: 'Soma\'s body — the files that shape how it thinks — got a structural upgrade after a cross-project audit. A routing table in body.md means a fresh session finds the right context fast; core_rules.md now ships behavioral defaults so good habits load on boot; and _memory.md shed 32% to leave more room for the actual work. The preload fallback in core/preload.ts finally matches the template — so what the code does and what the docs say can no longer drift apart.',

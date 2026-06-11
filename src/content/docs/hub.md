@@ -5,6 +5,7 @@ section: "Core Concepts"
 order: 5.1
 ---
 
+# Hub — Community Content
 
 <!-- tldr -->
 `/hub install <type> <name>` to install. `/hub find <keywords>` to search. `/hub share <type> <name>` to contribute. Content lives on GitHub (`meetsoma/community`), indexed automatically, browsable at `soma.gravicity.ai/hub`. Install defaults to global (`~/.soma/`). Templates pull their dependencies automatically.

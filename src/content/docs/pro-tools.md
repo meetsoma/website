@@ -89,7 +89,7 @@ Seven scripts ship today:
 | `soma-github.sh` + `soma-github-cache.sh` | ✅ `soma:github.*` (21 caps) | GitHub API + local repo indexer |
 | `soma-refactor.sh` | ⚠ CLI verb only (no cap surface yet) | Dependency graph + blast radius analysis |
 | `soma-scrape.sh` | ⚠ No cap | Doc discovery + pull-to-local for new tools |
-| `soma-browser.sh` | ✅ `soma:browser.*` (21 caps) — xray, click, fill, wait, navigate, screenshot, evaluate, and more | CDP browser automation (shell CLI is the fallback; `soma:browser.*` caps are the primary agent surface) |
+| `soma-browser.sh` | ⚠ CLI-only counterpart to `soma:browser.*` | Bridge-proxied browser ops (older, hardcoded Brave+bridge — see `browser-setup.md` for the configurable `soma:browser.*` system) |
 | `soma-theme.sh` | ⚠ No cap | Theme switcher |
 
 Three are currently capped (seam, github, github-cache via github family). The rest are CLI-only or only partially routed.

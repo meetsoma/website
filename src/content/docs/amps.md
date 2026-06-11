@@ -99,7 +99,7 @@ See [Commands](/docs/commands#hub-commands) for the full reference.
 │   ├── muscles/       ← learned patterns
 │   ├── scripts/       ← tools
 │   └── automations/   ← MAPs and workflows
-├── soul.md            ← who the agent is
+├── identity.md        ← who the agent is
 ├── memory/            ← sessions, preloads, ideas
 └── settings.json      ← configuration
 ```

@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via _tools.md, and the bundled set
 status: active
-updated: 2026-06-02
+updated: 2026-06-11
 ---
 
 # Tools
@@ -136,7 +136,7 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 | `soma` (`cap='soma:body.cost'`) | `soma-addons/body.ts` | Cache-invalidation cost of editing a specific slot. args: `{slot}`. |
 | `soma` (`cap='soma:body.audit'`) | `soma-addons/body.ts` | Heuristic audit of the body compile: duplicate slots, missing files, cache-unfriendly ordering. |
 | `soma` (`cap='soma:docs.list|show|search|whats_new|guide'`) | `soma-addons/docs.ts` | Bundled docs: list, read by name, full-text search. `whats_new({version?})` reads the agent-facing changelog; `guide({name})` resolves guides + dev guides. (v0.24.0+, SX-720.) |
-| `soma` (`cap='soma:browser.*'`) | `soma-addons/browser.ts` | Browser automation via CDP: 21 caps — status, tabs, version, new_tab, close_tab, activate_tab, setup, config (standalone) + navigate, screenshot, evaluate, console, accessibility, links, styles, emulate, performance, xray, click, fill, wait (bridge). Captures tabId; click uses Input.dispatchMouseEvent. |
+| `soma` (`cap='soma:browser.*'`) | `soma-addons/browser.ts` | Browser automation via CDP: 21 caps — status, tabs, version, new_tab, close_tab, activate_tab, setup, config (standalone) + navigate, screenshot, evaluate, console, accessibility, links, styles, emulate, performance + xray, click, fill, wait (bridge). Captures tabId; click uses Input.dispatchMouseEvent. |
 | `soma` (`cap='soma:agent.delegate'`) | `soma-addons/agent.ts` | Spawn a child agent. args: `{task, role?, model?, background?, terminal?}`. Sync by default; `background:true` returns immediately + registers in children.json. |
 | `soma` (`cap='soma:agent.list|tail|steer|kill|harvest|focus'`) | `soma-addons/agent.ts` | Manage background children. `focus` = cmux focus-pane / tmux attach hint. |
 | `soma` (`cap='soma:focus.show|set|clear|dry_run'`) | `soma-addons/focus.ts` | Boot-focus primer. `set <keyword>` seam-traces + primes next session's MAP + muscles. |

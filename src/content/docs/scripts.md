@@ -5,6 +5,7 @@ section: "Reference"
 order: 9
 ---
 
+# Scripts
 
 <!-- tldr -->
 Standalone bash tools for Soma. Run from the command line — no agent session needed. Your agent also uses these during sessions. **20+ free scripts** ship with the agent + **5 Pro scripts** as compiled `.js`; more are available via `soma hub install script <name>`. Run `soma --help scripts` to see what's installed.

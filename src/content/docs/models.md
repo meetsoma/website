@@ -77,6 +77,9 @@ Press **Ctrl+P** to cycle between available models, or use the `/model` command 
 # Use a specific model
 soma --model claude-sonnet-4
 
+# Claude Fable 5 (Anthropic's Mythos-class frontier model) — `fable` aliases to claude-fable-5
+soma --model fable
+
 # Use provider/model format
 soma --model openai/gpt-4o
 

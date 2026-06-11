@@ -10,7 +10,7 @@ applies-to: [development, shipping]
 scope: bundled
 tier: core
 created: 2026-04-03
-updated: 2026-06-02
+updated: 2026-06-11
 version: 1.0.1
 author: meetsoma
 license: MIT
