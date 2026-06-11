@@ -5,7 +5,6 @@ section: "Guide"
 order: 26
 ---
 
-# Customization
 
 <!-- tldr -->
 Six layers of customization, from quick settings to full prompt control: persona (name/emoji), voice (`body/voice.md`), rules (protocols), patterns (muscles), tools (scripts), and prompt structure (`body/_mind.md`). Start small — change one thing, see the effect. Most customization is just editing markdown files.

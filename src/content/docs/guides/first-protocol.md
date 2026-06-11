@@ -1,11 +1,10 @@
 ---
 title: "Your First Protocol"
-description: "Turn a repeated correction into a permanent rule — from frustration to muscle memory."
+description: "Turn a repeated correction into a permanent rule."
 section: "Guide"
 order: 27
 ---
 
-# Your First Protocol
 
 <!-- tldr -->
 You correct the agent. It happens again. You write a protocol — a markdown file in `.soma/amps/protocols/` with frontmatter and rules. The agent reads it every session. The correction never happens again. 10 minutes, permanent effect.

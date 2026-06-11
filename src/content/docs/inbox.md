@@ -1,11 +1,10 @@
 ---
 title: "Inbox"
-description: "Asynchronous messaging between agents, sessions, and humans — file-based, no automation needed."
+description: "Asynchronous messaging between agents, sessions, and humans."
 section: "Core Concepts"
 order: 4.5
 ---
 
-# Inbox
 
 <!-- tldr -->
 `.soma/inbox/` is a file-based message queue. Drop a markdown file, the next session reads it at boot via `{{inbox_summary}}`. Used for inter-agent communication, bug reports, notes-to-self, and human→agent messages. One topic per file. Frontmatter tracks sender, recipient, status. Archive after 2 weeks. Never delete.

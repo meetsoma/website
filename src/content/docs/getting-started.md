@@ -5,7 +5,6 @@ section: "First Steps"
 order: 1
 ---
 
-
 <!-- tldr -->
 `npm i -g meetsoma` → `cd your-project` → `soma`. First run creates `.soma/` and discovers identity. `/exhale` saves state + writes a preload. `soma inhale` starts fresh with that preload loaded. `/breathe` rotates mid-session. `/pin` keeps content hot, `/kill` drops it cold. `soma -c` resumes with full conversation history.
 <!-- /tldr -->
@@ -115,7 +114,7 @@ Pick from previous sessions to resume.
 | Command | What it does |
 |---------|-------------|
 | `/breathe` | Save state + rotate into fresh session |
-| `/exhale ["note"]` | Save state, write preload, session ends. Optional: text after `/exhale` becomes a `### Note` directing the agent — scope this wrap or pass directives forward. (v0.28.1) |
+| `/exhale ["note"]` | Save state, write preload, session ends. Optional: text after `/exhale` becomes a `⚠️ USER NOTE` directing the agent — scope this wrap or pass directives forward. (v0.28.1) |
 | `/rest` | Disable keepalive + exhale - for when you're done for the night |
 | `/inhale` | Reset session and load preload — fresh start with your most recent preload |
 | `/pin <name>` | Pin a protocol/muscle to hot (stays loaded) |

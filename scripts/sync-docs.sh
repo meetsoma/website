@@ -58,6 +58,7 @@ MANIFEST=(
   "system-prompt.md|System Prompt|How Soma's compiled system prompt is assembled, configured, and previewed.|Core Concepts|7"
   "workspaces.md|Workspaces|Parent-child inheritance, monorepo patterns, solo body mode.|Core Concepts|8"
   "scripts.md|Scripts & Audits|Standalone tools for searching, auditing, scanning, and maintaining your .soma/ ecosystem.|Reference|9"
+  "meta-workflow.md|Meta-Workflow|The operating cadence — three nested loops, a self-amending workflow, and how to adopt it in an existing project.|Workflows|10.5"
   "focus.md|Focus|Topic-driven session priming — boost relevant muscles, MAPs, and preloads automatically.|Workflows|11"
   "maps.md|MAPs|Workflow templates — repeatable processes with scar tissue from real sessions.|Workflows|12"
   "sessions.md|Sessions|Session logs, preloads, the exhale cycle, and cross-session memory.|Workflows|13"

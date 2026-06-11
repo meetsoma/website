@@ -1,11 +1,10 @@
 ---
 title: "Daily Workflow"
-description: "The exhale → reflect → inhale loop - how to use Soma day to day."
+description: "The exhale, reflect, inhale loop — how to use Soma day to day."
 section: "Guide"
-order: 12
+order: 25
 ---
 
-# Daily Workflow
 
 <!-- tldr -->
 End of session: `/exhale`. Between sessions: review the preload, reflect, update it. Next session: `soma inhale`. That's the loop. The preload is the handoff - write it like a briefing for someone who forgot everything. Power users journal and do MLR (Memory Lane Reflection) between sessions to deepen continuity.

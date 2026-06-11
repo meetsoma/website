@@ -5,7 +5,6 @@ section: "Reference"
 order: 7
 ---
 
-# Commands
 
 <!-- tldr -->
 CLI: `soma` (fresh), `soma inhale` (fresh + preload), `soma -c` (continue full history), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts). Body: `/body check`, `/body vars`, `/body map`, `/body render`. Script commands: `soma code` (codebase navigator), `soma verify` (structural checks), `soma refactor` (dependency analysis), `soma seam` (concept tracing), `soma session` (maintenance — strip images, list, stats). Scripts discovered via chain: bundled → project → global.
@@ -21,7 +20,7 @@ These are **slash commands** used inside the Soma TUI during a session.
 |---------|-------------|
 | `/inhale` | **Reset session and load preload.** Saves heat state, starts a fresh session, and loads the most recent preload. Two use cases: (1) you started with plain `soma` and want the preload — `/inhale` resets and loads it. (2) You `/exhale`’d, updated the preload, and want to continue — `/inhale` gives you a fresh session with your curated preload. Warns if preload is stale (>5 tool calls since written). Use `--force` to override. |
 | `/breathe` | Save state and rotate into a fresh session. Seamless rotation - exhale + inhale in one motion. |
-| `/exhale ["note"]` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Signals shared preload lifecycle (state → `REQUESTED`) so auto-rotation safety net defers. Session ends. **Optional note:** text after `/exhale` is injected as a `### Note` block — the agent uses it to scope this wrap ("quick" skips body audit + MLR) AND to pass directives forward to the next session. (v0.28.1) |
+| `/exhale ["note"]` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Signals shared preload lifecycle (state → `REQUESTED`) so auto-rotation safety net defers. Session ends. **Optional note:** text after `/exhale` is injected as a `⚠️ USER NOTE` block — the agent uses it to scope this wrap ("quick" skips body audit + MLR) AND to pass directives forward to the next session. (v0.28.1) |
 | `/rest` | Going to bed? Disables cache keepalive, then exhales. No pings will fire after you walk away. |
 | `/exit` | Save state and quit Soma cleanly. Exhales, then terminates. |
 

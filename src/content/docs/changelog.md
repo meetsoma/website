@@ -1,14 +1,137 @@
 ---
 title: "Changelog"
-description: "What shipped, what changed — the full version history of Soma."
+description: "What shipped, what changed, version history."
 section: "Reference"
 order: 10
 ---
 
 
+All notable changes to the Soma agent are documented here.
+
+Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
+
+---
+
 ## [Unreleased]
 
+### Added
+- **Claude Fable 5 model support.** Fable 5 (Anthropic's Mythos-class model — 1M context, vision, `xhigh` adaptive thinking, $10/$50 per M) is now first-class: `MODEL_ALIASES` (`fable` / `fable-5` → `claude-fable-5`), premium classification in `inferClass`, the model definition in `~/.soma/agent/models.json` (the installed pi-ai 0.78.0 didn't define it — it was resolving metadata-blind with no cost tracking), `enabledModels` (Ctrl+P selectable), and a `*fable*` breathe-threshold block. Refreshed the stale `opus`/`sonnet` aliases to current ids (`-4-8` / `-4-6`) while there. (s01-81f576)
+
+### Fixed
+- **Delegate sync path repaired — `pi-agent-core.Agent class not found`.** The sync delegate used a dynamic `import("@earendil-works/pi-agent-core")`, which bypasses Pi's jiti alias map (only *static* imports are rewritten) and resolved to the installed top-level package (new `AgentSession` API, no `Agent`) instead of Pi's bundled copy (which still exports `class Agent`). Switched to a static import. Prevention: any `@earendil-works/pi-*` import in jiti-loaded extension code must be static top-level. (s01-81f576)
+- **Delegate honors the role's `default-model` in background spawn + shows the real model.** `spawnBackground()` hardcoded `?? "claude-haiku-4-5"` and never consulted the role's frontmatter, so `delegate({role:X})` ignored the role's model. Resolution is now `explicit model > role default-model > haiku fallback` (new `resolveRoleDefaultModel`). Also fixed the `model: "auto"` display bug (the spawn record + `soma:agent.list` now show the actually-booted model). (s01-81f576)
+- **Shell-injection hardening (3 surfaces).** A security audit found a systemic `execSync`-with-string-interpolation pattern; all converted to `execFileSync(cmd, [args])` (array args, no shell): `/hub share` (`name` + a file-derived frontmatter `description` flowed into `gh`/`git` shell strings — a malicious description in a cloned/hub `.soma` could run arbitrary shell on an innocent share), drop-in slash-commands (unquoted `restArgs`), and scan-logs (`toolArgs`/cwd). Behavior preserved for valid input. (Still open — folds into the Pi 0.79.1 / project-trust work: project-local `.soma` scripts execute with no trust gate.) (s01-81f576)
+- **Image paste into the TUI works — `@mariozechner/clipboard` is now a direct dependency.** Same bug class as the photon image-reads fix: soma bundles the engine's clipboard reader (`dist/utils/clipboard-native.js`) which loads the native `@mariozechner/clipboard` by bare specifier, but it was only a transitive dep — so soma's top-level copy resolved it to `null` and image paste (Ctrl+V) silently read an empty clipboard, *regardless of keybinding*. Declaring it directly (pinned 0.3.9) forces hoisting. Note: on macOS, terminals can't receive image data via Cmd+V — use **Ctrl+V**, which makes the app read the OS clipboard. (s01-cfe9ac)
+- **`soma-release-ship.sh`: push dev to meetsoma before the main-sync (SX-768).** Recurring ship bug (bit v0.30.0 + v0.30.1): the release/bump commit was made locally but never pushed before the dev→main sync fetched `meetsoma/dev`, so the sync merged stale dev (missing the bump) and the runtime landed a version behind. New Step 3.5 pushes dev first and aborts loudly on failure. (s01-cfe9ac)
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
+
+## [0.30.1] — 2026-06-04
+
+### Fixed
+- **Image reads no longer silently break — `@silvia-odwyer/photon-node` is now a direct dependency.** Soma bundles the engine's image code (resize via photon WASM), which imports photon by bare specifier. Photon was only a *transitive* dep, so when npm nested it instead of hoisting, image reads died with a misleading "could not be resized below size limit" note — regardless of actual size. Declaring it directly (pinned 0.3.4) forces top-level hoisting; `soma update` runs npm install on pull, so installs self-heal. (s01-cfe9ac, reported by a sibling soma)
+- **Release-prepare gate: Phase 1 split into unit vs release-state tests (SX-765).** The gate ran the full suite as one blunt hard-block, but tests validating *release state* (installed-runtime version, dev↔main parity, npm registry) can't pass before ship — so they false-blocked releases whose code was sound. Tests now opt into release-state handling with a `# @release-state` marker; pre-ship failures route to NEEDS-REVIEW (re-checked in their dedicated phases + post-ship), while unit failures still hard-gate. (s01-cfe9ac)
+
+
+## [0.30.0] — 2026-06-04
+
+### Added
+- **Headless delegation — `soma:agent.delegate {headless:true}`** — a minimal-inference delegation path that spawns `soma -p` as a subprocess (not a tmux TUI), captures structured output, and detects completion via exit code (fixing the flaky pane-tail completion of background mode). Routes to OpenCode **free** models (`big-pickle` → `deepseek-v4-flash-free`), off the Claude subscription extra-usage wall, with auto-retry + model fallback on rate-limit. Role system prompts inject via `--append-system-prompt`. `runHeadless`/`loadRole`/`stripPreamble` in `extensions/soma-delegate.ts`. Patterns adapted from upstream pi-mono's subagent example. (v0.30.0 Phase 1, s01-3a1d9b)
+- **Chain delegation — `soma:agent.delegate {chain:[{role,task,model?},...]}`** — sequential headless steps where `{previous}` is substituted with the prior step's output (scout→planner→worker style). Each step gets the same retry+fallback. (v0.30.0 Phase 2)
+- **`soma-dev cycle`** — the test-before-main dev→release flow: curate CHANGELOG (headless, free) → commit → build dev dist → **smoke the dev build before main** → gate → hand off to the release orchestrator. Main only ever receives tested-good code. Only the changelog + smoke steps use a model (both free); the rest is bash. (v0.30.0 Phase 3)
+- **`soma-series-rollover.sh`** — scaffolds `releases/vX.Y.x/INDEX.md` + sweeps current-series markers on a minor bump, closing the orphaned-step drift the version-truth gate flags but couldn't fix. (s01-3a1d9b)
+
+### Changed
+- **npm and agent are independent version trains (supersedes SX-659 collapsed train)** — the npm thin-CLI is a one-time bootstrap; `soma update` pulls the agent runtime via `git pull` from soma-beta and never re-fetches npm, so publishing npm on an agent-only release delivers users nothing. npm now publishes **only when the thin-CLI code changes** (`ship.sh` Step 5 is conditional on `npm/thin-cli.js`/`npm/lib/` diffs); when it does publish, the version syncs to the agent's so `soma --version` stays legible (it shows both, labeled). The version-drift gates (`test-doctor`, `test-release-completeness`) now treat npm *lagging* the agent as the expected steady state. This is what RELEASE-FLOW.md + body/soma-cli.md already documented; the collapsed-train enforcement was the stale half. (s01-cfe9ac)
+- **RELEASE-FLOW.md rewired to two modes** (orchestrated / manual) — Step 7 now calls the gated `soma-release-prepare.sh` orchestrator instead of bypassing it; the doc describes decisions, the scripts own mechanics (stops the doc↔script drift). phase-5-release.md slimmed 390→169 lines (history lifted to `release-lessons.md`). (s01-3a1d9b)
+
+### Fixed
+- **`soma --help` shows Soma's commands when a project has extensions** — `--help` delegates to the runtime cli.js via `delegateToCore()`, which prepends project `-e <ext>` flags before the command. cli.js checked `args[0] === "--help"`, so with extensions present --help fell through to Pi's native help instead of Soma's command list. Fixed by skipping leading `-e`/`--extension` pairs to find the effective command (subcommand help like `soma focus --help` stays intact). Manifested with a project `.soma/extensions` dir (dogfood + power users). (s01-cfe9ac)
+- **release-prepare crash: `PREP_VERSION` unbound in Phase 5.5** — the website-readiness phase referenced `$PREP_VERSION` at a `[[ -z ]]` check but only assigned it inside the `PROPOSAL_FILE` conditional; with `set -u`, the common unset-PROPOSAL_FILE path crashed the whole prepare run at the tone-check. Initialized before the block. (Completes the partial fix `a7ba618c` made on main.) (s01-cfe9ac)
+- **universal timeout for all providers (upstream 7c531d05)**
+- **`soma:body.audit` no longer false-flags compiler-prepended slots** — the audit told users to "move `muscle_digests` after `<rules>`," but that slot is prepended by `compileFrontalCortex` (not template-interpolated, gate-locked) and `essential: true` (removing it breaks muscle loading). The advice could have moved a load-bearing slot. Check 3 now skips prepended slots (`muscle_digests`/`protocol_summaries`/`scripts_table`) and the audit gained a "Slot mechanics" footer that points at `body/DNA.md` (the canonical explanation) rather than duplicating it. (s01-3a1d9b)
+
+### Internal
+- Test-suite hygiene (s01-cfe9ac): `test-keepalive` asserted a refactored-out `bonus10` literal → now checks the `_getTier()` mechanism; `test-meta-hygiene` required an inline `Results:` echo → now also recognizes the shared `_shared.sh` `results` helper (227/227); removed a stray gitignored empty `.soma/amps/muscles/` dir that false-tripped `test-muscles`.
+- Headless-delegation polish: `delegate` help text documents the `headless`/`chain` modes; new `tests/test-delegate-headless.sh` unit-tests `loadRole` + `stripPreamble` (non-flaky, no model call). (v0.30.0 Phase 4)
+
+### Pending (not yet shipped)
+- **Browser Ship 2** — end-to-end smoke across CDP ports (needs bridge running).
+
+
+## [0.29.1] — 2026-06-02
+
+### Added
+- **`/body update` CLI command** — version-aware template comparison and update workflow. Subcommand on `/body`, reads `prompts/body-update.md` and sends as followUp. Agent walks user through classified comparison (current/updateable/customized/legacy/extra), respects `customized: true` flag, creates backups before overwriting. (5d1a965b, s01-34d9de)
+- **Doctor `/body update` suggestion** — both "current" and "migration needed" paths now suggest `/body update` when stale or missing templates are detected. Bridges the gap between structural migrations (doctor) and content evolution (`/body update`). (f092e239, s01-34d9de)
+
+### Fixed
+- **`/exhale <note>` now processed in all paths** — note extracted before early-return check so it works when preload already exists (new, update-existing, already-saved). Note format upgraded to `⚠️ USER NOTE` with action hint. (a241d635, b788848e, s01-8f2308)
+- **Statusline preload detection simplified** — checks preload file directly on disk instead of depending on `breatheDetail.preloadWritten` lifecycle state. (a241d635, s01-8f2308)
+- **Preload validator no longer warns about missing "Next Session"** — renamed to "Start Here" in required + recommended section checks. Recommended sections updated to match current template (Who You Were, Gaps, Unfinished, Traps, Patterns). (s01-8f2308)
+
+### Changed
+- **Exhale note visibility** — `### Note` → `⚠️ USER NOTE` with scope/directive hint. Template `_memory.md` and docs (`commands.md`, `getting-started.md`) updated. (a241d635, b788848e, s01-8f2308)
+- **Preload template fallback synced with `_memory.md`** — hardcoded fallback in `core/preload.ts` now matches canonical format. (f73d75e9, s01-8f2308)
+
+## [0.29.0] — 2026-06-02
+
+### Fixed
+- **poll preload file on disk to detect manual exhale writes (s01-e56328)**
+- **muscle_digests slot estimate now capped by configured tokenBudget (s01-e56328)**
+- **system-core.md now ships from correct source + adds structure-aware tools guidance** — build was copying from wrong path, runtime couldn't find it. Now ships from `repos/agent/prompts/` to `dist/prompts/`. Added "Structure-aware before raw" reflex: `soma:code.map`, `.find`, `.outline`, `soma:seam.trace` listed as first-reach tools. (ebdd6306)
+
+### Improved
+- **Website docs synced for 21 caps** — tools.md (20→21), cli-tools.md (17→21), browser-setup.md (new caps in matrix, cap-based quick start, bridge note), pro-tools.md (updated browser entry).
+- **Roadmap browser-tools.svg** — DOM scanning + click/fill/wait visualization for the browser automation story.
+
+### Infrastructure
+- **Bridge CDP endpoints committed** — `cdp.ts` click() via Input.dispatchMouseEvent (bypasses React Aria isTrusted), fill() with value injection + events, waitForElement() with polling. `bridge.ts` POST /api/browser/xray, /click, /fill, /wait endpoints. (somaverse 7093f62)
+
+## [0.28.4] — 2026-06-01
+
+### Added
+- **gap-safe settings backfill + template auto-update (v0.28.1)** — three sentinel-gated migrations run at every boot regardless of migration chain gaps: settings keys backfill, template auto-update, exhale-note template header update.
+- **v0.28.0 → v0.28.1 migration phase file** — exhale note + template drift + inhale model fix documented with gap-safe sentinel pattern.
+- **`/exhale note` header redesign** — `### User's Note for Next Session` renamed to `### Note`, dual-purpose: scopes the current wrap AND passes directives forward. Template (`_memory.md`) and docs updated.
+
+### Fixed
+- **Theme crash on `/inhale --model`** — `"warm"`, `"gitCyan"`, `"gitYellow"`, `"gitBlue"` weren't in Pi's `ThemeColor` union, causing TUI render crash. Replaced with valid union members: `"muted"`, `"warning"`, `"accent"`. (47a0de5f, s01-72adde)
+- **`PROPOSAL_FILE` unbound variable in release prepare Phase 5.5** — `set -euo pipefail` halted the script before Phase 6 created the proposal file.
+
+## [0.28.1] — 2026-06-01
+
+### Fixed
+- **`soma inhale --model <model>` now loads the preload instead of treating the model name as a preload target** — the CLI's `nameArg` extraction stole model values (e.g. `opencode/big-pickle`) as preload names, setting `SOMA_INHALE_TARGET` and failing `findPreloadByName`. PassThrough values are now excluded from nameArg extraction. (s01-14580a)
+- **Full preload format at all context thresholds — minimal format loses context** — high-context preloads now use the full structured template with Resume Point, What Shipped, and In-Flight sections. (1ae67a38)
+- **`/exhale <note>` directs the current agent during preload writing.** Text after `/exhale` is injected as a `### Note` block in the EXHALE follow-up. The agent uses it to scope the wrap ("quick" → skip body audit + MLR) AND to pass directives forward to the next session's Start Here. `--note` prefix and quotes stripped. `/exhale` alone works the same. (89efd1b6, s01-65fd1e)
+- **ANSI colors replaced with `theme.fg()` calls** — header and statusline in the TUI now respect Pi's theme system instead of hardcoded escape codes across 33 points. (5a824c6c, s01-6a544e)
+- **Release Step 6 delegates to `soma-dev sync main`** — replaces inline push+branch logic with the dedicated command. (256e968d)
+- **Release Step 6 main-sync is now a HARD gate** — `⚠ push failed` no longer lets the release continue; exits 1 if main-sync fails, preventing v0.28.0-style stale-runtime-after-ship. (3c51de02, s01-5c0055)
+
+### Added
+- **`soma-dev sync main` as a proper command** — release Step 6 extracted from inline bash into a proper `soma-dev sync main` command that handles CI-drift detection, rebase + merge, conflict resolution, dist rebuild, and version verification. (4d53663c)
+
+
+## [0.28.0] — 2026-05-30
+
+### Added
+- **All models from Together AI, OpenCode Go, Gemini 3.x** — Pi 0.74+ unlocked new providers and model families. Together AI inference, Google Gemini 3.x support, OpenCode Go models — all available without configuration.
+- **Claude Opus 4.8 support** — Pi 0.77+ supports Anthropic's latest model.
+- **842+ models total** — Pi 0.78 resolver sees everything the ecosystem offers.
+- **roadmap tone-check as hard gate** in release prepare script Phase 5.5.
+
+### Changed
+- **Pi runtime upgraded 5 versions** — `@mariozechner/*@0.73.1` → `@earendil-works/*@0.78.0`. Full namespace migration across all four Pi packages, 61 source files swept, 8 patches audited against new compiled shapes. (3414a84)
+- **Two patches retired** — title-symbol (Pi now reads `piConfig.name` → APP_TITLE dynamically) and compaction.js estimateTokens guard (upstream refactored to guard internally). One patch rewritten for 0.78.0 API (pi-tui image height cap).
+
+### Fixed
+- **`soma model <p> set` now actually works** — `enabledModels[0]` always unshifts to front. Pi's model resolver picks `scopedModels[0]` before `defaultModel`, so in-place updates never took effect. Months-old bug.
+- **`soma model <p> project` support** — project-local defaults via `.soma/settings.json`. Four options: global, project-only, global+start, cancel.
+- **`soma inhale --model <p>` flag forwarding** — inhale now extracts `--model`, `--provider`, `--thinking-level`, and `--models` flags and passes them through to Pi. Previously all three inhale paths called `main([])`, silently dropping flags.
+- **Stale project `defaultModel` removed** — `claude-opus-4-7` was silently overriding global via deep-merge, producing nonexistent `openrouter/claude-opus-4-7`.
+- **13 transitive deps restored** — `npm uninstall` dropped undici, chalk, minimatch, diff, glob, highlight.js, hosted-git-info, jiti, typebox, cross-spawn, execa, proper-lockfile.
+- **Test suite hardened for migration** — 3 stale grep patterns updated, resetBreatheState now resets preloadNotifyState, seam/trace and compaction tests fixed for 0.78.0.
+
 
 ## [0.27.6] — 2026-05-28
 
@@ -119,7 +242,7 @@ order: 10
 
 ### Added
 
-- **Pi upstream monitor — live version gap in every session** (s01-8b3cb3). GitHub Actions workflow (`.github/workflows/upstream-monitor.yml`) watches `badlogic/pi-mono` (source of `@mariozechner/pi-coding-agent`) every 6 hours. Writes `PI_UPSTREAM.md` to the agent root with: current pinned version, latest npm version, releases behind count, and flagged commits relevant to Soma (covers all 33 Pi API usages: `registerTool`, `registerCommand`, `sendUserMessage`, 11 event hooks, 7 patch targets). New `{{pi_gap}}` body var in `resolveBlockVariables` reads `PI_UPSTREAM.md` at session start and injects live gap into the system prompt. `soma-dev status` surfaces flagged ⚠️ items in yellow. Eliminates manually tracking Pi version drift.
+- **Pi upstream monitor — live version gap in every session** (s01-8b3cb3). GitHub Actions workflow (`.github/workflows/upstream-monitor.yml`) watches `badlogic/pi-mono` (source of `@earendil-works/pi-coding-agent`) every 6 hours. Writes `PI_UPSTREAM.md` to the agent root with: current pinned version, latest npm version, releases behind count, and flagged commits relevant to Soma (covers all 33 Pi API usages: `registerTool`, `registerCommand`, `sendUserMessage`, 11 event hooks, 7 patch targets). New `{{pi_gap}}` body var in `resolveBlockVariables` reads `PI_UPSTREAM.md` at session start and injects live gap into the system prompt. `soma-dev status` surfaces flagged ⚠️ items in yellow. Eliminates manually tracking Pi version drift.
 
 - **Autonomous CI loop — nightly tests + issue filing + fix pipeline** (s01-8b3cb3, smoke-validated s01-ae942e). Three-layer self-healing CI: (1) `.github/workflows/test-nightly.yml` runs 25 portable tests on schedule (4am UTC) and on push to dev/main; on failure, auto-files a structured GitHub issue tagged `nightly-failure` with failing tests, error excerpts, Pi version, last 5 commits, and a fix brief for the next agent. Dedupe gate skips filing when an open issue already exists for the same failure. (2) `dev:issue.create` + `dev:issue.list` addon caps for agent-filed issues from within sessions. (3) `soma-dev delegate ci-fix <url>` orchestrates: `issue_investigator` → `builder` → `verifier`. 18 tests gained `CI=true` skip guards (workspace/dist-dependent tests self-skip). `pr-check.yml` hardened: tsc typecheck job + changelog blocking + conventional-commit format validation. End-to-end smoke s01-ae942e drove a deliberate test failure through nightly→issue→dedupe→revert→green.
 
@@ -258,7 +381,7 @@ order: 10
 ### Fixed
 - **add required Actions section to v0.23.0-to-v0.23.1.md**
 - **bump pi-* to 0.71.0 — clears CVE-2026-41686 (GHSA-p7fg-763f-g4gf)**
-- **Bump pi-* deps 0.71.0 + clear CVE-2026-41686 (GHSA-p7fg-763f-g4gf)** — upgraded `@mariozechner/pi-{ai,coding-agent,tui,agent-core}` from `^0.69.0` to `^0.71.0`. Clears `@anthropic-ai/sdk` advisory (affects `>=0.79.0 <0.91.1`). Also picks up: cache-control model-compat awareness, fine-grained tool streaming beta, empty tools array fix, stream truncation detection. fast-xml-parser (AWS Bedrock SDK transitive) remains at moderate — not reachable through soma's Anthropic provider path.
+- **Bump pi-* deps 0.71.0 + clear CVE-2026-41686 (GHSA-p7fg-763f-g4gf)** — upgraded `@earendil-works/pi-{ai,coding-agent,tui,agent-core}` from `^0.69.0` to `^0.71.0`. Clears `@anthropic-ai/sdk` advisory (affects `>=0.79.0 <0.91.1`). Also picks up: cache-control model-compat awareness, fine-grained tool streaming beta, empty tools array fix, stream truncation detection. fast-xml-parser (AWS Bedrock SDK transitive) remains at moderate — not reachable through soma's Anthropic provider path.
 
 ### Added
 - **soma:github.* v2 (SX-720)** — 21 caps total. API-mode (metadata; 13 caps including new audit/releases/diff/compare/file_diff parity wires) + new local-mode (tarball + soma-code shim; 8 caps): `local_path`, `local_map`, `local_find`, `local_refs`, `local_blast`, `local_structure`, `cache_list`, `cache_clean`. Treat any GitHub repo as local: fetch tarball ~1–5s to `~/.soma/cache/gh/<owner>--<repo>--<sha>/`, then run soma-code (12 langs, full ripgrep regex, DEF/IMP/USE refs, blast radius). Architectural pivot from "per-file API" to "fetch-once-then-local-toolchain." Plan: `releases/v0.23.x/plans/github-tool-10x.md`. Commits: `e7ff177`, `907013a`, `96a511c`. Guide: `docs/_dev/github-scanner.md`.
@@ -868,7 +991,7 @@ T1 scalar back-compat, T3 chain gemma→qwen→haiku fall-through, T4 cooldown s
 - **`soma-2x-cmux.sh`** launcher. Opens a cmux workspace with Sonnet parent + invocation-monitor pane. `--focus` / `--close` / `--restart` flags for iteration cycle.
 
 ### Fixed (during MVP verification, same release cycle)
-- **`pi-agent-core.Agent` via `createRequire` bypass.** Pi's extension loader aliases `@mariozechner/pi-agent-core` and can resolve to wrong package under jiti. Switched to `createRequire(import.meta.url)` for that one import — native Node resolution bypasses jiti. `pi-ai` + `pi-coding-agent` stay ESM-only (static imports at module top).
+- **`pi-agent-core.Agent` via `createRequire` bypass.** Pi's extension loader aliases `@earendil-works/pi-agent-core` and can resolve to wrong package under jiti. Switched to `createRequire(import.meta.url)` for that one import — native Node resolution bypasses jiti. `pi-ai` + `pi-coding-agent` stay ESM-only (static imports at module top).
 - **Inline flow YAML arrays.** `inherits: []` was parsed as the string `"[]"`; parser now detects and splits `[a, b, c]` inline.
 - **Inline YAML comments.** `default-model: claude-sonnet-4-5  # comment` previously included the comment in the value. `stripComment` handles this now (respects `#` inside quoted strings).
 - **`getModel` returning `undefined`** (not throwing) when a model id was unknown. Now surfaces as a typed error the chain walker can react to.
@@ -1932,7 +2055,7 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - Dev-only scripts no longer shipped to users (#2c8db4a)
 - Restart signal cleared at factory load time, not `session_start` (#0bddce2)
 - Dynamic muscle read and script execution detection for heat tracking (#99a7663)
-- `soma-route.ts` import path — uses `@mariozechner/pi-coding-agent`, not `@anthropic-ai/claude-code` (#49454ea)
+- `soma-route.ts` import path — uses `@earendil-works/pi-coding-agent`, not `@anthropic-ai/claude-code` (#49454ea)
 - Internal protocols (`content-triage`, `community-safe`) removed from bundled set (#3ad0884)
 - Auto-init `.soma/.git` when `autoCommit` is true (#276f6f2)
 - Missing TL;DRs on 4 self-awareness protocols (#c457752)

@@ -1,8 +1,8 @@
 ---
-title: "Models & Providers"
-description: "Set up API keys, choose models, configure custom providers like Ollama, OpenAI, and more."
-section: "First Steps"
-order: 1.5
+title: "Models"
+description: "Model configuration, provider setup, custom endpoints."
+section: "Reference"
+order: 19
 ---
 
 <!-- tldr -->
@@ -52,8 +52,6 @@ Set an environment variable or add to `auth.json`:
 | **Hugging Face** | `HF_TOKEN` |
 | **Cerebras** | `CEREBRAS_API_KEY` |
 | **OpenCode** | `OPENCODE_API_KEY` |
-
-> 💡 **New to OpenCode?** Use our referral link to get **$5 credit** when you sign up for Go: [opencode.ai/go?ref=D86VYYWKT9](https://opencode.ai/go?ref=D86VYYWKT9). Works with the same `OPENCODE_API_KEY` setup — or you can use `/login opencode` inside a session. Their free models (DeepSeek V4 Flash Free, MiMo V2.5 Free, Big Pickle, and more) require no API key at all.
 | **Kimi Coding** | `KIMI_API_KEY` |
 | **Minimax** | `MINIMAX_API_KEY` |
 | **Z.ai** | `ZAI_API_KEY` |
@@ -329,3 +327,68 @@ All built-in models stay available. Your existing auth continues to work.
 - For subscription providers: try `/logout` then `/login`
 - For API keys: verify with `echo $ANTHROPIC_API_KEY | head -c 10`
 - Auth file keys override env vars — check both
+
+## Model Value Guide (OpenCode Provider)
+
+OpenCode is a pay-as-you-go AI provider with unified access to frontier models at competitive prices. Most models support extended thinking and OpenAI/Anthropic-compatible APIs.
+
+> **Get started with OpenCode:** Use our referral link to sign up for OpenCode Go — you get **$5 credit** and your friend gets **$5 credit** too.
+> [opencode.ai/go?ref=D86VYYWKT9](https://opencode.ai/go?ref=D86VYYWKT9)
+
+### Free Models (No API Key Required)
+
+These models cost $0 for both input and output. Ideal for prototyping, simple tasks, and testing:
+
+| Model | Context | Thinking | Use Case |
+|-------|---------|----------|----------|
+| **Big Pickle** | 200K | ✅ | General purpose, strong reasoning |
+| **DeepSeek V4 Flash Free** | 200K | ✅ | Code generation, lightweight tasks |
+| **MiMo V2.5 Free** | 1M | ✅ | Long-context document analysis |
+| **Nemotron 3 Super Free** | 200K | ✅ | Text generation, reasoning |
+
+### Best Bang for Your Buck
+
+Prices per 1M tokens. Sorted by best value (intelligence per dollar):
+
+#### Tier 1 — The Sweet Spot ($0.14-$0.40 input)
+
+| Model | Input | Output | Context | Why |
+|-------|------:|------:|-------:|-----|
+| **DeepSeek V4 Flash** | $0.14 | $0.28 | 1M | Code specialist, xhigh thinking, excellent for automated pipelines |
+| **Qwen3.7 Plus** ⭐ | $0.40 | $1.60 | 262K | New architecture, Sonnet-tier reasoning at 8× less cost. Best undiscovered value |
+| **Qwen3.5 Plus** | $0.20 | $1.20 | 262K | Good all-rounder, supports images |
+| **Qwen3.6 Plus** | $0.50 | $3.00 | 262K | Incremental improvement over 3.5, solid mid-range |
+
+#### Tier 2 — Workhorse ($0.50-$3 input)
+
+| Model | Input | Output | Context | Why |
+|-------|------:|------:|-------:|-----|
+| **Gemini 3.5 Flash** | $1.50 | $9.00 | 1M | Near Sonnet-level performance, multimodal, huge context. Good fallback for long-context + image tasks |
+| **Gemini 3 Flash** | $0.50 | $3.00 | 1M | Budget multimodal, 1M context, image support |
+| **Gemini 3.1 Pro** | $2.00 | $12.00 | 1M | Strong reasoning, 1M context, solid mid-tier choice |
+| **Claude Sonnet 4.6** 🔶 | $3.00 | $15.00 | 1M | Proven workhorse. Best instruction-following, best tool-use reliability. Worth the premium for critical sessions |
+| **Grok Build 0.1** | $1.00 | $2.00 | 256K | If xAI's benchmarks hold, this competes with Sonnet at a fraction of the cost |
+| **Kimi K2.6** | $0.95 | $4.00 | 262K | Strong deepseeking reasoning, competitive at this price point |
+
+#### Tier 3 — Premium ($5 input)
+
+| Model | Input | Output | Context | Why |
+|-------|------:|------:|-------:|-----|
+| **Claude Opus 4.7** 🔷 | $5.00 | $25.00 | 1M | Your current default — earns its spot. 1M context, adaptive thinking, the ceiling. Worth it for complex architecture work |
+| **Claude Opus 4.8** | $5.00 | $25.00 | 1M | Latest Opus, marginal improvement over 4.7 |
+| **GPT 5.5** | $5.00 | $30.00 | 1M | Competitive with Opus for creative/code. Higher output cost |
+| **GPT 5.4 Pro** | $30.00 | $180.00 | 1M | Ultra-premium. For when nothing else will do and budget isn't a concern |
+
+### Personal Recommendation
+
+If I were choosing a daily driver stack today:
+
+| Role | Model | Why |
+|------|-------|-----|
+| **Everyday reasoning** | Qwen3.7 Plus | ~12× cheaper than Opus 4.7 on output, likely 85-90% of the intelligence for most tasks |
+| **Code generation** | DeepSeek V4 Flash | 1M context, elite code reasoning, $0.14/$0.28. Hard to beat |
+| **Critical architecture** | Claude Opus 4.7 | When the problem is hard and wrong is expensive |
+| **Long context + images** | Gemini 3.5 Flash | 1M context, strong multimodal, $1.50/$9 |
+| **Free prototyping** | DeepSeek V4 Flash Free | Zero cost, same API shape. Good enough for drafts |
+
+Try subbing in Qwen3.7 Plus for your default model for a week and see if you notice the difference. The savings on output ($1.60 vs $25 per million tokens) add up fast.

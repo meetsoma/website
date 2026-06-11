@@ -1,11 +1,10 @@
 ---
 title: "MAPs"
-description: "My Automation Protocol Scripts — reusable workflow templates that tell the agent which muscles to load, which scripts to run, and in what order."
-section: "Reference"
-order: 10
+description: "Workflow templates — repeatable processes with scar tissue from real sessions."
+section: "Workflows"
+order: 12
 ---
 
-# MAPs — My Automation Protocol Scripts
 
 <!-- tldr -->
 MAPs are the navigation layer over AMPS. A MAP is a markdown file that describes a repeatable process — which muscles to read, which protocols to follow, which scripts to run, and in what order. MAPs live in `.soma/amps/automations/maps/`. Load a MAP with `soma --map <name>` to prime the agent's system prompt for that specific workflow.

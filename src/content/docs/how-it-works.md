@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 2
 ---
 
-
 <!-- tldr -->
 Sessions are breaths: inhale (configurable boot steps: identity, preload, protocols, muscles, scripts, git-context) → work → breathe or exhale (save state, decay heat, write preload). Git context loads recent commits/diffs automatically. Heat system loads hot content fully, warm as breadcrumbs, cold stays dormant. Context warnings and preload staleness are configurable. All thresholds in `settings.json`.
 <!-- /tldr -->
@@ -159,6 +158,12 @@ For proactive sessions, enable **auto-breathe** (`/auto-breathe on` or `settings
 Rotation uses the **capability router** (`soma-route.ts`) when a slash command has run in the session — this calls `newSession()` directly for a seamless transition. If no command has run, the CLI handles rotation via process restart (transparent to the user).
 
 The 85% safety net always stays active as a backstop. Context thresholds are percentages of the model's context window — they scale automatically from 200K to 1M+ context models. See [Configuration](/docs/configuration#auto-breathe) for thresholds.
+
+## Operating Cadence — Meta-Workflow
+
+The breath cycle governs one session. The **meta-workflow** governs the layer above it: how an idea becomes shipped, verified, consolidated work across many sessions — and how the way you work improves from its own incidents. Three nested loops (BREATH → ARC → EVOLUTION), a 7-stage arc with gates (GROUND → … → REFLECT), an append-only Observation Ledger that amends the cadence from evidence, and a Decision Register for open forks.
+
+It ships as the `meta-workflow` core protocol (the *shape*). You adopt it per-project by instantiating a living `META_WORKFLOW.md` (the *content*) — the protocol is inert until you do. To turn it on, just ask Soma: *"set up the meta-workflow cadence."* See [Meta-Workflow](/docs/meta-workflow) for the overview + adoption guide.
 
 ## MAPs — Workflow Templates
 
