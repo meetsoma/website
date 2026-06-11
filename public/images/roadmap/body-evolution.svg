@@ -26,25 +26,25 @@
   <!-- Specular highlight -->
   <ellipse cx="270" cy="200" rx="40" ry="25" fill="white" opacity="0.06"/>
 
-  <!-- Eyebrows — asymmetric (scholar v2 style): left relaxed, right raised -->
-  <path d="M 232 170 Q 260 163 280 170" fill="none" stroke="#c9d1d9" stroke-width="3.5" stroke-linecap="round" opacity="0.8"/>
-  <path d="M 318 155 Q 345 143 370 150" fill="none" stroke="#c9d1d9" stroke-width="3.5" stroke-linecap="round" opacity="0.8"/>
+  <!-- Eyebrows — gently arched, symmetric (thoughtful, not crooked) -->
+  <path d="M 234 166 Q 260 158 286 166" fill="none" stroke="#c9d1d9" stroke-width="3.5" stroke-linecap="round" opacity="0.8"/>
+  <path d="M 314 166 Q 340 158 366 166" fill="none" stroke="#c9d1d9" stroke-width="3.5" stroke-linecap="round" opacity="0.8"/>
 
-  <!-- Eyes — small round pupils with highlights, above glasses -->
-  <circle cx="260" cy="195" r="5" fill="#c9d1d9"/>
-  <circle cx="261" cy="193" r="1.5" fill="white" opacity="0.7"/>
-  <circle cx="340" cy="195" r="5" fill="#c9d1d9"/>
-  <circle cx="341" cy="193" r="1.5" fill="white" opacity="0.7"/>
+  <!-- Eyes — round pupils with highlights, sitting just above the reading glasses -->
+  <circle cx="260" cy="196" r="5.5" fill="#c9d1d9"/>
+  <circle cx="261.5" cy="194" r="1.6" fill="white" opacity="0.75"/>
+  <circle cx="340" cy="196" r="5.5" fill="#c9d1d9"/>
+  <circle cx="341.5" cy="194" r="1.6" fill="white" opacity="0.75"/>
 
-  <!-- Half-moon reading glasses — lower on the face -->
-  <path d="M 215 218 Q 215 248 255 248 Q 295 248 295 218" fill="rgba(255,255,255,0.04)" stroke="#6494be" stroke-width="2"/>\
-  <path d="M 308 216 Q 308 246 348 246 Q 388 246 388 214" fill="rgba(255,255,255,0.04)" stroke="#6494be" stroke-width="2"/>
-  <line x1="295" y1="220" x2="308" y2="218" stroke="#6494be" stroke-width="2" stroke-linecap="round"/>
-  <line x1="215" y1="220" x2="185" y2="215" stroke="#6494be" stroke-width="2" stroke-linecap="round"/>
-  <line x1="388" y1="216" x2="418" y2="211" stroke="#6494be" stroke-width="2" stroke-linecap="round"/>
+  <!-- Half-moon reading glasses — symmetric, worn low, one lens under each eye -->
+  <path d="M 222 214 Q 222 244 260 244 Q 298 244 298 214" fill="rgba(255,255,255,0.04)" stroke="#6494be" stroke-width="2"/>
+  <path d="M 302 214 Q 302 244 340 244 Q 378 244 378 214" fill="rgba(255,255,255,0.04)" stroke="#6494be" stroke-width="2"/>
+  <line x1="298" y1="214" x2="302" y2="214" stroke="#6494be" stroke-width="2" stroke-linecap="round"/>
+  <line x1="222" y1="214" x2="192" y2="210" stroke="#6494be" stroke-width="2" stroke-linecap="round"/>
+  <line x1="378" y1="214" x2="408" y2="210" stroke="#6494be" stroke-width="2" stroke-linecap="round"/>
 
-  <!-- Mouth — slight quirk to the side ("hmm, interesting") -->
-  <path d="M 278 280 Q 300 288 322 278" fill="none" stroke="#c9d1d9" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
+  <!-- Mouth — gentle, even ("hmm, makes sense") -->
+  <path d="M 280 280 Q 300 289 320 280" fill="none" stroke="#c9d1d9" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
 
   <!-- Tiny "?" thought mark — the curious scholar -->
   <g transform="translate(395, 105)" opacity="0.5">
@@ -102,13 +102,6 @@
   <text x="450" y="378" font-family="'SF Mono', monospace" font-size="9" fill="#8bb9e0">v0.29</text>
   <text x="395" y="398" text-anchor="middle" font-family="'SF Mono', monospace" font-size="8" fill="#6494be">6 files improved</text>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       TITLE BAR
-       ══════════════════════════════════════════════════════════════ -->
-
-  <rect x="260" y="18" width="120" height="22" rx="11" fill="rgba(100,148,190,0.1)" stroke="#6494be" stroke-width="1"/>
-  <text x="320" y="33" text-anchor="middle" font-family="'SF Mono', monospace" font-size="10" fill="#6494be" letter-spacing="1">v0.29.0</text>
-
-  <text x="320" y="58" text-anchor="middle" font-family="'SF Mono', monospace" font-size="16" fill="#c9d1d9" font-weight="600" letter-spacing="1">THE BODY EVOLVED</text>
-  <text x="320" y="78" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">From 6 files to 12, with routing tables and behavioral defaults — the system that built itself</text>
+  <!-- No embedded title/version — the roadmap card chrome supplies those.
+       (The version-number layout belongs in the standalone blog OG, not here.) -->
 </svg>
