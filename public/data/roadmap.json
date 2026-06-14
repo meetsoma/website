@@ -18,6 +18,17 @@
       "version": "Next"
     },
     {
+      "version": "0.31.2",
+      "date": "2026-06-14",
+      "title": "Model list fix",
+      "tagline": "Listing your models works again, plus quieter dev ergonomics under the hood.",
+      "features": {
+        "fixed": [
+          "**`soma model --list` shows your models again.** A path was leaking into the command's search, so it always returned zero results; both `soma model --list` and bare `soma model` now behave correctly."
+        ]
+      }
+    },
+    {
       "version": "0.31.1",
       "date": "2026-06-14",
       "title": "Runtime refresh",
