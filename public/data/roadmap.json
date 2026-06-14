@@ -18,6 +18,18 @@
       "version": "Next"
     },
     {
+      "version": "0.31.1",
+      "date": "2026-06-14",
+      "title": "Runtime refresh",
+      "tagline": "Soma moves to the latest runtime, inheriting a batch of upstream reliability fixes.",
+      "features": {
+        "fixed": [
+          "**Clearer API errors.** When a provider refuses a request, Soma now keeps the provider's own explanation instead of collapsing it into a generic error.",
+          "**Corrected model limits.** Context-window sizes for several models were fixed upstream, so requests no longer overflow a model's real limit."
+        ]
+      }
+    },
+    {
       "version": "0.31.0",
       "date": "2026-06-10",
       "title": "Fable 5, and a cadence Soma runs on itself",
