@@ -1,43 +1,43 @@
 {
   "birthday-release": {
-    "durationSec": 423.11,
-    "sizeKB": 1653
+    "durationSec": 420.95,
+    "sizeKB": 1644
   },
   "cache-and-the-self-knowing-agent": {
-    "durationSec": 195.79,
-    "sizeKB": 765
+    "durationSec": 190.6,
+    "sizeKB": 745
   },
   "eating-our-own-memory": {
-    "durationSec": 523.37,
-    "sizeKB": 2044
+    "durationSec": 518.08,
+    "sizeKB": 2024
   },
   "five-things-had-to-go-wrong": {
-    "durationSec": 386.84,
-    "sizeKB": 1511
+    "durationSec": 384.86,
+    "sizeKB": 1503
   },
   "four-commands-after-an-update": {
-    "durationSec": 416.37,
-    "sizeKB": 1626
+    "durationSec": 370.44,
+    "sizeKB": 1447
   },
   "how-much-does-a-screenshot-cost": {
-    "durationSec": 311.3,
-    "sizeKB": 1216
+    "durationSec": 310.15,
+    "sizeKB": 1211
   },
   "introducing-soma": {
-    "durationSec": 365.61,
-    "sizeKB": 1428
+    "durationSec": 359.38,
+    "sizeKB": 2105
   },
   "let-pi-compile": {
     "durationSec": 129.12,
     "sizeKB": 756
   },
   "memory-is-not-a-feature": {
-    "durationSec": 563.58,
-    "sizeKB": 2201
+    "durationSec": 565.85,
+    "sizeKB": 3315
   },
   "show-the-machinery": {
-    "durationSec": 188.13,
-    "sizeKB": 735
+    "durationSec": 177.5,
+    "sizeKB": 1040
   },
   "somaverse-preview": {
     "durationSec": 518.78,
@@ -59,8 +59,40 @@
     "durationSec": 221.14,
     "sizeKB": 864
   },
+  "the-bridge-pattern": {
+    "durationSec": 589.13,
+    "sizeKB": 3451
+  },
+  "the-doctor-that-never-worked": {
+    "durationSec": 204.38,
+    "sizeKB": 1197
+  },
+  "the-doors-opened": {
+    "durationSec": 320.71,
+    "sizeKB": 1879
+  },
+  "the-last-eight-percent": {
+    "durationSec": 319.94,
+    "sizeKB": 1874
+  },
+  "the-operating-system": {
+    "durationSec": 639.74,
+    "sizeKB": 3748
+  },
   "the-ratio": {
     "durationSec": 686.09,
     "sizeKB": 4020
+  },
+  "the-reminders-that-became-code": {
+    "durationSec": 975.18,
+    "sizeKB": 3809
+  },
+  "the-scripts-we-deleted": {
+    "durationSec": 334.67,
+    "sizeKB": 1307
+  },
+  "the-session-that-paid-for-itself": {
+    "durationSec": 527.71,
+    "sizeKB": 2061
   }
 }
