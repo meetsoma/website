@@ -18,6 +18,18 @@
       "version": "Next"
     },
     {
+      "version": "0.32.1",
+      "date": "2026-06-15",
+      "title": "Migration safety",
+      "tagline": "Upgrades reach behind installs without ever clobbering your customized files.",
+      "features": {
+        "fixed": [
+          "**Behind installs actually upgrade.** `soma doctor --fix` now migrates a workspace that skipped versions (backfills settings + fast-forwards the version) instead of silently doing nothing.",
+          "**Your customizations are protected.** Template auto-update only touches pristine files now — a customized `_memory.md` (or any `_*.md` you've edited) is kept, never overwritten."
+        ]
+      }
+    },
+    {
       "version": "0.32.0",
       "date": "2026-06-15",
       "title": "Headless Claude sub-agents + a self-healing prompt",
