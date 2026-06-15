@@ -5,6 +5,7 @@ section: "Reference"
 order: 7.5
 ---
 
+# Statusline & Notices
 
 Soma renders a three-line footer beneath the prompt and surfaces short toast
 notices for events worth knowing. This page is the canonical reference for

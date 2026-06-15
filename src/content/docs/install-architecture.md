@@ -5,6 +5,7 @@ section: "Reference"
 order: 21
 ---
 
+# Install Architecture
 
 <!-- UPDATE WHEN: install flow changes, thin-cli.js updated, soma-beta structure changes -->
 <!-- SEAMS: getting-started.md#install, updating.md, doctor.md, configuration.md -->

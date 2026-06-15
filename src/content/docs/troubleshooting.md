@@ -5,6 +5,7 @@ section: "Reference"
 order: 22
 ---
 
+# Troubleshooting
 
 <!-- tldr -->
 Most issues: `soma init` (fixes broken install), `soma doctor` (fixes project version), restart the session (picks up changes). Below: organized by symptom. Check here before filing an issue.
