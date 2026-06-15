@@ -5,7 +5,6 @@ section: "Reference"
 order: 10
 ---
 
-# Changelog
 
 All notable changes to the Soma agent are documented here.
 
@@ -15,6 +14,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ## [Unreleased]
 
+
+### Fixed
+- **collapse preload double-notify, document notice surfaces (SX-786)**
+- **add missing guard.bashNotify to schema + drop dead casts (SX-788)**
+
+### Added
+- **always-on irreversibility tier + .soma/.git/git-init guards (SX-787 Option A)**
+- **per-model trustedModels allowlist (SX-787)**
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
 ## [0.32.1] — 2026-06-15

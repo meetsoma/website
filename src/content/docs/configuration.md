@@ -5,7 +5,6 @@ section: "Reference"
 order: 6
 ---
 
-# Configuration
 
 <!-- tldr -->
 `settings.json` at any level in the soma chain (project → parent → global). Project overrides parent overrides global. Controls: heat thresholds, muscle budgets, boot steps (including git-context), context warning thresholds, preload staleness, auto-detection, parent-child inheritance, persona, system prompt toggles, guard rules. Only set what you want to change — defaults fill the rest.

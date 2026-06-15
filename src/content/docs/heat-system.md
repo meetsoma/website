@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 3.5
 ---
 
-# Heat System
 
 <!-- UPDATE WHEN: heat thresholds change, new tier added, decay/boost logic changes -->
 <!-- SEAMS: configuration.md#heat, protocols.md#heat-tracking, muscles.md#heat, how-it-works.md#heat -->

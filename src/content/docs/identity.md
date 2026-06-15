@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 2.5
 ---
 
-# Identity
 
 <!-- tldr -->
 Identity lives in `.soma/body/soul.md` (primary) or `.soma/SOMA.md` (legacy monolith). The soul is who the agent is. The body carries what it's learned. Discovered through use, refined through corrections. Layered: project → parent → global. Gitignored by default.

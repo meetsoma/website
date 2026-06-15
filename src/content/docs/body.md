@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 3.6
 ---
 
-# Body Architecture
 
 <!-- tldr -->
 The body is Soma's structured identity system. Files in `.soma/body/` become template variables (`soul.md` → `{{soul}}`). Templates (`_mind.md`, `_memory.md`) use these variables to compile the system prompt and preload. Lazy files load on demand. The soma chain (project → parent → global) merges content with child-wins priority.

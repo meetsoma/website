@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 7
 ---
 
-# System Prompt
 
 <!-- tldr -->
 Soma compiles a system prompt from: static core → identity → protocols/muscles → docs → guard → skills. When `body/_mind.md` exists, it's a **template** — you control the structure with `{{variables}}`. All AMPS are classified by heat: hot = full body, warm = `<available_skills>` XML, cold = hidden. Preview with `/body render` (full output) or `/body map` (structure). Token budget warns at 4000 (configurable).

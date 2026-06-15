@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 5.5
 ---
 
-# Muscles
 
 <!-- tldr -->
 Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = TL;DR only, cold = name listed. Add a `## TL;DR` section — it's what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.

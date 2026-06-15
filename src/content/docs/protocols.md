@@ -5,7 +5,6 @@ section: "Core Concepts"
 order: 3
 ---
 
-# Protocols
 
 <!-- tldr -->
 Behavioral rules in `.soma/amps/protocols/` as markdown with YAML frontmatter. Loaded by heat: hot (≥8) = full body, warm (≥3) = TL;DR/description only, cold = name only. Heat rises on use (+1 auto-detect), decays per session if unused. Domain scoping via `applies-to` field. Write your own: add `name`, `heat-default`, `description`, `applies-to` frontmatter. Configure thresholds in `settings.json`.

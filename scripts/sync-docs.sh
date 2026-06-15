@@ -55,6 +55,7 @@ MANIFEST=(
   "muscles.md|Muscles|Learned patterns, digest system, heat tiers, writing your own.|Core Concepts|5.5"
   "configuration.md|Configuration|Settings, heat thresholds, muscle budgets — tune Soma's behavior.|Reference|6"
   "commands.md|Commands|Slash commands, CLI flags, context warnings, the breath cycle.|Reference|7"
+  "statusline.md|Statusline & Notices|The three-line footer, every indicator, and the toast notices Soma shows you — including the preload lifecycle.|Reference|7.5"
   "system-prompt.md|System Prompt|How Soma's compiled system prompt is assembled, configured, and previewed.|Core Concepts|7"
   "workspaces.md|Workspaces|Parent-child inheritance, monorepo patterns, solo body mode.|Core Concepts|8"
   "scripts.md|Scripts & Audits|Standalone tools for searching, auditing, scanning, and maintaining your .soma/ ecosystem.|Reference|9"
