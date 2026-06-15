@@ -209,7 +209,7 @@ Protects core Soma files and git identity from accidental modification.
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `coreFiles` | `"warn"` | Protection for soul.md, SOMA.md, STATE.md, protocols/, settings.json. Options: `"allow"` (no guard), `"warn"` (notify on write), `"block"` (require confirmation) |
+| `coreFiles` | `"warn"` | Protection for `.soma/identity.md`, `STATE.md`, `protocols/`, `settings.json`, the body templates (`_mind.md`/`_memory.md`/`_first-breath.md`), and the runtime install (`~/.soma/agent/`). Applies to both **write and edit**. Options: `"allow"` (no guard), `"warn"` (notify), `"block"` (require confirmation). Note: ordinary body files like `soul.md` are **not** protected — they're meant to be edited. |
 | `bashCommands` | `"warn"` | Bash command guard. `"allow"` = no prompts, `"warn"` = confirm dangerous commands, `"block"` = prevent entirely. Protects against: `rm -rf`, `git push --force`, etc. |
 | `bashNotify` | `"notify"` | Non-blocking notifications for routine commands. Currently shows a notice on plain `git push`. Set to `"off"` to silence. |
 | `gitIdentity` | `null` | Expected git identity. `null` = only checks email is set. `{ email: "x@y.com" }` = warns on mismatch. `{ email: ["a@b.com", "c@d.com"] }` = accepts any in the list. |
