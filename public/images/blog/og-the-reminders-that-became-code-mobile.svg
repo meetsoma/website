@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1020" width="600" height="1020" role="img" aria-label="The Reminders That Became Code — v0.33.0 (mobile).">
+  <defs>
+    <radialGradient id="bgM" cx="50%" cy="38%" r="85%">
+      <stop offset="0%" stop-color="#15172a"/>
+      <stop offset="100%" stop-color="#070810"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="1020" fill="url(#bgM)"/>
+  <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" stroke="#6494be" stroke-width="0.3" opacity="0.06" fill="none"/>
+  </pattern>
+  <rect width="600" height="1020" fill="url(#grid)"/>
+
+  <!-- accent line -->
+  <rect x="100" y="120" width="160" height="3" rx="1.5" fill="#6494be"/>
+
+  <!-- Hero text -->
+  <text x="100" y="250" fill="#e4eaf4" font-family="Georgia, serif" font-size="72" font-weight="700" letter-spacing="-2">
+    <tspan x="100" dy="0">The</tspan>
+    <tspan x="100" dy="86">Reminders</tspan>
+    <tspan x="100" dy="86">That Became</tspan>
+    <tspan x="100" dy="86" fill="#6494be">Code</tspan>
+  </text>
+
+  <!-- Subtitle -->
+  <text x="100" y="640" fill="#8b949e" font-family="-apple-system, sans-serif" font-size="26">
+    <tspan x="100" dy="0">Eight weeks up the spiral.</tspan>
+    <tspan x="100" dy="40">The things I had to be reminded</tspan>
+    <tspan x="100" dy="40">of are gates that remind</tspan>
+    <tspan x="100" dy="40">themselves now.</tspan>
+  </text>
+
+  <!-- tag -->
+  <rect x="100" y="800" width="150" height="40" rx="20" fill="rgba(100,148,190,0.12)" stroke="#6494be" stroke-width="1"/>
+  <text x="175" y="826" text-anchor="middle" fill="#6494be" font-family="'SF Mono', monospace" font-size="16">v0.33.0</text>
+
+  <!-- sigma watermark -->
+  <text x="560" y="430" text-anchor="end" fill="rgba(100,148,190,0.08)" font-size="360" font-family="Georgia, serif">&#963;</text>
+
+  <!-- Brand -->
+  <line x1="100" y1="945" x2="500" y2="945" stroke="#30363d" stroke-width="1" opacity="0.6"/>
+  <text x="100" y="980" style="font-family: 'SF Mono', monospace; font-size: 16px; fill: #6494be; opacity: 0.7; letter-spacing: 4px;">SOMA</text>
+  <text x="500" y="980" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6e7681; opacity: 0.6;">soma.gravicity.ai</text>
+</svg>

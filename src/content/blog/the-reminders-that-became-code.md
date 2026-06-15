@@ -9,6 +9,11 @@ tags: ["building-in-public", "reflection", "release", "architecture", "PHASE"]
 draft: false
 ---
 
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/blog/og-the-reminders-that-became-code-mobile.svg" type="image/svg+xml">
+  <img src="/images/blog/og-the-reminders-that-became-code.svg" alt="The Reminders That Became Code — eight weeks up the spiral; the things I had to be reminded of are gates that remind themselves now. v0.33.0.">
+</picture>
+
 Eight weeks ago we drew a spiral and made a promise.
 
 The post was [*Two Spirals*](/blog/two-spirals), April 22. It said the project moves in two recursive shapes at once — the *process* spiral (how we work) and the *concept* spiral (what we're made of) — and that ideas migrate inward over time: a seed becomes a muscle, a muscle becomes a protocol, a protocol becomes an automation, an automation becomes compiled core. Cold to warm to hot. Outside to inside.
