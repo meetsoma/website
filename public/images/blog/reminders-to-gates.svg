@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 460" font-family="-apple-system, sans-serif">
+  <!-- transparent background — stars show through -->
+
+  <!-- title -->
+  <text x="40" y="48" fill="#c9d1d9" font-size="20" font-weight="600">What moved inward this cycle</text>
+  <text x="40" y="74" fill="#6e7681" font-size="13" font-family="'SF Mono', monospace">a reminder hit by hand  →  a gate that fires itself</text>
+
+  <!-- column headers -->
+  <text x="40" y="116" fill="#f0883e" font-size="12" font-family="'SF Mono', monospace" letter-spacing="1">OUTSIDE · by hand</text>
+  <text x="780" y="116" text-anchor="end" fill="#6494be" font-size="12" font-family="'SF Mono', monospace" letter-spacing="1">INSIDE · in code</text>
+
+  <!-- rows -->
+  <g font-size="14">
+    <!-- row 1 -->
+    <rect x="40" y="136" width="320" height="44" rx="8" fill="rgba(240,136,62,0.08)" stroke="rgba(240,136,62,0.4)" stroke-width="1"/>
+    <text x="56" y="163" fill="#c9d1d9">npm publish skipped, silently</text>
+    <text x="392" y="163" fill="#6494be" font-size="20">&#8594;</text>
+    <rect x="430" y="136" width="350" height="44" rx="8" fill="rgba(100,148,190,0.10)" stroke="#6494be" stroke-width="1"/>
+    <text x="446" y="163" fill="#c9d1d9">release pipeline · 10 gates</text>
+
+    <!-- row 2 -->
+    <rect x="40" y="192" width="320" height="44" rx="8" fill="rgba(240,136,62,0.08)" stroke="rgba(240,136,62,0.4)" stroke-width="1"/>
+    <text x="56" y="219" fill="#c9d1d9">doctor warned, never fired</text>
+    <text x="392" y="219" fill="#6494be" font-size="20">&#8594;</text>
+    <rect x="430" y="192" width="350" height="44" rx="8" fill="rgba(100,148,190,0.10)" stroke="#6494be" stroke-width="1"/>
+    <text x="446" y="219" fill="#c9d1d9">migration gate · hard-stops the cut</text>
+
+    <!-- row 3 -->
+    <rect x="40" y="248" width="320" height="44" rx="8" fill="rgba(240,136,62,0.08)" stroke="rgba(240,136,62,0.4)" stroke-width="1"/>
+    <text x="56" y="275" fill="#c9d1d9">&#8220;did you update the docs?&#8221;</text>
+    <text x="392" y="275" fill="#6494be" font-size="20">&#8594;</text>
+    <rect x="430" y="248" width="350" height="44" rx="8" fill="rgba(100,148,190,0.10)" stroke="#6494be" stroke-width="1"/>
+    <text x="446" y="275" fill="#c9d1d9">doc-currency gate · flags drift</text>
+
+    <!-- row 4 -->
+    <rect x="40" y="304" width="320" height="44" rx="8" fill="rgba(240,136,62,0.08)" stroke="rgba(240,136,62,0.4)" stroke-width="1"/>
+    <text x="56" y="331" fill="#c9d1d9">&#8220;that card&#8217;s a touch long&#8221;</text>
+    <text x="392" y="331" fill="#6494be" font-size="20">&#8594;</text>
+    <rect x="430" y="304" width="350" height="44" rx="8" fill="rgba(100,148,190,0.10)" stroke="#6494be" stroke-width="1"/>
+    <text x="446" y="331" fill="#c9d1d9">80-word cap · enforced</text>
+  </g>
+
+  <!-- caption -->
+  <text x="40" y="392" fill="#6e7681" font-size="12" font-family="'SF Mono', monospace">cold → warm → hot · seed → muscle → protocol → automation → core</text>
+
+  <!-- sigma watermark -->
+  <text x="800" y="430" text-anchor="end" fill="rgba(100,148,190,0.10)" font-size="120" font-family="Georgia, serif">&#963;</text>
+</svg>
