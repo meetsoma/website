@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Dark solid background -->
+  <rect width="1200" height="630" fill="#0d1117"/>
+
+  <!-- Subtle gradient overlay -->
+  <defs>
+    <linearGradient id="glow" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(100,148,190,0.06)"/>
+      <stop offset="50%" stop-color="rgba(100,148,190,0.02)"/>
+      <stop offset="100%" stop-color="rgba(100,148,190,0.08)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Accent line -->
+  <rect x="60" y="80" width="200" height="3" fill="#6494be" rx="1.5"/>
+
+  <!-- Hero text -->
+  <text x="60" y="210" fill="#c9d1d9" font-size="89" font-family="Georgia, serif" font-weight="700" letter-spacing="-1">
+    <tspan x="60" dy="0">The Reminders</tspan>
+    <tspan x="60" dy="100">That Became Code</tspan>
+  </text>
+
+  <!-- Subtitle -->
+  <text x="60" y="360" fill="#6e7681" font-size="24" font-family="-apple-system, sans-serif">
+    Eight weeks up the spiral — the things I had to
+  </text>
+  <text x="60" y="395" fill="#6e7681" font-size="24" font-family="-apple-system, sans-serif">
+    be reminded of are gates that remind themselves now.
+  </text>
+
+  <!-- Tag -->
+  <rect x="60" y="440" width="130" height="32" rx="16" fill="rgba(100,148,190,0.12)" stroke="#6494be" stroke-width="1"/>
+  <text x="125" y="462" text-anchor="middle" fill="#6494be" font-size="14" font-family="'SF Mono', monospace">v0.33.0</text>
+
+  <!-- Brand bar -->
+  <rect x="0" y="570" width="1200" height="60" fill="rgba(22,27,34,0.6)"/>
+  <text x="60" y="608" fill="#c9d1d9" font-size="16" font-family="'SF Mono', monospace" letter-spacing="2">SOMA</text>
+  <text x="1140" y="608" text-anchor="end" fill="#6e7681" font-size="14" font-family="-apple-system, sans-serif">soma.gravicity.ai</text>
+
+  <!-- Mascot watermark — sigma -->
+  <text x="1080" y="260" text-anchor="end" fill="rgba(100,148,190,0.08)" font-size="320" font-family="Georgia, serif">σ</text>
+</svg>
