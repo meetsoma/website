@@ -228,9 +228,17 @@ Protects core Soma files and git identity from accidental modification.
 ```
 New users and weaker models keep `coreFiles`/`bashCommands` at their configured level; sonnet/opus sessions skip the write/bash prompts. Put this in your **global** `~/.soma/settings.json` to apply everywhere, or a project's `.soma/settings.json` to scope it (child overrides global).
 
-**v0.27.3+: Runtime install protection and expensive op confirmation:**
+**Always-on protection (irreversibility tier):**
 
-The guard also intercepts destructive operations on `~/.soma/agent/` (the runtime install) and expensive operations (npm publish, docker push, remote rsync, ssh sudo). These always require explicit confirmation — can't be silenced via `bashCommands: allow`.
+Some guards fire **regardless** of `bashCommands` or `trustedModels` — capability relaxes the routine prompts, never the catastrophic ones. These always require explicit confirmation and cannot be silenced:
+
+- **`.soma` workspace destruction** — `rm -r`/`-rf` of a `.soma` directory itself (your memory + identity). Deleting files *within* `.soma` is unaffected.
+- **`.git` history destruction** — `rm -r`/`-rf` of a `.git` directory (wipes commit history).
+- **`git init`** — can detach or orphan an existing `.soma`/`.git` history (this has wiped a workspace before), so it prompts to confirm.
+- **Runtime install** — destructive operations on `~/.soma/agent/` (breaks your `soma` command).
+- **Expensive operations** — `npm publish`, `docker push`, remote `rsync`, `ssh … sudo`, `git push --tags`, AWS sync/invalidation (real-world cost/permanence).
+
+The relaxable tier (`coreFiles`, `bashCommands` dangerous-command prompts, `toolGates`, git-identity notices) is what `trustedModels` and `bashCommands: "allow"` skip.
 
 **Example: tool→muscle gating:**
 ```json
