@@ -18,6 +18,22 @@
       "version": "Next"
     },
     {
+      "version": "0.32.0",
+      "date": "2026-06-15",
+      "title": "Headless Claude sub-agents + a self-healing prompt",
+      "tagline": "Delegate to Claude on your subscription — and the agent's memory layer is back in every prompt.",
+      "features": {
+        "added": [
+          "**Headless Claude sub-agents.** Spawn a child agent through the official Claude CLI — it draws from your subscription, not metered extra usage. `soma claude \"<task>\"` or delegate `model: 'claude-cli/sonnet'`.",
+          "**Delegation is teachable.** Ask any Soma to delegate and its help explains the children pattern — durable specialist roles you author once that get smarter every run."
+        ],
+        "fixed": [
+          "**Memory layer restored.** A path bug had silently dropped the whole harness (breath, memory, preloads, how-to-work) from the system prompt — fixed, with a smoke test to keep it there.",
+          "**Statusline reliability.** The preload-saved and runtime-branch indicators work again, plus a rare keepalive crash during session recovery is gone."
+        ]
+      }
+    },
+    {
       "version": "0.31.2",
       "date": "2026-06-14",
       "title": "Model list fix",

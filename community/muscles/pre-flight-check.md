@@ -7,7 +7,7 @@ heat: 0
 triggers: [exists, duplicate, already, check, prior-art, awareness, quality, meta]
 applies-to: [any]
 created: 2026-03-12
-updated: 2026-06-11
+updated: 2026-06-15
 tools: [soma-verify.sh, soma-plans.sh]
 loads: 0
 seams: [s01-3498d3]

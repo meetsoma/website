@@ -20,6 +20,16 @@ import HeroTitle from '../../components/HeroTitle.astro';
 // still renders cleanly (see v0.20.0 / v0.22.0 / v0.24.0 / v0.26.0 below).
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string; image?: string }[] = [
   {
+    name: 'Headless Claude sub-agents — on your subscription, not extra usage',
+    icon: 'automations',
+    description: 'Spawn a focused child agent that runs through the official Claude CLI — it draws from your subscription plan instead of metered extra usage, the one headless-Claude path that doesn\'t bill overage. `soma claude "<task>"` for a one-shot, or delegate with `model: \'claude-cli/sonnet\'`; read-only by default. The same release restores the agent\'s whole memory layer (a path bug had silently dropped breath/memory/preloads from every prompt for months — now back, with a smoke test to keep it there), makes delegation teachable (the children pattern surfaces in `delegate` help), and hardens the release pipeline so a credential can never reach main and every settings/template change ships its migration.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.32.0',
+    date: '2026-06-15',
+    image: '/images/roadmap/headless-claude-subagents.svg',
+  },
+  {
     name: 'The $0.00 that meant it was flying blind — Fable 5 lands native',
     icon: 'extensions',
     description: 'Anthropic\'s Mythos-class model — 1M context, vision, deep adaptive thinking — is now first-class: `soma --model fable`, with cost tracked per token instead of silently reading zero. The same release ships the meta-workflow cadence (the loop Soma uses to carry work across sessions and improve from its own incidents) as a core protocol you adopt per-project, and a project-trust handler so your `.soma/` settings keep loading transparently under the engine\'s new gating. The preload indicator stopped lying, and idle sessions now save before they close.',
@@ -125,15 +135,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     image: '/images/roadmap/cache-stickiness-brokenclaw.svg',
   },
   {
-    name: 'Model Switching & Opus 4.7',
-    icon: 'scripts',
-    description: '`soma model` command — switch default models from CLI with fuzzy matching. 23 providers, 842+ models. Claude Opus 4.7 with adaptive thinking. Smarter prompt caching — tool changes no longer invalidate your cache.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-    version: 'v0.20.0',
-    date: '2026-04-15',
-  },
-  {
     name: 'Somaverse',
     icon: 'extensions',
     description: 'Visual workspace at somaverse.ai — 33 plugins, 28 agent tools. `soma login` pairs your agent. Hub relay routes data through your machine, never stores it. Per-user isolation with Argon2 device keys. Your browser is the UI, your machine is the brain.',
@@ -143,17 +144,6 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     date: '2026-03-20',
     blogPost: 'the-operating-system',
     image: '/images/roadmap/somaverse-terminal.svg',
-  },
-  {
-    name: 'Doctor & Migration',
-    icon: 'protocols',
-    description: 'Project health check with auto-fix on boot. Declarative migration phases from v0.6.1 onward. Critical semver fix ensures upgrades actually run. Your customizations are never touched.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-    version: 'v0.11.0',
-    date: '2026-03-01',
-    blogPost: 'the-doctor-that-never-worked',
-    image: '/images/roadmap/doctor-codecard.svg',
   },
 ];
 
