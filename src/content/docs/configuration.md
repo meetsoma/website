@@ -215,6 +215,18 @@ Protects core Soma files and git identity from accidental modification.
 | `bashNotify` | `"notify"` | Non-blocking notifications for routine commands. Currently shows a notice on plain `git push`. Set to `"off"` to silence. |
 | `gitIdentity` | `null` | Expected git identity. `null` = only checks email is set. `{ email: "x@y.com" }` = warns on mismatch. `{ email: ["a@b.com", "c@d.com"] }` = accepts any in the list. |
 | `toolGates` | `{}` | Tool→muscle gating. Require reading a muscle before using certain bash commands. Keys are command substrings, values are `{ muscle, mode }`. |
+| `worktree` | `null` | Worktree boundary. When set to an absolute/`~` path, `write` and `edit` outside it are hard-blocked (sub-agent isolation). |
+| `trustedModels` | `[]` | Per-model allowlist. When the **active model id** matches a glob in this list, `coreFiles` + `bashCommands` resolve to `"allow"` for that turn — capable models (sonnet/opus) skip the prompts while weaker models and new users keep full protection. Globs use `*` wildcards, matched case-insensitively against the model id (same convention as `breathe.thresholds`). Settable per-project **or** global; child wins. Empty (default) = no model is trusted. Example: `["*sonnet*", "*opus*"]`. |
+
+**Example: relax guards for capable models only:**
+```json
+{
+  "guard": {
+    "trustedModels": ["*sonnet*", "*opus*"]
+  }
+}
+```
+New users and weaker models keep `coreFiles`/`bashCommands` at their configured level; sonnet/opus sessions skip the write/bash prompts. Put this in your **global** `~/.soma/settings.json` to apply everywhere, or a project's `.soma/settings.json` to scope it (child overrides global).
 
 **v0.27.3+: Runtime install protection and expensive op confirmation:**
 
