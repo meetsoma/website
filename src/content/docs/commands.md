@@ -91,14 +91,11 @@ changed a `.ts` file, `/reload` picks it up.
 
 ### Statusline line 3 — what each label means
 
-When a commit (or your own edits) touches files the running session might
-want to pick up, line 3 of the statusline shows a short tag. Severity-labeled:
-
-| Tag | What changed | What to do |
-|---|---|---|
-| `🔄 /reload` | `extensions/*.ts` or `core/*.ts` | Run `/reload` — takes <1s, no cost. |
-| `📝 /rebuild?` | `body/*.md` | **Optional.** The `?` means "only if you want it applied right now." Skip freely if the edit is for your next session (preloads, journal, identity tweaks). |
-| `⚠ relaunch` | `dist/*` or `core/*.js` | `/reload` can't help — Pi's static imports are frozen at process boot. `/exit`, then run `soma` again. Only happens when you've run `build-dist.mjs` or bumped Pi; normal source edits never trigger this. |
+When a commit (or your own edits) touches files the running session might want
+to pick up, line 3 of the statusline shows a short tag (`🔄 /reload`,
+`📝 /rebuild?`, `⚠ relaunch`). See **[Statusline & Notices](/docs/statusline)**
+for the full table and what to do for each — along with every other statusline
+indicator and Soma's toast notices.
 
 ## Drop-in Commands
 

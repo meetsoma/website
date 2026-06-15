@@ -18,6 +18,23 @@
       "version": "Next"
     },
     {
+      "version": "0.33.0",
+      "date": "2026-06-15",
+      "title": "Guard & settings hardening",
+      "tagline": "Capable models skip the nags; the catastrophic prompts never relax — and the guards finally cover edits too.",
+      "features": {
+        "added": [
+          "**Per-model guard allowlist.** Trust sonnet/opus to skip the core-file + bash confirmations while weaker models and new users keep full protection — `guard.trustedModels`, settable per-project or globally.",
+          "**Catastrophe guards are always on.** Wiping a `.soma` workspace or `.git` history, `git init`, and destructive runtime/publish ops always confirm — capability relaxes routine prompts, never irreversible ones."
+        ],
+        "fixed": [
+          "**One preload confirmation, not two.** Saving a preload now shows a single clear confirmation instead of a redundant double-notification.",
+          "**Commits work with no email set.** Fixed a hook bug that silently blocked every commit in any repo without a configured git identity.",
+          "**The core-file guard now covers edits**, not just writes — editing a runtime file or `settings.json` is gated like writing it."
+        ]
+      }
+    },
+    {
       "version": "0.32.1",
       "date": "2026-06-15",
       "title": "Migration safety",

@@ -307,15 +307,9 @@ Or update the guard setting in `.soma/settings.json`.
 
 ### Statusline shows `🔄 /reload`, `📝 /rebuild?`, or `⚠ relaunch`
 
-The third line of your statusline (v0.20.3+) surfaces a tag when commits or edits touch files the running session might want to pick up. Each tag tells you exactly what to do:
+The third line of your statusline (v0.20.3+) surfaces a tag when commits or edits touch files the running session might want to pick up: `🔄 /reload`, `📝 /rebuild?`, `⚠ relaunch`, or `⚠ sync dev + /reload`.
 
-| Tag | What changed | What to do |
-|---|---|---|
-| `🔄 /reload` | `extensions/*.ts` or `core/*.ts` | Run `/reload` — takes <1s, no cost. [Pi's hot-reload re-imports via jiti, mtime-keyed.] |
-| `📝 /rebuild?` | `body/*.md` | **Optional.** The `?` means "only if you want the change applied right now." Skip freely if the edit is for your next session (preloads, journal, identity tweaks land naturally on fresh boot). |
-| `⚠ relaunch` | `dist/*` or `core/*.js` | `/reload` can't help — Pi's static imports are frozen at process boot. `/exit`, then run `soma` again. Only appears after `build-dist.mjs` or a Pi upgrade; normal source edits never trigger this. |
-
-See [Reload & Rebuild](/docs/commands#reload--rebuild) for the full command reference.
+See **[Statusline & Notices](/docs/statusline#line-3--location-runtime-restart-signals)** for the full table and the exact action for each tag.
 
 ### Extension errors in debug log
 
