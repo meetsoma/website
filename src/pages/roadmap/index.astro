@@ -195,7 +195,7 @@ function formatDate(d?: string): string {
         <div class="hero-viewport" data-carousel-viewport>
           {upcoming.map((feature, i) => (
             <article
-              class="hero-slide"
+              class={`hero-slide${i === 0 ? ' is-active' : ''}`}
               data-carousel-slide
               data-index={i}
               aria-roledescription="slide"
@@ -214,7 +214,9 @@ function formatDate(d?: string): string {
                   class="hero-art"
                   src={feature.image}
                   alt=""
-                  loading="lazy"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : 'auto'}
+                  decoding="async"
                   aria-hidden="true"
                 />
               )}
