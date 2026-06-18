@@ -18,6 +18,20 @@
       "version": "Next"
     },
     {
+      "version": "0.34.0",
+      "date": "2026-06-18",
+      "title": "A tidier inbox",
+      "tagline": "Soma marks letters read as it handles them — the startup inbox shows what's actually pending.",
+      "features": {
+        "added": [
+          "**Inbox read-status.** Soma marks letters read, actioned, or archived as it handles them — the unread list at startup reflects what genuinely needs attention rather than growing forever."
+        ],
+        "fixed": [
+          "**Exhale no longer crashes in a fresh directory.** Ending a session in a folder that was not yet set up could abort the whole save; it now prepares the directory first."
+        ]
+      }
+    },
+    {
       "version": "0.33.1",
       "date": "2026-06-18",
       "title": "Runtime refresh",
