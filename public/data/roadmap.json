@@ -18,6 +18,18 @@
       "version": "Next"
     },
     {
+      "version": "0.33.1",
+      "date": "2026-06-18",
+      "title": "Runtime refresh",
+      "tagline": "Caught up with upstream Pi — steadier shell output, cleaner crash recovery, sturdier `soma init`.",
+      "features": {
+        "fixed": [
+          "**Latest Pi runtime.** Picks up upstream fixes — more reliable capture of output from fast-finishing shell commands, and cleaner terminal restore if a session ever crashes.",
+          "**Sturdier `soma init`.** Closed a dependency-resolution gap that could fail a fresh install on a clean machine."
+        ]
+      }
+    },
+    {
       "version": "0.33.0",
       "date": "2026-06-15",
       "title": "Guard & settings hardening",
