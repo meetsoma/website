@@ -16,8 +16,8 @@
     "sizeKB": 1511
   },
   "four-commands-after-an-update": {
-    "durationSec": 416.37,
-    "sizeKB": 1626
+    "durationSec": 365.62,
+    "sizeKB": 1428
   },
   "how-much-does-a-screenshot-cost": {
     "durationSec": 311.3,
@@ -28,8 +28,8 @@
     "sizeKB": 1428
   },
   "let-pi-compile": {
-    "durationSec": 129.12,
-    "sizeKB": 756
+    "durationSec": 806.84,
+    "sizeKB": 3152
   },
   "memory-is-not-a-feature": {
     "durationSec": 563.58,
@@ -82,6 +82,10 @@
   "the-soma-sun-shows-up": {
     "durationSec": 539.78,
     "sizeKB": 2108
+  },
+  "the-tools-that-made-these-posts": {
+    "durationSec": 487.32,
+    "sizeKB": 1904
   },
   "the-warning-curtis-saw-every-startup": {
     "durationSec": 331.96,
