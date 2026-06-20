@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via _tools.md, and the bundled set
 status: active
-updated: 2026-06-11
+updated: 2026-06-20
 ---
 
 # Tools
@@ -142,6 +142,7 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 | `soma` (`cap='soma:focus.show|set|clear|dry_run'`) | `soma-addons/focus.ts` | Boot-focus primer. `set <keyword>` seam-traces + primes next session's MAP + muscles. |
 | `soma` (`cap='soma:new.muscle|protocol'`) | `soma-addons/new.ts` | Crystallize a pattern. Scaffolds `.soma/amps/muscles/<name>.md` or `.../protocols/<name>.md` with frontmatter. args: `{name, description?, tags?, global?, force?}`. |
 | `soma` (`cap='soma:terminals.list|detect|status|prefer|doctor'`) | `soma-addons/terminals.ts` | Terminal-driver management for `soma:agent.delegate(background:true)`. Detect + prefer a driver (tmux/cmux/ghostty/iterm/terminal). |
+| `soma` (`cap='soma:inbox.list|read|actioned|archive'`) | `soma-addons/inbox.ts` | Markdown-inbox read-status. `.list {status?}` shows letters; `.read/.actioned {file}` mark a letter handled so it stops surfacing at boot; `.archive {file}` moves it to `inbox/_archive/`. `file` = filename, slug, or unique partial. Resolves the `.soma/` chain from cwd. |
 | `somaverse` (`cap='somaverse:workspace.*'`) | `somaverse-addons/workspace.ts` | Panes / channels / seams (status, send, connect, snapshot, add_pane, remove_pane, list_plugins, …). Requires bridge + paired hub. |
 | `somaverse` (`cap='somaverse:plugin.read|write'`) | `somaverse-addons/plugin.ts` | Plugin-state persistence (Somadian-backed). |
 | `somaverse` (`cap='somaverse:ai.*'`) | `somaverse-addons/ai.ts` | Local semantic search: load model, index, search, embed. |

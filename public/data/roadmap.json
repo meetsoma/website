@@ -18,6 +18,24 @@
       "version": "Next"
     },
     {
+      "version": "0.35.0",
+      "date": "2026-06-20",
+      "title": "Ground before think",
+      "tagline": "New Somas start with a sharper instinct — open the evidence before reasoning — plus a fixed startup crash and steadier edits.",
+      "features": {
+        "added": [
+          "**Ground before think.** New installs carry a sharper default instinct: open the file, the log, the running thing *before* reasoning about it — because reasoning that runs ahead of the evidence wanders into a plausible story. It's in the soul, the core rules, and how Soma briefs its next session."
+        ],
+        "changed": [
+          "**Clearer delegation docs.** The guide now leads with the reliable way to run a background helper (`headless`) and explains when to use each mode."
+        ],
+        "fixed": [
+          "**The TUI no longer crashes after `/inhale`.** A startup error could close the terminal right after loading a session — fixed, and the packaging flaw that let it ship is now caught *before* release.",
+          "**Edits stop failing on a common malformation.** When the model crams two changes into one (a frequent Opus quirk), the Edit tool now untangles it instead of rejecting the whole edit."
+        ]
+      }
+    },
+    {
       "version": "0.34.0",
       "date": "2026-06-18",
       "title": "A tidier inbox",

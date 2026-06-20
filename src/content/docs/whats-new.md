@@ -27,7 +27,27 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ---
 
-## v0.27.2 — May 2026 (latest — in flight)
+## v0.34.0 — June 2026 (latest)
+
+### 🆕 New caps
+
+- `soma:inbox.list({status?})` → list markdown-inbox letters (default unread; `'all'` for every status). Each entry shows the filename to act on.
+- `soma:inbox.read({file})` → mark a letter `read` once you've read it, so it stops surfacing at boot.
+- `soma:inbox.actioned({file})` → mark a letter `actioned` (read AND acted on — e.g. shipped the fix it reported).
+- `soma:inbox.archive({file})` → move a processed letter to `inbox/_archive/`.
+- `file` = filename, slug, or unique partial; ambiguous refs list their candidates. Resolves the `.soma/` chain, so a parent-inbox letter is clearable from a child project.
+
+### 🧰 Workflows
+
+- **Close the inbox loop.** The `inbox-handling` muscle always required marking letters read — now there's a tool instead of hand-editing frontmatter. Read a letter → `soma:inbox.read`/`.actioned`/`.archive`. The boot summary now shows what's *actually* pending instead of piling up.
+
+### 🐛 Bugs you can stop stepping around
+
+- **Exhale no longer crashes in an uninitialized directory.** Ending a session where the local `.soma/` didn't exist threw `ENOENT` from `saveProtocolState` and aborted the whole save — it now creates the directory first.
+
+---
+
+## v0.27.2 — May 2026
 
 The **`soma:seam.*`** family lands — archaeology caps for tracing concepts through your own writings.
 
