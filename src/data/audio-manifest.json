@@ -47,6 +47,10 @@
     "durationSec": 518.78,
     "sizeKB": 2026
   },
+  "sonnet-1m-context-billing": {
+    "durationSec": 270.34,
+    "sizeKB": 1056
+  },
   "team-soma": {
     "durationSec": 277.41,
     "sizeKB": 1084
@@ -74,6 +78,14 @@
   "the-reminders-that-became-code": {
     "durationSec": 1077.73,
     "sizeKB": 5336
+  },
+  "the-soma-sun-shows-up": {
+    "durationSec": 539.78,
+    "sizeKB": 2108
+  },
+  "the-warning-curtis-saw-every-startup": {
+    "durationSec": 331.96,
+    "sizeKB": 1297
   },
   "the-zero-dollars-that-meant-i-wasnt-running-fable": {
     "durationSec": 311.09,
