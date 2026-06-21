@@ -1,47 +1,55 @@
 {
   "birthday-release": {
-    "durationSec": 420.95,
-    "sizeKB": 1644
+    "durationSec": 423.11,
+    "sizeKB": 1653
   },
   "cache-and-the-self-knowing-agent": {
-    "durationSec": 190.6,
-    "sizeKB": 745
+    "durationSec": 195.79,
+    "sizeKB": 765
   },
   "eating-our-own-memory": {
-    "durationSec": 518.08,
-    "sizeKB": 2024
+    "durationSec": 523.37,
+    "sizeKB": 2044
   },
   "five-things-had-to-go-wrong": {
-    "durationSec": 384.86,
-    "sizeKB": 1503
+    "durationSec": 386.84,
+    "sizeKB": 1511
   },
   "four-commands-after-an-update": {
-    "durationSec": 370.44,
-    "sizeKB": 1447
+    "durationSec": 365.62,
+    "sizeKB": 1428
   },
   "how-much-does-a-screenshot-cost": {
-    "durationSec": 310.15,
-    "sizeKB": 1211
+    "durationSec": 311.3,
+    "sizeKB": 1216
   },
   "introducing-soma": {
-    "durationSec": 359.38,
-    "sizeKB": 2105
+    "durationSec": 365.61,
+    "sizeKB": 1428
   },
   "let-pi-compile": {
-    "durationSec": 129.12,
-    "sizeKB": 756
+    "durationSec": 806.84,
+    "sizeKB": 3152
   },
   "memory-is-not-a-feature": {
-    "durationSec": 565.85,
-    "sizeKB": 3315
+    "durationSec": 563.58,
+    "sizeKB": 2201
+  },
+  "model-value-guide": {
+    "durationSec": 357.61,
+    "sizeKB": 1397
   },
   "show-the-machinery": {
-    "durationSec": 177.5,
-    "sizeKB": 1040
+    "durationSec": 188.13,
+    "sizeKB": 735
   },
   "somaverse-preview": {
     "durationSec": 518.78,
     "sizeKB": 2026
+  },
+  "sonnet-1m-context-billing": {
+    "durationSec": 270.34,
+    "sizeKB": 1056
   },
   "team-soma": {
     "durationSec": 277.41,
@@ -59,25 +67,29 @@
     "durationSec": 221.14,
     "sizeKB": 864
   },
+  "the-body-that-grew-around-us": {
+    "durationSec": 691.66,
+    "sizeKB": 2702
+  },
   "the-bridge-pattern": {
-    "durationSec": 589.13,
-    "sizeKB": 3451
+    "durationSec": 585.1,
+    "sizeKB": 2286
   },
   "the-doctor-that-never-worked": {
-    "durationSec": 204.38,
-    "sizeKB": 1197
+    "durationSec": 199.81,
+    "sizeKB": 780
   },
   "the-doors-opened": {
-    "durationSec": 320.71,
-    "sizeKB": 1879
+    "durationSec": 316.67,
+    "sizeKB": 1237
   },
   "the-last-eight-percent": {
-    "durationSec": 319.94,
-    "sizeKB": 1874
+    "durationSec": 314.27,
+    "sizeKB": 1228
   },
   "the-operating-system": {
-    "durationSec": 639.74,
-    "sizeKB": 3748
+    "durationSec": 637.62,
+    "sizeKB": 2491
   },
   "the-ratio": {
     "durationSec": 686.09,
@@ -88,11 +100,27 @@
     "sizeKB": 5336
   },
   "the-scripts-we-deleted": {
-    "durationSec": 334.67,
-    "sizeKB": 1307
+    "durationSec": 332.72,
+    "sizeKB": 1300
   },
   "the-session-that-paid-for-itself": {
-    "durationSec": 527.71,
-    "sizeKB": 2061
+    "durationSec": 526.38,
+    "sizeKB": 2056
+  },
+  "the-soma-sun-shows-up": {
+    "durationSec": 539.78,
+    "sizeKB": 2108
+  },
+  "the-tools-that-made-these-posts": {
+    "durationSec": 487.32,
+    "sizeKB": 1904
+  },
+  "the-warning-curtis-saw-every-startup": {
+    "durationSec": 331.96,
+    "sizeKB": 1297
+  },
+  "the-zero-dollars-that-meant-i-wasnt-running-fable": {
+    "durationSec": 311.09,
+    "sizeKB": 1215
   }
 }
