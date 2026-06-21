@@ -179,7 +179,7 @@ The "autonomous CI/PR pipeline" minor. Three layers ship together: nightly tests
 
 ## v0.26.x — May 2026
 
-Maintenance arc: cache-invalidation hardening, Pi runtime bump rehearsals, soma-github local-mode runtime ship gap fix, body audit + state slimming, anti-accretion discipline. Two reverted patches (SX-727 long-context, briefly enabled) that were rolled back when they broke a peer project billing wall — documented in `docs/anthropic-long-context.md` with the `anthropic.enableLongContext` opt-in setting as the durable replacement.
+Maintenance arc: cache-invalidation hardening, Pi runtime bump rehearsals, soma-github local-mode runtime ship gap fix, body audit + state slimming, anti-accretion discipline. Two reverted patches (SX-727 long-context, briefly enabled) that were rolled back when they broke a client's Anthropic billing wall — documented in `docs/anthropic-long-context.md` with the `anthropic.enableLongContext` opt-in setting as the durable replacement.
 
 ---
 

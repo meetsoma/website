@@ -100,7 +100,7 @@ These work for both protocols and muscles. Tab-complete the name.
 }
 ```
 
-**Muscles:** Heat is stored in the muscle file's own frontmatter (`heat: N`). The muscle file is the source of truth.
+**Muscles + Automations:** Heat is stored in `.soma/state.json` (alongside protocols, in `muscles` / `automations` dicts), updated in-memory during a session and saved once at exhale. The frontmatter `heat: N` is a **static seed** — read once to seed a muscle's first state entry, then never written (so muscle files don't churn every session).
 
 ## Configuration
 
@@ -151,10 +151,15 @@ Heat and usage are tracked automatically — no manual updates needed:
 
 | Content | What's tracked | Where stored | Mechanism |
 |---------|---------------|-------------|-----------|
-| Protocols | Heat events (applied, referenced, pinned) | `state.json` | `recordHeatEvent()` on tool_result |
-| Muscles | Loads count, heat | Frontmatter (`loads:`, `heat:`) | `trackMuscleLoads()` at boot, `bumpMuscleHeat()` on use |
-| MAPs | Run count, last run date | Frontmatter (`runs:`, `last-run:`) | `trackMapRun()` on .boot-target load |
+| Protocols | Heat events (applied, referenced, pinned) | `state.json` (`protocols.{name}`) | `recordHeatEvent()` on tool_result |
+| Muscles | heat, timesApplied | `state.json` (`muscles.{name}`) | `seedAndOverlayMuscleHeat()` at boot, `recordMuscleHeat()` on use, decay at exhale |
+| Automations | heat, timesApplied | `state.json` (`automations.{name}`) | `seedAndOverlayAutomationHeat()` / `recordAutomationHeat()` |
+| MAPs (run-count) | runs, last-run date | Frontmatter (`runs:`, `last-run:`) | `trackMapRun()` on .boot-target load |
 | Scripts | Usage count, last used date | `state.json` (`scripts.{name}`) | Auto-detect on `tool_result` (bash command regex) |
+
+> **Note (v0.36.0):** muscle + automation **heat** moved out of `.md` frontmatter into `state.json`
+> (no more per-session file churn). Frontmatter `heat:` is now a one-time **seed** only. MAP **run-count**
+> (`runs:`/`last-run:`) is separate and still lives in frontmatter.
 
 ### Focus Overrides
 

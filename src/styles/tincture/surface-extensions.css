@@ -155,7 +155,7 @@
    * dark+light values into _generated/foundation.css. See registry.json
    * for the doc strings on each.
    *
-   * Pattern (Curtis on s01-b73653, mirrors a peer project's surface-axis tokens):
+   * Pattern (Curtis on s01-b73653, mirrors a sibling project's surface-axis tokens):
    *   --promo       → the BRIGHT accent (icons, dots, lines, σ, glows)
    *   --promo-text  → the READABLE text version (deep on light, bright on dark)
    *   --promo-dim   → muted/dimmed (hover-leave, tertiary text)

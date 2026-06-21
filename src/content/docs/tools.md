@@ -2,118 +2,56 @@
 title: Tools
 description: Soma tools — registration, configuration via _tools.md, and the bundled set
 status: active
-updated: 2026-06-20
+updated: 2026-06-21
 ---
 
 # Tools
 
 Soma tools are capabilities the agent can call during a session. They're
 registered through Pi's tool API (`pi.registerTool()`) but routed through
-Soma's `somaRegisterTool()` wrapper so `_tools.md` can configure them and
-the system prompt shows each tool's full guidance (`promptSnippet` +
-`promptGuidelines`).
+Soma's `somaRegisterTool()` wrapper so the system prompt shows each tool's
+full guidance (`promptSnippet` + `promptGuidelines`). Disable any tool via
+`settings.json` → `tools.disabled`.
 
-**Three routes** for a tool to enter Soma:
+**Two routes** for a tool to enter Soma:
 
 1. **Bundled** — ships with Soma, defined in `repos/agent/extensions/*.ts`
 2. **Project extension** — dropped at `.soma/extensions/*.ts` (per workspace)
-3. **Markdown (custom)** — declared in `.soma/body/_tools.md` (v0.20.3+ scope; parsed but not registered as of v0.20.2.1)
 
-All three flow through the same pipeline and render identically in the prompt.
+Both flow through the same pipeline and render identically in the prompt.
 
-## `_tools.md` — the config
+## Disabling tools — `settings.json`
 
-`_tools.md` is the man-in-the-middle between registration and the final
-registry. It lives in `.soma/body/_tools.md` and follows the soma body
-chain (project → parent → global; child wins). Three sections:
+Disable tools by name in `.soma/settings.json` under `tools.disabled`:
 
-```markdown
-## Disabled
-
-- context_status   # opt out of this tool
-
-## Overrides
-
-### search
-**promptSnippet:** Project convention: prefer search() over bash rg.
-**promptGuidelines:**
-- Default scope is 'os' (ripgrep).
-- scope='api' for web (requires BRAVE_API_KEY).
-
-## Custom
-
-### weather
-**description:** Get weather for a location.
-**parameters:** ...
-**execute:** `curl -s "wttr.in/{{location}}?format=3"`
+```json
+{
+  "tools": {
+    "disabled": ["context_status"]
+  }
+}
 ```
 
-### Disabled
+It follows the body chain (project → parent → global) and the disabled sets
+are unioned. Unlisted tools default to **enabled**, so bundled tools added in
+future versions auto-register. The disable applies to **every** tool — bundled,
+project extension, or raw `pi.registerTool` — because the active set is filtered
+at session start, not only at registration.
 
-Bullet list of tool names to skip. Unlisted tools default to **enabled**,
-so bundled tools added in future Soma versions auto-register without
-requiring edits to `_tools.md`.
+**Hardwired tools** — currently `delegate` — cannot be disabled. Attempts are
+ignored with a warning, preventing accidental lobotomies of systems that depend
+on the tool (child-agent orchestration).
 
-**Hardwired tools** — currently `delegate` — cannot be disabled. Attempts
-emit a warning and register the tool anyway. This prevents accidental
-lobotomies of systems that depend on the tool (child-agent orchestration).
-
-### Overrides
-
-Per-tool tweaks to any of four fields: `description`, `promptSnippet`,
-`promptGuidelines`, `executionMode`. Remove a block to revert the tool to
-its extension-defined defaults. Overrides apply to **any** tool (bundled,
-project extension, hardwired) — they change what the model sees, not the
-tool's identity.
-
-Field syntax inside each `### tool_name` block:
-
-```markdown
-**description:** one-line override
-**promptSnippet:** short tagline that renders in "Available tools:"
-**promptGuidelines:**
-- first bullet
-- second bullet
-**executionMode:** parallel
-```
-
-### Custom
-
-Markdown-defined tools with shell-backed execution. Parsed in v0.20.2.1
-but not yet registered — the security model (parameter escaping, timeout
-enforcement, opt-in via `allow: true`, sub-agent scope) lands in v0.20.3.
-
-The format is identical to an Override block, plus:
-
-```markdown
-### weather
-**description:** Get weather for a location.
-**promptSnippet:** Use weather when the user asks about conditions.
-**promptGuidelines:**
-- Location accepts city, airport code, or lat/lon.
-**parameters:**
-- `location` (string, required) — city name or airport code
-**execute:** `curl -s "wttr.in/{{location}}?format=3"`
-**timeout:** 5s
-```
+> **Retired:** `.soma/body/_tools.md` (with its `## Disabled` / `## Overrides` /
+> `## Custom` sections) is gone. Disable moved to `settings.json`; per-tool
+> overrides and the never-shipped markdown-custom-tools were dropped. Existing
+> `_tools.md` files auto-migrate on next boot (disabled entries ported to
+> settings, the file archived to `body/_archive/`).
 
 ## Sub-agent scoping
 
-Each child role (under `body/children/<role>/`) inherits from the main
-body chain but can override `_tools.md` with its own. A narrow `_tools.md`
-at `body/children/verifier/_tools.md` scopes that role's toolset:
-
-```markdown
-## Disabled
-
-- search
-- delegate         # no nested delegation
-- workspace_send   # read-only role
-- workspace_add_pane
-```
-
-The child sees only the tools you didn't disable. Pure markdown — no new
-TS needed.
+Child roles narrow their toolset with a role-scoped `tools.disabled` in their
+own settings — e.g. a read-only `verifier` disabling `delegate`, `write`, `edit`.
 
 ## Bundled tools
 
@@ -181,8 +119,7 @@ soma tool --extensions     # group by extension file
 ```
 
 This runs an offline static parser over `extensions/*.ts` (or
-`dist/extensions/*.js` for release installs). It does NOT apply `_tools.md`
-overrides — it shows the authored definition.
+`dist/extensions/*.js` for release installs). It shows the authored definition.
 
 **Inside a running Soma session, with overrides applied:**
 
@@ -191,8 +128,8 @@ capabilities(op: "list")
 capabilities(op: "detail", name: "delegate")
 ```
 
-The `capabilities` tool reads the runtime Soma registry (post-`_tools.md`
-merge) and reflects active/inactive status for the current session.
+The `capabilities` tool reads the runtime Soma registry and reflects
+active/inactive status for the current session.
 
 ## Writing a new tool
 
@@ -228,9 +165,10 @@ export default function myExtension(pi: ExtensionAPI) {
 }
 ```
 
-**Always use `somaRegisterTool`** over `pi.registerTool` directly — it's
-the gate that makes `_tools.md` work, preserves `promptSnippet` and
-`promptGuidelines` in the compiled prompt, and supports overrides.
+**Always use `somaRegisterTool`** over `pi.registerTool` directly — it
+preserves `promptSnippet` and `promptGuidelines` in the compiled prompt.
+(Disable still works for raw `pi.registerTool` tools too, via the active-set
+filter at session start.)
 Third-party tools that call `pi.registerTool` directly still work (Pi
 registers them, they're invokable) but miss the rich prompt surface.
 
@@ -277,14 +215,12 @@ Two registries exist:
 - **Soma's prompt registry** — what drives `buildToolSection`. `somaRegisterTool`
   writes here (and also forwards to Pi).
 
-If `_tools.md` disables a tool, it's excluded from **both** registries —
-the tool isn't callable, isn't prompted. Overrides only affect the prompt
-registry (the tool's behavior is unchanged; only the model's understanding
-of it is tweaked).
+If `tools.disabled` lists a tool, it's filtered from the active set —
+the tool isn't callable and isn't prompted.
 
 ## Related
 
 - **[Extending Soma](/docs/extending)** — how to write extensions, the drop-in
   router (`soma-route.ts`), events, APIs
 - **[System Prompt](/docs/system-prompt)** — how `_mind.md` renders with tools
-- **[Body architecture](/docs/body)** — where `_tools.md` sits in the chain
+- **[Body architecture](/docs/body)** — where settings sits in the chain

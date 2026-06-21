@@ -129,7 +129,7 @@ soma tool <name>                # full guidance: description, promptSnippet, par
 soma tool --extensions          # group by extension file
 ```
 
-For the runtime view (post-`_tools.md` overrides), call `capabilities(op:'list')` from inside a session.
+For the runtime view, call `capabilities(op:'list')` from inside a session.
 
 ### soma new
 

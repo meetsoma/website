@@ -90,6 +90,8 @@ Soma identifies a valid `.soma/` directory by looking for at least one of:
 | `memory/` | **Gitignored** | Session-specific, personal |
 | `state.json` | **Gitignored** | Personal heat state |
 
+**Auto-checkpoint:** `.soma/` commits itself — `settings.checkpoints.soma.autoCommit` (on by default) checkpoints tracked content in the background. **You don't `git add` / `git commit` inside `.soma/` manually**; Soma handles it. Your *project* repos (the code you ship) still need normal commits. Put new content where it fits the project's existing structure (`amps/`, `skills/`, `memory/`, and whatever organizing folders the project has grown — `plans/`, `cycles/`, `releases/`, `docs/` …); add a new top-level folder only when a genuinely new *kind* of thing has no home — staying in step with the project's conventions rather than imposing a fresh layout.
+
 ## User-Level: `~/.soma/agent/`
 
 Global settings and runtime. Shared across all projects.

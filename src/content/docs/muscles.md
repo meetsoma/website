@@ -61,7 +61,7 @@ Always verify with curl after deploy. Check build output for page count changes.
 | `triggers` | `string[] \| object[]` | Focus triggers — keywords that auto-activate this muscle (see [Focus](/docs/focus)) |
 | `tools` | `string[]` | Scripts this muscle relates to |
 | `heat` | `number` | Current heat level — determines loading tier |
-| `loads` | `number` | How many times loaded at boot (tracked automatically) |
+| `loads` | `number` | Legacy boot-load counter (no longer written as of v0.35.x; heat lives in state.json). |
 | `created` | `date` | When the muscle first formed |
 | `updated` | `date` | Last modification |
 
