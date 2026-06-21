@@ -139,9 +139,17 @@ changes require a full restart.
 
 Four separate concerns. Each lever covers a different layer.
 
+> **First, a myth to drop:** editing your `body/*.md` (or any prompt-compiled file) **does not "bust" a running
+> session's cache.** Soma snapshots the compiled prompt and restores it on reload/resume, so the live prefix
+> is byte-stable no matter what you edit; a change simply takes effect on the *next* compile (next session, or
+> `/rebuild` to apply now) — the normal cost of the prompt changing, not a penalty to avoid. The real cache
+> rule is a **runtime** one: extension code must not mutate the live `systemPrompt`/`payload` *between turns*
+> (that's the $160/day class of bug). The only file-side concern is **leanness** — every always-loaded line
+> costs tokens every turn (a size concern, not a cache one).
+
 | Concern | What it means | Layer |
 |---|---|---|
-| **Cache-safe registration** | Capability is added without busting Anthropic's prompt cache (~$1-2/session saved). Lives in soma-route's runtime registry, not in the system prompt. | Anthropic API |
+| **Cache-safe registration** | A capability is added with **zero prompt-schema growth** (leaner prompt) and goes live without `/reload`. Lives in soma-route's runtime registry, not in the system prompt. | Anthropic API |
 | **Module hot-reload (`/reload`)** | Edits to an extension's `.ts` file take effect after `/reload`. Pi re-imports every extension via fresh jiti (`moduleCache: false`), so source changes are picked up. | Node module cache |
 | **Prompt rebuild (`/rebuild`)** | The compiled system prompt is restored from disk cache on `/reload`. To regenerate it from current `body/*.md` and current tool definitions, you need `/rebuild`. | System prompt |
 | **Subprocess pickup (zero ceremony)** | Tool wrappers that `exec`/`spawn` an external script pick up edits to the script on the next invocation. The wrapper is JS-in-memory; the script is a fresh subprocess each call. | OS process |
@@ -165,7 +173,7 @@ Decision matrix for what to run after editing:
 | **`route.provide` cap impl body** | **Cache-safe** — caps not in prompt | `/reload` — same Node-memory rule as `pi.registerTool` execute. |
 | **CLI script behind a wrapper** (e.g. `repos/agent/scripts/soma-code.sh` while `soma-addons/code.ts` shells out to it via `execSync`) | None | **Nothing.** Each cap invocation spawns a fresh subprocess; the OS reads the script at exec time. Edit the script, save, next call uses the new code. |
 | **`amps/scripts/*` drop-in** (e.g. `soma <name>` script discovery) | None | **Nothing for the script itself.** `/reload` only if you also edited `soma-boot.ts`'s discovery logic. |
-| **`body/*.md`** (identity, soul, voice, mind template) | **Busts cache** on next compile | `/rebuild` if you want it live now; otherwise skip till next session. |
+| **`body/*.md`** (identity, soul, voice, mind template) | **Recompiles on next compile** (the running session is snapshotted — safe to edit mid-session) | `/rebuild` if you want it live now; otherwise it takes effect next session. |
 
 **Why prompt-visible-field edits need `/rebuild` too:** the system prompt is
 compiled at session start and cached to disk (`state/<id>`). `/reload`
@@ -241,7 +249,7 @@ See the [Pi extension docs](https://github.com/badlogic/pi-mono/blob/main/packag
 ## Soma Tools
 
 Soma tools are capabilities the agent can call. They're registered through
-Pi's tool API but wrapped by Soma's `somaRegisterTool()` so `_tools.md`
+Pi's tool API but wrapped by Soma's `somaRegisterTool()` so settings.json
 configuration applies and the full guidance (`promptSnippet` + per-tool
 `promptGuidelines`) reaches the system prompt.
 
@@ -291,13 +299,13 @@ export default function myExt(pi: ExtensionAPI) {
 
 ### What `somaRegisterTool` does
 
-1. Reads merged `_tools.md` config from the soma body chain.
+1. Reads merged `tools.disabled` config from the soma body chain (settings.json).
 2. If the tool's name is in `## Disabled` **and not hardwired** — skips Pi registration entirely.
 3. Merges any `## Overrides` block onto the definition (`description`, `promptSnippet`, `promptGuidelines`, `executionMode`).
 4. Stores the effective definition in Soma's prompt registry (for `buildToolSection`).
 5. Forwards to `pi.registerTool()` so the tool is invocable.
 
-See [Tools](/docs/tools) for the full `_tools.md` format and the bundled
+See [Tools](/docs/tools) for the `tools.disabled` config and the bundled
 Soma tool set.
 
 ### `pi.registerTool` vs `somaRegisterTool`
@@ -305,8 +313,7 @@ Soma tool set.
 | | `pi.registerTool` | `somaRegisterTool` |
 |---|---|---|
 | Tool is invocable | ✓ | ✓ |
-| Respects `_tools.md` disable | ✗ | ✓ |
-| Applies `_tools.md` overrides | ✗ | ✓ |
+| Respects `tools.disabled` | ✗ | ✓ |
 | `promptSnippet` reaches system prompt | ✗ (Pi's `ToolInfo` strips it) | ✓ |
 | `promptGuidelines` reach system prompt | ✗ | ✓ |
 | Appears in `/soma prompt` diagnostics | degraded | full |
@@ -365,7 +372,7 @@ Soma uses three top-level meta-tools to organize capabilities. Each is a single 
 1. **Pick the namespace.** If end users would benefit → `soma:*`. If only people working ON the agent need it → `dev:*`. If it's part of the proprietary tier → `somaverse:*`.
 2. **Pick the family.** Group by domain (`code`, `docs`, `hub`, etc.). New family = new file under the namespace's addon dir.
 3. **Implement.** Mirror an existing addon (e.g. `soma-addons/docs.ts`). Each cap is an `*Impl` async function + a `route.provide` registration. The meta-tool factory auto-discovers files under `<namespace>-addons/` at session-start.
-4. **No `pi.registerTool` for new top-level tools.** That cache-busts the prompt prefix (~$1-2/session). Always add as an addon under an existing meta-tool.
+4. **No `pi.registerTool` for new top-level tools.** A top-level tool grows the always-loaded prompt schema every turn (leanness); an addon adds the same capability with zero schema growth. Always add as an addon under an existing meta-tool.
 5. **Test with `<namespace>(op='list')` and `<namespace>(op='call', cap='<namespace>:<family>.<action>', args={...})`.**
 
 ### Project-local caps (route.provide, no factory)
@@ -415,7 +422,7 @@ is the same discipline `createMetaTool` uses internally.
 a CLI script (`.mjs` / `.sh` / any subprocess-runnable file) and shell
 out from the cap via `execSync`. Edits to the script are picked up next
 invocation — no `/reload` needed. Reference: `soma-addons/code.ts` shells
-out to `soma code` CLI; `a peer project/.soma/extensions/meta-addon.ts`
+out to `soma code` CLI; `<your-project>/.soma/extensions/meta-addon.ts`
 shells out to `meta.mjs`.
 
 **When to use this vs. global factory addon:**
