@@ -18,6 +18,17 @@
       "version": "Next"
     },
     {
+      "version": "0.37.1",
+      "date": "2026-06-23",
+      "title": "A cleaner exit",
+      "tagline": "Leaving a session no longer scrambles your terminal.",
+      "features": {
+        "fixed": [
+          "Exiting Soma — whether from a 30-minute idle auto-shutdown or the /exit command — no longer leaves your shell typing garbage characters. The terminal is now restored cleanly on the way out."
+        ]
+      }
+    },
+    {
       "version": "0.37.0",
       "date": "2026-06-23",
       "title": "Behavior you own",

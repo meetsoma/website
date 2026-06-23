@@ -1,11 +1,20 @@
 {
-  "generated": "2026-06-23T19:25:15Z",
+  "generated": "2026-06-23T21:47:37Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
       "version": "Unreleased",
       "date": "",
       "entries": {}
+    },
+    {
+      "version": "0.37.1",
+      "date": "2026-06-23",
+      "entries": {
+        "fixed": [
+          "**Exiting a session no longer garbles your shell (SX-808).** Two soma-driven exits — the keepalive idle"
+        ]
+      }
     },
     {
       "version": "0.37.0",
