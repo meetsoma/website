@@ -1,12 +1,27 @@
 {
-  "generated": "2026-06-21T17:03:21Z",
+  "generated": "2026-06-23T19:25:15Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
       "version": "Unreleased",
       "date": "",
+      "entries": {}
+    },
+    {
+      "version": "0.37.0",
+      "date": "2026-06-23",
       "entries": {
+        "changed": [
+          "**The system prompt was split along a scaffold-vs-behavior line.** `prompts/system-core.md` (the always-",
+          "**SX-805 — v0.37.0 template-migration plumbing.** The `core_rules.md` and `_protocol-template.md` seeds"
+        ],
+        "added": [
+          "**`soma:browser.render` — render a JS-heavy / SPA page in an ephemeral tab and return its text (SX-807).**"
+        ],
         "fixed": [
+          "**`soma:browser.evaluate` + `.navigate` now fall back to raw CDP-WS when the bridge is down (SX-807).** The",
+          "**SX-794 — `soma:agent.delegate({ model:'claude-cli/*', background:true })` now actually runs.** Background",
+          "**scrub names from shipping .ts + close leak-scan .js gap**",
           "**block peer/client soma-instance names from soma-beta**"
         ]
       }

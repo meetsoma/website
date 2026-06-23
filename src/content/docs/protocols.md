@@ -38,7 +38,7 @@ Soma ships with 16 protocols, scaffolded on `soma init`:
 
 ## Heat
 
-Every protocol has a temperature. Hot (8+) loads the full body. Warm (3-7) loads the TL;DR or description. Cold (0-2) shows the name but nothing else.
+Every protocol has a temperature. Hot (8+) loads the full body. Warm (3-7) loads the `## TL;DR` (or the `description` breadcrumb if there's no TL;DR section). Cold (0-2) shows the name but nothing else.
 
 Heat rises when a protocol gets used (auto-detected from tool results) and decays by 1 each session if unused. `/pin` locks something hot. `/kill` drops it to zero.
 
@@ -62,7 +62,7 @@ status: active
 updated: 2026-03-09
 heat-default: warm
 applies-to: [typescript]
-description: "One sentence that captures what this protocol enforces. This is ALL the agent sees when warm."
+description: "One sentence that captures what this protocol enforces — the warm-tier fallback if there's no ## TL;DR section."
 ---
 ```
 
@@ -72,7 +72,7 @@ description: "One sentence that captures what this protocol enforces. This is AL
 |-------|---------|
 | `name` | Protocol identifier (used in heat state, `/pin`, `/kill`) |
 | `heat-default` | Starting temperature: `cold`, `warm`, or `hot` |
-| `description` | One sentence shown when protocol is warm (this is ALL the agent sees at warm temperature) |
+| `description` | One sentence; the warm-tier fallback breadcrumb when the protocol has no `## TL;DR` |
 
 **Optional fields:**
 
@@ -109,11 +109,10 @@ Explicit exclusions.
 
 | Tier | What the Agent Sees | When |
 |------|-------------------|------|
-| **Breadcrumb** | `description:` frontmatter value | Protocol is warm |
-| **TL;DR** | `## TL;DR` section | Agent reads deeper on demand |
+| **TL;DR** | `## TL;DR` section (or the `description` breadcrumb if absent) | Protocol is warm |
 | **Full body** | Entire file (minus frontmatter) | Protocol is hot |
 
-Write the description to be self-contained — it's the only thing loaded at warm temperature.
+Write a `## TL;DR` — it's what loads at warm. Keep the `description` self-contained too, as the fallback when a protocol has no TL;DR.
 
 ## Protocol Resolution Chain
 

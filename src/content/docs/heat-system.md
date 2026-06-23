@@ -32,7 +32,7 @@ The heat system is how Soma decides what to put in the agent's context window. I
 | Tier | What Loads | Example |
 |------|-----------|---------|
 | 🔥 Hot | Full protocol body — all rules, all sections | The complete breath-cycle protocol with every phase described |
-| 🟡 Warm | Description — a single sentence from the `description:` frontmatter field | "Commits must be attributed correctly. Check git config user.email before first commit." |
+| 🟡 Warm | TL;DR — the `## TL;DR` section (falls back to the `description:` breadcrumb if the protocol has none) | A few-line summary of the protocol's key rules |
 | ❄️ Cold | Just the protocol name in a list | `- git-identity` |
 
 **Muscles:**

@@ -15,10 +15,59 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ## [Unreleased]
 
+<!-- Entries accumulate here and get promoted to a versioned section on release. -->
+
+## [0.37.0] — 2026-06-23
+
+### Changed
+- **The system prompt was split along a scaffold-vs-behavior line.** `prompts/system-core.md` (the always-
+  loaded framework harness, identical on every install) is now **pure scaffold** — session mechanics, the
+  memory tree, tool-discovery, docs, commands, rhythm, and *pointers* to the behavioral layer. **All
+  behavioral rules now live in `core_rules.md`** — a body file you own and tune (ours-vs-theirs like
+  `soul.md` / `voice.md`). Four behaviors moved from system-core into the `core_rules` seed: **Match the
+  Codebase · Name the Approach · Mark Reversals, Don't Delete · Guard Secrets, Refuse Harm.** Why: the
+  always-loaded scaffold stays lean and universal, while the behavioral layer becomes yours to shape — the
+  same separation `soul`/`voice` already have. Existing installs keep their `core_rules` untouched; an
+  **agent-run migration** (`migrations/phases/v0.36.0-to-v0.37.0.md`, `fix-mode: agent`) diffs the new seed
+  against yours and merges the missing behaviors, preserving every customization (never a mechanical clobber).
+- **SX-805 — v0.37.0 template-migration plumbing.** The `core_rules.md` and `_protocol-template.md` seeds
+  bumped to 0.37.0 (core_rules gained the 4 behavior sections; the protocol template moved `## Summary` →
+  `## TL;DR` so warm-loading reads the right block). A `template-auto-update-v0.37.0` boot step auto-updates a
+  **pristine** `_protocol-template.md` to the new content and **keeps a customized one** (byte-exact pristine
+  check against the archived v0.36.0 seed — the anti-clobber guard). `core_rules.md` is user-owned and never
+  auto-written; new installs get the full v0.37.0 set, existing installs migrate via the agent-run map above.
+
+### Added
+- **`soma:browser.render` — render a JS-heavy / SPA page in an ephemeral tab and return its text (SX-807).**
+  Static `fetch()` returns only a ~400-char shell on JS-rendered sites; this drives a real browser via raw
+  CDP over WebSocket: create a throwaway tab → wait for hydration → read `innerText` (or `outerHTML`, or a
+  CSS selector's content) → close the tab. **No bridge required**, and the ephemeral tab sidesteps the
+  tab-UUID-registry churn. args: `{url, selector?, format?:'text'|'html', waitMs?(5000), keepOpen?}`. (Inherits
+  bot-detection — CAPTCHA / Cloudflare can still block.)
 
 ### Fixed
+- **`soma:browser.evaluate` + `.navigate` now fall back to raw CDP-WS when the bridge is down (SX-807).** The
+  bridge proxies CDP control-plane ops, but it dies mid-session — and these caps used to hard-fail with
+  "requires bridge" even though CDP itself (:9333) was still alive. Now they detect an unreachable bridge and
+  talk CDP directly (resolving the target tab by id / url / title, else the first page). The bridge-up path is
+  unchanged. The direct-CDP WebSocket helper rewrites the target host to the resolved config (127.0.0.1),
+  avoiding the `localhost`→IPv6 (`::1`) footgun where a browser listening on IPv4 only is unreachable.
+- **SX-794 — `soma:agent.delegate({ model:'claude-cli/*', background:true })` now actually runs.** Background
+  delegation booted `soma --model claude-cli/sonnet` in the terminal pane, but `claude-cli/*` is a delegate
+  *backend*, not a base-resolver model — the child died with "Model not found" and the task text leaked into
+  the shell. The synchronous path already intercepted `claude-cli/*` (→ `claude -p`); the background path
+  never reached that branch. Now `spawnBackground` detects a claude-cli backend and boots a real **`claude -p`
+  one-shot** in the pane instead: the role's declared `default-tools` drive the allowlist (SX-801; read-only
+  fallback when a role declares nothing), the role's compiled prompt rides as `--append-system-prompt`,
+  `ANTHROPIC_API_KEY` is blanked so it draws from the subscription (never silent extra-usage), and
+  `--permission-mode acceptEdits` keeps a detached, non-interactive pane from hanging on a tool prompt. Task +
+  prompt are passed via temp files referenced as `"$(cat …)"` so no user content is inlined into the
+  send-keys command. Drivers gained a generic `SpawnOpts.bootCommand` (run verbatim instead of the default
+  soma boot). Verified end-to-end: a background `builder` child wrote a file (Write) and ran a command (Bash)
+  via `claude -p` in tmux. (root-cause handoff from a peer soma instance.)
+- **scrub names from shipping .ts + close leak-scan .js gap**
 - **block peer/client soma-instance names from soma-beta**
-<!-- Entries accumulate here and get promoted to a versioned section on release. -->
+
 
 ## [0.36.0] — 2026-06-21
 

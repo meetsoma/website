@@ -18,6 +18,44 @@
       "version": "Next"
     },
     {
+      "version": "0.37.0",
+      "date": "2026-06-23",
+      "title": "Behavior you own",
+      "tagline": "Soma's behavioral rules move into a file you tune — like soul and voice.",
+      "features": {
+        "added": [
+          "soma:browser.render — pull clean, readable text from a JavaScript-heavy page in a single call, no running bridge required. Great for research and scraping where a plain fetch returns only an empty shell."
+        ],
+        "changed": [
+          "All of Soma's behavioral rules now live in core_rules.md — a file you own and tune, like soul and voice. Your edits are preserved; an upgrade merges in what's new without overwriting them."
+        ],
+        "fixed": [
+          "Browser automation survives a bridge restart — evaluate and navigate fall back to a direct connection when the bridge drops mid-task, instead of failing.",
+          "Background sub-agents on Claude now run reliably, drawing from your subscription."
+        ]
+      }
+    },
+    {
+      "version": "0.36.0",
+      "date": "2026-06-21",
+      "title": "Leaner, clearer sessions",
+      "tagline": "A trimmer, reorganized prompt — your agent orients faster and spends fewer tokens.",
+      "features": {
+        "added": [
+          "A leaner, clearer always-loaded prompt — behavioral guidance reorganized into a simple Orient → Work → Remember loop, so the agent orients faster and spends fewer tokens every turn.",
+          "Sub-agents on Claude that can actually build, not just read — delegated children honor the tools their role declares, while still drawing from your subscription instead of metered usage."
+        ],
+        "changed": [
+          "Lighter sessions — tool-loading hygiene trimmed a large slice of accidental cruft from every boot.",
+          "Sharper hand-offs between sessions — the next-session briefing gained Ground Truth, Open Loops, and Decisions Made sections, so your agent wastes less time re-deriving what it already knew."
+        ],
+        "fixed": [
+          "The Edit tool no longer flattens a file's typography (em-dashes, smart quotes) on a fuzzy match — safe for prose-heavy work.",
+          "/inhale no longer replays stale code after a mid-session update, and the statusline preload badge reflects real state."
+        ]
+      }
+    },
+    {
       "version": "0.35.0",
       "date": "2026-06-20",
       "title": "Ground before think",
