@@ -18,6 +18,21 @@
       "version": "Next"
     },
     {
+      "version": "0.38.0",
+      "date": "2026-06-26",
+      "title": "Caselaw Researcher",
+      "tagline": "Soma can do real legal research now — search Canadian caselaw straight from your own browser, no API key.",
+      "features": {
+        "added": [
+          "Caselaw research, built in — search the full text of Canadian court & tribunal decisions (CanLII) from your own browser, no API key. Find cases by keyword or party name, or pull a decision's full text."
+        ],
+        "fixed": [
+          "Soma's command-line helpers (e.g. scaffolding a new muscle) no longer fail with a stray-flag error — every soma subcommand now receives clean arguments.",
+          "Rapid back-to-back caselaw searches no longer interfere with each other — they now run cleanly one at a time."
+        ]
+      }
+    },
+    {
       "version": "0.37.1",
       "date": "2026-06-23",
       "title": "A cleaner exit",

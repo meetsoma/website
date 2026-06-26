@@ -1,11 +1,27 @@
 {
-  "generated": "2026-06-23T21:47:37Z",
+  "generated": "2026-06-26T08:18:09Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
       "version": "Unreleased",
       "date": "",
       "entries": {}
+    },
+    {
+      "version": "0.38.0",
+      "date": "2026-06-26",
+      "entries": {
+        "fixed": [
+          "**script subcommands must use clean userArgs, not injected argv (SX-811)**",
+          "**serialize browser-driving caps — concurrency race**"
+        ],
+        "added": [
+          "**soma:caselaw.* — Caselaw Researcher cap family**"
+        ],
+        "changed": [
+          "**Internal: removed the dead `systemPromptBlock` protocol renderer (SX-806).** `buildProtocolInjection`"
+        ]
+      }
     },
     {
       "version": "0.37.1",
