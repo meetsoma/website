@@ -77,14 +77,17 @@ Press **Ctrl+P** to cycle between available models, or use the `/model` command 
 # Use a specific model
 soma --model claude-sonnet-4
 
+# Claude Sonnet 5 (latest, adaptive thinking)
+soma --model claude-sonnet-5
+
 # Claude Fable 5 (Anthropic's Mythos-class frontier model) — `fable` aliases to claude-fable-5
 soma --model fable
 
 # Use provider/model format
 soma --model openai/gpt-4o
 
-# Set thinking level
-soma --model sonnet:high
+# Set thinking level (xhigh, max now available in Pi 0.80.6)
+soma --model sonnet:max
 
 # Limit model cycling to specific models
 soma --models claude-sonnet,claude-haiku,gpt-4o
@@ -369,8 +372,9 @@ Prices per 1M tokens. Sorted by best value (intelligence per dollar):
 | **Gemini 3.5 Flash** | $1.50 | $9.00 | 1M | Near Sonnet-level performance, multimodal, huge context. Good fallback for long-context + image tasks |
 | **Gemini 3 Flash** | $0.50 | $3.00 | 1M | Budget multimodal, 1M context, image support |
 | **Gemini 3.1 Pro** | $2.00 | $12.00 | 1M | Strong reasoning, 1M context, solid mid-tier choice |
-| **Claude Sonnet 4.6** 🔶 | $3.00 | $15.00 | 1M | Proven workhorse. Best instruction-following, best tool-use reliability. Worth the premium for critical sessions |
-| **Grok Build 0.1** | $1.00 | $2.00 | 256K | If xAI's benchmarks hold, this competes with Sonnet at a fraction of the cost |
+| **Claude Sonnet 4.6** 🔶 | $3.00 | $15.00 | 1M | Proven workhorse. Best instruction-following, best tool-use reliability |
+| **Claude Sonnet 5** 🆕 | $3.00 | $15.00 | 1M | Latest Sonnet — adaptive thinking, max thinking level. Pi 0.80.6 |
+| **Grok Build 0.1** | $1.00 | $2.00 | 256K | If xAI's benchmarks hold, competes with Sonnet at a fraction of the cost |
 | **Kimi K2.6** | $0.95 | $4.00 | 262K | Strong deepseeking reasoning, competitive at this price point |
 
 #### Tier 3 — Premium ($5 input)
@@ -380,6 +384,7 @@ Prices per 1M tokens. Sorted by best value (intelligence per dollar):
 | **Claude Opus 4.7** 🔷 | $5.00 | $25.00 | 1M | Your current default — earns its spot. 1M context, adaptive thinking, the ceiling. Worth it for complex architecture work |
 | **Claude Opus 4.8** | $5.00 | $25.00 | 1M | Latest Opus, marginal improvement over 4.7 |
 | **GPT 5.5** | $5.00 | $30.00 | 1M | Competitive with Opus for creative/code. Higher output cost |
+| **GPT 5.6** 🆕 | $5.00 | $30.00 | 1M | Latest GPT-5.6 family — Sol, Terra, Luna variants. Pi 0.80.6 |
 | **GPT 5.4 Pro** | $30.00 | $180.00 | 1M | Ultra-premium. For when nothing else will do and budget isn't a concern |
 
 ### Personal Recommendation
