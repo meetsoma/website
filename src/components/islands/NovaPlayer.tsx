@@ -107,7 +107,7 @@ export default function NovaPlayer({ src, title, sizeKB, durationSec }: Props) {
       <audio
         ref={audioRef}
         src={src}
-        preload="metadata"
+        preload="none"
         onPlay={() => { setPlaying(true); setError(null); }}
         onPause={() => setPlaying(false)}
         onEnded={() => setPlaying(false)}
