@@ -66,8 +66,7 @@ CF-specific, no API key needed.
 
 ### 🧰 Workflows
 
-- **$0 delegation:** write spec → hand to freebuff (`soma-freebuff.sh ask`) → gate → commit.
-  Same pattern as `soma:agent.delegate` but costs nothing.
+- **$0 delegation:** write spec → hand to freebuff (`~/.soma/agent/scripts/dev-only/soma-freebuff.sh ask`) → gate → commit. Six free models. Same pattern as `soma:agent.delegate` but costs nothing.
 - **Pi bump TUI smoke:** after bumping Pi, boot with a free model in tmux to catch import errors
   and duplicate declarations that build+tests+sandbox miss. `soma --model opencode/deepseek-v4-flash-free`
 
