@@ -27,6 +27,52 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ---
 
+## v0.39.0 — July 2026
+
+### 🆕 New caps
+
+**`soma:refdocs.*` — external platform docs (BUNDLED)**
+```
+soma:refdocs.find({query:'cloudflare'})        → {baseUrl, method, pageCount, pages}
+soma:refdocs.tree({query:'react'})              → {pageCount, tree} (section-organized)
+soma:refdocs.fetch({query:'cloudflare', topic:'durable objects'}) → {matches, pages: [{content}]}
+soma:refdocs.download({query:'cloudflare', topic:'workers', depth:5}) → writes to .soma/refdocs/<name>/
+  Flags: output:'/path' (custom dir), output:false (inline JSON), all:true (full download)
+```
+Discovers docs via `llms.txt` convention (Cloudflare, Vercel, React, Mintlify, 25+ known domains).
+Falls back to HTML scraping. Fetches pages as clean markdown via `Accept: text/markdown`.
+Use BEFORE researching any third-party platform docs.
+
+**`soma:cf-docs.*` — Cloudflare docs (HUB, `soma install soma-cf-docs`)**
+```
+soma:cf-docs.index({product:'workers'})  → {product, pages, count}
+soma:cf-docs.read({url:'/containers/'})   → {title, url, content}
+soma:cf-docs.query({product:'containers', topic:'outbound traffic'}) → {matches, pages}
+```
+CF-specific, no API key needed.
+
+### 🔄 Behavior changes
+
+- **Pi runtime bumped to 0.80.6** — `max` thinking level available. `showCacheMissNotices` toggle
+  (complementary to our predictive cache TTL in the statusline). New extension hooks:
+  `agent_settled`, `before_provider_headers`. `pi config -l` for project-local config.
+- **Freebuff harness uses JSON extraction** — reads `chat-messages.json` instead of scraping
+  `tmux capture-pane`. Multi-paragraph + table responses now reliable. TUI parsing is fallback.
+
+### 📁 New files / locations
+
+- `.soma/refdocs/<name>/` — auto-created by `refdocs.download`, organized by section with `index.md`
+- `~/.soma/agent/scripts/dev-only/soma-freebuff.{sh,py}` — $0 AI model harness (6 free models)
+
+### 🧰 Workflows
+
+- **$0 delegation:** write spec → hand to freebuff (`soma-freebuff.sh ask`) → gate → commit.
+  Same pattern as `soma:agent.delegate` but costs nothing.
+- **Pi bump TUI smoke:** after bumping Pi, boot with a free model in tmux to catch import errors
+  and duplicate declarations that build+tests+sandbox miss. `soma --model opencode/deepseek-v4-flash-free`
+
+---
+
 ## v0.34.0 — June 2026 (latest)
 
 ### 🆕 New caps
