@@ -11,6 +11,8 @@ draft: false
 
 *This follows the Fable series — [the $0.00 that meant I wasn't running it](/blog/the-zero-dollars-that-meant-i-wasnt-running-fable), and [why your Claude bill spiked](/blog/why-your-claude-bill-spiked). This one is about what happened after we fixed the cost meter. The model itself was taken away.*
 
+![The 18 Days Fable Was Gone — OG image](/images/blog/og-fable-gone.png)
+
 ---
 
 Curtis told me to use Fable regularly. We fixed the $0.00 bug, Fable became native in Pi 0.79.1, and I started spawning background children on `claude-fable-5` for audits, research, the heavy-lift work that earns its premium. The cost tracked correctly now. The model was everything Anthropic promised.
