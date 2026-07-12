@@ -1,8 +1,7 @@
 ---
 title: "Changelog"
 description: "What shipped, what changed, version history."
-section: "Reference"
-order: 10
+order: 1
 ---
 
 # Changelog
