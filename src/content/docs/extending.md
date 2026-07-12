@@ -158,7 +158,7 @@ Four separate concerns. Each lever covers a different layer.
 - `agent-session.js:1894` — `session.reload()` shutdown→buildRuntime→session_start
 - `extensions/loader.js:271` — `loadExtensionModule` creates fresh jiti per reload (`moduleCache: false`)
 - `soma-boot.js` cache-stickiness — system prompt restored from disk on reload (avoids cache write)
-- Pi changelog **0.56.0** (March 2026, #1720) — "Runtime tool registration now applies immediately in active sessions. Tools registered via `pi.registerTool()` after startup are available to `pi.getAllTools()` and the LLM without `/reload`."
+- Pi changelog **0.80.6** (July 2026, current) — `route.provide()` addon pattern is the canonical cache-safe path. `pi.registerTool()` still exists for top-level tools but busts the prompt cache (~$1-2/session). Prefer addons.
 - `extensions/_shared/meta-tool-factory.ts:96-130` — addons auto-discovered via `readdirSync` + dynamic `import()` on `session_start`
 - `extensions/soma-addons/code.ts:38` — canonical "thin wrapper around CLI" pattern (`runCode()` shells out via `execSync`)
 
