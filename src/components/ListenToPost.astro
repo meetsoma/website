@@ -50,7 +50,7 @@ const src = `/audio/blog/${slug}.mp3`;
     gap: 1.25rem;
     align-items: center;
     padding: 1rem 1.25rem;
-    border: 1px solid rgba(100, 148, 190, 0.22);
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
     border-radius: 14px;
     background:
       radial-gradient(circle at 0% 0%, rgba(124, 178, 212, 0.08) 0%, transparent 60%),
@@ -61,7 +61,7 @@ const src = `/audio/blog/${slug}.mp3`;
     position: relative;
   }
   .nova-player.is-playing {
-    border-color: rgba(240, 136, 62, 0.35);
+    border-color: color-mix(in srgb, var(--promo) 35%, transparent);
     box-shadow:
       0 0 0 1px rgba(240, 136, 62, 0.05),
       0 8px 32px -12px rgba(100, 148, 190, 0.25);
@@ -73,7 +73,7 @@ const src = `/audio/blog/${slug}.mp3`;
     position: absolute;
     left: 0; top: 15%;
     width: 2px; height: 70%;
-    background: linear-gradient(180deg, transparent, #f0883e, transparent);
+    background: linear-gradient(180deg, transparent, var(--promo), transparent);
     opacity: 0;
     transition: opacity 0.4s ease;
     border-radius: 2px;
@@ -97,7 +97,7 @@ const src = `/audio/blog/${slug}.mp3`;
   .nova-play-btn:hover { transform: scale(1.04); }
   .nova-play-btn:active { transform: scale(0.97); }
   .nova-play-btn:focus-visible {
-    outline: 2px solid #7cb2d4;
+    outline: 2px solid var(--accent);
     outline-offset: 4px;
   }
   .nova-play-btn:disabled { cursor: not-allowed; opacity: 0.5; }
@@ -122,7 +122,7 @@ const src = `/audio/blog/${slug}.mp3`;
     transform-origin: center;
     transition: stroke 0.3s ease;
   }
-  .is-playing .nova-mark-ring { stroke: #f0883e; }
+  .is-playing .nova-mark-ring { stroke: var(--promo); }
 
   /* Subtle bars pulse while playing */
   .nova-mark-bars rect {
@@ -160,19 +160,19 @@ const src = `/audio/blog/${slug}.mp3`;
     font-size: 0.7rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #7cb2d4;
+    color: var(--accent);
     font-weight: 600;
     white-space: nowrap;
   }
   .nova-dot {
     width: 6px; height: 6px;
     border-radius: 50%;
-    background: #7cb2d4;
+    background: var(--accent);
     box-shadow: 0 0 6px rgba(124, 178, 212, 0.6);
     animation: nova-breathe 4s ease-in-out infinite;
   }
   .is-playing .nova-dot {
-    background: #f0883e;
+    background: var(--promo);
     box-shadow: 0 0 8px rgba(240, 136, 62, 0.8);
     animation-duration: 1.6s;
   }
@@ -198,14 +198,14 @@ const src = `/audio/blog/${slug}.mp3`;
     touch-action: none;
   }
   .nova-rail:focus-visible {
-    outline: 2px solid #7cb2d4;
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 3px;
   }
   .nova-rail-fill {
     position: absolute;
     inset: 0 auto 0 0;
-    background: linear-gradient(90deg, #6494be, #f0883e);
+    background: linear-gradient(90deg, #6494be, var(--promo));
     border-radius: 2px;
     transition: width 0.1s linear;
   }
@@ -260,7 +260,7 @@ const src = `/audio/blog/${slug}.mp3`;
     border-color: rgba(124, 178, 212, 0.4);
   }
   .nova-speed:focus-visible {
-    outline: 2px solid #7cb2d4;
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
 
@@ -274,16 +274,16 @@ const src = `/audio/blog/${slug}.mp3`;
     transition: color 0.2s ease, background 0.2s ease;
   }
   .nova-download:hover {
-    color: #7cb2d4;
+    color: var(--accent);
     background: rgba(124, 178, 212, 0.1);
   }
   .nova-download:focus-visible {
-    outline: 2px solid #7cb2d4;
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
 
   .nova-error {
-    color: #f0883e;
+    color: var(--promo);
     font-size: 0.75rem;
     font-family: 'SF Mono', ui-monospace, monospace;
     margin-top: 0.25rem;
