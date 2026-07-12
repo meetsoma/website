@@ -15,6 +15,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ## [Unreleased]
 
+<!-- Entries accumulate here and get promoted to a versioned section on release. -->
+
+## [0.39.0] — 2026-07-12
+
 ### Added
 - **soma:refdocs — General-purpose external docs fetcher.** Discover + fetch ANY external platform docs
   as clean markdown using the `llms.txt` convention (Cloudflare, Vercel, React, and 25+ known domains).
@@ -42,7 +46,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
   restructuring) and duplicate `baseContent` declaration in re-forked edit-diff.
 - **edit-diff.soma.js cleanup.** Removed dead `countOccurrences` (superseded by `findEditSpan`),
   documented trailing-whitespace quirk in fuzzy matching.
-<!-- Entries accumulate here and get promoted to a versioned section on release. -->
+
 
 ## [0.38.0] — 2026-06-26
 
