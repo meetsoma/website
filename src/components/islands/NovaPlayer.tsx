@@ -58,6 +58,14 @@ export default function NovaPlayer({ src, title, sizeKB, durationSec }: Props) {
     if (audioRef.current) audioRef.current.playbackRate = speed;
   }, [speed]);
 
+  // Fix: delay src until after hydration — avoids Preact clearing src
+  // during reconciliation, which triggers "no supported sources" on first load.
+  useEffect(() => {
+    if (audioRef.current && audioRef.current.src !== src) {
+      audioRef.current.src = src;
+    }
+  }, [src]);
+
   const toggle = () => {
     const a = audioRef.current;
     if (!a) return;
