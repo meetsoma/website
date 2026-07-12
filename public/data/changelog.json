@@ -1,11 +1,30 @@
 {
-  "generated": "2026-06-26T08:18:09Z",
+  "generated": "2026-07-12T08:04:51Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
       "version": "Unreleased",
       "date": "",
       "entries": {}
+    },
+    {
+      "version": "0.39.0",
+      "date": "2026-07-12",
+      "entries": {
+        "added": [
+          "**soma:refdocs — General-purpose external docs fetcher.** Discover + fetch ANY external platform docs",
+          "**soma:cf-docs — Cloudflare developer docs cap family.** Query CF docs as clean markdown with",
+          "**Freebuff harness — $0 AI model access.** Headless freebuff sessions in tmux, programmatic"
+        ],
+        "changed": [
+          "**Pi runtime: 0.79.6 → 0.80.6.** 13 versions (0.79.7–0.79.10, 0.80.1–0.80.6). New features"
+        ],
+        "fixed": [
+          "**Freebuff parser: TUI scraping → JSON extraction.** Line-wrapping in `tmux capture-pane` broke",
+          "**Pi 0.80.6 compat fixes.** Fixed `setBedrockProviderModule` import path (moved in 0.80.0 API",
+          "**edit-diff.soma.js cleanup.** Removed dead `countOccurrences` (superseded by `findEditSpan`),"
+        ]
+      }
     },
     {
       "version": "0.38.0",
