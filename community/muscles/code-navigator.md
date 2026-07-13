@@ -8,7 +8,7 @@ triggers: [find, map, refs, structure, grep, navigate, codebase, navigation, sea
 tags: [tooling, search, refactor, shell]
 applies-to: [any]
 created: 2026-03-15
-updated: 2026-06-18
+updated: 2026-07-13
 tools: [soma-code.sh]
 related: [incremental-refactor, task-tooling]
 version: 1.0.0

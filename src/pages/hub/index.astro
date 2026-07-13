@@ -112,33 +112,18 @@ const hubJsonLd = {
       </p>
     </div>
 
-    <!-- Pi Ecosystem — cross-compatible extensions -->
-    <section class="pi-ecosystem">
+    <!-- Pi Ecosystem -->
+    <section class="contribute">
       <h2>5,231+ extensions from the Pi ecosystem</h2>
       <p>
         Soma is built on Pi and inherits its full extension system. Every extension,
-        skill, theme, and prompt published on <a href="https://pi.dev/packages" target="_blank" rel="noopener">pi.dev</a>
-        is cross-compatible — same ExtensionAPI, same runtime. Install any package
+        skill, theme, and prompt published on <a href="https://pi.dev/packages">pi.dev</a>
+        is cross-compatible. Same ExtensionAPI, same runtime. Install any package
         directly from npm.
       </p>
-      <div class="pi-commands">
-        <div class="pi-cmd">
-          <code>soma install npm:@scope/package</code>
-          <span>Install any Pi extension</span>
-        </div>
-        <div class="pi-cmd">
-          <code>soma:extensions.search({query:'keyword'})</code>
-          <span>Search from inside a session</span>
-        </div>
-        <div class="pi-cmd">
-          <a href="https://pi.dev/packages" target="_blank" rel="noopener">pi.dev/packages →</a>
-          <span>Browse the full catalog</span>
-        </div>
-      </div>
-      <p class="pi-note">
-        Popular: sub-agents, web access, MCP adapters, browser automation, codebase indexing,
-        safety nets, and 5,226 more. All installable with one command.
-      </p>
+      <p><code>soma install npm:@scope/package</code></p>
+      <p><code>soma:extensions.search(&#123;query:'keyword'&#125;)</code></p>
+      <a href="https://pi.dev/packages" class="contribute-link">Browse 5,231+ packages →</a>
     </section>
 
     <!-- Filters (Preact island) -->
@@ -627,64 +612,6 @@ const hubJsonLd = {
   .contribute-link:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 20px var(--shadow-accent-mid);
-  }
-
-  /* Pi ecosystem section */
-  .pi-ecosystem {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: var(--space-2xl);
-    margin: var(--space-3xl) 0 var(--space-2xl);
-    text-align: center;
-  }
-  .pi-ecosystem h2 {
-    font-size: 1.5rem;
-    margin: 0 0 var(--space-md);
-    color: var(--ink);
-  }
-  .pi-ecosystem > p {
-    color: var(--ink-soft);
-    max-width: 600px;
-    margin: 0 auto var(--space-xl);
-    line-height: 1.7;
-  }
-  .pi-commands {
-    display: flex;
-    gap: var(--space-lg);
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: var(--space-lg);
-  }
-  .pi-cmd {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-xs);
-  }
-  .pi-cmd code, .pi-cmd a {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: var(--space-sm) var(--space-lg);
-    font-size: 0.9rem;
-    font-family: var(--font-mono);
-    color: var(--accent);
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .pi-cmd a:hover, .pi-cmd code:hover {
-    border-color: var(--accent);
-    background: var(--surface-accent-soft);
-  }
-  .pi-cmd span {
-    font-size: 0.85rem;
-    color: var(--ink-muted);
-  }
-  .pi-note {
-    font-size: 0.85rem;
-    color: var(--ink-muted);
-    margin: 0;
   }
 
   @media (max-width: 480px) {

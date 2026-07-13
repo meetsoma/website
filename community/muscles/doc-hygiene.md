@@ -9,7 +9,7 @@ triggers: [doc-hygiene, plans-rot, stale-docs, context-hygiene, plan-lifecycle, 
 scope: hub
 tier: official
 created: 2026-03-14
-updated: 2026-06-18
+updated: 2026-07-13
 version: 1.0.0
 author: meetsoma
 license: MIT
