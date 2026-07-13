@@ -79,6 +79,29 @@ Extensions are TypeScript files that hook into Soma's lifecycle events.
 
 **Opt-out:** `--no-extensions` (or `-ne`) skips extension discovery for one session. Explicit `--extension <path>` always works.
 
+### Pi Ecosystem — 5,231+ cross-compatible packages
+
+Soma is built on Pi and shares its ExtensionAPI. Every extension, skill, theme,
+and prompt published on [pi.dev/packages](https://pi.dev/packages) is
+cross-compatible — install any of them directly from npm.
+
+```bash
+# Install any Pi package
+soma install npm:@scope/package-name
+soma install npm:pi-web-access
+soma install npm:@bacnh85/pi-subagent
+
+# Search from inside a session
+soma:extensions.search({query:'subagent'})
+soma:extensions.search({query:'browser', type:'extension'})
+
+# Browse the catalog
+open https://pi.dev/packages
+```
+
+Popular categories: sub-agents, web access, MCP adapters, browser automation,
+codebase indexing, safety nets, status bars, and 5,226 more.
+
 ### Extension Security
 
 Extensions run with full system permissions. Configure an allowlist in `settings.json` to get warnings about unrecognized extensions:

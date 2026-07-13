@@ -112,6 +112,35 @@ const hubJsonLd = {
       </p>
     </div>
 
+    <!-- Pi Ecosystem — cross-compatible extensions -->
+    <section class="pi-ecosystem">
+      <h2>5,231+ extensions from the Pi ecosystem</h2>
+      <p>
+        Soma is built on Pi and inherits its full extension system. Every extension,
+        skill, theme, and prompt published on <a href="https://pi.dev/packages" target="_blank" rel="noopener">pi.dev</a>
+        is cross-compatible — same ExtensionAPI, same runtime. Install any package
+        directly from npm.
+      </p>
+      <div class="pi-commands">
+        <div class="pi-cmd">
+          <code>soma install npm:@scope/package</code>
+          <span>Install any Pi extension</span>
+        </div>
+        <div class="pi-cmd">
+          <code>soma:extensions.search({query:'keyword'})</code>
+          <span>Search from inside a session</span>
+        </div>
+        <div class="pi-cmd">
+          <a href="https://pi.dev/packages" target="_blank" rel="noopener">pi.dev/packages →</a>
+          <span>Browse the full catalog</span>
+        </div>
+      </div>
+      <p class="pi-note">
+        Popular: sub-agents, web access, MCP adapters, browser automation, codebase indexing,
+        safety nets, and 5,226 more. All installable with one command.
+      </p>
+    </section>
+
     <!-- Filters (Preact island) -->
     <HubFilters client:load />
 
@@ -598,6 +627,64 @@ const hubJsonLd = {
   .contribute-link:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 20px var(--shadow-accent-mid);
+  }
+
+  /* Pi ecosystem section */
+  .pi-ecosystem {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: var(--space-2xl);
+    margin: var(--space-3xl) 0 var(--space-2xl);
+    text-align: center;
+  }
+  .pi-ecosystem h2 {
+    font-size: var(--heading-2);
+    margin: 0 0 var(--space-md);
+    color: var(--text);
+  }
+  .pi-ecosystem > p {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto var(--space-xl);
+    line-height: 1.7;
+  }
+  .pi-commands {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-lg);
+  }
+  .pi-cmd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+  .pi-cmd code, .pi-cmd a {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--body-primary);
+    font-family: var(--font-mono);
+    color: var(--accent);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .pi-cmd a:hover, .pi-cmd code:hover {
+    border-color: var(--accent);
+    background: var(--accent-surface);
+  }
+  .pi-cmd span {
+    font-size: var(--body-secondary);
+    color: var(--text-muted);
+  }
+  .pi-note {
+    font-size: var(--body-secondary);
+    color: var(--text-muted);
+    margin: 0;
   }
 
   @media (max-width: 480px) {

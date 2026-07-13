@@ -14,6 +14,39 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ## [Unreleased]
 
+### Added
+- **Pi ecosystem — 5,231+ extensions cross-compatible.** `soma:extensions.search` queries the
+  full pi.dev catalog from inside a session. `soma install npm:<package>` installs any Pi
+  extension, skill, theme, or prompt. Pi and Soma share the same ExtensionAPI — every package
+  on pi.dev is cross-compatible.
+- **soma:agent.models — live model catalog.** Shows enabled/scoped models from settings.json
+  (not all 474 theoretical). Groups by availability: enabled, providers with API keys, quick
+  picks for delegation. `soma:agent.model` inspects a single model.
+- **soma:body.parts — auto-discovered body files.** Discovers `.soma/body/*.md` across project,
+  parent, and global layers. Splits discovered (project-specific + platform) from core
+  (always-loaded identity). Heat-tracked by recency.
+- **soma:agent.extensions — active extensions list.** Shows all loaded extensions with cap
+  counts and descriptions. Auto-discovered at boot via `{{active_extensions}}` template variable.
+- **soma:agent.models + .extensions + .parts caps.** Three new auto-discovery tools so Soma
+  knows her own capabilities without being told.
+- **`{{active_extensions}}` and `{{enabled_models}}` template variables.** Boot-time summaries
+  injected into the system prompt — Soma wakes up knowing her extensions and available models.
+
+### Changed
+- **Hub now shows Pi ecosystem.** `dev:hub.list` includes a pi.dev section with 5,231+ extensions,
+  search, and install commands. The hub page at soma.gravicity.ai/hub shows the full ecosystem.
+- **`soma install npm:` pass-through.** The CLI now delegates `npm:` prefixed installs to Pi's
+  native package manager instead of catching them in the AMP content-cli.
+
+### Fixed
+- **Headless delegate hang.** Timeout killed only the direct child process; `soma -p` grandchildren
+  survived, keeping the promise from resolving and the TUI stuck. Now uses process-group kill
+  (`process.kill(-child.pid)`).
+- **Cold muscle list bloat.** The "117 muscles not loaded" line now shows only the count — saves
+  ~500 tokens every session. Hot/warm limit was already 10; the cold name list was the last bloat.
+- **`soma-dev sync dev` now syncs core/.** Changes to `body.ts`, `muscles.ts`, etc. were never
+  reaching the runtime because only `extensions/` and `dist/` were synced.
+
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
 ## [0.39.0] — 2026-07-12
