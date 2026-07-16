@@ -123,6 +123,7 @@ Commands appear in `/soma status` output and tab completions. Install community 
 | `/code <subcommand> [args]` | Fast codebase navigator - wraps `soma code`. Subcommands: `find`, `lines`, `map`, `refs`, `replace`, `structure`, `physics`, `events`, `css-vars`, `config`. |
 | `/scrape <name\|topic> [--discover]` | Scrape docs for a tool, library, or topic. Providers: `github`, `npm`, `mdn`, `css`, `skills`. |
 | `/scan-logs [count] [--send]` | Scan conversation logs - session analytics via `soma-stats.sh`. `--send` injects results into conversation. |
+| `/soma vision-review <path> "<prompt>"` | **Image/vision analysis** — sends screenshot or image to Cohere Command A Vision for analysis. Also available as CLI: `soma vision-review <path> "<prompt>"`. Use when your current model lacks vision support. Requires Cohere API key (free tier available). |
 | `/body [check\|vars\|map\|render]` | Body template inspector. `check` = health report, `vars` = all variables by category, `map` = template structure, `render` = full compiled system prompt. All support `--send`. |
 
 ## Toggle Commands
