@@ -45,6 +45,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
   `@release-state` so pre-existing drift in them stops blocking `prepare` with a hard conflict.
 
 ### Fixed
+- **mark test-doctor as release-state (surface check)**
 - **Anthropic OAuth billing gate.** Soma's compiled system prompt now opens with
   `"You are an expert coding assistant."` — matching Pi's default identity — before Soma's own
   identity block. Freshly-issued OAuth tokens were hitting a `billing_error` on Anthropic's Beta
