@@ -13,7 +13,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
-## [Unreleased] — 2026-07-16
+## [Unreleased] — 
+
+
+### Fixed
+- **promote Unreleased → 0.41.0, add fresh Unreleased section**
+## [0.41.0] — 2026-07-17
 
 ### Added
 - **Delegation goes multi-model.** Child roles no longer default to a single Claude model —
