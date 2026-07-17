@@ -3,6 +3,7 @@ title: Anthropic Long-Context (1M) Billing
 description: How Sonnet 4.6's 1M context tier works under OAuth, and what to enable on the account vs the client.
 ---
 
+
 # Anthropic Long-Context (1M) Billing
 
 Sonnet 4.6 supports up to 1M token context. Above some account-specific threshold below the full window, requests bill at the "extra usage" tier and require explicit account-side enrollment + client-side opt-in. Get either out of order and the API rejects every request.
