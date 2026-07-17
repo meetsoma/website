@@ -32,52 +32,36 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
   and where it came from (explicit arg / role default / settings.json / built-in fallback) before
   spawning, and a `deliverable:` field in role frontmatter injects a hard write-to-disk rule when
   a child owes a file on disk. Free-tier children get a keepalive note so they don't mistake
-  `[cache keepalive]` pings for real tasks (s01-0e4632).
-- **System prompt budget guardrail.** Project setting `maxTokens: 17000` warns when the compiled
-  prompt exceeds budget, enforcing the lean-body discipline from the recent soul/voice/core_rules
-  cuts (s01-639c5f).
-- **State-disk sync muscle.** Documents the drift pattern where moving or deleting a body file
-  under `_archive/` leaves a ghost entry in `state.json`; proposes a boot-time prune (s01-639c5f).
+  `[cache keepalive]` pings for real tasks.
+- **System prompt budget guardrail.** New project setting `maxTokens` warns when a compiled
+  system prompt exceeds its budget, so a bloated body gets flagged before it costs you tokens on
+  every turn.
 
 ### Changed
 - **Delegate defaults flipped to free-tier.** `default-model` for child templates moved off
   `claude-sonnet-4-6`/`claude-haiku-4-5` onto Mistral (`mistral-large-2512` for quality,
   `ministral-8b-2512` for speed), with the same swap in the `spawnBackground` fallback chain.
   Delegate help text and `docs/guides/background-delegation.md` now list Mistral first and mark
-  Claude models as premium-with-billing-note (s01-0e4632).
+  Claude models as premium-with-billing-note.
 - **Pi runtime: 0.80.6 → 0.80.10.** Four patch versions. `AuthStorage` was removed from the SDK
   in favor of `readStoredCredential`; `edit-diff.js` was re-forked against the new base. tsc clean,
   sandbox 106/106.
-- **Release script hardening.** `soma-release-ship.sh` now auto-updates `_kanban.md`'s
-  current-version-public after a ship instead of leaving it stale, and two surface/infra tests
-  (`test-sx777-narrative-final.sh`, `test-soma-github-local-runtime.sh`) are marked
-  `@release-state` so pre-existing drift in them stops blocking `prepare` with a hard conflict.
 
 ### Fixed
-- **mark test-doctor as release-state (surface check)**
 - **Anthropic OAuth billing gate.** Soma's compiled system prompt now opens with
   `"You are an expert coding assistant."` — matching Pi's default identity — before Soma's own
   identity block. Freshly-issued OAuth tokens were hitting a `billing_error` on Anthropic's Beta
   Sessions API because non-standard agent identities get classified as third-party harness usage.
   May still need extra-usage billing enabled at claude.ai/settings/usage if Anthropic tightens
   long-context classification further.
-- **Body lean-out — 62% smaller.** soul.md 9.2K→3.7K, voice.md 8.6K→3.4K, core_rules.md 8.9K→2.6K,
-  body.md 11.1K→4.5K. Four concepts (ground-before, probes, corrections, tool discipline) that were
-  each narrated 3-4× across files got a single canonical home. System prompt down from ~26K to
-  ~16-17K tokens (s01-639c5f).
-- **Muscle archive — 147→63 muscles.** 56 dead muscles (heat=0, never applied) moved to
-  `_archive/`; 24 matching ghost entries purged from `state.json`, saving ~3-4K tokens of muscle
-  digest per boot (s01-639c5f).
 - **`/body` detector false positives.** Unreferenced body files now collapse into one warning
   instead of one per file; backtick-quoted code and fenced blocks are stripped before `{{var}}`
   extraction so prose mentions stop triggering it; authoring scaffolds (`_*-template.md`) are
-  excluded from template-variable validation (s01-639c5f).
+  excluded from template-variable validation.
 - **Delegate + Pi 0.80.x compat.** Delegate calls were hitting `ARG_MAX` passing the system prompt
   inline; switched to `--system-prompt-file` with a temp file, and updated Pi's import paths for
   the 0.80.x restructuring. Stale preloads no longer leak into child processes, and boot warnings
   were fixed alongside.
-- **sx794 test suite** updated for the `--system-prompt-file` change, gained a template version
-  check, and had its reports moved out of the roles directory.
 
 ## [0.40.0] — 2026-07-13
 
@@ -413,10 +397,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 - **release-prepare crash: `PREP_VERSION` unbound in Phase 5.5** — the website-readiness phase referenced `$PREP_VERSION` at a `[[ -z ]]` check but only assigned it inside the `PROPOSAL_FILE` conditional; with `set -u`, the common unset-PROPOSAL_FILE path crashed the whole prepare run at the tone-check. Initialized before the block. (Completes the partial fix `a7ba618c` made on main.) (s01-cfe9ac)
 - **universal timeout for all providers (upstream 7c531d05)**
 - **`soma:body.audit` no longer false-flags compiler-prepended slots** — the audit told users to "move `muscle_digests` after `<rules>`," but that slot is prepended by `compileFrontalCortex` (not template-interpolated, gate-locked) and `essential: true` (removing it breaks muscle loading). The advice could have moved a load-bearing slot. Check 3 now skips prepended slots (`muscle_digests`/`protocol_summaries`/`scripts_table`) and the audit gained a "Slot mechanics" footer that points at `body/DNA.md` (the canonical explanation) rather than duplicating it. (s01-3a1d9b)
-
-### Internal
-- Test-suite hygiene (s01-cfe9ac): `test-keepalive` asserted a refactored-out `bonus10` literal → now checks the `_getTier()` mechanism; `test-meta-hygiene` required an inline `Results:` echo → now also recognizes the shared `_shared.sh` `results` helper (227/227); removed a stray gitignored empty `.soma/amps/muscles/` dir that false-tripped `test-muscles`.
-- Headless-delegation polish: `delegate` help text documents the `headless`/`chain` modes; new `tests/test-delegate-headless.sh` unit-tests `loadRole` + `stripPreamble` (non-flaky, no model call). (v0.30.0 Phase 4)
 
 ### Pending (not yet shipped)
 - **Browser Ship 2** — end-to-end smoke across CDP ports (needs bridge running).
@@ -1469,12 +1449,6 @@ Follow-up to v0.12.3 shipping integrity. Pi runtime bump, thin-CLI UX cleanup, r
 - **Stale `soma init` → `soma update` references** in `thin-cli.js`, `docs/updating.md`, and `docs/troubleshooting.md`. Missed during the v0.12.3 command reshuffle.
 - **`check-phases.sh` pipefail crash on clean working tree.** `grep -v` returns 1 on empty input, which under `set -o pipefail` killed the script mid-run. Same bug class as `soma-plans.sh` bash 3.2 issues. Script now runs all 10 phases to completion.
 
-### Internal
-- Dropped the B2 patch attempt (`settings-manager.js` enabledModels sync). Pi #3331 fixes the upstream symptom, and the target function is minified to `.n()` in 0.67.68 — patching by name would silently fail. See `.soma/releases/v0.12.x/model-resolution-audit.md`.
-- `UPSTREAM-NOTES.md` scratchpad added to `soma-dev/` for tracking changelog-worthy upstream items between Pi bumps.
-
----
-
 ## [0.12.3] — 2026-04-17
 
 Shipping integrity release. Fixes a critical bug where `npm install -g meetsoma@0.3.3` produced a broken install (missing internal imports), and makes the update flow actually work. If you've been stuck on an older Pi runtime despite cutting newer Soma versions, this is why.
@@ -1498,13 +1472,6 @@ Shipping integrity release. Fixes a critical bug where `npm install -g meetsoma@
 - **Periodic update check inside the agent.** `soma-statusline.ts` runs a silent `git fetch` every 30 minutes while the agent is running. If behind, shows `⬆ update` in the statusline and writes to `~/.soma/config.json` so the next `soma` boot prints a one-line notice. Zero network latency at CLI launch.
 - **Pre-publish smoke test.** `soma-npm-publish.sh` now packs the tarball, extracts it to a clean temp dir, and runs `node dist/thin-cli.js --version` before allowing npm publish. Aborts if the tarball has broken imports or contains forbidden content (`dist/core/`, `.ts`, `node_modules/`, etc.). Also integrated into `soma-dev pipeline` so dev cycles catch breakage early.
 - **Docker e2e sandbox** (`soma-sandbox-docker.sh local`) now reliably tests our local bundle. Previous Dockerfile had a broken `COPY ... local-pkg*` glob that created a file literally named `local-pkg*`, so the sandbox was silently falling through to the registry version. Fixed — 24/24 tests pass in clean `node:22-slim` container.
-
-### Internal
-- `repos/agent/scripts/_dev/patches/` unchanged — only `error-sanitizer` remains. An attempt to add a `settings-manager-enabled-models` patch was rolled back when it turned out not to be necessary (speculation from an inbox report; the actual user bug was update-flow staleness, not Ctrl+P cycling).
-- New muscles: `inbox-handling.md` (inbox letters are diagnoses, not FYIs), `tui-safe-logging.md` (no bare `console.*` in extensions).
-- New soma-dev-map phase entry: Phase 0 orient now checks Pi drift (`soma-dev status`) and scans inbox as part of orientation.
-
----
 
 ## [0.12.2] — 2026-04-17
 
@@ -2008,18 +1975,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **Boot message duplication** — stripped content already in system prompt from boot followUp.
 - **`/body render`** compiles fresh from disk each time (was using stale boot cache).
 
-### Internal
-- **`VARIABLE_REGISTRY`** in `core/body.ts` — complete registry of all template variables with categories, essential flags, descriptions.
-- **`core/skill-loader.ts`** — `LoadableContent` interface, `loadAllContent()`, `formatAsSkillsXml()`.
-- **`compileWithTemplate()`** — template path in `compileFullSystemPrompt()`, shared section builders.
-- **`getDefaultMindTemplate()`**, `getDefaultBootTemplate()` — built-in fallback templates.
-- **`loadFirstBreath()`** — conditional first-run template with chain inheritance.
-- **52 block variables** tested (77/77 body tests + 19 E2E).
-- **Frontmatter-kit** — 9 scripts for bulk AMPS frontmatter operations (extract, writeback, sort, migrate, audit).
-- **`preload.lastMessages`** setting removed (conversation tail scanner was the only consumer).
-
----
-
 ## [0.6.3] — 2026-03-22
 
 ### Added
@@ -2071,14 +2026,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **soma-beta** — `.map` files (128) and `.d.ts` files (64) stripped from dist. Source maps contained full `sourcesContent`.
 - **soma-beta** — orphan history on every release. Old commits can't recover source code.
 
-### Internal
-- 7-phase dev cycle MAP (soma-dev/cycle.md with phase files)
-- Blog content cycle MAP (blog/cycle.md with phase files)
-- SVG blog diagrams muscle (Soma palette, transparent bg, rsvg-convert pipeline)
-- Migration v0.6.2→v0.6.3 updated for scope:core + git-identity restore
-- FRONTMATTER.md rewritten, CONTRIBUTING.md updated
-- 185 unit test assertions (was 162), 51 regression tests
-
 ## [0.6.2] — 2026-03-21
 
 ### Added
@@ -2116,15 +2063,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **Runtime delegation** — soma-beta now includes cli.js and Pi runtime files. Previously thin-cli fell through to raw Pi (no version skip, no auto-rotate, "Update Available" banner).
 - **Fresh installs** now include version field in settings.json.
 - **Stale test assertions** — test suite checked for removed frontmatter fields and nonexistent commands.
-
-### Internal
-- soma-theme.sh, soma-rebrand.sh, soma-switch.sh dev mode, soma-doctor.sh
-- script-polish + github-theming muscles
-- 7 repo READMEs refreshed, post-release MAP created
-- License date corrected to 2027-09-18, contact standardised to meetsoma@gravicity.ai
-- Dangerous CI disabled (release-publish.yml shipped full source on v* tags)
-
----
 
 ## [0.6.1] — 2026-03-20
 
@@ -2165,15 +2103,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - "The Ratio" — solo, on code vs behavior growth
 - "The Operating System We Didn't Plan" — solo, on AMPS as dev process
 - Interlinks across all 8 published posts + doc page SEO links
-
-### Internal
-- `soma-dev` CLI: doctor, fix, sync-dist, reinstall commands
-- `system-audit` + `audit-preflight` MAPs — truth-check any subsystem
-- `release-tracking` protocol + `release-cycle` MAP
-- Release folder structure: `v0.6.0/` (archived) + `v0.6.x/` (living)
-- AMPS organised: `_public/` staging for hub, consistent across protocols/muscles/scripts
-- `amps-interconnect` MAP restored from archive
-- `solo-editorial` muscle for agent-authored blog posts
 
 ## [0.6.0] — 2026-03-20
 
@@ -2376,12 +2305,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - Visual gap analysis MAP expanded (9 steps, 7 patterns, E2E test phase)
 - 5 MAPs updated with test quality info
 - release-cycle MAP: +Phase 5 (changelog sync) +Phase 6 (E2E verification)
-
-### Internal
-- Pi constraints documented — discovery.ts untestable outside Pi runtime, piConfig package-scoped, no programmatic extension registration, APP_NAME defaults to "pi"
-- Ignore per-worktree `.pi/` and `.soma/settings.json` in git (#d6778a2)
-
----
 
 ## [0.5.2] — 2026-03-15
 

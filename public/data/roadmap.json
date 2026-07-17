@@ -31,8 +31,7 @@
         "added": [
           "Delegation overhaul — sync mode works with any role size, batch tasks in one call",
           "Pi 0.80.10 — AuthStorage→readStoredCredential, Kimi K3, Grok 4.5",
-          "Desktop agent connection — app spawns soma --mode rpc, bundled runtime for zero-setup launch",
-          "Release flow hardened — kanban auto-update, surface tests marked release-state"
+          "Desktop agent connection — app spawns soma --mode rpc, bundled runtime for zero-setup launch"
         ],
         "fixed": [
           "claude -p ARG_MAX bug — large roles no longer fail silently",
