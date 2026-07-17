@@ -1,7 +1,8 @@
 ---
 title: "Changelog"
 description: "What shipped, what changed, version history."
-order: 1
+section: "Reference"
+order: 10
 ---
 
 # Changelog
@@ -12,34 +13,61 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ---
 
-## [Unreleased] — 2026-07-14
+## [Unreleased] — 2026-07-16
 
-
-### Fixed
-- **auto-update kanban public version on ship, mark surface tests as release-state**
-- **update sx794 for --system-prompt-file, add template version, move reports out of roles dir**
-- **update Pi imports for 0.80.x compat path**
-- **use --system-prompt-file + temp file to avoid ARG_MAX**
-- **Anthropic OAuth billing gate — prepend first-party identity to system prompt** (s01-639c5f). Soma's compiled system prompt now starts with `"You are an expert coding assistant."` (matching Pi's default identity) before Soma's full identity block. Fixes `billing_error` from Anthropic's Beta Sessions API on freshly-issued OAuth tokens, which classify non-standard agent identities as third-party harness usage. **Note:** may still require extra-usage billing setup at claude.ai/settings/usage if Anthropic has tightened long-context classification.
-- **Body lean-out — 62% reduction** (s01-639c5f). soul.md 9.2K→3.7K, voice.md 8.6K→3.4K, core_rules.md 8.9K→2.6K, body.md 11.1K→4.5K. Consolidated 4 overlapping concepts (ground-before, probes, corrections, tool discipline) that were narrated 3-4× across files into single canonical locations. System prompt down from ~26K→~16-17K tokens.
-- **Muscle archive — 147→63 muscles** (s01-639c5f). 56 dead muscles (heat=0, never applied) archived to _archive/; 24 ghost entries purged from state.json. ~3-4K tokens saved from muscle digests.
-- **`/body` detector fixes** (s01-639c5f). Three fixes: (1) unreferenced body files consolidated into single warning instead of one-per-file; (2) backtick-quoted code + fenced blocks stripped before `{{var}}` extraction to eliminate prose-mention false positives; (3) authoring scaffolds (`_*-template.md`) excluded from template variable validation.
-- **skip stale preload for child processes + boot warnings fix**
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **parent model inheritance + delegation muscle + YAML fixes**
-- **Configurable delegate global default model** — settings.json → `delegate.defaultModel` (s01-0e4632)
-- **13 child roles updated with diverse model chains** across Mistral, Gemini, Cohere, and Groq providers — each role has `model-chain` frontmatter with automatic fallback on rate-limit or failure (s01-0e4632)
-- **`deliverable:` field in role frontmatter** — compiled child prompts now inject a hard write-to-disk rule when a deliverable path is declared (s01-0e4632)
-- **Model visibility in delegate output** — every delegate call shows resolved model + source (explicit arg / role default / settings.json / built-in fallback) before spawning (s01-0e4632)
-- **Keepalive note for free models** — child templates document `[cache keepalive]` protocol to prevent free models from responding to keepalive pings as tasks (s01-0e4632)
+- **Delegation goes multi-model.** Child roles no longer default to a single Claude model —
+  13 roles now carry a `model-chain` in frontmatter spanning Mistral, Gemini, Cohere, and Groq,
+  with automatic fallback on rate-limit or failure, and a configurable global default
+  (`settings.json` → `delegate.defaultModel`). Every delegate call now prints the resolved model
+  and where it came from (explicit arg / role default / settings.json / built-in fallback) before
+  spawning, and a `deliverable:` field in role frontmatter injects a hard write-to-disk rule when
+  a child owes a file on disk. Free-tier children get a keepalive note so they don't mistake
+  `[cache keepalive]` pings for real tasks (s01-0e4632).
+- **System prompt budget guardrail.** Project setting `maxTokens: 17000` warns when the compiled
+  prompt exceeds budget, enforcing the lean-body discipline from the recent soul/voice/core_rules
+  cuts (s01-639c5f).
+- **State-disk sync muscle.** Documents the drift pattern where moving or deleting a body file
+  under `_archive/` leaves a ghost entry in `state.json`; proposes a boot-time prune (s01-639c5f).
 
 ### Changed
-- **Child template defaults updated** — `default-model` changed from `claude-sonnet-4-6`/`claude-haiku-4-5` to free-tier models (`mistral/mistral-large-2512` for quality, `mistral/ministral-8b-2512` for speed) (s01-0e4632)
-- **`spawnBackground` fallback** — `claude-haiku-4-5` replaced with `readDelegateDefaultModel() ?? mistral/ministral-8b-2512` (s01-0e4632)
-- **Delegate help text** — shows Mistral free models first, Claude models as premium-with-billing-note (s01-0e4632)
-- **Docs updated** — `docs/guides/background-delegation.md` reflects new model precedence chain (s01-0e4632)
+- **Delegate defaults flipped to free-tier.** `default-model` for child templates moved off
+  `claude-sonnet-4-6`/`claude-haiku-4-5` onto Mistral (`mistral-large-2512` for quality,
+  `ministral-8b-2512` for speed), with the same swap in the `spawnBackground` fallback chain.
+  Delegate help text and `docs/guides/background-delegation.md` now list Mistral first and mark
+  Claude models as premium-with-billing-note (s01-0e4632).
+- **Pi runtime: 0.80.6 → 0.80.10.** Four patch versions. `AuthStorage` was removed from the SDK
+  in favor of `readStoredCredential`; `edit-diff.js` was re-forked against the new base. tsc clean,
+  sandbox 106/106.
+- **Release script hardening.** `soma-release-ship.sh` now auto-updates `_kanban.md`'s
+  current-version-public after a ship instead of leaving it stale, and two surface/infra tests
+  (`test-sx777-narrative-final.sh`, `test-soma-github-local-runtime.sh`) are marked
+  `@release-state` so pre-existing drift in them stops blocking `prepare` with a hard conflict.
+
+### Fixed
+- **Anthropic OAuth billing gate.** Soma's compiled system prompt now opens with
+  `"You are an expert coding assistant."` — matching Pi's default identity — before Soma's own
+  identity block. Freshly-issued OAuth tokens were hitting a `billing_error` on Anthropic's Beta
+  Sessions API because non-standard agent identities get classified as third-party harness usage.
+  May still need extra-usage billing enabled at claude.ai/settings/usage if Anthropic tightens
+  long-context classification further.
+- **Body lean-out — 62% smaller.** soul.md 9.2K→3.7K, voice.md 8.6K→3.4K, core_rules.md 8.9K→2.6K,
+  body.md 11.1K→4.5K. Four concepts (ground-before, probes, corrections, tool discipline) that were
+  each narrated 3-4× across files got a single canonical home. System prompt down from ~26K to
+  ~16-17K tokens (s01-639c5f).
+- **Muscle archive — 147→63 muscles.** 56 dead muscles (heat=0, never applied) moved to
+  `_archive/`; 24 matching ghost entries purged from `state.json`, saving ~3-4K tokens of muscle
+  digest per boot (s01-639c5f).
+- **`/body` detector false positives.** Unreferenced body files now collapse into one warning
+  instead of one per file; backtick-quoted code and fenced blocks are stripped before `{{var}}`
+  extraction so prose mentions stop triggering it; authoring scaffolds (`_*-template.md`) are
+  excluded from template-variable validation (s01-639c5f).
+- **Delegate + Pi 0.80.x compat.** Delegate calls were hitting `ARG_MAX` passing the system prompt
+  inline; switched to `--system-prompt-file` with a temp file, and updated Pi's import paths for
+  the 0.80.x restructuring. Stale preloads no longer leak into child processes, and boot warnings
+  were fixed alongside.
+- **sx794 test suite** updated for the `--system-prompt-file` change, gained a template version
+  check, and had its reports moved out of the roles directory.
 
 ## [0.40.0] — 2026-07-13
 
