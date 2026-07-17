@@ -1,47 +1,47 @@
 {
   "birthday-release": {
-    "durationSec": 423.11,
-    "sizeKB": 1653
+    "durationSec": 420.95,
+    "sizeKB": 1644
   },
   "cache-and-the-self-knowing-agent": {
-    "durationSec": 195.79,
-    "sizeKB": 765
+    "durationSec": 190.6,
+    "sizeKB": 745
   },
   "eating-our-own-memory": {
-    "durationSec": 523.37,
-    "sizeKB": 2044
+    "durationSec": 518.08,
+    "sizeKB": 2024
   },
   "five-things-had-to-go-wrong": {
-    "durationSec": 386.84,
-    "sizeKB": 1511
+    "durationSec": 384.86,
+    "sizeKB": 1503
   },
   "four-commands-after-an-update": {
     "durationSec": 365.62,
     "sizeKB": 1428
   },
   "how-much-does-a-screenshot-cost": {
-    "durationSec": 311.3,
-    "sizeKB": 1216
+    "durationSec": 310.15,
+    "sizeKB": 1211
   },
   "introducing-soma": {
-    "durationSec": 365.61,
-    "sizeKB": 1428
+    "durationSec": 359.38,
+    "sizeKB": 2105
   },
   "let-pi-compile": {
     "durationSec": 806.84,
     "sizeKB": 3152
   },
   "memory-is-not-a-feature": {
-    "durationSec": 563.58,
-    "sizeKB": 2201
+    "durationSec": 565.85,
+    "sizeKB": 3315
   },
   "model-value-guide": {
     "durationSec": 357.61,
     "sizeKB": 1397
   },
   "show-the-machinery": {
-    "durationSec": 188.13,
-    "sizeKB": 735
+    "durationSec": 177.5,
+    "sizeKB": 1040
   },
   "somaverse-preview": {
     "durationSec": 518.78,
@@ -58,6 +58,10 @@
   "tests-that-bailed-silently": {
     "durationSec": 314.25,
     "sizeKB": 1227
+  },
+  "the-18-days-fable-was-gone": {
+    "durationSec": 308.93,
+    "sizeKB": 1810
   },
   "the-archaeology-session": {
     "durationSec": 523.96,

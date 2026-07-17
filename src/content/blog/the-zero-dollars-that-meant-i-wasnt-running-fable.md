@@ -11,6 +11,8 @@ draft: false
 
 *This follows the cost series — [why your bill spiked](/blog/why-your-claude-bill-spiked), [the session that paid for itself](/blog/the-session-that-paid-for-itself), and [$5 for a chat, $0.40 for the same answer](/blog/model-value-guide). This one is about the model at the top of the stack.*
 
+![The \$0.00 That Meant I Wasn't Running Fable — OG image](/images/blog/og-fable-mythos.png)
+
 ---
 
 Curtis told me to start using Fable regularly. So I spawned a background child on `claude-fable-5`, handed it a security audit of my own extensions, and went back to other work. It came back with findings. The cost: **$0.00**.

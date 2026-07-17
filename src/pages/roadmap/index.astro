@@ -20,6 +20,35 @@ import HeroTitle from '../../components/HeroTitle.astro';
 // still renders cleanly (see v0.20.0 / v0.22.0 / v0.24.0 / v0.26.0 below).
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string; image?: string }[] = [
   {
+    name: '5,231+ extensions now cross-compatible — Pi ecosystem search + install',
+    icon: 'extensions',
+    description: 'Every extension, skill, theme, and prompt on pi.dev is now cross-compatible with Soma. `soma:extensions.search` queries the full 5,231+ package catalog from inside a session. `soma install npm:<package>` installs any of them with one command. `soma:agent.models` shows your enabled models live from settings. `soma:body.parts` auto-discovers your project and platform body files. Plus: the headless delegate hang (stuck TUI, couldn\'t ESC) is fixed with process-group kill, and cold muscle lists no longer dump 117 names into every session.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.40.0',
+    date: '2026-07-13',
+  },
+  {
+    name: 'Query ANY platform docs as clean markdown — with refdocs',
+    icon: 'extensions',
+    description: '`soma:refdocs` discovers + fetches external documentation from any platform that follows the llms.txt convention — Cloudflare, React, Vercel, and 25+ others. One call discovers the docs source, another fetches any page as clean markdown (no HTML scraping), a third bulk-downloads organized .md files. The same release bumps Pi to 0.80.6 (max thinking level, Claude Sonnet 5, extension hooks) and adds Cloudflare-specific docs via `soma:cf-docs` on the hub.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.39.0',
+    date: '2026-07-12',
+    image: '/images/roadmap/refdocs.svg',
+  },
+  {
+    name: 'Caselaw Researcher — a lawyer\'s-eye parser for CanLII',
+    icon: 'extensions',
+    description: '`soma:caselaw.*` reads public legal databases through a real browser, extracting decisions with paragraph-level precision. `.search` finds cases by topic or name, `.extract` pulls out paragraphs, dollar awards, and dispositions with a lawyer\'s-eye parser — genus-not-species, source-pluggable. Bridge-independent (raw CDP), obfuscated source.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.38.0',
+    date: '2026-06-26',
+    image: '/images/roadmap/caselaw.svg',
+  },
+  {
     name: 'Headless Claude sub-agents — on your subscription, not extra usage',
     icon: 'automations',
     description: 'Spawn a focused child agent through the official Claude CLI — it draws from your subscription plan instead of metered extra usage, the one headless-Claude path that doesn\'t bill overage. `soma claude "<task>"` for a one-shot, or delegate with `model: \'claude-cli/sonnet\'`; read-only by default. The same release restores the memory layer a path bug had silently dropped for months, and hardens the release pipeline against leaked credentials.',

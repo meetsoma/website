@@ -45,6 +45,42 @@
       "tagline": "Batch delegations, system-prompt-file fix, release flow improvements, bundled desktop agent."
     },
     {
+      "version": "0.39.0",
+      "date": "2026-07-12",
+      "title": "Query any docs as clean markdown",
+      "tagline": "soma:refdocs discovers + fetches documentation from any platform — Cloudflare, React, Vercel, and 25+ others — as clean markdown, no scraping.",
+      "features": {
+        "added": [
+          "soma:refdocs — discover + fetch ANY external docs as clean markdown using the llms.txt convention. refdocs.find discovers the source, refdocs.tree shows structure, refdocs.fetch gets a page, refdocs.download bulk-fetches organized .md files.",
+          "soma:cf-docs on the hub — Cloudflare-specific docs cap family, no API key needed.",
+          "Pi runtime bumped to 0.80.6 — max thinking level, showCacheMissNotices, extension hooks (agent_settled, before_provider_headers), Claude Sonnet 5, GPT-5.6 family."
+        ],
+        "fixed": [
+          "Freebuff harness now uses JSON extraction — multi-paragraph + table responses work reliably."
+        ]
+      }
+    },
+    {
+      "version": "0.40.0",
+      "date": "2026-07-13",
+      "title": "Pi ecosystem — extensions search, model catalog, body parts",
+      "tagline": "Discover 5,231+ Pi packages from hub, inspect your agent's body parts, and see scoped models at boot — all new caps in v0.40.0.",
+      "features": {
+        "added": [
+          "soma:extensions.search — query 5,231+ Pi packages from chat, soma install npm:<pkg> installs them.",
+          "soma:agent.models — live catalog of 35 enabled models from settings.json (not the 474-model theoretical list).",
+          "soma:body.parts — auto-discovers 20+ body files with descriptions and update dates.",
+          "soma:agent.extensions — shows active extensions with capability counts.",
+          "{{active_extensions}} and {{enabled_models}} template variables — auto-injected at boot.",
+          "Delegate process-group kill — detached children no longer orphan grandchildren on timeout."
+        ],
+        "fixed": [
+          "soma-dev sync dev now syncs core/ — changes to body.ts and muscles.ts reach the runtime.",
+          "Cold muscle list truncated to count-only — saves ~500 tokens per session."
+        ]
+      }
+    },
+    {
       "version": "0.38.0",
       "date": "2026-06-26",
       "title": "Caselaw Researcher",
