@@ -16,8 +16,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [Unreleased] — 
 
 
-### Fixed
-- **promote Unreleased → 0.41.0, add fresh Unreleased section**
 ## [0.41.0] — 2026-07-17
 
 ### Added

@@ -1,8 +1,8 @@
 {
-  "version": "0.38.0",
-  "badge": "v0.38.0",
+  "version": "0.41.0",
+  "badge": "v0.41.0",
   "channel": "soma-beta",
-  "releaseDate": "2026-06-23",
+  "releaseDate": "2026-07-17",
   "releaseNotes": "/blog/",
   "_note": "Bumped on each public release. Authoritative homepage version badge (`src/pages/index.astro` imports this). Pair with: roadmap.json timeline entry + roadmap card in `roadmap/index.astro` if release is featurable. Should be part of the W2/W3 release-flow checklist; if you see this stale, update on the next ship."
 }
