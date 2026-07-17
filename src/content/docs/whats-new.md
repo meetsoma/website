@@ -27,39 +27,6 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ---
 
-## v0.41.0 — July 2026
-
-### 🆕 New caps
-
-*No new caps. Core delegation and release infrastructure.*
-
-### 🔄 Behavior changes
-
-- **Delegation sync mode works with any role size.** The `claude -p` ARG_MAX bug is fixed — child roles now load via `--system-prompt-file` with temp files instead of inline CLI args. No flag needed.
-- **Pi runtime bumped to 0.80.10.** AuthStorage→readStoredCredential. New models: Kimi K3, Grok 4.5, native Fable 5 thinking levels.
-- **Release flow improved.** Ship script auto-updates kanban version. Surface tests marked `@release-state` (don't block prepare).
-
-### 🧰 Workflows
-
-- **Batch delegations.** One `soma:agent.delegate()` call can now handle 3-5 tasks. See `body/delegate.md`.
-- **Post-delegation digest.** After every child: verify commits, parse MLR, update role AK. Muscle: `amps/muscles/delegation-digest.md`.
-
----
-
-## v0.40.0 — July 2026
-
-### 🆕 New caps
-
-*See v0.39.0 whats-new for existing caps.*
-
-### 🔄 Behavior changes
-
-- **Body lean-out — 62% reduction.** soul/voice/core_rules/body trimmed. System prompt ~26K→~17K tokens.
-- **Muscle archive — 147→63.** 56 dead muscles removed from state.json.
-- **OAuth billing fix.** Identity prepend prevents third-party classification.
-
----
-
 ## v0.39.0 — July 2026
 
 ### 🆕 New caps
