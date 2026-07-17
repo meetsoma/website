@@ -1,11 +1,15 @@
 {
-  "generated": "2026-07-17T06:59:35Z",
+  "generated": "2026-07-17T07:29:13Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
       "version": "Unreleased",
       "date": "",
-      "entries": {}
+      "entries": {
+        "added": [
+          "**add claude-file backend — file-based delegation (delegate.sh pattern)**"
+        ]
+      }
     },
     {
       "version": "0.41.1",
@@ -31,7 +35,6 @@
           "**Pi runtime: 0.80.6 → 0.80.10.** Four patch versions. `AuthStorage` was removed from the SDK"
         ],
         "fixed": [
-          "**Anthropic OAuth billing gate.** Soma's compiled system prompt now opens with",
           "**`/body` detector false positives.** Unreferenced body files now collapse into one warning",
           "**Delegate + Pi 0.80.x compat.** Delegate calls were hitting `ARG_MAX` passing the system prompt"
         ]

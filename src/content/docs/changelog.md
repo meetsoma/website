@@ -15,6 +15,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 
 ## [Unreleased] —
 
+
+### Added
+- **add claude-file backend — file-based delegation (delegate.sh pattern)**
 ## [0.41.1] — 2026-07-17
 
 ### Fixed
@@ -48,12 +51,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
   sandbox 106/106.
 
 ### Fixed
-- **Anthropic OAuth billing gate.** Soma's compiled system prompt now opens with
-  `"You are an expert coding assistant."` — matching Pi's default identity — before Soma's own
-  identity block. Freshly-issued OAuth tokens were hitting a `billing_error` on Anthropic's Beta
-  Sessions API because non-standard agent identities get classified as third-party harness usage.
-  May still need extra-usage billing enabled at claude.ai/settings/usage if Anthropic tightens
-  long-context classification further.
 - **`/body` detector false positives.** Unreferenced body files now collapse into one warning
   instead of one per file; backtick-quoted code and fenced blocks are stripped before `{{var}}`
   extraction so prose mentions stop triggering it; authoring scaffolds (`_*-template.md`) are
