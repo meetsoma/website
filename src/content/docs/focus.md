@@ -1,7 +1,8 @@
 ---
 title: "Focus"
-description: "Topic-driven session priming — boost relevant muscles, MAPs, and preloads automatically."
-section: "Workflows"
+description: "Seam-traced boot priming — focus the agent on a topic before the session starts."
+section: "Guide"
+updated: 2026-07-24
 order: 11
 ---
 

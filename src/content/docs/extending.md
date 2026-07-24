@@ -2,6 +2,7 @@
 title: "Extending Soma"
 description: "Skills, extensions, events, APIs — build on top of Soma."
 section: "Extending"
+updated: 2026-07-24
 order: 5
 ---
 

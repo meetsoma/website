@@ -9,12 +9,15 @@ order: 29
 
 *How to spawn Soma child agents that work in the background while you (or the parent Soma) keep going.*
 
-Soma has two ways to delegate work to a child agent:
+Soma has **three** ways to delegate work to a child agent:
 
 - **Synchronous** — `delegate(task)` from inside Soma. The parent blocks, the child runs in-process, you get back a summary + MLR. Single tool call. Good for small, bounded tasks where you want the answer right now.
-- **Background** — `delegate(task, background:true)` from inside Soma, or `soma children spawn <role> "<task>"` from your shell. The child launches in a detached terminal session and the parent returns immediately. Good for longer tasks, or tasks you want to watch while you keep working.
+- **Headless** — `delegate(task, headless:true)`. The child runs as a `soma -p` subprocess (print mode): no interactive terminal, completion signalled by **exit code**, with auto-retry + model fallback; output returns inline. Chain sequential steps with `chain:[{role,task},...]`. **This is the reliable, unattended path** — use it for productive/batch work you don't need to watch (running a cycle queue, mechanical edits). Because it's print mode, a broken project extension is isolated, not fatal.
+- **Background** — `delegate(task, background:true)`, or `soma children spawn <role> "<task>"` from your shell. The child launches in a *detached interactive terminal* (tmux/cmux) and the parent returns immediately. Use it when you want to **watch the child live** or steer it mid-run.
 
-This doc is about the background path.
+> **Which one?** Answer now → synchronous. Done reliably without watching → **headless**. Watch/steer live → background. (Reaching for `background` for unattended batch work is a common miss — it spawns an *interactive* session, so an unattended task can land on the shell. `headless` is the right tool there.)
+
+This doc covers the **background** path; `headless` is also documented in the `soma:agent.delegate` cap help under `## modes`.
 
 ## TL;DR
 
@@ -65,15 +68,75 @@ To watch live: tmux attach -t soma-child-7f3a91
 
 Running `tmux attach -t soma-child-7f3a91` in any terminal attaches you to the child's TUI. You can watch it work, type in it, or just `Ctrl-b d` to detach and leave it running.
 
+## Authoring roles (the children pattern)
+
+A role is a **durable specialist**, not a one-off prompt. You author it once, in
+`body/children/<role>.md`, and it gets smarter every time you use it. This is the
+difference between delegating *well* and pasting a fresh wall of instructions into
+every `task`.
+
+A role file is plain Markdown with frontmatter:
+
+```markdown
+---
+summary: One line — shows in the role list (delegate help).
+default-model: mistral/mistral-large-2512   # Free-tier best quality. mistral/ministral-8b-2512 for speed.
+                              # cohere/command-a-03-2025 for cheap alt (requires cohere-models.ts extension).
+                              # Set delegate.defaultModel in settings.json for a global default.
+max-tool-calls: 40
+max-cost-usd: 0.60
+inherits: []                       # protocols this role loads
+success: What "done" looks like for this role.
+---
+
+# <Role name>
+
+Who this specialist is, **where the relevant code/files live**, and the workflow
+they follow (e.g. REVIEW → PROPOSE → IMPLEMENT → VERIFY — named phases beat a vague
+"do the thing").
+
+## Accumulated Knowledge
+
+<!-- The footguns this role has hit, the traps that are locked in. The
+     sub-compiler injects THIS section into every spawn of the role. -->
+
+## Success Criteria
+
+The checklist the role verifies before reporting back.
+```
+
+**The one rule that makes roles compound:** the sub-compiler injects each role's
+`## Accumulated Knowledge` into *every* spawn. So when a child hits a footgun,
+write it into that section afterward — the next spawn starts already knowing it.
+Improve the role; pass only the **task** to `delegate()`. Don't re-paste standing
+context per job.
+
+Lean generic roles (`auditor`, `builder`, `verifier`, …) ship by default. Evolve
+them into named domain personas with explicit phase workflows as the work demands
+it. Scaffold a new one from `body/children/_child-template.md`. Run
+`delegate(help: true)` to see the roles this install has and a quick recap of
+this pattern.
+
 ## Picking a model
 
-`background:true` defaults to `claude-haiku-4-5` (fast + cheap). Override with the `model` param:
+`background:true` defaults to the following precedence:
+1. Explicit `model` arg
+2. Role frontmatter `default-model`
+3. `settings.json → delegate.defaultModel`
+4. Built-in: `mistral/ministral-8b-2512` (free)
+
+Override with the `model` param:
 
 ```
-delegate(task: "...", background: true, model: "sonnet")
-delegate(task: "...", background: true, model: "opus")
-delegate(task: "...", background: true, model: "claude-sonnet-4-6")
+delegate(task: "...", background: true, model: "mistral/mistral-large-2512")
+delegate(task: "...", background: true, model: "mistral/ministral-8b-2512")
+delegate(task: "...", background: true, model: "cohere/command-a-03-2025")
 ```
+
+**Premium models** (Claude, GPT-4o) require an active subscription or extra-usage billing.
+When available, aliases work: `sonnet`, `haiku`, `opus`.
+The `claude-cli/*` backend runs via the official `claude -p` CLI and draws from
+your Claude plan (not extra usage). See `body/models.md`.
 
 Aliases (`sonnet`, `haiku`, `opus`) are resolved before launch, so the child uses the same provider as the parent. Pass a fully-qualified id (`claude-sonnet-4-6`, `anthropic/claude-opus-4-7`, etc.) if you want explicit control.
 

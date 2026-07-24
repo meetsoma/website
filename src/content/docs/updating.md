@@ -1,6 +1,6 @@
 ---
-title: "Updating"
-description: "How to keep Soma up to date across projects."
+title: "Updating & Migration"
+description: "Keep Soma up to date across your projects."
 section: "Reference"
 order: 20
 ---

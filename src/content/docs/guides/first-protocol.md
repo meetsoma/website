@@ -1,10 +1,11 @@
 ---
 title: "Your First Protocol"
-description: "Turn a repeated correction into a permanent rule."
+description: "Turn a repeated correction into a permanent rule — from frustration to muscle memory."
 section: "Guide"
 order: 27
 ---
 
+# Your First Protocol
 
 <!-- tldr -->
 You correct the agent. It happens again. You write a protocol — a markdown file in `.soma/amps/protocols/` with frontmatter and rules. The agent reads it every session. The correction never happens again. 10 minutes, permanent effect.
@@ -98,14 +99,14 @@ type: protocol            # always "protocol"
 name: deploy-safety       # unique identifier — used by /pin, /kill
 status: active            # active | dormant | retired
 heat-default: warm        # starting temperature: cold, warm, or hot
-description: "..."        # ONE sentence — this is ALL the agent sees when warm
+description: "..."        # ONE sentence — the warm fallback when there's no ## TL;DR
 applies-to: [always]      # when this protocol applies
 created: 2026-04-04
 updated: 2026-04-04
 ---
 ```
 
-**The `description` is critical.** At warm temperature (the default), this single sentence is the only thing loaded into the agent's prompt. Make it count — specific and actionable, not vague.
+**The `description` is your warm fallback.** When a protocol has no `## TL;DR` (see below), this single sentence is what loads at warm temperature — so make it count: specific and actionable, not vague.
 
 ```yaml
 # Good — the agent knows exactly what to do
@@ -120,10 +121,10 @@ description: "Be careful when deploying."
 | Value | Starting Temp | What Loads | Use When |
 |-------|--------------|------------|----------|
 | `hot` | 8 | Full body (every rule) | Critical rules you never want missed |
-| `warm` | 3 | Description only (one sentence) | Most protocols — loads reminder, agent reads full body when relevant |
+| `warm` | 3 | `## TL;DR` digest (or `description` if none) | Most protocols — loads the gist; agent reads full body when relevant |
 | `cold` | 0 | Name listed, nothing loaded | Rarely needed protocols |
 
-**Start with `warm`.** The agent sees your description every session. When it encounters a deploy situation, it can read the full protocol on demand. Only use `hot` for rules that must be in the prompt at all times.
+**Start with `warm`.** The agent sees your `## TL;DR` (or `description` if there's none) every session. When it encounters a deploy situation, it can read the full protocol on demand. Only use `hot` for rules that must be in the prompt at all times.
 
 ### The TL;DR Section
 

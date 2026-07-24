@@ -2,6 +2,7 @@
 title: "Commands"
 description: "Slash commands, CLI flags, context warnings, the breath cycle."
 section: "Reference"
+updated: 2026-07-24
 order: 7
 ---
 

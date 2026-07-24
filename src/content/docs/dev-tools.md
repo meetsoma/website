@@ -2,6 +2,7 @@
 title: "Meta Dev-Tools"
 description: "The dev:* namespace: caps that ship with the dev tree, not user installs."
 section: "Reference"
+updated: 2026-07-24
 order: 13
 ---
 

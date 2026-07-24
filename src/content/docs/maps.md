@@ -1,8 +1,9 @@
 ---
 title: "MAPs"
-description: "Workflow templates — repeatable processes with scar tissue from real sessions."
-section: "Workflows"
-order: 12
+description: "My Automation Protocol Scripts — reusable workflow templates that tell the agent which muscles to load, which scripts to run, and in what order."
+section: "Reference"
+updated: 2026-07-24
+order: 10
 ---
 
 # MAPs — My Automation Protocol Scripts

@@ -1,7 +1,8 @@
 ---
 title: "Troubleshooting"
-description: "Common issues and fixes."
+description: "Common issues and fixes — install problems, model errors, broken sessions, and more."
 section: "Reference"
+updated: 2026-07-24
 order: 22
 ---
 

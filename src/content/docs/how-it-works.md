@@ -2,6 +2,7 @@
 title: "How It Works"
 description: "Breath cycle, identity, muscles, protocols, context management."
 section: "Core Concepts"
+updated: 2026-07-24
 order: 2
 ---
 

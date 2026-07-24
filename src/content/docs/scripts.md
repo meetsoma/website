@@ -1,7 +1,8 @@
 ---
-title: "Scripts & Audits"
-description: "Standalone tools for searching, auditing, scanning, and maintaining your .soma/ ecosystem."
+title: "Scripts"
+description: "Standalone tools that ship with Soma — codebase navigation, memory tracing, session focus, doc scraping, and more."
 section: "Reference"
+updated: 2026-07-24
 order: 9
 ---
 
@@ -281,6 +282,42 @@ soma-spell.sh .soma/amps/    # check everything
 ### git-identity-hook.sh
 
 Git pre-commit hook that validates your git identity matches `guard.gitIdentity` settings.
+
+### soma-reflect-eco.py (cross-.soma ecosystem OSINT)
+
+**Not the same as `soma reflect` above** — that one mines a single workspace's session logs; this one
+walks EVERY `.soma`/`.claude`/`.agents` memory root AND every git repo below a directory, greps a
+topic across all of them, and merges the results into one dated timeline. Answers "what happened to
+X while I was away?" across a multi-project workspace in one call instead of manual per-project
+grepping. Also does contract-drift detection: same-relative-path body files that differ across
+sibling `.soma` roots (silent divergence — e.g. two projects' `_memory.md` templates drifting apart
+with nothing catching it), plus missing-file gaps (a sibling has a file this root doesn't).
+
+```bash
+soma-reflect-eco.py "auth flow"                              # timeline across every repo/memory root
+soma-reflect-eco.py "X" --since 2026-07-01 --limit 50        # narrow by date
+soma-reflect-eco.py --list-roots                             # map discovered memory roots + repos
+soma-reflect-eco.py --drift                                  # body/*.md drift vs sibling .soma roots
+soma-reflect-eco.py --drift --all-roots --drift-scope amps/muscles  # full sweep, different dir
+```
+
+Agent-side: `soma:reflect.timeline`, `soma:reflect.roots`, `soma:reflect.drift`.
+
+### soma-steno.py (deliberation + outcome telemetry)
+
+Parses a session's JSONL transcript for two signals. **Hotspots**: ranks turns by thinking-token
+spikes — each spike marks a place no muscle/trait existed yet to shortcut the reasoning; a recurring
+theme across spikes is a muscle candidate. **Ratio**: outcome-per-token — `(writes + commits) / 10K
+tokens (output + thinking)`, logged automatically at every exhale via `state-log.sh`, making
+model-vs-model comparison objective instead of vibes.
+
+```bash
+soma-steno.py hotspots --top 8       # top 8 deliberation-heavy turns, ranked
+soma-steno.py ratio                  # outcome-per-token for the current session
+soma-steno.py both                   # both, default mode
+```
+
+Agent-side: `soma:seam.hotspots` (hotspots, on-demand); ratio runs automatically at exhale.
 
 ## Building Your Own Scripts
 

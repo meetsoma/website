@@ -2,6 +2,7 @@
 title: "Getting Started"
 description: "Install Soma, run your first session, understand the basics."
 section: "First Steps"
+updated: 2026-07-24
 order: 1
 ---
 
@@ -147,9 +148,9 @@ Created by `soma init` or on first run:
 │   ├── automations/         ← triggered actions
 │   ├── muscles/             ← learned patterns
 │   ├── protocols/           ← behavioral rules (17 ship by default)
-│   └── scripts/             ← developer tools (11 seeded on init)
+│   └── scripts/             ← developer tools (12 seeded on init)
 │       ├── soma-code.sh     ← codebase navigator
-│       ├── soma-seam.sh     ← concept tracing
+│       ├── soma-reflect.sh  ← session pattern mining
 │       ├── soma-focus.sh    ← session priming
 │       └── commands/        ← drop-in /soma commands
 │

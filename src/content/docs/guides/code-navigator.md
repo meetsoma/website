@@ -1,10 +1,11 @@
 ---
 title: "Code Navigator"
-description: "soma code — agent-first codebase navigator with auto-detect, progressive scan, hard timeouts, and 12-language map support. (s01-4d36c6: missing-from-manifest fix)"
+description: "soma code — map, find, refs, blast, structure, lines, replace, stats, files, types. Agent-first codebase navigator with auto-detect, progressive scan, hard timeouts, and 12-language map support."
 section: "Guide"
 order: 28
 ---
 
+# Code Navigator
 
 <!-- tldr -->
 `soma code` is the codebase navigator both you and the agent should reach for first. Maps file structure across **12 languages** (TS/JS, Rust, Python, Bash, CSS, Astro/Svelte/Vue, TOML, YAML, JSON, Markdown), auto-detects the project type from `cwd` markers (Cargo.toml → Rust, package.json → TS/JS, etc.), respects `.gitignore`, and never hangs the agent's session — every long search has a hard wall-clock timeout (30s default) plus stutter detection. Uses `ripgrep` when installed, falls back to `grep` transparently. **v3.1+ (s01-4d36c6)** adds rg type aliases (`type=rust` / `t=cpp` delegates to ripgrep's 215 built-in language types), per-command help with examples, fuzzy command correction (`fnd → find`), and three new subcommands: `stats` (count without listing), `files` (what would be searched), `types` (list aliases).
@@ -124,7 +125,6 @@ Directory tree with file sizes. Respects `.gitignore`. Use for orientation befor
 ```bash
 $ soma code structure repos/agent/extensions
 extensions/
-├── _tool-template.ts         2.1K
 ├── soma-boot.ts            132.0K
 ├── soma-breathe.ts          45.1K
 ├── soma-addons/             10.2K  (code, body, browser, docs)

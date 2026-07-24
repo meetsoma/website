@@ -2,6 +2,7 @@
 title: "AMPS"
 description: "The four layers that make Soma grow — Automations, Muscles, Protocols, Scripts. How they connect, how they evolve, and why they replace flat config files."
 section: "Core Concepts"
+updated: 2026-07-24
 order: 2.8
 ---
 

@@ -2,7 +2,7 @@
 title: Browser Setup for Soma
 description: Configure Soma to drive a browser via CDP — Chrome, Brave, Edge, Arc, Chromium, Firefox
 status: preflight
-updated: 2026-06-11
+updated: 2026-07-24
 ---
 
 # Browser Setup

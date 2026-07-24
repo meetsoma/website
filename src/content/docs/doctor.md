@@ -1,7 +1,8 @@
 ---
 title: "Doctor & Migration"
-description: "Project health checks, version migration, keeping .soma/ current."
+description: "Project health checks, version migration, and how Soma keeps your .soma/ current."
 section: "Reference"
+updated: 2026-07-24
 order: 8.5
 ---
 

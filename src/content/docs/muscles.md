@@ -1,6 +1,6 @@
 ---
 title: "Muscles"
-description: "Learned patterns, digest system, heat tiers, writing your own."
+description: "Learned patterns, TL;DR system, heat tiers, writing your own."
 section: "Core Concepts"
 order: 5.5
 ---

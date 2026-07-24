@@ -1,8 +1,8 @@
 ---
 title: Tools
-description: Soma tools — registration, configuration via _tools.md, and the bundled set
+description: Soma tools — registration, configuration via settings.json, and the bundled set
 status: active
-updated: 2026-06-21
+updated: 2026-07-24
 ---
 
 # Tools

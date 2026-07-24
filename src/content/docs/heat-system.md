@@ -1,7 +1,8 @@
 ---
 title: "Heat System"
-description: "How Soma decides what to load — temperature-based relevance that adapts through use."
+description: "How Soma decides what to load — temperature-based relevance."
 section: "Core Concepts"
+updated: 2026-07-24
 order: 3.5
 ---
 

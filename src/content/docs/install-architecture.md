@@ -1,8 +1,9 @@
 ---
 title: "Install Architecture"
-description: "How Soma installs, updates, and manages versions."
+description: "How Soma installs, updates, and manages versions — the full flow from npm to runtime."
 section: "Reference"
-order: 21
+updated: 2026-07-24
+order: 20
 ---
 
 # Install Architecture

@@ -2,6 +2,7 @@
 title: "Configuration"
 description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior."
 section: "Reference"
+updated: 2026-07-24
 order: 6
 ---
 

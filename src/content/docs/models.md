@@ -1,8 +1,9 @@
 ---
-title: "Models"
-description: "Model configuration, provider setup, custom endpoints."
-section: "Reference"
-order: 19
+title: "Models & Providers"
+description: "Set up API keys, choose models, configure custom providers like Ollama, OpenAI, and more."
+section: "First Steps"
+updated: 2026-07-24
+order: 1.5
 ---
 
 <!-- tldr -->

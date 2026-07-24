@@ -1,7 +1,8 @@
 ---
 title: "Hub"
-description: "Install, share, and discover community content."
+description: "Install, share, and discover community content — protocols, muscles, scripts, templates, and automations."
 section: "Core Concepts"
+updated: 2026-07-24
 order: 5.1
 ---
 

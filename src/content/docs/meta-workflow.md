@@ -1,8 +1,9 @@
 ---
 title: "Meta-Workflow"
-description: "The operating cadence — three nested loops, a self-amending workflow, and how to adopt it in an existing project."
-section: "Workflows"
-order: 10.5
+description: "The operating cadence — how work flows through a project across many sessions. Three nested loops, a self-amending workflow, and how to adopt it in an existing project."
+section: "Reference"
+updated: 2026-07-24
+order: 11
 ---
 
 # Meta-Workflow — the operating cadence

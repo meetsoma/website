@@ -2,6 +2,7 @@
 title: "Identity"
 description: "Discovery, layering, customization, project vs global."
 section: "Core Concepts"
+updated: 2026-07-24
 order: 2.5
 ---
 
