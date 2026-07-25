@@ -16,8 +16,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 ## [Unreleased] —
 
 
-### Added
-- **add claude-file backend — file-based delegation (delegate.sh pattern)**
+## [0.41.2] — 2026-07-17
+
+**Maintenance release — nothing user-facing.** These notes are written retroactively: v0.41.2 shipped
+without any, because the step that promotes pending entries into a version section failed silently and the
+release went out anyway. That step now fails loudly instead.
+
+The only code change was an internal delegation backend that isn't yet reachable from the tool set — so
+there is nothing here to try. It will be listed in the release that wires it up.
+
 ## [0.41.1] — 2026-07-17
 
 ### Fixed

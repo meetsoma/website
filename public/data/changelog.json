@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-17T07:29:13Z",
+  "generated": "2026-07-25T15:45:59Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
@@ -7,9 +7,81 @@
       "date": "",
       "entries": {
         "added": [
-          "**add claude-file backend — file-based delegation (delegate.sh pattern)**"
+          "**The shipped harness now tells every agent to cite only from files it has open.** One line in",
+          "**Pi runtime bumped 0.80.6 → 0.82.0** — four releases in one step (0.80.10, 0.81.0, 0.81.1,",
+          "**Two long-skipped patches recovered — both had been parked on a false premise.** Site E",
+          "**Test coverage for `soma:reflect.*` (new file) + `soma:seam.hotspots`** — both cap families",
+          "**`soma:agent.delegate` model gate — no more silent unconfigured-model spawns** (closes a",
+          "**`soma:reflect.drift` — contract-drift detection across sibling `.soma` roots (distro #6)** —",
+          "**soma:seam.hotspots — deliberation telemetry cap (distro #2)** — `soma:seam.hotspots` wraps",
+          "**`soma:reflect.*` — cross-.soma ecosystem OSINT timeline** (`soma:reflect.timeline` + `.roots`). Discovers every `.soma`/`.claude`/`.agents` memory root and git repo below a directory, greps a topic, dates hits (frontmatter > filename > mtime), merges with `git log --grep` across every repo, emits one chronological timeline. Answers \"what happened to X while I was away?\" in one call instead of manual multi-root archaeology. (studio soma, s01-6404a9)",
+          "**GAP-1 T1 — agent announces resolved connection identity** — `_shared/announce.ts` (`buildAgentHello()`) emits `{mode, channel, somadianWs, bridgeWs, agentId, protoVer}` as a relay event on bridge connect, so the Somaverse chat pane binds to the agent's actual resolved mode/channel instead of independently re-guessing from `window.location` (the twin-resolver bug behind the TUI↔chat-pane connection gap).",
+          "**outcome-per-token ratio logged at every exhale (distro proposal #5, s01-6404a9)** — `soma-breathe.ts`'s rotation path now computes `artifacts (writes+commits) / 10K tokens (output+thinking)` from the session JSONL and appends it to `STATE.md`'s activity log via a newly-bundled `state-log.sh`. Makes model comparison objective (same body, different engine, compare ratios) instead of vibes. `soma-steno.py` + `state-log.sh` now ship in `BUNDLED_SCRIPTS` (fresh `soma init` gets both).",
+          "**auto-log syncs to STATE.md activity log**",
+          "**add soma:body.index — list body files with frontmatter**",
+          "**Delegate sync path: dynamic provider discovery** — `KNOWN_PROVIDERS` changed from hardcoded 7 providers to `getBuiltinProviders()` (35 from Pi's registry) + 3 extras. Mistral, Groq, Cohere, OpenCode and 25+ other providers now resolve in the sync delegate path. Previously all non-Claude API models silently failed with \"all chain entries exhausted.\"",
+          "**`soma:agent.intern` cap** — shell out to external coding CLIs (cursor-agent, agy, gemini). Fast offload for tasks that fit a shell-out pattern. args: {backend, prompt, model?, timeout_s?}. `child.unref()` added to detached spawn for clean event-loop exit.",
+          "**`soma:models.openrouter` cap** — query OpenRouter's public API (342 models). Search by keyword, exact match, full detail with context/pricing/capabilities, recently added, free-only, or list providers. Each result includes the OpenRouter page URL.",
+          "**`dev-cohere-models` extension** — registers Cohere models (command-a-plus, north-mini-code-1-0) via Pi's `registerProvider()` API. Native Pi integration."
+        ],
+        "removed": [
+          "**The vendored `edit-diff.js` override — deleted, not re-forked.** Soma carried a full-file fork of Pi's"
+        ],
+        "fixed": [
+          "**Two unit suites were failing, and one of them had never tested what it claimed.**",
+          "**The activity logger leaked a blank line on every run — found by finally running it.** Rebuilding the",
+          "**STATE.md's activity log had eight writers and, on a default install, none of them had ever written a",
+          "**A test that had been failing for weeks while asserting the absence of a deliberately-deleted line.**",
+          "**Context stacking shipped inert — a child's declared muscles were never delivered, and nothing",
+          "**repair upstream-monitor — it reported \"0 behind\" for months while blind**",
+          "**Two long-standing TypeScript errors nobody could see — and the gate gap that hid them.**",
+          "**Statusline session cost silently under-counted spend** — the footer's `$x.xx` summed",
+          "**`test-delegate-headless.sh` — 40-day-stale expected values** — `changelog_curator`'s",
+          "**`soma-dev sync docs` could leak untracked files to the public website** — the sync loop copied",
+          "**`docs/scripts.md` + `docs/getting-started.md` drift** — `soma-reflect-eco.py` (cross-.soma OSINT",
+          "**`.git-hooks/post-commit` CHANGELOG dedup false-negative** — the auto-append hook's dedup check",
+          "**Groq `prompt_cache_key` 400 error via headless delegation** — root cause: `detectCompat()` in",
+          "**Delegate sync path crash for non-claude-cli models (\"AgentClass is not a constructor\")** — under",
+          "**`runScript` hardcoded `bash` — `.py` scripts misparsed as shell** — the shared script-runner (`extensions/_shared/script-resolver.ts`, used by `seam.ts`/`docs.ts`/`reflect.ts`) always spawned `bash <path>`, fine for the `.sh` scripts it was built for but silently wrong for `soma-reflect-eco.py`: bash read Python line-by-line as shell, and `import os` resolved to macOS's ImageMagick `import` binary instead of erroring loudly. `soma:reflect.timeline` threw ImageMagick usage text instead of results. Fixed: interpreter picked by extension (`.py` → `python3`, else `bash`).",
+          "**dev was unbuildable — 2 committed syntax errors**",
+          "**allowlist cohere-models.ts in pre-push extension check**",
+          "**surface 'model id not in registry' instead of 'chain exhausted'**",
+          "**background claude-cli passed --system-prompt-file content not path**",
+          "**remove incorrect jiti alias patch — original was already longest-first**",
+          "**add jiti-alias-longest-match patch + register in manifest**",
+          "**remove double commas re-introduced in 4df8f257**",
+          "**repair STATE.md awk trim — no next in END block**",
+          "**trim STATE.md activity log to 15 max entries**",
+          "**dynamic KNOWN_PROVIDERS from Pi registry**",
+          "**add missing providers to sync-path model resolver**",
+          "**Meta-tool listing no longer dumps 100+ cap names on error** — unknown-cap errors now show families and a drill hint instead of every cap as one comma line. Family drill path (`soma({op:'call', cap:'soma:browser'})`) shows compact 5-line view instead of 22-line flat dump.",
+          "**Browser bridge-down errors include recovery steps** — tells you to run `soma-bridge.sh start` or start Chrome with `--remote-debugging-port=9333`.",
+          "**Double-comma syntax error in meta-tool factory** — Python insertion of pattern field created `],",
+          "**OAuth \"billing check failed\" on bare `soma` — root-caused + resolved.** The failure was a user-global",
+          "**Slot-map ruler was lying** — FILE_BACKED slots measured `statSync().size` ignoring `lazy: true`.",
+          "**Slot-map audit false-positive** — the lazy-tag string suffix on `Slot.source` caused",
+          "**`soma-dev switch <ref>` abort on stale-tag fetch** — `git fetch meetsoma --tags` rejected with",
+          "**readStoredCredential→AuthStorage revert** for Pi 0.80.6 compat",
+          "**Remove dup identity line** from `system-core.md`",
+          "**2 stale dist files untracked** from git (`dist/prompts/system-core.md`,"
+        ],
+        "changed": [
+          "**Meta-tool listing: ultra-compact progressive disclosure** — `soma(op='list')` now shows 109 caps in ~18 lines (one per family, grouped CORE/SUPPORT). Family drill (`soma:browser`) shows 5-line compact view with hot caps + workflow patterns + remaining count. Error messages show families, not 100+ cap names. Full dump available with `{verbose:true}`.",
+          "**Family drill views include usage patterns** — each family now defines common workflows (e.g. `navigate({url}) → wait → xray → click/fill → evaluate` for browser) shown in the compact drill.",
+          "**Browser error messages include recovery command** — bridge-down errors now say `Run 'soma-bridge.sh start' (bridge) or Chrome --remote-debugging-port=9333 (browser)` instead of vague \"start the bridge.\"",
+          "**systemPrompt.mode setting** — `soma|pi|custom` mode for extension boot ownership.",
+          "**system-prompt.md template** for custom mode",
+          "**scripts_table cap** — `settings.scripts.maxInPrompt` (default 40), sorts by usage, unused tail",
+          "**Boot-time external-extension conflict detection** — on every boot, diffs the real external-extension",
+          "**Lazy-load `mode` column in `soma:body.slots`** — dedicated column shows `lazy`/`full`/`-` per slot,",
+          "CHANGELOG promotion hardened for v0.41.2 (prior session)"
         ]
       }
+    },
+    {
+      "version": "0.41.2",
+      "date": "2026-07-17",
+      "entries": {}
     },
     {
       "version": "0.41.1",

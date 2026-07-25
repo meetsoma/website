@@ -14,6 +14,17 @@
       }
     },
     {
+      "version": "0.41.2",
+      "date": "2026-07-17",
+      "title": "Maintenance",
+      "tagline": "A release-plumbing update with no user-facing changes — listed for completeness, so the version history has no silent gaps.",
+      "features": {
+        "fixed": [
+          "Release notes no longer go missing — the step that promotes pending entries into a version section used to fail without saying so, which is why this release originally shipped with no notes at all. It now fails loudly instead."
+        ]
+      }
+    },
+    {
       "version": "0.41.1",
       "date": "2026-07-17",
       "title": "Reasoning + Upgrade Reliability",
