@@ -27,6 +27,31 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ---
 
+## v0.42.1 — July 2026
+
+### 🐛 Bugs you can stop stepping around
+
+- **`soma:browser.render` with `format:'markdown'` and no `selector` now actually converts.** It was
+  silently reading `document.body.innerText` (plain rendered text, no HTML) instead of `outerHTML`,
+  so the converter had nothing to clean — every real-world call reported `format:"markdown"` while
+  returning near-0% "reduction" and full page chrome. Fixed; verified live (89050 → 13215 chars,
+  −85.2%, real content preserved, nav/footer gone). A page's own in-content `<header>`/`<nav>`
+  (an article's title + breadcrumbs) also survives now instead of being stripped identically to
+  global site chrome.
+- **A `claude-cli/*` role's `max-cost-usd` budget is now actually enforced.** It read the wrong
+  frontmatter key and had two separate falsy-zero bugs that silently turned an explicit `0` into
+  "no cap." If your role declares a real number, it's held to it now — including a genuine `0` hard
+  cap (never draw billed overage). Only applies to `default-model: claude-cli/*`; every other backend
+  (mistral/groq/cohere) still has no dollar-cost enforcement, only `max-tool-calls`.
+
+### 📁 New files / locations
+
+- **`_boot.md` shows a last-session/last-reflection breadcrumb** (`{{last_session_ref}}` /
+  `{{last_mlx_ref}}`) on a fresh boot with no preload loaded — a pointer to what's still on disk,
+  not a summary. Zero-cost on a brand-new project with no `memory/` history yet.
+
+---
+
 ## v0.42.0 — July 2026
 
 ### 🆕 New caps

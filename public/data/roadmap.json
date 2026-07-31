@@ -14,6 +14,19 @@
       }
     },
     {
+      "version": "0.42.1",
+      "date": "2026-07-31",
+      "title": "Real Markdown Conversion + Real Budget Caps",
+      "tagline": "The markdown converter now actually converts, and a role's dollar budget now actually holds.",
+      "features": {
+        "fixed": [
+          "browser.render(format:\"markdown\") now actually converts the page instead of returning unconverted text — real ~85% size reduction, verified live.",
+          "A delegated role's dollar budget is now genuinely enforced instead of silently ignored, including a real zero-cost hard cap for free-tier-only roles.",
+          "A page's own title and navigation survive markdown conversion instead of being stripped like site chrome."
+        ]
+      }
+    },
+    {
       "version": "0.42.0",
       "date": "2026-07-31",
       "title": "Earned Command Trust + Smarter Delegation",

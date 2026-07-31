@@ -1,11 +1,22 @@
 {
-  "generated": "2026-07-31T10:09:31Z",
+  "generated": "2026-07-31T12:01:32Z",
   "source": "CHANGELOG.md",
   "versions": [
     {
       "version": "Unreleased",
       "date": "",
       "entries": {}
+    },
+    {
+      "version": "0.42.1",
+      "date": "2026-07-31",
+      "entries": {
+        "fixed": [
+          "**The default shipped body templates never used v0.42.0's own new features.** A fresh",
+          "**`soma:browser.render`'s `format:'markdown'` silently returned unconverted plain text on",
+          "**Delegated children's `max-cost-usd` budget was silently unenforced for every"
+        ]
+      }
     },
     {
       "version": "0.42.0",
