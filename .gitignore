@@ -16,3 +16,6 @@ logos/iterations/
 logos/preview.html
 preview-*.html
 *.swp
+
+# Wrangler CLI local state (s01-d4e65e — appeared during v0.42.1 deploy attempts)
+.wrangler/
