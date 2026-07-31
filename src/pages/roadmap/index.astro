@@ -5,6 +5,20 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import Icon from '../../components/icons/SomaIcons.astro';
 import RoadmapTimeline from '../../components/islands/RoadmapTimeline.tsx';
 import HeroTitle from '../../components/HeroTitle.astro';
+import roadmapData from '../../../public/data/roadmap.json';
+
+// ─── Shipping Soon ────────────────────────────────────────────
+// Read from public/data/roadmap.json at BUILD time. This section used to be
+// hardcoded markup, which is how it came to advertise three niche templates as
+// "shipped" that never existed, while under-reporting async comms that had
+// actually shipped — nothing re-verified it because there was nothing to verify
+// against. Every entry now carries a `cycle` pointer and test-release-surfaces.sh
+// fails on a claim with no plan behind it. Curate at release time (RELEASE-FLOW W1).
+// Imported, not read from disk: Vite resolves this against the real source file at
+// build time. (A `new URL(..., import.meta.url)` read resolved one directory too high
+// during the Astro build and hard-failed the page — s01-016071.)
+const shippingSoon: { title: string; blurb: string; status: string; cycle: string }[] =
+  (roadmapData as any).shippingSoon ?? [];
 
 // ─── Recently Shipped ────────────────────────────────────────────────
 // Strategic landmark releases, newest first. Shown as an auto-advancing
@@ -382,48 +396,15 @@ function formatDate(d?: string): string {
     <section class="section">
       <SectionHeader title="Shipping Soon" />
       <div class="progress-list">
-        <div class="progress-item">
-          <span class="progress-dot active"></span>
-          <div>
-            <strong>Somaverse public beta</strong>
-            <p>Open registration, team workspaces, pane drag-and-drop. Visual workspace for your agent — already live at somaverse.ai.</p>
+        {shippingSoon.map((item) => (
+          <div class="progress-item">
+            <span class={`progress-dot${item.status === 'in-progress' ? ' active' : ''}`}></span>
+            <div>
+              <strong>{item.title}</strong>
+              <p>{item.blurb}</p>
+            </div>
           </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot active"></span>
-          <div>
-            <strong>Niche templates</strong>
-            <p>Next.js, Rust, Python ML shipped. Go, Laravel, Astro, React Native, Monorepo planned. Each template shapes the agent for your stack.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot active"></span>
-          <div>
-            <strong>CLI convergence</strong>
-            <p>Reduce wrapping around the Pi engine. Let upstream flags pass through cleanly. Persistent model switching already shipped — more commands coming.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot"></span>
-          <div>
-            <strong>Recall memory</strong>
-            <p>Graph-backed persistent memory. Cross-session knowledge. The agent remembers patterns, decisions, and context across projects.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot"></span>
-          <div>
-            <strong>Content versioning</strong>
-            <p>Know when hub protocols update. Diff before upgrading. Never lose your customizations to a hub sync.</p>
-          </div>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot"></span>
-          <div>
-            <strong>Async agent comms</strong>
-            <p>Soma reaches you when decisions are needed. File-based inbox already works. Push notifications coming.</p>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
 

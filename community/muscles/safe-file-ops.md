@@ -8,7 +8,7 @@ triggers: [write, delete, file-ops, overwrite, safety, file-operations, read, ed
 tags: [safety, files, editing, guard, precision]
 applies-to: [any]
 created: 2026-03-10
-updated: 2026-07-13
+updated: 2026-07-31
 tools: [soma-refactor.sh, soma-code.sh, soma-verify.sh]
 version: 1.0.0
 author: meetsoma

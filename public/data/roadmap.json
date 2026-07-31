@@ -1254,5 +1254,38 @@
       },
       "tagline": "Soma's first breath — 9 core modules, 4 extensions, logo through 36 SVG iterations."
     }
+  ],
+  "shippingSoonNote": "HAND-CURATED. Rendered by src/pages/roadmap/index.astro (was hardcoded markup until s01-016071). Every entry MUST carry a resolvable `cycle` — test-release-surfaces.sh fails on a claim with no plan behind it. Curate at release time; see RELEASE-FLOW.md W1.",
+  "shippingSoon": [
+    {
+      "title": "Somaverse public beta",
+      "blurb": "Open registration, team workspaces, and pane drag-and-drop. The visual workspace for your agent — already live at somaverse.ai.",
+      "status": "in-progress",
+      "cycle": "releases/cycles/somaverse-connection"
+    },
+    {
+      "title": "Async agent comms",
+      "blurb": "Soma reaches you when a decision is needed. The file-based inbox works today — a delegated child can already write a report straight to its parent. Push notifications next.",
+      "status": "in-progress",
+      "cycle": "releases/cycles/child-parent-comms"
+    },
+    {
+      "title": "CLI convergence",
+      "blurb": "Less wrapping around the Pi engine. Upstream flags pass through cleanly, so the commands you already know keep working.",
+      "status": "in-progress",
+      "cycle": "releases/cycles/pi-native-simplification"
+    },
+    {
+      "title": "Desktop app — signed builds, every platform",
+      "blurb": "A native desktop Soma with signed builds and DMG distribution, plus Windows and Linux.",
+      "status": "in-progress",
+      "cycle": "cycles/product/01-soma-desktop-app"
+    },
+    {
+      "title": "Voice, as an install",
+      "blurb": "Speak to your agent and hear it answer. The speaking half works today; listening is still in progress. Ships as an optional install so the audio stack stays opt-in.",
+      "status": "planned",
+      "cycle": "releases/cycles/voice-as-extension"
+    }
   ]
 }
