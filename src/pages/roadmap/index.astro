@@ -34,6 +34,16 @@ const shippingSoon: { title: string; blurb: string; status: string; cycle: strin
 // still renders cleanly (see v0.20.0 / v0.22.0 / v0.24.0 / v0.26.0 below).
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string; image?: string }[] = [
   {
+    name: 'Earned command trust + delegation through files, not fragile arguments',
+    icon: 'protocols',
+    description: 'guard.trust lets Soma stop re-asking for commands you\'ve already approved three times in a project (30-day expiry, per directory — never for destructive commands). `soma:agent.claude` delegates large tasks through a file contract instead of a command-line argument, removing a silent length ceiling, and `soma:agent.fold` reads what a delegated child noticed about its own role and feeds it back in. Plus a graduated keepalive ladder and real markdown conversion for fetched docs (~82% smaller than raw HTML).',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.42.0',
+    date: '2026-07-31',
+    image: '/images/roadmap/earned-trust-delegation.svg',
+  },
+  {
     name: '5,231+ extensions now cross-compatible — Pi ecosystem search + install',
     icon: 'extensions',
     description: 'Every extension, skill, theme, and prompt on pi.dev is now cross-compatible with Soma. `soma:extensions.search` queries the full 5,231+ package catalog from inside a session. `soma install npm:<package>` installs any of them with one command. `soma:agent.models` shows your enabled models live from settings. `soma:body.parts` auto-discovers your project and platform body files. Plus: the headless delegate hang (stuck TUI, couldn\'t ESC) is fixed with process-group kill, and cold muscle lists no longer dump 117 names into every session.',

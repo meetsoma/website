@@ -2,7 +2,7 @@
 title: Anthropic Long-Context (1M) Billing
 description: How Sonnet 4.6's 1M context tier works under OAuth, and what to enable on the account vs the client.
 ---
-updated: 2026-07-12
+
 
 # Anthropic Long-Context (1M) Billing
 

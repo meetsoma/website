@@ -14,6 +14,24 @@
       }
     },
     {
+      "version": "0.42.0",
+      "date": "2026-07-31",
+      "title": "Earned Command Trust + Smarter Delegation",
+      "tagline": "Soma stops re-asking for commands you already approved, and delegates big tasks through files, not fragile arguments.",
+      "features": {
+        "added": [
+          "guard.trust — approve the same command 3 times in a project and Soma stops asking for it (30-day expiry, per directory). Never applies to destructive commands like rm -rf or force-push.",
+          "Delegate large tasks through a file, not an argument — soma:agent.claude removes the length ceiling that used to fail big prompts silently.",
+          "Children's reflections feed back into how they work — soma:agent.fold reads what a delegated child noticed about its own role and proposes improvements.",
+          "A mid-session check-in before a long session winds down, instead of running cold to the end (the keepalive ladder)."
+        ],
+        "fixed": [
+          "Streamed prompts relayed through the bridge were silently rejected — now they go through.",
+          "The dangerous-command guard no longer flags safe commands just for containing 'rm' (platform, confirm, terraform, perform)."
+        ]
+      }
+    },
+    {
       "version": "0.41.2",
       "date": "2026-07-17",
       "title": "Maintenance",
@@ -55,22 +73,6 @@
       "tagline": "Batch delegations, system-prompt-file fix, release flow improvements, bundled desktop agent."
     },
     {
-      "version": "0.39.0",
-      "date": "2026-07-12",
-      "title": "Query any docs as clean markdown",
-      "tagline": "soma:refdocs discovers + fetches documentation from any platform — Cloudflare, React, Vercel, and 25+ others — as clean markdown, no scraping.",
-      "features": {
-        "added": [
-          "soma:refdocs — discover + fetch ANY external docs as clean markdown using the llms.txt convention. refdocs.find discovers the source, refdocs.tree shows structure, refdocs.fetch gets a page, refdocs.download bulk-fetches organized .md files.",
-          "soma:cf-docs on the hub — Cloudflare-specific docs cap family, no API key needed.",
-          "Pi runtime bumped to 0.80.6 — max thinking level, showCacheMissNotices, extension hooks (agent_settled, before_provider_headers), Claude Sonnet 5, GPT-5.6 family."
-        ],
-        "fixed": [
-          "Freebuff harness now uses JSON extraction — multi-paragraph + table responses work reliably."
-        ]
-      }
-    },
-    {
       "version": "0.40.0",
       "date": "2026-07-13",
       "title": "Pi ecosystem — extensions search, model catalog, body parts",
@@ -87,6 +89,22 @@
         "fixed": [
           "soma-dev sync dev now syncs core/ — changes to body.ts and muscles.ts reach the runtime.",
           "Cold muscle list truncated to count-only — saves ~500 tokens per session."
+        ]
+      }
+    },
+    {
+      "version": "0.39.0",
+      "date": "2026-07-12",
+      "title": "Query any docs as clean markdown",
+      "tagline": "soma:refdocs discovers + fetches documentation from any platform — Cloudflare, React, Vercel, and 25+ others — as clean markdown, no scraping.",
+      "features": {
+        "added": [
+          "soma:refdocs — discover + fetch ANY external docs as clean markdown using the llms.txt convention. refdocs.find discovers the source, refdocs.tree shows structure, refdocs.fetch gets a page, refdocs.download bulk-fetches organized .md files.",
+          "soma:cf-docs on the hub — Cloudflare-specific docs cap family, no API key needed.",
+          "Pi runtime bumped to 0.80.6 — max thinking level, showCacheMissNotices, extension hooks (agent_settled, before_provider_headers), Claude Sonnet 5, GPT-5.6 family."
+        ],
+        "fixed": [
+          "Freebuff harness now uses JSON extraction — multi-paragraph + table responses work reliably."
         ]
       }
     },

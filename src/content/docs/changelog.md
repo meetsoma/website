@@ -11,19 +11,245 @@ All notable changes to the Soma agent are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follows [Semantic Versioning](https://semver.org/).
 
+**Entries are lean: one or two lines naming the fix, change, or addition, and its effect on you.**
+Root cause, diagnosis, what it cost and how it was tested are kept — in the project's internal
+`.soma/` logs, not here. This file answers *what changed for me?*; the logs answer *why, and how*.
+
+<!-- CONVENTION (s01-dcd604, Curtis): LEAN entries. No storytelling.
+     If an entry exceeds ~3 lines, or contains "because" / "which is why" / "it cost", it is a
+     session-log entry in a CHANGELOG costume — cut it and MOVE the remainder to
+     .soma/memory/sessions/, .soma/memory/mlx/, or the owning cycle. Move, never delete.
+     WHO UPDATES: .soma/body/children/changelog_curator.md v0.2.0 owns this rule; that role
+     previously mandated the opposite ("write paragraphs, ~3-5 sentences") and produced a 497-line
+     [Unreleased]. Historical sections below still carry the old verbose style. -->
+
 ---
 
-## [Unreleased] —
+## [Unreleased]
 
+<!-- Entries accumulate here and get promoted to a versioned section on release. -->
+
+## [0.42.0] — 2026-07-31
+
+### Fixed
+
+- **Relayed prompts were rejected while streaming** — bridge-connect passed Pi's inner option
+  name (`streamingBehavior`) on the extension surface, which takes `deliverAs`, so every relayed
+  `prompt` failed. `steer` was unaffected, which is why it went unnoticed.
+
+- **String.repeat crashed the whole TUI on a narrow pane**
+
+- **Dangerous-command guard fired on words containing `rm`** — `platform`, `confirm`, `terraform`,
+  `perform`. Read-only commands in those directories no longer prompt "could cause data loss".
+
+- **This file no longer repeats itself.** 363 bullet lines that had been stamped across every
+  historical section are gone, and entries are now lean — one or two lines naming a change and its
+  effect on you. The diagnosis and cost behind each one moved to the project's internal logs.
+
+### Added
+
+- **`guard.trust` — earned, scoped command trust.** Approve the same command 3× in a project and the
+  guard stops asking (30-day expiry, per-directory). Never applies to `rm -rf`, force-push,
+  `reset --hard`, `clean -f`, or root-path truncation. Configure via
+  `guard.trust.{enabled,threshold,ttlDays}`; ledger at `~/.soma/state/guard-trust.json`.
+
+### Added
+
+- **`{{parent_inbox}}` slot** — a delegated child can drop a report letter into its parent's inbox
+  (Stage 1, child-parent-comms).
+
+- **`{{last_mlx}}` / `{{last_preload}}` / `{{last_session}}` / `{{last_note}}` memory slots** — a
+  preload can now name the artifacts it was written from.
+
+- **Graduated keepalive ladder, configured by `body/_keepalives.md`** — pings 1-2 stay quiet, 3
+  triggers a mid-session reflection, 4 winds down, 5 is the final call. Rungs are editable content;
+  with no template present the behaviour is unchanged.
+
+- **`soma:agent.fold` — the MLR drain is now callable.** Reads children's reflections and proposes
+  amendments to their role definitions. Dry by default: it proposes, it doesn't rewrite.
+
+- **Real HTML→markdown for `refdocs` and `browser`** — `format: "markdown"` returns markdown instead
+  of raw HTML. ~82% smaller output on a real page, no new dependencies.
+
+### Fixed
+
+- **Child liveness in `soma:agent.list`** — dead children no longer sit at `running` for hours, a
+  child that died shows `ended?` rather than `completed`, and a live child that has shelled out is no
+  longer reported dead. Covered by `tests/test-tmux-alive.sh`.
+
+- **`soma:agent.intern` `backend: 'agy'` resolves its binary via `PATH`**, like the `cursor` and
+  `gemini` backends, instead of an absolute path under one developer's home.
+
+- **Child prompts get their stacked context, once** — roles declaring `context:` had their resolved
+  files dropped by the shipped `_child.md`, and the template's own doc-comment was substituted too,
+  giving every child a second garbled copy of task/soul/voice/context (up to 20K per spawn). Slot
+  mismatches now warn in both directions.
+
+- **`soma:agent.claude` is registered and callable** — delegate a Claude child through a contract file
+  instead of argv, so a large prompt can't fail on argument length. `soma:agent.claude_harvest({runDir})`
+  reads the report, returning not-finished while the child still runs. Shipped unreachable in v0.41.2.
+
+- **The shipped harness tells every agent to cite only from files it has open** — one line in
+  `prompts/system-core.md`, so it reaches future installs. Adds optional evidence tags for
+  load-bearing claims: `[ran: <cmd>]` · `[read: file:line]` · `[inferred]`.
+
+- **Pi runtime 0.80.6 → 0.82.0** (four releases in one step). One migration: `AuthStorage` →
+  `readStoredCredential()`. New surface: constrained tool sampling (strict JSON-Schema and grammar),
+  OpenRouter and Kimi OAuth sign-in, `PI_SESSION_ID`/`PI_MODEL` exposed to bash tools, live
+  `models.json` reload in `/model`, and usage accounting that covers tool calls and compaction.
+
+- **Two upstream patches re-enabled** — Site E (Anthropic content guard) and Site H (OpenRouter
+  body-level `session_id`) had been switched off as "removed upstream"; both had only moved
+  `providers/` → `api/`.
+
+- **`soma:agent.delegate` refuses to spawn on an unconfigured model** instead of falling through to a
+  hardcoded fallback. An explicit `{model}`, a role default, or any configured setting proceeds as
+  before; pass `{model:'default'}` to opt into the default deliberately. Headless mode is exempt.
+
+- **The `soma:seam.*` caps worked for nobody but us.** They resolved a `_pro/` source path that
+  never ships, then told you it was a paid feature — while the script they needed sat installed two
+  directories away. All six caps work on a normal install now. (The `soma seam …` CLI verb was
+  always fine; only the caps were blind.)
+
+### Removed
+
+- **The vendored `edit-diff.js` override — deleted, not re-forked.** Upstream Pi now preserves
+  untouched lines verbatim, which is what the fork's fuzzy-matching half existed to protect. The
+  near-match hint returns later as a `tool_result` enricher; the old delta stays recoverable via
+  `git show d0760833^:scripts/_dev/patches/edit-diff.soma.js`.
+
+### Fixed
+
+- **Context stacking works** — a child role's `context:` files are delivered. Frontmatter list
+  promotion is structural (any key with `  - ` children), list-item trailing comments are
+  stripped, and an indented `#` comment no longer injects a garbage key.
+
+- **Statusline session cost stopped under-counting.** The footer `$` figure now includes
+  sub-agent, compaction and branch-summary usage, not just assistant messages.
+
+- **Docs drift corrected** — `soma-reflect-eco.py` and `soma-steno.py` now have Bundled Scripts
+  entries; `getting-started.md`'s tree lists `soma-reflect.sh` instead of the PRO-tier
+  `soma-seam.sh`, seeded-script count 11 → 12.
+
+- **`post-commit` skips CHANGELOG auto-append when the commit already touches `CHANGELOG.md`** —
+  a hand-curated entry no longer gets a mechanical duplicate beside it.
+
+- **Groq no longer 400s on `prompt_cache_key`** — a new patch site excludes Groq from
+  long-cache-retention detection. Repro: `soma -p "hi" --provider groq --model llama-3.1-8b-instant`.
+
+### Added
+
+- **`soma:reflect.drift`** — md5-compares same-relative-path body files across sibling `.soma`
+  roots and flags files a sibling has that this root doesn't. `{all_roots:true}` sweeps the
+  whole ecosystem; self-scoped by default.
+
+### Fixed
+
+- **Delegate sync path no longer crashes with "AgentClass is not a constructor."** Non-`claude-cli/*`
+  models route through the headless `soma -p` subprocess, model ids resolve to their real provider
+  instead of a hardcoded `opencode`, and the in-process path fails with a clear message.
+
+### Added
+
+- **`soma:seam.hotspots`** ranks session turns by thinking-token spikes; **`soma:reflect.timeline`
+  / `.roots`** emit one chronological timeline across every `.soma`/`.claude`/`.agents` root and
+  git repo below a directory.
+
+- **`soma:agent.intern`** shells out to cursor-agent / agy / gemini; **`soma:models.openrouter`**
+  searches OpenRouter's 342 models by keyword, price, context or provider; **`soma:body.index`**
+  lists body files with their frontmatter.
+
+- **Delegate sync path resolves 38 providers from Pi's registry** instead of a hardcoded 7 —
+  Mistral, Groq, Cohere, OpenCode and 25+ others stopped failing with "all chain entries exhausted."
+
+- **Outcome-per-token ratio logged at every exhale** — artifacts per 10K tokens, appended to
+  STATE.md's activity log, and syncs auto-log there too. `soma-steno.py` and `state-log.sh` ship
+  in `BUNDLED_SCRIPTS`, so a fresh `soma init` gets both.
+
+- **Agent announces its resolved connection identity on bridge connect** (`mode`, `channel`,
+  `agentId`, sockets, protocol version), so the Somaverse chat pane binds to what the agent
+  actually resolved instead of re-guessing from `window.location`.
+
+- **`dev-cohere-models`** — a developer-local extension you drop into your own
+  `~/.soma/agent/extensions/`. It is **not distributed**: installing this release does not give
+  you Cohere models.
+
+### Changed
+
+- **Meta-tool listing is progressively disclosed** — `soma(op='list')` shows 109 caps in ~18 lines
+  grouped CORE/SUPPORT, a family drill gives a 5-line view with hot caps and usage patterns, and
+  errors show families rather than 100+ cap names. `{verbose:true}` for the full dump.
+
+- **Browser bridge-down errors name the recovery command** — `soma-bridge.sh start`, or Chrome
+  with `--remote-debugging-port=9333`.
+
+- **`systemPrompt.mode` (`soma|pi|custom`)** decides who owns the system prompt at boot; `soma`
+  stays default, and a `system-prompt.md` template ships for custom mode.
+
+- **Scripts table capped at `settings.scripts.maxInPrompt` (default 40), sorted by usage** — was
+  ~2900 uncapped tokens on every request. The unused tail is still listable via `ls amps/scripts/`.
+
+- **Boot detects external-extension conflicts** — new or changed files auto-run `soma-extcheck.sh`;
+  HIGH findings surface as a boot notification, clean ones stay silent.
+
+- **`soma:body.slots` has a `mode` column** (`lazy`/`full`/`-`), so lazy-loaded body files are
+  visually distinct from full-injected ones.
+
+### Fixed
+
+- **`runScript` picks the interpreter by extension** (`.py` → `python3`), so `soma:reflect.timeline`
+  returns results instead of ImageMagick usage text.
+
+- **dev builds again** — two committed syntax errors and a double-comma in the meta-tool factory
+  that stopped the `soma` meta-tool registering; `cohere-models.ts` is allowlisted in the pre-push
+  extension check.
+
+- **Chain failures report "model id not in registry"** instead of the opaque "chain exhausted."
+
+- **Background `claude-cli` passes the `--system-prompt-file` path**, not the file's contents.
+
+- **jiti-alias-longest-match patch added, then REVERSED** in this same window — the original
+  resolution order was already longest-first.
+
+- **STATE.md activity log trim repaired** and capped at 15 entries.
+
+- **OAuth "billing check failed" on bare `soma` resolved** — a user-global Pi extension was
+  overwriting Soma's compiled system prompt. The Site L billing-marker patch and the
+  booted-decouple boot change are **REVERSED** as wrong fixes; `systemPrompt.mode` is the
+  supported lever.
+
+- **Slot map reports lazy files at their real injected size** (`ecosystem.md` read 2449 tok
+  against ~107 actual; `pulse` and `journal` too), and `soma:body.audit` stopped flagging every
+  lazy file as missing.
+
+- **`soma-dev switch <ref>` no longer aborts** when stale local tags clash with the remote.
+
+- **`readStoredCredential` → `AuthStorage` REVERSED** for Pi 0.80.6 compatibility.
+
+- **Duplicate identity line removed from `system-core.md`**; two stale build-output files
+  untracked from git.
+
+### Changed
+
+- CHANGELOG promotion hardened for v0.41.2.
 
 ## [0.41.2] — 2026-07-17
 
-**Maintenance release — nothing user-facing.** These notes are written retroactively: v0.41.2 shipped
-without any, because the step that promotes pending entries into a version section failed silently and the
-release went out anyway. That step now fails loudly instead.
+**Maintenance release — nothing user-facing.** These notes were written retroactively (2026-07-25): the
+release shipped with no narrative at all, because the CHANGELOG promotion step matched on
+`## [Unreleased]\n\n` while the real heading read `## [Unreleased] —`, found no match, and then `exit(0)`'d
+— reporting success and shipping anyway. Both the regex and the silent-success are fixed (v0.42.0).
 
-The only code change was an internal delegation backend that isn't yet reachable from the tool set — so
-there is nothing here to try. It will be listed in the release that wires it up.
+The only code addition was an internal `claude-file` delegation backend, deliberately **not** listed as a
+feature: its capability registration sits commented out at the end of the file, nothing imports it, and
+`soma:agent.claude` does not exist in the running tool set. It is unreachable, so there is nothing here for
+a user to try. It will appear in the release that actually wires it up.
+
+Everything else in the range was release plumbing — changelog promotion fixes, `apply-patches`
+canonicalisation, and a dev/main reconciliation merge. That merge is also why `git log v0.41.1..v0.41.2`
+looks larger than this release: it drags in commits that already shipped, including the Leanstral
+`reasoning_effort` fix documented above under `[0.41.1]`. `--first-parent` shows the real spine: six
+commits, none of them user-visible.
 
 ## [0.41.1] — 2026-07-17
 
@@ -71,8 +297,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **'soma install npm:<pkg>' pass-through to Pi package manager + hub shows pi.dev (s01-2b2368)**
 - **{{enabled_models}} template variable — scoped models at boot (s01-2b2368)**
 - **pi.dev package search — soma:extensions.search + .show (s01-2b2368)**
@@ -89,8 +313,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.39.0] — 2026-07-12
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **soma:refdocs — General-purpose external docs fetcher.** Discover + fetch ANY external platform docs
   as clean markdown using the `llms.txt` convention (Cloudflare, Vercel, React, and 25+ known domains).
   Four caps: `refdocs.find` discovers the source, `refdocs.tree` shows the organized structure,
@@ -126,8 +348,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 - **serialize browser-driving caps — concurrency race**
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **soma:caselaw.* — Caselaw Researcher cap family**
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
@@ -178,8 +398,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
   auto-written; new installs get the full v0.37.0 set, existing installs migrate via the agent-run map above.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **`soma:browser.render` — render a JS-heavy / SPA page in an ephemeral tab and return its text (SX-807).**
   Static `fetch()` returns only a ~400-char shell on JS-rendered sites; this drives a real browser via raw
   CDP over WebSocket: create a throwaway tab → wait for hydration → read `innerText` (or `outerHTML`, or a
@@ -214,8 +432,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.36.0] — 2026-06-21
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **The always-loaded core (`system-core.md`) restructured + sharpened — generally useful for every agent.** Reorganized the behavioral guidance into a clear **Orient → Work → Remember** loop (was a flat 15-bullet wall), and added high-value beats every Soma benefits from: **read the docs** (Soma ships its own docs in `docs/`; `soma:docs.search <topic>` finds the right one — read + follow cross-references before reinventing, vs reconstructing from memory); **keep your body current** (when you change a file, update the body file that owns it — an un-updated body file lies to your next self); **match the codebase** (follow existing style, verify a library is actually used before assuming it, don't add unrequested comments); **guard secrets / refuse harm**; and **name the approach before a multi-step change**. The `body/*.md` files are now framed as the agent's living model of the project (`body.md` = index, domain files = grown knowledge). Lean throughout — denser, not longer.
 - **System prompt now states the `.soma/` layout rule + that it commits itself.** Two recurring confusions
   got a one-line fix each in the always-loaded core prompt (`prompts/system-core.md`): (1) **stay in the
@@ -249,8 +465,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.35.0] — 2026-06-20
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **coerce Opus oldText2/newText2 Edit mis-shape (SX-795)** — the Edit tool now folds a crammed second pair / strips empty leftovers in `prepareEditArguments` before validation, instead of rejecting the whole call. Clean input untouched.
 
 ### Changed
@@ -267,8 +481,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **`soma:inbox.*` caps — mark inbox letters read/actioned/archived.** The markdown inbox (`.soma/inbox/*.md`) surfaces unread letters at boot, but the only way to clear one was hand-editing its `status:` frontmatter — high friction, so letters were read and never marked, and the boot summary piled up indefinitely. Four new caps mechanize it: `soma:inbox.list` (letters by status), `soma:inbox.read`, `soma:inbox.actioned`, `soma:inbox.archive` (move to `inbox/_archive/`). Each accepts a filename, slug, or unique partial; ambiguous refs list their candidates. Resolves the `.soma/` chain from cwd, so a letter in a parent inbox can be cleared from a child project. Free tier, no bridge. (SX-791)
 
 ### Fixed
@@ -290,8 +502,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.33.0] — 2026-06-15
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **Per-model guard allowlist (`guard.trustedModels`).** When the active model matches a glob in the list (e.g. `["*sonnet*", "*opus*"]`), the `coreFiles` and `bashCommands` prompts relax to `"allow"` for that turn — capable models skip the nags while weaker models and new users keep full protection. Settable per-project or globally (child wins). Empty by default = no change.
 - **Always-on irreversibility guards.** Destroying a `.soma` workspace or a `.git` history, running `git init`, destructive ops on the runtime install, and expensive operations (`npm publish`, `docker push`, …) now always require confirmation — they cannot be silenced by `bashCommands: "allow"` or a trusted model. Capability relaxes the routine prompts, never the catastrophic ones.
 - **New documentation: Statusline & Notices** — the canonical reference for all three statusline lines, every indicator, and Soma's toast notices (including the preload lifecycle).
@@ -315,8 +525,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.32.0] — 2026-06-15
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **v0.31.2→v0.32.0 phase + sentinels + template archive (SX-785)**
 - **credential-file tree-scan in channel guard (s01-542b99)**
 - **fail-fast migration gate (phase 0.6) + halt-before-slow-phases (SX-785)**
@@ -356,8 +564,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.31.0] — 2026-06-11
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **Pi runtime 0.79.1 — native Claude Fable 5.** Bumped the Pi runtime (all four `@earendil-works/pi-*` packages, in lockstep) from 0.78.0 → 0.79.1. Fable 5's model definition (1M context, vision, `xhigh` adaptive thinking, $10/$50 per M) now ships natively in Pi's model registry — Soma no longer needs a local `models.json` stopgap to describe it, so a fresh install gets Fable with correct cost metadata out of the box. (s01-781277)
 - **Meta-workflow cadence — now a core protocol, with guided adoption.** The operating cadence (three nested loops — BREATH → ARC → EVOLUTION; a self-amending Observation Ledger; a Decision Register) ships as the `meta-workflow` protocol (v1.1.0) alongside `breath-cycle` v3.0.0 (self-initiated rotation; the exhale is a complete checklist, preload last). Installing the protocol delivers the *shape*; a new adoption checklist + inline starter `META_WORKFLOW.md` skeleton turn it on per-project (just ask Soma *"set up the meta-workflow cadence"*). New `docs/meta-workflow.md` (Setup & Overview) + a how-it-works section. The protocol declares `requires: breath-cycle` so minimal installs self-heal the eager-trigger dependency. (s01-5d6a30)
 - **`soma doctor` advisory: meta-workflow protocol present but no instance.** `doctor`/`status`/`health` now nudge when the cadence protocol is installed but the project has no `META_WORKFLOW.md` instance (it's inert until instantiated), pointing at `docs/meta-workflow.md`. Advisory only — not a warning/issue; checks the three real-world instance locations (`.soma/` root, `cycles/`, `releases/`) so it never false-positives; no-ops outside a project. (s01-5d6a30)
@@ -385,8 +591,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.30.0] — 2026-06-04
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **Headless delegation — `soma:agent.delegate {headless:true}`** — a minimal-inference delegation path that spawns `soma -p` as a subprocess (not a tmux TUI), captures structured output, and detects completion via exit code (fixing the flaky pane-tail completion of background mode). Routes to OpenCode **free** models (`big-pickle` → `deepseek-v4-flash-free`), off the Claude subscription extra-usage wall, with auto-retry + model fallback on rate-limit. Role system prompts inject via `--append-system-prompt`. `runHeadless`/`loadRole`/`stripPreamble` in `extensions/soma-delegate.ts`. Patterns adapted from upstream pi-mono's subagent example. (v0.30.0 Phase 1, s01-3a1d9b)
 - **Chain delegation — `soma:agent.delegate {chain:[{role,task,model?},...]}`** — sequential headless steps where `{previous}` is substituted with the prior step's output (scout→planner→worker style). Each step gets the same retry+fallback. (v0.30.0 Phase 2)
 - **`soma-dev cycle`** — the test-before-main dev→release flow: curate CHANGELOG (headless, free) → commit → build dev dist → **smoke the dev build before main** → gate → hand off to the release orchestrator. Main only ever receives tested-good code. Only the changelog + smoke steps use a model (both free); the rest is bash. (v0.30.0 Phase 3)
@@ -409,8 +613,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.29.1] — 2026-06-02
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **`/body update` CLI command** — version-aware template comparison and update workflow. Subcommand on `/body`, reads `prompts/body-update.md` and sends as followUp. Agent walks user through classified comparison (current/updateable/customized/legacy/extra), respects `customized: true` flag, creates backups before overwriting. (5d1a965b, s01-34d9de)
 - **Doctor `/body update` suggestion** — both "current" and "migration needed" paths now suggest `/body update` when stale or missing templates are detected. Bridges the gap between structural migrations (doctor) and content evolution (`/body update`). (f092e239, s01-34d9de)
 
@@ -440,8 +642,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.28.4] — 2026-06-01
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **gap-safe settings backfill + template auto-update (v0.28.1)** — three sentinel-gated migrations run at every boot regardless of migration chain gaps: settings keys backfill, template auto-update, exhale-note template header update.
 - **v0.28.0 → v0.28.1 migration phase file** — exhale note + template drift + inhale model fix documented with gap-safe sentinel pattern.
 - **`/exhale note` header redesign** — `### User's Note for Next Session` renamed to `### Note`, dual-purpose: scopes the current wrap AND passes directives forward. Template (`_memory.md`) and docs updated.
@@ -461,16 +661,12 @@ there is nothing here to try. It will be listed in the release that wires it up.
 - **Release Step 6 main-sync is now a HARD gate** — `⚠ push failed` no longer lets the release continue; exits 1 if main-sync fails, preventing v0.28.0-style stale-runtime-after-ship. (3c51de02, s01-5c0055)
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **`soma-dev sync main` as a proper command** — release Step 6 extracted from inline bash into a proper `soma-dev sync main` command that handles CI-drift detection, rebase + merge, conflict resolution, dist rebuild, and version verification. (4d53663c)
 
 
 ## [0.28.0] — 2026-05-30
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **All models from Together AI, OpenCode Go, Gemini 3.x** — Pi 0.74+ unlocked new providers and model families. Together AI inference, Google Gemini 3.x support, OpenCode Go models — all available without configuration.
 - **Claude Opus 4.8 support** — Pi 0.77+ supports Anthropic's latest model.
 - **842+ models total** — Pi 0.78 resolver sees everything the ecosystem offers.
@@ -492,8 +688,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.27.6] — 2026-05-28
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **shared preload lifecycle state machine** — `_shared/preload-lifecycle.ts` module unifies preload tracking across breathe, boot, and statusline extensions. Single source of truth replaces 7 independent `let` flags. (Cycle 29)
 - **route capabilities for lifecycle access** — `preload:lifecycle` (read state), `preload:transition` (write transitions), `preload:reset` (fresh session), `preload:noteToolCall` (track work after save). (Cycle 29)
 - **three-state auto-breath config** — `breathe.auto` now accepts `"on"` (proactive), `"auto"` (adaptive), `"off"` (passive). Backward-compat with boolean and `"global"` values. (Cycle 28)
@@ -523,8 +717,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.27.5] — 2026-05-26
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **ancestor .soma/ walk-up + example extensions seeding + inherit gating**
 - **SX-763 — OpenRouter session_id in request body**
 
@@ -551,16 +743,10 @@ there is nothing here to try. It will be listed in the release that wires it up.
 - **SX-762 — call soma-code.sh directly via execFile, not 'soma code' CLI**
 - **bump obfuscator string-array-threshold 0.8→1.0**
 - **harden blacklist — dual-signal + obfuscation pipeline**
-- **harden blacklist — dual-signal + obfuscation pipeline**
-
-
-
 
 ## [0.27.3] — 2026-05-14
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 
 - **`soma:seam.*` addon family — concept archaeology caps** (s01-345201, SX-744). Eight new caps + 2 docs caps wire the existing shell archaeology tools into the cap surface so the agent reaches for them under context pressure. `soma:seam.trace` (free tier — wraps `amps/scripts/soma-trace.sh`), `soma:seam.ancestors` (PRO — vault agents + Pi/Claude sessions w/ attribution), `soma:seam.timeline` (PRO — chronological evolution), `soma:seam.sessions` (dev tree — search `.soma/memory/sessions/` + Pi JSONLs), `soma:seam.seeds` (PRO), `soma:seam.gaps` (PRO — orphan docs), `soma:seam.web` (PRO — **persistent** markdown trace written to `.soma/memory/webs/`), `soma:seam.stats` (dev tree — Pi JSONL analytics). Plus `soma:docs.related` + `soma:docs.impact` (dev tree — frontmatter graph walk). Caps degrade gracefully when underlying scripts aren't present (PRO/dev message). Honors Recall's "mind of the place" lineage. New file `extensions/_shared/script-resolver.ts` extracts the shared shell-out + path-resolution helper. Closure test (passing): `soma:seam.ancestors "breathe"` returns `Zenith (openclaw-dev) — dev lead, vault refactorer, soma's daddy`. 10/10 smoke tests green in `tests/test-seam-caps.sh`. Plan: `.soma/releases/v0.27.x/plans/seam-addon-family.md`.
 
@@ -584,8 +770,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.27.1](https://github.com/meetsoma/soma-agent/compare/v0.27.0...v0.27.1) (2026-05-10)
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 
 - **Model-aware breathe thresholds** (cycle 16, s01-7b287c). New tri-state `breathe.auto`: `"off"` / `"global"` / `"model-aware"` (boolean still parsed for back-compat via migration `breathe-tri-state-v0.27.0`). New `breathe.thresholds` map with glob patterns (e.g. `"*sonnet*"`) selects per-model `warnRange`/`exhaleRange` percentages from `ctx.model.id`. Sonnet's empirical `extra usage required for long context` wall (~48% on default-tier accounts) now triggers warn at 28-33% and auto-exhale at 34-50% — well before the wall, instead of the old fixed 50/70 thresholds that fired AFTER the wall hit. Opus uses 60-74 / 75-90; default fallback uses 50-64 / 65-85. Default install ships `auto: "model-aware"`. `/auto-breathe` accepts `off|global|model-aware|status` subcommands. 76 tests pass (was 47/55 before, +21 new tests for tri-state + per-model resolution + migration). Closes the wall-before-threshold bug that crashed s01-8b3cb3 mid-pipeline.
 - **`soma-dev delegate cycle <brief>` workflow** (cycle 17, s01-7b287c). Full implementation pipeline for any markdown brief (cycle.md, inbox/*.md, plans/*.md). Composes `intern` (investigate, 80-call budget) → `intern` (build, 80-call budget) → `verifier` (test, 25 calls) → `pr_author` (description, 30 calls). Total ~215 tool calls / ~$2.50 per cycle. Outputs `/tmp/soma-cycle-investigation.md`, `/tmp/soma-cycle-impl-summary.md`, `/tmp/soma-pr-description.md`. Flags: `--no-pr`, `--no-verify`. Built because single `builder` (25-call budget) was too small for multi-step cycles like cycle 16 (9 steps, ~80+ tool calls).
@@ -605,8 +789,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.27.0] — 2026-05-09
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 
 - **Pi upstream monitor — live version gap in every session** (s01-8b3cb3). GitHub Actions workflow (`.github/workflows/upstream-monitor.yml`) watches `badlogic/pi-mono` (source of `@earendil-works/pi-coding-agent`) every 6 hours. Writes `PI_UPSTREAM.md` to the agent root with: current pinned version, latest npm version, releases behind count, and flagged commits relevant to Soma (covers all 33 Pi API usages: `registerTool`, `registerCommand`, `sendUserMessage`, 11 event hooks, 7 patch targets). New `{{pi_gap}}` body var in `resolveBlockVariables` reads `PI_UPSTREAM.md` at session start and injects live gap into the system prompt. `soma-dev status` surfaces flagged ⚠️ items in yellow. Eliminates manually tracking Pi version drift.
 
@@ -639,8 +821,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.26.2] — 2026-05-07
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 
 - **`extraUsageRecovery` setting** (default `"auto"`, s01-c62a62, cycle 13 successor). Narrow-scoped recovery for the boot-turn-after-`/inhale` variant of Anthropic's `extra usage` 400 error. When `/inhale` rotates the session and the first API call returns Anthropic's `"You're out of extra usage. Add more at claude.ai/settings/usage and keep going."`, Soma surfaces a single notice and auto-injects `.` after a 1s debounce so the conversation advances and subsequent turns can run cleanly. Three modes: `"auto"` (default — notify + auto-`.`), `"notify"` (notice only; user sends any message to continue), `"off"` (silent — Pi's raw error display passes through). Hard fence: only fires when error contains literal `"extra usage"` AND `turnCount <= 2` AND no keepalive fired. Auto-injection is 1 char (`.`) — no full-context resend, no 2× billing amplifier (the SX-709 failure mode that killed the original auto-retry stays killed). Migration phase doc: `migrations/phases/v0.26.1-to-v0.26.2.md`. Plan: `.soma/cycles/audit-fix/13-startup-only-retry-redesign/cycle.md`.
 
@@ -659,8 +839,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.26.0] — 2026-05-07
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 
 - **Cycle 10 — `_tool-template.ts` modern shape + Pi tool runner runtime guard** (s01-a6b91e). Replaces broken canonical example (2-arg execute, bare-string return) with the contract Pi's runtime actually expects: 5-arg `(toolCallId, params, signal, onUpdate, ctx) => Promise<AgentToolResult>`, including required `label` field. Adds Site G defensive wrap in `pi-agent-core/agent-loop.js executePreparedToolCall` so any tool returning a string OR an object with undefined `.content` gets lifted into the canonical `{content: [{type:"text", text}], details}` envelope before persistence. Closes the bare-string-return bug class that was producing malformed toolResult records (no `.content` key) and crashing downstream consumers (renderer, compaction, anthropic provider). Verified all 7 runtime patches still needed against upstream Pi 0.73.0 main — audit recorded in `.soma/cycles/audit-fix/10-pi-tool-result-shape-mismatch/VERIFY.md`.
 
@@ -714,8 +892,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **Preflight update prompt** (s01-86b0fd). Cached `~/.soma/config.json:updateAvailable` (set by `soma-statusline` background check) now surfaces an interactive prompt at startup: `(c)ontinue / (u)pdate now / (s)kip this version`. Skip persists via `skipUpdateUntilTs` matched against `updateCheckTs` — new commits arrive, prompt re-fires. Zero network at boot. Replaces the misfiring Pi-cruft deprecation prompt that nagged on every startup. See `docs/troubleshooting.md § Startup Prompts`.
 - **`tests/test-shipped-templates-clean.sh` regression**. Locks the shipped `templates/default/_mind.md` AND the in-code `getDefaultMindTemplate()` fallback against re-introducing redundant `{{protocol_summaries}}` / `{{muscle_digests}}` / `{{scripts_table}}` interpolations. Four gates: source clean, dist mirrors source, warning comment present, fallback string clean.
 - **`tests/test-stale-ctx-after-rotation.sh` regression**. Static-scan + Pi `runner.js invalidate(...)` snapshot. Catches the SX-713 family (Pi 0.71.0 expanded the stale-ctx guard from `pi.X` to also cover `ctx.X`).
@@ -743,8 +919,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 - **tsconfig hygiene** (`9f6b091`). Added `extensions/_archive/**` to `tsconfig.json` exclude. Cleared 15 TS7006 errors from `_archive/sx594-flat-wrappers/` that `npm run check` was reporting. Archived code shouldn't be type-checked.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **`tests/test-release-completeness.sh` regression** (`9f6b091`). Asserts CHANGELOG ↔ git tag parity, dev ↔ main ff-merge reachability, `dist/manifest.json` ↔ `package.json`, `npm/package.json` ↔ `package.json` (SX-659 collapsed train). Wired into orchestrator Phase 1 (tests gate) automatically because `soma-release-prepare.sh` iterates `tests/test-*.sh`. If a previous release was incomplete (main behind), the next prepare fails CONFLICT-HARD before any new bump — the proactive layer of the SX-722 prevention rule.
 - **`tests/test-namespaced-caps.sh` regression** (`9f6b091`). Static-analysis floor for the cap-bus surface (~92 registered caps): per-family minimum thresholds, v0.24.0 named-cap presence (18 specific caps from CHANGELOG), duplicate-registration detection, namespace hygiene. Catches accidental cap deletion or rename across all addons before runtime.
 
@@ -758,8 +932,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 - **Bump pi-* deps 0.71.0 + clear CVE-2026-41686 (GHSA-p7fg-763f-g4gf)** — upgraded `@earendil-works/pi-{ai,coding-agent,tui,agent-core}` from `^0.69.0` to `^0.71.0`. Clears `@anthropic-ai/sdk` advisory (affects `>=0.79.0 <0.91.1`). Also picks up: cache-control model-compat awareness, fine-grained tool streaming beta, empty tools array fix, stream truncation detection. fast-xml-parser (AWS Bedrock SDK transitive) remains at moderate — not reachable through soma's Anthropic provider path.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **soma:github.* v2 (SX-720)** — 21 caps total. API-mode (metadata; 13 caps including new audit/releases/diff/compare/file_diff parity wires) + new local-mode (tarball + soma-code shim; 8 caps): `local_path`, `local_map`, `local_find`, `local_refs`, `local_blast`, `local_structure`, `cache_list`, `cache_clean`. Treat any GitHub repo as local: fetch tarball ~1–5s to `~/.soma/cache/gh/<owner>--<repo>--<sha>/`, then run soma-code (12 langs, full ripgrep regex, DEF/IMP/USE refs, blast radius). Architectural pivot from "per-file API" to "fetch-once-then-local-toolchain." Plan: `releases/v0.23.x/plans/github-tool-10x.md`. Commits: `e7ff177`, `907013a`, `96a511c`. Guide: `docs/_dev/github-scanner.md`.
 - **dev:kanban.* (SX-720)** — dev-only ticket audit caps. `dev:kanban.audit({ticket})`, `dev:kanban.audit_batch({tickets|all_open|all, mode?})`, `dev:kanban.audit_open()`. Triangulates kanban + git log + soma:code.* + sessions/preloads + cross-project trees (somaverse/somadian/website). Verdicts: SHIPPED / STALE / **STALE-CROSS-PROJECT** / STILL-VALID / NEEDS-REPRO / UNCLEAR. Used to close SX-588/SX-589/SX-642 in same session. Build-excluded from npm tarball. Commit: `4d667a3`. Guide: `docs/_dev/kanban-audit.md`.
 - **soma:docs.* upgrade (SX-720)** — 5 caps total. New: `whats_new({version?, limit?: 3})` reads `docs/whats-new.md` (agent-facing changelog); `guide({name})` resolves `guides/` then `_dev/`. Improved: `list` is now recursive (catches `guides/` and `_dev/`), groups by section, extracts TL;DR per entry; `show` accepts subdir paths. New `docs/whats-new.md` populated with v0.23.1 + v0.23.0 sections (action-oriented invocation hints). New `docs/_dev/` subdir convention (build-excluded; gated by filesystem presence). Commits: `75b78f9`, `a7fe2f8`.
@@ -788,8 +960,6 @@ there is nothing here to try. It will be listed in the release that wires it up.
 ## [0.23.0] — 2026-04-27
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
 - **tree-hygiene gate (Phase 0.5, SX-712)** — `soma-release-prepare.sh` halts if `repos/agent/` has uncommitted files other than ` M CHANGELOG.md`. Closes the agent-spawned-files-leaking-into-soma-beta hole observed s01-030d41. Override with `--skip-tree-hygiene` (writes audit trail). `.releaseignore` widened to cover `.soma/`, `.husky/`, `node_modules/`.
 - **`soma:agent.list` role filter (SX-701)** — pass `{role: 'librarian'}` (or any role string) to filter children by role. Stacks with existing `active_only`/`all`/`cleanup` filters. Useful when a parent has spawned multiple roles and wants to inspect just one cohort.
 - **somadian drift discipline — verify + lift + pre-commit gate (SOMADIAN-002, s01-ef2bdc)** — three scripts that enforce byte-identical shared code across the 4 somadian bins (cloud / enterprise / local / sidecar): `somadian-verify` detects drift, `somadian-mirror` lifts a canonical bin to the others, and `install-hooks.sh` wires a pre-commit gate that blocks divergent commits. Closes the silent-drift hole.
@@ -837,9 +1007,6 @@ _(no other behavior changes this release — see Added/Fixed.)_
 ## [0.22.1] — 2026-04-25
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **soma:new.child cap + bundled _child-template.md (SX-663)**
 - **progressive teach + child monitor improvements (SX-665, SX-666)**
 - **cache-TTL rollback on aborted/errored turns (SX-660)**
@@ -879,9 +1046,6 @@ _(no other behavior changes this release — see Added/Fixed.)_
 - **smart partial-state handling + rootName + doctor bail on `soma init` (SX-592)**
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **`soma bridge` CLI — `start`/`stop`/`restart`/`status`/`logs`/`config`/`setup` (SX-522)** — first-class bridge daemon lifecycle. Works standalone without Somaverse; mirrored by `somaverse:bridge.*` (7 caps) + `somaverse:auth.*` (3 caps) for agent-side automation.
 - **`soma:agent.*` meta-tool — `delegate`/`children` collapsed (SX-609)** — 7 caps: `delegate`, `list`, `tail`, `steer`, `kill`, `harvest`, `focus` (focus op recovered from original plan). Extension shrank 606→330 lines.
 - **`soma:focus.*` / `soma:new.*` / `soma:terminals.*` — 11 new caps wrapping bundled CLIs.** Also fixed `soma focus` dispatcher's inverted discovery order.
@@ -912,9 +1076,6 @@ Micro-release caught during a post-ship audit of `v0.21.0..HEAD`. Three
 findings with real code impact; two dead-code + hygiene tidy-ups.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 
 - **`soma model-sync` — audit + set `defaultModel` across all scopes.** New
   bundled script `scripts/soma-model-sync.sh`. Audits global
@@ -968,9 +1129,6 @@ delegation surface (Phase B ops), ship background delegation to npm users
 so the delta-diff and `/reload` signal can actually fire.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 
 - **`children` tool — Phase B ops (SX-553)** — `tail` / `steer` / `kill` /
   `harvest` on top of `list`. `tail` uses the driver's capture; `steer`
@@ -1071,9 +1229,6 @@ Release notes: `.soma/releases/v0.20.x/v0.21.1/release-notes.md`.
 ## [0.21.0] — 2026-04-22 — Cache Economics + Discoverability + Self-Knowledge
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **suppress preventive OAuth-billing warning at boot (SX-566)**
 - **test-audit command + hygiene rule engine (SX-564)**
 - **swap Pi's π terminal-title glyph for Soma's σ**
@@ -1125,9 +1280,6 @@ reload/resume/fork. A new `/rebuild` command forces explicit recompile
 when body edits should be picked up.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **`/rebuild` command (SX-495)** — forces recompile of the system prompt and deletes the disk cache. Optional — only run it if you've edited `body/*.md` mid-session AND you want the change to apply right now. Otherwise `/reload` keeps the prompt sticky and body edits land naturally on your next session.
 - **Disk-backed prompt cache (SX-495)** — `.soma/state/.session-prompt-cache.json` written on first compile, restored on subsequent reloads. Eliminates the ~$1 cache-invalidation cost per `/reload`.
 - **Severity-aware change indicator on statusline line 3** — replaced the intrusive "Changes detected" toast with a subtle third-line tag. Labels: `🔄 /reload` (extensions/*.ts + core/*.ts; picked up by jiti re-import — confirmed in Pi's `extensions.md`), `📝 /rebuild?` (body/*.md — the `?` denotes optional), `⚠ relaunch` (dist/* or core/*.js — Pi's static imports are frozen at process boot, `/reload` can't help; `/exit` and run `soma` again). Signal writer + reader updated; legacy `severity: restart` still read for back-compat. Parser handles both YAML and JSON payloads (SX-497 will unify writers).
@@ -1155,9 +1307,6 @@ plumbing, softens the restart alert. Three Soma tools added (`context_status`,
 corrected in dev mode.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **Soma tool registry** (`core/tool-registry.ts`) with `somaRegisterTool()` helper — the man-in-the-middle between extension-defined tools and Pi's registry. Preserves `promptSnippet` + `promptGuidelines` in the compiled system prompt (Pi's `ToolInfo` strips them).
 - **`_tools.md` configuration** (project → parent → global body chain). Sections: **Disabled** (opt-out list), **Overrides** (per-tool field tweaks), **Custom** (parsed; registration lands v0.20.3). Hardwired set (`delegate`) cannot be disabled.
 - **`context_status` tool** — returns `{percent, tokens, contextWindow}` so the agent can ground its runway decisions instead of estimating.
@@ -1207,9 +1356,6 @@ hatch: `SOMA_LEGACY_PROMPT=1` forces the old full-replacement path. Kept alive
 until Phase 1c.2 (planned deletion of ~300 LOC rebuild path).
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **smarter randomizer + version-aware skeletons + CLI integration**
 - **three-layer version snapshot + update check (SX-489)**
 
@@ -1318,9 +1464,6 @@ human-editable scratchpad, and roles can declare where their canonical
 file lives (source-of-truth) + where artifacts go (paths block).
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **Three more roles**: `planner` (writes plan files, `[read, bash, write]`), `doc_writer` (markdown-only edits, `[read, edit, write]`), `reflector` (journal entries under `memory/journal/`, `[read, write]`). 7 roles total. Researcher deferred to v0.20.2 pending search integration.
 - **`source-of-truth` frontmatter field** on roles. Project-root-relative or absolute path to the canonical role file. When set, `discoverRole` re-reads from there and `apply` writes amendments there — fixes the runtime-copy vs git-source drift v0.20.1 highlighted. Missing file → stderr warning + fallback to chain-walked copy.
 - **`paths:` frontmatter block** on roles. Per-role artifact paths (`invocations`, `proposals`, `proposalsApplied`, `scratchpad`) with `{role}` templating. Absent block = hardcoded defaults (zero migration). All paths live under `memory/` so writes stay cache-safe.
@@ -1349,9 +1492,6 @@ MLR parsed into structured objects, cost/token tracking, and CLI paths (`childre
 `children health`) for driving delegations outside the TUI.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **Structured model chain in role frontmatter** (`model-chain:` list of entries with `id`, `class`, `cooldown-on-rate-limit`). Scalar `default-model: <id>` still works (1-entry chain back-compat).
 - **Model policies** (`model-policy:` — `order` | `free-only` | `paid-only` | `prefer-free`). Runtime walks the chain per-policy, skipping unavailable or cooldown'd models.
 - **Health cache + cooldown** at `.soma/state/model-health.json`. Rate-limited or dead models get marked and skipped for a TTL (default 1h). Survives across sessions.
@@ -1377,9 +1517,6 @@ T1 scalar back-compat, T3 chain gemma→qwen→haiku fall-through, T4 cooldown s
 **Delegation MVP. Team Soma begins.** The `delegate` Pi tool spawns an in-process child agent via `pi-agent-core.Agent`, running a role-tuned system prompt while inheriting parent soul/voice/ecosystem. Foundation for everything in v0.20.x.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **`delegate` tool** (registered via `extensions/soma-delegate.ts`). Called as `delegate(task, role?, model?)`. Spawns `pi-agent-core.Agent` in-process, tool budget enforced (`max-tool-calls`), returns summary + cost + MLR.
 - **Role files** in `body/children/`: `_child.md` (sub-compiler template), `_child-template.md` (scaffold for new roles), `general.md` (starter role: Sonnet, full tools, budget 25/$0.25).
 - **Role discovery via body chain.** `discoverRole` walks `body/children/<role>.md` across the soma chain (project → parent → global) so a workspace can ship roles its child projects inherit.
@@ -1409,9 +1546,6 @@ Curator loop + specialized child roles (verifier, builder, curator). Closes the 
 > Shipped on `dev-2x` branch. Merged to `dev` at tag time. Follows v0.20.0 (delegation MVP) + v0.20.0.1 (delegation hardening).
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **Three role files** in `body/children/`: `verifier.md` (read-only, `read + bash`, PASS/FAIL + evidence), `builder.md` (write-capable, `read + bash + edit + write`, bounded edits with verify-after), `curator.md` (meta-role, `read + write`, proposes amendments). All bound to `claude-haiku-4-5` by default with per-role budgets.
 - **MLR queue reader** `scanMLRQueue(role, somaDir, sinceTs?)` in `core/delegate-core.ts`. Scans `memory/children/<role>/invocations.jsonl`, flattens `mlr.{what_worked, what_struggled, missing_capability, suggested_amendments}` into structured amendment candidates.
 - **Amendment classifier** `classifyAmendment(entry, evidence)` returns `auto-apply` | `propose` | `human-only` | `skip`. Auto-apply requires `accumulated_knowledge` section + ≥2 distinct invocations + text < 200 chars. `default-tools`/`budget`/`success_criteria` → `propose`. Identity/soul/voice/inherits → `human-only`.
@@ -1470,9 +1604,6 @@ Shipping integrity release. Fixes a critical bug where `npm install -g meetsoma@
 - **`soma check-updates`** preserves the old "report-only" behavior that `soma update` used to have, for when you just want to see what's available without updating.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **Periodic update check inside the agent.** `soma-statusline.ts` runs a silent `git fetch` every 30 minutes while the agent is running. If behind, shows `⬆ update` in the statusline and writes to `~/.soma/config.json` so the next `soma` boot prints a one-line notice. Zero network latency at CLI launch.
 - **Pre-publish smoke test.** `soma-npm-publish.sh` now packs the tarball, extracts it to a clean temp dir, and runs `node dist/thin-cli.js --version` before allowing npm publish. Aborts if the tarball has broken imports or contains forbidden content (`dist/core/`, `.ts`, `node_modules/`, etc.). Also integrated into `soma-dev pipeline` so dev cycles catch breakage early.
 - **Docker e2e sandbox** (`soma-sandbox-docker.sh local`) now reliably tests our local bundle. Previous Dockerfile had a broken `COPY ... local-pkg*` glob that created a file literally named `local-pkg*`, so the sandbox was silently falling through to the registry version. Fixed — 24/24 tests pass in clean `node:22-slim` container.
@@ -1480,9 +1611,6 @@ Shipping integrity release. Fixes a critical bug where `npm install -g meetsoma@
 ## [0.12.2] — 2026-04-17
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **`soma model` command** — Switch your default model from the CLI. Fuzzy matching (`soma model opus`), interactive selection when multiple matches, persistent save to settings. Subcommands: `soma model <pattern> set` (save without starting), `soma model <pattern> start` (save + start session), `soma model --list [search]` (browse models).
 - **Claude Opus 4.7 support** — Available via `/model` in-session or `soma model opus-4-7 set` from CLI. Includes adaptive thinking support.
 - **`soma-dev check-upstream`** — Detect and audit Pi runtime updates. Checks changelog, extension surface, provider diffs, patch compatibility. Supports `--audit` (full analysis) and `--json` (machine-readable).
@@ -1524,9 +1652,6 @@ control your workspace remotely, and pair with your browser — all through
 a secure relay. Data stays on your machine. The shard is just the pipe.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **`soma login`** — Pair your agent with Somaverse. Creates a pairing code, opens your browser, and saves your device key. One command to connect.
 - **Hub-connect extension** — Connects your agent to the Somaverse hub as a provider. Your browser pairs with it automatically. Works alongside bridge-connect (local + cloud simultaneously).
 - **Workspace proxy** — All 28 workspace + browser tools work through the hub relay. Your agent controls the workspace even from a remote machine.
@@ -1556,9 +1681,6 @@ a secure relay. Data stays on your machine. The shard is just the pipe.
 - **sync-docs.sh** — prefers `agent/` (dev) over `agent-stable/` (main) for Phase 5 doc sync.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **Image budget** — auto-compact when screenshots accumulate. Soft notify at 8 images, hard auto-compact at 10. Counts all image sources (browser_screenshot, Read tool, user-pasted). Counter resets on compact. Visible in `/status`.
 - **`imageBudget` settings** — `softAt` and `hardAt` configurable via `settings.json`. Set `hardAt: 0` to disable.
 - **`breathe.maxTokens` setting** — caps the effective context window for breathe threshold calculations. Fixes breathe being dormant on 1M-context models where 50% = 500K tokens.
@@ -1597,9 +1719,6 @@ a secure relay. Data stays on your machine. The shard is just the pipe.
 - **Error display** — build-time error-sanitizer patch converts raw JSON API errors to human-readable messages. Billing errors show progressive messages. Retryable errors (overloaded, 500) pass through untouched.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **`soma-dev verify upstream`** — detects dist/ vs node_modules/ drift by fingerprinting key runtime files. Prevents the 0.64→0.66 invisible drift.
 - **Runtime integrity tests** — test-hygiene.sh now checks telemetry disable, boot decomposition, billing removal, error cascade flag, verify-upstream existence.
 - **Release pipeline gate** — `soma-release.sh` now blocks on dist/ upstream drift detection before building.
@@ -1618,9 +1737,6 @@ a secure relay. Data stays on your machine. The shard is just the pipe.
 - **Pipeline** — remove `streamingBehavior` (not in Pi types), fix `focus --help` without seam.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **Cache health tracking** — statusline tracks cacheRead, cacheWrite, cost per session. Alerts on cache invalidations (>50K token writes). Footer shows ✓cache / Ninv indicator.
 - **Idle session detection** — auto-shutdown after configurable idle period with no user input.
 
@@ -1632,9 +1748,6 @@ a secure relay. Data stays on your machine. The shard is just the pipe.
 Identity overhaul + first-run experience. soul.md replaces SOMA.md as default. Minimal boot for new projects. 11 bundled scripts. Critical doctor fix.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **`soma session`** — session maintenance tool. `strip-images` removes base64 image data from JSONL (16MB → 2.6MB), `list` shows all sessions with sizes, `stats` analyzes image payload.
 - **test-install-flows.sh** — 36-assertion E2E test suite covering fresh init, v0.6→current upgrade, edge cases (corrupt settings, missing version, empty body/).
 - **Discovery marker: `body`** — `findSomaDir()` now detects projects with only `body/soul.md` (no SOMA.md).
@@ -1669,9 +1782,6 @@ Identity overhaul + first-run experience. soul.md replaces SOMA.md as default. M
 Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 25 commits since v0.9.0.
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **v0.8.1→v0.9.0 migration map** — settings additions (inherit, keepalive, heat.autoDetectBump), script routing syntax, AMPS consolidation notes. Chains with existing migration maps.
 - **soma-health.sh** — project health dashboard script.
 - **Docker sandbox** — `soma-sandbox.sh` can now use Docker for isolated E2E testing (21/21 tests pass).
@@ -1701,9 +1811,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.9.0] — 2026-04-04
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **`{{inbox_summary}}` template variable** — scans `.soma/inbox/` at boot, injects unread message summary into system prompt. File-based async messaging between agents.
 - **`{{scripts_table}}` in default `_mind.md`** — agents can now see their discovered scripts in the system prompt.
 - **`preload.autoInject` setting** — auto-inject most recent preload on fresh boot (default: true). No longer requires `soma inhale` CLI command for preload loading.
@@ -1726,9 +1833,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.8.1] — 2026-04-02
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **Unified warm content format** — `## TL;DR` replaces `<!-- digest:start/end -->` across all AMPS. Protocols, muscles, and automations all use the same format. Code accepts both during transition.
 - **`extractTldr()`** — shared utility for extracting TL;DR sections, used by protocols, muscles, and automations.
 - **MAP = automation alias** — `map` accepted as type alias in `/hub install`, `/hub fork`, `/hub share`. MAPs are a type of automation.
@@ -1746,9 +1850,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.8.0] — 2026-04-02
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
 - **`soma doctor`** — project health check and migration from CLI. Tier 1 auto-fixes (settings, body, protocols) run silently on every boot. TUI `/soma doctor` provides interactive Tier 2+ migration with `compareTemplates()` analysis.
 - **`soma status` / `soma health`** — quick project health check (renamed from old `soma doctor`).
 - **`soma --version`** — shows both agent and CLI versions.
@@ -1781,18 +1882,12 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.7.1] — 2026-04-01
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **`soma --help` rewrite** — Soma-branded help with session commands, project commands, options, and TUI slash commands. Replaces generic Pi help output.
 - **`soma --help scripts`** — show installed scripts with descriptions. Works from CLI and inside sessions.
 - **`soma --help commands`** — full command reference organized by category (CLI, session, heat, hub, info).
 - **`soma-theme.sh` bundled** — shared script theming now seeds on init (was a missing dependency for 3 bundled scripts).
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **Scripts crash on fresh projects** — `source soma-theme.sh` with `set -e` caused fatal exit when theme file wasn't present. Fixed with `if [ -f ]; then source; fi` pattern across all 8 scripts.
 - **`soma focus <keyword>` didn't start session** — `main()` call wasn't awaited, `process.exit(0)` ran before session could start.
 - **`postinstall.js` missing from builds** — deleted during Pi 0.64.0 dist sync, restored to CLI repo. Added to `OUR_DIST_FILES` and release script.
@@ -1803,10 +1898,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.7.0] — 2026-04-01
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **/inhale guard** — warns when no preload exists (suggests `/exhale`), warns when preload is stale (>5 tool calls since write). Use `/inhale --force` to override.
 - **Slash command usage hints** — 10 commands now include `Usage:` patterns in their descriptions: `/pin`, `/kill`, `/auto-commit`, `/inhale`, `/install`, `/auto-breathe`, `/hub`, `/scratch`, `/keepalive`, `/soul-space`, `/soma`.
 - **Hub: 5 new scripts** — soma-seam, soma-reflect, soma-query, soma-focus, soma-plans. All with coaching-voice digests.
@@ -1819,8 +1910,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **Semver discipline** — feature releases now bump minor version (0.X.0). Patch (0.x.Y) reserved for bug-fix-only releases.
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **Changelog hook** — `soma-dev.sh` post-commit hook now targets only the first `### Added`/`### Fixed` section (was appending to all version sections).
 - **Hub table rendering** — markdown tables in hub detail pages now render with proper `<table>`/`<thead>`/`<tbody>` structure.
 - **Community CI clean** — 21 frontmatter fixes across protocols and muscles (missing breadcrumb, tier, license, author, version fields).
@@ -1832,10 +1921,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.6.7] — 2026-03-30
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
 - **`/soma doctor`** — migration command. Detects version mismatch on boot, prompts to run migration script with confirmation, shows output, reloads settings. Post-migration guidance for body file review.
 - **Boot migration check** — notifies when project `.soma/` version is behind agent version.
 - **Global vs parent detection** — `detectProjectContext()` distinguishes `~/.soma/` (global runtime) from real parent workspaces. Init prompt has three-way messaging: real parent choice, global fallback, or no soma.
@@ -1850,8 +1935,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **System prompt budget** — default `systemPrompt.maxTokens` raised from 4000 to 10000. Anthropic's system prompt is ~25k; ours at ~5k was triggering false warnings.
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **Preload resume false-positive** — `soma -c` no longer falsely detects preloads from previous rotations as "written this session." Uses mtime check (2-min threshold).
 - **Body template instructions** — moved from frontmatter `description:` (invisible to agent) to HTML comment breadcrumbs in file body (visible, replaceable).
 - **Migration script path resolution** — resolves bundled templates relative to script location, works in sandbox/dev/installed contexts.
@@ -1861,11 +1944,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.6.6] — 2026-03-29
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
 - **Init UX** — prompt before auto-scaffolding (`ctx.ui.confirm`), parent .soma/ inheritance when user declines, `scaffoldBody` templateDir priority chain. (SX-164, SX-165, SX-241)
 - **Command provenance** — `/soma status` shows which extension registered each command via Pi's `sourceInfo`. (SX-233)
 - **cli.js tracked source** — `src/cli.js` in agent repo is source of truth. `sync-to-cli.sh` and `soma-release.sh` use it. (SX-252)
@@ -1877,8 +1955,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **scaffoldBody** priority chain: templateDir → bundled `_public/` → bundled `body/`.
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
 - **restore walk-up, keep .soma-only + runtime-home skip**
 - **findSomaDir checks current dir only, no walk-up**
 - **only .soma/ is a valid soma root, not .claude/ or .cursor/**
@@ -1890,11 +1966,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.6.5] — 2026-03-28
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
 - **`soma inhale --list`** — show available preloads with age and staleness markers from CLI.
 - **`soma inhale <name>`** — partial name match. Load a specific preload by date, session ID, or any substring. Ambiguous matches show alternatives.
 - **`soma inhale --load <path>`** — load any file as a preload by absolute or relative path.
@@ -1913,12 +1984,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **Boot greeting decomposed** — session ID and file paths now separate template variables. (`4d8331f`)
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
 - **Crash on partial settings** — `settings.heat.overrides` access without optional chaining crashed when `heat` section missing. Now defensive. (`b837a37`)
 - **Breathe graceSeconds mismatch** — runtime fallback was 60s, settings default was 30s. Aligned to 30s. (`b837a37`)
 - **5 auto-breathe UX gaps** — smart context warnings, resume awareness, write heuristic for preload detection. (`0f86bec`)
@@ -1928,14 +1993,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.6.4] — 2026-03-23
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
 - **Body architecture** — structured identity system. `.soma/body/` with content files (`soul.md` → `{{soul}}`, `voice.md` → `{{voice}}`, `body.md` → `{{body}}`) and templates (`_mind.md`, `_memory.md`, `_boot.md`). Content files become template variables. Templates control system prompt and preload structure.
 - **Template engine** (`core/body.ts`) — `{{variable}}` interpolation with 5 modifiers (`|tldr`, `|section:Name`, `|lines:N`, `|last:N`, `|ref`), conditional blocks (`{{#var}}...{{/var}}`), graceful degradation for missing vars.
 - **AMPS Skill Loader** (`core/skill-loader.ts`) — unified content scanner. All AMPS classified by heat: hot (8+) = full body in prompt, warm (3-7) = `<available_skills>` XML (agent reads on demand), cold (0-2) = hidden. Claude's native skill format.
@@ -1964,14 +2021,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **Sandbox test** updated for 8 extensions, 19 protocols, SOMA.md init.
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - **Conversation tail injection removed** — was scanning stale Pi JSONL sessions from wrong runtime, sidetracking agent with old conversations.
 - **Soul frontmatter leaking** into rendered system prompt — `loadIdentity()` now strips YAML frontmatter.
 - **Duplicate `# Identity` heading** — `buildLayeredIdentity()` no longer hardcodes heading; template handles it.
@@ -1982,18 +2031,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.6.3] — 2026-03-22
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
-- **settings-driven heat overrides — per-project AMPS control**
-- **inherit.automations — separate from tools inheritance**
-- **statusline preload indicator + smart /exhale (edit vs write)**
-- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 - **`/hub` command** — unified hub interface for community content. Install, fork, share, find, list, status. Replaces old `/install` and `/list` commands (kept as backward compat aliases).
 - **Smart sharing** (`/hub share`) — quality scoring (0-100%), privacy auto-fix with `_public/` staging, README generation that captures `--help` output and extracts functions, dependency resolution.
 - **Drop-in commands** — scripts in `.soma/amps/scripts/commands/` become `/soma <name>` commands. Hot-loadable, no restart needed. Tab completions included.
@@ -2013,14 +2050,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **Community CI** — validate-frontmatter accepts `triggers` (replaces `topic`+`keywords`), `description` OR `breadcrumb`. Format-check supports `scope: core`. Attribution allows org identity for owners. Actions upgraded to v6 (Node 22).
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - **`/hub list --remote`** — flag was parsed as type filter, returning 0 results.
 - **Drop-in command output** — ANSI escape codes stripped (sendUserMessage renders markdown, not terminal).
 - **Stale git-identity heat rule** removed from HEAT_RULES (protocol was archived).
@@ -2033,18 +2062,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.6.2] — 2026-03-21
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
-- **settings-driven heat overrides — per-project AMPS control**
-- **inherit.automations — separate from tools inheritance**
-- **statusline preload indicator + smart /exhale (edit vs write)**
-- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 - **Natural muscle heat detection** — muscles now heat-bump from natural use, not just focus. Script execution matches against `tools:` field. File edits match path segments against `triggers`. Zero configuration needed.
 - **Migration system** — `version` field in settings.json. `core/migrations.ts` discovers and chains migration maps. `soma doctor` checks workspace health. `soma doctor --fix` auto-repairs. `soma doctor --migrate` spawns agent for complex fixes.
 - **Community template sync** — boot fetches latest protocols from community repo. Bundled protocols serve as offline fallback. Add content to community → add name to template → all new users get it.
@@ -2056,14 +2073,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - **Personality engine** — welcome flow is honest about being templates, not the agent.
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - **Runtime delegation** — soma-beta now includes cli.js and Pi runtime files. Previously thin-cli fell through to raw Pi (no version skip, no auto-rotate, "Update Available" banner).
 - **Fresh installs** now include version field in settings.json.
 - **Stale test assertions** — test suite checked for removed frontmatter fields and nonexistent commands.
@@ -2078,14 +2087,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
   - ToolCallEventResult exported
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - CLI dist synced from pi-mono 0.61.1 — `getEditorKeybindings` → `getKeybindings` crash resolved
 - Stale `content-cli.js` import removed (Pi 0.61.0 moved install/list/content to main.js)
 - `--help` fixed — `printGumHelp` removed in 0.61.0, replaced with `printHelp`
@@ -2111,18 +2112,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.6.0] — 2026-03-20
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
-- **settings-driven heat overrides — per-project AMPS control**
-- **inherit.automations — separate from tools inheritance**
-- **statusline preload indicator + smart /exhale (edit vs write)**
-- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 #### MAP System — Plan-Driven Agent Orchestration
 - `maps.ts` — MAP discovery + prompt-config YAML parser (#1039512)
@@ -2185,14 +2174,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - Author attribution + CC BY 4.0 license footers on protocols (#0a2e0ac)
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - Edit tool detection in preload + overwrite-safe breathe instructions (#9e7684f)
 - Auto-breathe graceSeconds consistency + DRY path helpers (#ec857f8)
 - Auto-breathe timeout + session log `-2` suffix bugs (#baaf51b)
@@ -2313,83 +2294,27 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.5.2] — 2026-03-15
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
-- **settings-driven heat overrides — per-project AMPS control**
-- **inherit.automations — separate from tools inheritance**
-- **statusline preload indicator + smart /exhale (edit vs write)**
-- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 - `/scan-logs` command — search previous tool calls + results across sessions (#31a7e17)
 - `/scrape` command + `scrape:build` router capability — intelligent doc discovery (#c950f2b)
 - Boot session warnings injection — tool usage stats from previous session (#0cda314)
 - Boot last conversation context — inject last N messages on fresh boot (#f1d7f3d)
-- Periodic auto-commit for crash resilience (#c6caccc)
-- `graceTurns` setting — configurable grace period before auto-breathe rotation (#c9ab5a8)
-- Guard v2: tool→muscle gating — require reading muscles before dangerous commands (#1c6b725)
-- Protocol TL;DR extraction — `protocolSummary()` prefers `## TL;DR` body section (#83ec9ee)
-- Scratch lifecycle: session IDs, date sections, note management, auto-inject (#fd0bda2, #0d364f2)
-- Combined session ID format (`sNN-<hex>`) — sequential for order, hex for uniqueness (#e7c4057)
-- Statusline session ID display (#d474cbf)
-- Polyglot script discovery — .sh, .py, .ts, .js, .mjs (#1acb8c2)
-- Session log nudge with template at trigger point (#eb8acc8)
-- Identity layer in pattern-evolution, tool-awareness in working-style (#5e4219d)
 - Post-commit auto-changelog + pre-push docs-drift nudge hooks (#cc2ef55)
 
 ### Changed
 - System prompt trimmed ~19% — remove duplication and stale content (#de9c517)
-- Self-awareness protocols rewritten — 5 redundant protocols → configuration guides (#b70ca44)
 - Config-first script extensions via `settings.scripts.extensions` (#dadb78e)
-- Unified rotation through `/inhale`, removed `/auto-continue` (#7b7ba52)
-- Migrated `globalThis.__somaKeepalive` to router (#e919481)
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 - Boot: clean up muscle/protocol/automation formatting (#38a643f)
-- Boot: resume without fingerprint sends minimal boot, not full redundant injection (#7fd064b)
-- Boot: grace countdown skips tool turns during auto-breathe (#53bd421)
-- Boot: preload filename overwrites + rotation when preload pre-exists (#378a1b1)
-- Boot: auto-init `.soma/.git` when autoCommit is true (#276f6f2)
-- Boot: clear restart signal at factory load time (#0bddce2, #bb8350c)
-- Muscles/automations: filter archived status + README in discovery (#5f5ccae, #e42da9b)
 - Protocols: clean stale references, fix broken frontmatter (#7087d6a)
 - Protocols: correct attribution — Curtis Mercier only on personal/protocols-derived (#5d8fb83)
-- Heat: dynamic muscle read + script execution detection (#99a7663)
-- Extensions: soma-route.ts import path — use pi-coding-agent not claude-code (#49454ea)
-- Scripts: stop shipping dev-only scripts to users (#2c8db4a)
-- Scripts: sync paths after _dev/ move, AGENT_DIR resolution (#46615ef, #a520c13)
-- Statusline: restart detection, fs/path imports, signal path fixes (#f845894, #926fd4a, #18eba69)
-- Auto-breathe: reduce triple notifications, preload-as-signal rotation (#927bd74)
+- Scripts: sync-to-website AGENT_DIR resolution — `dirname` went one level too shallow (#a520c13)
 
 ---
 
 ## [0.5.1] — 2026-03-14
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
-- **settings-driven heat overrides — per-project AMPS control**
-- **inherit.automations — separate from tools inheritance**
-- **statusline preload indicator + smart /exhale (edit vs write)**
-- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - Capability router for inter-extension communication (`soma-route.ts`) — provides/gets capabilities, emits/listens signals. Replaces `globalThis` hacks (#94576f3, #e919481)
 - CLI-based session rotation via `.rotate-signal` file — auto-breathe can now rotate without command context (#2da3155)
@@ -2426,14 +2351,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - Dev hooks generated locally by `soma-dev.sh`, not committed to repo (#efc6ed4)
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - Muscle and automation discovery — filter archived status and README files (#e42da9b, #5f5ccae)
 - Scratch completions — remove PRO commands from free completions list (#fd0bda2)
@@ -2460,18 +2377,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.5.0] — 2026-03-12
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
-- **settings-driven heat overrides — per-project AMPS control**
-- **inherit.automations — separate from tools inheritance**
-- **statusline preload indicator + smart /exhale (edit vs write)**
-- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - Auto-breathe mode — proactive context management that triggers wrap-up at configurable %, auto-rotates at higher %. Safety net at 85% always on. Opt-in via `breathe.auto` in settings (#1d533bf)
 - `/auto-breathe` command — runtime toggle (`on|off|status`), persists to settings.json
@@ -2501,14 +2406,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - CI improvements — PR check and release workflows now run all test suites
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - System prompt dropped after turn 1 — Pi resets each `before_agent_start`, now caches compiled prompt
 - Identity never in compiled prompt — `isPiDefaultPrompt()` checked wrong string
@@ -2525,18 +2422,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.4.0] — 2026-03-11
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
-- **settings-driven heat overrides — per-project AMPS control**
-- **inherit.automations — separate from tools inheritance**
-- **statusline preload indicator + smart /exhale (edit vs write)**
-- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - Compiled system prompt ("Frontal Cortex") — `core/prompt.ts` assembles complete system prompt from identity chain, protocol summaries, muscle digests, dynamic tool section
 - Session-scoped preloads — `preload-<sessionId>.md` prevents multi-terminal conflicts
@@ -2559,14 +2444,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - CLAUDE.md awareness, not adoption — system prompt notes existence but doesn't inject content
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - Print-mode race condition — `ctx.hasUI` guard on `sendUserMessage` in `session_start`
 - Skip scaffolding core extensions into project `.soma/extensions/`
@@ -2577,18 +2454,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.3.0] — 2026-03-10
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
-- **settings-driven heat overrides — per-project AMPS control**
-- **inherit.automations — separate from tools inheritance**
-- **statusline preload indicator + smart /exhale (edit vs write)**
-- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - AMPS content type system — 4 shareable types: Automations, Muscles, Protocols, Skills. `scope` field controls distribution
 - Hub commands — `/install <type> <name>`, `/list local|remote` with dependency resolution
@@ -2609,14 +2474,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - Bundled protocols slimmed from all to 4 core (breath-cycle, heat-tracking, session-checkpoints, pattern-evolution)
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - PII scrubbed from git history across all repos
 - CLI stripped to distribution only — agent is source of truth
@@ -2626,18 +2483,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 ## [0.2.0] — 2026-03-09
 
 ### Added
-- **System prompt budget guardrail — `maxTokens: 17000`** (s01-639c5f). Project-level setting warns when compiled prompt exceeds 17K tokens, enforcing lean-body discipline.
-- **State-disk sync muscle** (s01-639c5f). Documents the `state.json` drift pattern — when files are moved to `_archive/` or deleted, JSON entries persist as ghosts. Proposed boot-time fix: prune entries for non-existent files during discovery.
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **rewrite DNA.md — self-awareness, owner's manual, link to docs for deep reference**
-- **/inhale guard + stale warning, slash command usage hints**
-- **prompt before auto-init + parent inheritance (SX-164, SX-165, SX-241)**
-- **show command provenance in /soma status (SX-233)**
-- **track cli.js as source in agent repo (SX-252)**
-- **settings-driven heat overrides — per-project AMPS control**
-- **inherit.automations — separate from tools inheritance**
-- **statusline preload indicator + smart /exhale (edit vs write)**
-- **auto-archive stale preloads after exhale + archiveStalePreloads()**
 
 - Protocols and Heat System — behavioral rules loaded by temperature, heat rises through use, decays through neglect
 - Muscle loading at boot — sorted by heat, loaded within configurable token budget
@@ -2649,14 +2494,6 @@ Restructure release. AMPS consolidated, CLI script routing, Pi runtime bumped, 2
 - 9 core modules — discovery, identity, protocols, muscles, settings, init, preload, utils, index
 
 ### Fixed
-- **help header shows 'CLI v...' not bare version**
-- **help rewrite, script theme crash, focus session, postinstall, docs**
-- **restore walk-up, keep .soma-only + runtime-home skip**
-- **findSomaDir checks current dir only, no walk-up**
-- **only .soma/ is a valid soma root, not .claude/ or .cursor/**
-- **skip global runtime home in findSomaDir walk-up**
-- **defensive settings.heat access + stale test mocks — 567/567 pass**
-- **5 UX gaps — smart warnings, resume awareness, write heuristic**
 
 - Extensions load correctly
 - Skills install to correct path

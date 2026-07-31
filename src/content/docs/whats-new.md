@@ -27,6 +27,129 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ---
 
+## v0.42.0 — July 2026
+
+### 🆕 New caps
+
+**`soma:agent.claude` — delegate through a FILE contract, no ARG_MAX ceiling**
+```
+soma:agent.claude({task:'...', role?:'general', model?:'sonnet', maxBudgetUsd?:3})
+  → runId + tmux session + contract/report/log paths
+soma:agent.claude_harvest({runDir})   → the child's report, or not-finished
+```
+`delegate` passes the compiled prompt as a `claude -p` ARGUMENT, so a large role + task can exceed
+ARG_MAX and fail. This writes the contract to a file and hands the child a tiny instruction to read it.
+Always background (tmux). **Use `delegate` normally; reach for this when the prompt is large, or when
+`delegate` already failed on argument length.** Poll `claude_harvest` rather than attaching to tmux.
+
+### 🔄 Behavior changes
+
+- **Role frontmatter is parsed by real YAML now** (Pi's `parseFrontmatter`). It is STRICT: an unquoted
+  value containing `": "` becomes a mapping, and one containing `" #"` truncates at the comment. If a role
+  errors or a value arrives half-length, **quote it** — 7 bundled roles needed exactly that. The previous
+  hand-rolled parser accepted both and was silently masking them.
+- **`context:` in a role's frontmatter actually stacks now.** It shipped inert: the parser's promotion
+  allowlist omitted the key, so declared files rendered as `"(none)"`. Declared muscles/docs now arrive as
+  `<context_file path=...>` blocks. **A child spawned from a session older than this change still gets the
+  old compiler** — reload for it to take effect.
+- **The shipped harness asks you to cite only from files you have OPEN.** Naming a doc as support asserts
+  you read it this session; a routing table says which file owns a fact, never what the fact is.
+
+### 🐛 Bugs you can stop stepping around
+
+- `soma-dev sync dev` / `sync main` now actually write STATE.md's activity log (all writers were broken;
+  on a default install none had ever appended a row) — and they assert the row arrived, not just exit 0.
+- `dist/.dev-synced` carries provenance (`branch@sha`, version, piVersion, timestamp) instead of being a
+  zero-byte flag; `soma-dev switch status` prints it and states that the git ref describes the CHECKOUT,
+  not the dist.
+
+---
+
+## v0.41.2 — July 2026
+
+**Maintenance release. Nothing to try.**
+
+No user-facing change shipped in this one, and it is listed here only so the trail has no gap.
+The single code addition was an internal delegation backend whose capability was never registered —
+unreachable, so there was nothing a user could call. It became reachable in a later release and is
+documented there.
+
+These notes were written retroactively: the release originally shipped with no narrative at all,
+because the changelog-promotion step matched on a heading format that had since changed, found
+nothing, and exited reporting success. Both the match and the silent success are fixed.
+
+---
+
+## v0.41.1 — July 2026
+
+### 🐛 Fixes
+
+- **Leanstral models no longer error when reasoning is on.** `labs-leanstral-*` were sending a
+  reasoning flag the Mistral API rejects outright (`400 code 3051`); they now send the field the API
+  actually expects.
+- **The runtime no longer breaks after a Pi version bump.** Syncing a bump that changed
+  `package.json` skipped reinstalling dependencies, so a newly-built runtime could run against the
+  previous version's modules and crash at boot. The sync now reinstalls before rebuilding.
+
+---
+
+## v0.41.0 — July 2026
+
+### 🆕 Delegation goes multi-model
+
+Child roles are no longer pinned to a single Claude model. A role can declare a **chain** — an
+ordered list of models with a cost class — and delegation walks it, falling through to the next
+entry when one is unavailable. In practice that means a cheap model does the routine pass and a
+capable one is reached for only when the work needs it.
+
+```
+default-model: claude-cli/haiku
+model-chain:
+  - id: claude-cli/haiku
+    class: cheap
+  - id: claude-cli/sonnet
+    class: coding
+```
+
+### 🔄 Behavior changes
+
+- **Child defaults moved to the free tier.** New child templates no longer default to a paid model.
+  Existing roles that name their own `default-model` are unaffected.
+- **Pi runtime 0.80.6 → 0.80.10.**
+
+### 🐛 Fixes
+
+- **`/body` stopped crying wolf.** Unreferenced body files used to emit one warning each; they now
+  collapse into a single line.
+- **Large delegate prompts no longer fail on argument length.** The compiled role prompt is written
+  to a file instead of passed as a command-line argument, so prompt size no longer has a ceiling.
+
+---
+
+## v0.40.0 — July 2026
+
+### 🆕 You can see, and scope, which models are available
+
+```
+soma:agent.models            → live catalog, honouring settings.json scoping
+soma:extensions.search       → search pi.dev packages
+soma:extensions.show         → inspect one before installing
+soma install npm:<pkg>       → install through Pi's own package manager
+```
+
+The delegate model catalog is now built at call time from the live registry rather than a hardcoded
+list, so a provider you have configured shows up without a code change. `{{enabled_models}}` and
+`{{active_extensions}}` are available as template variables, so a prompt can state what this install
+actually has rather than what it assumed.
+
+### 🔄 Behavior changes
+
+- **A budget guardrail on the system prompt — `systemPrompt.maxTokens`.** Compiling a prompt over the
+  configured budget warns rather than failing, so a body grows lean by decision rather than by
+  accident. Check yours with `soma:body.slots`.
+
+---
+
 ## v0.39.0 — July 2026
 
 ### 🆕 New caps
@@ -72,7 +195,7 @@ CF-specific, no API key needed.
 
 ---
 
-## v0.34.0 — June 2026 (latest)
+## v0.34.0 — June 2026
 
 ### 🆕 New caps
 

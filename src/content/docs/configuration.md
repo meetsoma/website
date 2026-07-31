@@ -2,7 +2,7 @@
 title: "Configuration"
 description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-07-31
 order: 6
 ---
 
@@ -218,6 +218,7 @@ Protects core Soma files and git identity from accidental modification.
 | `toolGates` | `{}` | Tool→muscle gating. Require reading a muscle before using certain bash commands. Keys are command substrings, values are `{ muscle, mode }`. |
 | `worktree` | `null` | Worktree boundary. When set to an absolute/`~` path, `write` and `edit` outside it are hard-blocked (sub-agent isolation). |
 | `trustedModels` | `[]` | Per-model allowlist. When the **active model id** matches a glob in this list, `coreFiles` + `bashCommands` resolve to `"allow"` for that turn — capable models (sonnet/opus) skip the prompts while weaker models and new users keep full protection. Globs use `*` wildcards, matched case-insensitively against the model id (same convention as `breathe.thresholds`). Settable per-project **or** global; child wins. Empty (default) = no model is trusted. Example: `["*sonnet*", "*opus*"]`. |
+| `trust` | `{enabled: true, threshold: 3, ttlDays: 30}` | **Earned, scoped command trust.** Approve the same command shape 3× in a project and the guard stops asking (30-day expiry, per-directory). Only ever relaxes the *routinely-prompted* tier — never applies to `rm -rf`, force-push, `reset --hard`, `clean -f`, or root-path truncation (the always-on list below still fires). Ledger at `~/.soma/state/guard-trust.json`. |
 
 **Example: relax guards for capable models only:**
 ```json

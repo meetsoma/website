@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-hidden="true">
+  <defs>
+    <radialGradient id="et-bg" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#0e1620"/>
+      <stop offset="100%" stop-color="#050810"/>
+    </radialGradient>
+    <radialGradient id="et-glow" cx="50%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#4ade80" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#2a3e54" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="470" fill="url(#et-bg)"/>
+  <rect width="640" height="470" fill="url(#et-glow)"/>
+
+  <!-- Shield: earned trust (guard.trust) -->
+  <g transform="translate(210,110)">
+    <path d="M110 0 L220 40 V150 C220 230 165 280 110 310 C55 280 0 230 0 150 V40 Z"
+          fill="#14202e" stroke="#4ade80" stroke-width="2" opacity="0.95"/>
+    <!-- three checkmarks accumulating toward the trust threshold -->
+    <g stroke="#4ade80" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.9">
+      <path d="M55 130 L75 150 L110 105"/>
+    </g>
+    <g stroke="#4ade80" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.65">
+      <path d="M55 175 L75 195 L110 150"/>
+    </g>
+    <g stroke="#4ade80" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.35">
+      <path d="M55 220 L75 240 L110 195"/>
+    </g>
+  </g>
+
+  <!-- File → child node: delegation through a file contract -->
+  <g transform="translate(430,190)">
+    <rect x="0" y="0" width="86" height="108" rx="6" fill="#14202e" stroke="#7cb2d4" stroke-width="1" opacity="0.9"/>
+    <rect x="14" y="16" width="50" height="5" rx="2.5" fill="#7cb2d4" opacity="0.6"/>
+    <rect x="14" y="30" width="58" height="4" rx="2" fill="#7cb2d4" opacity="0.3"/>
+    <rect x="14" y="42" width="40" height="4" rx="2" fill="#7cb2d4" opacity="0.3"/>
+    <rect x="14" y="54" width="50" height="4" rx="2" fill="#7cb2d4" opacity="0.2"/>
+    <path d="M-40 54 H-4" stroke="#7cb2d4" stroke-width="2" opacity="0.5" marker-end="url(#et-arrow)"/>
+  </g>
+  <defs>
+    <marker id="et-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#7cb2d4" opacity="0.5"/>
+    </marker>
+  </defs>
+  <circle cx="360" cy="244" r="5" fill="#7cb2d4" opacity="0.7"/>
+
+  <!-- small child node dot, delegation target -->
+  <circle cx="560" cy="330" r="10" fill="#050810" stroke="#7cb2d4" stroke-width="2"/>
+  <path d="M516 244 L560 330" stroke="#7cb2d4" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4"/>
+</svg>

@@ -2,7 +2,7 @@
 title: "Statusline & Notices"
 description: "The three-line footer, every indicator, and the toast notices Soma shows you — including the preload lifecycle."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-07-31
 order: 7.5
 ---
 
@@ -33,6 +33,11 @@ The statusline is rendered by `soma-statusline.ts`. Notices are emitted by
 | `◷<m:ss>` | Time left on the Anthropic prompt-cache TTL (5 min). The keepalive refreshes it. |
 | `♥on` / `♥<n>` | Keepalive: `♥on` (dim) when idle, `♥<n>` (green) showing pings sent. Absent if keepalive is disabled. |
 | `<n>inv` | Guard interventions this session (yellow > 0, red > 5). Only shown when non-zero. |
+
+**Keepalive ladder** — the ping messages are **editable content**, configured per-workspace
+in `body/_keepalives.md` (pings 1–2 stay quiet by default, 3 triggers a mid-session reflection,
+4 winds down, 5 is the final call). Highest matching rung wins for the ping count; a `default`
+key sets the fallback. With no ladder file present, behaviour is unchanged.
 
 ## Line 2 — session state
 

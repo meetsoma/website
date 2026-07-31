@@ -2,7 +2,7 @@
 title: "Engine Settings"
 description: "All runtime settings — models, compaction, UI, retry, shell, and more."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-07-31
 order: 6.3
 ---
 
@@ -99,6 +99,20 @@ Controls how long conversations are summarized to stay within context limits.
 | `shellPath` | string | — | Custom shell path |
 | `shellCommandPrefix` | string | — | Prefix for every bash command (e.g., `"shopt -s expand_aliases"`) |
 | `npmCommand` | string[] | — | Custom npm command (e.g., `["mise", "exec", "node@20", "--", "npm"]`) |
+
+## Scripts
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `scripts.maxInPrompt` | number | `40` | Max scripts rendered in the boot scripts_table. Lower if the table crowds the prompt; higher if you want more discoverability at boot. |
+
+## Guard
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `guard.trust.enabled` | boolean | `true` | Earned command trust on/off. |
+| `guard.trust.threshold` | number | `3` | Same-command approvals before the guard stops asking (per project). |
+| `guard.trust.ttlDays` | number | `30` | Days of disuse before an earned entry expires. |
 
 ## Terminal & Images
 
