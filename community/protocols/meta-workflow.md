@@ -11,7 +11,7 @@ requires:
 scope: bundled
 tier: core
 created: 2026-06-10
-updated: 2026-07-31
+updated: 2026-06-15
 version: 1.2.0
 author: meetsoma
 license: CC BY 4.0
