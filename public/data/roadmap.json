@@ -1292,7 +1292,7 @@
       "title": "Somaverse public beta",
       "blurb": "Open registration, team workspaces, and pane drag-and-drop. The visual workspace for your agent — already live at somaverse.ai.",
       "status": "in-progress",
-      "cycle": "releases/cycles/somaverse-connection"
+      "cycle": "../somaverse/.soma/cycles/somaverse-connection"
     },
     {
       "title": "Async agent comms",
