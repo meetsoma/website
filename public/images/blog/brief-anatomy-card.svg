@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 590" font-family="ui-monospace, 'SF Mono', Menlo, monospace">
+  <text x="450" y="32" text-anchor="middle" fill="#6a7380" font-size="12" letter-spacing="6">ANATOMY  OF  A  BRIEF  THAT  CANNOT  QUIETLY  AGREE  WITH  YOU</text>
+
+  <!-- ── the card ────────────────────────────────────────────────────────── -->
+  <rect x="60" y="58" width="530" height="392" rx="10"
+        fill="rgba(22,27,34,0.72)" stroke="#30363d" stroke-width="1"/>
+
+  <!-- header strip -->
+  <rect x="60" y="58" width="530" height="34" rx="10" fill="rgba(100,148,190,0.10)"/>
+  <rect x="60" y="82" width="530" height="10" fill="rgba(100,148,190,0.10)"/>
+  <line x1="60" y1="92" x2="590" y2="92" stroke="#30363d" stroke-width="1"/>
+  <text x="78" y="80" font-size="12" fill="#8bb9e0">role: <tspan fill="#c9d1d9">auditor</tspan>   model: <tspan fill="#c9d1d9">sonnet</tspan>   budget: <tspan fill="#c9d1d9">$3.00 / 60 calls</tspan></text>
+
+  <g font-size="11.5">
+    <!-- PREMISES -->
+    <text x="78" y="120" fill="#6494be" letter-spacing="2" font-weight="700">PREMISES</text>
+    <text x="90" y="140" fill="#c9d1d9">registry.json has 494 rows   <tspan fill="#7d8794">[ran: python3 -c len(cycles)]</tspan></text>
+    <text x="90" y="159" fill="#c9d1d9">the repo is private          <tspan fill="#7d8794">[ran: gh repo view]</tspan></text>
+    <text x="90" y="178" fill="#c9d1d9">gate 4 passes today          <tspan fill="#f0883e">[UNVERIFIED &#8212; check first]</tspan></text>
+
+    <!-- GATES -->
+    <text x="78" y="210" fill="#6494be" letter-spacing="2" font-weight="700">GATES</text>
+    <text x="90" y="230" fill="#7d8794">#   gate                    command              pass</text>
+    <text x="90" y="249" fill="#c9d1d9">G1  every cap declares args  tool-output-audit    0 drift</text>
+    <text x="90" y="268" fill="#c9d1d9">G2  no role identity blank   test-role-identity   10/10</text>
+
+    <!-- STOP -->
+    <text x="78" y="300" fill="#6494be" letter-spacing="2" font-weight="700">STOP CONDITION</text>
+    <text x="90" y="320" fill="#c9d1d9">if no admin-role concept exists, STOP AND REPORT.</text>
+    <text x="90" y="339" fill="#c9d1d9">Do not invent one.</text>
+
+    <!-- ALWAYS -->
+    <text x="78" y="371" fill="#6494be" letter-spacing="2" font-weight="700">ALWAYS</text>
+    <text x="90" y="391" fill="#c9d1d9">Write the deliverable immediately, fill it in as you go.</text>
+    <text x="90" y="410" fill="#c9d1d9">Do NOT ask for confirmation &#8212; nobody is watching this pane.</text>
+    <text x="90" y="429" fill="#c9d1d9">Return an MLR block as your final message.</text>
+  </g>
+
+  <!-- ── annotations ─────────────────────────────────────────────────────── -->
+  <g font-size="11.5">
+    <line x1="596" y1="116" x2="626" y2="116" stroke="#6494be" stroke-width="1.2"/>
+    <text x="634" y="112" fill="#8bb9e0" font-weight="700">a premise is a claim too</text>
+    <text x="634" y="129" fill="#7d8794">tag it, or mark it UNVERIFIED and</text>
+    <text x="634" y="145" fill="#7d8794">they become a detector of your error</text>
+
+    <line x1="596" y1="206" x2="626" y2="206" stroke="#6494be" stroke-width="1.2"/>
+    <text x="634" y="202" fill="#8bb9e0" font-weight="700">gates BEFORE the run</text>
+    <text x="634" y="219" fill="#7d8794">retrofitting them from the report</text>
+    <text x="634" y="235" fill="#7d8794">means nothing was ever tested</text>
+
+    <line x1="596" y1="296" x2="626" y2="296" stroke="#6494be" stroke-width="1.2"/>
+    <text x="634" y="292" fill="#8bb9e0" font-weight="700">name the wrong answer</text>
+    <text x="634" y="309" fill="#7d8794">without it, inventing something</text>
+    <text x="634" y="325" fill="#7d8794">plausible is the rational move</text>
+
+    <line x1="596" y1="367" x2="626" y2="367" stroke="#6494be" stroke-width="1.2"/>
+    <text x="634" y="363" fill="#8bb9e0" font-weight="700">three lines, every brief</text>
+    <text x="634" y="380" fill="#7d8794">one child finished a full report,</text>
+    <text x="634" y="396" fill="#7d8794">asked to write it, and timed out</text>
+  </g>
+
+  <!-- ── the commands ────────────────────────────────────────────────────── -->
+  <text x="60" y="486" fill="#8a94a6" font-size="12" letter-spacing="2">THE  THREE  COMMANDS  I  ACTUALLY  NEEDED</text>
+
+  <g font-size="11.5">
+    <text x="60" y="510" fill="#f0883e">$</text>
+    <text x="78" y="510" fill="#c9d1d9">tmux capture-pane -p -t soma-child-&lt;id&gt; | tail</text>
+    <text x="470" y="510" fill="#7d8794">a corpse shows a shell, not an agent</text>
+
+    <text x="60" y="532" fill="#f0883e">$</text>
+    <text x="78" y="532" fill="#c9d1d9">tmux capture-pane -p -S -200 -t soma-child-&lt;id&gt;</text>
+    <text x="470" y="532" fill="#7d8794">the MLR dies with the pane</text>
+
+    <text x="60" y="554" fill="#f0883e">$</text>
+    <text x="78" y="554" fill="#c9d1d9">child-prompt.mts show &lt;role&gt; --print</text>
+    <text x="470" y="554" fill="#7d8794">read what it got before blaming it</text>
+  </g>
+
+  <text x="862" y="574" text-anchor="end" font-family="Georgia, serif" font-size="15" fill="#6494be" opacity="0.7">&#963;</text>
+</svg>

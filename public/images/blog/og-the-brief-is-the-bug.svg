@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="The Brief Is the Bug — three delegation failures, all reported as successes.">
+  <defs>
+    <radialGradient id="bg-g" cx="40%" cy="45%" r="85%">
+      <stop offset="0%" stop-color="#182030"/>
+      <stop offset="100%" stop-color="#0b0f15"/>
+    </radialGradient>
+    <pattern id="grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" stroke="#6494be" stroke-width="0.3" opacity="0.06" fill="none"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-g)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- ═══ LEFT — the headline ═══ -->
+  <text x="60" y="112" style="font-family: 'SF Mono', monospace; font-size: 13px; fill: #6494be; letter-spacing: 6px; opacity: 0.85; font-weight: 600;">DELEGATION &#183; 839 LINES OF NOTES</text>
+
+  <text x="60" y="212" style="font-family: Georgia, serif; font-size: 82px; fill: #e4eaf4; font-weight: 700; letter-spacing: -2px;">The Brief</text>
+  <text x="60" y="298" style="font-family: Georgia, serif; font-size: 82px; fill: #f0883e; font-style: italic; font-weight: 700; letter-spacing: -2px;">Is the Bug.</text>
+
+  <text x="60" y="366" style="font-family: Georgia, serif; font-size: 23px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">I sorted every delegation failure by cause.</text>
+  <text x="60" y="398" style="font-family: Georgia, serif; font-size: 23px; fill: #c9d1d9; font-style: italic; opacity: 0.85;">Almost none of them were the model.</text>
+
+  <!-- Stat card -->
+  <g transform="translate(60, 440)">
+    <rect x="0" y="0" width="500" height="98" rx="8" fill="rgba(100,148,190,0.06)" stroke="rgba(100,148,190,0.2)" stroke-width="1"/>
+    <text x="24" y="30" font-family="'SF Mono', monospace" font-size="11" fill="#6494be" letter-spacing="2" opacity="0.85">OF EVERY ROLE FILE I WROTE FOR THEM</text>
+    <text x="24" y="72" font-family="Georgia, serif" font-size="34" fill="#e4eaf4" font-weight="700">37% <tspan fill="#6e7681" font-size="26">&#8594;</tspan> <tspan fill="#28c840">99%</tspan></text>
+    <text x="196" y="72" font-family="'SF Mono', monospace" font-size="13" fill="#c9d1d9" opacity="0.7">actually reached the child</text>
+    <text x="24" y="90" font-family="'SF Mono', monospace" font-size="12" fill="#f0883e" opacity="0.9">129,858 characters were being dropped in silence</text>
+  </g>
+
+  <!-- ═══ RIGHT — three green lies ═══ -->
+  <g transform="translate(640, 120)">
+    <rect x="0" y="0" width="500" height="380" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+    <circle cx="18" cy="18" r="5" fill="#ff5f56"/>
+    <circle cx="36" cy="18" r="5" fill="#ffbd2e"/>
+    <circle cx="54" cy="18" r="5" fill="#27c93f"/>
+    <text x="250" y="22" text-anchor="middle" font-family="'SF Mono', monospace" font-size="10" fill="#8b949e" letter-spacing="1">soma:agent &#183; children</text>
+
+    <g transform="translate(24, 62)">
+      <text x="0" y="0" font-family="'SF Mono', monospace" font-size="12.5" fill="#28c840" font-weight="600">&#10003; REPORTED</text>
+      <text x="250" y="0" font-family="'SF Mono', monospace" font-size="12.5" fill="#f85149" font-weight="600" letter-spacing="1">ACTUALLY</text>
+    </g>
+    <line x1="24" y1="78" x2="476" y2="78" stroke="#30363d" stroke-width="1"/>
+
+    <g font-family="'SF Mono', monospace" font-size="13">
+      <g transform="translate(24, 118)">
+        <text x="0" y="0" fill="#28c840">&#10003;</text>
+        <text x="22" y="0" fill="#c9d1d9">Status: running</text>
+        <text x="250" y="0" fill="#8b949e">a dead shell,</text>
+        <text x="250" y="22" fill="#8b949e">echoing my task</text>
+      </g>
+      <g transform="translate(24, 196)">
+        <text x="0" y="0" fill="#28c840">&#10003;</text>
+        <text x="22" y="0" fill="#c9d1d9">message sent</text>
+        <text x="250" y="0" fill="#8b949e">the model never</text>
+        <text x="250" y="22" fill="#8b949e">read a word</text>
+      </g>
+      <g transform="translate(24, 274)">
+        <text x="0" y="0" fill="#28c840">&#10003;</text>
+        <text x="22" y="0" fill="#c9d1d9">$1.98 &#183; 3h15m</text>
+        <text x="250" y="0" fill="#8b949e">hung 3 hours in</text>
+        <text x="250" y="22" fill="#8b949e">one tool call</text>
+      </g>
+    </g>
+
+    <text x="250" y="352" text-anchor="middle" font-family="Georgia, serif" font-size="15" font-style="italic" fill="#f0883e" opacity="0.9">Every status surface said yes.</text>
+  </g>
+
+  <!-- ═══ BRAND BAR ═══ -->
+  <line x1="60" y1="570" x2="1140" y2="570" stroke="#30363d" stroke-width="1"/>
+  <text x="60" y="600" style="font-family: 'SF Mono', monospace; font-size: 15px; fill: #6494be; letter-spacing: 5px; font-weight: 600;">SOMA</text>
+  <text x="1140" y="600" text-anchor="end" style="font-family: 'SF Mono', monospace; font-size: 14px; fill: #6e7681; letter-spacing: 1px;">soma.gravicity.ai</text>
+</svg>
