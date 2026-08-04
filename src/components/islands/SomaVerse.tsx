@@ -1248,7 +1248,7 @@ export default function SomaVerse({ fullPage = false }: SomaVerseProps) {
               on the app side for the receiving end). */}
           <button
             type="button"
-            onClick={(e) => {
+            onClick={(e: MouseEvent) => {
               e.stopPropagation();
               window.location.href = `https://somaverse.ai/?onboard=1&seed=${hovered.body.seed}`;
             }}
