@@ -7,6 +7,9 @@ All notable changes to the Soma website.
 ### Added
 - Blog post: "Eating Our Own Memory" — dogfooding narrative (`a5926b3`)
 - `soma-verify.sh copy` — automated marketing copy verification against source of truth
+- SomaVerse: "Adopt this Soma →" CTA in the hover card — carries a clicked body's seed into guest
+  onboarding (`somaverse.ai/?onboard=1&seed=N`). L10 — full report:
+  `.worktrees/verse-onboarding/.soma/releases/audits/l10-verse-onboarding.md`
 
 ### Fixed
 - Ecosystem page: protocol count 15→14 (matched actual hub)
