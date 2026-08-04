@@ -1240,6 +1240,29 @@ export default function SomaVerse({ fullPage = false }: SomaVerseProps) {
             {hovered.body.heterochromia && <span style={{ color: rc.color }}>hetero</span>}
             {hovered.body.hasRings && <span style={{ color: rc.color }}>ringed</span>}
           </div>
+          {/* L10 — carry this Soma's seed into guest onboarding. Distinct from
+              the canvas-level `onClick` above (:767-775, resets to /verse/) —
+              this is a dedicated CTA inside the hover card overlay, not the
+              canvas element, so it doesn't trigger that handler. Data
+              sovereignty: seed only, no backend call (see GuestOnboarding.tsx
+              on the app side for the receiving end). */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.location.href = `https://somaverse.ai/?onboard=1&seed=${hovered.body.seed}`;
+            }}
+            style={{
+              pointerEvents: 'auto',
+              marginTop: '10px', width: '100%',
+              padding: '7px 0', borderRadius: '6px', border: `1px solid ${rc.color}60`,
+              background: `${rc.color}18`, color: rc.color, cursor: 'pointer',
+              fontFamily: 'var(--font-mono, monospace)', fontSize: '0.68rem',
+              fontWeight: 600, letterSpacing: '0.04em',
+            }}
+          >
+            Adopt this Soma →
+          </button>
         </div>
       )}
 
