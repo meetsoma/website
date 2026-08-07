@@ -81,6 +81,109 @@ description: "One sentence that captures what this protocol enforces — the war
 | `applies-to` | `[always]` | Domain signals this protocol applies to |
 | `scope` | `local` | `local` = project only, `shared` = eligible for parent chain, `core` = built-in behavior documentation (never loads into prompt) |
 | `tier` | `community` | `community` or `official` |
+| `gates` | none | Enforcement hooks — see below |
+
+### 2b. Gates — make a protocol enforce itself
+
+> ⚠ **Not yet in a tagged release.** On `dev` now, listed under CHANGELOG `[Unreleased]`. The
+> frontmatter shape below is settled and covered by tests — build on it.
+
+A protocol can carry its own enforcement. Instead of a rule that loads into the prompt on every
+turn, the rule sits dormant and **fires at the moment it is broken**:
+
+```yaml
+gates:
+  - paths: ["src/migrations/"]          # before a write/edit under these paths
+    mode: remind
+    rule: "Migrations are append-only — never edit an applied one. Add a new migration instead."
+    read-first: MIGRATIONS.md            # optional: offered, never required
+
+  - command: "npm publish"               # before a matching bash command
+    mode: block
+    rule: "Run `npm run verify` first — publish is irreversible."
+
+  - after: "git commit"                  # AFTER the command succeeds
+    mode: remind
+    rule: "Update CHANGELOG [Unreleased] before the next task."
+```
+
+**Triggers**
+
+| key | fires | use for |
+|---|---|---|
+| `paths` | before `write`/`edit` on a matching path | "you're about to change X — know Y first" |
+| `paths` + `tool: write` | only when a file is **created** or wholesale-replaced | "you're adding an Nth thing here — check what exists first" |
+| `paths` + `tool: edit` | only when an **existing** file is modified | "you're changing something that already shipped" |
+| `command` | before a matching `bash` command | "don't run this — run that instead" |
+| `after` | after a matching `bash` command **succeeds** | the action was right but created an obligation |
+
+`command` and `after` are **regular expressions**. `paths` is a substring match.
+
+**Modes**
+
+| mode | behaviour |
+|---|---|
+| `remind` (default) | Blocks **once**, shows `rule`, and the identical retry goes through. Repeats on a later independent break; at 5 it suggests writing a muscle. |
+| `block` | Stays blocked until `read-first` has been read this session. For the rare thing that must not proceed unread. |
+| `warn` | UI notice only. ⚠ The model does **not** see notifications — `warn` reminds a human, not the agent. |
+
+**A gate can point at a muscle**
+
+`read-first:` resolves muscles as readily as docs, which makes the two layers compose: the protocol
+supplies the **trigger**, the muscle supplies the **knowledge**. A muscle behind a gate costs zero
+prompt tokens *and* arrives exactly when it applies — no heat needed.
+
+```yaml
+gates:
+  - paths: ["roadmap.json"]
+    mode: block
+    read-first: roadmap-tone-check.md     # a muscle
+    rule: "The roadmap is not the CHANGELOG — read the muscle before writing an entry."
+```
+
+**The division of labour, in one line:** a muscle makes an action *better*; a protocol decides
+whether the action *happens*. Full comparison table: [Muscles → Muscle or protocol?](muscles.md).
+
+**When a rule earns a gate**
+
+Most rules shouldn't be gated — they should just be written down. A rule earns a gate when it keeps
+getting broken **precisely because nothing catches it at the moment it's broken.**
+
+That gives a clean promotion path for anything you've written down as a habit or a note:
+
+| keep as prose | promote to a gate |
+|---|---|
+| *when* to reach for something at all | the rule that must fire **at the violation** |
+| judgement, tradeoffs, worked reasoning | a mechanical trigger: `paths` / `command` / `after` |
+| the full procedure | the one-line correction needed *right then* |
+
+The note keeps the reasoning; the protocol takes the enforcement. Don't move the whole thing — a
+gate whose `rule` is a paragraph is a document with extra steps.
+
+**Rules of thumb**
+
+- Write `rule` as a correction — *"don't do X, do Y"* — not as a pointer to a document.
+- A gate needs a **mechanical** trigger. If the rule requires noticing that you're in a situation,
+  it cannot be gated and belongs in your always-loaded body files. *"Plausibly detectable" is not
+  detectable* — if you can't write the expression, leaving it as prose is the correct outcome.
+- **Anchor `command` patterns to the invocation, not the word.** `\b(timeout)\b` matches
+  `grep 'timeout' notes.md` and `curl --timeout 5` as readily as `timeout 5 cmd`. Anchor to command
+  position: `(^|[;|&(]\s*)\s*timeout\s`.
+- **Test both directions before trusting a gate.** List what must fire *and* what must not, and
+  check both. A gate that never false-fires on your own workflow is the only kind you'll keep.
+- **Re-verify on a fresh session.** Protocol gates are read once at startup, so the session that
+  adds a gate cannot see it. Start a new session to confirm it behaves.
+- **Re-read the `rule` text when the code it describes changes.** A gate outlives the thing it was
+  written about, and nobody re-reads a rule they already agree with. A gate enforcing a claim that
+  stopped being true is worse than no gate — it's confidently wrong at exactly the moment someone
+  is trying to work.
+- Nothing deadlocks: an unresolvable `read-first` degrades to allow, a gate never blocks edits to
+  its own protocol file, and malformed frontmatter is skipped rather than fatal.
+- Reading via `cat`/`head` satisfies a `read-first` — the `read` tool is not required.
+- **Don't gate paths that only exist in your project** if the protocol is shared or shipped.
+
+Projects that prefer configuration over authoring can declare the same thing in
+`settings.json` under `guard.pathGates`; explicit settings win over protocol-declared gates.
 
 ### 3. Write the body
 

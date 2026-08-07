@@ -13,6 +13,47 @@ Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, st
 
 Muscles are **learned patterns** — reusable knowledge that Soma builds from experience. Unlike protocols (which are behavioral rules you write), muscles emerge organically from work. They're Soma's playbook.
 
+## Muscle or protocol?
+
+The short version: **a muscle makes an action better. A protocol decides whether the action happens
+at all.**
+
+| | **Muscle** | **Protocol** |
+|---|---|---|
+| **Answers** | *"how do I do this well?"* | *"may I do this — and if not, what instead?"* |
+| **Nature** | knowledge, method, judgement | a rule, with consequences |
+| **Arrives** | loaded by heat, or summoned by a gate's `read-first` | fires at the moment its rule is broken |
+| **Effect on a tool call** | improves it — you write better code because you read it | **gates it** — `remind`, `block`, or redirect to the right tool |
+| **Prompt cost** | resident: hot = full body, warm = TL;DR, cold = free | ~zero until broken (a `gates:` block loads nothing) |
+| **Fails by** | never being recalled — a reflex you didn't have | over-firing on innocent work, or its premise going stale |
+| **Good fit** | "here is the tone the roadmap needs" | "don't `grep -r` a tree — use `soma:code.find`" |
+
+**They compose, and that's the point.** A gate can name a muscle as its `read-first`, so the
+protocol supplies the *trigger* and the muscle supplies the *knowledge*:
+
+```yaml
+gates:
+  - paths: ["roadmap.json"]
+    mode: block
+    read-first: roadmap-tone-check.md      # ← a MUSCLE, not a doc
+    rule: "The roadmap is not the CHANGELOG. Read the muscle, then run the tone-check script."
+```
+
+That pairing solves the muscle's oldest problem. A cold muscle costs nothing and is never recalled;
+a hot one is recalled but costs tokens every turn forever. **Behind a gate it costs nothing AND
+arrives exactly when it applies** — no heat required.
+
+### Folding a long muscle
+
+If a muscle is long, split it by what each half does:
+
+- the part that is a **rule** — *don't do X, do Y* — becomes a gate's one-line `rule:`
+- the part that is **judgement** — examples, tone, tradeoffs — stays in the muscle as the read target
+
+The reader then gets a single corrective line at the moment of the mistake, and only opens the long
+version when they actually need it. **Don't move the whole muscle into a gate** — a `rule:` that
+runs to a paragraph is a document with extra steps, and it loads on every violation.
+
 ## How Muscles Form
 
 Muscles start as observations. When Soma notices a pattern across sessions — a deployment process, a code style, an API workflow — it writes it down as a muscle file in `.soma/amps/muscles/`.

@@ -27,7 +27,188 @@ Root cause, diagnosis, what it cost and how it was tested are kept — in the pr
 
 ## [Unreleased]
 
+### Added
+- **Protocols enforce their own rules — `gates:` in protocol frontmatter.** A gate stays out of the
+  system prompt and fires in the tool result at the moment the rule is broken. Triggers: `paths:`
+  (before a write/edit), `command:` (before a bash command), `after:` (once a bash command
+  succeeds); `command`/`after` are regex, `paths` is substring with `exclude:` for carve-outs.
+  Modes: `remind` blocks once and lets the identical retry through, `block` stays shut until a named
+  doc is read this session, `warn` notifies the UI only. Projects can declare the same thing in
+  `settings.json` → `guard.pathGates`, which overrides a protocol-declared gate on the same pattern.
+  Nothing deadlocks: an unresolvable `read-first` allows, a gate never blocks its own protocol file,
+  malformed frontmatter is skipped. Docs: `docs/protocols.md` §2b.
+- **Path gates narrow to one tool with `tool: write` or `tool: edit`.** `write` fires when a file is
+  created or wholesale-replaced; `edit` only on modifications to an existing file. Omit `tool:` and
+  the gate fires on both, as before.
+- **`/hub share` refuses `scope: internal` and `scope: workspace` content.** Applies to markdown
+  frontmatter (`scope:`) and script headers (`# scope:`). Change the scope to `hub` or `bundled` to
+  share it.
+- **`soma-release-prepare.sh` validates bundled protocol scope (phase 3.5).** A protocol declaring
+  `scope: internal` or `workspace` inside the npm source directory hard-fails the release; `hub`,
+  unrecognised, or missing scope flags for review. Note that `scope:` does not itself gate npm
+  distribution — physical location in `repos/community/protocols/` does.
+- **inject core_rules Trait 9 (falsifiability) into every child prompt**
+- **Background/tmux delegated children now write invocation records** — previously only the
+  synchronous delegation path logged to `invocations.jsonl`; background children (the dominant
+  spawn mode) left no trace on completion. Records now include the child's final message as
+  `summary`/`mlr`, resolved from its own session JSONL.
+- **soma:markdown.* — map and groom long markdown docs**
+- **soma:agent.transcript — read what a child/peer said from its session JSONL**
+- **Q15b — flag (not enforce) a background child's budget overage**
+- **Q12 — the 5 sync-hardening guards (soma-dev-sync-hardening)**
+- **soma:agent.pane — iTerm2 split-in-current-window lifecycle for child/sibling tmux sessions (pane-lifecycle cycle, prototype-proven)**
+- **agent sends agent_role + parent_session_id on hub path (L43/R5 P3, T8/T9)**
+- **gate a child to a PROJECT via project?/cwd? arg (L12)**
+- **soma:agent.roles — lists the role ROSTER, not instances.** Every other `soma:agent.*` cap lists
+  running children; this one lists the durable specialists in `body/children/*.md` (summary,
+  default-model, budget, default-tools) — previously reachable only inside `delegate({help:true})`.
+  A 0-byte or frontmatter-less role file is now flagged loudly instead of listed as normal.
+- **soma:agent.checkin — progress, not liveness**
+- **somadian-drift-matrix — which bin forked, and is the drift committed?**
+- **deliver the whole role file, not three sections of it**
+- **fleet footer on every soma:agent.* result**
+- **next-step tips on spawn; models defaults to what is enabled**
+- **soma:code.comments — comment census with line ranges**
+- **260s hard ceiling on every cap call, soft-fail toward tmux**
+- **global output limit with head/tail/full, at the one funnel**
+- **catch wrong syntax at the router — did-you-mean + silent-arg guard**
+- **soma:cycles.outline — code.map for cycles, spine-aware**
+- **expose the comparison axes as caps, and register the family so it is visible at all**
+
+- **Hub can install `body/` files and extensions.** `ContentType` gained `body` and `extension`, so
+  a plugin can now ship the doorway file that makes an agent aware of it, plus its caps. Previously
+  a plugin could install muscles and skills but nothing that made it discoverable. Also fixes
+  `communityDir()`'s `type + "s"` fallback, which would have silently resolved `body` to `"bodys"` —
+  a wrong path that never errors — and adds the missing `script` entry to two `VALID_TYPES` lists
+  that rejected a type the installer already supported.
+
+- **`soma:cycles.dashboard`** — regenerate the cycle dashboard's data and report whether it was
+  stale and whether the server is up. `{check:true}` reports without writing. Detects staleness by
+  **edit**, not just by count: it compares every row's mtime against `generated_at`, because a
+  cycle edited in place leaves the count identical and the snapshot silently wrong.
+
+- **`soma:cycles.*` (9 caps)** — the cross-tree cycle registry as a meta-tool family:
+  `validate`, `drift`, `stale`, `duplicates`, `trees`, `registry`, `json`, `raw`, `where`.
+  A thin wrapper over `soma-cycles-registry.py`, so the script stays editable with no
+  rebuild and no restart; `raw` calls subcommands added after the family was written.
+  Refuses to fall back when `SOMA_CYCLES_SCRIPT` names a missing path.
+
+### Fixed
+- **`plan-hygiene` protocol's example frontmatter had two YAML keys fused onto one line** (`license: MITowner:` / `version: 1.0.0scope:`) — copy-pasting the template silently dropped `owner` and `scope`. Fixed in both the bundled copy and the community source.
+- **Pi's compat.js lazy-init patch had a double-write bug that silently reverted itself**,
+  leaving a live crash risk on one code path and leaving the copy that matters most for
+  startup performance never patched at all. Both fixed, both copies, with a regression test.
+- **document level:2 undercounting in .sections/.groom descriptions** — the tool descriptions now tell you to retry at `level:3` when a doc nests resolved items under subsections, instead of silently under-reporting.
+- **Q14 — background claude-cli budget read the wrong frontmatter key**
+- **L53 — declaredArgs() no longer leaks quoted type-union values as phantom args**
+- **L16 prevention half — role/proposal writes are atomic (write-temp, verify non-zero+size, rename); a mid-write failure can no longer truncate a roster file**
+- **Q14/S3 — validate model id + verify boot before sending task text**
+- **Q13 - re:/subject: letter-key drift (alias + write-time guard)**
+- **revert accidental core/install.ts regression from stash mishap**
+- **dashboard default out resolves against the script's .soma root, not cwd**
+- **help roster parses folded-scalar summaries via discoverRole**
+- **soma-openvoice default port 18793 -> 18791**
+- **soma-bodies-backup discovers bodies instead of a hand list**
+- **sync dev silently uninstalled the entire somaverse surface**
+- **--mangle-props=_ was unanchored — it renamed every underscore-bearing property**
+- **bridge.pid records the npx wrapper, not the listener — stop leaves the port held**
+- **soma-somadian-deploy path refs -> repo root (cycle 167 phase 5)**
+- **dashboard joins on handle_id and parses the current statusline**
+- **drift-matrix canonical bin is app/ after Phase 3 mv**
+- **strip frontmatter before slicing the identity compacts**
+- **drift-matrix prints its own denominator and flags a sample**
+- **role identity was extracted from the wrong heading, silently.** `extractSection()` anchored on
+  the first `\n# ` *anywhere* in a role's body rather than the document's own H1, so a role carrying
+  a quoted report template (`# Audit — <subject>`) had its identity taken from the quote. On that
+  anchor it returned `""`, not `null` — and the call site's fallback is `?? `, which does not fire on
+  an empty string, so the guard written for exactly this case never ran. Measured over the live
+  30-role corpus: **11 roles got a wrong or absent identity, 7 of them completely blank.** Found by
+  the `auditor` child, which read its own role file mid-run and saw text it had never received.
+  Gated by `tests/test-role-identity.sh` (10 cases, corpus scan asserts its own denominator,
+  negative control falsified against the old code).
+- **declare the out arg added with boundChildOutput**
+- **claude-cli alias table rejected valid names and silently downgraded**
+- **delegated children get no keepalive and never auto-exhale**
+- **`agent.pane` reported "no viewer available" inside tmux** — tmux overwrites `TERM_PROGRAM`, so
+  iTerm was undetectable in exactly the setup same-window splits are for. Falls back to
+  `ITERM_SESSION_ID` / `WEZTERM_PANE` / `GHOSTTY_*`, which survive tmux.
+- **an undeclared budget now means NO LIMIT.** `max-tool-calls` silently defaulted to 25, capping
+  roles that never asked for a cap. An explicit `0` is still honoured as a real ceiling — only an
+  absent value is unlimited. Undeclared budgets read "unlimited" in the child's prompt instead of a
+  number nobody set.
+- **`test-frontmatter-editor-stamp` was testing nothing.** Its fixtures lived outside any `.soma`, so
+  the stamp raised `ModuleNotFoundError` and exited before doing any work — and 7 of its assertions
+  check a file is *untouched*, which a crashed script satisfies. The `edited_by` hook itself was
+  never broken. Fixtures now resolve, a canary fails loudly if the stamp doesn't run, and the e2e
+  (skipped because the hook lacked +x) runs again. 13/13.
+- **`body/children/INDEX.md` was offered as a delegatable role.** The roster catalog appeared in
+  `soma:agent.roles` and counted toward "38/38 valid", so `delegate({role:'INDEX'})` would have
+  compiled the index as a child prompt. Non-role docs are now filtered by their `type:` marker.
+- **a FAILING test could look like a BROKEN test.** `fail()` ended with `[ -n "$2" ] && echo`, so
+  called with one argument it returned 1 — under `set -e` that aborted the suite mid-run, leaving no
+  `Results:` line for `test-meta-hygiene` to read. It reported "zero assertions ran" and the real
+  failure was masked. Affected 3 suites.
+- **`test-template-versioning` no longer requires `soma_template_version` on `_child-template.md`** —
+  that file's frontmatter is the ROLE schema and must match `ROLE_FRONTMATTER_KEYS`; the key would
+  copy into every authored role. 60/60.
+- **`test-meta-hygiene` can return a verdict again.** It executes every other suite with no
+  per-suite bound, so its runtime is their sum and any hang was permanent. Bounded per suite
+  (portable `perl alarm`; `timeout` is not on macOS) and now reports a hang distinctly from a
+  silent bail. 541/543.
+- **`test-changelog-duplication-gate` had been silently skipping** — its gate script moved under
+  the `children/` arc folder and the hardcoded path turned a reorganisation into a skip. Resolves
+  both layouts; 3 assertions run again.
+- **`soma:code.refs` / `.blast` reported uses as definitions.** DEF required only that a line start
+  with a keyword and mention the symbol, so `const x = foo(y)` was a "definition" of `foo`. Class
+  methods were never DEF at all. Guarded by `tests/test-code-refs-classify.sh`.
+- **model Quick picks showed up to 3 per category, newest first.** `.find()` returned whichever
+  match sat earliest in `enabledModels`, so "deep reasoning" recommended `opus-4-8` over `opus-5`
+  purely on array order.
+- **"balanced — most tasks" never honoured your `defaultModel`** — it is stored unqualified
+  (`claude-opus-5`) while `enabledModels` are qualified, so the lookup always missed.
+- **`soma:agent.delegate` refused models you enabled via `/scoped-models`.** The fallback for ids
+  Pi's bundled registry doesn't know sat in a `catch {}`, but `getModel` returns `undefined` on a
+  miss instead of throwing — so it never ran. `anthropic/claude-opus-5` was rejected while running
+  fine in the TUI. Guarded by `tests/test-scoped-model-resolution.sh`.
+- **background children no longer get the parent's soul/voice.** `compileChildPrompt` now takes a
+  spawn `kind`; a background one-shot has no soma tools and no keepalive, so the identity layer was
+  instructions it could not follow. ~594 tokens leaner per spawn.
+- **role/body excerpts are block-aligned instead of cut mid-word** — whole sections are kept and
+  omissions are stated, so a child can tell what it wasn't given.
+- **`soma:agent.transcript` always reported the script missing** — it built the path from the
+  SomaDir object instead of `.path`, so it looked for `[object Object]/amps/scripts/…`. Guarded by
+  `tests/test-transcript-cap.sh`.
+- **a cmux-spawned child kept its keepalive while an identical tmux one didn't** — both drivers now
+  build the child boot env from one shared builder, so `SOMA_CHILD_PROCESS=1` can't go missing again.
+- **`/keepalive on` did nothing in a delegated child** — it flipped the flag but left the ping budget
+  at 0. It now restores a real budget, so it works as the in-TUI escape hatch.
+- **the `♥` statusline badge showed `on` for sessions that could never ping** — it now renders
+  capability, not the flag.
+- **bound the two caps that return a child's whole output**
+- **every cap now declares its args**
+- **close the description-vs-implementation arg drift**
+- **delegate help described the mode that no longer exists**
+- **declare timeoutMs in the description it is read from**
+- **children always run in a pane, never in the session window**
+- **the 260s ceiling must not cap process-owning caps**
+- **`soma:browser.navigate({url})` returned `400 Missing targetUrl`** — the catalog advertised
+  `navigate({url})` while the impl required `targetUrl`, so the documented signature failed on
+  first use, every time. `url` is now accepted as an alias; existing `targetUrl` callers unaffected.
+- **refuse claude-cli children instead of reporting a phantom success**
+- **pick latest preload by mtime, not filename sort**
+- **`/hub install body|extension` fetched from the wrong directory** — both fell through to
+  `skills/` and 404'd even when the item existed. Hub plugins can now install their doorway file.
+- **`/hub list script` listed community tooling as installable** — offered installs that could
+  only 404. Now lists script folders only.
+
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
+
+### Changed
+
+- **`soma:agent.list` is paged and sorted newest-first, capped at 10.** It was dumping every
+  child in the last 7 days (78 rows in one call) in registry order, which buried the child you
+  just spawned at the bottom. New args: `limit` (`0` = all), `page`, `sort`
+  (`recent`|`runtime`|`role`|`status`). Footer shows `showing 1-10 of 78 · {page:2} for next`.
 
 ## [0.42.1] — 2026-07-31
 
