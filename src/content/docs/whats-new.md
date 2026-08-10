@@ -220,6 +220,79 @@ CF-specific, no API key needed.
 
 ---
 
+## v0.38.0 — June 2026
+
+### 🆕 New caps
+
+**`soma:caselaw.*` — Caselaw Researcher cap family.**
+
+### 🐛 Bugs you can stop stepping around
+
+- **Script subcommands get clean `userArgs`, not injected argv.** A subcommand no longer
+  inherits arguments meant for the wrapper — if you passed flags and the script saw extra ones, that
+  was this.
+- **Browser-driving caps are serialized.** Two browser caps in flight at once raced each other; they
+  now queue. Symptom was an operation returning another call's page.
+
+---
+
+## v0.37.1 — June 2026
+
+### 🐛 Bugs you can stop stepping around
+
+- **Exiting a session no longer garbles your shell.** Two soma-driven exits left the
+  terminal in a bad state. If you were reflexively running `reset` after quitting — stop, it's fixed.
+
+---
+
+## v0.37.0 — June 2026
+
+### 🔄 Behavior changes
+
+- **The system prompt split along a scaffold-vs-behavior line.** `prompts/system-core.md` holds what
+  is always true of Soma; your body files hold what is true of *you*. **Why you care:** editing your
+  body no longer risks clobbering framework scaffolding, and core updates arrive without touching
+  your files.
+- **template-migration plumbing** for `core_rules.md` and `_protocol-template.md`.
+
+### 🆕 New caps
+
+**`soma:browser.render`** — render a JS-heavy / SPA page in an ephemeral tab and return its text. Use when `fetch` returns an empty shell because the content is client-rendered.
+
+---
+
+## v0.36.0 — June 2026
+
+### 🔄 Behavior changes
+
+- **The always-loaded core was restructured and sharpened** — shorter, and generally useful to every
+  install rather than shaped by one workspace's habits.
+- **The prompt now states the `.soma/` layout rule and that `.soma/` commits itself.** Two recurring
+  confusions — *"where does this file go?"* and *"do I `git add .soma`?"* — are answered in the
+  prompt instead of being re-derived per session. **You do not commit `.soma/`; it checkpoints
+  itself.**
+- **Prompt refined from corpus mining** of the two most-recurring anti-patterns across real sessions.
+
+---
+
+## v0.35.0 — June 2026
+
+### 🐛 Bugs you can stop stepping around
+
+- **Opus `Edit` mis-shape is coerced, not rejected.** A crammed second `oldText2/newText2`
+  pair used to fail the whole edit; it is now folded into a normal edit.
+- **`/inhale` no longer crashes the TUI.** The error-sanitizer import is prepended and fails
+  loud rather than silently producing a broken module.
+
+### 🔄 Behavior changes
+
+- **Body templates lead with "ground before think."** `soul.md` and `core_rules.md` now open with the
+  discipline of checking an artifact before reasoning about it.
+- **`headless` is documented as the reliable delegation mode.** If background children were
+  behaving unpredictably, this is the mode to use.
+
+---
+
 ## v0.34.0 — June 2026
 
 ### 🆕 New caps
@@ -372,7 +445,7 @@ The "autonomous CI/PR pipeline" minor. Three layers ship together: nightly tests
 
 ## v0.26.x — May 2026
 
-Maintenance arc: cache-invalidation hardening, Pi runtime bump rehearsals, soma-github local-mode runtime ship gap fix, body audit + state slimming, anti-accretion discipline. Two reverted patches (SX-727 long-context, briefly enabled) that were rolled back when they broke a client's Anthropic billing wall — documented in `docs/anthropic-long-context.md` with the `anthropic.enableLongContext` opt-in setting as the durable replacement.
+Maintenance arc: cache-invalidation hardening, Pi runtime bump rehearsals, soma-github local-mode runtime ship gap fix, body audit + state slimming, anti-accretion discipline. Two reverted patches (long-context, briefly enabled) that were rolled back when they broke a client's Anthropic billing wall — documented in `docs/anthropic-long-context.md` with the `anthropic.enableLongContext` opt-in setting as the durable replacement.
 
 ---
 
@@ -388,14 +461,14 @@ The "releases verify they actually completed" patch arc: protect the release pip
 
 ### 🛠 New tests you can run
 
-- **`tests/test-release-completeness.sh`** — asserts CHANGELOG ↔ git tag parity, `dev` ↔ `main` ff-merge reachability, `dist/manifest.json` ↔ `package.json`, `npm/package.json` ↔ `package.json` (SX-659 collapsed train). Auto-runs in orchestrator Phase 1 (tests gate). If a previous release was incomplete, the next prepare fails CONFLICT-HARD before any new bump.
+- **`tests/test-release-completeness.sh`** — asserts CHANGELOG ↔ git tag parity, `dev` ↔ `main` ff-merge reachability, `dist/manifest.json` ↔ `package.json`, `npm/package.json` ↔ `package.json` (collapsed-train case). Auto-runs in orchestrator Phase 1 (tests gate). If a previous release was incomplete, the next prepare fails CONFLICT-HARD before any new bump.
 - **`tests/test-namespaced-caps.sh`** — static-analysis floor for the ~92-cap soma:/dev:/somaverse: bus surface. Per-family minimums, named-cap presence (18 specific from CHANGELOG), duplicate-registration detection, namespace hygiene. Catches accidental cap deletion or rename.
 
 Both run as part of `npm test`; both fail loud if real drift exists.
 
 ### 🔄 Behavior changes
 
-- **`soma-release-ship.sh` Step 7 now verifies post-pull** (was silent on failure). Reads `~/.soma/agent/package.json` after `git pull --ff-only` and asserts version matches `NEW_VERSION`; on mismatch prints diagnostic + manual fix path + exits 1. Fixes SX-722 (v0.24.0 silently shipped to npm with the runtime worktree stuck at v0.23.0 because pull failure was being swallowed).
+- **`soma-release-ship.sh` Step 7 now verifies post-pull** (was silent on failure). Reads `~/.soma/agent/package.json` after `git pull --ff-only` and asserts version matches `NEW_VERSION`; on mismatch prints diagnostic + manual fix path + exits 1. Fixes the case where v0.24.0 silently shipped to npm with the runtime worktree stuck at v0.23.0 because pull failure was being swallowed).
 - **`tests/test-doctor.sh`, `test-release-completeness.sh`, `test-release-surfaces.sh`, and `test-version-truth.sh` are now in-flight aware**: detect HEAD subject `chore(release): vX.Y.Z` and skip transient assertions during the ship window. Without this, `npm test` fails mid-ship because `dist/manifest.json` lags the bumped `package.json`. Re-run post-ship to confirm the assertion holds.
 
 ### 🧰 Workflows
@@ -467,7 +540,7 @@ The "audit + scan + remember" patch arc: tooling for auditing your own kanban, s
 
 ### 🧰 Workflows
 
-- **End-of-arc kanban sweep:** `dev:kanban.audit_open()` before cutting a release. Closes 3–4 wrongly-marked tickets in seconds; spawns verifier delegations for the high-stakes ones. (Used to close SX-588 / SX-589 / SX-642 in s01-236eb4.)
+- **End-of-arc kanban sweep:** `dev:kanban.audit_open()` before cutting a release. Closes 3–4 wrongly-marked tickets in seconds; spawns verifier delegations for the high-stakes ones.
 - **Survey a third-party repo without cloning:** `soma:github.local_path({repo: 'owner/name'})` → returns cache dir → run anything against it. Map / find / blast / refs all work locally with full toolchain. ~5s one-time cost, then instant.
 - **Soma-code env override:** `SOMA_CODE_DEFAULT_EXT="go,md"` (or any ext list) overrides cwd-marker auto-detect. Use when working in monorepo subdirs or pre-modules language repos that lack manifest files.
 
@@ -480,7 +553,7 @@ The "audit + scan + remember" patch arc: tooling for auditing your own kanban, s
 ### 📜 Plans referenced this arc
 
 - `releases/v0.23.x/plans/github-tool-10x.md` — the soma-github v1 → v2 architectural pivot
-- `releases/v0.23.x/plans/discovered-tools-body-injection.md` — the seed for self-discovering tool surface (Phase 0 done, Phase 1+ queued as SX-719)
+- `releases/v0.23.x/plans/discovered-tools-body-injection.md` — the seed for self-discovering tool surface (Phase 0 done, Phase 1+ queued)
 
 ---
 
@@ -490,11 +563,11 @@ The "release orchestrator + tree-hygiene" arc.
 
 ### 🆕 New caps
 
-- `soma:agent.list({role: 'X'})` (SX-701) → filter children by role string. Stacks with existing `active_only`/`all`/`cleanup`. Useful when a parent has spawned multiple roles and wants to inspect just one cohort.
+- `soma:agent.list({role: 'X'})` → filter children by role string. Stacks with existing `active_only`/`all`/`cleanup`. Useful when a parent has spawned multiple roles and wants to inspect just one cohort.
 
 ### 🔄 Behavior changes
 
-- **Release orchestrator is now 10 gates** (was 8). New: **tree-hygiene** (Phase 0.5, SX-712) — halts on uncommitted state in `repos/agent/` other than `M CHANGELOG.md`. Prevents agent-spawned files leaking into ship. **website-readiness** (Phase 5.5) — calls `tests/test-release-surfaces.sh` for CHANGELOG ↔ roadmap.json drift.
+- **Release orchestrator is now 10 gates** (was 8). New: **tree-hygiene** (Phase 0.5) — halts on uncommitted state in `repos/agent/` other than `M CHANGELOG.md`. Prevents agent-spawned files leaking into ship. **website-readiness** (Phase 5.5) — calls `tests/test-release-surfaces.sh` for CHANGELOG ↔ roadmap.json drift.
 - **Phase 4-ship.md and 4.5-audit.md are archived.** Their work is now inside `soma-release-prepare.sh` + `soma-release-ship.sh`.
 
 ### 📜 Plans referenced this arc

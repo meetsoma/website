@@ -2,7 +2,7 @@
 title: Bridge Setup for Soma
 description: Configure the local Somaverse bridge daemon — lifecycle, config, connectivity
 status: shipped-v0.22.0
-updated: 2026-04-24
+updated: 2026-08-10
 ---
 
 # Bridge Setup
@@ -102,8 +102,7 @@ The bridge is one layer; pairing to the Somaverse hub is another. Pair once
 via `soma login start` — this writes `~/.soma/device-key` (chmod 600) used by
 `bridge-connect.ts` to authenticate against `api.somaverse.ai`.
 
-See [login-setup.md](./login-setup.md) for pairing flow (or `soma login
---help`).
+Run `soma login --help` for the pairing flow.
 
 ## Architecture layers
 
@@ -145,9 +144,8 @@ UI (typically `pnpm dev` in somaverse/builds/local, serves at
 workspace provider. Re-run `somaverse:workspace.status` after.
 
 **Note:** today's `/health` returns `ok:true` as long as the process is
-alive, regardless of whether a workspace client is paired. The split
-`/health` vs `/ready` is tracked as
-[SX-637](../.soma/releases/_kanban.md#somaverse--bridge).
+alive, regardless of whether a workspace client is paired. Splitting
+`/health` (process alive) from `/ready` (client paired) is tracked internally.
 
 ### Port 18811 already in use
 
@@ -176,8 +174,7 @@ the PID and trust the `/health` line.
 
 - **Pairing secret never in URL** — pre-v0.22.0 `soma login` sent the
   pair-secret in a query string; fixed to use the `X-Pair-Secret` header so
-  it doesn't leak into nginx/Traefik/CloudFront access logs. See
-  [SX-634](../.soma/releases/_kanban.md).
+  it doesn't leak into nginx/Traefik/CloudFront access logs.
 - **Device key stored with umask 077** — prevents the world-readable race
   between `open()` and `chmod 600`.
 - **Bridge runs as your user** — no privilege escalation. Token auth is
@@ -186,6 +183,4 @@ the PID and trust the `/health` line.
 ## See also
 
 - [browser-setup.md](./browser-setup.md) — CDP endpoint config (works without bridge)
-- [`soma login`](./login-setup.md) — hub pairing (if exists; else `soma login --help`)
-- Connection audit (internal): `.soma/releases/v0.22.x/v0.22.0/plans/connection-audit-s01-d7bdf0.md`
-- Design doc (internal): `.soma/releases/v0.20.x/plans/vps-vs-local-state-2026-04-19.md`
+- `soma login --help` — hub pairing
