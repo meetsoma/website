@@ -1,0 +1,27 @@
+# Docs that must NOT be treated as doorways. One path or glob per line, `#` comments.
+# Read by meetsoma's `.soma/skills/project-doorways/scripts/soma-doorway.py`.
+# Added s01-54fe75@meetsoma, 2026-08-11: `map` reported "19 doorway(s); 19 incomplete" and
+# every single one was a file this repo does not author. A lint that can never reach green
+# is a lint everyone learns to scroll past.
+#
+# The REASON is the routing information — that is why each line carries one.
+
+# ── `community/` is BUILD OUTPUT, not source ──────────────────────────────────
+# `scripts/fetch-community.mjs` re-syncs the whole tree from the meetsoma/community repo
+# before every build ("Runs before build to keep website/community/ in sync", :3).
+# These READMEs are published artifacts of ANOTHER repo — editing one here is overwritten
+# on the next `pnpm build`, and doorway-ness for them is owned upstream.
+# It is tracked rather than gitignored, so `.gitignore` cannot express this — which is
+# exactly the case `.doorwayignore` exists for.
+community/*
+
+# ── `public/` cannot HOLD a doorway: everything in it becomes a public URL ────
+# Astro copies public/ to dist/ verbatim, so `public/README.md` would be served at
+# https://soma.gravicity.ai/README.md — an internal maintenance doc published on the
+# marketing site. Tried it; removed it. `soma-publish-check` passed the file, which is
+# the tell that a green checker answers only the question it asks: it looks for
+# workspace-shaped LEAKS, not for whether a doc belongs on a product surface.
+# ⇒ public/'s two real rules live where they ACT, in the root README §Content Sources:
+#   · roadmap.json is CURATED — deleting it to "regenerate" is what destroys it
+#   · public/logos/ ships; the repo-root logos/ does not
+public/
