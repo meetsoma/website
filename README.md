@@ -54,7 +54,7 @@ git add -A && git commit -m "docs: ..." && git push
 git checkout main && git merge dev --ff-only && git push && git checkout dev
 
 # 3 · DEPLOY — build from dev, publish to Cloudflare Pages
-pnpm deploy                 # = pnpm build && wrangler pages deploy dist --project-name soma-site
+pnpm deploy                 # = pnpm build && pnpm dlx wrangler pages deploy dist --project-name soma-site
 ```
 
 Add `--commit-dirty=true` when the workspace is dirty and you accept it. **Verify at the artifact,
