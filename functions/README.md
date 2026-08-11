@@ -25,8 +25,19 @@ to fix a signup bug changes nothing on the live site.** See `api/README.md`.
 Set as Pages environment variables, never in the repo: `GITHUB_APP_ID`, `GITHUB_INSTALL_ID`, and
 `GITHUB_APP_PEM_B64` (preferred) or `GITHUB_APP_PEM`.
 
-⚠ **Missing credentials do not surface as an error.** The handler logs the signup and still returns
-success, so the form never looks broken — which means *a silent credential outage looks exactly like
-a working form*. Verify a real signup produced a GitHub Issue; do not infer it from the response.
+⚠ **THREE separate failure paths return `success: true`**, so a broken signup and a working one are
+indistinguishable from the browser [read: `api/beta-signup.js`]:
+
+| line | failure | what the user sees |
+|---|---|---|
+| `:43-48` | missing env vars | *"Request received — we'll follow up by email."* |
+| `:56-58` | JWT creation failed | the same message |
+| `:103-104` | **GitHub rejected the issue** | *"Request received"* |
+
+Only an unexpected throw returns 500 (`:106-108`). The design is deliberate — the form must never
+look broken — but it means **a silent outage is invisible from the outside for as long as it lasts.**
+
+⇒ **Verify a signup by checking the GitHub Issue exists, never by the HTTP response.** If you are
+changing this file, the tail of `wrangler pages deployment tail` is the only place the failure shows.
 
 Requires the `nodejs_compat` flag (`wrangler.jsonc`) for `crypto.createSign` + `Buffer`.
