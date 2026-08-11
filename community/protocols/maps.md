@@ -8,7 +8,7 @@ tags: [workflow, process, navigation, amps, efficiency]
 applies-to: [always]
 scope: bundled
 created: 2026-03-16
-updated: 2026-08-10
+updated: 2026-08-06
 version: 1.1.0
 author: meetsoma
 license: MIT

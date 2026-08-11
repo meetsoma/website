@@ -10,7 +10,7 @@ scope: bundled
 tier: core
 created: 2026-03-09
 updated: 2026-08-10
-version: 1.1.0
+version: 1.2.0
 author: Curtis Mercier
 license: CC BY 4.0
 upstream: core
@@ -45,23 +45,34 @@ Every Markdown document in an agent-managed workspace MUST have YAML frontmatter
 | `owner` | string | Who owns this doc |
 | `priority` | string | high/medium/low |
 | `scope` | string | `internal` = workspace only, never push to public repos |
+| `updated_source` | string | **Provenance of the `updated:` value.** Present only when `updated:` was NOT set editorially — e.g. `git-mtime`, derived from the file's last real commit. |
+
+#### Why `updated_source` exists
+
+`updated:` means *last **meaningful** update*. When a date is **backfilled** from git mtime, that is a
+weaker claim — git mtime says *"the file changed"*, which is not the same as *"the work advanced"*.
+A bulk indexing pass can move mtime on hundreds of files without changing what any of them mean.
+
+**Without a provenance marker a backfilled date is indistinguishable from a maintained one**, which
+manufactures false precision. With it, a reader — and a validator — can tell the difference.
+
+⚠ **A missing `updated:` is visibly unknown; a fabricated one is not.** Never write this field with an
+invented date: if there is no git ground truth (non-git trees), leave `updated:` absent and report it.
 
 ### Scope: Internal
 
 Files with `scope: internal` must never be pushed to agent, community, or any public repo. This protects workspace-specific content (private paths, internal workflows, project-specific protocols) from leaking.
 
-**Nothing enforces this for you.** If you move content between repos with your own tooling, that
-check is yours to write — a file correctly marked `scope: internal`, containing no obvious secret,
-pushes straight through.
-<!-- CORRECTED s01-8a247c 2026-08-07: this read "The `soma-channel-guard.sh` pre-push hook -->
-<!-- should check for this. Scripts like `soma-repos.sh drift sync push` should refuse to copy -->
-<!-- files marked `scope: internal`." Two defects in one sentence. -->
-<!-- (1) DESIGN INTENT PHRASED AS LIVE PROTECTION: that pre-push hook has zero references to -->
-<!-- frontmatter and never checked `scope:`; a reader took "should" as "does" and believed they -->
-<!-- were protected. The workspace copy was corrected 2026-08-07 (s01-ec5e7f) and THIS MIRROR -->
-<!-- WAS MISSED, so the retracted claim stayed live on the published side - the side that matters. -->
-<!-- (2) Both scripts are DEV-TIER while this protocol ships at scope: bundled, so it prescribed -->
-<!-- tools its readers cannot run - flagged by test-protocol-tool-refs.sh. -->
+⚠ **`scope:` is a convention, not a guard — nothing in the agent enforces it for you.** If you move
+content between repos with your own tooling, that check is yours to write: a file correctly marked
+`scope: internal`, containing no obvious secret, pushes straight through.
+
+🔑 **Write the check where the content LEAVES**, not where it is authored — a sync/publish step that
+refuses to copy a `scope: internal` file, and hard-errors rather than warning. A pre-push hook that
+matches keywords and credential shapes will not catch this: it never reads frontmatter.
+
+⚠ **Do not phrase design intent as live protection.** "The hook *should* check for this" reads as
+"does" — and a reader who believes they are covered stops checking. State only what runs.
 
 ### Valid Types (13)
 

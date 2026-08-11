@@ -6,11 +6,18 @@ description: "Be direct — no ceremony. Lead with action. Know your tools befor
 heat-default: warm
 tags: [workflow, style, communication]
 applies-to: [always]
+gates:
+  - after: "git (?!.*checkpoint)(?:-[a-zA-Z] [^ ]+ )*commit"
+    mode: remind
+    rule: "You committed. Make sure CHANGELOG [Unreleased] carries this change before the next task — one or two lines naming it and its user-visible effect. No root cause, no war story (those go to the session log or the cycle). If a post-commit hook left a placeholder, curate that; if the entry already shipped in the commit, you're done."
+  - after: "git (?:-[a-zA-Z] [^ ]+ )*push(?! *--dry-run)"
+    mode: remind
+    rule: "Pushed. Log the work: append what shipped + the commit hash to your session log — chat is not a store."
 scope: bundled
 tier: official
 created: 2026-03-10
 updated: 2026-08-10
-version: 1.1.0
+version: 1.2.0
 author: meetsoma
 license: MIT
 ---

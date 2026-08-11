@@ -44,6 +44,69 @@ automation (executable workflow — hooks, rituals, enforcement)
 
 Automations are the final crystallization. The protocol explains *why*; the automation enforces *how*. An agent with the automation but without the protocol can't reason about edge cases.
 
+## Promotion is by ENFORCEABILITY, and it moves a PART — not the whole thing
+
+**A muscle cannot enforce itself.** It is a reflex: it fires if you happen to recall it, and a
+reflex you did not recall is indistinguishable from a reflex you do not have. So the trigger for
+muscle → protocol is not "it feels important now." It is:
+
+> 🔑 **Does this muscle contain a gotcha that keeps costing you *precisely because* nothing can
+> catch it at the moment it's violated?** That part — and only that part — belongs in a protocol,
+> as a **`gates:` entry**.
+
+**What moves, what stays:**
+
+| stays in the muscle | moves to the protocol |
+|---|---|
+| the reflex — *when* to reach for this at all | the rule that must **fire at the violation** |
+| judgement, tradeoffs, worked reasoning | a mechanical trigger: `paths:` / `command:` / `after:` |
+| the pointer to the full procedure | the one-line correction the violator needs *right then* |
+
+The muscle shrinks to a **trigger**; the protocol gains a **gate**. Neither duplicates the other,
+and the procedure keeps one home (usually a skill). *That split is the crystallization — the muscle
+becomes muscle memory precisely by giving up the part it could never enforce.*
+
+### Why this rung only recently became real
+
+The table above calls Protocol "Mandatory" and puts enforcement at **Automation**. Until protocols
+could declare `gates:`, that was accurate but hollow: a protocol was the *same injected text* as a
+muscle wearing a stronger word, and **text cannot stop you.** Anything genuinely enforceable had to
+become a full automation — an expensive jump most patterns never justified.
+
+`gates:` moved enforcement **down one rung**. A protocol can now fire at the violation without
+becoming an automation, which makes muscle → protocol a real promotion instead of a relabelling.
+→ `releases/cycles/protocol-gates/cycle.md`
+
+### The gate on the gate — promotion is not free
+
+Do **not** promote a gotcha that has no mechanical trigger. "Plausibly detectable" is not detectable;
+if you cannot name the `paths:`/`command:`/`after:` expression, the honest outcome is **it stays
+resident text**, and saying so beats forcing a bad matcher.
+
+⚠ **Three costs, all measured 2026-08-07:**
+1. **A gate is a narrowing of the rule, and the boundary is where the next incident lives.** A
+   `command:` gate on `\b(timeout|...)\b` matched the *word*, blocking `grep 'timeout'` and
+   `curl --timeout` — 5 false positives in 14 cases.
+2. **A gate's premise rots, and nobody re-reads a rule they agree with.** Two gates enforced a cache
+   claim that had been false for months — contradicting the TL;DR of the very file they lived in.
+3. **Escalation on a gate that cannot observe compliance is unsound.** A `paths:` gate counts
+   traffic, not violations; escalating on that count demanded a behaviour change from an agent that
+   was already complying.
+
+⇒ **A promoted gate inherits a falsifiability duty:** state what would make it fire wrongly, and
+re-verify its premise on a live path — not from the session that wrote it (`getProtocolGates()`
+caches at boot).
+
+### Known blocker — the trigger kind that would unlock the next class
+
+Today's triggers see **location and literal text**, never **edit shape**. So a whole class of
+otherwise-ready gotchas cannot be promoted — e.g. *"don't change a role's `default-model` without
+reading the calibration ledger"* (`amps/muscles/model-role-calibration.md`) is mechanical in spirit
+but needs a **content-diff trigger** to fire on that field rather than on every edit under
+`body/children/`. Same missing primitive blocks append-vs-correct detection
+(`protocol-gates/cycle.md` #11). **One trigger kind, two blocked classes** — which is the argument
+for building it.
+
 ## Identity: The Override Layer
 
 Identity sits outside the maturation ladder. It doesn't replace protocols — it sharpens them for a specific project.
@@ -109,7 +172,7 @@ Standard: +1 applied in action, +2 explicitly referenced.
 
 The session log's Observations section is the raw material. The reflection is where you ask: *should this stay an observation, or has it earned promotion?*
 
-## Parallel Maturation Gradients (from MLR Cycle 4, s01-7631fc)
+## Parallel Maturation Gradients
 
 Content isn't the only thing that matures. Three parallel gradients follow the same pattern:
 
