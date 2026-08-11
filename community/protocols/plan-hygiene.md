@@ -9,7 +9,7 @@ applies-to: [always]
 scope: bundled
 tier: official
 created: 2026-03-14
-updated: 2026-04-12
+updated: 2026-08-10
 version: 1.0.0
 author: meetsoma
 license: MIT
@@ -30,8 +30,10 @@ status: active          # draft | active | blocked | complete | archived
 created: 2026-03-13
 updated: 2026-03-14     # always update on any change
 author: meetsoma
-license: MITowner: curtis + soma
-version: 1.0.0scope: [auto-breathe, notifications]
+license: MIT
+owner: curtis + soma
+version: 1.0.0
+scope: [auto-breathe, notifications]
 remaining:              # brief list of what's left — empty when complete
   - research API for new feature
   - implement core logic

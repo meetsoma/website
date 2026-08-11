@@ -9,8 +9,8 @@ applies-to: [always]
 scope: core
 tier: core
 created: 2026-03-09
-updated: 2026-06-11
-version: 3.0.0
+updated: 2026-08-10
+version: 3.0.1
 author: Curtis Mercier
 license: CC BY 4.0
 ---
@@ -19,7 +19,7 @@ license: CC BY 4.0
 > How Soma manages session lifecycle. This behavior is built into the boot extension — this protocol helps you understand what's happening and how to change it.
 
 ## TL;DR
-Inhale → hold → exhale. Auto-breathe at 50%/70%/85%. Commands: `/exhale`, `/breathe`, `/rest`, `/inhale`. **Rotation is self-initiated** — a natural-language wrap-up phrase ("wrap up", "wind down", "let's call it") fires the exhale; the user never lists the steps. **The exhale is a complete checklist** (verify → ship-completeness → reflect → promote → preload → log), and the preload is the *last* step, never the only one.
+Inhale → hold → exhale. Auto-breathe at 50%/70%/85%. Commands: `/exhale`, `/breathe`, `/rest`, `/inhale`. **Rotation is self-initiated** — a natural-language wrap-up phrase ("wrap up", "wind down", "let's call it") fires the exhale; the user never lists the steps. **The exhale is a complete checklist** (verify → ship-completeness → reflect → promote → log → preload), and the preload is the *last* step, never the only one — writing it can trigger rotation, so nothing may be left until after it.
 
 ## How It Works
 
@@ -55,10 +55,10 @@ The most common failure is an exhale that fires correctly but only writes a prel
 2. **Ship-completeness** (below) — for everything shipped this session: docs (incl. *related* docs/index/changelog that reference it, not just its own)? test? discoverable?
 3. **Reflect** — Memory Lane Reflection (`memory-lane-reflection` muscle); 5+ cycles at 70%+ context. Surface lessons + gaps *explicitly* — corrections are the richest signal.
 4. **Promote what recurred** (below) — file each observation at its home; anything that recurred ≥2× becomes a muscle *now*.
-5. **Write the preload** — last. Resume point + what shipped + orient-from + next steps (see *Preload Quality*).
-6. **Log the session** + commit/push everything tracked.
+5. **Log the session** + commit/push everything tracked.
+6. **Write the preload — genuinely last.** Resume point + what shipped + orient-from + next steps (see *Preload Quality*). ⚠ **Writing the preload can END the session:** auto-breathe detects the preload write and rotates on it. Anything you leave until after it may be written into a session that no longer exists — which is why the log is step 5, not step 6.
 
-> **The exhale is steps 1–6, not step 5 alone.** If all you wrote was a preload, you skipped the exhale.
+> **The exhale is steps 1–6, not step 6 alone.** If all you wrote was a preload, you skipped the exhale.
 
 This applies identically to an **auto-fired** exhale — the 85% safety net and keepalive exhaustion run all six steps, not just the preload.
 

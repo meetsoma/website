@@ -9,7 +9,7 @@ applies-to: [always]
 scope: bundled
 tier: core
 created: 2026-03-10
-updated: 2026-04-12
+updated: 2026-08-10
 version: 3.0.0
 author: meetsoma
 license: MIT
@@ -87,7 +87,7 @@ Install from the community hub to extend your toolkit:
 | Task | Script | Install |
 |------|--------|---------|
 | Navigate codebase (find, map, refs, structure) | `soma-code` | `/hub install script soma-code` |
-| Doc discovery + SDK research | `soma-scrape` | `/hub install script soma-scrape` |
+| Doc discovery + SDK research | `soma:refdocs.*` | built in — `refdocs.find` / `.fetch` / `.tree` |
 | Spelling + grammar checking | `soma-spell` | `/hub install script soma-spell` |
 
 Browse all available scripts: `/hub list --remote script`

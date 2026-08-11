@@ -9,7 +9,7 @@ applies-to: [always]
 scope: bundled
 tier: core
 created: 2026-03-09
-updated: 2026-04-12
+updated: 2026-08-10
 version: 1.4.0
 author: Curtis Mercier
 license: CC BY 4.0
@@ -50,7 +50,7 @@ Identity sits outside the maturation ladder. It doesn't replace protocols — it
 
 ```
 protocol: "Verify after you build"           ← universal rule
-identity: "Verify using soma-verify.sh"      ← project-specific application
+identity: "Verify using ./verify-paths.sh"   ← project-specific application
 ```
 
 **Protocols should work without identity.** A user who never writes an identity file should still get useful behavior from protocols alone. If a protocol requires project-specific knowledge to be useful, it's too narrow.
@@ -63,7 +63,7 @@ identity: "Verify using soma-verify.sh"      ← project-specific application
 identity insight: "After structural changes, verify scripts still produce correct output"
   ↓ is this project-specific? No — it's universal.
   ↓ extract to protocol (quality-standards or tool-discipline)
-  ↓ identity keeps the project-specific version: "run soma-verify.sh after path changes"
+  ↓ identity keeps the project-specific version: "run ./verify-paths.sh after path changes"
 ```
 
 ## How Muscles Are Born

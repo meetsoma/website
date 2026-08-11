@@ -2,14 +2,14 @@
 name: deep-recall
 type: protocol
 status: active
-description: "Preloads are surface memory. On continued sessions, deepen context: soma-seam trace the work topic, soma-reflect for past patterns, scan recent session logs."
+description: "Preloads are surface memory. On continued sessions, deepen context: soma:seam.trace the work topic, soma-reflect for past patterns, scan recent session logs."
 heat-default: cold
 tags: [memory, context, continuity, recall]
 applies-to: [always]
 scope: bundled
 tier: official
 created: 2026-03-15
-updated: 2026-04-12
+updated: 2026-08-10
 version: 1.1.0
 author: meetsoma
 license: MIT
@@ -33,7 +33,7 @@ The preload gives you:
 When the user describes what they want to do next, run a quick recall cycle:
 ```bash
 # 1. Trace the topic through memory
-soma-seam.sh trace "<keyword>"
+soma:seam.trace {query:"<keyword>"}
 # → Shows: related muscles, protocols, MAPs, sessions, seeds
 # 2. Check recent session logs for the detailed path
 soma-reflect.sh --since <last-session-date>
@@ -75,7 +75,7 @@ With deep recall: the agent reads the preload (500 tokens), traces the specific 
 ## Tools Reference
 | Need | Tool | What it returns |
 |------|------|----------------|
-| What's connected to this topic? | `soma-seam.sh trace <keyword>` | Related muscles, protocols, MAPs, sessions |
+| What's connected to this topic? | `soma:seam.trace` | Related muscles, protocols, MAPs, sessions |
 | What patterns did I notice before? | `soma-reflect.sh --search <term>` | Past observations, gaps, corrections |
 | What did I specifically do last session? | Read session log directly | Commits, decisions, timestamps |
 | What tools did I use for this? | `/scan-logs tools <pattern>` | Tool calls from JSONL logs |

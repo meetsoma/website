@@ -9,7 +9,7 @@ applies-to: [always]
 scope: core
 tier: core
 created: 2026-03-22
-updated: 2026-04-12
+updated: 2026-08-10
 version: 1.0.0
 author: Curtis Mercier
 license: MIT
@@ -57,7 +57,7 @@ Privacy patterns (mechanical — handled by the share handler):
 Runtime state (mechanical — always stripped):
 - `heat:` values → set to 0
 - `loads:` values → set to 0
-- `scope: internal` content → blocked from sharing entirely
+- `scope: internal` **or** `scope: workspace` content → hard-blocked from sharing entirely
 
 ### What the Agent Helps With
 

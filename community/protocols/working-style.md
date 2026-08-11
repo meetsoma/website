@@ -9,7 +9,7 @@ applies-to: [always]
 scope: bundled
 tier: official
 created: 2026-03-10
-updated: 2026-04-02
+updated: 2026-08-10
 version: 1.1.0
 author: meetsoma
 license: MIT
@@ -21,7 +21,7 @@ How to communicate and approach work. These are defaults — if the user prefers
 
 ## TL;DR
 
-Test → commit → push → log. No unpushed, untested, or unlogged work. `soma-code.sh map` before editing any file. `soma-refactor.sh scan` before deleting or renaming anything. `soma-verify.sh` after structural changes. `soma-ship.sh` after every commit to agent. Plans live in files, not in context — write it down, link it, move on. When you catch a bug, fix the system that allowed it. When a test fails, trace BOTH the test and the code — don't change the test to make it pass without understanding why it failed. Be direct. Lead with action. No ceremony.
+Test → commit → push → log. No unpushed, untested, or unlogged work. `soma:code.map` before editing any file. `soma:code.blast` before deleting, `soma:code.refs` before renaming. Plans live in files, not in context — write it down, link it, move on. When you catch a bug, fix the system that allowed it. When a test fails, trace BOTH the test and the code — don't change the test to make it pass without understanding why it failed. Be direct. Lead with action. No ceremony.
 
 ## When to Apply
 

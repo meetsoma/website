@@ -9,7 +9,7 @@ applies-to: [always]
 scope: bundled
 tier: official
 created: 2026-03-10
-updated: 2026-04-12
+updated: 2026-08-10
 version: 1.0.0
 author: meetsoma
 license: MIT
@@ -57,7 +57,7 @@ Install from the hub to extend these practices:
 | Find references (blast radius) | `soma-code` | `/hub install script soma-code` | `soma-code.sh find "functionName" src/` |
 | Map file structure before editing | `soma-code` | (same) | `soma-code.sh map src/myfile.ts` |
 | File tree overview | `soma-code` | (same) | `soma-code.sh structure src/` |
-| Doc discovery + SDK research | `soma-scrape` | `/hub install script soma-scrape` | `soma-scrape.sh npm express` |
+| Doc discovery + SDK research | `soma:refdocs.*` | built in | `soma:refdocs.find({q:"express"})` |
 | Spelling + grammar | `soma-spell` | `/hub install script soma-spell` | `soma-spell.sh docs/` |
 | Check test coverage exists | `grep` | (built-in) | `grep -rn "functionName" tests/` |
 

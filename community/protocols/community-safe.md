@@ -2,38 +2,57 @@
 name: community-safe
 type: protocol
 status: active
-description: "Community/public content must never contain private data. The channel-guard script catches leaks pre-push. This protocol covers the judgment — what to keep private, where it belongs."
+description: "Community/public content must never contain private data. ⚠ The channel guard blocks pro-keywords and credential FILE SHAPES only — nothing blocks emails, API keys or IPs at push time. This protocol covers the judgment and the check you must run yourself."
 heat-default: cold
 tags: [privacy, safety, self-awareness]
 applies-to: [always]
 scope: hub
 tier: core
 created: 2026-03-10
-updated: 2026-04-12
-version: 2.0.0
-author: meetsoma
-license: MIT
+updated: 2026-08-10
+version: 2.1.0
+author: Curtis Mercier
+license: CC BY 4.0
 ---
 # Community Safe
 
 ## TL;DR
-Private data stays private. Channel-guard blocks PII pre-push. Your judgment covers the rest: protocols and muscles must be generic (no emails, paths, project names). When sharing to hub, strip absolute paths and private repo references. Private data belongs in `.soma/secrets/`, identity files, or env vars.
+Private data stays private. 🔴 **The channel guard does NOT block PII** — it blocks pro/private keywords and credential file shapes; emails, API keys and IP addresses pass straight through. **Run a PII check yourself before publishing.** Protocols and muscles must be generic (no emails, paths, project names). When sharing to the hub, strip absolute paths and private repo references. Private data belongs in `.soma/secrets/`, identity files, or env vars.
 
-> How Soma keeps private data out of public content. The channel-guard script catches leaks mechanically — this protocol covers the judgment that prevents creating them.
+> How Soma keeps private data out of public content. The guard catches a NARROW mechanical class —
+> this protocol covers the judgment, and names the check the guard will not run for you.
 
-## What's Automated
+## What's Automated — and what isn't
 
-**`soma-channel-guard.sh`** — pre-push hook that scans for:
-- Email addresses, IP addresses, API keys
-- Absolute paths containing usernames
-- Private repo references
-- `.soma/secrets/` content
+🔴 **Nothing blocks PII at push time. Do not rely on a hook to catch a leaked email.**
 
-If it finds PII in a public repo commit, it blocks the push.
+> **Corrected 2026-08-10.** This protocol previously stated: *"If it finds PII in a public repo
+> commit, it blocks the push"* — listing emails, IP addresses and API keys as blocked. **That was
+> false**, and false in the reassuring direction, which is the dangerous one: it credited the
+> pre-push guard with a job a different, non-blocking, on-demand script does, and credited
+> **nobody** with IP addresses. Verified by reading the guard: it contains no email or API-key
+> matching at all.
+
+Two different mechanisms, and only one of them blocks:
+
+| what | when | blocks? |
+|---|---|---|
+| Pro/private keywords (vault paths, private-tier names, absolute home paths) | pre-push hook | ✅ **yes** |
+| Credential FILE SHAPES (`id_rsa`, `*.pem`, `credentials.json`, `.env.local`) | pre-push hook | ✅ **yes** |
+| `_`-prefixed branch guard | pre-push hook | ✅ yes |
+| **Email addresses, API keys** | on-demand PII audit only — **no hook wiring** | ❌ **no** |
+| **IP addresses** | — | ❌ **detected by nothing** |
+
+⇒ **Run a PII scan over your diff yourself before publishing.** The channel guard will not do it for
+you, and **a clean push is not evidence your diff is PII-free.**
+
+🔑 **The general lesson, worth more than this one file:** a control that is *documented* as blocking
+and is *implemented* as advisory is worse than no control — it buys confidence it has not earned.
+When a doc tells you something is enforced, read the enforcer.
 
 ## What Needs Judgment
 
-The script catches obvious leaks. These need your awareness:
+The guard catches obvious shapes. These need your awareness:
 
 **Private data belongs in:**
 - `.soma/secrets/` (gitignored)
@@ -42,7 +61,7 @@ The script catches obvious leaks. These need your awareness:
 
 **Protocols and muscles must be generic:**
 - ✅ "Read before edit" — universal pattern
-- ❌ "User prefers tabs over spaces" — personal preference in public protocol
+- ❌ "User prefers tabs over spaces" — personal preference in a public protocol
 - ✅ "Check git config before committing" — universal
 - ❌ "Set email to user@example.com" — private data
 
@@ -53,8 +72,6 @@ The script catches obvious leaks. These need your awareness:
 
 ## Source
 
-- Channel guard: `scripts/soma-channel-guard.sh`
-- Guard extension: `extensions/soma-guard.ts`
-- PII audit: `scripts/soma-audit.sh` → PII check
-
----
+- **Channel guard** — the pre-push hook: keyword and filename shapes only
+- **Guard extension** — `soma-guard` (path/command gates)
+- **PII audit** — on demand via `soma-audit pii`; never blocks, never runs itself

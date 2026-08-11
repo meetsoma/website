@@ -8,7 +8,7 @@ tags: [workflow, process, navigation, amps, efficiency]
 applies-to: [always]
 scope: bundled
 created: 2026-03-16
-updated: 2026-04-12
+updated: 2026-08-10
 version: 1.1.0
 author: meetsoma
 license: MIT
@@ -19,7 +19,9 @@ tier: official
 
 ## TL;DR
 
-Read the MAP before starting. Not skim — **read**. The MAP has scar tissue from sessions where you made the exact mistake you're about to make. The Gaps and Lessons Learned sections exist because something went wrong and someone wrote it down so you wouldn't repeat it. In v0.6.2: skipped the refactor MAP → broke the ship pipeline. Skipped the test-hygiene muscle → hid a real bug. Both were in the MAP. When you feel confident enough to skip the MAP, that's exactly when you need it most. Build a new MAP after the second time you do something manually. `soma focus <keyword>` finds relevant MAPs automatically.
+⚠️ **The MAPS layer is currently dormant.** As of 2026-08-07, zero live MAPs exist in `amps/automations/maps/` — all authored MAPs have been archived without execution. This protocol describes the intended workflow; that workflow has not yet been actively used. The layer remains available for future revival.
+
+When MAPs are actively used: Read the MAP before starting. Not skim — **read**. The MAP has scar tissue from sessions where you made the exact mistake you're about to make. The Gaps and Lessons Learned sections exist because something went wrong and someone wrote it down so you wouldn't repeat it. In v0.6.2: skipped the refactor MAP → broke the ship pipeline. Skipped the test-hygiene muscle → hid a real bug. Both were in the MAP. When you feel confident enough to skip the MAP, that's exactly when you need it most. Build a new MAP after the second time you do something manually. `soma focus <keyword>` finds relevant MAPs automatically.
 
 ## Why
 
@@ -48,7 +50,7 @@ A MAP points to AMPS content by name:
 reads:
   muscles: [ship-cycle, incremental-refactor]
   protocols: [quality-standards, workflow]
-  scripts: [soma-ship.sh, soma-refactor.sh]
+  scripts: [soma-code.sh, soma-browser.sh]
 ```
 
 The agent loads these before executing. The MAP doesn't reproduce their content — it says "read ship-cycle before step 3" and trusts the muscle to provide the knowledge.
@@ -138,7 +140,7 @@ These fields enable the agent to estimate session cost, verify preconditions bef
 | **A**utomations | Triggered procedures | MAPS *are* manual automations. Automated MAPS become `trigger: event/cron` automations. |
 | **M**uscles | Domain knowledge | MAPS load muscles for context. "Read ship-cycle before shipping." |
 | **P**rotocols | Behavioral rules | MAPS follow protocols. "Follow quality-standards during review." |
-| **S**cripts | Executable tools | MAPS run scripts. "Run soma-refactor.sh routes for audit." |
+| **S**cripts | Executable tools | MAPS run scripts. "Run soma-code.sh find to audit routes." |
 
 MAPS are the connective tissue. They don't add new knowledge — they organize existing knowledge into a path.
 
@@ -151,4 +153,3 @@ MAPS are the connective tissue. They don't add new knowledge — they organize e
 - **Building a MAP for a one-time task** — overkill. MAPS are for recurring processes.
 
 ---
-

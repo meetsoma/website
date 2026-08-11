@@ -9,7 +9,7 @@ applies-to: [always]
 scope: bundled
 tier: core
 created: 2026-03-09
-updated: 2026-04-12
+updated: 2026-08-10
 version: 1.1.0
 author: Curtis Mercier
 license: CC BY 4.0
@@ -50,7 +50,18 @@ Every Markdown document in an agent-managed workspace MUST have YAML frontmatter
 
 Files with `scope: internal` must never be pushed to agent, community, or any public repo. This protects workspace-specific content (private paths, internal workflows, project-specific protocols) from leaking.
 
-The `soma-channel-guard.sh` pre-push hook should check for this. Scripts like `soma-repos.sh drift sync push` should refuse to copy files marked `scope: internal`.
+**Nothing enforces this for you.** If you move content between repos with your own tooling, that
+check is yours to write — a file correctly marked `scope: internal`, containing no obvious secret,
+pushes straight through.
+<!-- CORRECTED s01-8a247c 2026-08-07: this read "The `soma-channel-guard.sh` pre-push hook -->
+<!-- should check for this. Scripts like `soma-repos.sh drift sync push` should refuse to copy -->
+<!-- files marked `scope: internal`." Two defects in one sentence. -->
+<!-- (1) DESIGN INTENT PHRASED AS LIVE PROTECTION: that pre-push hook has zero references to -->
+<!-- frontmatter and never checked `scope:`; a reader took "should" as "does" and believed they -->
+<!-- were protected. The workspace copy was corrected 2026-08-07 (s01-ec5e7f) and THIS MIRROR -->
+<!-- WAS MISSED, so the retracted claim stayed live on the published side - the side that matters. -->
+<!-- (2) Both scripts are DEV-TIER while this protocol ships at scope: bundled, so it prescribed -->
+<!-- tools its readers cannot run - flagged by test-protocol-tool-refs.sh. -->
 
 ### Valid Types (13)
 
