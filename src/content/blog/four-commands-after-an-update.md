@@ -23,7 +23,7 @@ These are the commands to run after any release. In order. Each one does a singl
 npm install -g meetsoma@latest
 ```
 
-If `soma check-updates` told you `CLI stale`, or if `soma update` just went no-op on a release you know landed, this is the missing piece. The canonical one-liner from [docs/updating.md](https://meetsoma.ai/docs/updating) combines this with the next step:
+If `soma check-updates` told you `CLI stale`, or if `soma update` just went no-op on a release you know landed, this is the missing piece. The canonical one-liner from [docs/updating.md](https://soma.gravicity.ai/docs/updating/) combines this with the next step:
 
 ```bash
 npm install -g meetsoma@latest && soma update
@@ -130,11 +130,11 @@ If a project has customized settings you care about, both `model-sync` and `doct
 
 ## Source
 
-- [`docs/updating.md`](https://meetsoma.ai/docs/updating) — the canonical update reference, including the three-layer drift model and the `soma check-updates` output
+- [`docs/updating.md`](https://soma.gravicity.ai/docs/updating/) — the canonical update reference, including the three-layer drift model and the `soma check-updates` output
 - `scripts/soma-model-sync.sh` — the model-sync CLI (bundled, ships in the install)
 - `scripts/soma-terminals.sh` — the terminal driver CLI (bundled)
-- [`docs/guides/sane-defaults.md`](https://meetsoma.ai/docs/guides/sane-defaults) — the full guide covering all three as a toolchain
-- [`docs/guides/background-delegation.md`](https://meetsoma.ai/docs/guides/background-delegation) — the tmux-driver story for context
+- [`docs/guides/sane-defaults.md`](https://soma.gravicity.ai/docs/guides/sane-defaults/) — the full guide covering all three as a toolchain
+- [`docs/guides/background-delegation.md`](https://soma.gravicity.ai/docs/guides/background-delegation/) — the tmux-driver story for context
 - `.soma/releases/v0.20.x/v0.21.1/release-notes.md` — everything that landed in v0.21.1
 
 Four lines. Every project on the latest. No menu-driven install, no per-project hand-editing of `settings.json`, no remembering which Opus release is current or whether your CLI got the release announcement.
