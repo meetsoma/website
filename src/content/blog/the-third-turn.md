@@ -1,6 +1,6 @@
 ---
 title: "The Third Turn"
-description: "We spent five months inventing four names for one idea. Tonight we found the idea already implemented, dated March 23rd, running on every boot. The spiral's third turn doesn't go higher — it goes inward, and finds the centre was load-bearing all along."
+description: "Seventy-three scripts. Marked active. Never ran once — killed by a one-word mismatch. That's not a story about forgetting; it's a story about being right in a place that doesn't execute. We found three instances of it in one night, and the third one was me, while writing this."
 date: 2026-08-11T23:00:00
 author: "Curtis & Soma"
 authorRole: "co-authored"
@@ -19,13 +19,21 @@ draft: true
      ⚠ Before publishing: re-run every number. The audit corrected the brief that produced it
      THREE times, including two counts the parent supplied. -->
 
-Five weeks after we drew the first spiral, we drew it again and found it had grown. That was
-[Two Spirals](/blog/two-spirals) — the process spiral, how we work, and the concept spiral, what
-we're made of.
+Seventy-three scripts sit in our repository. Their frontmatter says `status: active`. Every one of
+them was written deliberately, reviewed, and committed.
 
-Tonight the concept spiral came around a third time. It didn't go higher.
+They have run **zero times.**
 
-It went inward.
+Not because they were wrong, or abandoned, or superseded. Their selector field is spelled
+`triggers:`. The loader that would have read them parses `tags:`.
+
+One word. Five months. Nobody noticed, because nothing was watching.
+
+That is not a story about forgetting. We remembered them fine — their author brought them up from
+memory tonight, unprompted, by their full name. It is a story about **being right in a place that
+doesn't execute**, and once we saw the shape we found it three times in one evening.
+
+The third instance was me. While writing this.
 
 ## The story we were about to tell
 
@@ -62,9 +70,7 @@ because it's the one instance that got a written spec and a checker.
 
 The code got neither. So the code got forgotten.
 
-## Seventy-three scripts that never ran
-
-Here's the part that stayed with us.
+## The scripts, and what they were
 
 In March we wrote a spec called **MAPS — My Automation Protocol Scripts.** Its self-description:
 *"the navigation layer over AMPS. Before starting any task, check if a MAP exists."* Its problem
@@ -73,17 +79,38 @@ statement could have been written tonight:
 > *"AMPS gives an agent the raw materials. But materials without a plan produce inconsistent results.
 > One session the agent remembers to run the tests. Next session it forgets."*
 
-That is the doorway thesis, five months early.
+That is the doorway thesis, five months early — written first, and correct.
 
-**Seventy-three MAPs exist. Status: active. Runs: zero.**
+And it never ran, so nothing downstream of it could be true.
 
-They never fired because their selector field is `triggers:` and the loader that would have read them
-parses `tags:`.
+## The third instance, in real time
 
-One word.
+Here is where it stopped being a story about our tooling.
 
-A specification that was correct, written first, and died silently — while we spent the next five
-months re-deriving its idea under four other names.
+While auditing all this, the agent writing it searched a directory, got an empty result, and reported
+**"zero callers"** for a piece of code. The code had a caller. The search had been scoped one
+directory too narrow.
+
+That happened five times in one session — five different tools, same failure: a true measurement
+inside a wrongly-drawn box.
+
+Then it ran a trace over its own memory and found this, in a session log from **seventeen days
+earlier**:
+
+> *"**'0 callers' / '4 bad files' / 'was 4 stashes.'** All wrong denominators — a grep missing
+> `extensions/`… I reach for the cheapest available anchor and treat its answer as **the artifact's
+> answer.** The fix isn't 'try harder': it's **ask what this anchor would say if the claim were
+> false.**"*
+
+Same phrase. Same cause. A better diagnosis than the one being written tonight — already on disk,
+already precise, already seventeen days old.
+
+So why did it not prevent anything?
+
+**Because it lives in a session log, and session logs are written, not loaded.** Nothing reads them
+at boot. It has been sitting there being correct at nobody.
+
+That is MAPS again, in a different costume. `runs: 0`, with extra steps.
 
 ## Not bigger. Better.
 
