@@ -45,14 +45,20 @@ loaders that already walk the chain find the content where they always look.
 ```jsonc
 // .soma/settings.json
 {
-  "packages": [".soma/packages/my-domain"]
+  "domainPackages": [".soma/packages/my-domain"]
 }
 ```
 
+> **Why `domainPackages` and not `packages`?** `packages` already belongs to Pi, in this very file —
+> it lists skill repositories to install, and Pi rewrites that array when you manage them. Two
+> meanings in one key would mean a package command could quietly drop your domains. `packages` is
+> still read for one release so nothing already written breaks; entries there that are not
+> directories are left alone, because they are Pi's.
+
 > **⚠ Relative paths resolve against your PROJECT directory, not against `.soma/`.**
 > `"packages/my-domain"` resolves to `<project>/packages/my-domain` — almost certainly not what you
-> meant. Write `".soma/packages/my-domain"`, or use an absolute path. A declared package that cannot
-> be found is reported on stderr and skipped; it never fails your boot silently.
+> meant. Write `".soma/packages/my-domain"`, or use an absolute path. A `domainPackages` entry that
+> cannot be found is reported on stderr and skipped; it never fails your boot silently.
 
 Order matters: earlier entries win a name collision, because every loader dedupes first-wins.
 
