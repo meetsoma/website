@@ -2,7 +2,7 @@
 title: "Body Architecture"
 description: "Structured identity with templates, variables, lazy loading, and the soma chain."
 section: "Core Concepts"
-updated: 2026-07-24
+updated: 2026-08-16
 order: 3.5
 ---
 
@@ -244,7 +244,10 @@ parent/.soma/      ← workspace level
 
 - **Templates** (`_mind.md`, etc.): first found wins (no merging)
 - **Content** (non-template): merged across chain, child wins on collision
-- **Controlled by** `inherit.*` settings — set `false` to use only project level
+- **Controlled by** `inherit.*` settings — set `false` to drop what you *inherit* (parent and global
+  levels). Your project keeps its own body files, and keeps any [domain packages](/docs/domain-packages)
+  it declared: a package is something you opted into, not something you inherit. A package declared
+  by a *parent* goes with that parent, under the same switch.
 
 ## Identity Resolution
 

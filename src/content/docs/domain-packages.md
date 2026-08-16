@@ -7,7 +7,7 @@ order: 5.4
 ---
 
 <!-- tldr -->
-A domain package is a mini `.soma` in one folder: its own `amps/protocols/`, `amps/muscles/`, `amps/scripts/` and `body/`. Declare it in `settings.json` and soma loads its contents **where soma already looks** — gates fire, muscles load, scripts appear in the catalog. Undeclare it and all of that withdraws in one move. A skill gives you a doorway; a package gives you the machinery behind it.
+A domain package is a mini `.soma` in one folder: its own `amps/protocols/`, `amps/muscles/`, `amps/scripts/` and `body/`. Put it in `.soma/packages/<name>/`, declare it in `settings.json`, and soma loads its contents **where soma already looks** — gates fire, muscles load, scripts appear in the catalog. Undeclare it and all of that withdraws in one move. A skill is a doorway; a package is a doorway **plus** the machinery behind it.
 <!-- /tldr -->
 
 ## What a domain package is
@@ -22,8 +22,8 @@ content kind per root, and a skill folder is not one of those roots.
 A **domain package** is that missing root. It is a directory laid out like a small `.soma`:
 
 ```
-my-domain/
-├── SKILL.md              ← the doorway (see "One folder, two doors" below)
+.soma/packages/my-domain/
+├── SKILL.md              ← the doorway — what the domain is, and where to start
 ├── package.json          ← manifest: what this package provides
 ├── amps/
 │   ├── protocols/        ← including gate-bearing ones
@@ -33,6 +33,10 @@ my-domain/
 └── cycles/               ← optional: the domain's own work record
 ```
 
+**`packages/` and `skills/` are different things on purpose.** A folder under `skills/` is a
+doorway and nothing more. A folder under `packages/` is a doorway **and** amps, body and rules. You
+can tell which is which by where it lives, without opening it.
+
 Declare it and every one of those directories joins the search chain. Nothing else changes: the
 loaders that already walk the chain find the content where they always look.
 
@@ -41,30 +45,32 @@ loaders that already walk the chain find the content where they always look.
 ```jsonc
 // .soma/settings.json
 {
-  "packages": [".soma/skills/my-domain"]
+  "packages": [".soma/packages/my-domain"]
 }
 ```
 
 > **⚠ Relative paths resolve against your PROJECT directory, not against `.soma/`.**
-> `"skills/my-domain"` resolves to `<project>/skills/my-domain` — almost certainly not what you
-> meant. Write `".soma/skills/my-domain"`, or use an absolute path. A declared package that cannot
+> `"packages/my-domain"` resolves to `<project>/packages/my-domain` — almost certainly not what you
+> meant. Write `".soma/packages/my-domain"`, or use an absolute path. A declared package that cannot
 > be found is reported on stderr and skipped; it never fails your boot silently.
 
 Order matters: earlier entries win a name collision, because every loader dedupes first-wins.
 
-## One folder, two doors
+## How its doorway is found
 
-A package and a skill are not competing layouts — **the same folder can be both**, and that is the
-recommended shape:
+Declaring a package loads its **content** — protocols, muscles, scripts, body files — through the
+search chain. That part is complete.
 
-| you get | because |
-|---|---|
-| a catalog entry (name + description, body on demand) | the folder lives under `.soma/skills/` |
-| gates, muscles, scripts and body files loaded natively | the folder is declared in `packages:` |
+> **⚠ Its `SKILL.md` does not yet appear in the on-demand skill catalog.** The catalog is assembled
+> from your skill directories; a package doorway is not enumerated into it today. **Route to it the
+> way you route to any other doc** — name the path from your project's `body/` or a doorway file —
+> and an agent will open it.
+>
+> Enumerating package doorways into the catalog is a planned addition. Until it lands, treat
+> `SKILL.md` as the file a reader is *pointed at*, not one they are *offered*.
 
-Put the folder under `.soma/skills/my-domain/`, give it a `SKILL.md`, and declare that same path in
-`packages:`. Readers find it by description; the machinery loads because you declared it. Removing
-the `packages:` entry leaves the doorway and withdraws the machinery — two independent switches.
+That limit applies only to the doorway. Everything the package actually installs — the gates, the
+muscles, the scripts, the body variables — is live the moment you declare it.
 
 ## What it means for inheritance
 
