@@ -5,7 +5,7 @@ All notable changes to the Soma website.
 ## [Unreleased]
 
 ### Added
-- SomaIcons: Lucide-sourced icons are fetched from Iconify and inlined at build time instead of hand-copied — a broken icon id now fails the build instead of shipping silently (`feat/icon-pipeline`, not yet merged)
+- SomaIcons: Lucide-sourced icons are fetched from Iconify and inlined at build time instead of hand-copied — a broken icon id now fails the build instead of shipping silently
 - Blog post: "Eating Our Own Memory" — dogfooding narrative (`a5926b3`)
 - `soma-verify.sh copy` — automated marketing copy verification against source of truth
 - SomaVerse: "Adopt this Soma →" CTA in the hover card — carries a clicked body's seed into guest
