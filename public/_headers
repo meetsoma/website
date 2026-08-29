@@ -2,3 +2,17 @@
   Cache-Control: public, max-age=31536000, immutable
 /pagefind/*
   Cache-Control: public, max-age=3600
+
+# ── pages.dev is INFRASTRUCTURE, never a product surface ────────────────────────────────────
+# Host-conditional noindex using CF Pages absolute-URL syntax (:project / :version placeholders):
+#   https://developers.cloudflare.com/pages/configuration/headers/
+# The second rule covers PREVIEW deployments (<hash>.<project>.pages.dev) — a separate indexable
+# surface that is easy to forget.
+#
+# ⚠ Scoped to the pages.dev host ON PURPOSE. Do NOT move these into a /* block and do NOT add a
+# robots META tag: either would noindex this site's CUSTOM DOMAIN, which is the real site.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
