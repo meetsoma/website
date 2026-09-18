@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via settings.json, and the bundled set
 status: active
-updated: 2026-07-24
+updated: 2026-09-18
 ---
 
 # Tools
@@ -75,12 +75,20 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 | `soma` (`cap='soma:body.audit'`) | `soma-addons/body.ts` | Heuristic audit of the body compile: duplicate slots, missing files, cache-unfriendly ordering. |
 | `soma` (`cap='soma:docs.list|show|search|whats_new|guide'`) | `soma-addons/docs.ts` | Bundled docs: list, read by name, full-text search. `whats_new({version?})` reads the agent-facing changelog; `guide({name})` resolves guides + dev guides. (v0.24.0+, SX-720.) |
 | `soma` (`cap='soma:browser.*'`) | `soma-addons/browser.ts` | Browser automation via CDP: 21 caps — status, tabs, version, new_tab, close_tab, activate_tab, setup, config (standalone) + navigate, screenshot, evaluate, console, accessibility, links, styles, emulate, performance + xray, click, fill, wait (bridge). Captures tabId; click uses Input.dispatchMouseEvent. |
-| `soma` (`cap='soma:agent.delegate'`) | `soma-addons/agent.ts` | Spawn a child agent. args: `{task, role?, model?, background?, terminal?}`. Sync by default; `background:true` returns immediately + registers in children.json. |
+| `soma` (`cap='soma:agent.delegate'`) | `soma-addons/agent.ts` | Spawn a child agent. args: `{task, role?, model?, background?, terminal?, transport?, cwd?, worktree?, deliverable?}`. Sync by default; `background:true` returns immediately + registers in children.json. `transport:'rpc'` delivers over pi's RPC protocol with an acknowledged frame and no pane (see [Background delegation → RPC delivery](guides/background-delegation.md#rpc-delivery-opt-in)). |
 | `soma` (`cap='soma:agent.list|tail|steer|kill|harvest|focus'`) | `soma-addons/agent.ts` | Manage background children. `focus` = cmux focus-pane / tmux attach hint. |
+| `soma` (`cap='soma:agent.checkin|grade|transcript|activity|pane'`) | `soma-addons/*.ts` | The verification half of delegation: `checkin` measures PROGRESS (is the deliverable growing?), `grade` records that you checked the artifact, `transcript` reconstructs what a child said, `activity` censuses what a sibling session did, `pane` opens/closes a viewer split. |
 | `soma` (`cap='soma:focus.show|set|clear|dry_run'`) | `soma-addons/focus.ts` | Boot-focus primer. `set <keyword>` seam-traces + primes next session's MAP + muscles. |
 | `soma` (`cap='soma:new.muscle|protocol'`) | `soma-addons/new.ts` | Crystallize a pattern. Scaffolds `.soma/amps/muscles/<name>.md` or `.../protocols/<name>.md` with frontmatter. args: `{name, description?, tags?, global?, force?}`. |
 | `soma` (`cap='soma:terminals.list|detect|status|prefer|doctor'`) | `soma-addons/terminals.ts` | Terminal-driver management for `soma:agent.delegate(background:true)`. Detect + prefer a driver (tmux/cmux/ghostty/iterm/terminal). |
-| `soma` (`cap='soma:inbox.list|read|actioned|archive'`) | `soma-addons/inbox.ts` | Markdown-inbox read-status. `.list {status?}` shows letters; `.read/.actioned {file}` mark a letter handled so it stops surfacing at boot; `.archive {file}` moves it to `inbox/_archive/`. `file` = filename, slug, or unique partial. Resolves the `.soma/` chain from cwd. |
+| `soma` (`cap='soma:doorway.*'`) | `soma-addons/*.ts` | Folder-doorway navigation — `route --task` ranks what to read before writing into an unfamiliar tree. |
+| `soma` (`cap='soma:session.name'`) | boot | Rename this session for the resume picker; bare call reports the current name. |
+| `soma` (`cap='soma:settings.*'`) | settings | `list/get/set/doctor` — what a setting resolves to and where it came from. |
+| `soma` (`cap='soma:markdown.*'`) | soma-addons | Outline and groom long markdown documents by heading. |
+| `soma` (`cap='soma:cycles.*'`) | soma-addons | Cross-tree cycle registry (9 caps): validate, drift, stale, duplicates, trees, dashboard, outline… |
+| `soma` (`cap='soma:code.comments'`) | soma-addons/code.ts | Census the comments in a file with line ranges. |
+| `soma` (`cap='soma:seam.trace|web'`) | soma-addons/seam.ts | Walk sessions + preloads + journal as ONE corpus — where an idea came from and how it evolved. |
+| `soma` (`cap='soma:inbox.list|read|actioned|archive|send'`) | `soma-addons/inbox.ts` | Markdown-inbox read-status. `.list {status?}` shows letters; `.read/.actioned {file}` mark a letter handled so it stops surfacing at boot; `.archive {file}` moves it to `inbox/_archive/`. `file` = filename, slug, or unique partial. Resolves the `.soma/` chain from cwd. |
 | `somaverse` (`cap='somaverse:workspace.*'`) | `somaverse-addons/workspace.ts` | Panes / channels / seams (status, send, connect, snapshot, add_pane, remove_pane, list_plugins, …). Requires bridge + paired hub. |
 | `somaverse` (`cap='somaverse:plugin.read|write'`) | `somaverse-addons/plugin.ts` | Plugin-state persistence (Somadian-backed). |
 | `somaverse` (`cap='somaverse:ai.*'`) | `somaverse-addons/ai.ts` | Local semantic search: load model, index, search, embed. |
@@ -90,7 +98,7 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 > **Namespace migration (v0.22.0, SX-594):** flat `code_*` / `file_outline` / `workspace_*` / `plugin_state_*` / `browser_*` / `ai_*` / `dev:body.*` / `delegate` / `children` tools were folded into the `soma:*` + `somaverse:*` meta-tools. Call via `soma(op='call', cap='soma:code.find', args={...})` or `somaverse(op='call', cap='somaverse:workspace.status')`. Use `soma(op='list')` / `somaverse(op='list')` to discover the full catalog. Legacy flat names archived to `extensions/_archive/sx594-flat-wrappers/`.
 >
 > **Cache math:** 1 meta-tool registration costs 1 tool slot in the prompt; addons are free (discovered at runtime via the factory). Flat tools cost linear: N tools = N slots. Post-SX-594 + SX-609, the prompt registers `soma` / `somaverse` / `dev` / `capabilities`, plus Pi builtins (`bash` / `read` / `write` / `edit`), plus the 10 `office_*` still parked as flat (SX-606). Approximately 19 slots for 100+ reachable caps.
-| `context_status` | `soma-context.ts` | Current context usage `{percent, tokens, contextWindow}`. |
+| `context_status` | `soma-context.ts` | Current context usage + runway to the rotate line `{percent, tokens, contextWindow, rotateAt, runwayToRotate}`. Text form: `59% · 6% to the 65% rotate line` (model-aware). |
 | `search` | `soma-search.ts` | Unified search — local ripgrep (default), Brave API, semantic (v0.20.3.1). |
 
 Each tool defines:

@@ -2,7 +2,7 @@
 title: "CLI Tools: How Soma Surfaces Tools to the Agent"
 description: "The three patterns for adding a tool. Pattern 1 (commands/.sh drop-in) is the answer most of the time. Decision flow ladder + reload semantics."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 12
 ---
 
@@ -157,10 +157,15 @@ extensions/soma-addons/         Pattern 2 — soma:* family addons
   terminals.ts    (5 caps)
 
 extensions/dev-addons/          Pattern 2 — dev:* family addons (internal)
-  audit.ts        (2 caps)
+  audit.ts        (3 caps)
+  changelog.ts    (2 caps)
+  doctor.ts       (1 cap)
   hub.ts          (5 caps)
   issue.ts        (2 caps)
-  kanban.ts       (3 caps)
+  kanban.ts       (6 caps)
+  opencode.ts     (3 caps)
+  pr.ts           (2 caps)
+  verify.ts       (1 cap)
 
 extensions/                     Pattern 3 — standalone tools (last resort)
   soma-capabilities.ts    (capabilities — bootstrap discovery)

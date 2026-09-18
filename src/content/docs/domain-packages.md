@@ -2,7 +2,7 @@
 title: "Domain Packages"
 description: "Bundle a whole domain — protocols, muscles, scripts and body files — into one folder soma loads as if it were native."
 section: "Extending"
-updated: 2026-08-16
+updated: 2026-09-18
 order: 5.4
 ---
 
@@ -43,7 +43,23 @@ loaders that already walk the chain find the content where they always look.
 ## Declaring one
 
 ```jsonc
-// .soma/settings.json
+// .soma/settings.json — object form: presence in the folder IS the declaration
+{
+  "domainPackages": {
+    "autoDir": "packages",                    // relative to .soma/ — every valid package inside mounts automatically (this is the default; omit it)
+    "connect": ["../other-repo/their-pkg"],   // packages OUTSIDE autoDir — explicit paths, project-relative
+    "deny": ["some-package"]                  // block by folder name — works on autoDir, connect, AND packages inherited from a parent .soma
+  }
+}
+```
+
+A valid package carries a `package.json` or a `SKILL.md`; anything else in `autoDir` is warned
+about, never silently skipped. `"autoDir": false` turns auto-mounting off. Your nearest `.soma`'s
+`deny` wins over anything a parent would hand down — the closer to your work, the more focused.
+
+The array form still works and means connect-only, with no auto-mounting:
+
+```jsonc
 {
   "domainPackages": [".soma/packages/my-domain"]
 }
@@ -67,16 +83,16 @@ Order matters: earlier entries win a name collision, because every loader dedupe
 Declaring a package loads its **content** — protocols, muscles, scripts, body files — through the
 search chain. That part is complete.
 
-> **⚠ Its `SKILL.md` does not yet appear in the on-demand skill catalog.** The catalog is assembled
-> from your skill directories; a package doorway is not enumerated into it today. **Route to it the
-> way you route to any other doc** — name the path from your project's `body/` or a doorway file —
-> and an agent will open it.
->
-> Enumerating package doorways into the catalog is a planned addition. Until it lands, treat
-> `SKILL.md` as the file a reader is *pointed at*, not one they are *offered*.
+Its `SKILL.md` is also **offered**, not only pointed at: a mounted package's doorway is enumerated
+into the on-demand skill catalog (`<available_skills>`) under its `name:`, beside the skills from
+your skill directories. The same goes for **skills the package carries**: any
+`<package>/skills/<name>/SKILL.md` is catalogued while the package is mounted, and leaves the catalog
+with it — so a domain can ship its own skills and a session focused elsewhere never pays for them.
+A directory whose name starts with `_` is a draft or archive and is skipped; a name your skill
+directories already offer is left to that copy, so nothing appears twice.
 
-That limit applies only to the doorway. Everything the package actually installs — the gates, the
-muscles, the scripts, the body variables — is live the moment you declare it.
+Everything the package installs — the gates, the muscles, the scripts, the body variables, the
+doorway and its skills — is live the moment you declare it.
 
 ## What it means for inheritance
 
@@ -88,6 +104,29 @@ merely sits under. Soma keeps these distinct:
   `inherit.automations`) **keeps the packages you declared** and drops what you inherit.
 - A package declared by a *parent* is inherited, so it goes with the parent under that same switch —
   one switch, not two.
+
+## Focusing a session on some of them
+
+Settings say what **can** mount. A session can mount a subset — the packages the work at hand
+needs, and no others:
+
+```yaml
+# in the preload's frontmatter
+focus: [somaverse]            # one or more package folder names
+```
+
+```bash
+soma --package somaverse      # same thing from the command line; repeatable, wins over the preload
+```
+
+Every other package is left out of the chain for that session — its doorway, protocols, muscles,
+body files and tools together. Your project's own `.soma`, its parents and the global `.soma` are
+never affected; only package roots are. A focus that names no mountable package warns at boot and
+names what *is* mountable, so a typo cannot quietly narrow the session. `deny` is applied first,
+then `autoDir`/`connect`, then focus.
+
+> A focused-out package's **gates go with it**. Focus is for a lane that genuinely does not touch
+> that domain; if the work might, leave the package in.
 
 ## The manifest
 

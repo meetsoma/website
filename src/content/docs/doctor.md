@@ -2,7 +2,7 @@
 title: "Doctor & Migration"
 description: "Project health checks, version migration, and how Soma keeps your .soma/ current."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-07-12
 order: 8.5
 ---
 

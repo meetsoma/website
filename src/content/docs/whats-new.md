@@ -27,6 +27,39 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ---
 
+## 🚧 Coming soon — next release
+
+### 🧰 Workflows
+
+- **`soma attach` — reconnect to a session that is still running.** Lists every live session
+  newest-first with turns, uptime, working directory, tmux name, model, and the exact command to
+  reach it; `soma attach <#|id|tmux-name>` takes you there. Works from inside tmux
+  (`switch-client` on the same server, a nested attach across servers) where plain `tmux attach`
+  refuses. Liveness comes from each session's heartbeat plus a live process id — never from pane
+  text, which keeps showing a session id after that agent has exited.
+- **`soma start` — the stopped half of the same list.** Same rows, opposite set, and each footer
+  names the other, so a session is always in exactly one of the two. `soma start <#|id>` reopens
+  one with full history — `soma -c`, except you choose which. Bounded to this project and 48h
+  (`--hours`, `--all`), and it prints its own denominator so a short list never reads as the whole
+  set.
+- **`soma attach --kill <#|id>` / `--kill all` — stop a running session.** Killing is not deleting:
+  the transcript is untouched and the session moves to the `soma start` list. It asks the session
+  to stop first so it saves and deregisters, escalates only if refused, and confirms rather than
+  assuming. Refuses to kill the session you are in. ⚠ Distinct from `/kill <name>` in the TUI,
+  which drops a muscle to cold.
+- **Sessions now say WHAT they are** — `↳scout of a60dac` for a delegated child, `↳succ of 7434d0`
+  for a rotation successor, unmarked for an orchestrator. Shows up in the resume picker and both
+  lists. Recorded at BOOT from the spawner's environment, because it is unrecoverable afterwards:
+  a child and an orchestrator are indistinguishable by any text in their transcripts. Sessions
+  started before this show no marker and read as orchestrators.
+- **🔄 `soma -c` continues YOUR session, not the child that wrote last.** Delegated children write
+  into the same directory as their parent, so after a delegation burst `-c` reopened a scout. It
+  now continues the most recent **stopped orchestrator** and prints what it skipped. Only sessions
+  positively marked as delegated are skipped — anything unmarked behaves exactly as before.
+  `SOMA_CONTINUE_ANY=1 soma -c` restores the old meaning.
+
+---
+
 ## v0.42.1 — July 2026
 
 ### 🐛 Bugs you can stop stepping around

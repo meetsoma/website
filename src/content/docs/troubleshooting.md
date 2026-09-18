@@ -2,7 +2,7 @@
 title: "Troubleshooting"
 description: "Common issues and fixes — install problems, model errors, broken sessions, and more."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 22
 ---
 
@@ -16,7 +16,7 @@ Most issues: `soma init` (fixes broken install), `soma doctor` (fixes project ve
 
 ### "⬆ Soma update available—… (c)ontinue (u)pdate now (s)kip this version"
 
-Preflight prompt (introduced v0.25.0, s01-86b0fd) gates `soma` startup when an
+Preflight prompt (introduced v0.25.0) gates `soma` startup when an
 update is cached as available. The check is **read-only and zero-network** at
 boot — `soma-statusline` updates `~/.soma/config.json:updateAvailable` on a
 periodic background check while you work, so the prompt fires from cache.
@@ -62,7 +62,7 @@ This was Pi-inherited deprecation noise that fired on `.soma/tools/`,
 `.soma/hooks/`, and `.soma/commands/` directories. Soma never adopted any of
 those as extension conventions — our extension dir is `.soma/extensions/` and
 our script bucket is `.soma/amps/scripts/`. The warning was removed in
-v0.25.0 (s01-86b0fd) because it misfired on legitimate user content (Python
+v0.25.0 because it misfired on legitimate user content (Python
 workflow scripts in `.soma/tools/` etc.).
 
 If you want to align with Soma conventions:
@@ -161,6 +161,18 @@ Make sure Ollama is running (`ollama serve`) and the model is pulled (`ollama li
 See [Models & Providers](/docs/models) for the full setup guide.
 
 ## Sessions & Context
+
+### Session refuses to resume ("is LIVE — another writer")
+
+Resuming with `-r`, `--continue`, `--session` or `--fork` refuses when another live process is
+already writing that session — two writers on one transcript can both commit and push, so the
+refusal is protecting your history.
+
+1. **Reattach instead** — the refusal names where it's running.
+2. **`soma inhale <id>`** — fresh session that loads that session's preload; no second writer.
+3. **`soma --fork <id>`** — branch off it.
+4. The session genuinely died within the last few minutes? Wait ~5 minutes (the liveness
+   signal expires) or override once with `SOMA_ALLOW_DUPLICATE_SESSION=1 soma …`.
 
 ### Preload not loading
 

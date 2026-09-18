@@ -2,7 +2,7 @@
 title: "Getting Started"
 description: "Install Soma, run your first session, understand the basics."
 section: "First Steps"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 1
 ---
 
@@ -15,6 +15,27 @@ order: 1
 
 ```bash
 npm install -g meetsoma
+```
+
+**Permission error?** On Linux and many macOS setups a global install writes to a root-owned
+directory and fails with `EACCES`. Point npm at your home directory instead of using `sudo`:
+
+```bash
+mkdir -p ~/.npm-global
+npm config set prefix ~/.npm-global
+# use ~/.zshrc instead if you run zsh
+echo 'export PATH=$HOME/.npm-global/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+npm install -g meetsoma
+```
+
+**What `soma --version` reports.** The `meetsoma` package on npm is a thin launcher and carries its
+own version number; the agent runtime it installs is versioned separately and is usually ahead. So
+`soma --version` prints both, and the CLI number being lower than the one in these docs is expected:
+
+```
+σ  Soma v0.42.1      ← the runtime, what the docs describe
+   CLI v0.31.0       ← the npm launcher
 ```
 
 **Already have Soma installed?** See [Updating](/docs/updating) for `npm install -g meetsoma@latest && soma update`.
@@ -44,6 +65,17 @@ soma
 ```
 
 On first run, Soma will ask to create a `.soma/` directory. Say yes.
+
+**Installing the runtime first.** On a machine that has never run Soma, the very first command
+downloads the agent runtime (a few hundred MB) and stops there — it does not also scaffold your
+project. Run it once more to create `.soma/`:
+
+```bash
+soma init     # downloads the runtime  → "Soma is installed!"
+soma init     # scaffolds this project → "🌱 Planted."
+```
+
+You only do this once per machine; in later projects a single `soma init` is enough.
 
 **Note:** Subsequent startups may show a short preflight prompt if a Soma
 update is available — `(c)ontinue / (u)pdate now / (s)kip this version`. The
@@ -85,7 +117,7 @@ Starts a **fresh session** and loads the most recent preload - the briefing your
 2. Review, reflect, update the preload if needed
 3. `soma inhale` → fresh context with your curated preload
 
-The difference from plain `soma`: `soma inhale` is **intentional**. You're saying "I've prepared the preload, load it now." Plain `soma` auto-loads quietly in the background.
+The difference from plain `soma`: `soma inhale` is **intentional**. You're saying "I've prepared the preload, load it now." Plain `soma` does **not** load a preload — `preload.autoInject` defaults to `false`, so you get a clean slate until you ask for one.
 
 ### Resume Full Session
 
@@ -107,7 +139,7 @@ Pick from previous sessions to resume.
 
 | Command | Context | Memory | Best for |
 |---------|---------|--------|----------|
-| `soma` | Fresh | Auto-loads preload (if exists) | Quick starts, new work |
+| `soma` | Fresh | **No preload** (default `autoInject: false`) | Quick starts, new work |
 | `soma inhale` | Fresh | Loads preload (explicit) | Daily continuation after review |
 | `soma -c` | Full history | Complete conversation | Short breaks |
 
@@ -147,7 +179,7 @@ Created by `soma init` or on first run:
 ├── amps/                    ← the AMPS content system
 │   ├── automations/         ← triggered actions
 │   ├── muscles/             ← learned patterns
-│   ├── protocols/           ← behavioral rules (17 ship by default)
+│   ├── protocols/           ← behavioral rules (24 ship by default)
 │   └── scripts/             ← developer tools (12 seeded on init)
 │       ├── soma-code.sh     ← codebase navigator
 │       ├── soma-reflect.sh  ← session pattern mining
@@ -214,10 +246,10 @@ See [Commands](/docs/commands#script-commands) for the full reference.
 Somaverse gives your agent a visual workspace in the browser — a tiling desktop of plugin panes that Soma can see, control, and interact with.
 
 ```bash
-soma login
+soma login start
 ```
 
-This creates a pairing code, opens your browser to [somaverse.ai](https://somaverse.ai), and waits for you to enter the code. Once paired, your device key is saved to `~/.soma/device-key` and Soma auto-connects on every future session.
+This creates a pairing code, opens your browser to [somaverse.ai](https://somaverse.ai), and waits for you to enter the code. (`soma login` with no arguments only reports pairing status — `start` is what begins a pairing.) Once paired, your device key is saved to `~/.soma/device-key` and Soma auto-connects on every future session.
 
 **What you get:**
 - 🖥️ **28 workspace tools** — Soma sees your panes, sends commands, takes snapshots, manages layout

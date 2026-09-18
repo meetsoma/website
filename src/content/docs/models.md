@@ -2,7 +2,7 @@
 title: "Models & Providers"
 description: "Set up API keys, choose models, configure custom providers like Ollama, OpenAI, and more."
 section: "First Steps"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 1.5
 ---
 
@@ -81,7 +81,7 @@ soma --model claude-sonnet-4
 # Claude Sonnet 5 (latest, adaptive thinking)
 soma --model claude-sonnet-5
 
-# Claude Fable 5 (Anthropic's Mythos-class frontier model) — `fable` aliases to claude-fable-5
+# Claude Fable 5.1 (Anthropic's Mythos-class frontier model) — `fable` aliases to claude-fable-5-1
 soma --model fable
 
 # Use provider/model format

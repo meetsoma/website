@@ -12,7 +12,7 @@ order: 29
 Soma has **three** ways to delegate work to a child agent:
 
 - **Synchronous** — `delegate(task)` from inside Soma. The parent blocks, the child runs in-process, you get back a summary + MLR. Single tool call. Good for small, bounded tasks where you want the answer right now.
-- **Headless** — `delegate(task, headless:true)`. The child runs as a `soma -p` subprocess (print mode): no interactive terminal, completion signalled by **exit code**, with auto-retry + model fallback; output returns inline. Chain sequential steps with `chain:[{role,task},...]`. **This is the reliable, unattended path** — use it for productive/batch work you don't need to watch (running a cycle queue, mechanical edits). Because it's print mode, a broken project extension is isolated, not fatal.
+- **Headless** — `delegate(task, headless:true)`. The child runs as a `soma -p` subprocess (print mode): no interactive terminal, completion signalled by **exit code**, with auto-retry + model fallback; output returns inline. Chain sequential steps with `chain:[{role,task},...]`. **This is the reliable, unattended path** — use it for productive/batch work you don't need to watch (running a cycle queue, mechanical edits). Because it's print mode, a broken project extension is isolated, not fatal — **but that isolation is total: `--no-extensions` also unloads `soma-guard`, so protocol-declared gates (RELEASE-FLOW reminders, the `repos/agent` vs `~/.soma/agent` warning, any `paths:`/`command:` gate) never fire on this path.** A headless child editing a gated path gets no reminder at all. Use `background:true` for anything that touches a gated path.
 - **Background** — `delegate(task, background:true)`, or `soma children spawn <role> "<task>"` from your shell. The child launches in a *detached interactive terminal* (tmux/cmux) and the parent returns immediately. Use it when you want to **watch the child live** or steer it mid-run.
 
 > **Which one?** Answer now → synchronous. Done reliably without watching → **headless**. Watch/steer live → background. (Reaching for `background` for unattended batch work is a common miss — it spawns an *interactive* session, so an unattended task can land on the shell. `headless` is the right tool there.)
@@ -37,7 +37,7 @@ Both paths:
 4. Register the child in `~/.soma/state/children.json`.
 5. Return immediately. The child runs until it completes or you kill it.
 
-You watch progress via `children(op:'list')` / `children(op:'tail', id:...)` from inside Soma, or `soma children list` / `soma children tail <id>` from the shell.
+You watch progress via `soma:agent.list` / `soma:agent.tail({id})` from inside Soma, or `soma children list` / `soma children tail <id>` from the shell.
 
 ## Requirements
 
@@ -62,7 +62,7 @@ Detached means no window pops up. If you want to watch the child live, the spawn
 ```
 [delegate:background] spawned child-7f3a91 via tmux
 role: general | model: auto | handle: soma-child-7f3a91
-Status: running. Task sent. Use children(op:"list") to monitor.
+Status: running. Task sent. Use soma:agent.list to monitor.
 To watch live: tmux attach -t soma-child-7f3a91
 ```
 
@@ -97,19 +97,24 @@ they follow (e.g. REVIEW → PROPOSE → IMPLEMENT → VERIFY — named phases b
 
 ## Accumulated Knowledge
 
-<!-- The footguns this role has hit, the traps that are locked in. The
-     sub-compiler injects THIS section into every spawn of the role. -->
+<!-- The footguns this role has hit, the traps that are locked in. Every section of a
+     role file is injected into every spawn EXCEPT `## MLRX notes`. -->
 
 ## Success Criteria
 
 The checklist the role verifies before reporting back.
 ```
 
-**The one rule that makes roles compound:** the sub-compiler injects each role's
-`## Accumulated Knowledge` into *every* spawn. So when a child hits a footgun,
-write it into that section afterward — the next spawn starts already knowing it.
-Improve the role; pass only the **task** to `delegate()`. Don't re-paste standing
-context per job.
+**The one rule that makes roles compound:** the sub-compiler injects **every** section
+of a role file into **every** spawn — the only exception is `## MLRX notes`, which is
+held back. So when a child hits a footgun, refine the role afterward and the next
+spawn starts already knowing it. Improve the role; pass only the **task** to
+`delegate()`. Don't re-paste standing context per job.
+
+⚠ **Everything you add to a role file is re-read on every future spawn, forever.**
+Prefer sharpening a rule that is already there to appending a new one; put the run
+log in `## MLRX notes`, where it costs nothing, and keep out of the role anything
+that does not change what the *next* child does.
 
 Lean generic roles (`auditor`, `builder`, `verifier`, …) ship by default. Evolve
 them into named domain personas with explicit phase workflows as the work demands
@@ -142,48 +147,59 @@ Aliases (`sonnet`, `haiku`, `opus`) are resolved before launch, so the child use
 
 ## Monitoring
 
-From inside Soma:
+The `soma:agent.*` capability family is the surface:
 
 ```
-children(op: "list")                         // table of all children
-children(op: "tail", id: "child-7f3a91")     // last 50 lines of the child's pane
-children(op: "tail", id: "child-7f3a91", lines: 100)
-children(op: "steer", id: "child-7f3a91", message: "skip that last step")
-children(op: "kill", id: "child-7f3a91")     // SIGTERM + close container
-children(op: "harvest", id: "child-7f3a91")  // read MLR + remove from registry
+soma:agent.list                                  // every child — deliverable size leads the row
+soma:agent.tail({id: 'child-7f3a91'})            // live pane output
+soma:agent.checkin({id: 'child-7f3a91'})         // PROGRESS, not liveness — is the deliverable growing?
+soma:agent.transcript({id: 'child-7f3a91'})      // what the child actually said, reconstructed
+soma:agent.activity({session: 's01-xxxxxx'})     // what a sibling session DID (tool-call census)
+soma:agent.pane({id: 'child-7f3a91'})            // open/close a viewer split on its session
 ```
 
-From your shell:
-
-```
-soma children list
-soma children tail child-7f3a91 50
-soma children watch            # flicker-free live dashboard, refresh every 2s
-soma children kill child-7f3a91
-```
-
-Every `children list` call reconciles the registry with live driver state: if a child's container is gone but the registry says `running`, it flips to `completed`. So the table always reflects reality, not just the last write.
+**The deliverable is the liveness signal, not cost.** Spawn with
+`soma:agent.delegate({deliverable: '<path>'})` and every poll measures that file: growing means
+working, flat-plus-climbing-cost means idle or stuck. `list` also prints the live pane count
+beside its table and says so explicitly when the two disagree — a stale record can't answer
+"is anything running?" unnoticed.
 
 ## Steer
 
-`children(op:'steer', id, message)` sends your message as a chat message to the child. Works while the child is `running` or `spawning`; blocked when `completed`, `aborted`, or `error`. Typical uses:
+`soma:agent.steer({id, message})` writes to the child's pane. Two things it does NOT promise:
+delivery is confirmed at the *driver*, not the child — and **nothing interrupts a turn**; every
+send queues to the child's next turn boundary. Verify consumption (its ¶ counter moving past
+your message), never transmission. For a planned multi-phase sequence, put the phases in the
+brief up front instead of dripping steers.
 
-- Nudge the child when it's looping: `children(op:'steer', id:'child-...', message: "move on to the next file")`
-- Add context it didn't have: `children(op:'steer', id:'child-...', message: "also check files under lib/")`
-- Gracefully exit: `children(op:'steer', id:'child-...', message: "/exit")`
+On a child spawned with `transport:'rpc'` (below), a steer is different: it comes back
+**acknowledged** — `✓ ACKED — response frame steer success=true in 41ms` — and lands after the
+child's current tool calls, before its next model call. Semicolons, newlines and unusual
+unicode arrive exactly as typed.
 
-## Kill vs harvest
+## Kill vs harvest vs grade
 
-- **Kill** closes the driver container (tmux session / cmux pane), marks the registry entry `aborted`, and sets `ended_at`. The entry stays in `children.json` so you can still inspect it.
-- **Harvest** is the "clean end" path: it reads the child's MLR (Memory Lane Reflection), returns it in the summary, and removes the entry from the registry. It only works on children whose status is `completed`, `aborted`, or `error`.
+- **Harvest** (`soma:agent.harvest`) hands you the result and the child's own reflection. It
+  keys on the **deliverable**, so a finished-but-idle child — whose pane still reads `running`
+  because it's sitting at its prompt — harvests fine. Harvesting is free and repeatable.
+- **Grade** (`soma:agent.grade({id, grade: 'pass'|'fail'|'partial', note})`) records that you
+  actually checked the artifact — so "is anything I delegated still unchecked?" is a question
+  the tool can answer. `kill` warns if you end a child whose work you never graded.
+- **Kill** closes the pane and marks the entry `aborted`. **An idle child still bills** — there
+  is no keepalive on children, so a finished child sitting at its prompt costs money for
+  nothing. Decide at spawn: one task → kill at delivery; more tasks queued → reuse the warm
+  context, then kill.
 
-So the typical life cycle is: spawn → run → child finishes on its own → harvest. If the child gets stuck, kill first, then harvest.
+Typical lifecycle: spawn → work your own next lane → poll the deliverable → harvest → grade → kill.
 
-## The MLR gap (today)
+## What harvest returns (MLR)
 
-Children don't write their own MLR yet — that lands in Phase E when child Soma sessions get `--child-id` / `--brief` / `--parent-pid` CLI flags. Today, `harvest` returns the registry-level summary (id, role, model, runtime, cost, task) plus a placeholder where the MLR would go. You can still `tail` the child to see what it did.
-
-This is tracked in `.soma/releases/v0.20.x/plans/children-control-panel.md §Phase E`.
+Children write their own reflection. Background and tmux children are asked for a structured
+reflection block as part of finishing, write invocation records to their role's
+`invocations.jsonl`, and `harvest` returns the reflection alongside the registry summary
+(id, role, model, runtime, cost). A child killed before finishing usually has no reflection —
+the deliverable and `tail` output are what's left, which is one more reason to harvest before
+you kill.
 
 ## Configuration
 
@@ -209,10 +225,29 @@ Writes `{"delegate": {"terminal": "tmux"}}` to settings.json. Subsequent spawns 
 soma terminals status
 ```
 
+### RPC delivery (opt-in)
+
+```
+delegate(task: "...", transport: "rpc")
+```
+
+Instead of a terminal pane, the child runs as a subprocess speaking pi's RPC protocol. What you
+gain: the task and every steer are **acknowledged** by a typed response (`delivery ACKED`), so
+"did it get the brief?" stops being a guess; and the message is delivered verbatim — no
+keystroke mangling. What you give up: there is no pane to attach to. Watch it with
+`soma:agent.tail` / `soma:agent.transcript`, which read the child's event log
+(`~/.soma/state/rpc/<child>.jsonl`), and know that the child **ends with the session that
+spawned it** — only that session can steer it. Fits scouts and builders that run to completion
+while you work; for a child you want to sit with, keep the default pane.
+
+RPC children run raw pi with your models and keys and no Soma extensions, so the role file is
+prepended to the task the same way the pane route does it. `claude-cli/*` models are not
+available on this route.
+
 ### Discoverability helpers
 
 - `soma terminals list` — which drivers are available on this machine
-- `soma terminals detect` — same as list + a recommendation
+- `soma terminals detect [--json]` — which terminal app you are in (it sees through tmux), then the list + a recommendation. Detection wrong? Set `terminal.app` in `settings.json` ([configuration](../configuration.md#terminal))
 - `soma terminals setup [tmux|cmux]` — walkthrough to install + configure
 - `soma terminals doctor [<driver>]` — diagnose why a driver isn't working
 

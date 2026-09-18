@@ -15,7 +15,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versioning follo
 Root cause, diagnosis, what it cost and how it was tested are kept — in the project's internal
 `.soma/` logs, not here. This file answers *what changed for me?*; the logs answer *why, and how*.
 
-<!-- CONVENTION (house rule): LEAN entries. No storytelling.
+<!-- CONVENTION (s01-dcd604, Curtis): LEAN entries. No storytelling.
      If an entry exceeds ~3 lines, or contains "because" / "which is why" / "it cost", it is a
      session-log entry in a CHANGELOG costume — cut it and MOVE the remainder to
      .soma/memory/sessions/, .soma/memory/mlx/, or the owning cycle. Move, never delete.
@@ -28,59 +28,244 @@ Root cause, diagnosis, what it cost and how it was tested are kept — in the pr
 ## [Unreleased]
 
 ### Added
-- **Protocols enforce their own rules — `gates:` in protocol frontmatter.** A gate stays out of the
-  system prompt and fires in the tool result at the moment the rule is broken. Triggers: `paths:`
-  (before a write/edit), `command:` (before a bash command), `after:` (once a bash command
-  succeeds); `command`/`after` are regex, `paths` is substring with `exclude:` for carve-outs.
-  Modes: `remind` blocks once and lets the identical retry through, `block` stays shut until a named
-  doc is read this session, `warn` notifies the UI only. Projects can declare the same thing in
-  `settings.json` → `guard.pathGates`, which overrides a protocol-declared gate on the same pattern.
-  Nothing deadlocks: an unresolvable `read-first` allows, a gate never blocks its own protocol file,
-  malformed frontmatter is skipped. Docs: `docs/protocols.md` §2b.
-- **Path gates narrow to one tool with `tool: write` or `tool: edit`.** `write` fires when a file is
-  created or wholesale-replaced; `edit` only on modifications to an existing file. Omit `tool:` and
-  the gate fires on both, as before.
-- **`/hub share` refuses `scope: internal` and `scope: workspace` content.** Applies to markdown
-  frontmatter (`scope:`) and script headers (`# scope:`). Change the scope to `hub` or `bundled` to
-  share it.
+- **`/reduce` keeps your most recent screenshots.** It now reduces the OLDER images and leaves the 2 newest untouched, so a reduction never costs you the images you are still working with. Say `/reduce images` to touch images only (tool-results left alone), `--keep N` for a different window, and `--all` when you really do want every image stripped. `/resume-reduced` follows the same rule and takes `--all` too.
+- **`/resume-reduced` frees context without losing your work.** It mechanically reduces the current session to a replay-safe copy (images become text, oversized tool-results are truncated) and resumes into it — so a session that's climbing toward the context limit can keep going instead of rotating. Your original transcript is never touched, and it refuses to switch if the copy doesn't parse.
+- **`/reduce` mechanically shrinks a transcript to a copy, no model, no summary loss.** It strips image payloads (keeping the metadata) and truncates oversized tool results, writing a `.reduced.jsonl` beside the original — your live session and the original file are never touched. With no argument it reduces the current session's transcript; give it a path to reduce any. Measured across 200 real transcripts: 60% smaller on disk.
+- **summary-first output standard, full report to a file, and the parser fix**
+- **soma:audit.* — one command for the estate's real git state**
+- **`soma:browser.network` answers "did that click actually send anything?"** It records fetch and XHR inside the page and marks which ones are Next.js server actions, so a control that looks like it worked but silently sent nothing stops being invisible. `{action:'start'}`, do the thing, then `{action:'read'}`. When it was not recording it says so, instead of reporting zero requests — "nobody was watching" and "nothing was sent" are different answers and only one of them means your code is broken.
+- **`soma:browser.health` tells you whether a browser tab can be trusted, before you go looking for
+  a bug.** One call answers whether the tab has actually painted, whether the page has finished
+  hydrating, and — with `expectMarker:'<text your change puts on the page>'` — whether you are
+  looking at the build you just shipped or a cached older one. It returns a verdict naming the fix
+  rather than raw flags, so "the page is broken" and "this tab is lying to me" stop looking alike.
+- **role-gap carries the Soma brand lockup + accent**
+- **status names the seat — ✓ HIS (his profile, read-only bar) · ⚠ HEADLESS (shows him nothing) · agent seat — never just "Ready"**
+- **A delegated child's closing reflection now asks for a one-line rule and its tell, not a story.** This is what lets lessons fold into role files instead of piling up as war stories.
+- **`soma:browser.targets` and `status` now list every running browser, port or no port.** Each row: app, pid, headless or headed, debug port, profile, and whether it is the user's own browser (headed, on their profile). With a debug port it is REACHABLE and the line says `use({port})`; without one it says so and how to relaunch it. A headless seat is marked as such, and a seat on an unlisted port is probed instead of missed.
+- **`soma:browser.launch` opens a browser the agent owns under a named persistent profile** (`~/.soma/browser-profiles/<name>`), headed by default, and points the session at it — a last resort after `targets`, never the user's profile.
+- **`visible:true` says the real reason when it cannot attach** — the user's browser is already running without a debug port — instead of a bare `fetch failed`.
+- **`search` can use your own SearXNG instance.** Set `search.api.provider` to `searxng` and `search.api.url` to the instance (or `SOMA_SEARCH_URL` in the environment) — no API key, no metering. If your instance sits behind a shared header token, `search.api.token` (or `SOMA_SEARCH_TOKEN`) is sent as `X-Soma-Search`. A 403 from the instance is explained (it must allow JSON output). Brave remains available with `BRAVE_API_KEY`.
+- **A foreground `sleep` of 30s+ while you have running children now reminds you to check in instead of polling** — never blocks; a bounded wait is still allowed.
+- A child spawned on the tmux path is now told to read its role's `context:` files (a project's CHILD-RULES, a primer) right after its role file — the same files the compiled path stacks into the prompt. Absolute, resolved paths only; unresolvable entries are dropped, never guessed.
+- **A role pointer (`source-of-truth:`) can now ADD `context:`** on top of the generic role it points at — a project stacks its own tree rules onto a shared reviewer/auditor without forking the role. Duplicates are not added twice; a pointer with no `context:` changes nothing.
+- **`soma-bodies-sweep.sh` backs up every body in the estate in one pass** and republishes the browsable index from that run's results.
+- **Truncating a body's history is now something you can invoke** — `state:truncate` against another body's `.soma`. It refuses your own session's body outright.
+- **The backup repo mirrors where your bodies live on disk.** Its `main` branch is a folder tree — `Gravicity/meetsoma/`, `Gravicity/meetsoma/somaverse/` — with one pointer file per body naming the ref that holds its history and the command to restore it. Generated from the live set, so it cannot go stale.
+- **A backed-up `.soma` can keep a rolling window of history locally while the remote keeps all of it.** Default 45 days. Before anything is rewritten, the full history is pushed to an immutable archive ref and read back from the remote; if that read-back disagrees by a single commit, nothing is touched. Ordinary pushes keep working afterwards. Bodies with no backup remote keep everything, unchanged.
+- **A backup refuses if the body ever committed something secret-shaped.** `secrets/`, `.env`, `.pem`, `.key`, `*_rsa`, `auth.json`, `credentials*`, `.p12` and `id_ed25519` are checked against the body's whole history before anything is pushed, and the push is refused with the offending path named. The list is fixed — no setting narrows or extends it. New bodies already ignore `secrets/` and `*.env`, and those rules apply even if you replace `somaIgnores` with your own.
+- **A `.soma` is only ever backed up to a private remote.** If the target is public, cannot be checked, or is not a host Soma can ask, the push is refused and nothing is transmitted. There is no setting that turns this off.
+- **Your `.soma` can back itself up to a git remote.** Set `checkpoints.soma.backup.remote` and `.enabled`, and the body pushes its own history at every rotation — exhale, inhale, exit — rather than on a timer or a cron job. Soma stores no credential: it runs `git push`, and whatever your git already uses (a credential helper, SSH, a token) does the authentication. Bodies share one remote under `refs/bodies/<id>/`, addressed by the body's own id, so renaming or moving a project does not strand its backup. A push counts as done only when reading the remote back agrees with your local history. Bodies marked `durability: scratch` are never pushed, and a backup that fails warns once without blocking the rotation.
+- **Every `.soma` now has a stable id of its own.** Renaming or moving a project no longer disconnects its body from its backup — the rename is recorded, not silently forked.
+- **Per-project control over what a `.soma` ignores, keeps and backs up** — `somaIgnores`, `projectIgnores`, `retentionDays` and `durability` under `checkpoints.soma`, inherited from the parent or global soma unless a project overrides them.
+- `soma terminals open --detached` keeps what it opens alive after the window that opened it closes (a tmux session rather than a split pane). The Warp adapter reports that it cannot do this rather than failing quietly.
+- `soma:agent.peer({id})` — answers whether a successor or sibling is working on the plan it booted from, with the preload it loaded, which planned files it has touched, the commits it actually authored, and a verdict of ON-TRACK / DRIFT / STALLED / IDLE. `soma-session-activity.py --peer <id>` is the same thing from a terminal.
+- **`soma terminals tune` fixes the tmux settings that flatten a modern terminal's keys.** It checks `extended-keys`, `terminal-features extkeys`, `allow-passthrough` and `focus-events` in your tmux conf, shows what is missing, asks, and appends only those lines inside one `# >>> soma tmux >>>` block (backup taken, running server reloaded). `--remove` takes the block out byte-for-byte; `--yes` skips the prompt; `--json` for scripts. `soma doctor` now mentions it while any of the four are unset.
+- **`soma-dev sync dev` now checks who else is on the tree before deploying it.** The sync ships the working tree to `~/.soma/agent` — every boot on the machine — so with uncommitted changes AND another live session whose cwd covers the repo it refuses, listing the paths and the sessions; dirty and alone it warns and proceeds; `--allow-dirty` vouches for every listed path and is recorded in the activity log. `build-dist` stamps `gitHead` + `gitDirty` into `dist/manifest.json`, and a dist cut dirty then synced from a clean tree is refused until rebuilt.
+- **`soma terminals open <layout.json>` puts commands where you are looking.** In Warp it opens a new tab in your active window with the panes pre-split (a Tab Config); inside tmux it splits your current window; anywhere else it splits only if you configured a viewer and otherwise prints the commands to run. `--dry-run` shows the exact artifact, `--adapter warp|tmux|viewer` forces one. `soma terminals grid <id>...` does the same with one `soma attach <id>` pane per session. Also as `soma:terminals.open` / `soma:terminals.grid` for the agent.
+- **`soma` prints one stderr line when a domain package's `tools/` inject with no `--package` focus**, naming the packages and the escape (`soma --package <name>`) — a preload's `focus:` scopes the chain but is read after those tools are already on argv.
+- **Soma knows which terminal you are in — even inside tmux.** `soma terminals detect` now names the app (`warp`, `iterm`, `wezterm`, `ghostty`, `terminal-app`, or `unknown`) before the driver list; `--json` prints one line for scripts. Detection reads `$TERM_PROGRAM`, then the per-terminal variables that survive tmux, so a tmux session opened from Warp reports `warp`.
+- **`terminal.app` and `terminal.container` settings.** `terminal.app` overrides detection (e.g. `kitty`, which sets no `$TERM_PROGRAM`). `terminal.container` (default `tmux`) is where the sessions Soma opens for you run; leaving it unset changes nothing today.
+- **`parse-pi-changelog.mjs --from-clone` reads the upstream Pi clone instead of the installed copy**, so `--current-to-latest` answers what you are *missing* rather than always reporting no upgrade. `--clone=<path>` (or `$PI_CLONE`) picks the checkout and `--ref=` the git ref; a clone left unfetched for over 7 days warns that the gap may be understated, and every run names which source answered.
+- **`delegate.headlessChain` in `~/.soma/agent/settings.json` sets the fallback models headless children try, in order.** Written as `"provider/model"` strings; when a free tier ends, edit the list — no release needed. The built-in default now starts with `opencode/big-pickle`, then `opencode/nemotron-3.5-lightning-free`, then `nvidia/nvidia/nemotron-3-super-120b-a12b`.
+- **A domain package can carry its own skills.** Any `skills/<name>/SKILL.md` inside a mounted package appears in the skill catalog beside your project's skills, and disappears when the package is focused out of a session — so a domain ships its skills with its rules, and a session working elsewhere never carries them. Directories starting with `_` are treated as drafts and skipped; a name already offered by a skill directory is not duplicated.
+- **A stall row now names which extension's turn-end handler it sat behind.** `last` reads `breathe:turn_end`, `route:turn_end`, `statusline:turn_end` or `boot:turn_end` instead of a bare `turn_end`, so a frozen prompt can be attributed to one handler; a stall marked `boot:turn_end` with a small gap is Pi's own turn-end work. The background timers mark as well (`statusline:tick`, `statusline:render`, `boot:quiesce`), so a freeze in the middle of a long tool call names the timer it sat behind.
+- **`soma:agent.delegate({transport:'rpc'})` delivers a child's task over pi's RPC protocol, with an acknowledgement.** The task and every `soma:agent.steer` come back with a typed response frame instead of a guess from the pane's message counter; semicolons, newlines and U+2028 arrive verbatim. There is no pane — `soma:agent.tail` and `soma:agent.transcript` read the child's event log — and the child ends with the session that spawned it. Opt-in: the default tmux route is unchanged.
+- **A session can mount only the domain packages its lane needs.** `focus: [somaverse]` in a preload's frontmatter, or `soma --package somaverse` on the command line, keeps the named packages in the chain and leaves the rest out for that session — doorway, protocols, muscles, body files and tools together. Your own `.soma`, its parents and the global one are untouched. A focus naming no mountable package warns at boot and lists what is mountable.
+- **An event-loop stall log, so a frozen prompt can be attributed instead of guessed at.** `~/.soma/state/loop-stalls.jsonl` gains a row whenever the loop is held for more than a second (with the last event seen before it) and whenever a `.soma` checkpoint commit takes more than 100 ms. A stall row sitting right after a checkpoint row of the same length names the cause; a stall with no checkpoint beside it clears it. `SOMA_STATE_DIR` relocates the log.
+- **`soma:new.muscle` and `soma:new.protocol` refuse to create a near-duplicate.** Before scaffolding, the name is searched across every amp in the chain; a name-level match returns the existing candidates with their paths instead of a new file. `force:true` creates anyway. A genuinely new name is unaffected. The same check guards a raw `write` that would create a new file under `amps/muscles/` or `amps/protocols/`: the first attempt is refused with the candidates, an identical second write goes through.
+- **`soma:amps.find` searches every muscle, protocol, script and workflow before you create one.** It walks the whole chain including domain packages, hot and cold — because a cold muscle is invisible at boot and gets re-invented. Ranked name > header > body matches; "no match" is the licence to create. `soma amps-find <query>` works from a bare terminal too.
+- **Packages in `.soma/packages/` mount themselves.** The new object form of `domainPackages` — `{"autoDir", "connect", "deny"}` — makes presence in the folder the declaration: no more forgetting to list a package you just created. `connect` still mounts packages living elsewhere, and `deny` blocks a single package by name — including one a parent `.soma` would hand down — without turning off the rest. The old array form keeps working exactly as before.
+- **`soma preload` lists your preload lanes and starts one by number.** One row per preload — age, arc, lane, what it supersedes — and it names which one a bare boot would take (boot picks the newest by mtime, arc-blind). `soma preload <#|name>` starts a session on that lane; flags like `--model` pass through. Ends the two-live-lanes guessing game.
+- **A file at parent or global scope now has a first-class way to be found from a project.** `resolveChainFile(relPath)` / `readChainFile(relPath)` walk the whole soma chain nearest-first — project, its packages, parents, global — instead of reading only the nearest `.soma`, which silently dropped anything configured a level up.
+- **Keepalive can ping on a schedule you set, not only when the prompt cache is about to expire.** `keepalive.maxIntervalMinutes` pings after N minutes of silence regardless of cache state — useful with `cache.retention: "long"`, where the cache-driven ping fires roughly once an hour. Default `0` leaves behaviour unchanged. The notification names which trigger fired, `cache` or `cadence`. Pings are still capped by `maxPings`, so a shorter interval covers a shorter unattended window.
+- **`soma start` recognises older sessions that drove children.** Sessions from before Soma recorded what they were show no marker — but the child registry knows who spawned whom, so a session that delegated work now reads `orchestrator ↑17 children` instead of `unnamed`. Nothing is rewritten; it is read at display time.
+- **session-scoped CDP target + targets discovery**
+- **`soma -c` no longer hands you a delegated child.** It meant "whatever wrote last", and children write into the same directory as the orchestrator that spawned them — so after a busy delegation run, continuing put you in a scout instead of your own session. It now continues the most recent STOPPED orchestrator and prints what it skipped; a session that is still running is never a continue candidate, since `soma attach` is what reaches those. Only sessions positively marked as delegated are skipped, and anything unmarked behaves exactly as before. `SOMA_CONTINUE_ANY=1 soma -c` takes the newest of any kind.
+- **`soma attach --kill <#|id>` stops a running session, and `--kill all` stops every one but yours.** Killing is not deleting: the transcript is untouched and the session moves to the `soma start` list, so it reopens with full history. SIGTERM first so it saves and clears its heartbeat, escalating only if it refuses; it declines to kill the session you are in, and `--kill all` asks before acting. A pane started *with* the session closes with it; a pane where you typed `soma` by hand keeps its shell.
+- **Both session lists name the model.** `soma attach` and `soma start` show the model each session was last on, beside its turns and uptime — so a row says what it is, who spawned it and what it is running, without opening it. A mid-session ctrl+P switch is reflected.
+- **`soma start` — the stopped half of `soma attach`.** Same rows, opposite set: every session that has stopped, newest first, with the command to restart each with its full history. `soma start <#|id>` reopens it — like `soma -c`, except you choose which instead of taking whatever wrote last. Bounded to this project and the last 48h by default (`--hours`, `--all`), and each list's footer names the other, so a session is always in exactly one of the two.
+- **Sessions say whether they are a child, a successor or an orchestrator.** The resume picker, `soma attach` and `soma start` now show `↳scout of a60dac` beside a delegated child, leaving orchestrators unmarked — so a parent session no longer looks identical to the children spawned from it. Rows that used to read `project · s01-xxxxxx` and nothing else now carry who they are.
+- **`soma attach` — see every running session and reconnect to one.** Bare `soma attach` lists them newest-first with turns, uptime, working directory, tmux name and the command to reconnect; `soma attach <#|id|tmux-name>` takes you there, including from inside tmux where plain `tmux attach` refuses. A session running outside tmux says so, and a dead id points you at `soma inhale` / `soma --fork`.
+- **Tall full-page screenshots auto-cascade into a readable column grid.** `soma:browser.screenshot` detects a strip taller than 3000px and 3× its width, runs it through `soma-cascade.py` (resolved from `.soma/amps/scripts/`, `~/.soma`, or `SOMA_CASCADE_SCRIPT`), and names the `-cascade.png` to read instead. `cascade:true` forces it, `cascade:false` suppresses it; without the script the screenshot notes the skip and stays a plain strip.
+- **Resuming a live session refuses instead of creating a second writer — on every path.** `soma -r`, `--continue` and `--session` all check at session-open whether another live process is already writing that session (fresh heartbeat + live pid — works in any terminal, tmux or not) and refuse with the recovery options: reattach, `soma inhale <id>` for a fresh session, or `soma --fork <id>`. Only positive evidence of a live writer refuses; dormant or pre-heartbeat sessions open as before. `SOMA_ALLOW_DUPLICATE_SESSION=1` overrides.
+- **alias fable → claude-fable-5-1 globally (Curtis: align to 5.1; the Pi store and settings already resolve 5.1, the alias table drifted at 5.0)**
+- **visible:true raises Curtis's real browser; default is headless by design**
+- **A soma-package can carry Pi tools (`tools/*.ts`), scoped to its declaration tier (K10b)** — rescued from the merged `exp/package-tools` lane, whose changelog edit never left its worktree.
+- **The delegate spawn reply and live-harvest footer now state the idle-billing rule** — a finished child sitting at its prompt still bills (no keepalive); both surfaces say to kill at delivery when no next task is queued.
+- **A gate proving a role must be discoverable from the child's cwd** — 7 assertions against the real predicate, including controls that ordinary cross-project casts still spawn.
+- **soma:doorway.* — P1.5 thin wrapper over soma-doorway.py**
+- **A Soma session now names itself for the resume picker** — `project · arc · sid`, derived from the preload that boot already read. The picker previously showed a dozen near-identical rows because Pi renders `session.name ?? session.firstMessage` and every Soma session's first message is the same boot banner, leaving age as the only way to tell them apart.
+- **`soma:session.name`** — rename this session when its lane changes. A bare call reports the current name.
+- **Spawning a background child whose role declares `max-tool-calls` now says that the ceiling is not enforced on that path**, and points at bounding the run in the brief instead. The number previously sat in the role file looking like a limit while the run was unbounded.
+- **`soma:agent.list` now reports how many child panes are actually running, beside its table.** When that disagrees with the recorded statuses it says so explicitly and names the panes as the answer, so "is anything running?" cannot be answered from a stale record without noticing.
+- **`soma:agent.delegate` refuses a brief that initialises a git repo without first anchoring the directory with `cd` + `pwd`.** A child that names a scratch dir but never enters it initialises the repo at the orchestrator's cwd — a workspace root that deliberately has no `.git`. The error gives the exact line to add, and points at `cwd:`/`worktree:` as the version that cannot be forgotten.
+- **A `.soma/` checkpoint in a tree several sessions share now stages only what this session wrote, plus known runtime state — never everything.** A sibling's in-flight edit can no longer be swept into your commit and attributed to your session id; if nothing qualifies, the checkpoint commits nothing rather than staging the whole tree.
+- **`soma:inbox.send` writes a letter to another session with the frontmatter the inbox readers parse**, instead of hand-authoring the file and hoping the fields match.
+- **Edits a session makes to another project's `.soma` are now checkpointed too**, instead of sitting uncommitted in a tree nothing watches.
+- **A model that failed to start a child is remembered, and the next spawn on it is refused** with the reason and the date, instead of leaving a dead child that reads "running".
+- **A role can now restrict what its background children may reach**, with `enforce-tools: true` in its frontmatter. Roles that do not set it are unchanged.
+- **A child's record now shows the budget it ran under**, so "was that budget too tight?" is answerable from the log instead of from the child's prose.
+- **A project can declare domain packages in `settings.json`, and they load like part of it.**
+  `"domainPackages": ["packages/my-domain"]` adds a mini `.soma` — its own protocols, muscles, scripts and
+  body files — to the search chain, so one workspace can carry several bodies of knowledge without
+  merging them into one folder. Relative paths resolve against the project, and a declared package
+  that cannot be found is named on stderr instead of vanishing quietly. A package declared by a
+  parent `.soma` is inherited too, so working from a sub-repo sees the same content the workspace
+  root does. Turning inheritance off (`inherit.protocols`, `inherit.muscles`, `inherit.identity`,
+  `inherit.automations`) keeps the packages you declared and drops what you inherit — a parent's
+  package goes with the parent, under the same switch.
+- **`/inhale <arc>` finds the preload for that arc.** Matching was filename-only, and preloads are
+  named by date and session id, so an arc name never resolved. A filename match still wins; when an
+  arc matches several preloads they are listed instead of one being chosen for you.
+- **Boot detects a live sibling session from its heartbeat, not only from a pane marker.** A busy session's marker can scroll out of the captured window and read as if nobody were there; fresh heartbeats now count as evidence of a live session on their own. A `📋` marker whose session has no heartbeat is dropped — the drop is announced, naming which id and how stale it was — but a session with no heartbeat at all is still treated as live. Only sessions in the same project count as your siblings — a heartbeat from elsewhere on the machine no longer hides the session working beside you.
+- **`.soma/` commits on a 45-second quiet timer in addition to every 5 turns, and each commit says which session made it.** A long turn — a multi-minute command, a delegated child — now gets an interim commit before it can lose uncommitted work to a crash (`checkpoints.soma.quiescenceSeconds`, `0` to disable). Each commit also carries `Soma-Session:`/`Soma-Origin:` git trailers, so `git log --format='%(trailers:key=Soma-Session,valueonly)'` attributes every state change once two agents share a workspace and a git identity.
+- **Letters addressed to your session are announced without you going to look.** A letter whose `to:` field names your session id is surfaced once, after the current turn finishes — never mid-task — with who sent it and where to read it. Nothing is marked read for you.
+- **A commit with no `Soma-Cycle` trailer now says so.** The reminder appears at commit time; it
+  never blocks, and setting `SOMA_CYCLE` once silences it.
+- **`soma:agent.grade` and `soma:agent.kill` close the loop on delegated work.** `grade({id, grade:'pass'|'fail'|'partial', note?})` records that you checked a child's deliverable, so "is anything I delegated still unchecked?" is a question the tool can answer; `kill` warns when you end a child that produced work you never graded, and stays quiet when it produced nothing.
+- **`soma-hooks.sh` installs an optional `commit-msg` hook.** With it, a `feat`/`fix` commit with no `### Added` / `### Fixed` block gets a reminder — a warning, your commit still goes through — and `Soma-Session` / `Soma-Cycle` trailers are stamped when those variables are set. `soma-changelog.sh` then uses those blocks verbatim, so the sentence a user reads is written once. `status`, `install` and `uninstall`; uninstall removes only the hook this script wrote.
+- **`soma:agent.list` shows how big each child's deliverable is, and leads with it.** That is the
+  signal for whether a child is working — cost and runtime now trail it. When the deliverable cannot
+  be located the column reads `—?`, never `0B`, so "I could not measure this" is never mistaken for
+  "this child has produced nothing".
+- **Every path that can end or rotate your session is now a setting, and `session.autoEnd: false` is
+  the one switch that stops all of them.** It covers auto-breathe, the 85% auto-exhale, the keepalive
+  auto-exhale and both idle shutdowns; `/breathe`, `/exhale` and `/exit` still work, because asking
+  is not the same as being interrupted. Individually: `context.safetyNet` (the 85% auto-exhale),
+  `keepalive.autoExhale` and `/keepalive off` (the shutdown that follows keepalive), and the two
+  timeouts `session.absoluteIdleShutdownMinutes` (30) and `session.postExhaleShutdownMinutes` (15) —
+  `0` disables either.
+- **Two agents starting at once no longer both launch a browser.** When nothing is reachable,
+  the first caller claims the port and the second is told to wait and re-probe rather than start a
+  second Chrome on the same profile directory. The claim expires after 45s, so an agent that dies
+  mid-launch does not block the next one.
+- **The skill catalog is cleaner and more controllable.** Duplicate skill names in the emitted catalog are now detected, and `skills.deny` in `.soma/settings.json` hides a named skill from the catalog without moving or deleting it — for de-duplicating a doorway skill that already routes to something. Empty by default; denying a skill nothing routes to makes it unreachable.
+- **`core/job-runner.ts` spawns a detached job and reports whether it actually ran.** `spawnJob()`
+  returns a handle whose `ok` is false when no worker came up; `pollJob()` answers `DONE <rc>` /
+  `RUNNING` / `GONE` from a marker file's existence. Conformance suite:
+  `.soma/amps/scripts/soma-node-conformance.sh <adapter>`.
+- **Boot says which preload it loaded, and why.** You get the file, its arc, how many other
+  preloads were considered, and a one-line reason for each one it passed over — including any
+  whose session is still live in another pane, with the `soma inhale <id>` to switch to it.
+  When another live session is already working the arc you just loaded, that is the first line you
+  see, naming its session log; your own handoff never warns about itself. Nothing is ever dropped
+  silently, and the file boot picks is the same one it picked before.
+- **A bash call cannot block the agent for more than 260 seconds, and neither can a cap.** A
+  tool-call `timeout:` above that is refused with the detached alternative named in the refusal;
+  caps soft-fail toward tmux. **Process-owning caps are exempt** — they are supposed to outlive the
+  call. `/gates off` does not disarm it. Commands that typically run for minutes (`npm test`,
+  `cargo build`, `docker build`, `soma-dev build`…) get a reminder pointing at `soma-bound.sh daemon`.
+- **Background delegation reports whether the CHILD received the task, not just that it was typed.**
+  `soma:agent.delegate` waits for the child's prompt, sends, and confirms its message counter moved:
+  `delivery CONFIRMED`, `UNCONFIRMED` (with the pane tail and the `steer` recovery), `baked` for
+  `claude-cli/*`, or `unknown` when there is no counter to read.
+<!-- merged into "Resuming a live session refuses instead of creating a second writer" above —
+     the --session/tmux guard was the first half; the heartbeat guard completed it 2026-09-02. -->
+- **`preload.archiveAfterDays` and `preload.archiveKeepMin` are real settings.** Tune when old
+  preloads move to `memory/preloads/_archive/` and how many recent ones are always kept. Rotating
+  several times a day? Lower `archiveAfterDays` — age is a solo-user unit.
+- **The children roster is generated, accurate, and never offers a doorway file as a role.**
+  `soma:agent.roles` regenerates `body/children/INDEX.md` and lists the durable roster — not running
+  children — flagging an empty or frontmatter-less role file instead of listing it as normal.
+  `README.md`, `AGENT.md` and `INDEX.md` are excluded. A project opts out of regeneration with
+  `generated-regions: none`.
+- **`dev:opencode.ask` is now a usable transform transport.** It runs in tmux so it never blocks
+  you, writes its result to `<input>-output.md` and returns a receipt rather than the payload, and
+  takes `{file}` for stacked content; `dev:opencode.poll` answers `DONE rc=N`, `RUNNING` or `GONE`.
+  Call any of them with no args for a pipeline diagram — every failure prints the same diagram with
+  the broken stage marked. `dev:opencode.models` lists the live catalogue, free tier first.
+- **`soma:settings.*` shows what a setting actually resolves to, and where it came from.**
+  `list`/`get` report the effective value plus which file in the `.soma` chain set it; `set` writes
+  the file a key is actually READ from, instead of guessing; `doctor` finds keys that are set but
+  never read by any code path, or read but never set — the denominator is discovered in source, not
+  a hand-kept list.
+- **`soma:agent.transform`'s edit-script schema + applier land (slice 1 of the cap; no API call yet).**
+  `applyEditScript` replaces `{old,new}` spans in place instead of rewriting a document; an `old`
+  span must match the source exactly once or the whole batch is rejected. A response is rejected
+  before parsing unless `stop_reason === "end_turn"`. `core/delegate/transform-schema.ts`,
+  `transform-apply.ts`, `tests/test-transform-apply.sh`.
+- **Scripts can declare `related-docs:` in their header**, alongside `related-muscles:` and
+  `related-protocols:`. Names resolve against the agent's `docs/` tree.
+- **The release now tells you what it is about to leave behind.** A 13th gate compares the source
+  tree against the last shipped release and reports files that neither ship nor have a rule saying
+  why.
+- **`soma init` scaffolds a phased-doorway skeleton.** `_phased-template/` walks phases in order,
+  each one confirmed before the next, and `scripts/phased-scaffold.sh` generates a new phased skill
+  from a list of phase names. The layout is plain markdown any agent harness can read. It also names
+  the three ways a phase chain breaks silently — refs are globbed non-recursively, reachability is
+  read from `SKILL.md` alone, and a backward `refs/` pointer reverses the chain — each caught by
+  `soma-skill-nav.py test`.
+- **`soma:cycles.unrecorded` reports cycles with no file record.** Wraps the registry's
+  `unrecorded` command with an optional `{days}`; prints SKIPPED trees, because a tree that could
+  not be compared is not a pass.
+- **`soma:agent.activity` tells you what a sibling actually DID.** Pass `{session: 's01-xxxxxx'}`
+  and it reads the session transcript for span, model changes, tool-call breakdown and thinking
+  count — instead of watching a pane, which shows liveness, never activity. Engine:
+  `soma-session-activity.py` (runs standalone from a terminal too).
+- **Test discovery is recursive and cannot silently shrink.** Every runner finds tests in
+  subdirectories, and `pretest` fails the build when the discovered count drops below
+  `tests/.discovery-floor`. Raise the floor when you add a suite.
+- **`soma init` creates `body/children/` and seeds two example roles.** `example-scout` (read-only
+  survey) and `example-reviewer` (checks another agent's output against the artifact it cites) —
+  copy either as the starting point for your own. Existing roles and edits are never overwritten.
+- **`soma:agent.delegate({deliverable:'<path>'})` names a per-task output path.**
+  `soma:agent.checkin` shows that path for the child instead of its role's generic default.
+  Omit it and checkin falls back to the role default exactly as before.
+- **A protocol can enforce its own rules at the point of violation, and you can turn any of them
+  off.** Declare `gates:` in its frontmatter to fire on a path (`paths:`, narrowable to one tool), a
+  bash command (`command:`), or after one completes (`after:`), in `remind`, `block` or `warn` mode.
+  `guard.pathGates` in `settings.json` declares the same shape per-project and wins on the same
+  pattern; `/gates on|off [protocol]` disables them persistently, while core-file protection and the
+  dangerous-command confirms stay on regardless. Full reference: `docs/protocols.md` §2b.
+- **Hub can install `body/` files and extensions, and refuses to share anything scoped `internal` or `workspace`.** `ContentType` gained `body` and `extension`, so a plugin can ship the doorway file that makes an agent aware of it alongside its caps, installed from the type's own directory. `/hub share` checks both markdown frontmatter (`scope:`) and script headers (`# scope:`) — change the scope to `hub` or `bundled` to share it.
 - **`soma-release-prepare.sh` validates bundled protocol scope (phase 3.5).** A protocol declaring
   `scope: internal` or `workspace` inside the npm source directory hard-fails the release; `hub`,
   unrecognised, or missing scope flags for review. Note that `scope:` does not itself gate npm
   distribution — physical location in `repos/community/protocols/` does.
-- **inject core_rules Trait 9 (falsifiability) into every child prompt**
-- **Background/tmux delegated children now write invocation records** — previously only the
-  synchronous delegation path logged to `invocations.jsonl`; background children (the dominant
-  spawn mode) left no trace on completion. Records now include the child's final message as
-  `summary`/`mlr`, resolved from its own session JSONL.
-- **soma:markdown.* — map and groom long markdown docs**
-- **soma:agent.transcript — read what a child/peer said from its session JSONL**
-- **Q15b — flag (not enforce) a background child's budget overage**
-- **Q12 — the 5 sync-hardening guards (soma-dev-sync-hardening)**
-- **soma:agent.pane — iTerm2 split-in-current-window lifecycle for child/sibling tmux sessions (pane-lifecycle cycle, prototype-proven)**
-- **agent sends agent_role + parent_session_id on hub path (L43/R5 P3, T8/T9)**
-- **gate a child to a PROJECT via project?/cwd? arg (L12)**
-- **soma:agent.roles — lists the role ROSTER, not instances.** Every other `soma:agent.*` cap lists
-  running children; this one lists the durable specialists in `body/children/*.md` (summary,
-  default-model, budget, default-tools) — previously reachable only inside `delegate({help:true})`.
-  A 0-byte or frontmatter-less role file is now flagged loudly instead of listed as normal.
-- **soma:agent.checkin — progress, not liveness**
-- **somadian-drift-matrix — which bin forked, and is the drift committed?**
-- **deliver the whole role file, not three sections of it**
-- **fleet footer on every soma:agent.* result**
-- **next-step tips on spawn; models defaults to what is enabled**
-- **soma:code.comments — comment census with line ranges**
-- **260s hard ceiling on every cap call, soft-fail toward tmux**
-- **global output limit with head/tail/full, at the one funnel**
-- **catch wrong syntax at the router — did-you-mean + silent-arg guard**
-- **soma:cycles.outline — code.map for cycles, spine-aware**
-- **expose the comparison axes as caps, and register the family so it is visible at all**
-
-- **Hub can install `body/` files and extensions.** `ContentType` gained `body` and `extension`, so
-  a plugin can now ship the doorway file that makes an agent aware of it, plus its caps. Previously
-  a plugin could install muscles and skills but nothing that made it discoverable. Also fixes
-  `communityDir()`'s `type + "s"` fallback, which would have silently resolved `body` to `"bodys"` —
-  a wrong path that never errors — and adds the missing `script` entry to two `VALID_TYPES` lists
-  that rejected a type the installer already supported.
+- **Every child is told to make its own success falsifiable.** The rule that asks *what would make
+  this result a lie?* is now part of the compiled child prompt, so a child reports what it could
+  not settle instead of a clean-looking verdict.
+- **Background and tmux-delegated children write invocation records to `invocations.jsonl`.** Each
+  carries the child's final message as `summary`/`mlr`, resolved from its own session transcript.
+- **`soma:markdown.*` maps and grooms a long markdown document.** Outline it by heading, pull one
+  section, or groom the whole file — for docs too big to read end to end before editing.
+- **`soma:agent.transcript` reads what a child or peer actually said.** It reconstructs the
+  conversation from that session's own JSONL, so a report is checkable after its pane is gone.
+- **A background child that goes over its budget is flagged.** `soma:agent.list` and `.tail` show
+  the overage without the parent computing it; it is a visible flag, not a hard stop — interrupting
+  an in-flight tool call risks a half-written file.
+- **`soma-dev sync` refuses to push a runtime that would be wrong.** Five guards: a stale `dist`
+  warns or refuses, the synced sha is recorded so you can tell what is running, Pi dependency drift
+  is caught, an ahead-of-remote branch is reported before it ships, and `switch` verifies the tree it
+  landed on.
+- **`soma:agent.pane` opens and closes a viewer split on a child's session, in your current
+  window.** `open`/`close`/`list`; the viewer is auto-picked per terminal, or set
+  `delegate.viewer`. Closing a pane never kills the child.
+- **A child announces its role and its parent session on the hub path.** A connected fleet can tell
+  which agent is which, and which parent spawned it, instead of a flat list of anonymous sessions.
+- **A child can be pinned to one project.** Pass `project` or `cwd` to `soma:agent.delegate` and the
+  child boots there, instead of inheriting wherever the parent happened to be.
+- **`soma:agent.checkin` answers whether a child is making PROGRESS, not whether it is alive.** It
+  reports the deliverable's growth, so a running-but-stuck child is distinguishable from a working one.
+- **`somadian-drift-matrix` reports which bin forked and whether the drift is committed.** It reads
+  `app/` as the canonical bin, prints its own denominator, and flags a sample of what it found.
+- **A delegated child receives its whole role file**, not three sliced sections — guidance an author
+  put anywhere in the file now reaches the child.
+- **Every `soma:agent.*` result ends with the current fleet.** How many children are running, with
+  ids and roles — so a forgotten child is visible from any call, not just `list`.
+- **Spawning a child prints what to do next.** Watch, check, steer, harvest and kill, with the exact
+  call for that child; the model list defaults to the models you actually have enabled.
+- **`soma:code.comments` censuses the comments in a file with their line ranges.** For finding where
+  a file explains itself — and where a 60-line block has outgrown the code under it.
+- **Every capability's output obeys one size limit, with `head`, `tail` and `full` to override it.**
+  Applied at the single funnel all caps return through, so a new cap inherits it by existing.
+- **A mistyped capability call is caught at the router.** You get a did-you-mean for the name, and
+  an unrecognised argument is reported instead of silently ignored.
+- **`soma:cycles.outline` maps a cycle the way `soma:code.map` maps a file.** Sections, spine and
+  aliases, so a 700-line cycle is navigable without reading it in chunks.
+- **The comparison axes are reachable as capabilities, and the family is registered.** Discoverable
+  via `soma({hot:true})` like every other family.
 
 - **`soma:cycles.dashboard`** — regenerate the cycle dashboard's data and report whether it was
   stale and whether the server is up. `{check:true}` reports without writing. Detects staleness by
@@ -94,121 +279,438 @@ Root cause, diagnosis, what it cost and how it was tested are kept — in the pr
   Refuses to fall back when `SOMA_CYCLES_SCRIPT` names a missing path.
 
 ### Fixed
+- **`soma inhale <name>` no longer hangs after activated models when it matches a preload.** The one-shot-pin feature was calling `execFileSync("tmux")` to clear the global pin during boot — a synchronous call that could block the entire session before the agent prompt appeared.
+- **The `📝saved` preload badge no longer stays dark after you've written and sealed a preload.** A preload written after midnight UTC (a different date in its filename than when the session booted) was invisible to the badge; it now finds your preload by session id and reads the real saved path, so a sealed preload shows `📝saved` regardless of the date in its name.
+- **`soma inhale <name>` now pins just that one boot, not every later boot.** The pin used to linger in tmux's environment and silently reload the same preload for days — and could boot two sessions onto one preload. It's now cleared after it loads, so the next boot picks the newest/arc-appropriate preload again; run `soma inhale <name>` when you want to pin again.
+- **A successor boots on its own lineage, not a live sibling's preload.** Its parent's sealed next-preload wins over a newer unrelated one, and a preload whose session is live on another track ranks below a rotated one (never dropped). Applies to successors only (not delegated children), a re-inhale keeps its own preload, and a boot with no parent is unchanged.
+- **The boot announcement names the other tracks you could resume instead of counting them.** Each gets its arc, its age and the exact command to switch to it; a long list still collapses to `soma inhale --list`.
+- **A live session that tmux cannot see no longer reads as "nothing to disambiguate".** Sessions running outside a pane are counted from their heartbeat, so the boot stops printing that verdict two lines under the session it just found.
+- **`soma seam` and `soma refactor` no longer read another project's `.soma` when an old `SOMA_PROJECT_DIR` is still in the environment.** The variable is trusted only when the current directory is inside the project it names; otherwise the project is resolved from the current directory and the script says so.
+- **The boot's preload notes name the rule they actually used.** Three lines still said "ranked by newest-mtime" after ranking moved to `created:`.
+- **Adding a note to an old preload no longer makes the next session boot on it.** Preloads are now ranked by the `created:` date they were written with, using file time only to break ties within a day, and the boot announcement says when the two orders disagree.
+- **A boot no longer loads an old preload in silence because an earlier `soma inhale <name>` is still in the environment.** `SOMA_INHALE_TARGET` is inherited — tmux holds it for the life of the server — so the boot message now names the preload that was pinned, how old it is, and says arc-aware selection was bypassed.
+- **The preload-selection summary now reaches the agent on a fresh boot**, not just the UI notification; the boot template filter dropped it.
+- **Models you have enabled that the bundled registry does not know now appear** in the list — no price beside them, because the registry does not know them, but listed and selectable instead of quietly not existing.
+- **Search takes several words in any order** — `soma model --list opencode deepseek` works, which no single substring could.
+- **`soma model --list` now shows the full id for every model, and takes it back.** Each line is the `provider/model` you can paste into `soma model <id>`, which selects exactly that model at the price shown beside it. Previously the two halves were printed separately, so a copied name matched nothing.
+- **A `.soma` checkpoint ignores the generated dashboard snapshots by name instead of ignoring the folder they live in.** A file you add beside them — the registry dashboard's own source lives there — is no longer silently left out of your history.
+- **parse porcelain by COLUMN, not by first space**
+- **ask the repo for its default branch, and split AT RISK from unmerged**
+- **A blocking command gate now shows its owner's escalation line from the 3rd break, not only a reminding one.** Both modes carry it; the message assembly is a pure function with a test.
+- **`soma:agent.checkin` no longer calls a running child "finished".** Its 2-minute warm-up compared `Date.now()` to an ISO string (always `NaN`, printed as `NaNm`), so every child with an unwritten deliverable was flagged `∅ MISSING — finished` from the first poll. Age is parsed; a running child reads `… not yet written`; only an ended child with no artifact is `MISSING`, and the line says which status it ended in.
+- **Closing a child the recommended way no longer files it as a failure.** `soma:agent.harvest` on a still-running child now stamps the entry, and the `soma:agent.kill` that follows records `completed` (reason: harvested) instead of `aborted`, so run counts and the fold stop reading a graded, delivered run as a crash. A kill with no harvest is still `aborted`.
+- **A command gate no longer fires on text you are writing into a file.** With `ignore-quoted`, a heredoc body (`cat >> notes.md <<'EOF' … EOF`) is treated as data like a quoted span; a body fed to `bash`/`sh` is still a script and still gated.
+- **A child's takeaway is no longer lost when it scrolls off the pane.** The tmux driver read only the visible screen, so an `mlr` block followed by the idle-shutdown banner and a shell prompt was invisible to reconcile and harvest, which then reported "nothing was captured". Capture now reaches the requested number of lines into scrollback; `soma:agent.tail` gains the same reach.
+- `soma doctor` no longer reports bundled protocols as "missing" when they are inherited from a parent or the global `~/.soma` — it now says how many are present via an inherited root. Its remedy names the tier-1 backfill on the next session start or a direct copy, instead of `soma init` (which on an existing project only re-runs doctor).
+- **`soma:browser.targets` now probes the port you configured.** It scanned a fixed list and skipped the port `settings.json`, `SOMA_BROWSER_CDP_PORT` or `soma:browser.use` resolves to, so a browser on the estate's own default read "no CDP browser answering" while `status` had just named it. The empty result now says which ports it tried and which one is configured, instead of asserting nothing is running.
+- **A letter now reaches a session working in a different project.** `soma:inbox.send` wrote into the sender's own `.soma/inbox/`, so a letter to someone whose session started elsewhere landed in a directory they never read. It is now written where the recipient's session lives, and the send says where it went and when it will surface.
+- **`soma:inbox.send` refuses an address it cannot deliver to, instead of writing the file anyway.** It takes a session id, `successor`, `all`, or a project lane (`meetsoma`, `yoshi-platform` — a trailing `-dev` is fine). A child id is not a session id, and that now fails at send time with the ways to find the right one.
+- **`soma:code.*` results now carry the search's own warnings.** Timeouts, stalls, and hidden directories were previously reported only when a search found nothing.
+- **`soma:code.find` names the directories `.gitignore` hid from your search.** One line, whenever the root you searched ignores a subtree — on results as well as on zero, since a plausible hit count from a root missing a whole subproject is the case that misleads. Nested repos and vendored trees are the usual cause. Silent when nothing is hidden; `SOMA_CODE_IGNORED_NOTICE=0` turns it off.
+- **The backup index no longer lists un-backed-up bodies as though they were protected.** Bodies present on disk but never pushed appear in a separate section, and their pointer file says plainly that its ref does not resolve.
+- **The backup's pointer files now resolve.** Each body's history is stored under a ref named for where it lives on disk, which is the same ref the browsable index points at — previously the two disagreed, so following a pointer led nowhere. Archives stay keyed by the body's id, so a rename cannot orphan them.
+- **Customising `checkpoints.soma.somaIgnores` no longer removes the secret rules.** The list is yours to set, but `secrets/`, `*.env`, `*.pem`, `*.key`, `*_rsa`, `*.p12`, `id_ed25519`, `auth.json` and `credentials*` are always applied on top of whatever you configure — including when you set it to `[]`.
+- **A `.soma` that already exists now gets the same ignore rules and stable id as a freshly created one.** Previously only brand-new bodies received them, so the oldest and largest bodies — the ones actually accumulating junk — kept committing generated files forever. Rules now also cover files a tool regenerates (`state.json`, `cycles/_browser/`), child transcripts, and secrets.
+- **A `.soma` created automatically now gets the same ignore rules as one made by `soma init`** — scratch files and generated screenshots no longer end up committed to its history forever.
+- **shrink guard — refuse to propagate a gutted body without an explicit override**
+- `soma attach --kill` no longer reports that it stopped a session when it did not. A session running outside tmux is now described as running in its own terminal pane, with the command that does work on it, instead of being called "welded" and advising tmux.
+- `soma attach` no longer shows a process id where the working directory should be, and no longer drops the model, when a session's heartbeat was written without a `cwd`.
+- **a bare '-' is stdin, not an unknown flag**
+- `soma terminals open` and `soma terminals grid` now support `--help`, and reject an unknown option instead of silently treating it as a session id or a layout filename. Previously `soma terminals grid --help` opened a terminal tab.
+- **The 📝 preload badge now lights for a lane-suffixed preload** (`preload-next-<date>-<sid>-yoshi.md`), not only the exact boot-computed name. The badge matched one path while soma-breathe's detector matched the session id, so a sealed lane preload left the footer dark.
+- A `mode: block` protocol gate can now point its `read-first:` at a domain package's doorway (`packages/<name>/SKILL.md`). Previously such a gate silently allowed every edit it was written to stop, with no error.
+- Capability arg warnings no longer fire on correct calls to caps whose arguments contain a nested object — `soma:terminals.open({layout:{...}, dryRun:true})` was reporting `dryRun` as unrecognised while honouring it.
+- `soma:terminals.detect` now declares `{json?}`, `soma:terminals.grid` declares `viewer?`, `soma:browser.use` declares `clear?`, and `dev:opencode.poll` declares `limit?` — all four were read by the implementation but reported as unrecognised when passed.
+- **A letter addressed to you now reaches you before your next step, not after your whole turn.** The inbox notice was queued as a follow-up, which Pi holds until the agent has no more tool calls — so a letter found early in a long run surfaced only at the end. It is now steered in after the current tool round, before the next model call; the notice says so and tells you when to read it.
+- **Pasting the letter path from the inbox notice into `soma:inbox.read` now works.** The notice prints an absolute path and says the read call marks it; the matcher only knew filenames, so the exact call it suggested answered "no letter matches". `.read`, `.actioned` and `.archive` now take a path, a filename, or a partial.
+- **`soma:agent.activity` now shows which files a session edited or wrote.** It had reported `(none parsed)` for every session because the store keeps tool inputs under a different key than the parser read. It also takes `{id}` like its sibling caps (`{session}` still works), prints the session it resolved as its first line, and refuses an unknown argument instead of answering for a different session.
+- **Stall rows in `~/.soma/state/loop-stalls.jsonl` now name the mark BEFORE a freeze and the marks inside it.** `last`/`sinceLastMs` refer to the last event before the hold's estimated start; a new `during` array lists the handlers that ran inside it, so a row distinguishes a hold inside one extension's `turn_end` from Pi's own turn-end work.
+- **A typo'd or guessed subcommand no longer boots a session.** `soma inbox`, `soma atach` — one bare word that is neither a subcommand nor a `soma-<word>.sh` on the chain — now exits 2 with the word named and the escape shown (`soma -p '<word>'`, or a prompt of two or more words). Previously it fell through to a full session start with the word as the prompt: a model call, the boot migrations and a session file, in whatever directory you were in.
+- **The extra-usage warning suppression (`warnings.anthropicExtraUsage: false`) now reaches Pi.** Migration `settings-dead-keys-v0.43.1` moves `warnings` and `retry` from the project `.soma/settings.json` into Pi's own settings file (`~/.soma/agent/settings.json`; a value already there wins) and removes keys nothing reads: `anthropic.enableLongContext`, `agent.panes.{defaultReadOnly,maxPanes}`, empty `providers`. Fresh workspaces no longer receive `warnings`/`anthropic` blocks.
+- **`steno.enabled: false` now switches the exhale-time steno ratio off.** The key had been in settings with nothing reading it.
+- **`soma:settings.doctor` finds far more of the readers that exist, so SET-BUT-UNREAD is a list worth acting on.** It follows a same-file alias of a block (`const gc = settings.boot.gitContext; gc.since`, `sp?.includeSkills`) and destructuring, matches top-level keys on the settings object itself (`settings.debug`, `loadSettings(...).extraUsageRecovery`), and scans the CLI layer under `npm/` alongside `core/` and `extensions/`. Hits are tagged `(via alias <name>)` / `(destructured)`, the list states the one class it still cannot see (a block handed to another function as a parameter), and `$schema` / `_`-prefixed note keys are no longer counted as settings.
+- **The somaverse endpoint resolver sees the same `.soma` chain as everything else.** An `environment` override set in a declared domain package (or dropped by deny/focus) now takes effect; before, the resolver walked ancestor directories on its own and could not see packages at all.
+- **A domain package with both a doorway and a body file of the same name is offered once, as the doorway.** The body file stays readable through `soma:body.index`; the boot no longer warns about a duplicate.
+- **A focus naming an unknown package warns once, not four times.** The warning is remembered for the whole session and inherited by child sessions.
+- **`soma:inbox.send` accepts `to` without an "unrecognised arg" warning.** Its declared arguments were written as prose and the argument check could not read the first one; the same check now reads the leading name of any prose-style declaration, so a cap whose author wrote `to (session id)` no longer contradicts itself.
+- **A customized `_mind.md` survives the first boot after an upgrade.** The oldest template auto-update step overwrote any `_mind.md` that differed from the bundled one, customized or not, on a project that had never recorded it; it now keeps anything that does not byte-match a known archived template, like every later step already did.
+- **`soma:body.index` respects the session's `focus:` and `deny`.** It read the declared package list straight from settings, so a session focused to one package still listed every other package's body files. It now takes its package roots from the same chain the boot mounts — what the index shows is what the session has.
+- **`soma:body.index` and package `tools/` injection now honour the object form of `domainPackages`.** A project using `{"autoDir", "connect", "deny"}` gets its packages' body files in the catalog and their tools at boot, the same as with the array form.
+- **The periodic and quiescence `.soma` checkpoints no longer hold the event loop.** Their git calls run as spawned children, one at a time, so a checkpoint firing while you type cannot freeze input. Session-ending commits (exhale, exit, inhale, rotation) stay synchronous and wait for any in-flight checkpoint first, so nothing is lost at the boundary.
+- **`soma-dev test` reports every red suite instead of dying at the first one.** The runner inherited `set -e` and aborted on the first failing suite with no ✗ line and no summary; it now prints the failure and keeps going.
+- **The statusline honours settings set at parent or global scope.** `keepalive.*`, `session.*`, `cache.retention`, `imageBudget.*` and `extraUsageRecovery` were read from the nearest `settings.json` only, so a value configured one level up was silently ignored by the footer, the idle shutdown and the ping cadence while the rest of the agent honoured it. It now reads the same merged chain soma-boot does. `body/_keepalives.md` and the soul-space prompts resolve across the chain too.
+- **Child invocation logs are checkpointed.** `memory/children/` is runtime-written and was in no session's write set, so it accumulated as permanent uncommitted dirt.
+- **A brand-new file in a brand-new folder is checkpointed again.** The auto-checkpoint matched exact paths against git's compacted `dir/` status rows, so the first file in a new directory was silently never committed — and could trigger a spurious "checkpoint REFUSED — memory is NOT being saved" warning. Both halves fixed: the file is staged, and a no-op commit is no longer reported as a refusal.
+- **The statusline's ♥ segment now shows when the next keepalive ping fires.** The ◷ timer is the prompt-cache TTL; since ping cadence was decoupled from it (`keepalive.maxIntervalMinutes`), the keepalive had no visible timer of its own — it looked like the countdown ignored the setting.
+- **Stale settings blocks are now cleaned instead of frozen in place.** A one-time migration removes settings keys nothing reads — the old `checkpoints` `{enabled, intervalMinutes, squashOnPush}` shape, the pre-rename `keepalive` keys (`maxBeats`, `onExpiry`, `contextCeiling`), and the deprecated `systemPrompt.maxTokens` — and the migrator no longer writes that obsolete `checkpoints` shape when back-filling missing settings.
+- **The dev-mode keepalive unlock now works from any project under the .soma that grants it.** It is read across the whole soma chain rather than the nearest directory, so an unlock held at a parent no longer resolves to the default limit in every project beneath it.
+- **`soma:agent.list` no longer tells you a pane count is a process count.** When its table and the live panes disagreed it declared the panes correct; a pane outlives the agent inside it, so that count overcounts while the table undercounts. It now names neither as truth and points at `soma attach`, which keys on a live heartbeat and process id.
+- **A fresh install starts again.** Since v0.42.0 a newly installed Soma died at startup with `Cannot find module '../../modes/interactive/components/dynamic-border.js'` — the packaged tree carried two of Pi's own built-in extensions at a level where their imports could not resolve. They are no longer shipped there, and a gate now fails if any extension we do not own reaches the distributed tree.
+- **`soma:browser.config` and `.use` now detect a "bridge split" — when direct-CDP caps and bridge-required caps are talking to two different browsers — instead of letting it surface later as a misleading "No matching tab found".**
+- The generic body template no longer carries internal session ids — the generator strips them and refuses a render where one survives.
+- **Auto-exhale now fires ahead of the idle shutdown regardless of cache TTL** — it triggers ~5 min before the absolute idle kill on the kill's own clock, so a `retention: "long"` session still writes its preload before the process ends (ping exhaustion, the old trigger, could never happen under a 1h TTL).
+- **Keepalive auto-resumes after recovery** — an error-triggered pause (boot 400, rate limit) now re-enables itself on the next successful turn, with a notice. An explicit `/keepalive off` still sticks.
+- **`soma -p` exits when its turn completes** — the bridge/somadian/hub WebSockets no longer hold a one-shot print run open until killed; live channels are skipped in print mode (they had nothing to relay there anyway).
+- **Cache countdown honours `cache.retention: "long"`** — statusline TTL is now 1h to match the requested cache_control, so `▷cold` no longer shows 12× early and idle pings stop firing 12× too often. Note: with the default 30-min idle shutdown the process exits before the first 1h-TTL ping is due — resumes within the hour are warm regardless.
+- soma:agent.delegate now refuses to spawn when a NAMED role is not discoverable from the child's cwd, instead of silently spawning a child that carries none of it. 'general' and an absent role stay exempt.
+- **Protocols and muscles marked warm now appear in the system prompt.** Seven protocols sat at the warm threshold and exactly one reached a booted session; warm muscles were being dropped by the same mechanism. Protocols now render 1 -> 9 and muscles 5 -> 7, which restores `correction-capture`, `pre-flight` and `detection-triggers` — the mistake-catching layer that had been absent for months.
+- **A plain `soma` session now names itself.** The naming was nested inside `if (shouldInhale)`, so only an inhaling session got a name — and `soma` with no preload is the DEFAULT command and how every delegated child boots. Most new sessions stayed unnamed.
+- **`soma inhale <name>` now names its session too.** The naming sat inside the auto-select branch, so booting with an explicit preload name took the findPreloadByName branch and produced an unnamed session — the exact case a user hits when resuming a specific arc.
+- **Rows no longer read `project · <arc> · <sid>` literally.** `soma.origin` is a KIND ("project" | "package" | "parent" | "global"), not a name. The project name is the directory containing the .soma dir.
+- **A long arc no longer pushes the session id off the end of the picker row.** The arc is the elastic field and absorbs the overflow; project and session id are short, unique and kept whole. Truncating the id defeated the point, since it is the only part that says WHICH session a row is.
+- **Arc slugs are now cut on `→` and `": "` as well as the em-dash**, and an arc identical to its project is said once instead of twice (`nova-voice · nova-voice · …`).
+- **A boot-recovery checkpoint now carries `Soma-Recovered: true`**, so files it sweeps up are distinguishable from files the booting session actually wrote. Previously its trailers were identical to a normal checkpoint, and everything a dead session left behind was attributed to whoever happened to boot next.
+- **The `delivery CONFIRMED` line on a spawn now states that it proves the pane is alive, not that the child received your task**, and gives the check that does prove it. A booting child's message counter moves because it is orienting, so a brief lost to the boot greeting produced the identical CONFIRMED signal as one received (measured n=2 in one session, both drivers). The bare tick invited exactly the wrong read.
+- **`soma:agent.delegate` now lists `branch?` among its arguments, marked as declared only to be refused.** Passing it previously produced the generic "ignored unrecognised argument — the call ran with defaults", which described neither what happened nor what to do; you now get an error naming `worktree:` as the isolation you meant.
+- **`soma:agent.delegate` now refuses `branch:`**, which was never an argument and was silently dropped — so the child ran in your working tree while the call read as isolated. The error names `worktree:` as the fix.
+- **It also refuses a `deliverable:` path that never appears in the task text.** That argument is for the parent's polling and is not shown to the child, so the child wrote elsewhere and every poll reported UNMEASURED against a file nothing created.
+- **`soma:body.index` shows the description and date of a body file whose frontmatter uses a YAML block scalar** (`description: >`, `>-`, `|`), and matches it with `{q:...}`. Both previously showed the marker itself instead of the text, so those files listed blank and could not be found by keyword.
+- **channel id carries IDENTITY, not just address**
+- **Delegating with `model: 'claude-cli/*'` now spawns on sonnet** instead of dying at boot with an invalid model id.
+- **The own-tree checkpoint now commits only the paths it means to**, even if a sibling session has something else staged in the same shared index at that moment.
+- **`soma-dev sync dev` now mirrors the whole `scripts/` tree, not just `scripts/_dev/`.** A local `soma init` and any `_dev`/`_pro`-tier cap both now run against current code instead of a stale runtime copy.
+- **`soma-dev sync dev` now mirrors `templates/`, including `core_rules.md`.** A dev-worktree `soma init` no longer scaffolds a stale template after a fix has already shipped in `dev` — real installs were never affected; they read templates from the published package.
+- **When a checkpoint of another project's `.soma` cannot cover everything, it now says what it left behind** instead of reporting success and letting the rest look saved.
+- **A fresh `soma init` no longer scaffolds a 13-day-stale core_rules.** Among the corrections it was missing: the note that the secret-redaction recipe it still taught can print plaintext.
+- **Harvesting a child no longer risks showing you a sibling's reflection.** When two children of the same role run at once, the takeaway is now matched to the exact child; where an older record cannot be, harvest says how it matched instead of presenting a guess as fact.
+- **A lesson has to recur across two different sessions before it edits a role by itself**, and
+  `soma:agent.fold` now says which bar it is applying. Two children of the same session reporting
+  the same friction counted as two independent observations; they now count as one. Older records,
+  which carry no session, behave exactly as before — and fold says so rather than leaving you to
+  guess which rule was in force.
+- **A child's permanent record now says which session spawned it.** `invocations.jsonl` recorded the
+  role and the result but not the owner, so once `children.json` aged out no one could tell whose
+  child produced a row.
+- **The children footer and `soma:agent.checkin` now list YOUR children only.** When several
+  agents run at once, other sessions' children were shown as yours; they are now counted
+  separately and never labelled with your session.
+- **Harvesting a finished-but-idle child now hands over its MLR and records it**, instead of
+  printing "nothing was captured" — the takeaway was only written at kill time, after the
+  recommended harvest had already looked.
+- **Pane MLR extraction now reads gutter-indented fences and skips the role prompt's example
+  block**, so a child's real closing reflection is what gets captured.
+- **A role's `reasoning-effort` setting now reaches the child.** Roles that ask for a higher reasoning level get it; roles that declare nothing are unchanged.
+- **`soma-code find` and `refs` on a path that does not exist now error and name the path,
+  instead of printing "No results"** — the same output a real absence produces.
+- **A refused `.soma` checkpoint now says so instead of failing silently.** When a pre-commit hook rejects the tree, the automatic checkpoint announces it once — with the hook's own reason and the command to reproduce it — instead of quietly saving nothing. Still non-fatal: a refused checkpoint never breaks a turn.
+- **A letter with a typo'd or unknown `status:` now surfaces as unread instead of silently
+  vanishing** from the inbox list, the boot summary and the notifier — an unrecognised value was
+  strictly worse than no field at all.
+- **Two agents delegating at once no longer get a failure for a child that started fine, and no
+  longer drop each other's children from `soma:agent.list`.** Roster writes are serialised across
+  processes.
+- **Boot recovers unpersisted memory after a crash.** A `.soma/` left dirty and stale (its
+  auto-commit process died, e.g. a tmux crash) is committed clean at the next boot, before the
+  checkpoint banner renders (`checkpoint: boot-recovery`, `checkpoints.soma.bootRecoveryHours`,
+  default 2h). A leftover 0-byte `index.lock` crash corpse is cleared the same way
+  (`lockMaxAgeMinutes`, default 10) — a live, nonempty lock is left alone.
+- **The test-discovery gate censuses the whole repo, not just `tests/`.** A passing suite in an
+  extension's `__tests__/` dir with no runner is now flagged as an orphan; the one such suite
+  (l34b channel-identity) got a wrapper and runs under `npm test`.
+- **`verify-dist` runs again and checks every built extension.** Its expected list is now derived
+  from `extensions/*.ts` (was a hand list of 7 of 14), and `npm run build:dist` calls it
+  automatically via `postbuild:dist`.
+- **`soma-dev doctor` reports dev-sync staleness correctly.** It said the runtime dist was current
+  regardless of the actual state, while printing the real "N commits behind" line directly beneath.
+  If you have been trusting that green tick to tell you a sync landed, check it again.
+- **`state/SYSTEM.md` and `state/APPEND_SYSTEM.md` are written only with debug on.** They are
+  introspection artifacts, not the prompt Soma uses — a stale one reads as authoritative. Turn debug
+  on to refresh them.
+- **A stray copy of a built-in extension no longer stops Soma from starting.** A duplicate under
+  `~/.soma/extensions/` or a project's `.soma/extensions/` aborted the session with
+  `Tool "x" conflicts with …`; the duplicate is skipped and the built-in one loads.
+- **`soma init` scaffolds a `_template.ts` starter into `.soma/extensions/` instead of copying
+  built-in extensions there.**
+- **Soma no longer closes and relaunches itself when context crosses a threshold.** It asks for the
+  preload — write it, or update the one already there — and carries on working; you rotate with
+  `/breathe` or `/exhale` when you choose. Manual rotation is unchanged.
+- **One setting now decides what a full context does: `breathe.onFull` — `"warn"`, `"steer"`
+  (default) or `"rotate"`.** It replaces `breathe.autoRotate` and `context.safetyNet`; old settings
+  files keep working and are mapped on read.
+- **`"rotate"` is refused while Pi's own auto-compaction is on, and says so.** Compaction summarises
+  the middle of your session away at ~92% of the window; rotation writes a preload and starts clean.
+  Running both means two things managing the same context, so Soma steers instead until you set
+  `"compaction": { "enabled": false }`. A missing `compaction` key counts as ON — that is Pi's default.
+- **Context readings that come back unknown are no longer treated as empty.** Immediately after a
+  compaction Pi reports no percentage; Soma read that as 0% and went quiet for those turns.
+- **A stale preload is no longer treated as ready to rotate on** — the two auto-rotate paths now ask
+  for an update, which the safety net already did.
+- **The preload is not requested twice** when a threshold is crossed while a manual `/exhale` is
+  already in flight.
+- **After a compaction, the context prompts work again.** They fired once per session; a compaction
+  frees context, it climbs to the same level, and nothing was said the second time.
+- **`soma body check` counts your protocols, muscles and scripts instead of reporting zero.** It
+  asked an optional helper for the list of directories and, when that helper was not installed,
+  counted nothing and called it a clean result.
+- **`soma focus` picks the newest matching preload, not the last one alphabetically** — it could
+  write a superseded briefing into the next boot.
+- **`soma plans` works from a subdirectory.** It resolved `.soma` against the current directory
+  only, so from anywhere but the project root it reported "0 plans" and exited 0.
+- **`soma new` cannot leave a 0-byte muscle or protocol behind** — the file is written and checked
+  before it replaces anything.
+- **`soma reflect` returns instead of timing out.** On a workspace with a few hundred session logs it
+  could run for minutes and be killed mid-scan; it now finishes in seconds.
+- **A bullet is filed under the heading it was written under.** `- **gap** — …` inside an
+  `## Observations` section now appears under observations rather than gaps.
+- **`soma theme` lists muscles from declared packages, not just the project's own.**
+- **`soma browser` finds a free port without `lsof` or `nc`**, so it works on a bare container.
+- **A child that has finished its work can be harvested even though its pane still reads `running`.**
+  Soma checks whether the deliverable was written — the one you named for the task, the role's own
+  declared one, or an audit carrying the child's id — instead of trusting the pane, and it leaves the
+  child running. Previously the only way to close a finished child was to kill it, which recorded it
+  as `aborted`: the same thing a failed run looks like.
+- **`soma-compat` exits 3 when it has nothing to scan**, so an empty corpus is distinguishable from
+  a scan that found more than five warnings.
+- **`soma init` scaffolds the current core rules.** If your `core_rules.md` is a list of flat
+  sections rather than twelve traits — each ending in the test that tells you whether you followed
+  it — you have the older bundled copy, and the update is offered like any other template change.
+  The shipped copy is now generated from the maintained source at build time, so it cannot fall
+  behind again.
+- **The "Body files" list in your system prompt now names `core_rules.md` and `STATE.md`.** It was
+  a hand-kept list of 9 files that had drifted behind the 17 templates Soma ships; it's now derived
+  from the template directory, so a new template appears without a code change.
+- **Code search reads Zig, and picks the language from the directory you searched.** `soma code find`
+  over a Zig tree returned nothing at all; searching another project's folder from a workspace root
+  used the root's file types instead of that project's.
+- **A script or protocol you symlinked into `.soma/` is discovered like a real file.** Symlinked
+  files were skipped without a warning, so a script shared between projects by link never reached the
+  boot catalog and a symlinked protocol or muscle never loaded. Links to a directory, and broken
+  links, are still ignored.
+- **The idle shutdown now ends the sessions it should and spares the ones it should not.** A working
+  session is no longer killed — the 30-minute timer measures activity of any kind, not just your
+  typing, and both paths wait for an in-flight preload write. A rate-limited session you walked away
+  from no longer runs forever. A rotated session starts with its breathe state cleared.
+- **Background children are asked for their reflection block, however they were spawned.** The ask
+  travels with the task, like the role-read instruction.
+- **`soma:agent.harvest` no longer reports an empty MLR when the child left one.** The takeaway is
+  read from the role's `invocations.jsonl`. When the child wrote prose instead of an `mlr` block,
+  the prose is shown and labelled as such — `soma:agent.fold` still cannot read it.
+- **Cycle attribution catches more of what it should.** Two sessions on the same project are matched by their declared `projects:` field, not a 12-character arc-text match that most arc names never cleared; a `.soma/.active-cycle` written by a different session says so before your commit files under their lane (via a session id on line 2, warning not blocking); and the check runs in repos using `core.hooksPath` as well.
+- **`soma:body.index` lists body files that live in a declared domain package.** It walks the real
+  load-order chain rather than its own copy of the search path, so a packaged body file is findable
+  by the tool whose job is finding it. Each row names the package it came from, and the total says
+  what it counted.
+- **`soma doctor` checks that your bundled protocols are actually on disk**, rather than comparing
+  two version numbers. It reports what is missing and names the command that adds them; it never
+  writes anything itself.
+- **The changelog tools find your `CHANGELOG.md` in any project.** `soma-changelog.sh` and its JSON
+  export check `$SOMA_CHANGELOG`, `changelog.path` in `.soma/settings.json`, and `CHANGELOG.md` at
+  the project root.
+- **`soma init` scaffolds every bundled protocol.** All 23 land in `.soma/amps/protocols/`; an
+  agent install missing its bundled content warns instead of seeding `breath-cycle.md` alone.
+- **The push reminder no longer says "Pushed." when the push failed.** It now asks you to check the
+  exit code first.
+- **A session that shuts itself down leaves a reason.** `.soma/.last-shutdown.json` records why it
+  stopped, when, how many turns had run, and whether a preload had been saved.
+- **`soma:browser` reuses a browser that is already running instead of telling you to launch
+  another.** Resolution now prefers a live CDP instance answering on 9222 or 9333 over the bare
+  convention, and `browser.status` / `browser.config` report `from: discovered` with the port they
+  actually reached. An explicit `SOMA_BROWSER_CDP_PORT` or a saved setting still wins.
+- **`soma:github.local_*` says when a repo is not cached, instead of returning an empty result** —
+  an empty answer is indistinguishable from "nothing matched".
+- **Preload selection is correct and doesn't nag the wrong session.** Boot picks the newest preload by mtime, not filename sort; `/inhale <session-id>` finds one that was auto-archived to `_archive/`; and a session that has handed off is no longer told to write another.
+- **Heat state no longer keeps entries for protocols you deleted.** A protocol that merely does not
+  apply to the current project keeps its heat, and pinned entries are never removed.
+- **Install/setup instructions no longer tell users to pipe-to-shell from a domain we do not own.**
+- **`soma:agent.checkin` no longer reports a crashed child as running.** It now uses the same
+  process-level liveness check `soma:agent.list` already ran, instead of matching a tmux session
+  name that outlives the process.
+- **`soma init` says so when it has no skill skeleton to give you**, rather than reporting a clean
+  init.
+- **CI's command-docs and frontmatter audits actually run again.** Both were invoked at a path that
+  no longer exists and failed into a warning, so pull requests passed those checks without them ever
+  executing.
+- **`soma login` is fully documented and its own timeout names a working command.** `login-setup.md` covers pairing end to end — device key, non-default hub, unpairing, every error the command prints — linked from `bridge-setup.md`; the pairing timeout now says `soma login start` instead of the status-only `soma login`.
+- **A scaffolded skill's `--self-test` passes on a brand-new project.** The check comparing the
+  template's `soma-skill-nav.py` against the estate copy now reports SKIP, with the reason, when
+  there is nothing to compare against.
+- **The skill catalog is smaller and excludes what shouldn't load.** Every description is capped at 200 characters wherever the catalog is rendered — `SKILL.md` files, protocol/muscle TL;DRs, natively-discovered skills — with over-long entries ending in `...`; and a skill whose path contains a `_`-prefixed segment (`skills/_archive/`, `skills/_template/`) is excluded from `<available_skills>` for every source, including skills Soma injects itself.
+- **`soma:agent.delegate` resolves the models you actually enabled.** It falls back to the first one
+  you enabled via `/scoped-models` — no model id is hardcoded — and no longer refuses ids Pi's
+  bundled registry does not know, which had been rejecting `anthropic/claude-opus-5` while it ran
+  fine in the TUI. Enabled none? It errors and names the four ways to set one, rather than spawning
+  on a model you did not choose.
+- **Every shipped role names a model that exists**, including the `example-reviewer` template every
+  `soma init` copies. Roles prefer `-latest` aliases over dated snapshots, and the build fails if any
+  role or role template names an unresolvable model.
+- **The flat cycle list shows the 5 most recent entries plus help tips, instead of 50.**
+- **A finished child with no deliverable shows `∅ MISSING`, instead of silence.**
+- **Body files with a multi-line `description:` are selectable again.** A `description: >` or `|`
+  block reaches the skill catalog as its full text, so the agent has something to match the file on,
+  and a colon inside the block no longer becomes a stray frontmatter field. A body file with no
+  `description:` falls back to its first real line instead of the `---` delimiter.
+- **The `_mind.md` a new project scaffolds no longer ships its own authoring notes to the model.**
+  The guidance lives in the frontmatter now, where you can read it and the model cannot — so a fresh
+  `soma init` spends its prompt on your project instead of on instructions for writing the template.
+- **A warm protocol appears once in the system prompt, not twice.** A protocol shown in
+  `<available_skills>` is no longer repeated as an "Active Behavioral Rules" one-liner. Protocols
+  the catalog does not carry, and anything named by `forceInclude`, still appear there as before.
+- **A child that is killed mid-run now leaves partial work behind.** Every child is told to create
+  the file its task names on the first tool call and fill it as it goes, so a budget ceiling or an
+  interrupted run returns a partial deliverable instead of nothing.
+- **Truncated content says how much was cut, and cuts on a real boundary.** A child's recorded takeaway and any role/body excerpt are trimmed at a block or word boundary, never mid-word, and state what was omitted — so a short result is distinguishable from a truncated one.
+- **`soma:agent.fold` sees more of a child's recorded observations.** It reads structured `mlr` blocks, counts a takeaway recorded only in `summary` (prose, not a block), and reports observations sitting outside its 30-day window rather than an empty queue.
+- **A role's own run notes no longer leak into the next child's instructions.** `## MLRX notes`
+  headings are matched by prefix, so the common `## MLRX notes — <topic>` form is withheld too.
+  Delegation also warns when a role keeps ordinary sections below its notes.
+- **`soma:code.find` searches every `.soma/` tree, groups hits by file, and tells you when it
+  stopped looking.** Hidden directories are included (`SOMA_CODE_HIDDEN=0` to opt out). Above 100
+  matches you get per-file **counts, labelled as counts, not hits** — narrow it, or raise
+  `SOMA_CODE_LIMIT`. A run with no results names the scope and `ext` it searched, so an empty answer
+  is checkable. `soma-code find` in a terminal keeps the `path:line:match` layout.
+- **`breath-cycle`: the session log is step 5 and the preload is step 6.** Writing the preload can
+  trigger rotation, so anything left until after it may never be written. (protocol 3.0.1)
+- **`soma:agent.steer` refuses a child whose pane has fallen back to a shell.** A child that exits
+  leaves its tmux session up while the registry still says `running`; steering then typed the
+  message into that shell, which ran it as commands. It now checks the pane is live first and
+  tells you where the child's output still is.
+- **Inbox letters are readable regardless of how they're formatted.** `soma:inbox.read`/`.actioned` work on a letter with no frontmatter (a minimal block is prepended, the body untouched) or one written with `re:` instead of `subject:` — both keys are now accepted on read, and a write-time guard stops the drift at the source.
+- **A delegated child no longer hangs on a confirm dialog.** Children have a TUI but no human, so
+  the boot scaffold prompt, core-file confirms and dangerous-command confirms all waited forever
+  — flat cost, climbing runtime, indistinguishable from a hang. A child now takes the same
+  fail-closed path a headless run takes, and one spawned into a partial `.soma/` works against it
+  instead of scaffolding a `body/` nobody asked for.
+- **`deliverable:` frontmatter resolves to a real path.** The description after the path is a YAML comment now.
+- **`soma:agent.delegate` no longer warns that `cwd`, `project` and `worktree` were ignored.** They
+  are honoured; only the arg declaration was missing them. `soma:agent.transcript` now declares
+  `session` and `target`, the aliases it already accepted for `id`.
+- **`soma:seam.sessions` searches your workspace's `memory/`, so it finds your sessions.** It had
+  been resolving against the agent install, where there are none — and an empty result reads as
+  "no matches", never as "wrong directory".
+- **The children table marks the row that is your own session.** A soma spawned as a child keeps
+  running in that pane after it becomes an orchestrator, so it appeared in its own child list as a
+  long-running, climbing-cost job with no deliverable — which reads exactly like a hung child worth
+  killing.
+- **`max-cost-usd: 0` now caps file-based claude delegation instead of running it uncapped.** An
+  explicit zero was read as "no budget set".
 - **`plan-hygiene` protocol's example frontmatter had two YAML keys fused onto one line** (`license: MITowner:` / `version: 1.0.0scope:`) — copy-pasting the template silently dropped `owner` and `scope`. Fixed in both the bundled copy and the community source.
 - **Pi's compat.js lazy-init patch had a double-write bug that silently reverted itself**,
   leaving a live crash risk on one code path and leaving the copy that matters most for
   startup performance never patched at all. Both fixed, both copies, with a regression test.
-- **document level:2 undercounting in .sections/.groom descriptions** — the tool descriptions now tell you to retry at `level:3` when a doc nests resolved items under subsections, instead of silently under-reporting.
-- **Q14 — background claude-cli budget read the wrong frontmatter key**
-- **L53 — declaredArgs() no longer leaks quoted type-union values as phantom args**
-- **L16 prevention half — role/proposal writes are atomic (write-temp, verify non-zero+size, rename); a mid-write failure can no longer truncate a roster file**
-- **Q14/S3 — validate model id + verify boot before sending task text**
-- **Q13 - re:/subject: letter-key drift (alias + write-time guard)**
-- **revert accidental core/install.ts regression from stash mishap**
-- **dashboard default out resolves against the script's .soma root, not cwd**
-- **help roster parses folded-scalar summaries via discoverRole**
-- **soma-openvoice default port 18793 -> 18791**
-- **soma-bodies-backup discovers bodies instead of a hand list**
-- **sync dev silently uninstalled the entire somaverse surface**
-- **--mangle-props=_ was unanchored — it renamed every underscore-bearing property**
-- **bridge.pid records the npx wrapper, not the listener — stop leaves the port held**
-- **soma-somadian-deploy path refs -> repo root (cycle 167 phase 5)**
-- **dashboard joins on handle_id and parses the current statusline**
-- **drift-matrix canonical bin is app/ after Phase 3 mv**
-- **strip frontmatter before slicing the identity compacts**
-- **drift-matrix prints its own denominator and flags a sample**
-- **role identity was extracted from the wrong heading, silently.** `extractSection()` anchored on
-  the first `\n# ` *anywhere* in a role's body rather than the document's own H1, so a role carrying
-  a quoted report template (`# Audit — <subject>`) had its identity taken from the quote. On that
-  anchor it returned `""`, not `null` — and the call site's fallback is `?? `, which does not fire on
-  an empty string, so the guard written for exactly this case never ran. Measured over the live
-  30-role corpus: **11 roles got a wrong or absent identity, 7 of them completely blank.** Found by
-  the `auditor` child, which read its own role file mid-run and saw text it had never received.
-  Gated by `tests/test-role-identity.sh` (10 cases, corpus scan asserts its own denominator,
-  negative control falsified against the old code).
-- **declare the out arg added with boundChildOutput**
-- **claude-cli alias table rejected valid names and silently downgraded**
-- **delegated children get no keepalive and never auto-exhale**
+- **`soma:markdown.sections`/`.groom` tell you to retry at `level:3` when a result looks sparse**, so a doc that nests resolved items under subsections is not silently under-reported — the tool descriptions now tell you to retry at `level:3` when a doc nests resolved items under subsections, instead of silently under-reporting.
+- **A background `claude-cli` child's cost cap is actually read.** The enforcement site looked up a
+  frontmatter key the role schema does not use, so a declared `max-cost-usd` did nothing on that path.
+- **A capability's declared argument list no longer contains arguments that do not exist.** Quoted
+  type-union values (`'a'|'b'`) were being parsed as argument names, so the did-you-mean and
+  arg-drift checks compared against invented entries.
+- **Role and proposal files are written atomically.** Write to a temp file, verify it is non-empty
+  and the expected size, then rename — so an interrupted write can no longer leave a truncated or
+  empty roster behind.
+- **A child's model id is validated and its boot confirmed before the task is sent.** A bad model id
+  used to leave a bare shell in the pane, and the task text was then typed into that shell — where
+  backticks trigger command substitution and the rest lands as keystrokes.
+- **The dashboard resolves its default output path against the script's own `.soma`, not your
+  current directory.** It also joins children on `handle_id` and parses the current statusline
+  format, so a running child is matched to its pane.
+- **The help roster reads every role's summary**, including ones written as a folded YAML scalar.
+- **`soma-openvoice` defaults to port 18791.**
+- **`soma-bodies-backup` discovers bodies instead of following a hand-maintained list**, so a new
+  one is backed up without being added anywhere.
+- **`soma-dev sync dev` leaves the somaverse surface installed.** It removes only what it replaces.
+- **Minified builds keep the property names they need.** Mangling is anchored, so only the intended
+  private properties are renamed.
+- **`soma bridge stop` releases the port.** The pid file records the listener rather than the `npx`
+  wrapper that launched it, so stopping the bridge frees what it was holding.
+- **`soma-somadian-deploy` resolves its paths from the repo root.**
+- **Identity compacts have their frontmatter stripped before slicing**, so the excerpt starts at the
+  content rather than at `type:`.
+- **Role frontmatter and identity are read correctly.** `related`, `tags`, `seams`, `parent`, `layer`, `session` and `edited_by` are accepted again in role frontmatter (`status` stays rejected — declared widely, read by nothing), the frontmatter check scans the same corpus the loader does so a generated doc in `body/children/` (`type: index`, `changelog`, `readme`) is never flagged as a role, and a role's identity is read from its own H1 — not the first `# ` heading anywhere in its body, which could sit inside a quoted template. Gated by `tests/test-role-identity.sh`.
+- **The `out` arg is declared for `boundChildOutput`.**
+- **The `claude-cli` alias table accepts every valid model name, and never silently downgrades one.**
+- **Keepalive now behaves correctly inside a delegated child.** A child used to get none at all; a
+  cmux-spawned one kept its keepalive while an identical tmux one lost it (both drivers now build the
+  child boot env from one shared builder, so `SOMA_CHILD_PROCESS=1` cannot go missing); `/keepalive
+  on` flipped the flag but left the ping budget at zero, and now restores a real one; and the `♥`
+  statusline badge renders what the session can actually do rather than the flag's value.
 - **`agent.pane` reported "no viewer available" inside tmux** — tmux overwrites `TERM_PROGRAM`, so
   iTerm was undetectable in exactly the setup same-window splits are for. Falls back to
   `ITERM_SESSION_ID` / `WEZTERM_PANE` / `GHOSTTY_*`, which survive tmux.
-- **an undeclared budget now means NO LIMIT.** `max-tool-calls` silently defaulted to 25, capping
-  roles that never asked for a cap. An explicit `0` is still honoured as a real ceiling — only an
-  absent value is unlimited. Undeclared budgets read "unlimited" in the child's prompt instead of a
-  number nobody set.
-- **`test-frontmatter-editor-stamp` was testing nothing.** Its fixtures lived outside any `.soma`, so
-  the stamp raised `ModuleNotFoundError` and exited before doing any work — and 7 of its assertions
-  check a file is *untouched*, which a crashed script satisfies. The `edited_by` hook itself was
-  never broken. Fixtures now resolve, a canary fails loudly if the stamp doesn't run, and the e2e
-  (skipped because the hook lacked +x) runs again. 13/13.
-- **`body/children/INDEX.md` was offered as a delegatable role.** The roster catalog appeared in
-  `soma:agent.roles` and counted toward "38/38 valid", so `delegate({role:'INDEX'})` would have
-  compiled the index as a child prompt. Non-role docs are now filtered by their `type:` marker.
-- **a FAILING test could look like a BROKEN test.** `fail()` ended with `[ -n "$2" ] && echo`, so
-  called with one argument it returned 1 — under `set -e` that aborted the suite mid-run, leaving no
-  `Results:` line for `test-meta-hygiene` to read. It reported "zero assertions ran" and the real
-  failure was masked. Affected 3 suites.
-- **`test-template-versioning` no longer requires `soma_template_version` on `_child-template.md`** —
-  that file's frontmatter is the ROLE schema and must match `ROLE_FRONTMATTER_KEYS`; the key would
-  copy into every authored role. 60/60.
-- **`test-meta-hygiene` can return a verdict again.** It executes every other suite with no
-  per-suite bound, so its runtime is their sum and any hang was permanent. Bounded per suite
-  (portable `perl alarm`; `timeout` is not on macOS) and now reports a hang distinctly from a
-  silent bail. 541/543.
-- **`test-changelog-duplication-gate` had been silently skipping** — its gate script moved under
-  the `children/` arc folder and the hardcoded path turned a reorganisation into a skip. Resolves
-  both layouts; 3 assertions run again.
-- **`soma:code.refs` / `.blast` reported uses as definitions.** DEF required only that a line start
-  with a keyword and mention the symbol, so `const x = foo(y)` was a "definition" of `foo`. Class
-  methods were never DEF at all. Guarded by `tests/test-code-refs-classify.sh`.
-- **model Quick picks showed up to 3 per category, newest first.** `.find()` returned whichever
-  match sat earliest in `enabledModels`, so "deep reasoning" recommended `opus-4-8` over `opus-5`
-  purely on array order.
-- **"balanced — most tasks" never honoured your `defaultModel`** — it is stored unqualified
-  (`claude-opus-5`) while `enabledModels` are qualified, so the lookup always missed.
-- **`soma:agent.delegate` refused models you enabled via `/scoped-models`.** The fallback for ids
-  Pi's bundled registry doesn't know sat in a `catch {}`, but `getModel` returns `undefined` on a
-  miss instead of throwing — so it never ran. `anthropic/claude-opus-5` was rejected while running
-  fine in the TUI. Guarded by `tests/test-scoped-model-resolution.sh`.
-- **background children no longer get the parent's soul/voice.** `compileChildPrompt` now takes a
-  spawn `kind`; a background one-shot has no soma tools and no keepalive, so the identity layer was
-  instructions it could not follow. ~594 tokens leaner per spawn.
-- **role/body excerpts are block-aligned instead of cut mid-word** — whole sections are kept and
-  omissions are stated, so a child can tell what it wasn't given.
+- **An undeclared budget means NO LIMIT.** A role that declares no `max-tool-calls` is uncapped, and
+  reads "unlimited" in the child's prompt rather than a number nobody set. An explicit `0` is still
+  honoured as a real ceiling — only an absent value is unlimited.
+- **The test suite can no longer look green while a sub-suite silently failed to run.** Five ways it
+  could — fixtures outside any `.soma`, a `fail()` helper that aborted its own suite, a stale schema
+  requirement, an unbounded per-suite runtime, and a hardcoded path broken by a reorganisation — now
+  fail loudly, and a hang is reported distinctly from a bail.
+- **`soma:code.refs` / `.blast` tell a definition from a use.** A call inside an assignment is no
+  longer reported as defining the function it calls, and a class method is recognised as a
+  definition — so the count you get before a rename is the one you can act on.
+- **Model Quick picks recommend the newest match, and "balanced" honours your `defaultModel`.**
+  Picks showed whichever match sat earliest in the enabled-models array rather than the newest, so
+  "deep reasoning" suggested `opus-4-8` over `opus-5`; and `defaultModel` is stored unqualified
+  while enabled models are qualified, so that lookup always missed.
+- **A background child no longer carries the parent's identity layer.** A one-shot spawn has no soma
+  tools and no keepalive; the prompt is leaner for it.
 - **`soma:agent.transcript` always reported the script missing** — it built the path from the
   SomaDir object instead of `.path`, so it looked for `[object Object]/amps/scripts/…`. Guarded by
   `tests/test-transcript-cap.sh`.
-- **a cmux-spawned child kept its keepalive while an identical tmux one didn't** — both drivers now
-  build the child boot env from one shared builder, so `SOMA_CHILD_PROCESS=1` can't go missing again.
-- **`/keepalive on` did nothing in a delegated child** — it flipped the flag but left the ping budget
-  at 0. It now restores a real budget, so it works as the in-TUI escape hatch.
-- **the `♥` statusline badge showed `on` for sessions that could never ping** — it now renders
-  capability, not the flag.
-- **bound the two caps that return a child's whole output**
-- **every cap now declares its args**
-- **close the description-vs-implementation arg drift**
-- **delegate help described the mode that no longer exists**
-- **declare timeoutMs in the description it is read from**
-- **children always run in a pane, never in the session window**
-- **the 260s ceiling must not cap process-owning caps**
+- **The two capabilities that return a child's whole output are size-bounded**, like every other cap.
+- **Every capability now declares its args.**
+- **A capability's documented arguments and its implementation cannot drift apart.**
+- **`soma:agent.delegate`'s help names only the modes that still exist.**
+- **`timeoutMs` is declared in the same description it is read from.**
+- **Children always run in a pane, never in the session window.**
 - **`soma:browser.navigate({url})` returned `400 Missing targetUrl`** — the catalog advertised
   `navigate({url})` while the impl required `targetUrl`, so the documented signature failed on
   first use, every time. `url` is now accepted as an alias; existing `targetUrl` callers unaffected.
-- **refuse claude-cli children instead of reporting a phantom success**
-- **pick latest preload by mtime, not filename sort**
-- **`/hub install body|extension` fetched from the wrong directory** — both fell through to
-  `skills/` and 404'd even when the item existed. Hub plugins can now install their doorway file.
+- **A `claude-cli` child that cannot spawn is refused, rather than reported as a success that never happened.**
 - **`/hub list script` listed community tooling as installable** — offered installs that could
   only 404. Now lists script folders only.
+
+### Security
+- **undici is at 8.10.1 and brace-expansion at 5.0.9.** These are the top-level pins only — copies nested under other dependencies keep their own versions and can still carry advisories. `npm ls undici brace-expansion` lists every copy in your tree.
+- Pro scripts now ship obfuscated — the compiler only minified while its label said obfuscated, and the release verifier now checks compiled scripts so the ship blocks if that regresses. cohere-models is dogfood-only and stripped at ship.
+- The release now refuses to ship readable Soma-owned JS. The obfuscation verifier checks for the obfuscator's signature instead of a line-count heuristic every minified file false-passed, and soma-release.sh runs it as a mandatory step — it was never wired to anything before.
+- **`/hub share` blocks an unrecognised `scope:`** — only `bundled` · `hub` · `workspace` · `internal` are accepted; anything else stops the share and prints the legal list. An absent scope shares as before.
 
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
 ### Changed
+- **The context-usage percent in the footer now turns yellow/red at your model's actual rotate point.** Previously it used fixed 50%/75% bands, which were wrong for models that rotate earlier or later (e.g. Sonnet rotates near 34%) — so the colour now matches the same thresholds Soma uses to decide when to wind down.
+- **`context_status` now shows your runway, not just a raw percent.** It appends the distance to the rotate line — e.g. `59% · 6% to the 65% rotate line`, or `… PAST the … rotate line — ROTATE` once you're over — using the same model-aware thresholds the auto-breathe uses (sonnet rotates earlier than opus). The `details` object gains `rotateAt` and `runwayToRotate`.
+- soma:seam.trace now shows the 15 most-recent hits by default (with a note giving the full count/range and how to widen), instead of dumping the whole history. Pass {all:true} for everything, {since:'YYYY-MM-DD'} to window.
+- **Image-budget auto-compaction now asks first, you can cancel it, and it asks once more if screenshots keep piling up.** Soma notices at 8 images, offers a compact at 12 (`imageBudget.hardAt`) instead of doing it silently — OK compacts, Cancel keeps everything as-is. Cancelling no longer silences the whole session: past 20 images (`imageBudget.ceilingAt`) it offers once more, and again at each multiple. Heads-down and don't answer? It still protects you (compacts after 30s). A delegated child with no human at the keyboard compacts as before. Set `ceilingAt: 0` to never be re-asked, `hardAt: 0` to turn the budget off.
+- **`soma model --list` shows the models you have enabled, not every model that exists.** It reads the same `/scoped-models` list the agent runs on, so the list matches what you can actually use — and the header says how many. `--all` still lists everything.
+- **The sleep-with-children nudge names the file to write in, and asks instead of scolding.** It counts the live children, points at this session's own log, and says where progress actually shows — with no verdict on the wait itself.
+- **A gate you keep tripping now explains itself in its owner's words.** A command gate can declare `escalate:` in its frontmatter — the text shown from the third break in a session. Without it, the message names both possibilities (the command is right and the gate cannot see why → file a misfire; or the reach was unconsidered → switch tools) instead of asserting one.
+- **A command gate you keep tripping now says something different on the third break.** It names the pattern (tool momentum — the question changed mid-shell-line) and points at `tool-discipline.md §ANTI-PATTERN`, instead of telling you to write a muscle. `/exhale` appends the session's gate-trip tally so it lands in the session log without you having to notice it.
+- **New `.soma` bodies are now ignored by their parent project's git by default.** The body keeps its own version history; the project's repo stops carrying agent records.
+- **`soma:inbox.send` `priority` now controls delivery.** `low` = the recipient sees the notice at the end of its run; unset/normal/high = steered in before its next model call, with `high` marked 🔴. The `inbox.send` and `agent.steer` descriptions now state when a message lands and when to use which.
+- **Settings and template migrations run from one module, `core/tier1-migrations.ts`.** Boot calls it; the migration fixture suites drive it directly, so the code every session start runs is the code under test. No behaviour change beyond the `_mind.md` fix above.
+- **`soma:agent.pane` hands you `soma attach <session>` instead of trying to split your terminal.** A same-window split now runs only when you choose a viewer (`{viewer}` or `delegate.viewer`); the terminal app is no longer auto-detected for it. Works the same in every terminal, including ones with no scripting API.
+- **The footer's timers now say what they are.** `◷1h` names the cache retention in force (`5m` or `1h`) and colours by how warm the cache is; `♥ 8:38/10m` counts down to the next keepalive ping and names the cadence, `♥ 2·8:38/10m` once pings have gone out. Both colour by fraction of their window, so the gradient moves under a 1-hour retention the way it did under 5 minutes. Line 2 drops the static `🌿soma` and shows no branch when the cwd is not a repo. `/status` reports retention, cadence and the ping budget. Model and thinking level join tightly (`Fable 5.1·high`).
+- **The footer no longer shells out for what a stat can answer.** The restart signal is read with `existsSync`; a non-repo cwd is detected once instead of re-running git on every repaint; the dev-sync marker is checked every 30 s, not every render.
+- **`soma-statusline.ts` comments say what the code does, not how it got there.** Incident ids, session ids and dates are gone; direction stays. No behaviour change.
+- **`soma:inbox.read` now shows the letter it marks.** One call prints the body and closes the loop, and the letter records who read it (`read-by:` in frontmatter, one entry per session) — so a letter to `all` shows which sessions have actually seen it.
 
-- **`soma:agent.list` is paged and sorted newest-first, capped at 10.** It was dumping every
-  child in the last 7 days (78 rows in one call) in registry order, which buried the child you
-  just spawned at the bottom. New args: `limit` (`0` = all), `page`, `sort`
-  (`recent`|`runtime`|`role`|`status`). Footer shows `showing 1-10 of 78 · {page:2} for next`.
+- **The skills catalog is capped at 50 entries, and real skills come first.** Body files, muscles and
+  protocols rank below them because they are announced elsewhere already, and every entry carries a
+  `type` so a body file can be told from a skill. `skills.maxInPrompt` sets the cap; `0` disables it.
+  If your prompt advertises fewer skills than it used to, that is the cap.
+- **The tool list prints a tool's name alone unless the tool supplies its own prompt line.** A tool
+  description already reaches the model with the tool itself, so it is no longer repeated as prose.
+  Body files that are injected in full are also no longer listed again as paths to go read.
+- **`systemPrompt.maxTokens` is now `systemPrompt.warnAboveTokens`, and warns above 35,000.** The old
+  name still works. It warns and never truncates; the warning names the section sizes and the
+  settings that do bound them — `skills.maxInPrompt`, `muscles.tokenBudget`,
+  `protocols.maxBreadcrumbsInPrompt`.
+- **A domain package you declared now outranks a parent `.soma` you merely inherit.** Search order is
+  project → your packages → parent(s) → global. Before, a package ranked *below* the parent, so moving
+  a file into one silently handed the name back to the parent's copy — which made half the protocol
+  corpus impossible to move. Nothing resolves differently today; it removes the trap.
+- **`scripts/build-dist.mjs` records the rebuild in `STATE.md`'s activity log.** Every caller logs,
+  including a bare `node scripts/build-dist.mjs`; `SOMA_STATE_LOG` overrides the logger path. A
+  failed log warns and never fails the build.
+
+- **Delegated children no longer edit their own role files.** Lessons go in the child's final message and are recorded per run in `memory/children/<role>/invocations.jsonl` instead — `soma:agent.delegate`/`kill`'s next-step hint no longer suggests folding notes into the role file, and defaults to writing nothing.
+- **`body/` and `migrations/` READMEs say who should read them and when to skip.** Each opens with
+  `Read this if` / `Skip if` / `Below` / `Update this file when`.
+- **`soma:agent.list` is paged and sorted newest-first, capped at 10.** The child you just spawned
+  is at the top rather than buried under a week of them. `limit` (`0` = all), `page` and `sort`
+  (`recent`|`runtime`|`role`|`status`) are available; the footer shows how many were elided.
+- **Switching to a DeepSeek reasoning model mid-session works through OpenRouter and NVIDIA.** It
+  returned *"The `reasoning_content` in the thinking mode must be passed back to the API"* on the
+  first request after the switch. Native DeepSeek was never affected.
 
 ## [0.42.1] — 2026-07-31
 
@@ -520,16 +1022,16 @@ commits, none of them user-visible.
 
 
 ### Added
-- **'soma install npm:<pkg>' pass-through to Pi package manager + hub shows pi.dev**
-- **{{enabled_models}} template variable — scoped models at boot**
-- **pi.dev package search — soma:extensions.search + .show**
-- **{{active_extensions}} template variable — auto-discovered at boot**
-- **extensions list cap + body-parts dedup + discovered-vs-core split**
-- **dynamic delegate model catalog + body parts auto-discovery**
+- **'soma install npm:<pkg>' pass-through to Pi package manager + hub shows pi.dev (s01-2b2368)**
+- **{{enabled_models}} template variable — scoped models at boot (s01-2b2368)**
+- **pi.dev package search — soma:extensions.search + .show (s01-2b2368)**
+- **{{active_extensions}} template variable — auto-discovered at boot (s01-2b2368)**
+- **extensions list cap + body-parts dedup + discovered-vs-core split (s01-2b2368)**
+- **dynamic delegate model catalog + body parts auto-discovery (s01-2b2368)**
 
 ### Fixed
-- **soma:agent.models now shows enabled/scoped models from settings.json**
-- **sync core/ in soma-dev + add {{active_extensions}} to project _mind.md**
+- **soma:agent.models now shows enabled/scoped models from settings.json (s01-2b2368)**
+- **sync core/ in soma-dev + add {{active_extensions}} to project _mind.md (s01-2b2368)**
 - **guard fix.sh against missing AGENT_DIR in wrong workspace**
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
@@ -679,7 +1181,7 @@ commits, none of them user-visible.
 
 ### Fixed
 - **SX-804 (P2) — extension loader hygiene: `_`-prefixed files no longer auto-register dummy tools.** The seeded `~/.soma/extensions/_template.ts` example and the `_tool-template.ts` reference each registered a placeholder tool (`myTool`/`MyTool`) into every session's tool schema — cruft the model saw on every request. The soma extension injector now skips `_`-prefixed files (templates/partials aren't loadable extensions), and the canonical extension template moved from `extensions/_tool-template.ts` to `templates/extension-template.ts`, out of Pi's auto-load path. Smaller per-request tool schema, cleaner tool list.
-- **SX-803 — Edit tool: fuzzy matches no longer silently flatten the whole file's typography, and "Could not find" now shows the actual bytes to copy.** Two fixes to the upstream Pi edit tool (vendored full-file override of `core/tools/edit-diff.js`, drift-guarded against the 0.79.6 fork base). (1) **Surgical fuzzy match:** when `oldText` differed from the file only by whitespace/quote/dash formatting, pristine Pi performed the replacement in *whole-file–normalized* space — silently rewriting every em-dash → hyphen, smart quote → straight, NBSP → space, and stripping every line's trailing whitespace, across the *entire file*, on a single fuzzy edit. Destructive for typography-heavy prose (blog posts, body files). The match is now mapped back to a byte span in the original content and only that span is spliced; all untouched bytes are preserved (verified by re-normalizing the chosen span — a non-round-tripping match falls through to a hint rather than a wrong write). (2) **Near-match hint:** a genuine miss now appends the actual nearby file lines (token-overlap located, typo-tolerant) so the model copies the exact bytes instead of reconstructing `oldText` from memory — the #1 cause of the error. Discovered and verified live; 16-case regression harness at `scripts/_dev/patches/edit-diff.test.mjs`.
+- **SX-803 — Edit tool: fuzzy matches no longer silently flatten the whole file's typography, and "Could not find" now shows the actual bytes to copy.** Two fixes to the upstream Pi edit tool (vendored full-file override of `core/tools/edit-diff.js`, drift-guarded against the 0.79.6 fork base). (1) **Surgical fuzzy match:** when `oldText` differed from the file only by whitespace/quote/dash formatting, pristine Pi performed the replacement in *whole-file–normalized* space — silently rewriting every em-dash → hyphen, smart quote → straight, NBSP → space, and stripping every line's trailing whitespace, across the *entire file*, on a single fuzzy edit. Destructive for typography-heavy prose (blog posts, body files). The match is now mapped back to a byte span in the original content and only that span is spliced; all untouched bytes are preserved (verified by re-normalizing the chosen span — a non-round-tripping match falls through to a hint rather than a wrong write). (2) **Near-match hint:** a genuine miss now appends the actual nearby file lines (token-overlap located, typo-tolerant) so the model copies the exact bytes instead of reconstructing `oldText` from memory — the #1 cause of the error. Discovered and verified live (s01-4409c8); 16-case regression harness at `scripts/_dev/patches/edit-diff.test.mjs`.
 - **SX-801 — `claude-cli` delegate children can build, not just read.** The `claude-cli/*` delegate backend (subscription-billed children via the official `claude` CLI) read tools from a `claude-cli-tools` frontmatter field that **no role declares** — every role declares `default-tools`. So every claude-cli child silently fell back to the read-only safe set (Read/Grep/Glob/WebSearch/WebFetch) and could never edit, write, or run bash, even for build roles. The backend now resolves tools from the role's declared `default-tools` (mapped soma→Claude tool names, default-deny on anything unmapped), with `claude-cli-tools` kept as an optional explicit override and read-only still the default when a role declares nothing. Roles declare their tools once; existing roles immediately gain write capability on the claude-cli path with no per-role edits. Also hardens the backend to scrub `ANTHROPIC_API_KEY` from the child env (so `claude -p` always bills the subscription, never silent extra-usage) and returns an actionable "run `claude setup-token`" message on an expired-token 401 instead of an opaque error. (Reported by a sibling Soma instance.)
 - **SX-800 — preload badge no longer lies green while the staleness warning fires.** The statusline showed `📝saved` (green) at the same moment soma-breathe warned "Preload now stale (N tool calls since save)". A user-turn reset zeroes the staleness counter and the statusline reconcile re-lands "saved", so a genuinely stale preload (work happened since it was written, file never rewritten) pinned green. The badge now derives staleness from ground truth — whether tool work post-dates the preload file's mtime — so it shows `📝stale` and agrees with the warning. Fresh preloads still show green; a real re-exhale clears it.
 - **SX-799 — `/inhale` runtime-staleness guard.** `/inhale` resets the session via `newSession()` but stays in the same node process, so a process that booted before a mid-session runtime update replays stale in-memory modules — making an already-fixed crash appear to "recur." `/inhale` now detects a runtime updated after boot (module mtime vs process start) and blocks with a restart hint (`--force` to override) instead of running stale code.
@@ -742,14 +1244,14 @@ commits, none of them user-visible.
 - **consolidate map to v0.28.1-to-v0.32.0 (close the chain gap, SX-785)**
 - **archive-match protection in template-auto-update sentinel (SX-789)**
 - **gap-safe --fix actually migrates behind workspaces (SX-789)**
-- **npm-lag is SOFT for independent trains, not HARD**
+- **npm-lag is SOFT for independent trains, not HARD (s01-542b99)**
 
 
 ## [0.32.0] — 2026-06-15
 
 ### Added
 - **v0.31.2→v0.32.0 phase + sentinels + template archive (SX-785)**
-- **credential-file tree-scan in channel guard**
+- **credential-file tree-scan in channel guard (s01-542b99)**
 - **fail-fast migration gate (phase 0.6) + halt-before-slow-phases (SX-785)**
 - **add 'The Through-Line' to the preload template (cross-soma convergence)**
 - **surface the children pattern + claude-cli in delegate help (SX-784)**
@@ -787,47 +1289,47 @@ commits, none of them user-visible.
 ## [0.31.0] — 2026-06-11
 
 ### Added
-- **Pi runtime 0.79.1 — native Claude Fable 5.** Bumped the Pi runtime (all four `@earendil-works/pi-*` packages, in lockstep) from 0.78.0 → 0.79.1. Fable 5's model definition (1M context, vision, `xhigh` adaptive thinking, $10/$50 per M) now ships natively in Pi's model registry — Soma no longer needs a local `models.json` stopgap to describe it, so a fresh install gets Fable with correct cost metadata out of the box.
-- **Meta-workflow cadence — now a core protocol, with guided adoption.** The operating cadence (three nested loops — BREATH → ARC → EVOLUTION; a self-amending Observation Ledger; a Decision Register) ships as the `meta-workflow` protocol (v1.1.0) alongside `breath-cycle` v3.0.0 (self-initiated rotation; the exhale is a complete checklist, preload last). Installing the protocol delivers the *shape*; a new adoption checklist + inline starter `META_WORKFLOW.md` skeleton turn it on per-project (just ask Soma *"set up the meta-workflow cadence"*). New `docs/meta-workflow.md` (Setup & Overview) + a how-it-works section. The protocol declares `requires: breath-cycle` so minimal installs self-heal the eager-trigger dependency.
-- **`soma doctor` advisory: meta-workflow protocol present but no instance.** `doctor`/`status`/`health` now nudge when the cadence protocol is installed but the project has no `META_WORKFLOW.md` instance (it's inert until instantiated), pointing at `docs/meta-workflow.md`. Advisory only — not a warning/issue; checks the three real-world instance locations (`.soma/` root, `cycles/`, `releases/`) so it never false-positives; no-ops outside a project.
-- **Claude Fable 5 model support.** Fable 5 (Anthropic's Mythos-class model — 1M context, vision, `xhigh` adaptive thinking, $10/$50 per M) is now first-class: `MODEL_ALIASES` (`fable` / `fable-5` → `claude-fable-5`), premium classification in `inferClass`, the model definition in `~/.soma/agent/models.json` (the installed pi-ai 0.78.0 didn't define it — it was resolving metadata-blind with no cost tracking), `enabledModels` (Ctrl+P selectable), and a `*fable*` breathe-threshold block. Refreshed the stale `opus`/`sonnet` aliases to current ids (`-4-8` / `-4-6`) while there.
+- **Pi runtime 0.79.1 — native Claude Fable 5.** Bumped the Pi runtime (all four `@earendil-works/pi-*` packages, in lockstep) from 0.78.0 → 0.79.1. Fable 5's model definition (1M context, vision, `xhigh` adaptive thinking, $10/$50 per M) now ships natively in Pi's model registry — Soma no longer needs a local `models.json` stopgap to describe it, so a fresh install gets Fable with correct cost metadata out of the box. (s01-781277)
+- **Meta-workflow cadence — now a core protocol, with guided adoption.** The operating cadence (three nested loops — BREATH → ARC → EVOLUTION; a self-amending Observation Ledger; a Decision Register) ships as the `meta-workflow` protocol (v1.1.0) alongside `breath-cycle` v3.0.0 (self-initiated rotation; the exhale is a complete checklist, preload last). Installing the protocol delivers the *shape*; a new adoption checklist + inline starter `META_WORKFLOW.md` skeleton turn it on per-project (just ask Soma *"set up the meta-workflow cadence"*). New `docs/meta-workflow.md` (Setup & Overview) + a how-it-works section. The protocol declares `requires: breath-cycle` so minimal installs self-heal the eager-trigger dependency. (s01-5d6a30)
+- **`soma doctor` advisory: meta-workflow protocol present but no instance.** `doctor`/`status`/`health` now nudge when the cadence protocol is installed but the project has no `META_WORKFLOW.md` instance (it's inert until instantiated), pointing at `docs/meta-workflow.md`. Advisory only — not a warning/issue; checks the three real-world instance locations (`.soma/` root, `cycles/`, `releases/`) so it never false-positives; no-ops outside a project. (s01-5d6a30)
+- **Claude Fable 5 model support.** Fable 5 (Anthropic's Mythos-class model — 1M context, vision, `xhigh` adaptive thinking, $10/$50 per M) is now first-class: `MODEL_ALIASES` (`fable` / `fable-5` → `claude-fable-5`), premium classification in `inferClass`, the model definition in `~/.soma/agent/models.json` (the installed pi-ai 0.78.0 didn't define it — it was resolving metadata-blind with no cost tracking), `enabledModels` (Ctrl+P selectable), and a `*fable*` breathe-threshold block. Refreshed the stale `opus`/`sonnet` aliases to current ids (`-4-8` / `-4-6`) while there. (s01-81f576)
 
 ### Fixed
-- **Soma transparently trusts its own projects under Pi 0.79's project-trust gating.** Pi 0.79 added a trust gate around project-local config (`.soma/settings.json`, project extensions) — and non-interactive runs (delegate, `soma -p`) would silently resolve *untrusted* and drop your per-project settings. Soma now auto-trusts any genuine Soma project (one with a `.soma/body/`) via a `project_trust` handler, so your project config always loads with no prompt; non-Soma directories still follow Pi's normal trust flow.
-- **Fresh installs reliably resolve every runtime dependency.** The compiled runtime imports several packages directly (`undici`, `chalk`, `execa`, `pi-agent-core`) that the runtime package previously left to transitive resolution — under some npm install strategies (nested rather than hoisted) this surfaced as `ERR_MODULE_NOT_FOUND` at boot. The runtime package now declares its full dependency set explicitly.
-- **Statusline preload indicator no longer sticks on "stale" after a fresh write.** The consolidated lifecycle's transition map (Cycle 29) only allowed `requested→saved`, so the deterministic preload-write detector was silently dropped whenever state was `stale` or `unrequested` — re-writing a stale preload left the statusline showing `📝stale` despite the fresh save. Added `stale→saved` + `unrequested→saved` (a file write is ground truth). The statusline now reads the lifecycle *state* for the indicator rather than `existsSync(file) + a raw counter`, so a prior session's preload file no longer shows a false green `📝saved` at a fresh boot.
-- **Keepalive no longer closes the TUI before the auto-exhale preload lands.** On keepalive exhaustion the auto-exhale only *sends a message* asking the agent to write a preload (async, multi-turn), but `checkIdleShutdown` would `process.exit` gated only on `isAgentBusy` — and since the user had been idle long enough to exhaust keepalive, the exit fired between turns before the write completed. The post-exhale shutdown now waits while the lifecycle is `requested`; the 30-minute absolute-idle backstop still prevents zombie sessions.
-- **Delegate sync path repaired — `pi-agent-core.Agent class not found`.** The sync delegate used a dynamic `import("@earendil-works/pi-agent-core")`, which bypasses Pi's jiti alias map (only *static* imports are rewritten) and resolved to the installed top-level package (new `AgentSession` API, no `Agent`) instead of Pi's bundled copy (which still exports `class Agent`). Switched to a static import. Prevention: any `@earendil-works/pi-*` import in jiti-loaded extension code must be static top-level.
-- **Delegate honors the role's `default-model` in background spawn + shows the real model.** `spawnBackground()` hardcoded `?? "claude-haiku-4-5"` and never consulted the role's frontmatter, so `delegate({role:X})` ignored the role's model. Resolution is now `explicit model > role default-model > haiku fallback` (new `resolveRoleDefaultModel`). Also fixed the `model: "auto"` display bug (the spawn record + `soma:agent.list` now show the actually-booted model).
-- **Shell-injection hardening (3 surfaces).** A security audit found a systemic `execSync`-with-string-interpolation pattern; all converted to `execFileSync(cmd, [args])` (array args, no shell): `/hub share` (`name` + a file-derived frontmatter `description` flowed into `gh`/`git` shell strings — a malicious description in a cloned/hub `.soma` could run arbitrary shell on an innocent share), drop-in slash-commands (unquoted `restArgs`), and scan-logs (`toolArgs`/cwd). Behavior preserved for valid input. (Still open — folds into the Pi 0.79.1 / project-trust work: project-local `.soma` scripts execute with no trust gate.)
-- **Image paste into the TUI works — `@mariozechner/clipboard` is now a direct dependency.** Same bug class as the photon image-reads fix: soma bundles the engine's clipboard reader (`dist/utils/clipboard-native.js`) which loads the native `@mariozechner/clipboard` by bare specifier, but it was only a transitive dep — so soma's top-level copy resolved it to `null` and image paste (Ctrl+V) silently read an empty clipboard, *regardless of keybinding*. Declaring it directly (pinned 0.3.9) forces hoisting. Note: on macOS, terminals can't receive image data via Cmd+V — use **Ctrl+V**, which makes the app read the OS clipboard.
-- **`soma-release-ship.sh`: push dev to meetsoma before the main-sync (SX-768).** Recurring ship bug (bit v0.30.0 + v0.30.1): the release/bump commit was made locally but never pushed before the dev→main sync fetched `meetsoma/dev`, so the sync merged stale dev (missing the bump) and the runtime landed a version behind. New Step 3.5 pushes dev first and aborts loudly on failure.
+- **Soma transparently trusts its own projects under Pi 0.79's project-trust gating.** Pi 0.79 added a trust gate around project-local config (`.soma/settings.json`, project extensions) — and non-interactive runs (delegate, `soma -p`) would silently resolve *untrusted* and drop your per-project settings. Soma now auto-trusts any genuine Soma project (one with a `.soma/body/`) via a `project_trust` handler, so your project config always loads with no prompt; non-Soma directories still follow Pi's normal trust flow. (s01-781277)
+- **Fresh installs reliably resolve every runtime dependency.** The compiled runtime imports several packages directly (`undici`, `chalk`, `execa`, `pi-agent-core`) that the runtime package previously left to transitive resolution — under some npm install strategies (nested rather than hoisted) this surfaced as `ERR_MODULE_NOT_FOUND` at boot. The runtime package now declares its full dependency set explicitly. (s01-781277)
+- **Statusline preload indicator no longer sticks on "stale" after a fresh write.** The consolidated lifecycle's transition map (Cycle 29) only allowed `requested→saved`, so the deterministic preload-write detector was silently dropped whenever state was `stale` or `unrequested` — re-writing a stale preload left the statusline showing `📝stale` despite the fresh save. Added `stale→saved` + `unrequested→saved` (a file write is ground truth). The statusline now reads the lifecycle *state* for the indicator rather than `existsSync(file) + a raw counter`, so a prior session's preload file no longer shows a false green `📝saved` at a fresh boot. (s01-5d6a30)
+- **Keepalive no longer closes the TUI before the auto-exhale preload lands.** On keepalive exhaustion the auto-exhale only *sends a message* asking the agent to write a preload (async, multi-turn), but `checkIdleShutdown` would `process.exit` gated only on `isAgentBusy` — and since the user had been idle long enough to exhaust keepalive, the exit fired between turns before the write completed. The post-exhale shutdown now waits while the lifecycle is `requested`; the 30-minute absolute-idle backstop still prevents zombie sessions. (s01-5d6a30)
+- **Delegate sync path repaired — `pi-agent-core.Agent class not found`.** The sync delegate used a dynamic `import("@earendil-works/pi-agent-core")`, which bypasses Pi's jiti alias map (only *static* imports are rewritten) and resolved to the installed top-level package (new `AgentSession` API, no `Agent`) instead of Pi's bundled copy (which still exports `class Agent`). Switched to a static import. Prevention: any `@earendil-works/pi-*` import in jiti-loaded extension code must be static top-level. (s01-81f576)
+- **Delegate honors the role's `default-model` in background spawn + shows the real model.** `spawnBackground()` hardcoded `?? "claude-haiku-4-5"` and never consulted the role's frontmatter, so `delegate({role:X})` ignored the role's model. Resolution is now `explicit model > role default-model > haiku fallback` (new `resolveRoleDefaultModel`). Also fixed the `model: "auto"` display bug (the spawn record + `soma:agent.list` now show the actually-booted model). (s01-81f576)
+- **Shell-injection hardening (3 surfaces).** A security audit found a systemic `execSync`-with-string-interpolation pattern; all converted to `execFileSync(cmd, [args])` (array args, no shell): `/hub share` (`name` + a file-derived frontmatter `description` flowed into `gh`/`git` shell strings — a malicious description in a cloned/hub `.soma` could run arbitrary shell on an innocent share), drop-in slash-commands (unquoted `restArgs`), and scan-logs (`toolArgs`/cwd). Behavior preserved for valid input. (Still open — folds into the Pi 0.79.1 / project-trust work: project-local `.soma` scripts execute with no trust gate.) (s01-81f576)
+- **Image paste into the TUI works — `@mariozechner/clipboard` is now a direct dependency.** Same bug class as the photon image-reads fix: soma bundles the engine's clipboard reader (`dist/utils/clipboard-native.js`) which loads the native `@mariozechner/clipboard` by bare specifier, but it was only a transitive dep — so soma's top-level copy resolved it to `null` and image paste (Ctrl+V) silently read an empty clipboard, *regardless of keybinding*. Declaring it directly (pinned 0.3.9) forces hoisting. Note: on macOS, terminals can't receive image data via Cmd+V — use **Ctrl+V**, which makes the app read the OS clipboard. (s01-cfe9ac)
+- **`soma-release-ship.sh`: push dev to meetsoma before the main-sync (SX-768).** Recurring ship bug (bit v0.30.0 + v0.30.1): the release/bump commit was made locally but never pushed before the dev→main sync fetched `meetsoma/dev`, so the sync merged stale dev (missing the bump) and the runtime landed a version behind. New Step 3.5 pushes dev first and aborts loudly on failure. (s01-cfe9ac)
 
 
 ## [0.30.1] — 2026-06-04
 
 ### Fixed
-- **Image reads no longer silently break — `@silvia-odwyer/photon-node` is now a direct dependency.** Soma bundles the engine's image code (resize via photon WASM), which imports photon by bare specifier. Photon was only a *transitive* dep, so when npm nested it instead of hoisting, image reads died with a misleading "could not be resized below size limit" note — regardless of actual size. Declaring it directly (pinned 0.3.4) forces top-level hoisting; `soma update` runs npm install on pull, so installs self-heal. (reported by a sibling soma)
-- **Release-prepare gate: Phase 1 split into unit vs release-state tests (SX-765).** The gate ran the full suite as one blunt hard-block, but tests validating *release state* (installed-runtime version, dev↔main parity, npm registry) can't pass before ship — so they false-blocked releases whose code was sound. Tests now opt into release-state handling with a `# @release-state` marker; pre-ship failures route to NEEDS-REVIEW (re-checked in their dedicated phases + post-ship), while unit failures still hard-gate.
+- **Image reads no longer silently break — `@silvia-odwyer/photon-node` is now a direct dependency.** Soma bundles the engine's image code (resize via photon WASM), which imports photon by bare specifier. Photon was only a *transitive* dep, so when npm nested it instead of hoisting, image reads died with a misleading "could not be resized below size limit" note — regardless of actual size. Declaring it directly (pinned 0.3.4) forces top-level hoisting; `soma update` runs npm install on pull, so installs self-heal. (s01-cfe9ac, reported by a sibling soma)
+- **Release-prepare gate: Phase 1 split into unit vs release-state tests (SX-765).** The gate ran the full suite as one blunt hard-block, but tests validating *release state* (installed-runtime version, dev↔main parity, npm registry) can't pass before ship — so they false-blocked releases whose code was sound. Tests now opt into release-state handling with a `# @release-state` marker; pre-ship failures route to NEEDS-REVIEW (re-checked in their dedicated phases + post-ship), while unit failures still hard-gate. (s01-cfe9ac)
 
 
 ## [0.30.0] — 2026-06-04
 
 ### Added
-- **Headless delegation — `soma:agent.delegate {headless:true}`** — a minimal-inference delegation path that spawns `soma -p` as a subprocess (not a tmux TUI), captures structured output, and detects completion via exit code (fixing the flaky pane-tail completion of background mode). Routes to OpenCode **free** models (`big-pickle` → `deepseek-v4-flash-free`), off the Claude subscription extra-usage wall, with auto-retry + model fallback on rate-limit. Role system prompts inject via `--append-system-prompt`. `runHeadless`/`loadRole`/`stripPreamble` in `extensions/soma-delegate.ts`. Patterns adapted from upstream pi-mono's subagent example. (v0.30.0 Phase 1)
+- **Headless delegation — `soma:agent.delegate {headless:true}`** — a minimal-inference delegation path that spawns `soma -p` as a subprocess (not a tmux TUI), captures structured output, and detects completion via exit code (fixing the flaky pane-tail completion of background mode). Routes to OpenCode **free** models (`big-pickle` → `deepseek-v4-flash-free`), off the Claude subscription extra-usage wall, with auto-retry + model fallback on rate-limit. Role system prompts inject via `--append-system-prompt`. `runHeadless`/`loadRole`/`stripPreamble` in `extensions/soma-delegate.ts`. Patterns adapted from upstream pi-mono's subagent example. (v0.30.0 Phase 1, s01-3a1d9b)
 - **Chain delegation — `soma:agent.delegate {chain:[{role,task,model?},...]}`** — sequential headless steps where `{previous}` is substituted with the prior step's output (scout→planner→worker style). Each step gets the same retry+fallback. (v0.30.0 Phase 2)
 - **`soma-dev cycle`** — the test-before-main dev→release flow: curate CHANGELOG (headless, free) → commit → build dev dist → **smoke the dev build before main** → gate → hand off to the release orchestrator. Main only ever receives tested-good code. Only the changelog + smoke steps use a model (both free); the rest is bash. (v0.30.0 Phase 3)
-- **`soma-series-rollover.sh`** — scaffolds `releases/vX.Y.x/INDEX.md` + sweeps current-series markers on a minor bump, closing the orphaned-step drift the version-truth gate flags but couldn't fix.
+- **`soma-series-rollover.sh`** — scaffolds `releases/vX.Y.x/INDEX.md` + sweeps current-series markers on a minor bump, closing the orphaned-step drift the version-truth gate flags but couldn't fix. (s01-3a1d9b)
 
 ### Changed
-- **npm and agent are independent version trains (supersedes SX-659 collapsed train)** — the npm thin-CLI is a one-time bootstrap; `soma update` pulls the agent runtime via `git pull` from soma-beta and never re-fetches npm, so publishing npm on an agent-only release delivers users nothing. npm now publishes **only when the thin-CLI code changes** (`ship.sh` Step 5 is conditional on `npm/thin-cli.js`/`npm/lib/` diffs); when it does publish, the version syncs to the agent's so `soma --version` stays legible (it shows both, labeled). The version-drift gates (`test-doctor`, `test-release-completeness`) now treat npm *lagging* the agent as the expected steady state. This is what RELEASE-FLOW.md + body/soma-cli.md already documented; the collapsed-train enforcement was the stale half.
-- **RELEASE-FLOW.md rewired to two modes** (orchestrated / manual) — Step 7 now calls the gated `soma-release-prepare.sh` orchestrator instead of bypassing it; the doc describes decisions, the scripts own mechanics (stops the doc↔script drift). phase-5-release.md slimmed 390→169 lines (history lifted to `release-lessons.md`).
+- **npm and agent are independent version trains (supersedes SX-659 collapsed train)** — the npm thin-CLI is a one-time bootstrap; `soma update` pulls the agent runtime via `git pull` from soma-beta and never re-fetches npm, so publishing npm on an agent-only release delivers users nothing. npm now publishes **only when the thin-CLI code changes** (`ship.sh` Step 5 is conditional on `npm/thin-cli.js`/`npm/lib/` diffs); when it does publish, the version syncs to the agent's so `soma --version` stays legible (it shows both, labeled). The version-drift gates (`test-doctor`, `test-release-completeness`) now treat npm *lagging* the agent as the expected steady state. This is what RELEASE-FLOW.md + body/soma-cli.md already documented; the collapsed-train enforcement was the stale half. (s01-cfe9ac)
+- **RELEASE-FLOW.md rewired to two modes** (orchestrated / manual) — Step 7 now calls the gated `soma-release-prepare.sh` orchestrator instead of bypassing it; the doc describes decisions, the scripts own mechanics (stops the doc↔script drift). phase-5-release.md slimmed 390→169 lines (history lifted to `release-lessons.md`). (s01-3a1d9b)
 
 ### Fixed
-- **`soma --help` shows Soma's commands when a project has extensions** — `--help` delegates to the runtime cli.js via `delegateToCore()`, which prepends project `-e <ext>` flags before the command. cli.js checked `args[0] === "--help"`, so with extensions present --help fell through to Pi's native help instead of Soma's command list. Fixed by skipping leading `-e`/`--extension` pairs to find the effective command (subcommand help like `soma focus --help` stays intact). Manifested with a project `.soma/extensions` dir (dogfood + power users).
-- **release-prepare crash: `PREP_VERSION` unbound in Phase 5.5** — the website-readiness phase referenced `$PREP_VERSION` at a `[[ -z ]]` check but only assigned it inside the `PROPOSAL_FILE` conditional; with `set -u`, the common unset-PROPOSAL_FILE path crashed the whole prepare run at the tone-check. Initialized before the block. (Completes the partial fix `a7ba618c` made on main.)
+- **`soma --help` shows Soma's commands when a project has extensions** — `--help` delegates to the runtime cli.js via `delegateToCore()`, which prepends project `-e <ext>` flags before the command. cli.js checked `args[0] === "--help"`, so with extensions present --help fell through to Pi's native help instead of Soma's command list. Fixed by skipping leading `-e`/`--extension` pairs to find the effective command (subcommand help like `soma focus --help` stays intact). Manifested with a project `.soma/extensions` dir (dogfood + power users). (s01-cfe9ac)
+- **release-prepare crash: `PREP_VERSION` unbound in Phase 5.5** — the website-readiness phase referenced `$PREP_VERSION` at a `[[ -z ]]` check but only assigned it inside the `PROPOSAL_FILE` conditional; with `set -u`, the common unset-PROPOSAL_FILE path crashed the whole prepare run at the tone-check. Initialized before the block. (Completes the partial fix `a7ba618c` made on main.) (s01-cfe9ac)
 - **universal timeout for all providers (upstream 7c531d05)**
-- **`soma:body.audit` no longer false-flags compiler-prepended slots** — the audit told users to "move `muscle_digests` after `<rules>`," but that slot is prepended by `compileFrontalCortex` (not template-interpolated, gate-locked) and `essential: true` (removing it breaks muscle loading). The advice could have moved a load-bearing slot. Check 3 now skips prepended slots (`muscle_digests`/`protocol_summaries`/`scripts_table`) and the audit gained a "Slot mechanics" footer that points at `body/DNA.md` (the canonical explanation) rather than duplicating it.
+- **`soma:body.audit` no longer false-flags compiler-prepended slots** — the audit told users to "move `muscle_digests` after `<rules>`," but that slot is prepended by `compileFrontalCortex` (not template-interpolated, gate-locked) and `essential: true` (removing it breaks muscle loading). The advice could have moved a load-bearing slot. Check 3 now skips prepended slots (`muscle_digests`/`protocol_summaries`/`scripts_table`) and the audit gained a "Slot mechanics" footer that points at `body/DNA.md` (the canonical explanation) rather than duplicating it. (s01-3a1d9b)
 
 ### Pending (not yet shipped)
 - **Browser Ship 2** — end-to-end smoke across CDP ports (needs bridge running).
@@ -836,23 +1338,23 @@ commits, none of them user-visible.
 ## [0.29.1] — 2026-06-02
 
 ### Added
-- **`/body update` CLI command** — version-aware template comparison and update workflow. Subcommand on `/body`, reads `prompts/body-update.md` and sends as followUp. Agent walks user through classified comparison (current/updateable/customized/legacy/extra), respects `customized: true` flag, creates backups before overwriting. (5d1a965b)
-- **Doctor `/body update` suggestion** — both "current" and "migration needed" paths now suggest `/body update` when stale or missing templates are detected. Bridges the gap between structural migrations (doctor) and content evolution (`/body update`). (f092e239)
+- **`/body update` CLI command** — version-aware template comparison and update workflow. Subcommand on `/body`, reads `prompts/body-update.md` and sends as followUp. Agent walks user through classified comparison (current/updateable/customized/legacy/extra), respects `customized: true` flag, creates backups before overwriting. (5d1a965b, s01-34d9de)
+- **Doctor `/body update` suggestion** — both "current" and "migration needed" paths now suggest `/body update` when stale or missing templates are detected. Bridges the gap between structural migrations (doctor) and content evolution (`/body update`). (f092e239, s01-34d9de)
 
 ### Fixed
-- **`/exhale <note>` now processed in all paths** — note extracted before early-return check so it works when preload already exists (new, update-existing, already-saved). Note format upgraded to `⚠️ USER NOTE` with action hint. (a241d635, b788848e)
-- **Statusline preload detection simplified** — checks preload file directly on disk instead of depending on `breatheDetail.preloadWritten` lifecycle state. (a241d635)
-- **Preload validator no longer warns about missing "Next Session"** — renamed to "Start Here" in required + recommended section checks. Recommended sections updated to match current template (Who You Were, Gaps, Unfinished, Traps, Patterns).
+- **`/exhale <note>` now processed in all paths** — note extracted before early-return check so it works when preload already exists (new, update-existing, already-saved). Note format upgraded to `⚠️ USER NOTE` with action hint. (a241d635, b788848e, s01-8f2308)
+- **Statusline preload detection simplified** — checks preload file directly on disk instead of depending on `breatheDetail.preloadWritten` lifecycle state. (a241d635, s01-8f2308)
+- **Preload validator no longer warns about missing "Next Session"** — renamed to "Start Here" in required + recommended section checks. Recommended sections updated to match current template (Who You Were, Gaps, Unfinished, Traps, Patterns). (s01-8f2308)
 
 ### Changed
-- **Exhale note visibility** — `### Note` → `⚠️ USER NOTE` with scope/directive hint. Template `_memory.md` and docs (`commands.md`, `getting-started.md`) updated. (a241d635, b788848e)
-- **Preload template fallback synced with `_memory.md`** — hardcoded fallback in `core/preload.ts` now matches canonical format. (f73d75e9)
+- **Exhale note visibility** — `### Note` → `⚠️ USER NOTE` with scope/directive hint. Template `_memory.md` and docs (`commands.md`, `getting-started.md`) updated. (a241d635, b788848e, s01-8f2308)
+- **Preload template fallback synced with `_memory.md`** — hardcoded fallback in `core/preload.ts` now matches canonical format. (f73d75e9, s01-8f2308)
 
 ## [0.29.0] — 2026-06-02
 
 ### Fixed
-- **poll preload file on disk to detect manual exhale writes**
-- **muscle_digests slot estimate now capped by configured tokenBudget**
+- **poll preload file on disk to detect manual exhale writes (s01-e56328)**
+- **muscle_digests slot estimate now capped by configured tokenBudget (s01-e56328)**
 - **system-core.md now ships from correct source + adds structure-aware tools guidance** — build was copying from wrong path, runtime couldn't find it. Now ships from `repos/agent/prompts/` to `dist/prompts/`. Added "Structure-aware before raw" reflex: `soma:code.map`, `.find`, `.outline`, `soma:seam.trace` listed as first-reach tools. (ebdd6306)
 
 ### Improved
@@ -870,18 +1372,18 @@ commits, none of them user-visible.
 - **`/exhale note` header redesign** — `### User's Note for Next Session` renamed to `### Note`, dual-purpose: scopes the current wrap AND passes directives forward. Template (`_memory.md`) and docs updated.
 
 ### Fixed
-- **Theme crash on `/inhale --model`** — `"warm"`, `"gitCyan"`, `"gitYellow"`, `"gitBlue"` weren't in Pi's `ThemeColor` union, causing TUI render crash. Replaced with valid union members: `"muted"`, `"warning"`, `"accent"`. (47a0de5f)
+- **Theme crash on `/inhale --model`** — `"warm"`, `"gitCyan"`, `"gitYellow"`, `"gitBlue"` weren't in Pi's `ThemeColor` union, causing TUI render crash. Replaced with valid union members: `"muted"`, `"warning"`, `"accent"`. (47a0de5f, s01-72adde)
 - **`PROPOSAL_FILE` unbound variable in release prepare Phase 5.5** — `set -euo pipefail` halted the script before Phase 6 created the proposal file.
 
 ## [0.28.1] — 2026-06-01
 
 ### Fixed
-- **`soma inhale --model <model>` now loads the preload instead of treating the model name as a preload target** — the CLI's `nameArg` extraction stole model values (e.g. `opencode/big-pickle`) as preload names, setting `SOMA_INHALE_TARGET` and failing `findPreloadByName`. PassThrough values are now excluded from nameArg extraction.
+- **`soma inhale --model <model>` now loads the preload instead of treating the model name as a preload target** — the CLI's `nameArg` extraction stole model values (e.g. `opencode/big-pickle`) as preload names, setting `SOMA_INHALE_TARGET` and failing `findPreloadByName`. PassThrough values are now excluded from nameArg extraction. (s01-14580a)
 - **Full preload format at all context thresholds — minimal format loses context** — high-context preloads now use the full structured template with Resume Point, What Shipped, and In-Flight sections. (1ae67a38)
-- **`/exhale <note>` directs the current agent during preload writing.** Text after `/exhale` is injected as a `### Note` block in the EXHALE follow-up. The agent uses it to scope the wrap ("quick" → skip body audit + MLR) AND to pass directives forward to the next session's Start Here. `--note` prefix and quotes stripped. `/exhale` alone works the same. (89efd1b6)
-- **ANSI colors replaced with `theme.fg()` calls** — header and statusline in the TUI now respect Pi's theme system instead of hardcoded escape codes across 33 points. (5a824c6c)
+- **`/exhale <note>` directs the current agent during preload writing.** Text after `/exhale` is injected as a `### Note` block in the EXHALE follow-up. The agent uses it to scope the wrap ("quick" → skip body audit + MLR) AND to pass directives forward to the next session's Start Here. `--note` prefix and quotes stripped. `/exhale` alone works the same. (89efd1b6, s01-65fd1e)
+- **ANSI colors replaced with `theme.fg()` calls** — header and statusline in the TUI now respect Pi's theme system instead of hardcoded escape codes across 33 points. (5a824c6c, s01-6a544e)
 - **Release Step 6 delegates to `soma-dev sync main`** — replaces inline push+branch logic with the dedicated command. (256e968d)
-- **Release Step 6 main-sync is now a HARD gate** — `⚠ push failed` no longer lets the release continue; exits 1 if main-sync fails, preventing v0.28.0-style stale-runtime-after-ship. (3c51de02)
+- **Release Step 6 main-sync is now a HARD gate** — `⚠ push failed` no longer lets the release continue; exits 1 if main-sync fails, preventing v0.28.0-style stale-runtime-after-ship. (3c51de02, s01-5c0055)
 
 ### Added
 - **`soma-dev sync main` as a proper command** — release Step 6 extracted from inline bash into a proper `soma-dev sync main` command that handles CI-drift detection, rebase + merge, conflict resolution, dist rebuild, and version verification. (4d53663c)
@@ -971,7 +1473,7 @@ commits, none of them user-visible.
 
 ### Added
 
-- **`soma:seam.*` addon family — concept archaeology caps** (SX-744). Eight new caps + 2 docs caps wire the existing shell archaeology tools into the cap surface so the agent reaches for them under context pressure. `soma:seam.trace` (free tier — wraps `amps/scripts/soma-trace.sh`), `soma:seam.ancestors` (PRO — vault agents + Pi/Claude sessions w/ attribution), `soma:seam.timeline` (PRO — chronological evolution), `soma:seam.sessions` (dev tree — search `.soma/memory/sessions/` + Pi JSONLs), `soma:seam.seeds` (PRO), `soma:seam.gaps` (PRO — orphan docs), `soma:seam.web` (PRO — **persistent** markdown trace written to `.soma/memory/webs/`), `soma:seam.stats` (dev tree — Pi JSONL analytics). Plus `soma:docs.related` + `soma:docs.impact` (dev tree — frontmatter graph walk). Caps degrade gracefully when underlying scripts aren't present (PRO/dev message). Honors Recall's "mind of the place" lineage. New file `extensions/_shared/script-resolver.ts` extracts the shared shell-out + path-resolution helper. Closure test (passing): `soma:seam.ancestors "breathe"` returns `Zenith (openclaw-dev) — dev lead, vault refactorer, soma's daddy`. 10/10 smoke tests green in `tests/test-seam-caps.sh`. Plan: `.soma/releases/v0.27.x/plans/seam-addon-family.md`.
+- **`soma:seam.*` addon family — concept archaeology caps** (s01-345201, SX-744). Eight new caps + 2 docs caps wire the existing shell archaeology tools into the cap surface so the agent reaches for them under context pressure. `soma:seam.trace` (free tier — wraps `amps/scripts/soma-trace.sh`), `soma:seam.ancestors` (PRO — vault agents + Pi/Claude sessions w/ attribution), `soma:seam.timeline` (PRO — chronological evolution), `soma:seam.sessions` (dev tree — search `.soma/memory/sessions/` + Pi JSONLs), `soma:seam.seeds` (PRO), `soma:seam.gaps` (PRO — orphan docs), `soma:seam.web` (PRO — **persistent** markdown trace written to `.soma/memory/webs/`), `soma:seam.stats` (dev tree — Pi JSONL analytics). Plus `soma:docs.related` + `soma:docs.impact` (dev tree — frontmatter graph walk). Caps degrade gracefully when underlying scripts aren't present (PRO/dev message). Honors Recall's "mind of the place" lineage. New file `extensions/_shared/script-resolver.ts` extracts the shared shell-out + path-resolution helper. Closure test (passing): `soma:seam.ancestors "breathe"` returns `Zenith (openclaw-dev) — dev lead, vault refactorer, soma's daddy`. 10/10 smoke tests green in `tests/test-seam-caps.sh`. Plan: `.soma/releases/v0.27.x/plans/seam-addon-family.md`.
 
 ### Fixed
 - **exclude tincture/_generated from path scan**
@@ -994,58 +1496,58 @@ commits, none of them user-visible.
 
 ### Added
 
-- **Model-aware breathe thresholds** (cycle 16). New tri-state `breathe.auto`: `"off"` / `"global"` / `"model-aware"` (boolean still parsed for back-compat via migration `breathe-tri-state-v0.27.0`). New `breathe.thresholds` map with glob patterns (e.g. `"*sonnet*"`) selects per-model `warnRange`/`exhaleRange` percentages from `ctx.model.id`. Sonnet's empirical `extra usage required for long context` wall (~48% on default-tier accounts) now triggers warn at 28-33% and auto-exhale at 34-50% — well before the wall, instead of the old fixed 50/70 thresholds that fired AFTER the wall hit. Opus uses 60-74 / 75-90; default fallback uses 50-64 / 65-85. Default install ships `auto: "model-aware"`. `/auto-breathe` accepts `off|global|model-aware|status` subcommands. 76 tests pass (was 47/55 before, +21 new tests for tri-state + per-model resolution + migration). Closes the wall-before-threshold bug that crashed a prior session mid-pipeline.
-- **`soma-dev delegate cycle <brief>` workflow** (cycle 17). Full implementation pipeline for any markdown brief (cycle.md, inbox/*.md, plans/*.md). Composes `intern` (investigate, 80-call budget) → `intern` (build, 80-call budget) → `verifier` (test, 25 calls) → `pr_author` (description, 30 calls). Total ~215 tool calls / ~$2.50 per cycle. Outputs `/tmp/soma-cycle-investigation.md`, `/tmp/soma-cycle-impl-summary.md`, `/tmp/soma-pr-description.md`. Flags: `--no-pr`, `--no-verify`. Built because single `builder` (25-call budget) was too small for multi-step cycles like cycle 16 (9 steps, ~80+ tool calls).
+- **Model-aware breathe thresholds** (cycle 16, s01-7b287c). New tri-state `breathe.auto`: `"off"` / `"global"` / `"model-aware"` (boolean still parsed for back-compat via migration `breathe-tri-state-v0.27.0`). New `breathe.thresholds` map with glob patterns (e.g. `"*sonnet*"`) selects per-model `warnRange`/`exhaleRange` percentages from `ctx.model.id`. Sonnet's empirical `extra usage required for long context` wall (~48% on default-tier accounts) now triggers warn at 28-33% and auto-exhale at 34-50% — well before the wall, instead of the old fixed 50/70 thresholds that fired AFTER the wall hit. Opus uses 60-74 / 75-90; default fallback uses 50-64 / 65-85. Default install ships `auto: "model-aware"`. `/auto-breathe` accepts `off|global|model-aware|status` subcommands. 76 tests pass (was 47/55 before, +21 new tests for tri-state + per-model resolution + migration). Closes the wall-before-threshold bug that crashed s01-8b3cb3 mid-pipeline.
+- **`soma-dev delegate cycle <brief>` workflow** (cycle 17, s01-7b287c). Full implementation pipeline for any markdown brief (cycle.md, inbox/*.md, plans/*.md). Composes `intern` (investigate, 80-call budget) → `intern` (build, 80-call budget) → `verifier` (test, 25 calls) → `pr_author` (description, 30 calls). Total ~215 tool calls / ~$2.50 per cycle. Outputs `/tmp/soma-cycle-investigation.md`, `/tmp/soma-cycle-impl-summary.md`, `/tmp/soma-pr-description.md`. Flags: `--no-pr`, `--no-verify`. Built because single `builder` (25-call budget) was too small for multi-step cycles like cycle 16 (9 steps, ~80+ tool calls).
 
 ### Fixed
 
-- **`/inhale` no longer double-injects preload after rotation** (cycle 17 bug #1). Empirically verified across 10 sessions in the last 14 days: every `/inhale`-triggered rotation produced TWO preload-injection messages in the new session — one from soma-boot's `session_start` "new" branch (`[Soma Boot — rotated session]`, ~16K chars), one from `/inhale`'s post-await `send()` (`[Soma Inhale — Loading Preload]`, ~16K chars). ~8K tokens duplicated per `/inhale`. Fix: soma-boot now exposes `route.provide("preload:wasInjected", ...)`; `/inhale` queries this after `await ctx.newSession({})` and skips its own send if `session_start` already injected. Print-mode safety preserved (when `ctx.hasUI=false` the session_start branch skips, flag stays false, `/inhale` falls back to direct send).
-- **`/inhale` catch-fallback race** (cycle 17 bug #2). The catch block at `soma-boot.ts:3007-3020` previously fired its fallback preload-send unconditionally on any `newSession()` throw. If the throw came AFTER `session_start` had emitted (e.g. `apply()` / `setup()` / `finishSessionReplacement()` failure post-runtime-creation), the fallback would TRIPLE-stack with both the session_start injector and the happy-path injector. Same `preload:wasInjected` flag now discriminates: catch only sends if session_start hadn't already.
-- **`session_start` "new" branch fallback when boot template missing** (cycle 17). Previously, if `loadBootMessage()` returned null (boot template not found), the rotation message was silently skipped — the new session had no preload injection, and `/inhale`'s old post-await send was the only thing carrying it. After bug #1 fix, that path no longer exists, so session_start now falls back to a minimal `## Preload (from last session)\n\n${preload.content}` message when the template is missing.
-- **Honest auto-breathe notification text** (cycle 17 bug #3). The `🪵 Auto-breathe: rotating at N%` notification fired when the threshold was hit, but actual rotation only happens later in `turn_end` after the agent writes the preload (within `graceSeconds`, default 30s). New text: `🪵 Preload requested at N% — rotating after agent writes it`. The other branch (preload-already-written, immediate `.rotate-signal`) keeps its honest "Rotating — preload already written" text.
+- **`/inhale` no longer double-injects preload after rotation** (cycle 17 bug #1, s01-7b287c). Empirically verified across 10 sessions in the last 14 days: every `/inhale`-triggered rotation produced TWO preload-injection messages in the new session — one from soma-boot's `session_start` "new" branch (`[Soma Boot — rotated session]`, ~16K chars), one from `/inhale`'s post-await `send()` (`[Soma Inhale — Loading Preload]`, ~16K chars). ~8K tokens duplicated per `/inhale`. Fix: soma-boot now exposes `route.provide("preload:wasInjected", ...)`; `/inhale` queries this after `await ctx.newSession({})` and skips its own send if `session_start` already injected. Print-mode safety preserved (when `ctx.hasUI=false` the session_start branch skips, flag stays false, `/inhale` falls back to direct send).
+- **`/inhale` catch-fallback race** (cycle 17 bug #2, s01-7b287c). The catch block at `soma-boot.ts:3007-3020` previously fired its fallback preload-send unconditionally on any `newSession()` throw. If the throw came AFTER `session_start` had emitted (e.g. `apply()` / `setup()` / `finishSessionReplacement()` failure post-runtime-creation), the fallback would TRIPLE-stack with both the session_start injector and the happy-path injector. Same `preload:wasInjected` flag now discriminates: catch only sends if session_start hadn't already.
+- **`session_start` "new" branch fallback when boot template missing** (cycle 17, s01-7b287c). Previously, if `loadBootMessage()` returned null (boot template not found), the rotation message was silently skipped — the new session had no preload injection, and `/inhale`'s old post-await send was the only thing carrying it. After bug #1 fix, that path no longer exists, so session_start now falls back to a minimal `## Preload (from last session)\n\n${preload.content}` message when the template is missing.
+- **Honest auto-breathe notification text** (cycle 17 bug #3, s01-7b287c). The `🪵 Auto-breathe: rotating at N%` notification fired when the threshold was hit, but actual rotation only happens later in `turn_end` after the agent writes the preload (within `graceSeconds`, default 30s). New text: `🪵 Preload requested at N% — rotating after agent writes it`. The other branch (preload-already-written, immediate `.rotate-signal`) keeps its honest "Rotating — preload already written" text.
 
 ### Documentation
 
-- **Auto-rotation Path A vs Path B clarification** (cycle 17 bug #5 audit). Per Pi types (`pi-coding-agent/dist/core/extensions/types.d.ts`), `newSession` lives on `ExtensionCommandContext`, not on the base `ExtensionContext` event handlers receive. Auto-breathe's `performRotation` falling back to `.rotate-signal` + process re-exec (Path A) is correct by design — Pi treats process re-exec as the safer auto-rotation route. In-process `route.get("session:new")` (Path B) is a happy-path optimization available only after a user has invoked `/breathe`/`/inhale`/`/auto-breathe` in the current session. Comment block added to `soma-breathe.ts:performRotation` documenting this; notify text changed to `🪵 Rotating session (process re-exec)...`.
+- **Auto-rotation Path A vs Path B clarification** (cycle 17 bug #5 audit, s01-7b287c). Per Pi types (`pi-coding-agent/dist/core/extensions/types.d.ts`), `newSession` lives on `ExtensionCommandContext`, not on the base `ExtensionContext` event handlers receive. Auto-breathe's `performRotation` falling back to `.rotate-signal` + process re-exec (Path A) is correct by design — Pi treats process re-exec as the safer auto-rotation route. In-process `route.get("session:new")` (Path B) is a happy-path optimization available only after a user has invoked `/breathe`/`/inhale`/`/auto-breathe` in the current session. Comment block added to `soma-breathe.ts:performRotation` documenting this; notify text changed to `🪵 Rotating session (process re-exec)...`.
 
 
 ## [0.27.0] — 2026-05-09
 
 ### Added
 
-- **Pi upstream monitor — live version gap in every session**. GitHub Actions workflow (`.github/workflows/upstream-monitor.yml`) watches `badlogic/pi-mono` (source of `@earendil-works/pi-coding-agent`) every 6 hours. Writes `PI_UPSTREAM.md` to the agent root with: current pinned version, latest npm version, releases behind count, and flagged commits relevant to Soma (covers all 33 Pi API usages: `registerTool`, `registerCommand`, `sendUserMessage`, 11 event hooks, 7 patch targets). New `{{pi_gap}}` body var in `resolveBlockVariables` reads `PI_UPSTREAM.md` at session start and injects live gap into the system prompt. `soma-dev status` surfaces flagged ⚠️ items in yellow. Eliminates manually tracking Pi version drift.
+- **Pi upstream monitor — live version gap in every session** (s01-8b3cb3). GitHub Actions workflow (`.github/workflows/upstream-monitor.yml`) watches `badlogic/pi-mono` (source of `@earendil-works/pi-coding-agent`) every 6 hours. Writes `PI_UPSTREAM.md` to the agent root with: current pinned version, latest npm version, releases behind count, and flagged commits relevant to Soma (covers all 33 Pi API usages: `registerTool`, `registerCommand`, `sendUserMessage`, 11 event hooks, 7 patch targets). New `{{pi_gap}}` body var in `resolveBlockVariables` reads `PI_UPSTREAM.md` at session start and injects live gap into the system prompt. `soma-dev status` surfaces flagged ⚠️ items in yellow. Eliminates manually tracking Pi version drift.
 
-- **Autonomous CI loop — nightly tests + issue filing + fix pipeline** (smoke-validated a prior session). Three-layer self-healing CI: (1) `.github/workflows/test-nightly.yml` runs 25 portable tests on schedule (4am UTC) and on push to dev/main; on failure, auto-files a structured GitHub issue tagged `nightly-failure` with failing tests, error excerpts, Pi version, last 5 commits, and a fix brief for the next agent. Dedupe gate skips filing when an open issue already exists for the same failure. (2) `dev:issue.create` + `dev:issue.list` addon caps for agent-filed issues from within sessions. (3) `soma-dev delegate ci-fix <url>` orchestrates: `issue_investigator` → `builder` → `verifier`. 18 tests gained `CI=true` skip guards (workspace/dist-dependent tests self-skip). `pr-check.yml` hardened: tsc typecheck job + changelog blocking + conventional-commit format validation. End-to-end smoke a prior session drove a deliberate test failure through nightly→issue→dedupe→revert→green.
+- **Autonomous CI loop — nightly tests + issue filing + fix pipeline** (s01-8b3cb3, smoke-validated s01-ae942e). Three-layer self-healing CI: (1) `.github/workflows/test-nightly.yml` runs 25 portable tests on schedule (4am UTC) and on push to dev/main; on failure, auto-files a structured GitHub issue tagged `nightly-failure` with failing tests, error excerpts, Pi version, last 5 commits, and a fix brief for the next agent. Dedupe gate skips filing when an open issue already exists for the same failure. (2) `dev:issue.create` + `dev:issue.list` addon caps for agent-filed issues from within sessions. (3) `soma-dev delegate ci-fix <url>` orchestrates: `issue_investigator` → `builder` → `verifier`. 18 tests gained `CI=true` skip guards (workspace/dist-dependent tests self-skip). `pr-check.yml` hardened: tsc typecheck job + changelog blocking + conventional-commit format validation. End-to-end smoke s01-ae942e drove a deliberate test failure through nightly→issue→dedupe→revert→green.
 
-- **Autonomous PR workflow — `soma-dev delegate pr`**. Full pipeline from commits to complete PR: `soma-pr-brief.sh` generates structured brief (git-cliff CHANGELOG, affected files, semver bump type, docs to update, roadmap entry suggestion); `changelog_curator` writes rich `[Unreleased]` narrative; `pr_author` writes PR description; `doc_writer` updates flagged docs; `verifier` confirms tests pass. `cliff.toml` added — git-cliff configured for Keep-A-Changelog format from conventional commits (feat→Added, fix→Fixed, ci/chore/test filtered). `release-please` manifest updated from stale 0.22.1 → 0.26.2; auto-trigger enabled on push to dev.
+- **Autonomous PR workflow — `soma-dev delegate pr`** (s01-8b3cb3). Full pipeline from commits to complete PR: `soma-pr-brief.sh` generates structured brief (git-cliff CHANGELOG, affected files, semver bump type, docs to update, roadmap entry suggestion); `changelog_curator` writes rich `[Unreleased]` narrative; `pr_author` writes PR description; `doc_writer` updates flagged docs; `verifier` confirms tests pass. `cliff.toml` added — git-cliff configured for Keep-A-Changelog format from conventional commits (feat→Added, fix→Fixed, ci/chore/test filtered). `release-please` manifest updated from stale 0.22.1 → 0.26.2; auto-trigger enabled on push to dev.
 
-- **`soma-dev delegate` — multi-agent workflow orchestrator**. New command composes child agents into named end-to-end pipelines: `pr` / `pr-brief` / `ci-fix <url>` / `changelog` / `doc-update` / `audit`. Wired into `soma-dev` as `soma-dev delegate | soma-dev workflow`. Eliminates manually orchestrating multiple `soma-dev children run` calls.
+- **`soma-dev delegate` — multi-agent workflow orchestrator** (s01-8b3cb3). New command composes child agents into named end-to-end pipelines: `pr` / `pr-brief` / `ci-fix <url>` / `changelog` / `doc-update` / `audit`. Wired into `soma-dev` as `soma-dev delegate | soma-dev workflow`. Eliminates manually orchestrating multiple `soma-dev children run` calls.
 
-- **3 new child role bodies**. `body/children/issue_investigator.md` (read-mostly root-cause tracer for nightly failures — writes `/tmp/fix-brief.md`), `body/children/pr_author.md` (writes rich PR descriptions from a brief, voice-hygiene + solo-editorial inherited), `body/children/changelog_curator.md` (curates `[Unreleased]` narratives from git-cliff output, replaces auto-appended bullet noise). Past-self in a prior session declared the roles in `delegate.sh` + CHANGELOG narratives but the body files were never written — every `soma-dev delegate ci-fix` call would have failed at phase 1 with `role 'X' not found in body/children/...`. Surfaced via the a prior session smoke; fixed in the same session.
+- **3 new child role bodies** (s01-ae942e). `body/children/issue_investigator.md` (read-mostly root-cause tracer for nightly failures — writes `/tmp/fix-brief.md`), `body/children/pr_author.md` (writes rich PR descriptions from a brief, voice-hygiene + solo-editorial inherited), `body/children/changelog_curator.md` (curates `[Unreleased]` narratives from git-cliff output, replaces auto-appended bullet noise). Past-self in s01-8b3cb3 declared the roles in `delegate.sh` + CHANGELOG narratives but the body files were never written — every `soma-dev delegate ci-fix` call would have failed at phase 1 with `role 'X' not found in body/children/...`. Surfaced via the s01-ae942e smoke; fixed in the same session.
 
-- **`tests/test-children-roles-exist.sh`**. Drift-prevention regression test: extracts every `_run_role` reference from `delegate.sh`, asserts a matching `body/children/<role>.md` exists, plus validates required frontmatter fields. Catches the a prior session class of "declared role, missing body" drift before it ships.
+- **`tests/test-children-roles-exist.sh`** (s01-ae942e). Drift-prevention regression test: extracts every `_run_role` reference from `delegate.sh`, asserts a matching `body/children/<role>.md` exists, plus validates required frontmatter fields. Catches the s01-8b3cb3 class of "declared role, missing body" drift before it ships.
 
-- **`soma-dev check-phases` pre-release gate**. 30-second sanity check (upstream sync + tests + tsc) before running the full 5-minute `soma-release-prepare.sh` orchestrator. Exits non-zero if any of the three signals is off, saving the cost of a full prepare run that would fail.
+- **`soma-dev check-phases` pre-release gate** (s01-8b3cb3). 30-second sanity check (upstream sync + tests + tsc) before running the full 5-minute `soma-release-prepare.sh` orchestrator. Exits non-zero if any of the three signals is off, saving the cost of a full prepare run that would fail.
 
 ### Changed
 
-- **Pi runtime: `0.72.1` → `0.73.1`** (commit `42ef127`). All 4 pi-* packages bumped together (`pi-coding-agent`, `pi-ai`, `pi-agent-core`, `pi-tui`) per the lockstep rule — mismatched bumps cause silent API mismatches (e.g. `cleanupSessionResources` in pi-ai@0.73.1 not found if pi-ai stayed at 0.72.1). All 7 runtime patches apply cleanly against new upstream; CI green.
+- **Pi runtime: `0.72.1` → `0.73.1`** (s01-8b3cb3, commit `42ef127`). All 4 pi-* packages bumped together (`pi-coding-agent`, `pi-ai`, `pi-agent-core`, `pi-tui`) per the lockstep rule — mismatched bumps cause silent API mismatches (e.g. `cleanupSessionResources` in pi-ai@0.73.1 not found if pi-ai stayed at 0.72.1). All 7 runtime patches apply cleanly against new upstream; CI green.
 
-- **`docs/anthropic-long-context.md` — long-context wall claim corrected**. Previous prose asserted the long-context tier triggers at "~200K" of context, presented as Anthropic-published behavior. That number wasn't sourced; empirical evidence on a Claude Max plan shows the wall hits at ≈40-48% of Sonnet 4-6's reported 1M context window (~400-480K tokens) — substantially higher than the doc claimed. Three prose blocks + the per-model behavior table updated with hedge language naming the empirical observation; users probe their own account threshold via the `extra usage required for long context` 429.
+- **`docs/anthropic-long-context.md` — long-context wall claim corrected** (s01-ae942e). Previous prose asserted the long-context tier triggers at "~200K" of context, presented as Anthropic-published behavior. That number wasn't sourced; empirical evidence on Curtis's Claude Max plan shows the wall hits at ≈40-48% of Sonnet 4-6's reported 1M context window (~400-480K tokens) — substantially higher than the doc claimed. Three prose blocks + the per-model behavior table updated with hedge language naming the empirical observation; users probe their own account threshold via the `extra usage required for long context` 429.
 
 ### Fixed
 
-- **Release flow consolidation**. `soma-ship.sh` (both in `repos/agent/scripts/_dev/` and `.soma/amps/scripts/internal/`) archived to `_archive/pre-orchestrator-v0.22.x/` — it referenced `repos/agent-stable` (dead since SX-652 worktree topology) and a 10-phase spiral that no longer exists. `soma-dev ship` replaced with clean `git push meetsoma dev` (branch guard + unpushed count). `soma-dev release` now routes to `prepare/ship/beta` subcommands.
+- **Release flow consolidation** (s01-8b3cb3). `soma-ship.sh` (both in `repos/agent/scripts/_dev/` and `.soma/amps/scripts/internal/`) archived to `_archive/pre-orchestrator-v0.22.x/` — it referenced `repos/agent-stable` (dead since SX-652 worktree topology) and a 10-phase spiral that no longer exists. `soma-dev ship` replaced with clean `git push meetsoma dev` (branch guard + unpushed count). `soma-dev release` now routes to `prepare/ship/beta` subcommands.
 
-- **3 stale model-ID references**. Test fixture in `scripts/_dev/tests/test-children-list.sh` referenced `claude-sonnet-4-5`; verify script `scripts/_dev/soma-verify.sh` referenced `claude-3-5-haiku-latest` (a generation-old alias); `scripts/soma-model-sync.sh` error-message hint suggested retired IDs. All bumped to current available IDs. Behavior defaults intentionally NOT changed: `core/delegate/models.ts` MODEL_ALIASES still pin sonnet/haiku/opus to 4-5 (default-tier safety — bumping aliases would silently force users onto 1M-context variants and their long-context billing tier).
+- **3 stale model-ID references** (s01-ae942e). Test fixture in `scripts/_dev/tests/test-children-list.sh` referenced `claude-sonnet-4-5`; verify script `scripts/_dev/soma-verify.sh` referenced `claude-3-5-haiku-latest` (a generation-old alias); `scripts/soma-model-sync.sh` error-message hint suggested retired IDs. All bumped to current available IDs. Behavior defaults intentionally NOT changed: `core/delegate/models.ts` MODEL_ALIASES still pin sonnet/haiku/opus to 4-5 (default-tier safety — bumping aliases would silently force users onto 1M-context variants and their long-context billing tier).
 
-- **Premature v0.26.3 roadmap entry removed from website**. Past-self in a prior session drafted a v0.26.3 entry covering the autonomous CI/CD work but the version was never released (`npm view meetsoma version` = 0.26.2). Entry deleted; this work surfaces under v0.27.0.
+- **Premature v0.26.3 roadmap entry removed from website** (s01-ae942e). Past-self in s01-8b3cb3 drafted a v0.26.3 entry covering the autonomous CI/CD work but the version was never released (`npm view meetsoma version` = 0.26.2). Entry deleted; this work surfaces under v0.27.0.
 
 ## [0.26.2] — 2026-05-07
 
 ### Added
 
-- **`extraUsageRecovery` setting** (default `"auto"`, a prior session, cycle 13 successor). Narrow-scoped recovery for the boot-turn-after-`/inhale` variant of Anthropic's `extra usage` 400 error. When `/inhale` rotates the session and the first API call returns Anthropic's `"You're out of extra usage. Add more at claude.ai/settings/usage and keep going."`, Soma surfaces a single notice and auto-injects `.` after a 1s debounce so the conversation advances and subsequent turns can run cleanly. Three modes: `"auto"` (default — notify + auto-`.`), `"notify"` (notice only; user sends any message to continue), `"off"` (silent — Pi's raw error display passes through). Hard fence: only fires when error contains literal `"extra usage"` AND `turnCount <= 2` AND no keepalive fired. Auto-injection is 1 char (`.`) — no full-context resend, no 2× billing amplifier (the SX-709 failure mode that killed the original auto-retry stays killed). Migration phase doc: `migrations/phases/v0.26.1-to-v0.26.2.md`. Plan: `.soma/cycles/audit-fix/13-startup-only-retry-redesign/cycle.md`.
+- **`extraUsageRecovery` setting** (default `"auto"`, s01-c62a62, cycle 13 successor). Narrow-scoped recovery for the boot-turn-after-`/inhale` variant of Anthropic's `extra usage` 400 error. When `/inhale` rotates the session and the first API call returns Anthropic's `"You're out of extra usage. Add more at claude.ai/settings/usage and keep going."`, Soma surfaces a single notice and auto-injects `.` after a 1s debounce so the conversation advances and subsequent turns can run cleanly. Three modes: `"auto"` (default — notify + auto-`.`), `"notify"` (notice only; user sends any message to continue), `"off"` (silent — Pi's raw error display passes through). Hard fence: only fires when error contains literal `"extra usage"` AND `turnCount <= 2` AND no keepalive fired. Auto-injection is 1 char (`.`) — no full-context resend, no 2× billing amplifier (the SX-709 failure mode that killed the original auto-retry stays killed). Migration phase doc: `migrations/phases/v0.26.1-to-v0.26.2.md`. Plan: `.soma/cycles/audit-fix/13-startup-only-retry-redesign/cycle.md`.
 
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
@@ -1053,9 +1555,9 @@ commits, none of them user-visible.
 
 ### Fixed
 
-- **Cycle 21 — `test-release-completeness.sh` Section 4 in-flight aware**. The npm/package.json drift gate now respects the existing `IN_FLIGHT_VERSION` guard (same pattern as Section 2 dev↔main parity and `test-version-truth.sh` cycle 18). During the release ship window, `npm test` ran in orchestrator Step 4 (preflight) was reporting a real drift that resolved moments later when Step 5 (`soma-npm-publish.sh`) bumped + committed npm/package.json. Now skips cleanly with a SKIP not FAIL during ship. Re-run post-ship for verification.
+- **Cycle 21 — `test-release-completeness.sh` Section 4 in-flight aware** (s01-c62a62). The npm/package.json drift gate now respects the existing `IN_FLIGHT_VERSION` guard (same pattern as Section 2 dev↔main parity and `test-version-truth.sh` cycle 18). During the release ship window, `npm test` ran in orchestrator Step 4 (preflight) was reporting a real drift that resolved moments later when Step 5 (`soma-npm-publish.sh`) bumped + committed npm/package.json. Now skips cleanly with a SKIP not FAIL during ship. Re-run post-ship for verification.
 
-- **Cycle 22 — `soma:github.local_*` runtime ship gap** (commit `005005e`). The 8 local-mode caps shipped in v0.24.0 (`local_path` / `local_map` / `local_find` / `local_refs` / `local_blast` / `local_structure` / `cache_list` / `cache_clean`) registered cleanly on the route bus but failed at runtime in every install with `"ERROR: soma-github-cache.sh not found at /var/folders/.../T/"` because `compile-pro-scripts.sh` PRO_SCRIPTS list bundled `soma-github` without its companion cache helper. Static-only `test-namespaced-caps.sh` never invoked the caps so the gap was invisible. Fix (Option A — inline w/ clean-extraction markers): refactored `soma-github-cache.sh` case-dispatcher into named `_cache_*` functions wrapped in `{{INLINE-LIFT-START / END}}` markers; `soma-github.sh` got `{{INLINE-START / END}}` markers + a comment block explaining the rationale + clean-extraction pattern (so cache can later be promoted to a separate Pro tool); new `lift-cache-helper.sh` build gate (idempotent, hooked into `compile-pro-scripts.sh`) regenerates the inline block from canonical before b64-encode. Plus 1 sub-bug fix: `cache_info` dispatcher branch now passes `$REPO` (was empty `$@`). New runtime regression test `tests/test-soma-github-local-runtime.sh` drives the shipped `soma` binary through all 8 caps + a regression guard for the exact "not found" string — 10/10 pass. v0.24.0 marketing/docs surfaces (`docs/_dev/github-scanner.md`, `docs/whats-new.md`, `docs/tools.md`, website mirrors) described correct behavior all along; the fix makes those descriptions true at runtime.
+- **Cycle 22 — `soma:github.local_*` runtime ship gap** (s01-c62a62, commit `005005e`). The 8 local-mode caps shipped in v0.24.0 (`local_path` / `local_map` / `local_find` / `local_refs` / `local_blast` / `local_structure` / `cache_list` / `cache_clean`) registered cleanly on the route bus but failed at runtime in every install with `"ERROR: soma-github-cache.sh not found at /var/folders/.../T/"` because `compile-pro-scripts.sh` PRO_SCRIPTS list bundled `soma-github` without its companion cache helper. Static-only `test-namespaced-caps.sh` never invoked the caps so the gap was invisible. Fix (Option A — inline w/ clean-extraction markers): refactored `soma-github-cache.sh` case-dispatcher into named `_cache_*` functions wrapped in `{{INLINE-LIFT-START / END}}` markers; `soma-github.sh` got `{{INLINE-START / END}}` markers + a comment block explaining the rationale + clean-extraction pattern (so cache can later be promoted to a separate Pro tool); new `lift-cache-helper.sh` build gate (idempotent, hooked into `compile-pro-scripts.sh`) regenerates the inline block from canonical before b64-encode. Plus 1 sub-bug fix: `cache_info` dispatcher branch now passes `$REPO` (was empty `$@`). New runtime regression test `tests/test-soma-github-local-runtime.sh` drives the shipped `soma` binary through all 8 caps + a regression guard for the exact "not found" string — 10/10 pass. v0.24.0 marketing/docs surfaces (`docs/_dev/github-scanner.md`, `docs/whats-new.md`, `docs/tools.md`, website mirrors) described correct behavior all along; the fix makes those descriptions true at runtime.
 
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
@@ -1063,17 +1565,17 @@ commits, none of them user-visible.
 
 ### Added
 
-- **Cycle 10 — `_tool-template.ts` modern shape + Pi tool runner runtime guard**. Replaces broken canonical example (2-arg execute, bare-string return) with the contract Pi's runtime actually expects: 5-arg `(toolCallId, params, signal, onUpdate, ctx) => Promise<AgentToolResult>`, including required `label` field. Adds Site G defensive wrap in `pi-agent-core/agent-loop.js executePreparedToolCall` so any tool returning a string OR an object with undefined `.content` gets lifted into the canonical `{content: [{type:"text", text}], details}` envelope before persistence. Closes the bare-string-return bug class that was producing malformed toolResult records (no `.content` key) and crashing downstream consumers (renderer, compaction, anthropic provider). Verified all 7 runtime patches still needed against upstream Pi 0.73.0 main — audit recorded in `.soma/cycles/audit-fix/10-pi-tool-result-shape-mismatch/VERIFY.md`.
+- **Cycle 10 — `_tool-template.ts` modern shape + Pi tool runner runtime guard** (s01-a6b91e). Replaces broken canonical example (2-arg execute, bare-string return) with the contract Pi's runtime actually expects: 5-arg `(toolCallId, params, signal, onUpdate, ctx) => Promise<AgentToolResult>`, including required `label` field. Adds Site G defensive wrap in `pi-agent-core/agent-loop.js executePreparedToolCall` so any tool returning a string OR an object with undefined `.content` gets lifted into the canonical `{content: [{type:"text", text}], details}` envelope before persistence. Closes the bare-string-return bug class that was producing malformed toolResult records (no `.content` key) and crashing downstream consumers (renderer, compaction, anthropic provider). Verified all 7 runtime patches still needed against upstream Pi 0.73.0 main — audit recorded in `.soma/cycles/audit-fix/10-pi-tool-result-shape-mismatch/VERIFY.md`.
 
-- **Cycle 10 — 6 defensive runtime guards against malformed `ToolResult.content`**. Added Sites A-F across 4 files: `render-utils.getTextOutput`, `tool-execution.maybeConvertImagesForKitty`, `tool-execution.updateDisplay`, `compaction.estimateTokens`, `pi-ai/anthropic.convertContentBlocks`, plus `pi-tui/terminal.start` process-exit cleanup (CSI-u + bracketed-paste + modifyOtherKeys + raw-mode restoration so terminal doesn't leak escape sequences into shell after TUI crash). Defense-in-depth: Site G prevents the malformation upstream; Sites A-F catch anything that slips past.
+- **Cycle 10 — 6 defensive runtime guards against malformed `ToolResult.content`** (s01-a6b91e). Added Sites A-F across 4 files: `render-utils.getTextOutput`, `tool-execution.maybeConvertImagesForKitty`, `tool-execution.updateDisplay`, `compaction.estimateTokens`, `pi-ai/anthropic.convertContentBlocks`, plus `pi-tui/terminal.start` process-exit cleanup (CSI-u + bracketed-paste + modifyOtherKeys + raw-mode restoration so terminal doesn't leak escape sequences into shell after TUI crash). Defense-in-depth: Site G prevents the malformation upstream; Sites A-F catch anything that slips past.
 
-- **Cycle 12 — Preload notify state machine**. `extensions/soma-breathe.ts` replaces the every-turn-end "🟢 Preload saved..." notify with a transition-only state machine (`'none' | 'saved' | 'stale'`). Adds yellow stale notify (`🟡 Preload now stale (N tool calls...)`) and green refresh notify (`🟢 Preload refreshed`) on STALE→SAVED. Single source of truth for the stale threshold (`PRELOAD_STALE_TOOL_COUNT = 5`); `breathe:detail` route cap exposes `isStale`/`staleThreshold`/`notifyState` for downstream consumers (statusline + soma-boot). Removes dead opt-in `breathe.preloadStaleThreshold` setting (was default 0 = disabled).
+- **Cycle 12 — Preload notify state machine** (s01-a6b91e). `extensions/soma-breathe.ts` replaces the every-turn-end "🟢 Preload saved..." notify with a transition-only state machine (`'none' | 'saved' | 'stale'`). Adds yellow stale notify (`🟡 Preload now stale (N tool calls...)`) and green refresh notify (`🟢 Preload refreshed`) on STALE→SAVED. Single source of truth for the stale threshold (`PRELOAD_STALE_TOOL_COUNT = 5`); `breathe:detail` route cap exposes `isStale`/`staleThreshold`/`notifyState` for downstream consumers (statusline + soma-boot). Removes dead opt-in `breathe.preloadStaleThreshold` setting (was default 0 = disabled).
 
-- **Cycle 14 — Regression tests for runtime patches**. 27 new gates across 3 test scripts (`test-tool-result-content-guard.sh`, `test-pi-ai-anthropic-content-guard.sh`, `test-pi-tui-exit-cleanup.sh`) lock Sites A-G against regression. Plus `test-preload-notify-state-machine.sh` (15 gates) for cycle 12. Total: 42 new test gates, 100% passing.
+- **Cycle 14 — Regression tests for runtime patches** (s01-a6b91e). 27 new gates across 3 test scripts (`test-tool-result-content-guard.sh`, `test-pi-ai-anthropic-content-guard.sh`, `test-pi-tui-exit-cleanup.sh`) lock Sites A-G against regression. Plus `test-preload-notify-state-machine.sh` (15 gates) for cycle 12. Total: 42 new test gates, 100% passing.
 
-- **Cycle 03-meta — META_CYCLE.md adoption**. New `releases/META_CYCLE.md` umbrella dashboard (live state + cycles index + routing + cross-cycle artifact pointers + pattern + changelog). Pattern adopted from a peer soma instance v0.1.0; meetsoma is domain #2 of the validation arc that muscle's "Strengthen" phase needs.
+- **Cycle 03-meta — META_CYCLE.md adoption** (s01-a6b91e). New `releases/META_CYCLE.md` umbrella dashboard (live state + cycles index + routing + cross-cycle artifact pointers + pattern + changelog). Pattern adopted from a peer soma instance (s01-ddcd84) v0.1.0; meetsoma is domain #2 of the validation arc that muscle's "Strengthen" phase needs.
 
-- **Three new disciplines locked as muscles**:
+- **Three new disciplines locked as muscles** (s01-a6b91e):
   - `amps/muscles/meta-cycle-pattern.md` — single SoT per cycle; umbrella META_CYCLE.md dashboard; persistent service artifacts at `<umbrella>/<service>/`.
   - `amps/muscles/verify-patch-against-upstream.md` — `git show upstream/main:<path>` from your local pi-mono clone BEFORE adding any `apply-patches.sh` entry. Don't patch what upstream already fixed.
   - `amps/muscles/blast-radius-before-change.md` — `soma:code.blast` + regression test BEFORE claiming a fix shipped. No claim-shipped without a test.
@@ -1086,15 +1588,15 @@ commits, none of them user-visible.
 
 - **5 queued cycles for follow-up work** filed in `.soma/cycles/`:
   - `audit-fix/11-soma-inhale-double-preload-load` — deep code trace done, hypothesis space narrowed (H-A/H-B/H-C), smoke recipe ready for runtime repro.
-  - `audit-fix/13-startup-only-retry-redesign` — Pi 0.73 retry regex audited; gap = DNS/TLS/handshake errors; needs the reported error class to scope.
+  - `audit-fix/13-startup-only-retry-redesign` — Pi 0.73 retry regex audited; gap = DNS/TLS/handshake errors; needs Curtis's actual error class to scope.
   - `audit-fix/15-stale-test-cleanup-sx727-sx734` — deletes stale tests asserting reverted features.
 
 ### Fixed
-- **cycle 15 — delete stale SX-727/SX-734 tests + replacement upstream-tracking gate**
+- **cycle 15 — delete stale SX-727/SX-734 tests + replacement upstream-tracking gate (s01-a6b91e)**
 
-- **CHANGELOG entries from a prior session reflect what was originally shipped, not what's currently on `main`.** Two entries below describe features that were subsequently REVERSED or further GUTTED in the same session and not back-propagated to this changelog:
-  - **SX-727 (`context-1m-2025-08-07` beta header patch) — REVERSED** in commit `da6b971`. Always-on header rejected requests on accounts without long-context billing (observed on a Max-plan account). Patch is DISABLED in `apply-patches.sh`; manifest entry marked `"removed": "2026-05-04"`. To re-enable as opt-in, see SX-741 (auto-apply on settings flip). Original CHANGELOG entry retained below for ancestry; reality is the patch does NOT ship.
-  - **SX-734 (billing-retry gate) — FULLY GUTTED** in commit `7109ce1`. The `autoRetryBilling` setting gate landed (commit 54f7ef5), then SX-738 fixed undefined-settings ref (commit e403fab), then the entire layer was REMOVED — letting Pi handle billing errors natively (its `_isRetryableError` correctly excludes `extra usage`). Existing `tests/test-billing-retry-disabled.sh` is now stale and fails; cycle 15 plans cleanup.
+- **CHANGELOG entries from s01-a54f21 reflect what was originally shipped, not what's currently on `main`.** Two entries below describe features that were subsequently REVERSED or further GUTTED in the same session and not back-propagated to this changelog:
+  - **SX-727 (`context-1m-2025-08-07` beta header patch) — REVERSED** in commit `da6b971` (s01-a54f21). Always-on header rejected requests on accounts without long-context billing (Curtis's case). Patch is DISABLED in `apply-patches.sh`; manifest entry marked `"removed": "2026-05-04"`. To re-enable as opt-in, see SX-741 (auto-apply on settings flip). Original CHANGELOG entry retained below for ancestry; reality is the patch does NOT ship.
+  - **SX-734 (billing-retry gate) — FULLY GUTTED** in commit `7109ce1` (s01-a54f21). The `autoRetryBilling` setting gate landed (commit 54f7ef5), then SX-738 fixed undefined-settings ref (commit e403fab), then the entire layer was REMOVED — letting Pi handle billing errors natively (its `_isRetryableError` correctly excludes `extra usage`). Existing `tests/test-billing-retry-disabled.sh` is now stale and fails; cycle 15 plans cleanup.
 
   Both entries above need cleanup before this changelog is promoted to a versioned section. Cycle 15 (`audit-fix/15-stale-test-cleanup-sx727-sx734`) deletes the stale tests; the CHANGELOG entries themselves should be either removed or rewritten as REVERSED markers.
 
@@ -1102,12 +1604,12 @@ commits, none of them user-visible.
 
 - **SX-737 stable-v0.25.0 fallback branch + generic switch ref**
 - **Pi 0.72.1 bump** (SX-732). Updates `pi-ai`, `pi-coding-agent`, `pi-tui`, `pi-agent-core` from 0.71.0 to 0.72.1. Unlocks `shouldStopAfterTurn` agent loop callback (Pi 0.72.0+) — documented use case: *"request a graceful stop after the current turn, e.g. before context gets too full"* — the canonical mechanism for the upcoming v0.27 auto-breathe redesign. Pi's internal API rename (`compat.reasoningEffortMap` → `thinkingLevelMap`) audited clean: zero usage in Soma extensions. Removed providers (Gemini CLI / Antigravity) we don't reference. `npm audit`: 0 vulnerabilities post-bump.
-- **~~Anthropic `context-1m-2025-08-07` beta header patch~~** (SX-727) — REVERSED a prior session commit `da6b971`. See "Fixed" section above for full context. Original entry: *Soma now adds `context-1m-2025-08-07` to Anthropic's OAuth `anthropic-beta` header via `scripts/_dev/patches/apply-patches.sh`. Without this opt-in, Sonnet 4.6 hits the long-context billing tier ("extra usage" wall) at ~400K tokens.*
+- **~~Anthropic `context-1m-2025-08-07` beta header patch~~** (SX-727) — REVERSED s01-a54f21 commit `da6b971`. See "Fixed" section above for full context. Original entry: *Soma now adds `context-1m-2025-08-07` to Anthropic's OAuth `anthropic-beta` header via `scripts/_dev/patches/apply-patches.sh`. Without this opt-in, Sonnet 4.6 hits the long-context billing tier ("extra usage" wall) at ~400K tokens.*
 - **Doctor migration: `## Next Session` → `## Start Here` in active preloads** (SX-733). Closes the SX-729 loop for existing user preloads. Sentinel-gated `applyOnce("memory-section-rename-v0.26.0")` in BOTH Tier 1 sites (`extensions/soma-boot.ts` + `npm/thin-cli.js`). Strict heading-only regex; `_archive/` untouched (provenance). New regression test: `tests/test-memory-section-rename-migration.sh` (7 scenarios).
-- **~~Billing-error auto-retry disabled by default~~** (SX-734) — GATE GUTTED a prior session commit `7109ce1`. See "Fixed" section above for full context. Original entry: *Fix: gate auto-retry behind `settings.errors.autoRetryBilling` (default `false`). [...] New regression test: `tests/test-billing-retry-disabled.sh` (6 gates).* Reality: the autoRetryBilling gate AND the entire Soma billing-retry layer are now removed; Pi handles billing errors natively.
+- **~~Billing-error auto-retry disabled by default~~** (SX-734) — GATE GUTTED s01-a54f21 commit `7109ce1`. See "Fixed" section above for full context. Original entry: *Fix: gate auto-retry behind `settings.errors.autoRetryBilling` (default `false`). [...] New regression test: `tests/test-billing-retry-disabled.sh` (6 gates).* Reality: the autoRetryBilling gate AND the entire Soma billing-retry layer are now removed; Pi handles billing errors natively.
 
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
-<!-- a prior session: cycle 10/12/14 work added above; a prior session entries marked stale/reversed for ancestry. -->
+<!-- s01-a6b91e: cycle 10/12/14 work added above; s01-a54f21 entries marked stale/reversed for ancestry. -->
 
 
 ## [0.25.0] — 2026-05-04
@@ -1115,21 +1617,21 @@ commits, none of them user-visible.
 <!-- Entries accumulate here and get promoted to a versioned section on release. -->
 
 ### Added
-- **Preflight update prompt**. Cached `~/.soma/config.json:updateAvailable` (set by `soma-statusline` background check) now surfaces an interactive prompt at startup: `(c)ontinue / (u)pdate now / (s)kip this version`. Skip persists via `skipUpdateUntilTs` matched against `updateCheckTs` — new commits arrive, prompt re-fires. Zero network at boot. Replaces the misfiring Pi-cruft deprecation prompt that nagged on every startup. See `docs/troubleshooting.md § Startup Prompts`.
+- **Preflight update prompt** (s01-86b0fd). Cached `~/.soma/config.json:updateAvailable` (set by `soma-statusline` background check) now surfaces an interactive prompt at startup: `(c)ontinue / (u)pdate now / (s)kip this version`. Skip persists via `skipUpdateUntilTs` matched against `updateCheckTs` — new commits arrive, prompt re-fires. Zero network at boot. Replaces the misfiring Pi-cruft deprecation prompt that nagged on every startup. See `docs/troubleshooting.md § Startup Prompts`.
 - **`tests/test-shipped-templates-clean.sh` regression**. Locks the shipped `templates/default/_mind.md` AND the in-code `getDefaultMindTemplate()` fallback against re-introducing redundant `{{protocol_summaries}}` / `{{muscle_digests}}` / `{{scripts_table}}` interpolations. Four gates: source clean, dist mirrors source, warning comment present, fallback string clean.
 - **`tests/test-stale-ctx-after-rotation.sh` regression**. Static-scan + Pi `runner.js invalidate(...)` snapshot. Catches the SX-713 family (Pi 0.71.0 expanded the stale-ctx guard from `pi.X` to also cover `ctx.X`).
 - **`tests/test-mind-prepend-cleanup-migration.sh` + `tests/test-preflight-prompt.sh`** — fixture-based migration tests for v0.25.0 changes.
 - **Migration map `migrations/phases/v0.24.1-to-v0.25.0.md`** documenting the body/_mind.md cleanup migration + always-run sentinel pattern + preflight prompt.
 
 ### Changed
-- **Migrations now run UNCONDITIONALLY**. Previously gated behind `if (status.needsMigration)` (project version < agent version), missing users on current version with no sentinel — e.g. fresh init at current version, or manual settings.json edit. Now `applyOnce()` migrations run on every boot/doctor invocation; sentinels make them O(1) idempotent. Affects both `extensions/soma-boot.ts` Tier 1 and `npm/thin-cli.js` doctor mirror.
+- **Migrations now run UNCONDITIONALLY** (s01-86b0fd). Previously gated behind `if (status.needsMigration)` (project version < agent version), missing users on current version with no sentinel — e.g. fresh init at current version, or manual settings.json edit. Now `applyOnce()` migrations run on every boot/doctor invocation; sentinels make them O(1) idempotent. Affects both `extensions/soma-boot.ts` Tier 1 and `npm/thin-cli.js` doctor mirror.
 - **Doc updates**: `docs/troubleshooting.md` gains a `## Startup Prompts` section. `docs/getting-started.md` mentions the preflight prompt at first run. `docs/body.md` and `body/DNA.md` updated with the rationale for why `{{protocol_summaries}} / {{muscle_digests}} / {{scripts_table}}` are NOT in the shipped `_mind.md` template (compileFrontalCortex prepends them).
 - **`amps/muscles/internal/route-plumbing-first.md`**: TL;DR + symptom table now cover `ctx.X` access post-rotation (was `pi.X` only). Pi 0.71.0 expanded the guard.
 
 ### Fixed
-- **`/inhale` stale-ctx after Pi 0.71.0 guard expansion**. `extensions/soma-boot.ts` `/inhale` handler made 3 `ctx.ui.notify` calls AFTER `await ctx.newSession({})`, which Pi 0.71.0's expanded `runner.js invalidate()` guard now flags as stale. Fix: drop 2 redundant success notifies, route the degraded-state warning through `getRoute()?.get("ui:notify")`. Same family as SX-713 (`pi.sendUserMessage` post-rotation); muscle updated.
-- **`getDefaultMindTemplate()` inline fallback cleaned**. The fallback string at `core/body.ts:925` (used in test environments / `/soma debug` output when no shipped template is present) still interpolated `{{protocol_summaries}}\n\n{{muscle_digests}}` — inconsistent with the shipped template since `fcd32bd`. Fixed; locked by the new `test-shipped-templates-clean.sh`.
-- **Pi-cruft startup warnings removed**. `npm/migrations.js` `checkDeprecatedExtensionDirs` (Pi-inherited via SX-391 absorption) was warning users with `.soma/tools/` (Python scripts), `.soma/hooks/`, or `.soma/commands/` directories — none of which are Soma conventions. The Pi-rename history (Pi's old `tools/` → `extensions/` migration) doesn't apply to Soma. Function preserved as a no-op stub for future Soma-specific deprecations; warnings no longer fire.
+- **`/inhale` stale-ctx after Pi 0.71.0 guard expansion** (s01-86b0fd). `extensions/soma-boot.ts` `/inhale` handler made 3 `ctx.ui.notify` calls AFTER `await ctx.newSession({})`, which Pi 0.71.0's expanded `runner.js invalidate()` guard now flags as stale. Fix: drop 2 redundant success notifies, route the degraded-state warning through `getRoute()?.get("ui:notify")`. Same family as SX-713 (`pi.sendUserMessage` post-rotation); muscle updated.
+- **`getDefaultMindTemplate()` inline fallback cleaned** (s01-86b0fd). The fallback string at `core/body.ts:925` (used in test environments / `/soma debug` output when no shipped template is present) still interpolated `{{protocol_summaries}}\n\n{{muscle_digests}}` — inconsistent with the shipped template since `fcd32bd`. Fixed; locked by the new `test-shipped-templates-clean.sh`.
+- **Pi-cruft startup warnings removed** (s01-86b0fd). `npm/migrations.js` `checkDeprecatedExtensionDirs` (Pi-inherited via SX-391 absorption) was warning users with `.soma/tools/` (Python scripts), `.soma/hooks/`, or `.soma/commands/` directories — none of which are Soma conventions. The Pi-rename history (Pi's old `tools/` → `extensions/` migration) doesn't apply to Soma. Function preserved as a no-op stub for future Soma-specific deprecations; warnings no longer fire.
 
 
 ## [0.24.1] — 2026-05-03
@@ -1138,7 +1640,7 @@ commits, none of them user-visible.
 
 ### Fixed
 - **SX-722 — release-ship Step 7 silently swallowed pull failures** (`dcf8a3c`). `soma-release-ship.sh` was `(cd ~/.soma/agent && git pull ... || true)` and printed `✓ runtime updated` regardless of outcome. v0.24.0 shipped with the runtime worktree silently stuck at v0.23.0 because of this. Now: `git pull --ff-only`, then verify `package.json` version matches `NEW_VERSION` post-pull; on mismatch print full diagnostic + manual fix path and exit 1.
-- **scrape: `mkdir -p` dest before writing llms.txt** (`1ad8469`). Silent failure when `_website/` wasn't created — previously lost a fetched llms.txt this way (2026-04-27, lightpanda). Found as uncommitted edit on the runtime worktree during the a prior session cycle pass; lifted to dev. (`scripts/_pro/*` is gitignored from soma-beta release — dev/main only.)
+- **scrape: `mkdir -p` dest before writing llms.txt** (`1ad8469`). Silent failure when `_website/` wasn't created — previously lost a fetched llms.txt this way (2026-04-27, lightpanda). Found as uncommitted edit on the runtime worktree during the s01-f1230f cycle pass; lifted to dev. (`scripts/_pro/*` is gitignored from soma-beta release — dev/main only.)
 - **tsconfig hygiene** (`9f6b091`). Added `extensions/_archive/**` to `tsconfig.json` exclude. Cleared 15 TS7006 errors from `_archive/sx594-flat-wrappers/` that `npm run check` was reporting. Archived code shouldn't be type-checked.
 
 ### Added
@@ -1183,15 +1685,15 @@ commits, none of them user-visible.
 ## [0.23.0] — 2026-04-27
 
 ### Added
-- **tree-hygiene gate (Phase 0.5, SX-712)** — `soma-release-prepare.sh` halts if `repos/agent/` has uncommitted files other than ` M CHANGELOG.md`. Closes the agent-spawned-files-leaking-into-soma-beta hole observed a prior session. Override with `--skip-tree-hygiene` (writes audit trail). `.releaseignore` widened to cover `.soma/`, `.husky/`, `node_modules/`.
+- **tree-hygiene gate (Phase 0.5, SX-712)** — `soma-release-prepare.sh` halts if `repos/agent/` has uncommitted files other than ` M CHANGELOG.md`. Closes the agent-spawned-files-leaking-into-soma-beta hole observed s01-030d41. Override with `--skip-tree-hygiene` (writes audit trail). `.releaseignore` widened to cover `.soma/`, `.husky/`, `node_modules/`.
 - **`soma:agent.list` role filter (SX-701)** — pass `{role: 'librarian'}` (or any role string) to filter children by role. Stacks with existing `active_only`/`all`/`cleanup` filters. Useful when a parent has spawned multiple roles and wants to inspect just one cohort.
-- **somadian drift discipline — verify + lift + pre-commit gate (SOMADIAN-002)** — three scripts that enforce byte-identical shared code across the 4 somadian bins (cloud / enterprise / local / sidecar): `somadian-verify` detects drift, `somadian-mirror` lifts a canonical bin to the others, and `install-hooks.sh` wires a pre-commit gate that blocks divergent commits. Closes the silent-drift hole.
-- **namespace-rooted workspace target path** — `soma-workspace-migrate-legacy.sh` now writes to `~/.soma/<namespace>/workspaces/__legacy__/...` (was `~/.soma/workspaces/...`). Aligns with first-name-wins namespace shape (SOMAVERSE-019).
-- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
-- **soma-somaverse-deploy.sh — closes the build-vs-stamp race for somaverse (SOMAVERSE-009)** — mirrors `soma-somadian-deploy.sh` for the somaverse side. Enforces commit → build → deploy → verify ordering. The somaverse build embeds `git rev-parse HEAD` as the cache-buster (`main.js?v=<sha>`); building with uncommitted changes makes the deployed bundle report an older sha than its actual contents. Caught a prior session cycle 10 mid-deploy. Builds: `local` (build-only), `enterprise` (→ a client enterprise host), `vps` (→ somaverse.ai). End-to-end smoke verified live on enterprise build.
-- **soma-somadian-deploy.sh — closes the build-vs-rsync race (a prior session Cycle 15)** — enforces commit→rsync→build→deploy→verify order. Includes `rollback` command. Future deploys won't have stamp-vs-source mismatch. The Cycle 13 build had this race (binary had Cycle 13.5 fix but git_sha stamp was Cycle 13 commit).
-- **soma-voice-switch.sh — voice backend mutex orchestrator (a prior session W-3c)** — top-level orchestrator wraps the 3 individual lifecycle scripts and applies the mutex matrix (`use voxtral` kills openvoice + tts-server, starts voxtral; etc.). Used by `somaverse/.../server/bridge.ts` `POST /voice/use-backend` (pane wiring) AND `somaverse-addons/voice.ts` cap (agent surface) — single source of truth. `status` returns JSON for machine consumption.
-- **voice-backend lifecycle scripts** — 3 dev:* scripts in `scripts/_dev/`:
+- **somadian drift discipline — verify + lift + pre-commit gate (SOMADIAN-002, s01-ef2bdc)** — three scripts that enforce byte-identical shared code across the 4 somadian bins (cloud / enterprise / local / sidecar): `somadian-verify` detects drift, `somadian-mirror` lifts a canonical bin to the others, and `install-hooks.sh` wires a pre-commit gate that blocks divergent commits. Closes the silent-drift hole.
+- **namespace-rooted workspace target path (s01-ef2bdc)** — `soma-workspace-migrate-legacy.sh` now writes to `~/.soma/<namespace>/workspaces/__legacy__/...` (was `~/.soma/workspaces/...`). Aligns with first-name-wins namespace shape (SOMAVERSE-019).
+- **soma-workspace-migrate-legacy.sh — lazy migration W2 of plan 02 (s01-680a9c, preload #3)** — walks `~/.soma/plugins/<type>/state.json` and copies each into `~/.soma/workspaces/__legacy__/<type>/<type>-1.json` + registers in `~/.soma/workspaces/__legacy__/panes.json`. Idempotent (re-run skips already-registered instances). Skips leading-underscore types (`_test`, `_regression_test`) by default. Preserves old paths for one release cycle as fallback. Per `02-workspace-pane-config.md § Migration W2 (lazy)` and `~/.soma/workspaces/README.md`. Smoke-verified end-to-end against a tmp clone of `~/.soma/plugins/`: 8 panes migrated, registry built with types/paths/timestamps/provenance markers, re-run skipped all 8.
+- **soma-somaverse-deploy.sh — closes the build-vs-stamp race for somaverse (s01-680a9c, SOMAVERSE-009)** — mirrors `soma-somadian-deploy.sh` for the somaverse side. Enforces commit → build → deploy → verify ordering. The somaverse build embeds `git rev-parse HEAD` as the cache-buster (`main.js?v=<sha>`); building with uncommitted changes makes the deployed bundle report an older sha than its actual contents. Caught s01-680a9c cycle 10 mid-deploy. Builds: `local` (build-only), `enterprise` (→ a client enterprise host), `vps` (→ somaverse.ai). End-to-end smoke verified live on enterprise build.
+- **soma-somadian-deploy.sh — closes the build-vs-rsync race (s01-1bf0bb Cycle 15)** — enforces commit→rsync→build→deploy→verify order. Includes `rollback` command. Future deploys won't have stamp-vs-source mismatch. The Cycle 13 build had this race (binary had Cycle 13.5 fix but git_sha stamp was Cycle 13 commit).
+- **soma-voice-switch.sh — voice backend mutex orchestrator (s01-1bf0bb W-3c)** — top-level orchestrator wraps the 3 individual lifecycle scripts and applies the mutex matrix (`use voxtral` kills openvoice + tts-server, starts voxtral; etc.). Used by `somaverse/.../server/bridge.ts` `POST /voice/use-backend` (pane wiring) AND `somaverse-addons/voice.ts` cap (agent surface) — single source of truth. `status` returns JSON for machine consumption.
+- **voice-backend lifecycle scripts (s01-1bf0bb)** — 3 dev:* scripts in `scripts/_dev/`:
   - `soma-voxtral.sh` — local mlx Voxtral TTS (port 18795). macOS arm64 only; sweeps orphan procs.
   - `soma-openvoice.sh` — OpenVoice V2 voice-clone server (port 18793). Mirrors soma-racecar pattern.
   - `soma-tts-server.sh` — soma-voice/server/tts-server.py (port 18790, edge-tts + clone routing).
@@ -1209,10 +1711,10 @@ commits, none of them user-visible.
 - **Full Step 4 log on failure (S2, SX-667)** — `soma-release-ship.sh` now captures full `soma-release.sh` output to `/tmp/soma-release-step4-v$VERSION.log` and dumps the entire log on failure (was `tail -10`).
 
 ### Fixed
-- **`body/STATE.md` now scaffolds on fresh init (SX-669 follow-through)** — SX-669 retired the root `.soma/STATE.md` scaffold and declared `body/STATE.md` the canonical state slot. The migration comment in `core/init.ts:608` said `body/STATE.md` would be created by `templates/default/body/STATE.md` (handled by `scaffoldBody`) — but no `STATE.md` was ever added to `templates/default/`. Result: fresh init never created `STATE.md` anywhere, but the `_memory.md` preload template still told users to "Update STATE.md if branches, versions, or known bugs changed." Latent for ~6 weeks. Caught by sandbox smoke-test a prior session. Now ships a generic skeleton (Versions / Services / Tools / Known bugs / Recent shifts).
+- **`body/STATE.md` now scaffolds on fresh init (SX-669 follow-through)** — SX-669 (s01-88d4bd) retired the root `.soma/STATE.md` scaffold and declared `body/STATE.md` the canonical state slot. The migration comment in `core/init.ts:608` said `body/STATE.md` would be created by `templates/default/body/STATE.md` (handled by `scaffoldBody`) — but no `STATE.md` was ever added to `templates/default/`. Result: fresh init never created `STATE.md` anywhere, but the `_memory.md` preload template still told users to "Update STATE.md if branches, versions, or known bugs changed." Latent for ~6 weeks. Caught by sandbox smoke-test s01-b97ce5. Now ships a generic skeleton (Versions / Services / Tools / Known bugs / Recent shifts).
 - **`soma-release-prepare.sh` commit-msg-lint regex synced with `.git-hooks/commit-msg` (SX-702 follow-through)** — SX-702 fixed the hook to allow `.` in scope (`[a-z0-9_.-]+`) so dotted cap-name scopes like `agent.list` and `code.history` would pass. The companion regex in the orchestrator at `soma-release-prepare.sh:281` was missed and still rejected dots. Result: every dotted-scope commit was flagged NEEDS-REVIEW by the orchestrator even though the hook accepted it. Synced.
-- **`soma-sandbox.sh --main` worktree-aware** — pre-SX-652 the main branch lived at `$MEETSOMA/repos/agent-stable`. Post-SX-652 it lives at `$HOME/.soma/agent` (worktree-on-main). The `--main` source path was never updated and silently failed (`agent-stable not found`). Now points at the canonical runtime worktree.
-- **`soma-dev sandbox` wrapper repaired** — the wrapper at `scripts/_dev/soma-dev/commands/sandbox.sh` redirected to `$SOMA_DIR/amps/scripts/internal/soma-sandbox.sh`, a path that moved during a prior session consolidation. Wrapper was missed; `soma-dev sandbox` was silently broken for ~5 weeks. Now forwards to `scripts/_dev/sandbox/soma-sandbox.sh` (canonical kit).
+- **`soma-sandbox.sh --main` worktree-aware (s01-b97ce5)** — pre-SX-652 the main branch lived at `$MEETSOMA/repos/agent-stable`. Post-SX-652 it lives at `$HOME/.soma/agent` (worktree-on-main). The `--main` source path was never updated and silently failed (`agent-stable not found`). Now points at the canonical runtime worktree.
+- **`soma-dev sandbox` wrapper repaired (s01-b97ce5)** — the wrapper at `scripts/_dev/soma-dev/commands/sandbox.sh` redirected to `$SOMA_DIR/amps/scripts/internal/soma-sandbox.sh`, a path that moved during s01-c6944c consolidation. Wrapper was missed; `soma-dev sandbox` was silently broken for ~5 weeks. Now forwards to `scripts/_dev/sandbox/soma-sandbox.sh` (canonical kit).
 - **`soma-new` no longer pollutes agent install with spawned content (SX-710)** — `resolve_soma_dir()` walks up from `$PWD` looking for any `.soma/`; when invoked from inside `~/.soma/agent/`, it would resolve to the install's own dogfood `.soma/` (source-controlled, not a valid user-content target). Any `soma:new.muscle` / `soma:new.protocol` / `soma:new.child` call from inside the install would write into `~/.soma/agent/.soma/amps/...`. Fix: skip `~/.soma/agent/.soma` (symlink-safe via `pwd -P`) and continue the walk-up. Latent bug — no pollution found today, but the class is now closed.
 - **`build-dist.mjs` removes v0.6.6 protocols fallback entirely (SX-691 full)** — the fallback silently shipped frozen v0.6.6 protocols when `repos/community/` wasn't cloned alongside `repos/agent/`. 5 core protocols had drifted between canonical and frozen (verified by `dev:hub.audit`). Build now exits 1 with a clear pointer (`gh repo clone meetsoma/community`) instead of shipping stale.
 - **commit-msg lint allows `.` in scope (SX-702)** — conventional-commit scope regex was `[a-z0-9_-]+`, rejecting dotted scopes like `agent.list` and `code.history` (which match cap names). Caught when `feat(agent.list): ...` was silently rejected and `git push` said "Everything up-to-date" — cost ~2 min to diagnose. Fix: add `.` to the scope class.
@@ -1237,7 +1739,7 @@ _(no other behavior changes this release — see Added/Fixed.)_
 - **delegate progressive teaching (SX-665)** — `soma:agent.delegate` bare call (or `{help: true}`) returns a structured help payload: roles available (auto-discovered from `body/children/*.md`), models, recent children, examples, and a notice that async children don't yet ping on completion (see SX-664). Tool teaches itself; saves a tool round-trip when the parent doesn't remember the surface.
 - **child monitor improvements (SX-666)** — `soma:agent.list` now defaults to last-7-days (registry can grow long); accepts `{active_only: true}` to filter to running/spawning/completed-not-harvested; accepts `{cleanup: true}` to remove aborted/completed entries >24h old. Pass `{all: true}` to override the 7-day default.
 - **`soma:new.child` cap (SX-663)** — scaffold a new child role at `.soma/body/children/<name>.md` from `_child-template.md`, matching `soma:new.muscle` / `soma:new.protocol` pattern. Then edit the scaffold (set summary, default-model, inherits, guidelines), then `delegate({role:'<name>', task:'...'})`. Bundled `_child-template.md` ships with `soma init`.
-- **`keepalive.rollbackOnAbort` setting (SX-660, opt-in)** — when `true`, `lastActivityTs` rolls back on aborted/errored turns so the cache-TTL counter doesn't overstate after a user-aborted long-running tool call. Default `false` (no behavior change). Empirical evidence: aborted assistant messages have zero usage — API request never round-trips, so cache wasn't actually refreshed at the optimistic turn_start reset. Opt in via `.soma/settings.json` `keepalive.rollbackOnAbort: true`. See `releases/plans/active/agent-infra/README.md` § SX-660.
+- **`keepalive.rollbackOnAbort` setting (SX-660, opt-in)** — when `true`, `lastActivityTs` rolls back on aborted/errored turns so the cache-TTL counter doesn't overstate after a Curtis-aborted long-running tool call. Default `false` (no behavior change). Empirical evidence: aborted assistant messages have zero usage — API request never round-trips, so cache wasn't actually refreshed at the optimistic turn_start reset. Opt in via `.soma/settings.json` `keepalive.rollbackOnAbort: true`. See `releases/plans/active/agent-infra/README.md` § SX-660.
 - **Pi auto-fix loop on isolated worktree (SX-654)**
 - **prepare + ship orchestrator with checklog pattern (SX-653)**
 - **collapse agent + thin-CLI version trains (SX-659)**
@@ -1255,12 +1757,12 @@ _(no other behavior changes this release — see Added/Fixed.)_
 ## [0.22.0] — 2026-04-24 — Namespaced meta-tools end-to-end + bridge CLI + init hardening
 
 ### Fixed
-- **harden pairing flow — secret in header, umask, `curl --fail`, device-key shape-check (SX-audit)**
+- **harden pairing flow — secret in header, umask, `curl --fail`, device-key shape-check (SX-audit, s01-d7bdf0)**
 - **`SOMAVERSE_DIR` consumers use `builds/local/extensions` (SX-616)**
 - **stale-ctx guard on footer render; no more pi-tui crashes post-`/reload` (SX-633)**
 - **wire `soma-addons/` + `_shared/` end-to-end; Tier 2 addon-ship through release script (SX-594 Phase 3 / gap-addon-ship.md, SX-610)**
 - **`AGENT_VERSION` reads `dist/manifest.json` not `package.json` (SX-624 revises SX-619)**
-- **refresh `docs/guides/code-navigator.md` example + cap inventory (pre-release audit stale-ref sweep)**
+- **refresh `docs/guides/code-navigator.md` example + cap inventory (pre-release audit stale-ref sweep, s01-e3e1ed)**
 - **always stamp `AGENT_VERSION` in settings.json even when user template provides version field (SX-620)**
 - **copy `package.json` into `dist/` so `AGENT_VERSION` stamps correctly (SX-619, superseded by SX-624 for runtime path)**
 - **backport v0.21 cache economics to bundled defaults (SX-600)**
@@ -1437,7 +1939,7 @@ so the delta-diff and `/reload` signal can actually fire.
   keyword in the guard's pattern matched `SOMA_PROJECT_DIR` env mentions in
   benign output. Narrowed the pattern.
 
-### Verified end-to-end
+### Verified end-to-end (s01-b1b654)
 
 `delegate(background:true, terminal:'tmux', model:'haiku')` → `children(op:'list')`
 → `tail` → `steer` → `kill` → `harvest` against a real tmux-spawned child.
@@ -1471,13 +1973,13 @@ Release notes: `.soma/releases/v0.20.x/v0.21.1/release-notes.md`.
 - **soma-deploy.sh — thin wrapper on Dokploy API**
 - **browserCdpHost + browserCdpUrl — browser can live anywhere**
 - **browser profile tokenization — userDataDir + profileDirectory**
-- **Endpoint resolver (SX-513)** — single source of truth for every URL the agent touches. Tier 2 extensions (`bridge-connect`, `workspace-tools`) + dev scripts (`launch-browser`) now route through `_shared/env.ts` (Node side) + `soma-env.sh` (bash side). Mode taxonomy: `local` / `cloud` / `pro` / `enterprise` / `auto`. User default `cloud`; our dev default `auto` (probes localhost:18800, falls back to cloud). Config lives under `environment` in `settings.json` and is only read by the dev extension — prod has endpoints baked at build time.
+- **Endpoint resolver (SX-513, s01-6d05dd)** — single source of truth for every URL the agent touches. Tier 2 extensions (`bridge-connect`, `workspace-tools`) + dev scripts (`launch-browser`) now route through `_shared/env.ts` (Node side) + `soma-env.sh` (bash side). Mode taxonomy: `local` / `cloud` / `pro` / `enterprise` / `auto`. User default `cloud`; our dev default `auto` (probes localhost:18800, falls back to cloud). Config lives under `environment` in `settings.json` and is only read by the dev extension — prod has endpoints baked at build time.
 - **`bridge-connect-dev.ts`** — dev-only sibling of the shipped `bridge-connect.ts`. Reads `environment.mode` + overrides live, exposes a new `env_status` tool for runtime diagnostics. Installed via `soma-dev symlink extensions --dev`.
 - **`soma-env.sh`** — pure-bash resolver helper (no node dep, no cold start). Mirrors env.ts's defaults table. Parity guarded by `test-env-resolver-parity.sh` so the two implementations can't drift.
 - **`environment` block in `SomaSettings` interface** (`core/settings.ts`) — typed config for future agent-side `soma env` CLI; dev extensions read it today, prod extensions ignore it.
 - **Three new test suites** (`tests/test-env-resolver.sh`, `test-env-resolver-parity.sh`, `test-no-hardcoded-endpoints.sh`) — 25 + 24 + 4 assertions covering resolver behavior, shell/TS parity, and a golden-rule guard that catches any regression back to literal endpoints in migrated Tier 2 files.
 - **`SOMA_PROJECT_DIR` env var exported to discovered scripts (SX-555)** — when `soma <cmd>` dispatches to a discovered script (bundled / project / global), it now walks up from `$PWD` to find the nearest `.soma/` directory and exports the path as `SOMA_PROJECT_DIR`. Scripts can trust the env var instead of recomputing from `$0` (which breaks for bundled scripts living far from the user's project). Paired with the `resolve_soma_dir` helpers in `soma-refactor.sh` / `soma-seam.sh`.
-- **`soma update --yes` / `-y`** — skip the Y/N confirmation prompt in scripted upgrades. Closes the documented one-liner `npm install -g meetsoma@latest && soma update --yes`. Surfaced during the a prior session CLI audit (post-v0.20.3 follow-up).
+- **`soma update --yes` / `-y`** — skip the Y/N confirmation prompt in scripted upgrades. Closes the documented one-liner `npm install -g meetsoma@latest && soma update --yes`. Surfaced during the s01-c6944c CLI audit (post-v0.20.3 follow-up).
 
 ### Fixed
 - **ship .py helpers + _lib/ alongside .sh scripts**
@@ -1487,9 +1989,9 @@ Release notes: `.soma/releases/v0.20.x/v0.21.1/release-notes.md`.
 - **resolve soma_dir correctly + bash 3.2 compat + honest stable error**
 - **`soma refactor` / `soma seam` now resolve the right project directory when run outside cwd (SX-555)** — both scripts previously computed `SOMA_DIR` relative to their own install location, which broke for users whose project `.soma/` wasn't a sibling of the script. Added `resolve_soma_dir` helper that prefers `$SOMA_PROJECT_DIR`, then walks up from `$PWD`, then falls back to the legacy relative path. Also handles SIGPIPE gracefully (was killing piped output).
 - **`soma plans` bash 3.2 compat restored (SX-555)** — the `overlap` command used `declare -A` (associative arrays), which macOS bash 3.2 doesn't support. Rewrote to emit topic/path tuples to a tempfile, sort, and group — portable across bash versions. `get_field` now returns `|| true` so missing frontmatter fields don't trip `pipefail`.
-- **`soma-install.sh stable` gives an honest error (SX-555)** — `repos/agent-stable` was retired a prior session in favor of git tags. Stable mode now prints an explanation and points to the tag-based-install plan instead of failing silently.
+- **`soma-install.sh stable` gives an honest error (SX-555)** — `repos/agent-stable` was retired s01-419457 in favor of git tags. Stable mode now prints an explanation and points to the tag-based-install plan instead of failing silently.
 - **extractTldr no longer truncates multi-line TL;DRs**
-- **`symlink-extensions.sh` used stale post-restructure path** — was pointing at `somaverse/extensions/` (moved to `somaverse/builds/local/extensions/` in a prior session). Updated + added `--dev` flag that swaps the bridge-connect symlink to the dev variant.
+- **`symlink-extensions.sh` used stale post-restructure path** — was pointing at `somaverse/extensions/` (moved to `somaverse/builds/local/extensions/` in s01-efe898). Updated + added `--dev` flag that swaps the bridge-connect symlink to the dev variant.
 - **`build.sh` auth-gate temp files broke relative imports** — temps were written to `/tmp/` so esbuild couldn't resolve `./_shared/env.js`. Moved temps next to sources.
 
 ---
@@ -1509,7 +2011,7 @@ when body edits should be picked up.
 - **Commands doc — Reload & Rebuild section** (`docs/commands.md`) — explains the two commands, when to use each, and what the statusline indicators mean.
 
 ### Fixed
-- **Tier 2 extension build path updated for somaverse restructure** — `build-extensions/build.sh` SOMAVERSE_EXT now points to `somaverse/builds/local/extensions/` (moved a prior session). Unblocked v0.20.3 dry-run.
+- **Tier 2 extension build path updated for somaverse restructure** — `build-extensions/build.sh` SOMAVERSE_EXT now points to `somaverse/builds/local/extensions/` (moved s01-efe898). Unblocked v0.20.3 dry-run.
 - **`soma focus` restored.** Was silently broken since the Pro-scripts refactor moved `soma-seam.sh` into `scripts/_pro/` (and released form renamed to `.js`). `soma-focus.sh` only looked for `scripts/soma-seam.sh` and always errored. Now searches `scripts/`, `scripts/_pro/`, `$SOMA_DIR/amps/scripts/`, `~/.soma/amps/scripts/` and dispatches `node` for `.js` / `bash` for `.sh`. End-to-end verified.
 - **`docs/focus.md` accuracy.** Scoring table, force-include threshold, and heat formula were all out of date. Corrected to match `core/muscles.ts:matchMusclesToFocus` — trigger/keywords/topic list match (10), name (3), digest (2); force-include at `>= 8`; heat = `score + 2`; tags don't participate.
 - **`soma-dev sync-docs` walks subdirs.** `docs/guides/` was missing from the website; bash 3.2-compatible explicit loop added.
@@ -1543,7 +2045,7 @@ corrected in dev mode.
 ### Fixed
 - **Tool-registry timing fix (`37106e0`)** — `_tools.md` disable/override rules now apply at extension-load time. Pi loads extensions (calling `somaRegisterTool`) BEFORE firing `session_start`, so the previous `setToolConfigChain()` call ran too late. Fix: lazy chain self-discovery in `getToolConfig()` — walks up from `process.cwd()` if no explicit chain is set. 6 new timing tests added (62/62 total passing, was 56).
 
-- **`_mind.md` was orphaned** since Phase 1c.1 (`a prior session`). The Pi-native shortcut returned `event.systemPrompt` unchanged when `SYSTEM.md` + `APPEND_SYSTEM.md` existed, bypassing the template compiler. User customizations to `body/_mind.md` had no effect. The shortcut is removed. `compileFullSystemPrompt` (template-driven via `compileWithTemplate`) is now the single path. `SYSTEM.md` / `APPEND_SYSTEM.md` writes redirect to `.soma/state/` as introspection artifacts; Pi no longer auto-discovers them.
+- **`_mind.md` was orphaned** since Phase 1c.1 (`s01-a1a6aa`). The Pi-native shortcut returned `event.systemPrompt` unchanged when `SYSTEM.md` + `APPEND_SYSTEM.md` existed, bypassing the template compiler. User customizations to `body/_mind.md` had no effect. The shortcut is removed. `compileFullSystemPrompt` (template-driven via `compileWithTemplate`) is now the single path. `SYSTEM.md` / `APPEND_SYSTEM.md` writes redirect to `.soma/state/` as introspection artifacts; Pi no longer auto-discovers them.
 - **`soma --version`** in dev mode showed runtime v0.20.2 instead of CLI v0.3.5. `npm/thin-cli.js` read `__dirname/../package.json`, which resolved to agent's package.json in dev-symlink installs. Esbuild `--define:__CLI_VERSION__` + `build-dist.mjs` string-substitution now inject the correct literal.
 - **Restart alert too aggressive.** Pi `/reload` hot-reloads extensions via `jiti.import` (mtime-keyed cache) — `extensions/*.ts` edits don't need a full process restart. `.git-hooks/post-commit` now classifies changed files: `extensions/*.ts` and `core/*.ts` → `severity=reload`; `core/*.js` and `dist/*` → `severity=restart`. `soma-statusline` reads severity and shows the matching message.
 - **Script no-flag UX (SX-490):** `soma-login` no longer starts OAuth without an explicit `start` subcommand. `soma-snapshot` no longer snapshots CWD without an explicit path — bare invocation prints help + recent snapshots. `soma-theme` now prints help when executed directly (still sources cleanly). `git-identity-hook` unchanged (silent exit-0 is correct for a git hook).
@@ -1660,7 +2162,7 @@ until Phase 1c.2 (planned deletion of ~300 LOC rebuild path).
 
 ### Notes
 
-- **Sandbox verified end-to-end** (session `a prior session`): Pi-native path active,
+- **Sandbox verified end-to-end** (session `s01-5c01df`): Pi-native path active,
   APPEND content visible in system prompt including Behavioral Rules, Muscle Memory,
   Tools section with all 6 tools (read, bash, edit, write, code_find, code_map,
   code_refs, code_structure, code_blast, delegate), and Tool Guidelines. Model
@@ -1778,7 +2280,7 @@ Curator loop + specialized child roles (verifier, builder, curator). Closes the 
 - **`soma-dev children apply <proposal-id> [--force]`** — append amendment to role.md section, archive to `proposals/_applied/`. Auto-apply default; `--force` for propose-class (v0.20.1 still gates non-`accumulated_knowledge` sections).
 - **Chain-walk in `children.sh`** (SX-482). Port of `core/discovery.ts:getSomaChain` to bash. Shell subcommands now resolve roles across the full soma chain (project → parent → global `~/.soma`), matching runtime behavior. Adds per-role `source` column in `list` (project/parent/global) and `--soma=<path>` pin flag.
 - **Dedup in curator flow** (SX-481 fixup). `hasAmendmentInRole` + `hasProposalBeenApplied` helpers prevent duplicate bullets when curator runs on different days (slug-based dedup includes date, so same text on new day previously slipped through). Applied at both `buildProposal` (skip before write) and `apply-proposal` (skip + archive-only, defense in depth).
-- **`resolveTools` honors `bash` in read-only roles** (a prior session fix). `createReadOnlyTools()` upstream returns `[Read, Grep, Find, Ls]` with no Bash; `resolveTools` was dropping the `bash` declaration for any role without edit/write. Now rebuilt declaratively from 7 individual constructors so `[read, bash]` resolves correctly.
+- **`resolveTools` honors `bash` in read-only roles** (s01-b420d5 fix). `createReadOnlyTools()` upstream returns `[Read, Grep, Find, Ls]` with no Bash; `resolveTools` was dropping the `bash` declaration for any role without edit/write. Now rebuilt declaratively from 7 individual constructors so `[read, bash]` resolves correctly.
 
 ### Changed
 - `buildProposal` signature: optional `cwd` + `somaDirPath` params so library callers can thread the caller's chain into role discovery (instead of relying on `process.cwd()`).

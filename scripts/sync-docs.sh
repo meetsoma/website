@@ -76,6 +76,7 @@ MANIFEST=(
   "guides/customization.md|Customization|How to make Soma yours — identity, voice, rules, tools, and prompt structure.|Guide|26"
   "guides/first-protocol.md|Your First Protocol|Turn a repeated correction into a permanent rule.|Guide|27"
   "guides/code-navigator.md|Code Navigator|soma code — agent-first codebase navigator with auto-detect, progressive scan, hard timeouts, and 12-language map support. (s01-4d36c6: missing-from-manifest fix)|Guide|28"
+  "guides/managing-images-and-context.md|Managing Images & Context|Screenshots fill a context window fastest and are the usual way a long session dies. What /reduce does, when reducing pays for itself, and when to rotate instead.|Guide|40"
   "hub.md|Hub|Install, share, and discover community content.|Core Concepts|5.1"
   "troubleshooting.md|Troubleshooting|Common issues and fixes.|Reference|22"
   "updating.md|Updating|How to keep Soma up to date across projects.|Reference|20"

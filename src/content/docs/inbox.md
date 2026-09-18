@@ -2,7 +2,7 @@
 title: "Inbox"
 description: "Asynchronous messaging between agents, sessions, and humans — file-based, no automation needed."
 section: "Core Concepts"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 4.5
 ---
 
@@ -34,6 +34,13 @@ Drop a markdown file in `.soma/inbox/`. On the next boot, Soma scans the directo
 The agent sees unread messages at session start — no command needed, no automation required. Just files.
 
 ## Writing a Message
+
+**Use `soma:inbox.send`** — it writes the letter with exactly the frontmatter the readers
+parse, so the fields can't drift from what `inbox.list` and the boot announcement expect.
+Hand-authoring (below) still works and documents the format, but the cap exists precisely
+because hand-written frontmatter drifted. A letter whose `to:` names a live session is
+announced to that session once its current turn finishes — the recipient doesn't have to go
+looking.
 
 ### File Naming
 

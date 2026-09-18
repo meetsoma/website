@@ -2,7 +2,7 @@
 title: "AMPS"
 description: "The four layers that make Soma grow — Automations, Muscles, Protocols, Scripts. How they connect, how they evolve, and why they replace flat config files."
 section: "Core Concepts"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 2.8
 ---
 
@@ -49,7 +49,7 @@ Each layer references the others. A MAP lists which muscles to load. A muscle li
 
 ## How They Grow
 
-**Day 1:** You run `soma init`. You get 18 protocols and an empty `.soma/` directory. No muscles. No scripts. No MAPs.
+**Day 1:** You run `soma init`. You get 24 protocols and an empty `.soma/` directory. No muscles. No scripts. No MAPs.
 
 **Week 1:** The agent notices patterns. You correct it a few times. Those corrections become muscles. You ask it to do the same workflow twice. It builds a script.
 

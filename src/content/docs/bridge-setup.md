@@ -2,7 +2,7 @@
 title: Bridge Setup for Soma
 description: Configure the local Somaverse bridge daemon — lifecycle, config, connectivity
 status: shipped-v0.22.0
-updated: 2026-08-10
+updated: 2026-09-18
 ---
 
 # Bridge Setup
@@ -102,7 +102,7 @@ The bridge is one layer; pairing to the Somaverse hub is another. Pair once
 via `soma login start` — this writes `~/.soma/device-key` (chmod 600) used by
 `bridge-connect.ts` to authenticate against `api.somaverse.ai`.
 
-Run `soma login --help` for the pairing flow.
+See [login-setup.md](./login-setup.md) for the pairing flow (or run `soma login --help`).
 
 ## Architecture layers
 
@@ -183,4 +183,4 @@ the PID and trust the `/health` line.
 ## See also
 
 - [browser-setup.md](./browser-setup.md) — CDP endpoint config (works without bridge)
-- `soma login --help` — hub pairing
+- [login-setup.md](./login-setup.md) — pairing this device with Somaverse

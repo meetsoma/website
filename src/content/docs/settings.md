@@ -2,7 +2,7 @@
 title: "Engine Settings"
 description: "All runtime settings — models, compaction, UI, retry, shell, and more."
 section: "Reference"
-updated: 2026-07-31
+updated: 2026-09-18
 order: 6.3
 ---
 
@@ -128,6 +128,29 @@ Controls how long conversations are summarized to stay within context limits.
 |---------|------|---------|-------------|
 | `steeringMode` | string | `"one-at-a-time"` | How steering messages are sent: `"all"` or `"one-at-a-time"` |
 | `followUpMode` | string | `"one-at-a-time"` | How follow-up messages are sent |
+
+## Delegation
+
+Read from `~/.soma/agent/settings.json` when `soma:agent.delegate` spawns a child.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `delegate.defaultModel` | string | — | Model for any child whose call and role name none. Below an explicit `model:` and a role's `default-model`; above the first entry of `enabledModels`. |
+| `delegate.headlessChain` | string[] | built-in list | Models a **headless** child (`headless:true`, chains, or a non-`claude-cli` sync call) tries in order when none is named, as `"provider/model"`. Free tiers end and rate-limit without notice — when headless work starts failing with 4xx or "unavailable", edit this list. Four or five entries across providers lets a burst of children survive a per-minute limit. |
+| `delegate.terminal` | string | auto | Terminal driver for `background:true` children (`"tmux"`). `soma terminals prefer <driver>` writes it. |
+
+```json
+{
+  "delegate": {
+    "defaultModel": "mistral/mistral-medium-latest",
+    "headlessChain": [
+      "opencode/big-pickle",
+      "opencode/nemotron-3.5-lightning-free",
+      "nvidia/nvidia/nemotron-3-super-120b-a12b"
+    ]
+  }
+}
+```
 
 ## Branch Summary
 

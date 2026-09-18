@@ -15,7 +15,7 @@ Protocols are behavioral rules that guide Soma's actions. They live in `.soma/am
 
 ## Built-in Protocols
 
-Soma ships with 16 protocols, scaffolded on `soma init`:
+Soma ships with 24 protocols, scaffolded on `soma init`:
 
 | Protocol | Default Heat | What It Does |
 |----------|-------------|-------------|
@@ -123,9 +123,35 @@ gates:
 
 | mode | behaviour |
 |---|---|
-| `remind` (default) | Blocks **once**, shows `rule`, and the identical retry goes through. Repeats on a later independent break; at 5 it suggests writing a muscle. |
+| `remind` (default) | Blocks **once**, shows `rule`, and the identical retry goes through. A `paths` gate then stays quiet for the rest of the session; a `command` gate repeats on a later independent break, and at 5 suggests writing a muscle. |
 | `block` | Stays blocked until `read-first` has been read this session. For the rare thing that must not proceed unread. |
 | `warn` | UI notice only. ⚠ The model does **not** see notifications — `warn` reminds a human, not the agent. |
+
+> 🔑 **A `paths` gate says its piece once per session; a `command` gate can repeat.** The asymmetry
+> is deliberate. A path gate only knows that a file under a directory was touched — not whether you
+> followed the rule — so counting its hits measures how busy that directory is, not how often you
+> erred. A command gate matched the forbidden command itself, so a repeat is a real repeat.
+
+**Turning them off**
+
+| command | effect |
+|---|---|
+| `/gates` | list every protocol that declares gates, and whether it's on |
+| `/gates off` | all gates off |
+| `/gates off <protocol>` | that protocol's gates off (`.md` and case optional) |
+| `/gates on` · `/gates on <protocol>` | back on |
+
+**The state sticks** — it's written to your project's `settings.json` (`guard.gates`,
+`guard.gatesOff`) and carries to the next session. Granularity is the protocol, not the individual
+gate: that name is stable and typeable, and it's how you already think about them.
+
+Reach for this when a gate ships inside a protocol you don't own — deleting it from a bundled or
+hub-installed protocol just means an update puts it back. Core-file protection and the
+dangerous-command confirms are separate mechanisms and are **not** affected.
+
+> ⚠ **If a gate annoys you, the gate is usually wrong.** Read its `rule` text: if it *reassures*
+> ("you're in the right place") rather than naming a mistake, every firing is a false positive by
+> construction — delete it. `/gates off` is for when you want quiet now; deleting is the fix.
 
 **A gate can point at a muscle**
 

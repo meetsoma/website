@@ -2,7 +2,7 @@
 title: "Skills"
 description: "Install and create skills — self-contained capability packages loaded on demand."
 section: "Extending"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 5.3
 ---
 
@@ -28,15 +28,27 @@ Skills are loaded from these locations:
 | Location | Scope | Walk-up |
 |---|---|---|
 | `<cwd>/.soma/skills/` | Project-local — loads only in this project | No (cwd only) |
-| `~/.soma/skills/` | **User-global** — loads for all your Soma sessions | No |
+| `~/.soma/skills/` | ⚠ **Not loaded today** — see the note below | No |
 | `~/.soma/agent/skills/` | Runtime-bundled — ships with Soma; **do not write here** | No |
 | `~/.agents/skills/` | Cross-agent standard — shared with Claude Code, Cursor, etc. | **Yes** (ancestors) |
 
-**Where to put YOUR skills:** `~/.soma/skills/` for personal/global, or `<project>/.soma/skills/` for project-scoped. The `~/.soma/agent/skills/` location is the runtime install and is gated by soma-guard — writes there are blocked by default because they'd be lost on the next Soma update.
+Two controls over what reaches the catalog: paths with a `_` prefix (`skills/_archive/`,
+`skills/_template/`) never load, and `skills.deny` in `.soma/settings.json` hides a named skill
+without moving or deleting it — useful when a doorway skill already routes to the same content.
+Duplicate skill names in the emitted catalog are detected and reported.
+
+**Where to put YOUR skills:** `~/.agents/skills/` for personal/global, or `<project>/.soma/skills/` for project-scoped. The `~/.soma/agent/skills/` location is the runtime install and is gated by soma-guard — writes there are blocked by default because they'd be lost on the next Soma update.
+
+> ⚠ **`~/.soma/skills/` does not reach the prompt right now.** Soma passes `--skill ~/.soma/skills`
+> at startup, and the skills there are still not advertised — measured 2026-08-12: 26 of the 30 dirs
+> in one such folder appeared nowhere in the compiled prompt, with no error. **Put personal skills in
+> `~/.agents/skills/` instead** (the cross-agent directory, discovered natively and verified working),
+> or symlink: `ln -s ~/.soma/skills/my-skill ~/.agents/skills/my-skill`.
+> Tracking: `generated-body` QUEUE B17.
 
 **Opt-out:** `--no-skills` (or `-ns`) skips skill discovery for one session.
 
-**Migration tip:** if you have a setup with `~/.agents/skills/` symlinked to a single home (e.g. `ln -s ~/.soma/skills ~/.agents/skills`), that still works. Soma now also loads `~/.soma/skills/` natively, so the symlink isn't required.
+**Migration tip:** if you have `~/.agents/skills/` symlinked to a single home (e.g. `ln -s ~/.soma/skills ~/.agents/skills`), that still works — **and it is currently the only way `~/.soma/skills/` content gets loaded.** An earlier version of this page said the symlink was no longer required; that was wrong, and it is the reason the note above exists.
 
 ## Using Skills
 

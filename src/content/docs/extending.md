@@ -2,7 +2,7 @@
 title: "Extending Soma"
 description: "Skills, extensions, events, APIs — build on top of Soma."
 section: "Extending"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 5
 ---
 
@@ -194,7 +194,7 @@ individual caps do. Cap details are returned at runtime by `op:'list'` /
 `execSync("soma code ...")` or `spawn("bash", [scriptPath, ...])`. The
 subprocess loads the script's bytes from disk at exec time — not from any
 Node cache. Edit, save, next invocation runs the new code. This is the
-"tooling tied to CLI" pattern Curtis verified previously: e.g. editing
+"tooling tied to CLI" pattern verified previously: e.g. editing
 `scripts/_dev/soma-audit-tickets.sh` doesn't need `/reload` because
 `dev-addons/audit.ts` only spawns it; the bash script itself isn't in JS
 memory.
@@ -366,7 +366,7 @@ Soma uses three top-level meta-tools to organize capabilities. Each is a single 
 |-----------|----------|--------------|------|
 | `soma:*` | Every Soma install | Ships in npm tarball | `soma:agent.*`, `soma:body.*`, `soma:browser.*`, `soma:code.*`, `soma:docs.*`, `soma:focus.*`, `soma:github.*`, `soma:new.*`, `soma:terminals.*` |
 | `somaverse:*` | Somaverse-licensed | Proprietary, separate install | workspace ops, plugin builder, AI helpers |
-| `dev:*` | **Agent contributors only** | Build-excluded from npm + soma-beta | `dev:hub.*` (hub introspection), `dev:audit.*` (deps + CI) |
+| `dev:*` | **Agent contributors only** | Build-excluded from npm + soma-beta | `dev:hub.*` (hub introspection), `dev:audit.*` (deps + CI), `dev:opencode.*` (ask/poll/models transform transport) |
 
 ### When to add a new cap
 

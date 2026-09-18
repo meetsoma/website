@@ -2,7 +2,7 @@
 title: "How It Works"
 description: "Breath cycle, identity, muscles, protocols, context management."
 section: "Core Concepts"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 2
 ---
 
@@ -116,7 +116,7 @@ Heat rises when protocols get used (+1 per action, +2 per explicit reference) an
 
 See [Heat System](/docs/heat-system) for the complete guide.
 
-##***REMOVED*** Scoping
+### Scoping
 
 Protocols declare which projects they apply to via an `applies-to` field. For example, `git-identity` only loads in projects with a `.git/` directory. Meta-protocols like `breath-cycle` use `applies-to: [always]`.
 
@@ -144,7 +144,7 @@ Soma monitors context usage and provides escalating warnings. All thresholds are
 |-----------|---------|--------|
 | `notifyAt` | 50% | Info notification |
 | `urgentAt` | 80% | "Wrap up" warning injected into prompt |
-| `autoExhaleAt` | 85% | **Auto-flush** — writes preload, commits, continues |
+| `autoExhaleAt` | 85% | **Safety net** — asks for the preload and keeps running. Set `breathe.onFull: "rotate"` to rotate here instead |
 
 For longer sessions, push thresholds up. For aggressive context management, pull them down.
 

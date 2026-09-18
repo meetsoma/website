@@ -111,7 +111,7 @@ Rules are **protocols** — markdown files in `.soma/amps/protocols/`.
 
 ### Use a Built-in Protocol
 
-Soma ships 16 protocols. Browse them:
+Soma ships 24 protocols. Browse them:
 
 ```bash
 ls .soma/amps/protocols/

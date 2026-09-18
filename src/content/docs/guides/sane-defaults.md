@@ -101,7 +101,7 @@ Legend: `✓` matches target, `?` settings.json exists but no `defaultModel`, `-
 
 ```bash
 soma terminals list                       # drivers + availability
-soma terminals detect                     # list + recommendation
+soma terminals detect [--json]            # your terminal app + list + recommendation
 soma terminals status                     # current configured driver
 soma terminals prefer <driver>            # persist to ~/.soma/settings.json
 soma terminals setup [<driver>]           # install + verify walkthrough
@@ -112,7 +112,12 @@ soma terminals doctor [<driver>]          # diagnose why a driver isn't working
 
 ```bash
 soma terminals detect
-# → Recommendation: Use 'tmux' — tmux (detached session, attach-on-demand)
+# → Terminal
+#     app        warp (env)
+#     container  tmux
+#     in tmux    false
+#   …
+#   Recommendation: Use 'tmux' — tmux (detached session, attach-on-demand)
 #   Run: soma terminals prefer tmux to persist.
 
 soma terminals prefer tmux

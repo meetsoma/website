@@ -2,7 +2,7 @@
 title: "MAPs"
 description: "My Automation Protocol Scripts — reusable workflow templates that tell the agent which muscles to load, which scripts to run, and in what order."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-07-12
 order: 10
 ---
 

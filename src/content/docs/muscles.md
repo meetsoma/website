@@ -8,7 +8,7 @@ order: 5.5
 # Muscles
 
 <!-- tldr -->
-Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, topic, keywords, heat, loads). Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = TL;DR only, cold = name listed. Add a `## TL;DR` section — it's what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
+Learned patterns in `.soma/amps/muscles/` as markdown with frontmatter (type, status, topic, keywords, `heat-default`). Live heat lives in `.soma/state.json`, not the file — frontmatter `heat:` is only a first-sight seed. Loaded by heat within token budget (default: 2000). Hot (≥5) = full body, warm (≥1) = TL;DR only, cold = name listed. Add a `## TL;DR` section — it's what loads 90% of the time. `/pin` to keep hot, `/kill` to drop cold.
 <!-- /tldr -->
 
 Muscles are **learned patterns** — reusable knowledge that Soma builds from experience. Unlike protocols (which are behavioral rules you write), muscles emerge organically from work. They're Soma's playbook.
@@ -101,7 +101,7 @@ Always verify with curl after deploy. Check build output for page count changes.
 | `keywords` | `string[]` | Finer search terms for lookup and focus matching |
 | `triggers` | `string[] \| object[]` | Focus triggers — keywords that auto-activate this muscle (see [Focus](/docs/focus)) |
 | `tools` | `string[]` | Scripts this muscle relates to |
-| `heat` | `number` | Current heat level — determines loading tier |
+| `heat` | `number` | **Seed only.** Read once, the first time Soma sees the muscle, to create its `state.json` entry — then ignored. Editing it later changes nothing; live heat is in `.soma/state.json` and moves with your usage. Use `heat-default` to set the floor it decays to. |
 | `loads` | `number` | Legacy boot-load counter (no longer written as of v0.35.x; heat lives in state.json). |
 | `created` | `date` | When the muscle first formed |
 | `updated` | `date` | Last modification |

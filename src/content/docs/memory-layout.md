@@ -2,7 +2,7 @@
 title: "Memory Layout"
 description: "Project vs user level storage, git strategy, data flow."
 section: "Core Concepts"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 4
 ---
 
@@ -91,7 +91,7 @@ Soma identifies a valid `.soma/` directory by looking for at least one of:
 | `memory/` | **Gitignored** | Session-specific, personal |
 | `state.json` | **Gitignored** | Personal heat state |
 
-**Auto-checkpoint:** `.soma/` commits itself — `settings.checkpoints.soma.autoCommit` (on by default) checkpoints tracked content in the background. **You don't `git add` / `git commit` inside `.soma/` manually**; Soma handles it. Your *project* repos (the code you ship) still need normal commits. Put new content where it fits the project's existing structure (`amps/`, `skills/`, `memory/`, and whatever organizing folders the project has grown — `plans/`, `cycles/`, `releases/`, `docs/` …); add a new top-level folder only when a genuinely new *kind* of thing has no home — staying in step with the project's conventions rather than imposing a fresh layout.
+**Auto-checkpoint:** `.soma/` commits itself — `settings.checkpoints.soma.autoCommit` (on by default) checkpoints tracked content in the background, every 5 turns AND on a 45-second quiet timer (`checkpoints.soma.quiescenceSeconds`, `0` to disable), so a long turn gets an interim commit before a crash can lose it. Each commit carries `Soma-Session:`/`Soma-Origin:` git trailers, so state changes stay attributable when several agents share one workspace. In a shared tree the checkpoint stages **only what your session wrote** plus known runtime state — a sibling's in-flight edit is never swept into your commit — and edits you make to *another* project's `.soma` are checkpointed there too, with the partial scope reported. **You don't `git add` / `git commit` inside `.soma/` manually**; Soma handles it. Your *project* repos (the code you ship) still need normal commits. Put new content where it fits the project's existing structure (`amps/`, `skills/`, `memory/`, and whatever organizing folders the project has grown — `plans/`, `cycles/`, `releases/`, `docs/` …); add a new top-level folder only when a genuinely new *kind* of thing has no home — staying in step with the project's conventions rather than imposing a fresh layout.
 
 ## User-Level: `~/.soma/agent/`
 

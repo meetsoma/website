@@ -2,7 +2,7 @@
 title: "Commands"
 description: "Slash commands, CLI flags, context warnings, the breath cycle."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 7
 ---
 
@@ -20,7 +20,7 @@ These are **slash commands** used inside the Soma TUI during a session.
 
 | Command | Description |
 |---------|-------------|
-| `/inhale` | **Reset session and load preload.** Saves heat state, starts a fresh session, and loads the most recent preload. Two use cases: (1) you started with plain `soma` and want the preload — `/inhale` resets and loads it. (2) You `/exhale`’d, updated the preload, and want to continue — `/inhale` gives you a fresh session with your curated preload. Warns if preload is stale (>5 tool calls since written). Use `--force` to override. |
+| `/inhale` | **Reset session and load preload.** Saves heat state, starts a fresh session, and loads the most recent preload. Two use cases: (1) you started with plain `soma` and want the preload — `/inhale` resets and loads it. (2) You `/exhale`’d, updated the preload, and want to continue — `/inhale` gives you a fresh session with your curated preload. Warns if preload is stale (>5 tool calls since written). Use `--force` to override. `/inhale <arc>` finds the preload for that arc by arc name, not just filename — ambiguous matches list the candidates. |
 | `/breathe` | Save state and rotate into a fresh session. Seamless rotation - exhale + inhale in one motion. |
 | `/exhale ["note"]` | Save state to disk. Writes `preload-next-<date>-<id>.md` to `memory/preloads/`, saves heat state with decay for unused content. Signals shared preload lifecycle (state → `REQUESTED`) so auto-rotation safety net defers. Session ends. **Optional note:** text after `/exhale` is injected as a `⚠️ USER NOTE` block — the agent uses it to scope this wrap ("quick" skips body audit + MLR) AND to pass directives forward to the next session. (v0.28.1) |
 | `/rest` | Going to bed? Disables cache keepalive, then exhales. No pings will fire after you walk away. |
@@ -143,7 +143,7 @@ Soma monitors context usage and warns at configurable thresholds:
 |---------|---------|----------|
 | `context.notifyAt` | 50% | Gentle note: "Context halfway" |
 | `context.urgentAt` | 80% | Strong suggestion to exhale soon (injected into prompt) |
-| `context.autoExhaleAt` | 85% | Auto-exhale triggers - state saves, session rotates |
+| `context.autoExhaleAt` | 85% | Safety net fires — by default it asks for a preload and keeps running (`breathe.onFull`) |
 
 Override in `settings.json` - see [Configuration](configuration.md#context-warnings).
 
@@ -235,11 +235,14 @@ When screenshots accumulate in a session, the JSONL file grows large (10-20MB) a
 | `soma children tail <id>` | Tail a specific child's pane. |
 | `soma children kill <id>` | Terminate a child. |
 | `soma terminals list` | Show all terminal drivers with availability (tmux, cmux). |
-| `soma terminals detect` | Same as list + recommended driver for this machine. |
+| `soma terminals detect [--json]` | Which terminal app you are in (`warp`, `iterm`, … — sees through tmux), then the driver list + a recommendation. `--json` prints one line: `{app, insideTmux, container, source}`. |
 | `soma terminals status` | Current configured driver (from `~/.soma/settings.json`). |
 | `soma terminals prefer <driver>` | Persist driver preference to settings.json. |
 | `soma terminals setup [<driver>]` | Walkthrough install + configure. No arg = detect first. |
 | `soma terminals doctor [<driver>]` | Diagnose why a driver isn't working + suggest fixes. |
+| `soma terminals open <layout.json>` | Put commands where you are looking. In Warp: a new tab in the active window with the panes pre-split (a Tab Config). Inside tmux: splits your current window. Anywhere else: splits only if you configured a viewer (`delegate.viewer`), otherwise prints the commands to run. `--dry-run` shows what it would do; `--adapter warp\|tmux\|viewer` forces one. Exit 0 = opened, 1 = handed you the commands. |
+| `soma terminals grid <id>...` | `open` with one pane per session, each running `soma attach <id>`. |
+| `soma terminals tune [--yes] [--remove] [--json]` | Checks the four tmux keys that let a modern terminal's key combos, images and focus reach the agent inside (`extended-keys`, `terminal-features extkeys`, `allow-passthrough`, `focus-events`). Shows what is missing, asks, then appends one fenced `# >>> soma tmux >>>` block to your tmux conf (backup taken; running server reloaded). `--remove` takes the block out again. `soma doctor` mentions it when something is unset. |
 | `soma model-sync` | Audit `defaultModel` across global + project scopes. Read-only without `--set`. |
 | `soma model-sync --set <id> [--crawl] [--yes]` | Set `defaultModel` at global + current project (and optionally all crawled `.soma/` dirs). `--yes` skips confirmation. |
 
@@ -276,9 +279,187 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 | `soma` | **Fresh session** — runs the full boot sequence (identity, protocols, muscles, git context). By default does NOT load a preload (new projects have `preload.autoInject: false`). Use `soma inhale` to load your preload explicitly. |
 | `soma inhale` | **Fresh session + preload** — starts a new session and loads the most recent preload. The recommended daily workflow: `/exhale` → review/update preload → `soma inhale`. |
 | `soma inhale --list` | **Show available preloads** — lists all preloads with age and staleness. Stale (>48h) preloads are flagged with ⚠. Use to see what the agent will load. |
-| `soma inhale <name>` | **Load a specific preload** — partial name match (e.g. `soma inhale s01-19a716`). Useful when you want a specific session's context, not the latest. |
+| `soma inhale <name>` | **Load a specific preload** — partial name match (e.g. `soma inhale s01-19a716`). Useful when you want a specific session's context, not the latest. Composes with `--model` and other session flags. |
+| `soma preload` 🚧 | **List preload lanes** — one row per preload: age, arc, lane, what it supersedes, and **which one a bare boot would take** (boot picks newest by mtime, arc-blind). With two live lanes, this is how you choose instead of racing mtimes. |
+| `soma --package <a,b>` | **Mount only these domain packages** for the session — the rest of your declared packages (their doorway, protocols, muscles, body files, tools) stay out. Repeatable; composes with `soma inhale`. A preload can say the same thing with `focus: [a, b]` in its frontmatter. See [Domain packages → Focusing a session](/docs/domain-packages#focusing-a-session-on-some-of-them). |
+| `soma preload <#\|name>` 🚧 | **Start a session on that preload** — by row number or partial name; extra flags (`--model …`) pass through to `soma inhale`. |
 | `soma -c` | **Continue session** - reopens the last session with full conversation history preserved. No new boot sequence - you're back in the same context. |
 | `soma -r` | **Resume picker** - choose from previous sessions to restore. |
+| `soma attach` 🚧 | **Reconnect to a session that is still running** — lists every live session and the command to reach each one. See below. |
+| `soma start` 🚧 | **Restart a session that has stopped** — the other half of `soma attach`. Choose which, instead of taking whatever wrote last. |
+| `soma attach --kill <#\|id>` 🚧 | **Stop a running session.** `--kill all` stops every one except yours. |
+
+### Picking a preload lane
+
+When two pieces of work are live at once, each `/exhale` leaves its own preload — and a bare boot
+takes whichever file is newest, blind to which lane you meant. `soma preload` shows the lanes and
+lets you choose:
+
+```console
+$ soma preload
+
+  σ  Preload lanes  (10 preload(s) · 3 fresh <48h · a bare boot takes the newest)
+
+  1  s01-c34cf1  lane A  ← boot picks this
+     meetsoma/session-lifecycle — cycle 43 · sealed Sep  5 16:05 · supersedes s01-90f63a
+     soma preload 1
+```
+
+Reading a row: **`1`** row number · **`s01-c34cf1`** the lane's short name · **`lane A`** its
+declared lane · **`← boot picks this`** what a bare `soma inhale` would load. The second line is
+the arc it briefs, when it was last sealed (the mtime boot compares), and which earlier preload it
+retired. The third line is the command that boots exactly that lane — `--model …` passes through.
+A row marked `SUPERSEDED` is a retired lane; don't boot it.
+
+### Reconnecting to a Running Session
+
+> 🚧 **Coming soon** — `soma attach` lands in the next release.
+
+`soma -c` and `soma -r` reopen a session that has *stopped*. `soma attach` is for one that is
+still **running** right now — an agent working in another terminal, a background child, a session
+you left in a tmux tab this morning.
+
+```console
+$ soma attach
+
+  σ  Running soma sessions  (3 live)
+
+  1  s01-cd72dc  ~/code/api                        ← you are here
+     16 turns · up 2m · tmux soma-child-6551d3:1.1
+     soma attach s01-cd72dc
+
+  2  s01-a60dac  ~/code/dashboard
+     276 turns · up 1h48m · tmux soma-succ-dashboard:1.1
+     soma attach s01-a60dac
+
+  3  s01-f11ac9  ~/code/api
+     116 turns · up 10h56m · pid 2339 · not in tmux
+     no terminal to attach to
+
+  by row: soma attach 1   ·  more: soma attach --help
+```
+
+Every row carries the command that reaches it, so reconnecting is a copy and a paste. Each row also
+names **what the session is** and **what it is running** — see *Who is who* below.
+
+| Command | What it does |
+|---------|-------------|
+| `soma attach` | List running sessions, newest first, each with the command to reconnect |
+| `soma attach <#>` | Reconnect by row number |
+| `soma attach <s01-xxxxxx>` | Reconnect by session id |
+| `soma attach <tmux-name>` | Reconnect by tmux session name |
+| `soma attach --kill <#\|id>` | Stop that session |
+| `soma attach --kill all` | Stop every running session except the one you are in |
+| `soma attach --help` | Usage plus the related commands |
+
+#### `soma start` — the stopped half
+
+`soma attach` reaches sessions that are **running**. `soma start` lists the ones that have
+**stopped**, in the same rows, and reopens one with its full history:
+
+```console
+$ soma start
+
+  σ  Stopped soma sessions  (12 of 89 · last 48h · 1853 here)
+
+  1  s01-3b61da  ↳reviewer of 623ae0
+     0.3 MB · last wrote Sep  2 17:02 · claude-fable-5
+     soma start s01-3b61da
+
+  2  s01-7434d0  dashboard W1-W4
+     3.7 MB · last wrote Sep  2 14:57 · claude-opus-5
+     soma start s01-7434d0
+
+  …78 more — SOMA_START_LIMIT=90 soma start for all
+  also soma attach — 7 session(s) still RUNNING
+  widen: soma start --hours 168 · all projects: --all
+```
+
+It is `soma -c`, except **you** choose which. Scoped to the current project and the last 48 hours by
+default (`--hours <n>`, `--all` for every project), and it always prints its own denominator so a
+short list never reads as the whole set.
+
+**The two lists partition your sessions:** every session is in exactly one of them, so each footer
+points at the other.
+
+| Command | What it does |
+|---------|-------------|
+| `soma start` | List stopped sessions in this project |
+| `soma start <#\|s01-xxxxxx>` | Reopen it with full history |
+| `soma start --hours <n>` | Widen the time window (default 48) |
+| `soma start --all` | Every project, not just this one |
+
+#### Who is who — child, successor, orchestrator
+
+A row marked `↳` was spawned by something else:
+
+```
+  1  s01-8e884f  ↳product-architect of 2b4b44  ~/code/api
+  2  s01-2b4b44                                ~/code/api
+```
+
+Row 1 is a **delegated child** of row 2; row 2 is unmarked, so it is an **orchestrator** — a session
+you drive. A successor created by a rotation reads `↳succ of <id>`. Each row also shows the model
+the session was last on, so you can tell two otherwise identical sessions apart without opening
+either.
+
+This is why `soma -c` can now tell your own session from the children it spawned.
+
+> A session records what it is **at boot**. Sessions started before this feature show no marker —
+> they read as orchestrators, which is how they behaved anyway.
+
+#### Stopping a session
+
+```bash
+soma attach --kill 3            # by row
+soma attach --kill s01-a133d1   # by id
+soma attach --kill all          # all but the one you are in
+```
+
+**Killing is not deleting.** The transcript is untouched and the session moves to the `soma start`
+list, so you can reopen it with its full history. Soma asks the session to stop first, so it saves
+and deregisters itself; it escalates only if the session refuses, and confirms rather than assuming.
+It will not kill the session you are typing in, and `--kill all` asks before acting.
+
+> ⚠ Not to be confused with `/kill <name>` **inside** the TUI, which drops a muscle or protocol to
+> cold. Different surface, different verb.
+
+A terminal pane that was started *with* a session closes when it stops. A pane where you typed
+`soma` yourself keeps its shell — stopping a session never closes the terminal you were working in.
+
+#### It works from inside tmux
+
+Plain `tmux attach` refuses when you are already inside tmux — which a Warp, WezTerm or iTerm tab
+often is, so the obvious command fails exactly where you need it. `soma attach` picks the right
+move for where you are standing:
+
+```
+  where are you?
+  │
+  ├─ a plain shell ..... tmux attach
+  ├─ the SAME tmux ..... tmux switch-client   ← plain attach
+  └─ ANOTHER tmux ...... TMUX= tmux attach        refuses here
+```
+
+Detach again with your tmux prefix then `d` (default <kbd>Ctrl</kbd>+<kbd>b</kbd> `d`).
+
+#### Liveness is measured, not guessed
+
+A terminal pane keeps printing a session id in its title and scrollback long after the agent
+inside it exited, so anything that reads pane text can send you to a dead pane. `soma attach`
+instead reads each session's **heartbeat** — a file the running process refreshes every few
+seconds — and confirms the process id is alive, then finds the pane by walking that process's
+ancestry. A stopped session never appears in the list.
+
+#### When you ask for something that isn't there
+
+The command answers with the one that *is* right:
+
+| You typed | You get |
+|-----------|---------|
+| an id that is no longer running | `soma inhale <id>` (fresh session, its memory) or `soma --fork <id>` |
+| a session running outside tmux | told plainly — there is no terminal to attach to |
+| a tmux name that doesn't exist | the live session names, as copyable commands |
 
 > **`soma` vs `soma inhale` vs `soma -c`:**
 >

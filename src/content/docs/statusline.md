@@ -2,7 +2,7 @@
 title: "Statusline & Notices"
 description: "The three-line footer, every indicator, and the toast notices Soma shows you — including the preload lifecycle."
 section: "Reference"
-updated: 2026-07-31
+updated: 2026-09-18
 order: 7.5
 ---
 
@@ -13,7 +13,7 @@ notices for events worth knowing. This page is the canonical reference for
 both — what each glyph means, and which notice fires when.
 
 ```
-╭─ Opus-4.6─◉36%─$1.01─◷4:15─♥on
+╭─ Opus-4.6─◉36%─$1.01─◷4:15─♥9:41
 │  ⊚ main 🌿soma ¶12 📝saved
 ╰─ ~/project 5m33s +72-2
 ```
@@ -30,8 +30,8 @@ The statusline is rendered by `soma-statusline.ts`. Notices are emitted by
 | `<model>` | Active model (e.g. `Opus-4.6`), with thinking level appended (`• high`) when reasoning is on. |
 | `◉<n>%` | Context window used. Yellow ≥ 50%, red ≥ 75%. |
 | `$<n>` / `Free` | Session cost so far. `Free` when the model has no metered cost. |
-| `◷<m:ss>` | Time left on the Anthropic prompt-cache TTL (5 min). The keepalive refreshes it. |
-| `♥on` / `♥<n>` | Keepalive: `♥on` (dim) when idle, `♥<n>` (green) showing pings sent. Absent if keepalive is disabled. |
+| `◷<m:ss>` | Time left on the Anthropic prompt-cache TTL — 5 min by default, 1h when `cache.retention: "long"` is set. The keepalive refreshes it. |
+| `♥<m:ss>` / `♥<n>·<m:ss>` | Keepalive: countdown to the next ping — whichever fires first of the idle cadence (`keepalive.maxIntervalMinutes`) or the cache-warmth trigger. After pings, the count precedes it (`♥2·7:14`, green). `♥off` when keepalive is disabled. The ◷ timer is the cache TTL, a separate clock. |
 | `<n>inv` | Guard interventions this session (yellow > 0, red > 5). Only shown when non-zero. |
 
 **Keepalive ladder** — the ping messages are **editable content**, configured per-workspace

@@ -2,7 +2,7 @@
 title: "System Prompt"
 description: "How Soma's compiled system prompt is assembled, configured, and previewed."
 section: "Core Concepts"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 7
 ---
 
@@ -67,7 +67,7 @@ All toggles live under the `systemPrompt` key in `settings.json`:
 ```json
 {
   "systemPrompt": {
-    "maxTokens": 4000,
+    "warnAboveTokens": 35000,
     "includeSomaDocs": true,
     "includePiDocs": true,
     "includeContextAwareness": true,
@@ -80,7 +80,7 @@ All toggles live under the `systemPrompt` key in `settings.json`:
 
 | Key | Default | What It Controls |
 |-----|---------|-----------------|
-| `maxTokens` | `10000` | Estimated token budget for Soma's portion of the system prompt |
+| `warnAboveTokens` | `35000` | Warn threshold for Soma's portion of the system prompt (was `maxTokens`, which never capped anything) |
 | `includeSomaDocs` | `true` | Soma documentation references (links to docs, how to learn more) |
 | `includePiDocs` | `true` | Pi framework documentation references |
 | `includeContextAwareness` | `true` | Note about CLAUDE.md presence (if file exists) |
@@ -104,7 +104,7 @@ All toggles live under the `systemPrompt` key in `settings.json`:
 
 The system prompt competes for space in the model's context window. Soma's portion typically uses **2000–6000 estimated tokens** depending on how many protocols and muscles are hot and how much identity content exists.
 
-The `maxTokens` setting (default: 10000) is a **soft warning**. When the compiled prompt exceeds this budget, Soma shows a warning notification at boot. It never truncates — the warning helps you decide what to trim.
+The `warnAboveTokens` setting (default: 35000) is a **soft warning**. When the compiled prompt exceeds it, Soma shows a warning notification at boot. It never truncates — the warning helps you decide what to trim.
 
 To reduce token usage:
 - Mark body files as `lazy: true` (loads as skill reference, not full content)
@@ -126,7 +126,7 @@ Net: skills XML appears **once** in the final prompt, at the soma-controlled pos
 
 **If you remove `{{skills_block}}` from the template, skills disappear** — because soma's full-replacement throws away Pi's prompt. Either keep the slot OR change soma's compile mode to PREPEND (so Pi's native injection flows through unmodified) AND remove the slot.
 
-This is a different shape from the earlier `muscle_digests` slot (s01-1dae05, 2026-04-29), which WAS a true double-load — Pi compiler-prepended muscle digests AND soma's template re-rendered them. That one was correctly removed; skills should not be.
+This is a different shape from the earlier `muscle_digests` slot (removed 2026-04-29), which WAS a true double-load — Pi compiler-prepended muscle digests AND soma's template re-rendered them. That one was correctly removed; skills should not be.
 
 ## Identity Placement
 

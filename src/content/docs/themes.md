@@ -2,7 +2,7 @@
 title: "Themes"
 description: "Customize Soma's appearance with built-in or custom themes."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-07-12
 order: 6.4
 ---
 

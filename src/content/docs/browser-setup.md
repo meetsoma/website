@@ -2,7 +2,7 @@
 title: Browser Setup for Soma
 description: Configure Soma to drive a browser via CDP — Chrome, Brave, Edge, Arc, Chromium, Firefox
 status: preflight
-updated: 2026-07-24
+updated: 2026-09-18
 ---
 
 # Browser Setup
@@ -14,8 +14,8 @@ Soma can drive a real browser to automate web workflows — navigating, taking s
 ## Quick start
 
 ```bash
-# 1. Launch your browser with CDP enabled
-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/soma-chrome
+# 1. Launch your browser with CDP enabled (headless by default — the agent doesn't need a window)
+chrome --headless=new --remote-debugging-port=9222 --user-data-dir=/tmp/soma-chrome
 
 # 2. Ask Soma to configure itself
 soma browser setup
@@ -34,6 +34,7 @@ Each browser needs `--remote-debugging-port=<port>` passed at launch. Standard c
 **Chrome:**
 ```bash
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+  --headless=new \
   --remote-debugging-port=9222 \
   --user-data-dir=/tmp/soma-chrome
 ```
@@ -41,6 +42,7 @@ Each browser needs `--remote-debugging-port=<port>` passed at launch. Standard c
 **Brave:**
 ```bash
 /Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser \
+  --headless=new \
   --remote-debugging-port=9222 \
   --user-data-dir=/tmp/soma-brave
 ```
@@ -48,11 +50,16 @@ Each browser needs `--remote-debugging-port=<port>` passed at launch. Standard c
 **Edge:**
 ```bash
 /Applications/Microsoft\ Edge.app/Contents/MacOS/Microsoft\ Edge \
+  --headless=new \
   --remote-debugging-port=9222 \
   --user-data-dir=/tmp/soma-edge
 ```
 
-**Chromium / Arc / Vivaldi:** same pattern — `--remote-debugging-port=<port>` + `--user-data-dir=<path>`.
+**Chromium / Arc / Vivaldi:** same pattern — `--headless=new --remote-debugging-port=<port>` + `--user-data-dir=<path>`.
+
+**Headless is the default posture** — the agent reads pages, fills forms and screenshots without
+a window. Drop `--headless=new` (or pass `visible: true` on browser caps) only when you want to
+watch the browser work or drive a session the human shares.
 
 **Firefox v86+:** Enable `devtools.debugger.remote-enabled` in `about:config`, then launch with `--remote-debugging-port=9222`. Partial CDP support — expect some degradation (see § Firefox).
 
@@ -152,7 +159,7 @@ Soma doesn't currently support Safari. If you need Safari automation, file an is
 Your browser isn't running with the flag. Relaunch:
 
 ```bash
-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/soma-chrome
+chrome --headless=new --remote-debugging-port=9222 --user-data-dir=/tmp/soma-chrome
 ```
 
 Or check if another process is holding the port:

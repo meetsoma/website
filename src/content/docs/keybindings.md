@@ -2,7 +2,7 @@
 title: "Keybindings"
 description: "Keyboard shortcuts and how to customize them."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-07-12
 order: 6.2
 ---
 

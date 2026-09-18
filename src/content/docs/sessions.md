@@ -2,7 +2,7 @@
 title: "Sessions"
 description: "Session management — tree navigation, forking, compaction, and branch summarization."
 section: "Core Concepts"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 3.2
 ---
 
@@ -144,9 +144,38 @@ soma                    # Fresh session — clean slate
 soma inhale             # Fresh session + preload from last /exhale
 soma -c                 # Continue last session (full history)
 soma -r                 # Pick from sessions to resume
+soma attach             # 🚧 Reconnect to a session still RUNNING
+soma start              # 🚧 Reopen one that STOPPED — you pick
+soma attach --kill <id> # 🚧 Stop one (it moves to soma start)
 ```
 
 See [Commands — CLI Commands](/docs/commands#cli-commands) for the full comparison.
+
+**Stopped vs running.** `soma attach` 🚧 reaches a session still running in another terminal (and
+works from inside tmux, where plain `tmux attach` refuses). `soma start` 🚧 lists the ones that have
+stopped and reopens the one you choose. Every session is in exactly one of those two lists.
+See [Reconnecting to a Running Session](/docs/commands#reconnecting-to-a-running-session).
+
+**Sessions say what they are.** Each row is marked `↳scout of a60dac` for a delegated child,
+`↳succ of 7434d0` for a rotation successor, or left unmarked for an orchestrator you drive — with
+the model it was last on. This is recorded at boot, so sessions started before the feature show no
+marker.
+
+**`soma -c` prefers your own session.** 🚧 Children write into the same directory as the orchestrator
+that spawned them, so "continue the last session" used to hand back a scout after a busy delegation
+run. `-c` now continues the most recent **stopped orchestrator** and prints what it skipped;
+`SOMA_CONTINUE_ANY=1 soma -c` takes the newest of any kind.
+
+**Resuming a live session refuses instead of double-opening.** If another live process is
+already writing the session you picked (`-r`, `--continue`, `--session` or `--fork`), the open
+is refused with recovery options: reattach to the running one, `soma inhale <id>` for a fresh
+session that loads its preload, or `soma --fork <id>` to branch. Only positive evidence of a
+live writer refuses — dormant sessions open normally. Override (rarely needed):
+`SOMA_ALLOW_DUPLICATE_SESSION=1`.
+
+Sessions also name themselves for the resume picker (`project · arc · id`), so `-r` shows
+distinguishable rows instead of a dozen identical boot banners. Rename mid-session with
+`soma:session.name`.
 
 ### Export
 

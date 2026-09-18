@@ -2,7 +2,7 @@
 title: "Hub"
 description: "Install, share, and discover community content — protocols, muscles, scripts, templates, and automations."
 section: "Core Concepts"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 5.1
 ---
 
@@ -24,7 +24,7 @@ order: 5.1
 
 ## What's on the Hub
 
-The hub hosts five types of content:
+The hub hosts seven types of content:
 
 | Type | What | Example |
 |------|------|---------|
@@ -33,6 +33,8 @@ The hub hosts five types of content:
 | **Scripts** | Bash tools | `soma-reflect` — mine session logs for patterns |
 | **Automations** | Step-by-step workflows (MAPs) | `debug` — systematic bug hunting |
 | **Templates** | Starter bundles | `architect` — systems-thinking setup |
+| **Body files** | Doorway/knowledge files an agent loads | a plugin's awareness doc, installed beside its caps |
+| **Extensions** | Capability code | an extension shipped with the body file that documents it |
 
 All content is open source, community-contributed, and reviewed before merge.
 
@@ -113,6 +115,11 @@ Soma will:
 5. **Create a PR** — uses `gh` CLI to submit a pull request to `meetsoma/community`.
 
 ### Before Sharing
+
+Content scoped `internal` or `workspace` is refused for sharing — `/hub share` checks the
+`scope:` field (markdown frontmatter or a script's `# scope:` header) and only `hub` or
+`bundled` content goes out. An unrecognised scope value blocks the share and prints the legal
+list.
 
 Make sure your content has good frontmatter:
 

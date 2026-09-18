@@ -2,7 +2,7 @@
 title: "Configuration"
 description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior."
 section: "Reference"
-updated: 2026-07-31
+updated: 2026-09-18
 order: 6
 ---
 
@@ -47,7 +47,7 @@ Settings files can exist at any level in the Soma chain:
     "gitIdentity": null
   },
   "systemPrompt": {
-    "maxTokens": 10000,
+    "warnAboveTokens": 35000,
     "includeSomaDocs": true,
     "includePiDocs": true,
     "includeContextAwareness": true,
@@ -96,18 +96,23 @@ Settings files can exist at any level in the Soma chain:
     }
   },
   "breathe": {
-    "auto": false,
+    "onFull": "steer",
+    "auto": "model-aware",
     "triggerAt": 50,
     "rotateAt": 70,
     "graceSeconds": 30,
     "maxTokens": 0
+  },
+  "compaction": {
+    "enabled": true
   },
   "cache": {
     "retention": null
   },
   "imageBudget": {
     "softAt": 8,
-    "hardAt": 10
+    "hardAt": 12,
+    "ceilingAt": 20
   },
   "context": {
     "notifyAt": 50,
@@ -130,7 +135,8 @@ Settings files can exist at any level in the Soma chain:
   },
   "checkpoints": {
     "soma": {
-      "autoCommit": true
+      "autoCommit": true,
+      "quiescenceSeconds": 45
     },
     "project": {
       "style": "commit",
@@ -139,6 +145,9 @@ Settings files can exist at any level in the Soma chain:
     },
     "diffOnBoot": true,
     "maxDiffLines": 80
+  },
+  "terminal": {
+    "container": "tmux"
   }
 }
 ```
@@ -152,7 +161,7 @@ User-global resources live at `~/.soma/<type>/`, separate from the runtime insta
 | Directory | What goes there |
 |-----------|----------------|
 | `~/.soma/extensions/` | Custom Pi extensions (`.ts` files) |
-| `~/.soma/skills/` | Skill directories the agent loads on boot |
+| `~/.soma/skills/` | ⚠ Skill directories — **not reaching the prompt today; use `~/.agents/skills/`** ([why](skills.md#locations)) |
 | `~/.soma/prompts/` | Prompt template files or directories |
 | `~/.soma/themes/` | Theme files or directories |
 
@@ -285,7 +294,7 @@ Controls what sections appear in Soma's compiled system prompt. Use `/soma promp
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `maxTokens` | `10000` | Estimated token budget for Soma's system prompt portion |
+| `warnAboveTokens` | `35000` | Warn threshold for Soma's system prompt portion (renamed from `maxTokens`, which never capped anything) |
 | `includeSomaDocs` | `true` | Include Soma documentation references |
 | `includePiDocs` | `true` | Include Pi framework documentation references |
 | `includeContextAwareness` | `true` | Include CLAUDE.md awareness note |
@@ -453,12 +462,45 @@ Proactive context management — fires warn + exhale notifications before sessio
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `auto` | `"model-aware"` | Mode: `"off"` \| `"global"` \| `"model-aware"` |
+| `onFull` | `"steer"` | **What happens when context fills**: `"warn"` \| `"steer"` \| `"rotate"` |
+| `auto` | `"model-aware"` | Mode: `"off"` \| `"global"` \| `"model-aware"` — decides *when*, not *what* |
 | `triggerAt` | `50` | Warn % (used when `auto = "global"`) |
 | `rotateAt` | `70` | Exhale % (used when `auto = "global"`) |
 | `thresholds` | (see below) | Per-model ranges (used when `auto = "model-aware"`) |
 | `graceSeconds` | `30` | Seconds to wait for preload before timing out |
 | `maxTokens` | `0` | Absolute token cap for % calculations. `0` = use model's native window. |
+
+#### `onFull` — what a full context does
+
+| Value | Behaviour |
+|-------|-----------|
+| `"warn"` | Notifications only. Nothing is asked of the agent. |
+| `"steer"` | **Default.** One message: write the preload, or update the one that exists. The session keeps running; you rotate with `/breathe` or `/exhale` when you choose. |
+| `"rotate"` | Steer, then rotate into a fresh session once the preload lands. |
+
+Before this setting existed, crossing a threshold ended the process and re-exec'd. The successor
+read the preload, re-booted the body and resumed the same work — a full boot for a rotation nobody
+asked for. `"steer"` is the default because *when* to spend that is a judgement call, not a
+percentage.
+
+⚠ **`"rotate"` is refused while Pi's auto-compaction is enabled**, and says so once. Both manage the
+same context: compaction summarises the middle of your session away at roughly 92% of the window,
+rotation writes a preload and starts clean. Running both means two mechanisms editing the same
+thing. To use `"rotate"`:
+
+```json
+{
+  "breathe": { "onFull": "rotate" },
+  "compaction": { "enabled": false }
+}
+```
+
+A missing `compaction` key counts as **on** — that is Pi's default, not Soma's.
+
+**Replaces two older keys**, both still honoured so existing settings keep working:
+`breathe.autoRotate` (`true` → `"rotate"`) and `context.safetyNet` (`false` → downgrades a
+configured `"rotate"` to `"steer"`, which is all it ever meant). `session.autoEnd: false` still
+outranks everything: nothing automatic may end or rotate, and `onFull` behaves as `"warn"`.
 
 #### Tri-state mode
 
@@ -507,12 +549,13 @@ Controls when context usage warnings fire during a session. These are the **pass
 | `notifyAt` | `50` | Subtle notification in the status area |
 | `warnAt` | `70` | Warning-level notification |
 | `urgentAt` | `80` | Urgent warning injected into the system prompt |
-| `autoExhaleAt` | `85` | Safety net — triggers emergency preload + rotation prompt |
+| `autoExhaleAt` | `85` | Safety net — **where** the last-resort prompt fires. **What** it does is `breathe.onFull`. |
 
 **How context warnings relate to auto-breathe:**
 - With auto-breathe **off**: context warnings are your only alert system. The agent sees notifications at each threshold but has to decide what to do.
 - With auto-breathe **on**: the auto-breathe phases (`triggerAt`, `rotateAt`) handle rotation proactively. Context warnings still fire as a safety net, but auto-breathe should resolve things before they get to `urgentAt`.
-- The `autoExhaleAt` (85%) safety net fires regardless — it's the last resort.
+- The `autoExhaleAt` (85%) safety net fires regardless of mode — it is the last resort. Under the
+  default `onFull: "steer"` it asks for a preload; it does not end the session.
 
 **Why adjust:** If you find the agent panicking too early, push thresholds up. If sessions end abruptly without preloads, you might want them lower — but consider enabling auto-breathe instead, which is more graceful.
 
@@ -544,6 +587,11 @@ Controls when context usage warnings fire during a session. These are the **pass
 |-----|---------|-------------|
 | `staleAfterHours` | `48` | Hours before a preload file is considered stale. |
 | `autoInject` | `false` | Auto-inject latest preload on every fresh boot. When `true`, `soma` = `soma inhale`. |
+| `archiveAfterDays` | `7` | Age at which an old preload moves to `memory/preloads/_archive/` once a new preload is written. Lower it if you rotate several times a day. |
+| `archiveKeepMin` | `10` | Never archive below this many recent preloads, whatever their age. |
+
+Archived preloads stay reachable: `soma inhale <session-id>` falls back to `_archive/`. Only the
+boot-time "newest preload" choice is limited to live ones.
 
 ### API Recovery
 
@@ -576,6 +624,7 @@ Two-track version control: Soma's own `.soma/` state and your project code are c
 | Key | Default | Description |
 |-----|---------|-------------|
 | `soma.autoCommit` | `true` | Auto-commit `.soma/` changes on exhale (identity, heat state, preload) |
+| `soma.quiescenceSeconds` | `45` | Also commit `.soma/` after this many seconds with no `write`/`edit`/`bash`. `0` turns it off. This is a *second* trigger layered on the every-5-turns one, not a replacement: the turn-based trigger cannot fire during a single long turn, so a multi-minute command or a child delegate would otherwise accumulate every edit with no interim commit. Nothing is committed when the tree is clean, so a quiet session costs nothing. |
 
 #### Project Track
 
@@ -679,10 +728,15 @@ Controls the cache keepalive system — automatic pings that prevent expensive p
 | Key | Default | Description |
 |-----|---------|-------------|
 | `maxPings` | `5` | Maximum keepalive pings per idle period (0–5). Resets when you send a message. Set to `0` to disable keepalive entirely. |
-| `autoExhale` | `true` | Automatically triggers an exhale when keepalive lives are exhausted. The agent writes a preload before the cache expires, preserving your session state even if you walk away. |
+| `autoExhale` | `true` | Automatically triggers an exhale when keepalive lives are exhausted. The agent writes a preload before the cache expires, preserving your session state even if you walk away. **Skipped when a successor session is already live** — a session that has handed off does not need to be told to save. |
 | `autoExhaleMinTokens` | `75000` | Minimum context tokens used before auto-exhale triggers. Below this threshold, the session ends quietly instead — not worth saving a preload for a short interaction. |
 
 **How it works:** Anthropic's prompt cache has a ~5 minute TTL. When you stop interacting, the cache countdown begins. Soma pings the cache before it expires, keeping your prompt cached at the discounted rate. Each ping uses one "life." When lives run out, the agent auto-exhales (if enough work was done) or goes idle quietly.
+
+**Handing off:** if you rotate to a successor session, the work that follows — sealing the preload,
+starting the successor, wrapping up children — makes the session look busy-then-idle, which used to
+look exactly like walking away. It no longer triggers a second exhale: while a successor is live,
+auto-exhale stays quiet and says so once.
 
 **Why limit pings:** Unlimited keepalive burns API credits if you forget about a session. 5 pings (∼24 minutes of idle time) covers most breaks. Set `maxPings: 3` for shorter sessions, or `0` to disable.
 
@@ -730,23 +784,37 @@ Controls how Soma handles project updates and migrations.
 
 ### Image Budget
 
-Auto-compact when screenshots accumulate in context. Each image is ~20K tokens — at 10 images, that's 200K tokens of visual data.
+Keep screenshots from filling the context window. Each image is ~20K tokens — a dozen is most of a
+200K window. Three tiers on one count:
 
 ```json
 {
   "imageBudget": {
     "softAt": 8,
-    "hardAt": 10
+    "hardAt": 12,
+    "ceilingAt": 20
   }
 }
 ```
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `softAt` | `8` | Notify agent to consider `/compact` when this many images are in context. `0` = no notification. |
-| `hardAt` | `10` | Auto-compact at this count. The summary preserves visual observations while dropping raw image data. `0` = disabled. |
+| `softAt` | `8` | Notify the agent to consider `/compact` at this count. `0` = no notification. |
+| `hardAt` | `12` | Offer a compact you can cancel. Unanswered for 30s → it compacts (so an unattended session is still protected). Cancel → kept as-is. `0` = the whole budget is off. |
+| `ceilingAt` | `20` | Ask once more past this count even if you cancelled earlier, then again at each multiple (40, 60…). `0` = a cancel silences the rest of the session. |
 
-After auto-compact, the agent can take new screenshots. The counter resets. Light sessions (few images) never trigger — zero overhead.
+The summary preserves visual observations while dropping raw image data, so the agent can take new
+screenshots afterwards — the counter resets. Light sessions (few images) never trigger. Reading an
+image is never blocked; only accumulation is.
+
+**Example: never re-ask after a cancel:**
+```json
+{
+  "imageBudget": {
+    "ceilingAt": 0
+  }
+}
+```
 
 **Example: disable auto-compact (manual only):**
 ```json
@@ -756,6 +824,62 @@ After auto-compact, the agent can take new screenshots. The counter resets. Ligh
   }
 }
 ```
+
+### Terminal
+
+Which terminal app you are in, and where Soma places the sessions it opens for you (successors,
+background children). Soma detects the app on its own — `$TERM_PROGRAM`, or the per-terminal
+variables that survive tmux — so most people never set this. `soma terminals detect` shows the result.
+
+```json
+{
+  "terminal": {
+    "app": "kitty",
+    "container": "tmux"
+  }
+}
+```
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `app` | *(detected)* | Override detection. One of `warp`, `iterm`, `wezterm`, `kitty`, `ghostty`, `terminal-app`. Set it when detection says `unknown` — kitty, for example, sets no `$TERM_PROGRAM`. |
+| `container` | `"tmux"` | Where the sessions Soma opens for you run. `tmux` = detached tmux sessions you attach to (`soma attach <id>`); inside a tmux client, `soma terminals open` splits your window. `native` = the terminal's own tabs and panes: `soma terminals open` uses a Warp tab in Warp, and a viewer split elsewhere (only if `delegate.viewer` is set — otherwise it prints the commands). Rotation and children still use tmux today. |
+
+Leaving the block out keeps today's behaviour exactly.
+
+Using tmux under Warp, kitty, WezTerm, Ghostty or iTerm? `soma terminals tune` checks the four tmux
+options that let modified keys, images and focus events reach the agent inside, and offers to add the
+missing ones to your tmux conf in one removable block. `soma doctor` reminds you while any are unset.
+
+Layout files for `soma terminals open`:
+
+```json
+{ "name": "pair", "split": "horizontal",
+  "panes": [ { "cwd": "~/proj", "command": "soma attach s01-a", "focus": true },
+             { "cwd": "~/proj", "command": "soma attach s01-b" } ] }
+```
+
+### Search
+
+The `search` tool searches your files by default (ripgrep, honours `.gitignore`). `scope: "api"` searches
+the web through a provider you choose; `backend` makes one the default.
+
+```json
+{
+  "search": {
+    "backend": "os",
+    "api": { "provider": "searxng", "url": "https://search.example.com" }
+  }
+}
+```
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `backend` | `"os"` | What a bare `search()` uses: `os` (your files), `api` (the web), `semantic` (deferred). |
+| `api.provider` | `"brave"` | `searxng` — a self-hosted [SearXNG](https://docs.searxng.org) instance, no key, unmetered. `brave` — Brave Search API, needs `BRAVE_API_KEY` (or `SOMA_SEARCH_API_KEY`) in the environment, metered. |
+| `api.url` | — | SearXNG only: the instance base URL. `SOMA_SEARCH_URL` or `SEARXNG_URL` in the environment also works. The instance must allow JSON (`search.formats: [html, json]` in its `settings.yml`), or every query answers 403. |
+
+No web provider configured? The agent can still search by driving your browser (`soma:browser`).
 
 ## Examples
 

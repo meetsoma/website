@@ -2,14 +2,14 @@
 title: "Meta Dev-Tools"
 description: "The dev:* namespace: caps that ship with the dev tree, not user installs."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 13
 ---
 
 # Dev Tools — `dev:*`
 
 <!-- tldr -->
-`dev:*` is the internal-only meta-tool router. Caps live in `extensions/dev-addons/*.ts`, auto-discovered at `session_start` by `dev-tools.ts`. NOT shipped to user installs — the `dev-addons/` directory is excluded from the soma-beta tarball. Use when working from a Soma dev checkout. Four families today: `audit`, `hub`, `issue`, `kanban`.
+`dev:*` is the internal-only meta-tool router. Caps live in `extensions/dev-addons/*.ts`, auto-discovered at `session_start` by `dev-tools.ts`. NOT shipped to user installs — the `dev-addons/` directory is excluded from the soma-beta tarball. Use when working from a Soma dev checkout. Nine families today: `audit`, `changelog`, `doctor`, `hub`, `issue`, `kanban`, `opencode`, `pr`, `verify`.
 <!-- /tldr -->
 
 ## Why `dev:*` exists separately from `soma:*`
@@ -26,6 +26,13 @@ The `dev:*` router was split out from `soma:*` because dev caps are meaningfully
 The architectural pattern matches `soma:*` exactly: one `pi.registerTool("dev", ...)` head via `createMetaTool`, N caps registered through `route.provide`. Cache cost: one slot for the head, zero per cap.
 
 ## Current families
+
+Nine families are live; the four below are documented in depth. The other five —
+`dev:changelog.*` (release narrative + JSON parsing), `dev:doctor.*` (workspace health +
+migration), `dev:opencode.*` (ask/poll/models — the free transform transport, runs in tmux so
+it never blocks), `dev:pr.*` (PR submission via the bot identity), `dev:verify.*` (post-change
+structural verification) — are discoverable live via `dev(op='list')`, which is always current.
+Regenerate the census: `python3 .soma/amps/scripts/soma-tools-audit.py`.
 
 ### `dev:audit.*`
 

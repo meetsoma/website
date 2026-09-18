@@ -2,7 +2,7 @@
 title: "Scripts"
 description: "Standalone tools that ship with Soma — codebase navigation, memory tracing, session focus, doc scraping, and more."
 section: "Reference"
-updated: 2026-07-24
+updated: 2026-09-18
 order: 9
 ---
 
@@ -318,6 +318,40 @@ soma-steno.py both                   # both, default mode
 ```
 
 Agent-side: `soma:seam.hotspots` (hotspots, on-demand); ratio runs automatically at exhale.
+
+### soma-hooks.sh (opt-in git hooks — changelog nudge + cycle trailers)
+
+Installs a `commit-msg` hook so a commit can carry its own changelog entry. With it, a `feat`/`fix`
+commit that has no `### Added` / `### Fixed` block gets a reminder (a warning — your commit still
+goes through), and `Soma-Session` / `Soma-Cycle` trailers are stamped when those env vars are set.
+
+`soma-changelog.sh` then lifts those blocks **verbatim**, so the sentence a user reads is written
+once — in the commit — instead of once there and again in `CHANGELOG.md`.
+
+```bash
+soma-hooks.sh status      # what is installed, and where it would go
+soma-hooks.sh install     # write the hook
+soma-hooks.sh uninstall   # remove only the hook this script wrote
+```
+
+**It never writes `core.hooksPath`.** That setting is a single path, so changing it would silently
+disable husky, pre-commit, lefthook or anything else you already use. The hook goes into whatever
+directory git already consults. If a `commit-msg` hook exists that this script did not write, it
+**refuses** and prints a one-line chain you can add yourself.
+
+### soma-cycle-shipped.py (derive a cycle's shipped table from commits)
+
+Commits stamped with `Soma-Cycle:` can be collected into a table, so a cycle's record is derived
+rather than retyped.
+
+```bash
+soma-cycle-shipped.py <cycle-slug>                  # print the table
+soma-cycle-shipped.py <cycle-slug> --write DOC.md   # fill the region between SHIPPED markers
+soma-cycle-shipped.py <cycle-slug> --check DOC.md   # reconcile the doc against git; exit 1 on drift
+```
+
+`--check` reports commits that shipped without a row, and rows whose commit does not exist. It
+always prints how many commits carry no trailer at all — i.e. what it cannot see.
 
 ## Building Your Own Scripts
 
