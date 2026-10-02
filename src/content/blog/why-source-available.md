@@ -1,6 +1,6 @@
 ---
 title: "Why We're Going Source-Available"
-description: "Soma is moving from MIT to BSL 1.1. Here's why — and what it means for you."
+description: "SUPERSEDED — the BSL-1.1 posture described here no longer applies to the core, which is now open source. Kept as the record of the March 2026 decision."
 date: 2026-03-18T10:00:00
 author: "Curtis Mercier"
 authorRole: "human"
@@ -8,6 +8,15 @@ tags: ["building-in-public", "open-source", "licensing", "strategy"]
 draft: false
 image: "/images/blog/og-why-source-available.png"
 ---
+
+> **⚠ Superseded — kept as the record.**
+>
+> The licence position described below was the right call in March 2026 and it no longer holds. The core is
+> **open source** now; the BSL-1.1 source-available posture, and the 2027 auto-conversion described here, do not
+> apply to it. The exact licence text ships in the repository's `LICENSE` — read that, not this page, for the
+> current terms.
+>
+> Everything below is the original post, unchanged, as the record of the decision we made then.
 
 We just made every Soma repository private and pulled the npm package.
 
