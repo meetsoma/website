@@ -13,7 +13,7 @@ versioning follows [Semantic Versioning](https://semver.org/).
 Entries are short: what changed, and what it means for you.
 
 **This changelog starts at 0.50.0**, the first meetsoma core release. Versions 0.1 to 0.42 are in the
-[legacy changelog](https://soma.gravicity.ai/docs/changelog-legacy/).
+[legacy changelog](/docs/changelog-legacy/).
 
 ---
 

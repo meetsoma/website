@@ -24,7 +24,7 @@ The full runtime is open source and free on npm, day one:
 - The full tool registry, including browser automation, code navigation, and delegation
 
 A few advanced scripts (seam tracing, refactor analysis) live outside the core in an optional
-pack; the tools that wrap them say so when the pack isn't installed. See [Pro Tools](/docs/pro-tools).
+pack; the tools that wrap them say so when the pack isn't installed.
 
 ## What's optional
 

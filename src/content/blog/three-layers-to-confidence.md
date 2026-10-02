@@ -57,5 +57,5 @@ That's the version-of-the-version story: an install that knows what it is, all t
 
 ---
 
-**Changelog:** [Unreleased](/changelog) · SX-489
+**Changelog:** [legacy changelog](/docs/changelog-legacy/)
 **Related:** [Team Soma](/blog/team-soma) — the larger arc this ships inside.

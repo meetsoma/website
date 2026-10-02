@@ -1,3 +1,5 @@
 # Cloudflare Pages redirects (vercel.json is not read on Pages).
 /beta          /open-source/  301
 /beta/         /open-source/  301
+/changelog     /docs/changelog/  301
+/changelog/    /docs/changelog/  301

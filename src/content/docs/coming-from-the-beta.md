@@ -17,7 +17,7 @@ If you installed Soma before this release, here's what changed and how to move t
   repo. `soma update` points at the new source automatically; you don't need to re-clone
   anything by hand.
 - **Versions reset the count, not the history.** This release is `0.50.0`. The changelog for
-  everything before it is preserved at [the legacy changelog](https://soma.gravicity.ai/docs/changelog-legacy/);
+  everything before it is preserved at [the legacy changelog](/docs/changelog-legacy/);
   the current changelog starts fresh from here.
 - **Nothing in your projects changes.** Your `.soma/` directories, sessions, preloads, and
   identity files are untouched by any of this. This is a packaging and distribution change,
