@@ -399,7 +399,7 @@ const recentPosts = posts.slice(0, 3);
         <div class="verse-text">
           <p>Soma lives in the terminal. Somaverse gives it a workspace.</p>
           <p>A tiling workspace in your browser with 21 plugins. Terminal, files, editor, browser, chat, voice. Your agent sees every pane, sends commands, navigates the web.</p>
-          <p>Not a chatbot with plugins. A co-pilot with eyes.</p>
+          <p>Not a chatbot with plugins. An agent with eyes.</p>
           <div class="verse-cta">
             <a href="/blog/somaverse-preview" class="verse-link">Read the preview &rarr;</a>
             <span class="verse-status">Alpha &mdash; Genesis coming soon</span>
@@ -438,15 +438,18 @@ const recentPosts = posts.slice(0, 3);
     <!-- CTA with ecosystem links -->
     <section class="cta-section">
       <div class="cta-content">
-        <h2 class="cta-title">Start growing</h2>
-        <p class="cta-desc">Install meetsoma core. Start a session. Let Soma's memory build.</p>
+        <div class="cta-halo" aria-hidden="true"><span></span><span></span></div>
+        <h2 class="cta-title">Give your agent a memory.</h2>
+        <p class="cta-desc">Install meetsoma core, start a session, and Soma takes it from there.</p>
         <div class="cta-buttons">
-          <a href="https://github.com/meetsoma/core" target="_blank" rel="noopener" class="cta-primary">
-            View on GitHub →
-          </a>
-          <a href="/docs" class="cta-secondary">
-            Read the docs
-          </a>
+          <button class="install-pill" data-copy="npm i -g meetsoma" title="Copy install command">
+            <span class="install-prompt">$</span>
+            <span class="install-cmd">npm i -g meetsoma</span>
+            <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+          <a href="/docs/getting-started" class="portal-btn portal-btn-primary">Get started</a>
+          <a href="https://github.com/meetsoma/core" target="_blank" rel="noopener" class="portal-btn portal-btn-ghost">GitHub</a>
         </div>
         <div class="cta-links">
           <a href="/docs/getting-started" class="cta-link">
@@ -975,6 +978,27 @@ const recentPosts = posts.slice(0, 3);
 
   /* ── Recent Posts ── */
   .from-blog { margin-bottom: var(--section-gap); }
+
+  /* Closing CTA: the portal motif again, smaller — two static rings, one slow rotation. */
+  .cta-content { position: relative; isolation: isolate; overflow: hidden; }
+  .cta-halo { position: absolute; top: 46%; left: 50%; width: 0; height: 0; z-index: -1; pointer-events: none; }
+  .cta-halo span {
+    position: absolute;
+    top: 0; left: 0;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background: conic-gradient(from 0deg, transparent, var(--moon-bright) 70deg, transparent 150deg, transparent 210deg, var(--warm-bright) 260deg, transparent 330deg) border-box;
+    -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    animation: ring-spin 40s linear infinite;
+    will-change: transform;
+  }
+  .cta-halo span:nth-child(1) { width: 380px; height: 380px; opacity: .35; }
+  .cta-halo span:nth-child(2) { width: 620px; height: 620px; opacity: .18; animation-direction: reverse; animation-duration: 70s; }
+  .cta-title { font-size: clamp(1.8rem, 4vw, 2.8rem) !important; letter-spacing: -0.03em; }
+  .cta-section .cta-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); }
+  @media (prefers-reduced-motion: reduce) { .cta-halo span { animation: none !important; } }
   .recent-posts {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
