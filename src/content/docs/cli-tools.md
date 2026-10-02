@@ -1,12 +1,12 @@
 ---
-title: "CLI Tools: How Soma Surfaces Tools to the Agent"
+title: "CLI Tools: How meetsoma core Surfaces Tools to the Agent"
 description: "The three patterns for adding a tool. Pattern 1 (commands/.sh drop-in) is the answer most of the time. Decision flow ladder + reload semantics."
 section: "Reference"
-updated: 2026-09-02
+updated: 2026-10-02
 order: 12
 ---
 
-# CLI Tools — How Soma Surfaces Tools to the Agent
+# CLI Tools — How meetsoma core Surfaces Tools to the Agent
 
 <!-- tldr -->
 Three patterns, ranked by ceremony. Pattern 1 (drop a `.sh` in `.soma/amps/scripts/commands/`) needs **zero reload**. Pattern 2 (cap under the existing `soma:*` / `dev:*` meta-tool) needs no Pi restart but the catalog visibility lags one session. Pattern 3 (`pi.registerTool` standalone) is cache-busting — last resort. The meta-tool is the answer for almost everything that isn't bootstrap-essential.
@@ -62,10 +62,10 @@ Every namespaced cap (`soma:*`, `dev:*`, `somaverse:*`) lives behind exactly **o
 | Router | Source | Addon dir | Tier |
 |---|---|---|---|
 | `soma:*` | `extensions/soma-tools.ts` | `soma-addons/` | Free — always-on |
-| `dev:*` | `extensions/dev-tools.ts` | `dev-addons/` | Internal — dev tree only |
+| `dev:*` | — | — | Internal — dev tree only |
 | `somaverse:*` | `somaverse/builds/*/extensions/somaverse-tools.ts` | `somaverse-addons/` | Somaverse builds only |
 
-No `pro:*` router exists. PRO scripts (in `scripts/_pro/`) get wrapped by `soma:*` caps with graceful "PRO feature" degrade via [`extensions/_shared/script-resolver.ts`](#) when the underlying script isn't on disk. See `pro-tools.md`.
+Some advanced tools live in an optional pack that is not installed with meetsoma core. Their caps are wrapped by `soma:*` routers and report clearly when the pack is missing — the failure is a message, not a crash.
 
 **Add a cap:**
 
@@ -184,7 +184,7 @@ Regenerate the count: `python3 .soma/amps/scripts/soma-tools-audit.py`.
 ## Related docs
 
 - `dev-tools.md` — what `dev:*` is for, families inventory
-- `pro-tools.md` — `_pro/` tier model, distribution, graceful degrade
+- Optional advanced pack — not installed with meetsoma core; its caps report clearly when it is absent
 - `extending.md` — Pi extension API surface
 - `body.md` — body file system + cache budget
 - `body/soma-tools.md` (workspace-private) — extension topology + audit tables (regenerable)

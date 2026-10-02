@@ -1,11 +1,11 @@
 ---
-title: "What's New for Soma"
+title: "What's New in meetsoma core"
 description: "Agent-facing changelog: 'what NEW capabilities can I use, with just enough detail to use them.' Distinct from the technical CHANGELOG.md — this is action-oriented, dense, version-tagged, and tells YOU (the agent) which tools just landed and how to invoke them."
 section: "Reference"
 order: 2
 ---
 
-# What's New for Soma
+# What's New in meetsoma core
 
 <!-- tldr -->
 Read this when you wake up in a session that just ran `soma update`, or when starting fresh after a release. Each section is a version's *agent-actionable* surface: NEW caps you can call, behavior changes you should know, bugs you can stop stepping around. Not the technical commit log — that's `CHANGELOG.md`. This is the answer to *"what can I do now that I couldn't yesterday?"*.
@@ -23,13 +23,11 @@ Each version section follows the same shape:
 - **📁 New files / locations** — useful paths the runtime now writes/reads.
 - **🧰 Workflows** — new patterns worth muscle memory.
 
-A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball).
+A `[dev]` tag = dev install only (not shipped in the end-user tarball).
 
 ---
 
-## 🚧 Coming soon — next release
-
-## v0.50.0 — October 2026
+## v0.50.0 — 2026-10-02
 
 ### 🧰 Workflows
 
@@ -519,7 +517,7 @@ When the question shape is *"where did X come from?"* / *"who said X?"* / *"when
 
 Tier breakdown:
 - **Free tier (everyone)**: `seam.trace` (wraps `amps/scripts/soma-trace.sh`).
-- **PRO tier (soma-beta tarball)**: `seam.ancestors`, `seam.timeline`, `seam.seeds`, `seam.gaps`, `seam.web`.
+- **Optional pack (not installed with meetsoma core)**: `seam.ancestors`, `seam.timeline`, `seam.seeds`, `seam.gaps`, `seam.web`.
 - **Dev tree only (internal)**: `seam.sessions`, `seam.stats`, `docs.related`, `docs.impact`.
 
 ### 📁 New files / locations
@@ -653,7 +651,7 @@ Both run as part of `npm test`; both fail loud if real drift exists.
 
 ### 🐛 Bugs you can stop stepping around
 
-- **`soma-scrape.sh` lost fetched docs silently** when `_website/` dest dir didn't exist. Now `mkdir -p` before write. (`scripts/_pro/*` is gitignored from soma-beta release — dev/main only.)
+- **`soma-scrape.sh` lost fetched docs silently** when `_website/` dest dir didn't exist. Now `mkdir -p` before write. (Dev-only script — not part of the public core.)
 - **`tsconfig.json` was type-checking `extensions/_archive/**`** — cleared 15 TS7006 errors from `_archive/sx594-flat-wrappers/`. `npm run check` now exit 0.
 
 ---
@@ -715,7 +713,7 @@ The "audit + scan + remember" patch arc: tooling for auditing your own kanban, s
 
 ### 🛠 New scripts
 
-- `scripts/_pro/soma-github-cache.sh` — tarball fetch + extract + cache management
+- A dev-only script for tarball fetch + extract + cache management (internal, not part of the public core)
 - `.soma/amps/scripts/soma-audit-ticket.py` `[dev]` — single-ticket audit (Python; the heuristics engine)
 - `.soma/amps/scripts/soma-audit-tickets.sh` `[dev]` — parallel batch wrapper (xargs -P 8)
 

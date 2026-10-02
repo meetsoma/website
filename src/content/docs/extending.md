@@ -1,12 +1,12 @@
 ---
-title: "Extending Soma"
+title: "Extending meetsoma core"
 description: "Skills, extensions, events, APIs — build on top of Soma."
 section: "Extending"
 updated: 2026-10-02
 order: 5
 ---
 
-# Extending Soma
+# Extending meetsoma core
 
 <!-- tldr -->
 Built on Pi — inherits full extension system. Skills: markdown instructions in `.soma/skills/` or `~/.soma/agent/skills/`. Extensions: TypeScript hooks into agent lifecycle (before_agent_start, tool_result, session_shutdown). Built-in extensions: soma-boot (identity + protocols + muscles), soma-breathe (breath cycle + session rotation), soma-guard (safe file operations), soma-header (branded σῶμα header), soma-hub (community hub), soma-route (inter-extension communication), soma-scratch (scratch pad), soma-statusline (context/cost/git footer).

@@ -378,7 +378,7 @@ ls -la ~/.soma/agent/  # global runtime
 
 ## Getting Help
 
-- **GitHub Issues:** [github.com/meetsoma/soma-agent/issues](https://github.com/meetsoma/soma-agent/issues)
+- **GitHub Issues:** [github.com/meetsoma/core/issues](https://github.com/meetsoma/core/issues)
 - **Community Hub:** [github.com/meetsoma/community/discussions](https://github.com/meetsoma/community/discussions)
 - **Docs:** [soma.gravicity.ai/docs](https://soma.gravicity.ai/docs)
 

@@ -1,6 +1,6 @@
 ---
 title: "Getting Started"
-description: "Install Soma, run your first session, understand the basics."
+description: "Install meetsoma core, run your first session with Soma, understand the basics."
 section: "First Steps"
 updated: 2026-10-02
 order: 1

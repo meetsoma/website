@@ -1,8 +1,8 @@
 ---
-title: Bridge Setup for Soma
+title: Bridge Setup
 description: Configure the local Somaverse bridge daemon — lifecycle, config, connectivity
 status: shipped-v0.22.0
-updated: 2026-08-10
+updated: 2026-10-02
 ---
 
 # Bridge Setup
