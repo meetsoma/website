@@ -2,7 +2,7 @@
 title: "Extending Soma"
 description: "Skills, extensions, events, APIs — build on top of Soma."
 section: "Extending"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 5
 ---
 
@@ -366,7 +366,7 @@ Soma uses three top-level meta-tools to organize capabilities. Each is a single 
 |-----------|----------|--------------|------|
 | `soma:*` | Every Soma install | Ships in npm tarball | `soma:agent.*`, `soma:body.*`, `soma:browser.*`, `soma:code.*`, `soma:docs.*`, `soma:focus.*`, `soma:github.*`, `soma:new.*`, `soma:terminals.*` |
 | `somaverse:*` | Somaverse-licensed | Proprietary, separate install | workspace ops, plugin builder, AI helpers |
-| `dev:*` | **Agent contributors only** | Build-excluded from npm + soma-beta | `dev:hub.*` (hub introspection), `dev:audit.*` (deps + CI), `dev:opencode.*` (ask/poll/models transform transport) |
+| `dev:*` | **Agent contributors only** | Build-excluded from the npm tarball + `meetsoma/core` | `dev:hub.*` (hub introspection), `dev:audit.*` (deps + CI), `dev:opencode.*` (ask/poll/models transform transport) |
 
 ### When to add a new cap
 
@@ -381,7 +381,7 @@ Soma uses three top-level meta-tools to organize capabilities. Each is a single 
 The `createMetaTool` factory only auto-discovers addons in the **global**
 `~/.soma/agent/extensions/<namespace>-addons/` directory. For caps that
 should only load when CWD is in a specific project (e.g. project-specific
-tooling like the Gravicity cycle audit), register directly in a
+tooling like a project-specific audit), register directly in a
 project-local extension at `<project>/.soma/extensions/<name>.ts`:
 
 ```typescript
@@ -449,7 +449,7 @@ The `dev:*` namespace is for tools that audit, lint, or inspect the agent itself
 - `extensions/dev-tools.ts` registers the meta-tool
 - `extensions/dev-addons/*.ts` are the cap families
 - `build-dist.mjs` builds them locally for dogfood
-- `soma-release.sh § Step 3` strips them from the soma-beta copy
+- `soma-release.sh § Step 3` strips them from the public `meetsoma/core` copy
 - `verify-bootstrap-clean.sh § Test 5` asserts the strip code is in place
 
 Result: dev contributors can call `dev:hub.audit` to verify hub state; end users running `npm install meetsoma` never see the namespace.

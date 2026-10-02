@@ -2,7 +2,7 @@
 title: "Models & Providers"
 description: "Set up API keys, choose models, configure custom providers like Ollama, OpenAI, and more."
 section: "First Steps"
-updated: 2026-09-18
+updated: 2026-09-02
 order: 1.5
 ---
 

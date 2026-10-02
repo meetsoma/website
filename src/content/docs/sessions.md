@@ -2,7 +2,7 @@
 title: "Sessions"
 description: "Session management — tree navigation, forking, compaction, and branch summarization."
 section: "Core Concepts"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 3.2
 ---
 
@@ -156,8 +156,8 @@ works from inside tmux, where plain `tmux attach` refuses). `soma start` 🚧 li
 stopped and reopens the one you choose. Every session is in exactly one of those two lists.
 See [Reconnecting to a Running Session](/docs/commands#reconnecting-to-a-running-session).
 
-**Sessions say what they are.** Each row is marked `↳scout of a60dac` for a delegated child,
-`↳succ of 7434d0` for a rotation successor, or left unmarked for an orchestrator you drive — with
+**Sessions say what they are.** Each row is marked `↳scout of d38f60` for a delegated child,
+`↳succ of 91ac4e` for a rotation successor, or left unmarked for an orchestrator you drive — with
 the model it was last on. This is recorded at boot, so sessions started before the feature show no
 marker.
 

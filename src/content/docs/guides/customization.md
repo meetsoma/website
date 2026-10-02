@@ -101,7 +101,7 @@ Start with `body/soul.md` (one file). When it outgrows ~120 lines, split into st
 | `body/soul.md` | Who — personality, values | "I think in systems, verify before claiming" |
 | `body/voice.md` | How — communication style | "Dense, terse, no fluff" |
 | `body/body.md` | What — project context | "Next.js frontend, Hono API, pnpm monorepo" |
-| `body/journal.md` | Noticed — observations | "Curtis prefers numbered lists for options" |
+| `body/journal.md` | Noticed — observations | "The user prefers numbered lists for options" |
 
 See [Identity](/docs/identity) and [Body Architecture](/docs/body) for the full guide.
 

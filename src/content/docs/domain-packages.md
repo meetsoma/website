@@ -2,13 +2,38 @@
 title: "Domain Packages"
 description: "Bundle a whole domain — protocols, muscles, scripts and body files — into one folder soma loads as if it were native."
 section: "Extending"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 5.4
 ---
 
 <!-- tldr -->
 A domain package is a mini `.soma` in one folder: its own `amps/protocols/`, `amps/muscles/`, `amps/scripts/` and `body/`. Put it in `.soma/packages/<name>/`, declare it in `settings.json`, and soma loads its contents **where soma already looks** — gates fire, muscles load, scripts appear in the catalog. Undeclare it and all of that withdraws in one move. A skill is a doorway; a package is a doorway **plus** the machinery behind it.
 <!-- /tldr -->
+
+## Why they exist
+
+Everything you teach soma — rules, tools, notes — lands in your `.soma/`. That works until you work
+on more than one kind of thing, at which point every session pays for every rule you have ever
+written, and removing a subject means finding its files by hand.
+
+A package is one folder per subject, with a switch:
+
+```
+  BEFORE  — one pile                      AFTER — one folder per subject, each switchable
+
+  .soma/                                  .soma/
+  ├── protocols/  rules for everything     ├── protocols/   the rules you always want
+  ├── muscles/    notes for everything      └── packages/
+  └── scripts/    tools for everything          ├── api-work/    ← its own rules, notes, tools
+                                                  └── data-pipeline/  ← its own, separate
+  Adding a subject: dump more files in.
+  Removing one:     find them all by hand.     Adding a subject:    drop the folder in.
+                                               Removing one:        "deny": ["api-work"]
+```
+
+Nothing else changes. The loaders that already walk your `.soma/` find a package's contents in the
+same places they always look — so a package's gates fire, its muscles load, and its scripts appear
+in your boot catalog exactly as if you had written them yourself.
 
 ## What a domain package is
 

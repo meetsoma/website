@@ -75,7 +75,7 @@ Add context the agent missed. Fix incorrect statements. Add your own notes:
 ```markdown
 ## My Notes
 - The approach we took for auth won't scale - reconsider before session 3
-- Curtis: check the PR comments on #47 before continuing
+- Note: check the PR comments on #47 before continuing
 ```
 
 The agent reads everything in the preload. Your notes become its starting context.
@@ -88,7 +88,7 @@ For deeper continuity, maintain a journal at `.soma/body/journal.md`. After a se
 ## 2026-04-04
 - Agent struggled with the deploy flow - might need a muscle for it
 - The test coverage correction worked - didn't repeat the mistake
-- Curtis prefers terse status updates, not explanations
+- The user prefers terse status updates, not explanations
 ```
 
 The journal loads into the system prompt (if included in `_mind.md`). Over time, it becomes a record of patterns the agent uses to understand you.

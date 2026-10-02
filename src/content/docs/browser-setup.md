@@ -2,7 +2,7 @@
 title: Browser Setup for Soma
 description: Configure Soma to drive a browser via CDP — Chrome, Brave, Edge, Arc, Chromium, Firefox
 status: preflight
-updated: 2026-09-18
+updated: 2026-10-02
 ---
 
 # Browser Setup
@@ -148,7 +148,7 @@ When a Firefox-degraded cap returns partial data, Soma adds a `warning` field to
 
 Safari has no CDP implementation. It speaks WebDriver-BiDi (a different protocol) instead.
 
-Soma doesn't currently support Safari. If you need Safari automation, file an issue — a WebDriver-BiDi adapter is tracked (SX-617) but implementation depends on user demand.
+Soma doesn't currently support Safari. If you need Safari automation, file an issue — a WebDriver-BiDi adapter is tracked but implementation depends on user demand.
 
 **Workaround:** install a Chromium browser for Soma's browser tools. Safari + Soma coexist fine on the same machine — just launch a different browser when you need automation.
 

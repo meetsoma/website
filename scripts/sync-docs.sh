@@ -44,7 +44,9 @@ echo ""
 # Format: source_file|title|description|section|order
 # ---------------------------------------------------------------------------
 MANIFEST=(
-  "getting-started.md|Getting Started|Install Soma, run your first session, understand the basics.|First Steps|1"
+  "what-is-meetsoma-core.md|What is meetsoma core?|meetsoma core is the open-source harness you install. Soma is the agent that lives in it.|First Steps|0.5"
+  "coming-from-the-beta.md|Coming from the beta?|What changed for soma-beta users and how to switch to meetsoma core.|First Steps|0.8"
+  "getting-started.md|Getting Started|Install meetsoma core, run your first session with Soma, understand the basics.|First Steps|1"
   "how-it-works.md|How It Works|Breath cycle, identity, muscles, protocols, context management.|Core Concepts|2"
   "identity.md|Identity|Discovery, layering, customization, project vs global.|Core Concepts|2.5"
   "protocols.md|Protocols & Heat|Behavioral rules, heat system, domain scoping, writing your own.|Core Concepts|3"

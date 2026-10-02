@@ -2,7 +2,7 @@
 title: "Inbox"
 description: "Asynchronous messaging between agents, sessions, and humans — file-based, no automation needed."
 section: "Core Concepts"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 4.5
 ---
 
@@ -57,7 +57,7 @@ Examples:
 
 ```yaml
 ---
-from: curtis              # who sent it (human name, agent name, or project)
+from: user                # who sent it (human name, agent name, or project)
 to: soma                  # who should read it
 date: 2026-04-04          # when sent
 type: bug-report          # bug-report | review | request | fyi | reply | note
@@ -78,7 +78,7 @@ Write it like you're briefing someone who has no context. Include:
 
 ```markdown
 ---
-from: curtis
+from: user
 to: soma
 date: 2026-04-04
 type: request
@@ -138,7 +138,7 @@ The agent sees something like:
 ## Inbox (2 unread)
 
 1. [bug-report] "Keepalive limit not enforcing" (from: somaverse, 2026-04-03)
-2. [request] "Add error handling to deploy script" (from: curtis, 2026-04-04)
+2. [request] "Add error handling to deploy script" (from: user, 2026-04-04)
 ```
 
 If your `_mind.md` doesn't include `{{inbox_summary}}`, add it:
@@ -219,7 +219,7 @@ The inbox isn't just for agents talking to each other. It's the cleanest way for
 ```bash
 cat > .soma/inbox/2026-04-04-morning-priorities.md << 'EOF'
 ---
-from: curtis
+from: user
 to: soma
 date: 2026-04-04
 type: request

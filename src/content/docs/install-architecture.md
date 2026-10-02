@@ -2,13 +2,13 @@
 title: "Install Architecture"
 description: "How Soma installs, updates, and manages versions — the full flow from npm to runtime."
 section: "Reference"
-updated: 2026-07-12
+updated: 2026-10-02
 order: 20
 ---
 
 # Install Architecture
 
-<!-- UPDATE WHEN: install flow changes, thin-cli.js updated, soma-beta structure changes -->
+<!-- UPDATE WHEN: install flow changes, thin-cli.js updated, meetsoma/core structure changes -->
 <!-- SEAMS: getting-started.md#install, updating.md, doctor.md, configuration.md -->
 
 How `npm install -g meetsoma` becomes a working AI agent.
@@ -19,8 +19,8 @@ Soma has two independent packages that version separately:
 
 | Layer | Package | Version | What |
 |-------|---------|---------|------|
-| **CLI** | `meetsoma` (npm) | v0.3.3 | Thin bootstrap — welcome flow, `soma init`, delegates to runtime |
-| **Agent** | `soma-beta` (GitHub) | v0.11.2+ | Full runtime — extensions, protocols, body templates, Pi engine |
+| **CLI** | `meetsoma` (npm) | v0.31.0 | Thin bootstrap — welcome flow, `soma init`, delegates to runtime |
+| **Agent** | `meetsoma/core` (GitHub) | v0.50.0 | Full runtime — extensions, protocols, body templates, Pi engine |
 
 The CLI is ~50KB. The agent is the real thing. When you run `soma`, the CLI checks if the agent is installed and delegates everything to it.
 
@@ -44,7 +44,7 @@ npm install -g meetsoma
          │         ▼
          │    soma init
          │         │
-         │         ├── git clone --depth 1 soma-beta → ~/.soma/agent/
+         │         ├── git clone --depth 1 meetsoma/core → ~/.soma/agent/
          │         ├── npm install --omit=dev (Pi runtime + deps, pinned by lockfile)
          │         ├── Save config.json (installedAt, coreVersion, installPath)
          │         └── Restore user files (auth.json, models.json if they existed)
@@ -64,7 +64,7 @@ npm install -g meetsoma
 
 ```
 ~/.soma/
-  agent/                    ← git clone of soma-beta (the runtime)
+  agent/                    ← git clone of meetsoma/core (the runtime)
     dist/                   ← compiled runtime (Pi + Soma extensions)
       cli.js                ← Soma's entry point (delegates to Pi)
       thin-cli.js           ← copy of the npm CLI (for bundled installs)
@@ -79,7 +79,7 @@ npm install -g meetsoma
     migrations/             ← migration phases + cycle
     package.json            ← agent version (source of truth)
     node_modules/           ← Pi runtime dependencies (exact versions from package-lock.json)
-    package-lock.json       ← ships with soma-beta releases (v0.12.3+) — pins Pi and transitive tree
+    package-lock.json       ← ships with meetsoma/core releases — pins Pi and transitive tree
   config.json               ← install metadata
   amps/                     ← global AMPS (shared across projects)
   memory/                   ← global memory
@@ -108,7 +108,7 @@ your-project/
 ### Updating the Agent (runtime)
 
 ```bash
-soma update                 # v0.12.3+ — actually performs the update
+soma update                 # performs the update
 ```
 
 This does `git pull --ff-only` on `~/.soma/agent/`, then reinstalls deps if `package.json` changed. Your project `.soma/` files are never touched. Pi runtime version follows Soma version — when a new Soma release changes the Pi pin, this command fetches the new Pi as part of the update.
@@ -131,13 +131,10 @@ soma update
                    Warn if project is behind
 ```
 
-> **Pre-v0.12.3**: `soma update` was status-only (just reported what was available
-> and told you to run `soma init`). `soma init` on an existing install was the
-> one that actually did updates — an overload that silently hid the update flow
-> when you typed `init` for project work. Both behaviors are now corrected:
-> `soma init` = project setup, `soma update` = runtime update.
+> `soma init` = project setup, `soma update` = runtime update. They stay separate
+> on purpose: initializing a project should never silently trigger a runtime update.
 
-### Periodic Update Notices (v0.12.3+)
+### Periodic Update Notices
 
 The running agent checks for updates in the background:
 
@@ -213,20 +210,20 @@ soma doctor (CLI)
 
 ```bash
 soma --version
-# σ  Soma v0.11.2      ← agent version (from ~/.soma/agent/package.json)
-#    CLI v0.3.3          ← CLI version (from npm package)
+# σ  Soma v0.50.0      ← agent version (from ~/.soma/agent/package.json)
+#    CLI v0.31.0         ← CLI version (from npm package)
 
 soma doctor
-# Agent:   v0.11.2      ← what's installed globally
-# Project: v0.10.0      ← what this project was created with
-# CLI:     v0.3.3       ← npm package version
+# Agent:   v0.50.0      ← what's installed globally
+# Project: v0.49.0      ← what this project was created with
+# CLI:     v0.31.0      ← npm package version
 ```
 
 The **agent version** is what matters for features and compatibility. The **CLI version** is the thin bootstrap layer. The **project version** tracks what migration level the project's `.soma/` is at.
 
 ## Dev Setup
 
-For Soma developers, `soma-install.sh dev` creates symlinks instead of using the soma-beta clone:
+For meetsoma core developers, `soma-install.sh dev` creates symlinks instead of using the meetsoma/core clone:
 
 ```
 ~/.soma/agent/core/        → symlink → repos/agent/core/

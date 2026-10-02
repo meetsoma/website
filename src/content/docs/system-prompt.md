@@ -2,7 +2,7 @@
 title: "System Prompt"
 description: "How Soma's compiled system prompt is assembled, configured, and previewed."
 section: "Core Concepts"
-updated: 2026-09-18
+updated: 2026-09-02
 order: 7
 ---
 

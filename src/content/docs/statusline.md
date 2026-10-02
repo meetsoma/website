@@ -2,7 +2,7 @@
 title: "Statusline & Notices"
 description: "The three-line footer, every indicator, and the toast notices Soma shows you — including the preload lifecycle."
 section: "Reference"
-updated: 2026-09-18
+updated: 2026-09-05
 order: 7.5
 ---
 

@@ -2,7 +2,7 @@
 title: "Skills"
 description: "Install and create skills — self-contained capability packages loaded on demand."
 section: "Extending"
-updated: 2026-09-18
+updated: 2026-09-02
 order: 5.3
 ---
 

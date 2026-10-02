@@ -2,7 +2,7 @@
 title: "Getting Started"
 description: "Install Soma, run your first session, understand the basics."
 section: "First Steps"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 1
 ---
 
@@ -34,7 +34,7 @@ own version number; the agent runtime it installs is versioned separately and is
 `soma --version` prints both, and the CLI number being lower than the one in these docs is expected:
 
 ```
-σ  Soma v0.42.1      ← the runtime, what the docs describe
+σ  Soma v0.50.0      ← the runtime, what the docs describe
    CLI v0.31.0       ← the npm launcher
 ```
 
@@ -140,7 +140,8 @@ Pick from previous sessions to resume.
 | Command | Context | Memory | Best for |
 |---------|---------|--------|----------|
 | `soma` | Fresh | **No preload** (default `autoInject: false`) | Quick starts, new work |
-| `soma inhale` | Fresh | Loads preload (explicit) | Daily continuation after review |
+| `soma inhale` | Fresh | Loads the preload soma ranks first | Daily continuation, one lane |
+| `soma preload` → `soma preload <#>` | Fresh | Loads **the preload you pick** from a numbered list | Several lanes live — choose which work to continue |
 | `soma -c` | Full history | Complete conversation | Short breaks |
 
 ## Commands

@@ -2,7 +2,7 @@
 title: "Scripts"
 description: "Standalone tools that ship with Soma — codebase navigation, memory tracing, session focus, doc scraping, and more."
 section: "Reference"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 9
 ---
 
@@ -161,11 +161,11 @@ Shared theming for all Soma scripts. Provides colors, header/footer helpers, and
 
 ---
 
-## Advanced Scripts (Pro tier — beta)
+## Advanced Scripts (Pro tier)
 
-These 5 scripts ship as compiled `.js` files (base64-encoded bash, obfuscated) and provide deeper capabilities — dependency analysis, memory tracing, doc scraping, remote repo inspection, and browser automation.
+These 5 scripts ship as compiled `.js` files (base64-encoded bash) and provide deeper capabilities — dependency analysis, memory tracing, doc scraping, remote repo inspection, and browser automation.
 
-**During the v0.21.x beta, every install gets these working** — a Pro session token is provisioned automatically on first `soma` invocation. The auth scaffold inside each compiled script is real (not a no-op); when the Pro subscription tier ships, only the token-provisioning source changes — the scripts themselves ship unchanged. No friction for current users.
+**Every install gets these working today** — a Pro session token is provisioned automatically on first `soma` invocation, no separate signup step. The auth scaffold inside each compiled script is real (not a no-op); if a metered Pro tier ships later, only the token-provisioning source changes — the scripts themselves ship unchanged.
 
 ### soma seam
 

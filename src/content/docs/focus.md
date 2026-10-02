@@ -2,7 +2,7 @@
 title: "Focus"
 description: "Seam-traced boot priming — focus the agent on a topic before the session starts."
 section: "Guide"
-updated: 2026-09-18
+updated: 2026-09-06
 order: 11
 ---
 

@@ -29,34 +29,170 @@ A `[dev]` tag = dev install only (build-excluded from soma-beta end-user tarball
 
 ## 🚧 Coming soon — next release
 
+## v0.50.0 — October 2026
+
 ### 🧰 Workflows
 
-- **`soma attach` — reconnect to a session that is still running.** Lists every live session
-  newest-first with turns, uptime, working directory, tmux name, model, and the exact command to
-  reach it; `soma attach <#|id|tmux-name>` takes you there. Works from inside tmux
-  (`switch-client` on the same server, a nested attach across servers) where plain `tmux attach`
-  refuses. Liveness comes from each session's heartbeat plus a live process id — never from pane
-  text, which keeps showing a session id after that agent has exited.
-- **`soma start` — the stopped half of the same list.** Same rows, opposite set, and each footer
-  names the other, so a session is always in exactly one of the two. `soma start <#|id>` reopens
-  one with full history — `soma -c`, except you choose which. Bounded to this project and 48h
-  (`--hours`, `--all`), and it prints its own denominator so a short list never reads as the whole
-  set.
-- **`soma attach --kill <#|id>` / `--kill all` — stop a running session.** Killing is not deleting:
-  the transcript is untouched and the session moves to the `soma start` list. It asks the session
-  to stop first so it saves and deregisters, escalates only if refused, and confirms rather than
-  assuming. Refuses to kill the session you are in. ⚠ Distinct from `/kill <name>` in the TUI,
-  which drops a muscle to cold.
-- **Sessions now say WHAT they are** — `↳scout of a60dac` for a delegated child, `↳succ of 7434d0`
-  for a rotation successor, unmarked for an orchestrator. Shows up in the resume picker and both
-  lists. Recorded at BOOT from the spawner's environment, because it is unrecoverable afterwards:
-  a child and an orchestrator are indistinguishable by any text in their transcripts. Sessions
-  started before this show no marker and read as orchestrators.
-- **🔄 `soma -c` continues YOUR session, not the child that wrote last.** Delegated children write
-  into the same directory as their parent, so after a delegation burst `-c` reopened a scout. It
-  now continues the most recent **stopped orchestrator** and prints what it skipped. Only sessions
-  positively marked as delegated are skipped — anything unmarked behaves exactly as before.
+- **`soma attach` / `soma start` — see every session, running or stopped, and reconnect.**
+  `soma attach` lists live sessions newest-first (turns, uptime, cwd, tmux name, model) and
+  `soma attach <#|id|tmux-name>` takes you there — works from inside tmux, where plain `tmux
+  attach` refuses. `soma start` is the stopped half: same rows, opposite set, `soma start <#|id>`
+  reopens one with full history. Each list's footer names the other, so a session is always in
+  exactly one. `soma attach --kill <#|id>` / `--kill all` stops a running session without deleting
+  its transcript — it moves to the `soma start` list instead.
+- **Sessions say what they are.** `↳scout of d38f60` for a delegated child, `↳succ of 91ac4e` for a
+  rotation successor, unmarked for an orchestrator — in the resume picker, `soma attach` and `soma
+  start`. Recorded at boot from the spawner's environment; sessions started before this show no
+  marker.
+- **🔄 `soma -c` continues YOUR session, not whichever child wrote last.** Delegated children write
+  into the same directory as their parent, so after a delegation burst `-c` used to reopen a scout.
+  It now continues the most recent stopped orchestrator and prints what it skipped.
   `SOMA_CONTINUE_ANY=1 soma -c` restores the old meaning.
+- **`soma preload` lists your preload lanes and starts one by number.** One row per preload — age,
+  arc, lane, what it supersedes — naming which one a bare boot would take (boot picks newest by
+  mtime, arc-blind). `soma preload <#|name>` starts a session on that exact lane.
+- **`/reduce` and `/resume-reduced` shrink a transcript without losing work.** `/reduce` mechanically
+  strips image payloads (keeping metadata) and truncates oversized tool results into a
+  `.reduced.jsonl` beside the original — 60% smaller on disk, measured across 200 real transcripts,
+  original untouched. `/resume-reduced` does the same and resumes into the copy, so a session
+  climbing toward its context limit can keep going instead of rotating; it refuses to switch if the
+  reduced copy lost any turns. `/reduce images` touches images only; `--keep N` / `--all` adjust the
+  window.
+- **Address a peer directly: `@s01-xxxxxx <message>` in ordinary output.** Writes an inbox letter;
+  must start the line (never inside a code fence), and warns if the recipient has no heartbeat.
+- **`soma --model <name>` boots raw, skipping your last preload** — a quick run on a different model
+  no longer pays for a large handoff. Same for `--provider` / `--thinking-level`.
+  `preload.skipOnModelOverride: false` keeps the old behaviour; `soma inhale` still loads by name
+  either way.
+- **`focus: [somaverse]` in a preload, or `soma --package somaverse` on the command line, scopes a
+  session to only the domain packages it needs** — doorway, protocols, muscles, body files and tools
+  together. Your own `.soma` and parents are untouched; a focus naming an unmountable package warns
+  at boot.
+- **`soma terminals tune` fixes the tmux settings that flatten a modern terminal's keys**
+  (`extended-keys`, `allow-passthrough`, `focus-events`…) — shows what's missing, asks, appends
+  inside one `# >>> soma tmux >>>` block. `soma terminals open <layout.json>` puts commands where
+  you're looking (a Warp tab config, a tmux split); `soma terminals grid <id>...` opens one
+  `soma attach` pane per session.
+
+### 🆕 New caps
+
+- **`soma:agent.resume` restarts a child whose session ended** — same settings a fresh spawn gets,
+  so a crashed or idle-shutdown child keeps working as that child instead of coming back as an
+  ordinary session.
+- **`soma:inbox.wait` covers "a letter arrived", "the builder committed" and "the sweep finished" in
+  one call.** No args: returns your next unread letter (optionally filtered by sender or subject
+  word). `{repo, ref}`: returns when that branch gets a new commit. `{file}`: returns when a path
+  appears.
+- **`soma:inbox.send({cc})`** — one call writes the same letter to each recipient, one copy each.
+- **`soma:audit.*` — one command for the estate's real git state.** Parses `git status --porcelain`
+  by column (not the first space), asks each repo its actual default branch, splits AT-RISK commits
+  from merely-unmerged ones.
+- **`soma:browser.network({action:'start'})` then `{action:'read'})` answers "did that click
+  actually send anything?"** Records fetch/XHR inside the page and marks Next.js server actions — a
+  control that looks like it worked but sent nothing stops being invisible. Says when it wasn't
+  recording, instead of reporting zero requests.
+- **`soma:browser.health({expectMarker?})` tells you whether a tab can be trusted before you go
+  bug-hunting** — painted, hydrated, and whether you're looking at the build you just shipped or a
+  cached older one. Returns a verdict naming the fix, not raw flags.
+- **`soma:browser.targets` / `.status` list every running browser, port or no port**, each row
+  naming whether it's reachable (`use({port})`) or needs `soma:browser.launch` — a last-resort
+  agent-owned browser under a named persistent profile, never the user's own.
+- **`search` can use your own SearXNG instance.** `search.api.provider: 'searxng'` +
+  `search.api.url` (or `$SOMA_SEARCH_URL`) — no API key, no metering.
+- **`soma:agent.peer({id})` answers whether a successor/sibling is actually working the plan it
+  booted from** — preload it loaded, planned files touched, commits it authored, verdict
+  ON-TRACK/DRIFT/STALLED/IDLE.
+- **`soma:markdown.*` maps and grooms a long markdown document** — outline by heading, pull one
+  section, or groom the whole file, for docs too big to read end to end before editing.
+- **`soma:agent.transcript` reads what a child or peer actually said**, reconstructed from that
+  session's own JSONL — a report stays checkable after its pane is gone.
+- **`soma:settings.*` shows what a setting actually resolves to, and where it came from.**
+  `list`/`get` report the effective value plus which file in the chain set it; `set` writes the file
+  a key is actually read from; `doctor` finds SET-BUT-UNREAD and READ-BUT-UNSET keys from source,
+  not a hand-kept list.
+- **`soma:code.comments` censuses a file's comments with line ranges** — for finding where a file
+  explains itself, and where a 60-line comment block has outgrown the code under it.
+- **`soma:agent.grade` and `.kill` close the delegation loop.**
+  `grade({id, grade:'pass'|'fail'|'partial', note?})` records that you checked a child's deliverable;
+  `kill` warns when you end a child whose work was never graded, stays quiet when it produced
+  nothing.
+- **`soma:agent.checkin` answers whether a child is making PROGRESS, not whether it's alive** —
+  reports deliverable growth, so a running-but-stuck child reads differently from a working one.
+- **`soma:agent.activity({session})` tells you what a sibling actually DID** — span, model changes,
+  tool-call breakdown, thinking count, read from the transcript rather than watching a pane (which
+  only shows liveness).
+- **`soma:amps.find` and `soma:new.muscle`/`.protocol` refuse near-duplicates.** Before scaffolding,
+  the name is searched across the whole chain, hot and cold; a name-level match returns the
+  existing candidates instead of a new file. `force:true` creates anyway.
+- **`soma:agent.delegate({transport:'rpc'})` delivers a child's task over Pi's RPC protocol, with an
+  acknowledgement** — a typed response frame instead of guessing from the pane's message counter.
+  Opt-in; the default tmux route is unchanged.
+- **`soma:agent.pane` opens/closes a viewer split on a child's session in your current window** —
+  closing the pane never kills the child.
+
+### 🔄 Behavior changes
+
+- **`context_status` no longer says ROTATE.** Below your model's prep line it reports runway and
+  that context is not a reason to stop; past it, it says start rotation prep. Reports runway
+  directly now — `59% · 6% to the 65% rotate line` — instead of a bare percent.
+- **The `opus` alias now resolves to Claude Opus 5.5** (`opus`, `opus-5`, `opus5` →
+  `anthropic/claude-opus-5-5`; `opus-5-5`/`opus55` are new aliases).
+- **`delegate.headlessChain` in `settings.json` sets the fallback models headless children try, in
+  order** — edit the list when a free tier ends, no release needed.
+- **A domain package can carry its own skills** (`skills/<name>/SKILL.md` inside a mounted package)
+  — appears in the catalog while the package is focused in, disappears when it's focused out.
+- **A delegated child now receives its whole role file**, not three sliced sections — guidance an
+  author put anywhere in the file now reaches the child.
+- **`breathe.onFull` replaces `breathe.autoRotate`/`context.safetyNet`** — `"warn"`, `"steer"`
+  (default) or `"rotate"`. Old settings keep working and are mapped on read.
+  `"rotate"` is refused while Pi's own auto-compaction is on.
+- **`skills.deny` in `.soma/settings.json` hides a named skill from the catalog** without moving or
+  deleting it — for de-duplicating a doorway skill that already routes to something.
+- **Sub-agents boot with `GIT_EDITOR=true`** — a git merge/rebase/commit that would open an editor
+  now completes in a delegated child instead of hanging.
+- **A tool call that depends on a write still in flight in the same parallel block is now held**,
+  with the reason — reading, committing, pushing, building or deploying something an earlier call in
+  the same block is still writing returns "run this after it lands." `guard.inflightRace: false`
+  turns it off.
+- **A role's `reasoning-effort` setting now actually reaches the child.**
+
+### 🐛 Bugs you can stop stepping around
+
+- **`soma:agent.checkin` no longer calls a running child "finished."** Its 2-minute warm-up compared
+  `Date.now()` to an ISO string (always `NaN`) — every child with an unwritten deliverable was
+  flagged `∅ MISSING` from the first poll.
+- **Harvesting a still-running child, then killing it, no longer records a failure.**
+  `soma:agent.harvest` on a running child stamps the entry; the `soma:agent.kill` that follows
+  records `completed` (harvested) instead of `aborted` — run counts stop reading delivered work as a
+  crash.
+- **`soma:browser.navigate({url})` works** — the catalog advertised `url`, the implementation
+  required `targetUrl`, so the documented call 400'd every time. `url` is now a real alias.
+- **An undeclared budget means NO LIMIT, not zero.** A role with no `max-tool-calls` reads
+  "unlimited" in the child's prompt; an explicit `0` is still a real ceiling.
+- **`soma:code.refs` / `.blast` tell a definition from a use** — a call inside an assignment is no
+  longer reported as defining the function it calls; a class method is recognised as a definition.
+- **The `claude-cli` alias table accepts every valid model name and never silently downgrades one** —
+  `model: 'claude-cli/*'` now spawns on sonnet instead of dying at boot on an invalid id.
+- **A command gate no longer fires on a heredoc body you're writing into a file** (`ignore-quoted`
+  treats it as data, like a quoted span); a body fed to `bash`/`sh` is still gated.
+- **A background `claude-cli` child's cost cap is actually read** — the enforcement site looked up a
+  frontmatter key the role schema doesn't use, so a declared `max-cost-usd` did nothing on that
+  path.
+
+### 📁 New files / locations
+
+- **`~/.soma/state/loop-stalls.jsonl`** — a row whenever the event loop is held for more than a
+  second, and whenever a `.soma` checkpoint commit takes more than 100ms, with the last event seen
+  before it. `SOMA_STATE_DIR` relocates it.
+- **`memory/children/<role>/invocations.jsonl`** — a delegated child's lessons now go here per-run
+  instead of editing its own role file; `soma:agent.delegate`/`.kill` no longer suggest folding
+  notes into the role.
+- **`.soma/.last-shutdown.json`** — records why a session stopped, when, how many turns ran, and
+  whether a preload was saved.
+- **`checkpoints.soma.backup.remote` / `.enabled`** — your `.soma` can push its own history at every
+  rotation (exhale, inhale, exit). Refuses to push anywhere public or unverifiable; a push counts as
+  done only when reading the remote back agrees with local history. `durability: scratch` bodies are
+  never pushed.
 
 ---
 
@@ -506,14 +642,14 @@ Both run as part of `npm test`; both fail loud if real drift exists.
 
 ### 🧰 Workflows
 
-- **Anti-accretion sweep** (governed by `amps/protocols/atlas.md` v1.1.0): when `body/STATE.md` exceeds 6KB, run an anti-accretion sweep — session-history paragraphs ("sNN-XXXXXX shipped...") belong in `memory/sessions/` and `memory/journal/`, not in STATE. STATE holds *current state + pointers*; history references the actual session log. Fired live s01-f1230f: cut `body/STATE.md` 18,148 → 5,513 bytes (-70%) without losing any current state.
+- **Anti-accretion sweep** (governed by `amps/protocols/atlas.md` v1.1.0): when `body/STATE.md` exceeds 6KB, run an anti-accretion sweep — session-history paragraphs ("sNN-XXXXXX shipped...") belong in `memory/sessions/` and `memory/journal/`, not in STATE. STATE holds *current state + pointers*; history references the actual session log. First live run cut `body/STATE.md` 18,148 → 5,513 bytes (-70%) without losing any current state.
 - **Phase 6 (Reflect) step 4 expanded** (`releases/cycles/soma-dev/phases/6-reflect.md`): post-release body+state audit now mechanical. Run `soma:body.audit` (catches duplicate slot interpolations, lazy-frontmatter lies) + `soma:body.slots` (token budget per slot) + the size gate on STATE.md. Plus stale-state scan: pulse.md, _recent-lessons.md, ecosystem.md, journal.md "Latest".
 - **In-flight test detection pattern** (for any future test asserting build artifacts or release-pipeline state): detect `chore(release): vX.Y.Z` HEAD subject; if matches, skip the transient assertion with a SKIP not FAIL. Re-run post-ship for verification. Pattern lives in `body/_recent-lessons.md § In-flight test detection`.
 
 ### 📁 New files / locations
 
 - `body/STATE.md` frontmatter `governed-by: amps/protocols/atlas.md` field — makes the protocol discoverable from the file.
-- `releases/v0.24.x/plans/cycle-cross-check-audit.md` — audit doc surfacing five Curtis-decision items from the cycle MAP cross-check (e.g., should `5-release.md` Steps 4-13 be split into orchestrator-internal vs human-action sections?).
+- `releases/v0.24.x/plans/cycle-cross-check-audit.md` — audit doc surfacing five maintainer-decision items from the cycle MAP cross-check (e.g., should `5-release.md` Steps 4-13 be split into orchestrator-internal vs human-action sections?).
 
 ### 🐛 Bugs you can stop stepping around
 

@@ -2,7 +2,7 @@
 title: "How It Works"
 description: "Breath cycle, identity, muscles, protocols, context management."
 section: "Core Concepts"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 2
 ---
 
@@ -13,7 +13,7 @@ Sessions are breaths: inhale (configurable boot steps: identity, preload, protoc
 
 ## The Core Idea
 
-Soma is an AI coding agent that **remembers**. Unlike tools that start fresh every session, Soma carries identity, context, and learned patterns across sessions.
+meetsoma core is the open-source harness you install. Soma is the agent that lives in it — an AI coding agent that **remembers**. Unlike tools that start fresh every session, Soma carries identity, context, and learned patterns across sessions.
 
 σῶμα (sōma) — *Greek for "body."* The vessel that grows around you.
 
@@ -36,7 +36,7 @@ When Soma boots, it runs a configurable sequence of **boot steps**:
 | Step | What Loads | Default |
 |------|-----------|---------|
 | `identity` | Layered identity (project → parent → global) | ✅ On |
-| `preload` | Last session’s state (auto-injected by default) | ✅ On |
+| `preload` | Last session’s state — on `soma inhale` / `soma preload <#>`, or every boot when `preload.autoInject` is on | Off on plain `soma` |
 | `protocols` | Behavioral rules, sorted by heat tier | ✅ On |
 | `muscles` | Learned patterns, within token budget | ✅ On |
 | `automations` | MAPs and workflow templates, heat-tracked | ✅ On |
@@ -45,7 +45,7 @@ When Soma boots, it runs a configurable sequence of **boot steps**:
 
 The boot sequence is configurable in `settings.json` — remove steps you don't want, reorder to change priority. See [Configuration](/docs/configuration#boot-sequence).
 
-Fresh sessions (`soma`) load everything including the most recent preload (auto-injected by default). Resumed sessions (`soma -c`) restore full conversation history instead.
+Fresh sessions (`soma`) load everything except the preload (`preload.autoInject` defaults to `false`); `soma inhale` loads it. Resumed sessions (`soma -c`) restore full conversation history instead.
 
 #### Git Context
 

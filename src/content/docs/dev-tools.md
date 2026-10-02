@@ -2,14 +2,14 @@
 title: "Meta Dev-Tools"
 description: "The dev:* namespace: caps that ship with the dev tree, not user installs."
 section: "Reference"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 13
 ---
 
 # Dev Tools — `dev:*`
 
 <!-- tldr -->
-`dev:*` is the internal-only meta-tool router. Caps live in `extensions/dev-addons/*.ts`, auto-discovered at `session_start` by `dev-tools.ts`. NOT shipped to user installs — the `dev-addons/` directory is excluded from the soma-beta tarball. Use when working from a Soma dev checkout. Nine families today: `audit`, `changelog`, `doctor`, `hub`, `issue`, `kanban`, `opencode`, `pr`, `verify`.
+`dev:*` is the internal-only meta-tool router. Caps live in `extensions/dev-addons/*.ts`, auto-discovered at `session_start` by `dev-tools.ts`. NOT shipped to user installs — the `dev-addons/` directory is excluded from the public `meetsoma/core` distribution at build time. Use when working from a Soma dev checkout. Nine families today: `audit`, `changelog`, `doctor`, `hub`, `issue`, `kanban`, `opencode`, `pr`, `verify`.
 <!-- /tldr -->
 
 ## Why `dev:*` exists separately from `soma:*`
@@ -121,7 +121,7 @@ repos/agent/extensions/dev-addons/   Lives in the dev checkout
                                  ↓
                           Build excludes _dev/ + dev-addons/
                                  ↓
-                          User tarball (soma-beta)
+                          Public distribution (meetsoma/core)
                                  ↓
                           Free-tier `dev:*` caps return:
                           "[dev:family.cap] Internal tool — script not found."

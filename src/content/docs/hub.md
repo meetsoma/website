@@ -2,7 +2,7 @@
 title: "Hub"
 description: "Install, share, and discover community content — protocols, muscles, scripts, templates, and automations."
 section: "Core Concepts"
-updated: 2026-09-18
+updated: 2026-09-02
 order: 5.1
 ---
 

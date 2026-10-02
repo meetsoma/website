@@ -2,7 +2,7 @@
 title: "Workspaces"
 description: "Parent-child inheritance, monorepo patterns, solo body mode."
 section: "Core Concepts"
-updated: 2026-09-18
+updated: 2026-09-02
 order: 8
 ---
 

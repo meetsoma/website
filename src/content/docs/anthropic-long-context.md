@@ -8,7 +8,7 @@ description: How Sonnet 4.6's 1M context tier works under OAuth, and what to ena
 
 Sonnet 4.6 supports up to 1M token context. Above some account-specific threshold below the full window, requests bill at the "extra usage" tier and require explicit account-side enrollment + client-side opt-in. Get either out of order and the API rejects every request.
 
-**The exact threshold isn't documented in a place we've sourced.** Empirically on Curtis's Claude Max plan, the wall hit at ~40-48% of Sonnet 4.6's reported 1M context window (~400-480K tokens). Your account may be different. Watch for the `extra usage required for long context` 429 to detect yours.
+**The exact threshold isn't documented in a place we've sourced.** Empirically on one Claude Max plan, the wall hit at ~40-48% of Sonnet 4.6's reported 1M context window (~400-480K tokens). Your account may be different. Watch for the `extra usage required for long context` 429 to detect yours.
 
 ## The two switches
 
@@ -46,11 +46,11 @@ All three are technically correct responses to a 429 — but the underlying prob
 
 The mechanism is `scripts/_dev/patches/apply-patches.sh` (build-time string injection into `node_modules/@earendil-works/pi-ai/dist/providers/anthropic.js`). It adds `context-1m-2025-08-07` to the OAuth `anthropic-beta` header.
 
-The patch is **disabled by default** (s01-a54f21, SX-727 reversed). To enable:
+The patch is **disabled by default**. To enable:
 
 1. Verify long-context billing is on at [claude.ai/settings/usage](https://claude.ai/settings/usage)
 2. Set `anthropic.enableLongContext: true` in `~/.soma/settings.json` (or workspace)
-3. Currently: re-apply the patch manually (auto-apply on settings flip = SX-741 follow-up)
+3. Currently: re-apply the patch manually (auto-apply on settings flip is a planned follow-up)
 
 ## Per-model behavior under OAuth
 

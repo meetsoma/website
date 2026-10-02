@@ -2,7 +2,7 @@
 title: "Memory Layout"
 description: "Project vs user level storage, git strategy, data flow."
 section: "Core Concepts"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 4
 ---
 
@@ -141,11 +141,11 @@ Exhale (/exhale):
 
 ## Session Logs
 
-Session log files are named `YYYY-MM-DD-sNN-HASH.md` — the date, a sequential session number (`s01`, `s02`), and a 6-character hex hash for uniqueness. Example: `2026-03-28-s01-a3f2c1.md`. Each session gets its own file. The hash prevents collisions when multiple terminals run simultaneously.
+Session log files are named `YYYY-MM-DD-sNN-HASH.md` — the date, a sequential session number (`s01`, `s02`), and a 6-character hex hash for uniqueness. Example: `2026-03-28-s01-xxxxxx.md`. Each session gets its own file. The hash prevents collisions when multiple terminals run simultaneously.
 
 ## Session-Scoped Preloads
 
-Preload files are named `preload-next-YYYY-MM-DD-sNN-HASH.md` — the date plus the full session ID. Example: `preload-next-2026-03-28-s01-a3f2c1.md`. Each exhale writes a unique file. On resume, Soma picks the most recent preload by modification time.
+Preload files are named `preload-next-YYYY-MM-DD-sNN-HASH.md` — the date plus the full session ID. Example: `preload-next-2026-03-28-s01-xxxxxx.md`. Each exhale writes a unique file. On resume, Soma picks the most recent preload by modification time.
 
 This means you can have multiple preloads from different sessions. The unique filename prevents overwrites. Soma searches: `memory/preloads/` (configured) → `.soma/` root (legacy) → `memory/` (legacy).
 

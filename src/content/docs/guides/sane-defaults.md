@@ -121,7 +121,7 @@ soma terminals detect
 #   Run: soma terminals prefer tmux to persist.
 
 soma terminals prefer tmux
-# → wrote delegate.terminal = tmux to /Users/you/.soma/settings.json
+# → wrote delegate.terminal = tmux to ~/.soma/settings.json
 ```
 
 Subsequent `delegate(background:true)` uses tmux without asking. Override per-call via `delegate(terminal:'cmux', ...)`.

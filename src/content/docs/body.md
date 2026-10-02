@@ -2,7 +2,7 @@
 title: "Body Architecture"
 description: "Structured identity with templates, variables, lazy loading, and the soma chain."
 section: "Core Concepts"
-updated: 2026-08-16
+updated: 2026-10-02
 order: 3.5
 ---
 
@@ -111,7 +111,7 @@ Controls the system prompt layout. Compiled by `compileFullSystemPrompt()` on th
 
 No `_mind.md`? The agent uses a built-in default. Every variable is optional — missing variables produce empty sections that disappear.
 
-**Why no `{{protocol_summaries}}` / `{{muscle_digests}}` / `{{scripts_table}}`?** They were removed from the shipped template in `fcd32bd` (SX-600, 2026-04-23 — cache economics). The compiler **already prepends** protocol summaries + muscle digests as a static block via `compileFrontalCortex()` (in `core/prompt.ts`) BEFORE the template renders. Interpolating them again in `_mind.md` causes double injection — same content twice, wasted tokens, and the volatile slot ends up in a cache position that invalidates ~80% of the prefix below it on every edit. The variables are still populated for backwards compatibility, but the canonical pattern is to rely on the prepend and let the template render only what's specific to your project.
+**Why no `{{protocol_summaries}}` / `{{muscle_digests}}` / `{{scripts_table}}`?** They were removed from the shipped template in v0.21.0 (cache economics). The compiler **already prepends** protocol summaries + muscle digests as a static block via `compileFrontalCortex()` (in `core/prompt.ts`) BEFORE the template renders. Interpolating them again in `_mind.md` causes double injection — same content twice, wasted tokens, and the volatile slot ends up in a cache position that invalidates ~80% of the prefix below it on every edit. The variables are still populated for backwards compatibility, but the canonical pattern is to rely on the prepend and let the template render only what's specific to your project.
 
 ### _memory.md — Preload Format
 
@@ -196,7 +196,7 @@ lazy: true
 | Variable | What |
 |----------|------|
 | `{{preload}}` | Continuation prompt from last session |
-| `{{session_id}}` | Session identifier: `s01-abc123` |
+| `{{session_id}}` | Session identifier: `s01-xxxxxx` |
 | `{{greeting}}` | Contextual greeting (narrative only) |
 | `{{session_files}}` | Session log + preload file paths |
 | `{{today}}` | ISO date |

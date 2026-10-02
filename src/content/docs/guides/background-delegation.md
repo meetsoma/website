@@ -60,13 +60,13 @@ A background child is a full Soma session in a detached terminal. The terminal d
 Detached means no window pops up. If you want to watch the child live, the spawn output tells you how:
 
 ```
-[delegate:background] spawned child-7f3a91 via tmux
-role: general | model: auto | handle: soma-child-7f3a91
+[delegate:background] spawned child-xxxxxx via tmux
+role: general | model: auto | handle: soma-child-xxxxxx
 Status: running. Task sent. Use soma:agent.list to monitor.
-To watch live: tmux attach -t soma-child-7f3a91
+To watch live: tmux attach -t soma-child-xxxxxx
 ```
 
-Running `tmux attach -t soma-child-7f3a91` in any terminal attaches you to the child's TUI. You can watch it work, type in it, or just `Ctrl-b d` to detach and leave it running.
+Running `tmux attach -t soma-child-xxxxxx` in any terminal attaches you to the child's TUI. You can watch it work, type in it, or just `Ctrl-b d` to detach and leave it running.
 
 ## Authoring roles (the children pattern)
 
@@ -151,11 +151,11 @@ The `soma:agent.*` capability family is the surface:
 
 ```
 soma:agent.list                                  // every child — deliverable size leads the row
-soma:agent.tail({id: 'child-7f3a91'})            // live pane output
-soma:agent.checkin({id: 'child-7f3a91'})         // PROGRESS, not liveness — is the deliverable growing?
-soma:agent.transcript({id: 'child-7f3a91'})      // what the child actually said, reconstructed
+soma:agent.tail({id: 'child-xxxxxx'})            // live pane output
+soma:agent.checkin({id: 'child-xxxxxx'})         // PROGRESS, not liveness — is the deliverable growing?
+soma:agent.transcript({id: 'child-xxxxxx'})      // what the child actually said, reconstructed
 soma:agent.activity({session: 's01-xxxxxx'})     // what a sibling session DID (tool-call census)
-soma:agent.pane({id: 'child-7f3a91'})            // open/close a viewer split on its session
+soma:agent.pane({id: 'child-xxxxxx'})            // open/close a viewer split on its session
 ```
 
 **The deliverable is the liveness signal, not cost.** Spawn with
@@ -190,7 +190,7 @@ unicode arrive exactly as typed.
   nothing. Decide at spawn: one task → kill at delivery; more tasks queued → reuse the warm
   context, then kill.
 
-Typical lifecycle: spawn → work your own next lane → poll the deliverable → harvest → grade → kill.
+Typical lifecycle: spawn → work your own next task → poll the deliverable → harvest → grade → kill.
 
 ## What harvest returns (MLR)
 

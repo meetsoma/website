@@ -8,7 +8,7 @@ order: 28
 # Code Navigator
 
 <!-- tldr -->
-`soma code` is the codebase navigator both you and the agent should reach for first. Maps file structure across **12 languages** (TS/JS, Rust, Python, Bash, CSS, Astro/Svelte/Vue, TOML, YAML, JSON, Markdown), auto-detects the project type from `cwd` markers (Cargo.toml → Rust, package.json → TS/JS, etc.), respects `.gitignore`, and never hangs the agent's session — every long search has a hard wall-clock timeout (30s default) plus stutter detection. Uses `ripgrep` when installed, falls back to `grep` transparently. **v3.1+ (s01-4d36c6)** adds rg type aliases (`type=rust` / `t=cpp` delegates to ripgrep's 215 built-in language types), per-command help with examples, fuzzy command correction (`fnd → find`), and three new subcommands: `stats` (count without listing), `files` (what would be searched), `types` (list aliases).
+`soma code` is the codebase navigator both you and the agent should reach for first. Maps file structure across **12 languages** (TS/JS, Rust, Python, Bash, CSS, Astro/Svelte/Vue, TOML, YAML, JSON, Markdown), auto-detects the project type from `cwd` markers (Cargo.toml → Rust, package.json → TS/JS, etc.), respects `.gitignore`, and never hangs the agent's session — every long search has a hard wall-clock timeout (30s default) plus stutter detection. Uses `ripgrep` when installed, falls back to `grep` transparently. **v3.1+** adds rg type aliases (`type=rust` / `t=cpp` delegates to ripgrep's 215 built-in language types), per-command help with examples, fuzzy command correction (`fnd → find`), and three new subcommands: `stats` (count without listing), `files` (what would be searched), `types` (list aliases).
 <!-- /tldr -->
 
 ## Why it exists
@@ -242,7 +242,7 @@ The same tools are exposed to the agent via the `soma` meta-tool (from `extensio
 - `soma(op='call', cap='soma:code.structure', args={path?})` — same as `soma code structure`
 - `soma(op='call', cap='soma:code.blast', args={symbol, path?})` — symbol-blast-radius analysis (which files touch a symbol, severity-weighted)
 - `soma(op='call', cap='soma:code.outline', args={path})` — markdown/text heading outline (was `file_outline`)
-- `soma(op='call', cap='soma:code.history', args={file, limit?})` — git log for a file (sha + date + author + subject). v0.23.0+ (SX-700).
+- `soma(op='call', cap='soma:code.history', args={file, limit?})` — git log for a file (sha + date + author + subject). v0.23.0+.
 
 Legacy flat names (`code_find`, `code_refs`, `code_map`, `code_structure`, `code_blast`, `file_outline`) were archived in v0.22.0; call via the namespaced `soma:*` caps now.
 

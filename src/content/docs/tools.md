@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via settings.json, and the bundled set
 status: active
-updated: 2026-09-18
+updated: 2026-10-02
 ---
 
 # Tools
@@ -68,12 +68,12 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 | `soma` (`cap='soma:code.structure'`) | `soma-addons/code.ts` | Directory tree with sizes. Respects `.gitignore`. |
 | `soma` (`cap='soma:code.blast'`) | `soma-addons/code.ts` | Every file touching a symbol with severity — pre-deletion check. |
 | `soma` (`cap='soma:code.outline'`) | `soma-addons/code.ts` | Markdown/text headings with line numbers — cheap orientation. (Was `file_outline`.) |
-| `soma` (`cap='soma:code.history'`) | `soma-addons/code.ts` | `git log` for a file as structured output (sha + date + author + subject). Replaces raw `git log --format` shell calls. (v0.23.0+, SX-700.) |
-| `soma` (`cap='soma:github.meta|files|search|refs|blast|audit|releases|diff|compare|file_diff|local_path|local_map|local_find|local_refs|local_blast|local_structure|cache_list|cache_clean'`) | `scripts/soma-github.js` | GitHub repo tools. API-mode: metadata, file tree, search, symbol refs, releases, diffs. Local-mode: fetch repo tarball (~1–5s) to `~/.soma/cache/gh/`, then run `soma-code` against it — treats any public repo like a local codebase. (v0.24.0+, SX-720.) |
+| `soma` (`cap='soma:code.history'`) | `soma-addons/code.ts` | `git log` for a file as structured output (sha + date + author + subject). Replaces raw `git log --format` shell calls. (v0.23.0+.) |
+| `soma` (`cap='soma:github.meta|files|search|refs|blast|audit|releases|diff|compare|file_diff|local_path|local_map|local_find|local_refs|local_blast|local_structure|cache_list|cache_clean'`) | `scripts/soma-github.js` | GitHub repo tools. API-mode: metadata, file tree, search, symbol refs, releases, diffs. Local-mode: fetch repo tarball (~1–5s) to `~/.soma/cache/gh/`, then run `soma-code` against it — treats any public repo like a local codebase. (v0.24.0+.) |
 | `soma` (`cap='soma:body.slots'`) | `soma-addons/body.ts` | Slot map of `_mind.md` with per-slot cache-impact. Run before editing body templates. |
 | `soma` (`cap='soma:body.cost'`) | `soma-addons/body.ts` | Cache-invalidation cost of editing a specific slot. args: `{slot}`. |
 | `soma` (`cap='soma:body.audit'`) | `soma-addons/body.ts` | Heuristic audit of the body compile: duplicate slots, missing files, cache-unfriendly ordering. |
-| `soma` (`cap='soma:docs.list|show|search|whats_new|guide'`) | `soma-addons/docs.ts` | Bundled docs: list, read by name, full-text search. `whats_new({version?})` reads the agent-facing changelog; `guide({name})` resolves guides + dev guides. (v0.24.0+, SX-720.) |
+| `soma` (`cap='soma:docs.list|show|search|whats_new|guide'`) | `soma-addons/docs.ts` | Bundled docs: list, read by name, full-text search. `whats_new({version?})` reads the agent-facing changelog; `guide({name})` resolves guides + dev guides. (v0.24.0+.) |
 | `soma` (`cap='soma:browser.*'`) | `soma-addons/browser.ts` | Browser automation via CDP: 21 caps — status, tabs, version, new_tab, close_tab, activate_tab, setup, config (standalone) + navigate, screenshot, evaluate, console, accessibility, links, styles, emulate, performance + xray, click, fill, wait (bridge). Captures tabId; click uses Input.dispatchMouseEvent. |
 | `soma` (`cap='soma:agent.delegate'`) | `soma-addons/agent.ts` | Spawn a child agent. args: `{task, role?, model?, background?, terminal?, transport?, cwd?, worktree?, deliverable?}`. Sync by default; `background:true` returns immediately + registers in children.json. `transport:'rpc'` delivers over pi's RPC protocol with an acknowledged frame and no pane (see [Background delegation → RPC delivery](guides/background-delegation.md#rpc-delivery-opt-in)). |
 | `soma` (`cap='soma:agent.list|tail|steer|kill|harvest|focus'`) | `soma-addons/agent.ts` | Manage background children. `focus` = cmux focus-pane / tmux attach hint. |
@@ -95,9 +95,9 @@ Shipped in `repos/agent/extensions/` as of v0.20.2.1.
 | `somaverse` (`cap='somaverse:bridge.status|config|setup|start|stop|restart|logs'`) | `somaverse-addons/bridge.ts` | Local bridge daemon lifecycle from within the agent. Wraps `soma bridge` CLI. |
 | `somaverse` (`cap='somaverse:auth.status|start|logout'`) | `somaverse-addons/auth.ts` | Device pairing with the Somaverse hub. Long-running `start` opens browser + polls; `logout` removes `~/.soma/device-key`. |
 
-> **Namespace migration (v0.22.0, SX-594):** flat `code_*` / `file_outline` / `workspace_*` / `plugin_state_*` / `browser_*` / `ai_*` / `dev:body.*` / `delegate` / `children` tools were folded into the `soma:*` + `somaverse:*` meta-tools. Call via `soma(op='call', cap='soma:code.find', args={...})` or `somaverse(op='call', cap='somaverse:workspace.status')`. Use `soma(op='list')` / `somaverse(op='list')` to discover the full catalog. Legacy flat names archived to `extensions/_archive/sx594-flat-wrappers/`.
+> **Namespace migration (v0.22.0):** flat `code_*` / `file_outline` / `workspace_*` / `plugin_state_*` / `browser_*` / `ai_*` / `dev:body.*` / `delegate` / `children` tools were folded into the `soma:*` + `somaverse:*` meta-tools. Call via `soma(op='call', cap='soma:code.find', args={...})` or `somaverse(op='call', cap='somaverse:workspace.status')`. Use `soma(op='list')` / `somaverse(op='list')` to discover the full catalog. Legacy flat names no longer resolve as direct tools — call them through the meta-tools.
 >
-> **Cache math:** 1 meta-tool registration costs 1 tool slot in the prompt; addons are free (discovered at runtime via the factory). Flat tools cost linear: N tools = N slots. Post-SX-594 + SX-609, the prompt registers `soma` / `somaverse` / `dev` / `capabilities`, plus Pi builtins (`bash` / `read` / `write` / `edit`), plus the 10 `office_*` still parked as flat (SX-606). Approximately 19 slots for 100+ reachable caps.
+> **Cache math:** 1 meta-tool registration costs 1 tool slot in the prompt; addons are free (discovered at runtime via the factory). Flat tools cost linear: N tools = N slots. Since the v0.22.0 consolidation, the prompt registers `soma` / `somaverse` / `dev` / `capabilities`, plus Pi builtins (`bash` / `read` / `write` / `edit`), plus the 10 `office_*` still parked as flat. Approximately 19 slots for 100+ reachable caps.
 | `context_status` | `soma-context.ts` | Current context usage + runway to the rotate line `{percent, tokens, contextWindow, rotateAt, runwayToRotate}`. Text form: `59% · 6% to the 65% rotate line` (model-aware). |
 | `search` | `soma-search.ts` | Unified search — local ripgrep (default), Brave API, semantic (v0.20.3.1). |
 
@@ -116,7 +116,7 @@ and inline commentary on why each guideline exists.
 
 ### Discovering what's registered
 
-Two surfaces (SX-558):
+Two surfaces:
 
 **From a shell, without starting the agent:**
 

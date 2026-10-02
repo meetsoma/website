@@ -9,20 +9,20 @@ draft: true
 # Pro Tools — `_pro/`
 
 <!-- tldr -->
-`_pro/` scripts ship in the soma-beta tarball (PRO tier) but NOT in the public npm `meetsoma` package (free tier). PRO caps under `soma:*` degrade gracefully on free installs via `script-resolver.ts` — they return a "PRO feature" message instead of erroring. No separate `pro:*` meta-tool router exists today; PRO functionality rides the `soma:*` namespace with conditional script-presence checks.
+meetsoma core is open source and free. The `_pro/` scripts are NOT part of it: they are excluded from the core export and are not compiled by `build-dist.mjs`, so they form an optional pack (delivery still being designed). The tier plumbing (`script-resolver.ts`, a graceful "PRO feature" degrade message, a provisioned session token) is still in the code, built for a metered Pro/enterprise tier later in the ladder (core → hub → Somaverse → pro/enterprise). No separate `pro:*` meta-tool router exists; PRO functionality rides the `soma:*` namespace with conditional script-presence checks.
 <!-- /tldr -->
 
 ## Tier model
 
-Soma ships in three tiers, defined by which subdirectories ship in the install:
+Soma ships in two trees, defined by which subdirectories ship in the install:
 
 | Tier | What ships | Distribution |
 |---|---|---|
-| **Free** | `extensions/` (no `dev-addons/`), `core/`, `dist/`, bundled `amps/`, `templates/` | npm `meetsoma` package — public |
-| **PRO** | All Free + `scripts/_pro/*.js` (compiled, BSL-licensed) | soma-beta tarball — paid / opt-in install |
-| **Dev** | All PRO + `scripts/_dev/`, `extensions/dev-addons/`, source `.ts` files | Dev tree only — internal contributors |
+| **Core (open source)** | `extensions/` (no `dev-addons/`), `core/`, `dist/`, bundled `amps/`, `templates/` | `meetsoma/core` (GitHub, public) + npm `meetsoma` launcher — free |
+| **Pro pack (optional)** | `scripts/_pro/` | not in the core export; delivery being designed |
+| **Dev** | All of Core + `scripts/_dev/`, `extensions/dev-addons/`, source `.ts` files | Dev tree only — internal contributors |
 
-The free / PRO split is enforced at build time. `build-dist.mjs --clean` reads `scripts/_pro/*.sh`, compiles to obfuscated `*.js`, and ships only the compiled form in the soma-beta tarball. Source `.sh` stays in the dev tree.
+The split is enforced by the core export: `scripts/_dev/soma-core-excludes.txt` lists `scripts/_pro/`, so it never reaches `meetsoma/core`. A core cap that wraps a `_pro/` script finds nothing and returns the graceful "PRO feature" message below instead of failing.
 
 ## Why no `pro:*` meta-tool router (yet)
 
@@ -61,20 +61,12 @@ async function ancestorsImpl(args: any = {}): Promise<string> {
 }
 ```
 
-When a free-tier user invokes `soma:seam.ancestors`:
-
-1. `resolveScript("soma-seam.sh", "pro")` walks the candidate paths.
-2. Free-tier install doesn't have `~/.soma/agent/scripts/_pro/soma-seam.sh`.
-3. `proFeatureMessage(...)` returns:
+If `resolveScript("soma-seam.sh", "pro")` doesn't find the script (the normal case on a meetsoma core install, which has no `_pro/` pack), `proFeatureMessage(...)` returns:
 
 ```
 [soma:seam.ancestors] PRO feature — script not found.
 
-This cap wraps `_pro/soma-seam.sh`, which ships in the soma-pro tarball.
-Free-tier installs don't include the _pro/ scripts directory.
-
-Install: bash <(curl -fsSL https://soma.gravicity.ai/install-pro.sh)
-Or run the underlying script directly if you have it elsewhere.
+This cap wraps `_pro/soma-seam.sh`. Run `soma doctor` to repair the install.
 ```
 
 No crash, no confusing error — clear path forward.
@@ -109,7 +101,7 @@ async function myImpl(args: any = {}): Promise<string> {
 }
 ```
 
-4. Verify it builds into `repos/agent/dist/scripts/_pro/soma-<name>.js` (obfuscated) — `build-dist.mjs --clean`.
+4. Verify it builds into `repos/agent/dist/scripts/_pro/soma-<name>.js` (compiled) — `build-dist.mjs --clean`.
 5. Verify the cap degrades gracefully when called from a free-tier install (no `_pro/` directory present).
 
 ## Distribution boundary checklist
@@ -119,8 +111,8 @@ Before shipping a `_pro/` script:
 - [ ] Does the cap that wraps it use `script-resolver.ts` (graceful degrade)?
 - [ ] Does `proFeatureMessage()` reference the right install URL?
 - [ ] Is the underlying `.sh` file referenced in any agent doc that ships to free tier? (If yes, that doc needs to flag it as PRO.)
-- [ ] Does `build-dist.mjs` compile + obfuscate the script correctly?
-- [ ] Does the soma-beta tarball include the compiled `_pro/*.js`?
+- [ ] Does `build-dist.mjs` compile the script correctly?
+- [ ] Does the public `meetsoma/core` distribution include the compiled `_pro/*.js`?
 
 ## What does NOT belong in `_pro/`
 

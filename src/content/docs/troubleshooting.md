@@ -2,7 +2,7 @@
 title: "Troubleshooting"
 description: "Common issues and fixes — install problems, model errors, broken sessions, and more."
 section: "Reference"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 22
 ---
 
@@ -335,7 +335,7 @@ See **[Statusline & Notices](/docs/statusline#line-3--location-runtime-restart-s
 
 ### `/reload` costs $1 every time I run it (pre-v0.20.3)
 
-Fixed in v0.20.3 (SX-495). The compiled system prompt is now persisted to
+Fixed in v0.20.3. The compiled system prompt is now persisted to
 `.soma/state/.session-prompt-cache.json` and restored across `/reload`, `resume`,
 and `fork`. Reloads are near-free. Upgrade: `npm install -g meetsoma@latest`
 and `soma update`.

@@ -2,14 +2,14 @@
 title: "Commands"
 description: "Slash commands, CLI flags, context warnings, the breath cycle."
 section: "Reference"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 7
 ---
 
 # Commands
 
 <!-- tldr -->
-CLI: `soma` (fresh), `soma inhale` (fresh + preload), `soma -c` (continue full history), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts). Body: `/body check`, `/body vars`, `/body map`, `/body render`. Script commands: `soma code` (codebase navigator), `soma verify` (structural checks), `soma refactor` (dependency analysis), `soma seam` (concept tracing), `soma session` (maintenance — strip images, list, stats). Scripts discovered via chain: bundled → project → global.
+CLI: `soma` (fresh, no preload), `soma inhale` (fresh + the preload soma ranks first), `soma preload` → `soma preload <#>` (list, then fresh + the preload you pick), `soma -c` (continue full history), `soma -r` (resume picker). Session: `/inhale`, `/breathe`, `/exhale`, `/rest`. Heat: `/pin <name>`, `/kill <name>`. Hub: `/hub install`, `/hub find`, `/hub list`, `/hub fork`, `/hub share`. Management: `/soma status`, `/soma init`, `/soma prompt`, `/soma <command>` (drop-in scripts). Body: `/body check`, `/body vars`, `/body map`, `/body render`. Script commands: `soma code` (codebase navigator), `soma verify` (structural checks), `soma refactor` (dependency analysis), `soma seam` (concept tracing), `soma session` (maintenance — strip images, list, stats). Scripts discovered via chain: bundled → project → global.
 <!-- /tldr -->
 
 Soma registers slash commands that control the breath cycle, heat system, and session management.
@@ -279,8 +279,8 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 | `soma` | **Fresh session** — runs the full boot sequence (identity, protocols, muscles, git context). By default does NOT load a preload (new projects have `preload.autoInject: false`). Use `soma inhale` to load your preload explicitly. |
 | `soma inhale` | **Fresh session + preload** — starts a new session and loads the most recent preload. The recommended daily workflow: `/exhale` → review/update preload → `soma inhale`. |
 | `soma inhale --list` | **Show available preloads** — lists all preloads with age and staleness. Stale (>48h) preloads are flagged with ⚠. Use to see what the agent will load. |
-| `soma inhale <name>` | **Load a specific preload** — partial name match (e.g. `soma inhale s01-19a716`). Useful when you want a specific session's context, not the latest. Composes with `--model` and other session flags. |
-| `soma preload` 🚧 | **List preload lanes** — one row per preload: age, arc, lane, what it supersedes, and **which one a bare boot would take** (boot picks newest by mtime, arc-blind). With two live lanes, this is how you choose instead of racing mtimes. |
+| `soma inhale <name>` | **Load a specific preload** — partial name match (e.g. `soma inhale s01-xxxxxx`). Useful when you want a specific session's context, not the latest. Composes with `--model` and other session flags. |
+| `soma preload` 🚧 | **List preload lanes** — one numbered row per preload, newest sealed first: age, arc, lane, what it supersedes. With two live lanes, this is how you choose instead of guessing which one `soma inhale` will take. |
 | `soma --package <a,b>` | **Mount only these domain packages** for the session — the rest of your declared packages (their doorway, protocols, muscles, body files, tools) stay out. Repeatable; composes with `soma inhale`. A preload can say the same thing with `focus: [a, b]` in its frontmatter. See [Domain packages → Focusing a session](/docs/domain-packages#focusing-a-session-on-some-of-them). |
 | `soma preload <#\|name>` 🚧 | **Start a session on that preload** — by row number or partial name; extra flags (`--model …`) pass through to `soma inhale`. |
 | `soma -c` | **Continue session** - reopens the last session with full conversation history preserved. No new boot sequence - you're back in the same context. |
@@ -291,24 +291,25 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 
 ### Picking a preload lane
 
-When two pieces of work are live at once, each `/exhale` leaves its own preload — and a bare boot
-takes whichever file is newest, blind to which lane you meant. `soma preload` shows the lanes and
-lets you choose:
+When two pieces of work are live at once, each `/exhale` leaves its own preload — and a bare
+`soma inhale` takes the one its own ranking prefers, which may not be the lane you meant. `soma preload`
+shows the lanes and lets you choose:
 
 ```console
 $ soma preload
 
-  σ  Preload lanes  (10 preload(s) · 3 fresh <48h · a bare boot takes the newest)
+  σ  Preload lanes  (10 preload(s) · 3 fresh <48h · newest sealed first)
 
-  1  s01-c34cf1  lane A  ← boot picks this
-     meetsoma/session-lifecycle — cycle 43 · sealed Sep  5 16:05 · supersedes s01-90f63a
+  1  s01-xxxxxx  lane A  ← newest sealed
+     my-app/auth-refactor — step 3 · sealed Sep  5 16:05 · supersedes s01-yyyyyy
      soma preload 1
 ```
 
-Reading a row: **`1`** row number · **`s01-c34cf1`** the lane's short name · **`lane A`** its
-declared lane · **`← boot picks this`** what a bare `soma inhale` would load. The second line is
-the arc it briefs, when it was last sealed (the mtime boot compares), and which earlier preload it
-retired. The third line is the command that boots exactly that lane — `--model …` passes through.
+Reading a row: **`1`** row number · **`s01-xxxxxx`** the lane's short name · **`lane A`** its
+declared lane · **`← newest sealed`** the most recently sealed file. A bare `soma inhale` ranks by
+when each preload was written and which work it continues, so it can load a different row;
+`soma preload <#>` always loads exactly the row you name. The second line is the arc it briefs,
+when it was last sealed, and which earlier preload it retired. The third line is the command that boots exactly that lane — `--model …` passes through.
 A row marked `SUPERSEDED` is a retired lane; don't boot it.
 
 ### Reconnecting to a Running Session
@@ -324,15 +325,15 @@ $ soma attach
 
   σ  Running soma sessions  (3 live)
 
-  1  s01-cd72dc  ~/code/api                        ← you are here
-     16 turns · up 2m · tmux soma-child-6551d3:1.1
-     soma attach s01-cd72dc
+  1  s01-xxxxxx  ~/code/api                        ← you are here
+     16 turns · up 2m · tmux soma-child-xxxxxx:1.1
+     soma attach s01-xxxxxx
 
-  2  s01-a60dac  ~/code/dashboard
+  2  s01-yyyyyy  ~/code/dashboard
      276 turns · up 1h48m · tmux soma-succ-dashboard:1.1
-     soma attach s01-a60dac
+     soma attach s01-yyyyyy
 
-  3  s01-f11ac9  ~/code/api
+  3  s01-zzzzzz  ~/code/api
      116 turns · up 10h56m · pid 2339 · not in tmux
      no terminal to attach to
 
@@ -362,13 +363,13 @@ $ soma start
 
   σ  Stopped soma sessions  (12 of 89 · last 48h · 1853 here)
 
-  1  s01-3b61da  ↳reviewer of 623ae0
+  1  s01-xxxxxx  ↳reviewer of 0b9d47
      0.3 MB · last wrote Sep  2 17:02 · claude-fable-5
-     soma start s01-3b61da
+     soma start s01-xxxxxx
 
-  2  s01-7434d0  dashboard W1-W4
+  2  s01-yyyyyy  dashboard W1-W4
      3.7 MB · last wrote Sep  2 14:57 · claude-opus-5
-     soma start s01-7434d0
+     soma start s01-yyyyyy
 
   …78 more — SOMA_START_LIMIT=90 soma start for all
   also soma attach — 7 session(s) still RUNNING
@@ -394,8 +395,8 @@ points at the other.
 A row marked `↳` was spawned by something else:
 
 ```
-  1  s01-8e884f  ↳product-architect of 2b4b44  ~/code/api
-  2  s01-2b4b44                                ~/code/api
+  1  s01-xxxxxx  ↳product-architect of 5f2e8b  ~/code/api
+  2  s01-yyyyyy                                ~/code/api
 ```
 
 Row 1 is a **delegated child** of row 2; row 2 is unmarked, so it is an **orchestrator** — a session
@@ -412,7 +413,7 @@ This is why `soma -c` can now tell your own session from the children it spawned
 
 ```bash
 soma attach --kill 3            # by row
-soma attach --kill s01-a133d1   # by id
+soma attach --kill s01-xxxxxx   # by id
 soma attach --kill all          # all but the one you are in
 ```
 
@@ -461,10 +462,12 @@ The command answers with the one that *is* right:
 | a session running outside tmux | told plainly — there is no terminal to attach to |
 | a tmux name that doesn't exist | the live session names, as copyable commands |
 
-> **`soma` vs `soma inhale` vs `soma -c`:**
+> **`soma` vs `soma inhale` vs `soma preload` vs `soma -c`:**
 >
-> - `soma` = fresh start. No preload loaded (default `autoInject: false`). Good for quick sessions.
-> - `soma inhale` = fresh start with deliberate preload. Best for daily work — you’ve reviewed and possibly updated the preload before loading it.
+> - `soma` = fresh start. No preload loaded (default `autoInject: false`). Good for quick sessions and new work.
+> - `soma inhale` = fresh start with a preload **soma picks** (its ranking, not necessarily the newest file). Fine when there is one lane.
+> - `soma preload` → `soma preload <#>` = list the preloads, then fresh start with **the one you pick**. Best when several lanes are live — you choose the work, not the ranking.
+> - `soma inhale <name>` = the same as `soma preload <#>`, by (partial) filename.
 > - `soma -c` = same page. Full history, same context window. Best for short breaks.
 >
 > The preload is written during `/exhale` or `/breathe`. Power users often reflect and update the preload between sessions, then `soma inhale` to load the curated version.
@@ -491,7 +494,7 @@ These flags apply to the current session only — they don't change your default
 | Command | Description |
 |---------|-------------|
 | `soma init` | Initialize a new `.soma/` directory in the current project. First-time users also install the runtime here. Never updates an existing runtime — use `soma update` for that. |
-| `soma update` | Update the installed Soma runtime in `~/.soma/agent/`. Pulls the latest soma-beta, runs `npm install --omit=dev` if dependencies changed (e.g. a new Pi runtime version). *As of v0.12.3* — previously this command was status-only. |
+| `soma update` | Update the installed Soma runtime in `~/.soma/agent/`. Pulls the latest `meetsoma/core`, runs `npm install --omit=dev` if dependencies changed (e.g. a new Pi runtime version). |
 | `soma check-updates` | Report what updates are available without installing them. The old `soma update` behavior. |
 | `soma model <pattern>` | Switch your default model. Fuzzy matches, asks you to pick if multiple hits, saves persistently. Use `soma model <pattern> set` to save without starting a session, or `soma model --list [search]` to browse. |
 | `soma doctor` | Check project health and run migrations. Reports body file inventory, extension health, stale protocols, and version gaps. Tier 1 auto-fixes run silently. |

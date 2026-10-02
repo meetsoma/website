@@ -2,7 +2,7 @@
 title: "Configuration"
 description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior."
 section: "Reference"
-updated: 2026-09-18
+updated: 2026-10-02
 order: 6
 ---
 
@@ -35,6 +35,11 @@ Settings files can exist at any level in the Soma chain:
     "protocols": true,
     "muscles": true,
     "tools": true
+  },
+  "domainPackages": {
+    "autoDir": "packages",
+    "connect": [],
+    "deny": []
   },
   "persona": {
     "name": null,
@@ -192,6 +197,37 @@ Controls what a child `.soma/` inherits from its parent chain. All default to `t
 
 See [How It Works](/docs/how-it-works#parent-child-workspaces) for the full inheritance model.
 
+### Domain Packages
+
+Which [domain packages](domain-packages.md) this project mounts. A package is a folder laid out like a small `.soma` — its own protocols, muscles, scripts and body files — that loads where soma already looks.
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `autoDir` | `"packages"` | Folder, **relative to your `.soma/`**, whose subfolders mount automatically — presence in it is the declaration. A valid package carries a `package.json` or a `SKILL.md`; anything else in there is reported on stderr, never silently skipped. Names starting with `.` or `_` are ignored. `false` turns auto-mounting off. **This default applies to the object form only** (see below) |
+| `connect` | `[]` | Packages **outside** `autoDir`, by path. Relative paths resolve against your **project** directory, not `.soma/` — write `".soma/packages/my-domain"` or an absolute path. A path that does not exist is reported and skipped; it never fails your boot silently |
+| `deny` | `[]` | Block by **folder name**. Applies to `autoDir`, to `connect`, and to packages **inherited from a parent `.soma`** — your nearest settings win, so you turn one thing off in one place |
+
+**Example — mount everything in `.soma/packages/`, plus one from a sibling repo, minus one:**
+```json
+{
+  "domainPackages": {
+    "connect": ["../shared-tools/soma-infra"],
+    "deny": ["experimental-domain"]
+  }
+}
+```
+
+**The array form still works and means connect-only — nothing auto-mounts:**
+```json
+{
+  "domainPackages": [".soma/packages/my-domain"]
+}
+```
+
+Earlier entries win a name collision. Search order is project → your packages → parent(s) → global, so turning inheritance off keeps the packages you declared and drops only what you inherit.
+
+See [Domain Packages](domain-packages.md) for what a package contains, what travels with it, and when to build one instead of a skill.
+
 ### Persona
 
 Cosmetic identity overrides — give your agent a custom name, emoji, or icon.
@@ -227,6 +263,7 @@ Protects core Soma files and git identity from accidental modification.
 | `toolGates` | `{}` | Tool→muscle gating. Require reading a muscle before using certain bash commands. Keys are command substrings, values are `{ muscle, mode }`. |
 | `worktree` | `null` | Worktree boundary. When set to an absolute/`~` path, `write` and `edit` outside it are hard-blocked (sub-agent isolation). |
 | `trustedModels` | `[]` | Per-model allowlist. When the **active model id** matches a glob in this list, `coreFiles` + `bashCommands` resolve to `"allow"` for that turn — capable models (sonnet/opus) skip the prompts while weaker models and new users keep full protection. Globs use `*` wildcards, matched case-insensitively against the model id (same convention as `breathe.thresholds`). Settable per-project **or** global; child wins. Empty (default) = no model is trusted. Example: `["*sonnet*", "*opus*"]`. |
+| `inflightRace` | `true` | **Hold a call that depends on a write still in flight in the same parallel tool block.** When one call in a block writes a file (or updates a Komodo stack) and another call in the SAME block reads, names, commits, pushes, builds or deploys it, the second call returns "run this after it lands" and does not run; re-issue it in the next block. Sequential tool calls are never affected. `false` turns it off (read from the project's settings, like every guard key). |
 | `trust` | `{enabled: true, threshold: 3, ttlDays: 30}` | **Earned, scoped command trust.** Approve the same command shape 3× in a project and the guard stops asking (30-day expiry, per-directory). Only ever relaxes the *routinely-prompted* tier — never applies to `rm -rf`, force-push, `reset --hard`, `clean -f`, or root-path truncation (the always-on list below still fires). Ledger at `~/.soma/state/guard-trust.json`. |
 
 **Example: relax guards for capable models only:**
@@ -466,7 +503,7 @@ Proactive context management — fires warn + exhale notifications before sessio
 | `auto` | `"model-aware"` | Mode: `"off"` \| `"global"` \| `"model-aware"` — decides *when*, not *what* |
 | `triggerAt` | `50` | Warn % (used when `auto = "global"`) |
 | `rotateAt` | `70` | Exhale % (used when `auto = "global"`) |
-| `thresholds` | (see below) | Per-model ranges (used when `auto = "model-aware"`) |
+| `thresholds` | (see below) | Per-model ranges (used when `auto = "model-aware"`). Each glob entry: `warnRange` · `exhaleRange` (its first value is the **prep line** `context_status` counts down to — where rotation PREP starts: finish in-flight work, write the preload, rotate once it is sealed; not a hard stop) · optional **`delegateFrom`** — from this percent on, `context_status` adds a *pace* hint (split the next items into lanes and delegate); absent = no hint. Below `warnRange` the tool reports runway only and says context is not a reason to stop. Example: `"*opus*": { "warnRange": [80, 84], "exhaleRange": [85, 95], "delegateFrom": 30 }` |
 | `graceSeconds` | `30` | Seconds to wait for preload before timing out |
 | `maxTokens` | `0` | Absolute token cap for % calculations. `0` = use model's native window. |
 
@@ -589,6 +626,7 @@ Controls when context usage warnings fire during a session. These are the **pass
 | `autoInject` | `false` | Auto-inject latest preload on every fresh boot. When `true`, `soma` = `soma inhale`. |
 | `archiveAfterDays` | `7` | Age at which an old preload moves to `memory/preloads/_archive/` once a new preload is written. Lower it if you rotate several times a day. |
 | `archiveKeepMin` | `10` | Never archive below this many recent preloads, whatever their age. |
+| `skipOnModelOverride` | `true` | `soma --model <name>` (or `--provider`/`--thinking-level`) boots raw instead of loading your last preload. Set to `false` to keep the old behaviour. `soma inhale --model <name>` still loads a preload by name either way — an explicit inhale outranks this setting. |
 
 Archived preloads stay reachable: `soma inhale <session-id>` falls back to `_archive/`. Only the
 boot-time "newest preload" choice is limited to live ones.
@@ -691,7 +729,7 @@ Controls Anthropic prompt-cache TTL.
 | `"none"` | n/a | No caching | Diagnostic only |
 | `null` | inherit shell `PI_CACHE_RETENTION`, else Pi default | varies | Default — zero behavior change |
 
-**Status (validation):** ⚠️ *The schema and injection wiring shipped in v0.21.0 (SX-544 Phase A). The 1-hour TTL behavior is **not yet validated end-to-end** — SX-545 (Phase B) is the empirical test that confirms Anthropic respects `cacheRetention: "long"`. The estimated cost reduction (~70-80% of "first-5-minutes" cache rebuilds) comes from the SX-705 audit and is **modeled, not measured**. Opt in if you want to try it; we'd love a usage report.*
+**Status (validation):** ⚠️ *The schema and injection wiring shipped in v0.21.0. The 1-hour TTL behavior is **not yet validated end-to-end** — the empirical test that confirms Anthropic respects `cacheRetention: "long"` is still open. The estimated cost reduction (~70-80% of "first-5-minutes" cache rebuilds) comes from an internal audit and is **modeled, not measured**. Opt in if you want to try it; we'd love a usage report.*
 
 **Example: opt in to long retention (recommended path):**
 ```json
