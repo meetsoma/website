@@ -1,0 +1,455 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Icon from '../../components/icons/SomaIcons.astro';
+import HeroTitle from '../../components/HeroTitle.astro';
+
+const title = "Open Source — meetsoma core";
+const description = "meetsoma core, the harness Soma lives in, is open source on GitHub. Install it, read it, open issues, send pull requests.";
+---
+
+<Layout title={title} description={description} canonicalUrl="https://soma.gravicity.ai/open-source">
+  <main class="container">
+    <header class="hero">
+      <Breadcrumbs items={[{ label: 'Open Source', href: '/open-source' }]} />
+      <HeroTitle text="Open Source" align="center" />
+      <p class="subtitle">
+        <strong>meetsoma core</strong> is the open-source harness. <strong>Soma</strong> is the agent that lives in it.
+        Install it, read the code, open issues, send pull requests.
+      </p>
+    </header>
+
+    <!-- Install CTA -->
+    <section class="section">
+      <div class="install-card">
+        <div class="install-left">
+          <h2>Start using it now</h2>
+          <p>No account, no request form. The runtime is free and open on npm.</p>
+        </div>
+        <div class="install-right">
+          <button class="install-pill" data-copy="npm i -g meetsoma" title="Copy install command">
+            <span class="install-prompt">$</span>
+            <span class="install-cmd">npm i -g meetsoma</span>
+            <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- What's in the repo -->
+    <section class="section">
+      <SectionHeader title="What's in the repo" />
+      <p class="section-desc">
+        <code>github.com/meetsoma/core</code> is the full runtime, nothing held back for a later tier.
+      </p>
+      <ul class="repo-list">
+        <li>
+          <span class="repo-list-icon"><Icon name="terminal" size={18} /></span>
+          <div>
+            <h3>The CLI and the agent runtime</h3>
+            <p>Everything <code>npm i -g meetsoma</code> installs: the <code>soma</code> command, the session loop, the tool registry.</p>
+          </div>
+        </li>
+        <li>
+          <span class="repo-list-icon"><Icon name="memory" size={18} /></span>
+          <div>
+            <h3>Breath cycle and memory</h3>
+            <p>Inhale, work, exhale. The preload format, session logs, and heat tracking that let Soma pick up where it left off.</p>
+          </div>
+        </li>
+        <li>
+          <span class="repo-list-icon"><Icon name="protocols" size={18} /></span>
+          <div>
+            <h3>The AMPS layers</h3>
+            <p>Automations, muscles, protocols, and skills: the behavioral system, shipped as readable markdown, not compiled weights.</p>
+          </div>
+        </li>
+        <li>
+          <span class="repo-list-icon"><Icon name="skills" size={18} /></span>
+          <div>
+            <h3>Full documentation</h3>
+            <p>Every doc on this site is built from the same repo's <a href="/docs">docs</a>, not a separate internal copy.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- How to contribute -->
+    <section class="section">
+      <SectionHeader title="How to contribute" />
+      <div class="contrib-grid">
+        <a href="https://github.com/meetsoma/core/issues" target="_blank" rel="noopener" class="contrib-card">
+          <h3>Issues &amp; pull requests</h3>
+          <p>Found a bug or want to change how the runtime works? Open an issue or send a PR on <code>meetsoma/core</code>.</p>
+          <span class="contrib-link">github.com/meetsoma/core →</span>
+        </a>
+        <a href="/hub" class="contrib-card">
+          <h3>Protocols, muscles &amp; skills</h3>
+          <p>Smaller contributions, like a protocol your agent swears by or a muscle that saves you hours, go through the Hub instead of a core PR.</p>
+          <span class="contrib-link">Browse the Hub →</span>
+        </a>
+      </div>
+      <p class="section-desc" style="margin-top: var(--space-lg);">
+        First contribution? <a href="/docs/extending">Learn how to extend Soma</a> before you open a PR.
+      </p>
+    </section>
+
+    <!-- Free at the core -->
+    <section class="section ladder">
+      <SectionHeader title="Free at the core" subtitle="Everything above it is optional" />
+      <ol class="ladder-steps">
+        <li class="ladder-step ladder-step-live">
+          <span class="ladder-num">01</span>
+          <h3>meetsoma core</h3>
+          <p>The harness and the agent. Memory, identity, protocols, tools. Open source, free, yours.</p>
+          <span class="ladder-state">available now</span>
+        </li>
+        <li class="ladder-step">
+          <span class="ladder-num">02</span>
+          <h3>Register your soma</h3>
+          <p>Give your agent a name on the hub and reach the library of community add-ons.</p>
+          <span class="ladder-state">coming</span>
+        </li>
+        <li class="ladder-step">
+          <span class="ladder-num">03</span>
+          <h3>Somaverse</h3>
+          <p>Open your agent's memory as a place: a browser workspace where Soma sees every pane.</p>
+          <span class="ladder-state">alpha</span>
+        </li>
+        <li class="ladder-step">
+          <span class="ladder-num">04</span>
+          <h3>Pro &amp; teams</h3>
+          <p>Hosted infrastructure for teams that want their agents running without the upkeep.</p>
+          <span class="ladder-state">later</span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Coming from the beta -->
+    <section class="section">
+      <div class="switch-card">
+        <div>
+          <h3>Installed Soma before this release?</h3>
+          <p>The repo moved and the version count reset at 0.50.0. Nothing in your projects changes.</p>
+        </div>
+        <a href="/docs/coming-from-the-beta" class="switch-link">Coming from the beta? →</a>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 890px;
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
+    min-height: 100vh;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: var(--section-gap);
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(21px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--ink-soft);
+    max-width: 38rem;
+    margin: var(--space-md) auto 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  .subtitle strong { color: var(--ink); font-weight: 600; }
+
+  .section {
+    margin-bottom: var(--section-gap);
+  }
+
+  .section-desc {
+    font-family: var(--font-body);
+    font-size: var(--body-text);
+    color: var(--ink-soft);
+    line-height: var(--leading-relaxed);
+    max-width: 44rem;
+  }
+
+  .section-desc code,
+  .repo-list code {
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    color: var(--accent);
+    background: var(--surface-interactive);
+    padding: 2px var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  /* ── Install CTA ── */
+  .install-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-accent);
+    background: linear-gradient(135deg, var(--surface-card) 0%, rgba(104, 152, 190, 0.04) 100%);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .install-left h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .install-left p {
+    font-size: var(--body-secondary);
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .install-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 48px;
+    padding: 0 16px 0 18px;
+    border-radius: var(--radius-lg);
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+    background: color-mix(in srgb, var(--bg) 82%, black 18%);
+    color: var(--ink);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s;
+    white-space: nowrap;
+  }
+  .install-pill:hover { border-color: var(--moon-bright); box-shadow: 0 0 24px -6px var(--moon-glow); }
+  .install-prompt { color: var(--warm-bright); }
+  .install-pill svg { width: 16px; height: 16px; opacity: .6; }
+
+  /* ── Repo list ── */
+  .repo-list {
+    list-style: none;
+    margin: var(--space-xl) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--grid-gap);
+  }
+
+  .repo-list li {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 75%, transparent);
+    backdrop-filter: blur(10px);
+  }
+
+  .repo-list-icon {
+    display: flex;
+    align-items: flex-start;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .repo-list h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .repo-list p {
+    font-size: var(--body-secondary);
+    color: var(--ink-soft);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  /* ── Contribute ── */
+  .contrib-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--grid-gap);
+    margin-top: var(--space-xl);
+  }
+
+  .contrib-card {
+    display: block;
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-elevated);
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .contrib-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+  }
+
+  .contrib-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .contrib-card p {
+    font-size: var(--body-secondary);
+    color: var(--ink-soft);
+    line-height: var(--leading-relaxed);
+    margin: 0 0 var(--space-md);
+  }
+
+  .contrib-card code {
+    font-family: var(--font-mono);
+    font-size: var(--label-text);
+    color: var(--accent);
+    background: var(--surface-interactive);
+    padding: 2px var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .contrib-link {
+    font-size: var(--label-text);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── Ladder (matches home page language) ── */
+  .ladder-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+  }
+  .ladder-step {
+    position: relative;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: .78;
+  }
+  .ladder-step h3 { margin: 0; font-size: var(--text-base); color: var(--ink); }
+  .ladder-step p { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--ink-dim, var(--ink)); }
+  .ladder-num { font-family: var(--font-mono, ui-monospace, monospace); font-size: var(--text-xs); color: var(--ink-dim, var(--ink)); opacity: .6; }
+  .ladder-state {
+    margin-top: auto;
+    align-self: flex-start;
+    font-size: var(--text-xs);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+    color: var(--ink-dim, var(--ink));
+  }
+  .ladder-step-live {
+    opacity: 1;
+    border-color: color-mix(in srgb, var(--moon-bright) 45%, transparent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--moon-bright) 10%, transparent), color-mix(in srgb, var(--bg) 70%, transparent));
+    box-shadow: 0 0 40px -20px var(--moon-glow);
+  }
+  .ladder-step-live .ladder-state { border-color: var(--moon-bright); color: var(--moon-bright); }
+
+  /* ── Coming from the beta ── */
+  .switch-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--card-pad-y) var(--card-pad-x);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--border-accent);
+    background: var(--surface-card);
+  }
+
+  .switch-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .switch-card p {
+    font-size: var(--body-secondary);
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .switch-link {
+    flex-shrink: 0;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: var(--body-text);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .switch-link:hover { color: var(--moon-bright); }
+
+  @media (max-width: 768px) {
+    .repo-list, .contrib-grid { grid-template-columns: 1fr; }
+    .install-card, .switch-card { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: var(--space-2xl) var(--space-lg) var(--space-xl); }
+    .ladder-steps { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero { animation: none; }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector('.install-pill') as HTMLButtonElement | null;
+  if (btn) {
+    const copyIcon = btn.querySelector('.copy-icon') as HTMLElement | null;
+    const checkIcon = btn.querySelector('.check-icon') as HTMLElement | null;
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        if (copyIcon && checkIcon) {
+          copyIcon.style.display = 'none';
+          checkIcon.style.display = 'block';
+          setTimeout(() => {
+            copyIcon.style.display = 'block';
+            checkIcon.style.display = 'none';
+          }, 1600);
+        }
+      } catch {
+        // Clipboard API unavailable — silent no-op, the command is still visible to copy by hand.
+      }
+    });
+  }
+</script>

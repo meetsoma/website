@@ -9,6 +9,10 @@
       "dev": false
     }
   },
+  "redirects": [
+    { "source": "/beta", "destination": "/open-source/", "permanent": true },
+    { "source": "/beta/", "destination": "/open-source/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
