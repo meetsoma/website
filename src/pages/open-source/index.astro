@@ -42,7 +42,7 @@ const description = "meetsoma core, the harness Soma lives in, is open source on
     <section class="section">
       <SectionHeader title="What's in the repo" />
       <p class="section-desc">
-        <code>github.com/meetsoma/core</code> is the full runtime, nothing held back for a later tier.
+        <code>github.com/meetsoma/core</code> is the whole harness and the agent. A few advanced scripts live in an optional pack.
       </p>
       <ul class="repo-list">
         <li>
@@ -238,6 +238,7 @@ const description = "meetsoma core, the harness Soma lives in, is open source on
     white-space: nowrap;
   }
   .install-pill:hover { border-color: var(--moon-bright); box-shadow: 0 0 24px -6px var(--moon-glow); }
+  :global([data-surface="light"]) .install-pill { background: color-mix(in srgb, white 70%, transparent); border-color: color-mix(in srgb, var(--ink) 18%, transparent); }
   .install-prompt { color: var(--warm-bright); }
   .install-pill svg { width: 16px; height: 16px; opacity: .6; }
 
