@@ -14,6 +14,22 @@
       }
     },
     {
+      "version": "0.50.0",
+      "date": "2026-10-02",
+      "title": "meetsoma core goes open source",
+      "tagline": "The harness Soma runs on ships from a public repo now, with a fresh version count to match.",
+      "features": {
+        "added": [
+          "meetsoma core is open source: install with `npm i -g meetsoma`, read the full runtime at github.com/meetsoma/core.",
+          "No more request-access form. /open-source replaces the old sign-up page with install, contribute, and ladder info.",
+          "A coming-from-the-beta guide for anyone who installed Soma before this release."
+        ],
+        "changed": [
+          "Versions 0.43–0.49 were never released. 0.50.0 starts the open-source line; everything before it is preserved at the legacy changelog."
+        ]
+      }
+    },
+    {
       "version": "0.42.1",
       "date": "2026-07-31",
       "title": "Real Markdown Conversion + Real Budget Caps",
