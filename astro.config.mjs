@@ -15,6 +15,10 @@ export default defineConfig({
   build: {
     assets: 'assets'
   },
+  redirects: {
+    // meetsoma core went open source — the old request-access page is gone.
+    '/beta': '/open-source/',
+  },
   markdown: {
     remarkPlugins: [remarkRemoveFirstH1],
     shikiConfig: {
