@@ -94,19 +94,6 @@ const recentPosts = posts.slice(0, 3);
       </div>
     </section>
 
-    <!-- Recent Posts -->
-    {recentPosts.length > 0 && (
-      <section class="recent-posts">
-        {recentPosts.map((post, i) => (
-          <a href={blogPostUrl(post)} class:list={['recent-post-card', { 'recent-post-promo': i === 0 }]}>
-            {i === 0 && <span class="recent-post-badge">New</span>}
-            <span class="recent-post-title">{post.data.title}</span>
-            <span class="recent-post-arrow">→</span>
-          </a>
-        ))}
-      </section>
-    )}
-
     <!-- Get Started -->
     <section class="quickstart">
       <SectionHeader title="Get Started" />
@@ -254,9 +241,7 @@ const recentPosts = posts.slice(0, 3);
           <p class="breath-desc">Session state saves. Preloads write. Muscles crystallize. Nothing learned is lost.</p>
         </div>
       </div>
-      <div class="breath-ambient">
-        <div class="breath-circle"></div>
-      </div>
+      <div class="breath-orb" aria-hidden="true"><span></span></div>
     </section>
 
     <!-- AMPS — The Content System -->
@@ -391,6 +376,22 @@ const recentPosts = posts.slice(0, 3);
       </ol>
     </section>
 
+    <!-- From the blog -->
+    {recentPosts.length > 0 && (
+      <section class="from-blog">
+        <SectionHeader title="From the blog" link={{ href: "/blog", text: "All posts →" }} />
+        <div class="recent-posts">
+          {recentPosts.map((post, i) => (
+            <a href={blogPostUrl(post)} class:list={['recent-post-card', { 'recent-post-promo': i === 0 }]}>
+              {i === 0 && <span class="recent-post-badge">New</span>}
+              <span class="recent-post-title">{post.data.title}</span>
+              <span class="recent-post-arrow">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
     <!-- Somaverse teaser -->
     <section class="verse-teaser">
       <SectionHeader title="Somaverse" subtitle="Give your agent eyes and hands" />
@@ -470,7 +471,7 @@ const recentPosts = posts.slice(0, 3);
   .container {
     position: relative;
     z-index: 1;
-    max-width: 890px;
+    max-width: 1040px;
     margin: 0 auto;
     padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
     min-height: 100vh;
@@ -821,7 +822,8 @@ const recentPosts = posts.slice(0, 3);
     .recall-track::before { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .ring, .portal-rings, .portal-grad, .launch-dot, .recall-track::before, .portal-core { animation: none !important; }
+    .ring, .portal-rings, .portal-grad, .launch-dot, .recall-track::before, .portal-core,
+    .breath-orb span, .breath-phase::after { animation: none !important; }
   }
 
   /* ── Hero (legacy, unused) ── */
@@ -972,19 +974,20 @@ const recentPosts = posts.slice(0, 3);
   .description a:hover { color: var(--moon-bright); }
 
   /* ── Recent Posts ── */
+  .from-blog { margin-bottom: var(--section-gap); }
   .recent-posts {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-md);
-    margin-bottom: var(--section-gap);
-    animation: fadeUp 0.8s ease-out 0.1s both;
   }
+  @media (max-width: 768px) { .recent-posts { grid-template-columns: 1fr; } }
 
   .recent-post-card {
     display: flex;
     align-items: center;
-    gap: var(--space-lg);
-    padding: var(--space-lg) var(--space-xl);
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    min-height: 92px;
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
     background: var(--surface-card);
@@ -1123,19 +1126,67 @@ const recentPosts = posts.slice(0, 3);
     margin-bottom: var(--section-gap);
     animation: fadeUp 0.8s ease-out 0.3s both;
     position: relative;
+    isolation: isolate;
   }
 
   .breath-track {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+    gap: var(--space-md);
     position: relative;
+    margin-top: var(--space-xl);
   }
 
+  /* One 12s breath: each phase lights for its third of the cycle, the orb grows / holds / shrinks with it. */
   .breath-phase {
     text-align: center;
-    padding: var(--space-2xl) var(--space-lg);
+    padding: var(--space-xl) var(--space-lg);
     position: relative;
+    border-radius: var(--radius-lg);
+    border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+  }
+  /* The lit state is a pseudo-element animating OPACITY only — no per-frame repaint of borders/shadows. */
+  .breath-phase::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    border: 1px solid color-mix(in srgb, var(--moon-bright) 50%, transparent);
+    box-shadow: 0 0 40px -16px var(--moon-glow);
+    opacity: 0;
+    animation: phase-lit 12s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .breath-phase:nth-child(2)::after { animation-delay: 4s; }
+  .breath-phase:nth-child(3)::after { animation-delay: 8s; }
+  @keyframes phase-lit {
+    0%, 30%   { opacity: 1; }
+    36%, 100% { opacity: 0; }
+  }
+  .breath-orb {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    width: 520px;
+    height: 520px;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .breath-orb span {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 45%, var(--moon-glow) 0%, rgba(124,178,212,0.10) 35%, transparent 68%);
+    animation: orb-breath 12s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+  @keyframes orb-breath {
+    0%   { transform: scale(0.55); opacity: .35; }
+    33%  { transform: scale(1);    opacity: .9; }
+    66%  { transform: scale(1);    opacity: .9; }
+    100% { transform: scale(0.55); opacity: .35; }
   }
 
   .breath-dot {
@@ -1194,25 +1245,6 @@ const recentPosts = posts.slice(0, 3);
     line-height: var(--leading-relaxed);
   }
 
-  .breath-ambient {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-xl);
-  }
-
-  .breath-circle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 1px solid var(--border-accent);
-    animation: breathe 4s ease-in-out infinite;
-    opacity: 0.3;
-  }
-
-  @keyframes breathe {
-    0%, 100% { transform: scale(0.8); opacity: 0.15; }
-    50% { transform: scale(1.2); opacity: 0.4; }
-  }
 
   /* ── AMPS Layers ── */
   .layers {
@@ -1222,8 +1254,8 @@ const recentPosts = posts.slice(0, 3);
 
   .layers-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--grid-gap);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
   }
 
   .system-layers {
@@ -1274,7 +1306,7 @@ const recentPosts = posts.slice(0, 3);
 
   .layer-card {
     display: block;
-    padding: var(--card-pad-y) var(--card-pad-x);
+    padding: var(--space-lg);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
     background: var(--surface-card);
@@ -1294,13 +1326,13 @@ const recentPosts = posts.slice(0, 3);
   .layer-icon {
     font-size: var(--text-3xl);
     color: var(--accent);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
     line-height: var(--leading-none);
   }
 
   .layer-name {
     font-family: var(--font-display);
-    font-size: var(--text-xl);
+    font-size: var(--text-lg);
     font-weight: 600;
     margin-bottom: var(--space-xs);
     line-height: var(--leading-tight);
@@ -1312,11 +1344,11 @@ const recentPosts = posts.slice(0, 3);
     color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
   }
 
   .layer-desc {
-    font-size: var(--body-text);
+    font-size: var(--text-sm);
     color: var(--ink-soft);
     line-height: var(--leading-relaxed);
   }
@@ -1491,8 +1523,12 @@ const recentPosts = posts.slice(0, 3);
   }
 
   /* ── Responsive ── */
+  @media (max-width: 960px) and (min-width: 769px) {
+    .layers-grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 768px) {
     .layers-grid { grid-template-columns: 1fr; }
+    .breath-orb { width: 340px; height: 340px; }
     .system-layers { flex-direction: column; }
     .features-grid { grid-template-columns: 1fr; }
     .breath-track { grid-template-columns: 1fr; }
