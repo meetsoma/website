@@ -11,30 +11,88 @@ const recentPosts = posts.slice(0, 3);
 ---
 
 <Layout
-  title="σ — An AI agent that grows with you"
-  description="An AI coding agent with persistent memory, evolving identity, and the AMPS content system — automations, muscles, protocols, and scripts. Source-available under BSL 1.1."
+  title="meetsoma core — now open source · Soma, the agent that remembers"
+  description="meetsoma core is the open-source harness for Soma, an AI coding agent that keeps its memory across sessions, grows its own tools, and picks up where you left off."
   canonicalUrl="https://soma.gravicity.ai"
 >
   <main class="container">
-    <!-- Hero -->
-    <header class="hero">
-      <div class="hero-icon">
-        <img src="/media/soma-logo-animated.svg" alt="Soma" width="144" height="144" />
+    <!-- Hero — the portal: rings breathe, memory motes drift inward to the agent -->
+    <header class="portal">
+      <div class="portal-stage" aria-hidden="true">
+        <canvas class="portal-motes"></canvas>
+      </div>
+
+      <div class="portal-core">
+        <div class="portal-rings" aria-hidden="true">
+          <div class="portal-glow"></div>
+          <div class="ring ring-3"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-1"></div>
+        </div>
+        <img src="/media/soma-logo-animated.svg" alt="Soma" width="132" height="132" />
         <div class="moon-egg" onclick="window.location.href='/verse/'" title="✦"></div>
       </div>
 
-      <h1 class="title">
-        <span class="title-main">S<span class="title-sigma">σ</span>ma</span>
-        <a href="/roadmap" class="beta-badge" title={`Soma ${somaVersion.badge} · released ${somaVersion.releaseDate} on the ${somaVersion.channel} channel — click for roadmap`}>{somaVersion.badge}</a>
+      <a href="/docs/what-is-meetsoma-core" class="launch-pill">
+        <span class="launch-dot"></span>
+        <span>meetsoma core <strong>is now open source</strong></span>
+        <span class="launch-ver">{somaVersion.badge}</span>
+        <span class="launch-arrow">→</span>
+      </a>
+
+      <h1 class="portal-title">
+        The agent that <span class="portal-grad">remembers.</span>
       </h1>
 
-      <p class="tagline">An AI agent that grows with you</p>
-
-      <p class="description">
-        Memory that persists across sessions. Identity that evolves through use.<br/>
-        Built on <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>. Extended with automations, muscles, protocols, and scripts. Yours to shape.
+      <p class="portal-lede">
+        <strong>meetsoma core</strong> is the open-source harness. <strong>Soma</strong> is the agent that lives in it.
+        It keeps its memory between sessions, writes its own tools, and picks up exactly where you left off.
       </p>
+
+      <div class="portal-actions">
+        <button class="install-pill" data-copy="npm i -g meetsoma" title="Copy install command">
+          <span class="install-prompt">$</span>
+          <span class="install-cmd">npm i -g meetsoma</span>
+          <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+        <a href="/docs/getting-started" class="portal-btn portal-btn-primary">Get started</a>
+        <a href="https://github.com/meetsoma/core" target="_blank" rel="noopener" class="portal-btn portal-btn-ghost">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>
+          meetsoma/core
+        </a>
+      </div>
+
+      <p class="portal-note">Free to install. Runs in your terminal. Built on <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>.</p>
     </header>
+
+    <!-- What remembering looks like — three sessions, one memory -->
+    <section class="recall">
+      <div class="recall-head">
+        <p class="recall-eyebrow">What remembering looks like</p>
+        <h2 class="recall-title">Close the terminal. Come back next week.<br/>Soma is still mid-thought.</h2>
+      </div>
+      <div class="recall-track">
+        <article class="recall-card">
+          <span class="recall-tag">Session 1</span>
+          <p class="recall-you">› set up the auth refactor, tokens first</p>
+          <p class="recall-soma">Mapped <code>auth.ts</code> and <code>session.ts</code>. Refresh flow drafted. Left the cookie wrapper for next time.</p>
+          <span class="recall-foot">exhale · preload written</span>
+        </article>
+        <article class="recall-card">
+          <span class="recall-tag">Session 2</span>
+          <p class="recall-you">› soma inhale</p>
+          <p class="recall-soma">Picking up the auth refactor. Tokens are done; the cookie wrapper is next. You prefer small commits, so I'll split it.</p>
+          <span class="recall-foot">inhale · memory restored</span>
+        </article>
+        <article class="recall-card recall-card-glow">
+          <span class="recall-tag">Session 47</span>
+          <p class="recall-you">› the deploy failed again</p>
+          <p class="recall-soma">Same cache key as last month. I wrote a check for this after the second time, running it now.</p>
+          <span class="recall-foot">a muscle it grew itself</span>
+        </article>
+      </div>
+    </section>
 
     <!-- Recent Posts -->
     {recentPosts.length > 0 && (
@@ -90,7 +148,76 @@ const recentPosts = posts.slice(0, 3);
     </section>
 
     <script>
-      document.querySelectorAll('.copy-btn').forEach(btn => {
+      // Memory motes: particles drift in from the edges and spiral into the agent. Paused offscreen;
+      // a single static frame under prefers-reduced-motion.
+      (() => {
+        const canvas = document.querySelector('.portal-motes') as HTMLCanvasElement | null;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const css = getComputedStyle(document.documentElement);
+        const moon = css.getPropertyValue('--moon-bright').trim() || '#7cb2d4';
+        const warm = css.getPropertyValue('--warm-bright').trim() || '#e8a87c';
+        let w = 0, h = 0, cx = 0, cy = 0, dpr = 1, raf = 0, visible = true;
+        type Mote = { a: number; r: number; v: number; s: number; c: string; life: number };
+        const motes: Mote[] = [];
+        const spawn = (m?: Mote): Mote => {
+          const o = m ?? ({} as Mote);
+          o.a = Math.random() * Math.PI * 2;
+          o.r = Math.max(w, h) * (0.45 + Math.random() * 0.35);
+          o.v = 0.25 + Math.random() * 0.6;
+          o.s = 0.6 + Math.random() * 1.6;
+          o.c = Math.random() < 0.22 ? warm : moon;
+          o.life = 0;
+          return o;
+        };
+        const resize = () => {
+          dpr = Math.min(devicePixelRatio || 1, 2);
+          w = canvas.clientWidth; h = canvas.clientHeight;
+          canvas.width = w * dpr; canvas.height = h * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          const core = document.querySelector('.portal-core')?.getBoundingClientRect();
+          const box = canvas.getBoundingClientRect();
+          cx = core ? core.left + core.width / 2 - box.left : w / 2;
+          cy = core ? core.top + core.height / 2 - box.top : h * 0.34;
+          const n = Math.round(Math.min(160, (w * h) / 9000));
+          while (motes.length < n) motes.push(spawn());
+          motes.length = n;
+          motes.forEach((m) => { m.r *= Math.random(); m.life = 1; });
+        };
+        const draw = () => {
+          ctx.clearRect(0, 0, w, h);
+          for (const m of motes) {
+            if (!reduce) {
+              m.r -= m.v;
+              m.a += 0.0016 + 0.5 / Math.max(m.r, 40);
+              m.life = Math.min(1, m.life + 0.01);
+              if (m.r < 18) spawn(m);
+            }
+            const x = cx + Math.cos(m.a) * m.r;
+            const y = cy + Math.sin(m.a) * m.r * 0.62;
+            const near = Math.min(1, m.r / 120);
+            ctx.globalAlpha = m.life * (0.15 + 0.6 * (1 - Math.min(1, m.r / (w * 0.6)))) * near;
+            ctx.fillStyle = m.c;
+            ctx.beginPath();
+            ctx.arc(x, y, m.s, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.globalAlpha = 1;
+          if (!reduce && visible) raf = requestAnimationFrame(draw);
+        };
+        new IntersectionObserver(([e]) => {
+          visible = e.isIntersecting;
+          cancelAnimationFrame(raf);
+          if (visible) draw();
+        }).observe(canvas);
+        addEventListener('resize', () => { resize(); if (reduce) draw(); });
+        resize();
+        draw();
+      })();
+
+      document.querySelectorAll('.copy-btn, .install-pill').forEach(btn => {
         btn.addEventListener('click', async () => {
           const text = (btn as HTMLElement).dataset.copy || '';
           const copyIcon = btn.querySelector('.copy-icon') as HTMLElement;
@@ -225,12 +352,43 @@ const recentPosts = posts.slice(0, 3);
         <div class="feature-card">
           <h3 class="feature-title">Open &amp; Extensible</h3>
           <p class="feature-desc">
-            Source-available under BSL 1.1. Built on <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>.
-            Extensions, skills, protocols — all swappable.
-            Works alongside CLAUDE.md and existing setups.
+            meetsoma core is open source and built on <a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">Pi</a>.
+            Extensions, skills and protocols are all swappable, and it
+            works alongside CLAUDE.md and the setup you already have.
           </p>
         </div>
       </div>
+    </section>
+
+    <!-- The ladder — free at the core, optional above it -->
+    <section class="ladder">
+      <SectionHeader title="Free at the core" subtitle="Everything above it is optional" />
+      <ol class="ladder-steps">
+        <li class="ladder-step ladder-step-live">
+          <span class="ladder-num">01</span>
+          <h3>meetsoma core</h3>
+          <p>The harness and the agent. Memory, identity, protocols, tools. Open source, free, yours.</p>
+          <span class="ladder-state">available now</span>
+        </li>
+        <li class="ladder-step">
+          <span class="ladder-num">02</span>
+          <h3>Register your soma</h3>
+          <p>Give your agent a name on the hub and reach the library of community add-ons.</p>
+          <span class="ladder-state">coming</span>
+        </li>
+        <li class="ladder-step">
+          <span class="ladder-num">03</span>
+          <h3>Somaverse</h3>
+          <p>Open your agent's memory as a place: a browser workspace where Soma sees every pane.</p>
+          <span class="ladder-state">alpha</span>
+        </li>
+        <li class="ladder-step">
+          <span class="ladder-num">04</span>
+          <h3>Pro &amp; teams</h3>
+          <p>Hosted infrastructure for teams that want their agents running without the upkeep.</p>
+          <span class="ladder-state">later</span>
+        </li>
+      </ol>
     </section>
 
     <!-- Somaverse teaser -->
@@ -280,9 +438,9 @@ const recentPosts = posts.slice(0, 3);
     <section class="cta-section">
       <div class="cta-content">
         <h2 class="cta-title">Start growing</h2>
-        <p class="cta-desc">Install Soma. Start a session. Let the memory build.</p>
+        <p class="cta-desc">Install meetsoma core. Start a session. Let Soma's memory build.</p>
         <div class="cta-buttons">
-          <a href="https://github.com/meetsoma" target="_blank" rel="noopener" class="cta-primary">
+          <a href="https://github.com/meetsoma/core" target="_blank" rel="noopener" class="cta-primary">
             View on GitHub →
           </a>
           <a href="/docs" class="cta-secondary">
@@ -320,7 +478,346 @@ const recentPosts = posts.slice(0, 3);
     flex-direction: column;
   }
 
-  /* ── Hero ── */
+  /* ── Portal hero ── */
+  .portal {
+    position: relative;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-2xl) 0 var(--space-3xl);
+    margin-bottom: var(--space-2xl);
+    isolation: isolate;
+  }
+  .portal-stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 120%;
+    transform: translate(-50%, -54%);
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+    -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 42%, #000 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 60% 55% at 50% 42%, #000 40%, transparent 100%);
+  }
+  .portal-motes { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .portal-rings { position: absolute; top: 50%; left: 50%; width: 0; height: 0; z-index: -1; }
+  .ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 1.5px solid transparent;
+    background:
+      conic-gradient(from var(--ring-a, 0deg), transparent 0deg, var(--moon-bright) 60deg, transparent 150deg,
+        transparent 200deg, var(--warm-bright) 245deg, transparent 330deg) border-box;
+    -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+  }
+  .ring-1 { width: 260px; height: 260px; animation: ring-spin 18s linear infinite, breathe 8s ease-in-out infinite; opacity: .75; }
+  .ring-2 { width: 440px; height: 440px; animation: ring-spin 34s linear infinite reverse, breathe 8s ease-in-out 1.2s infinite; opacity: .45; }
+  .ring-3 { width: 660px; height: 660px; animation: ring-spin 60s linear infinite, breathe 8s ease-in-out 2.4s infinite; opacity: .25; }
+  @property --ring-a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+  @keyframes ring-spin { to { --ring-a: 360deg; } }
+  @keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50%      { transform: translate(-50%, -50%) scale(1.045); }
+  }
+  .portal-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 420px;
+    height: 420px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--moon-glow) 0%, rgba(124,178,212,0.08) 38%, transparent 70%);
+    filter: blur(8px);
+    animation: breathe 8s ease-in-out infinite;
+  }
+  .portal-core {
+    position: relative;
+    width: 132px;
+    height: 132px;
+    margin-bottom: var(--space-2xl);
+    animation: float 5s ease-in-out infinite;
+  }
+  .portal-core img { width: 100%; height: 100%; filter: drop-shadow(0 0 28px var(--logo-glow)); }
+  .portal-core .moon-egg { top: 30px; right: 8px; width: 31px; height: 31px; }
+
+  .launch-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px 7px 14px;
+    margin-bottom: var(--space-xl);
+    border-radius: var(--radius-full);
+    border: 1px solid color-mix(in srgb, var(--moon-bright) 35%, transparent);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    backdrop-filter: blur(10px);
+    color: var(--ink-dim, var(--ink));
+    font-size: var(--text-sm);
+    text-decoration: none;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--moon-bright) 6%, transparent), 0 8px 30px -12px var(--moon-glow);
+    animation: fadeUp .8s ease-out .15s both;
+    transition: border-color .25s, transform .25s;
+  }
+  .launch-pill:hover { border-color: var(--moon-bright); transform: translateY(-1px); }
+  .launch-pill strong { color: var(--ink); font-weight: 600; }
+  .launch-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--warm-bright);
+    box-shadow: 0 0 0 0 var(--warm-glow);
+    animation: pulse-dot 2.4s ease-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%   { box-shadow: 0 0 0 0 var(--warm-glow); }
+    70%  { box-shadow: 0 0 0 10px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  .launch-ver {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: var(--text-xs);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--moon-bright) 16%, transparent);
+    color: var(--moon-bright);
+  }
+  .launch-arrow { color: var(--moon-bright); transition: transform .25s; }
+  .launch-pill:hover .launch-arrow { transform: translateX(3px); }
+
+  .portal-title {
+    font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 var(--space-xl);
+    max-width: 14ch;
+    animation: fadeUp .9s ease-out .25s both;
+  }
+  .portal-grad {
+    background: linear-gradient(100deg, var(--moon-bright) 0%, #b9d8ec 38%, var(--warm-bright) 78%, var(--moon-bright) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    animation: grad-drift 9s ease-in-out infinite;
+  }
+  @keyframes grad-drift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  .portal-lede {
+    max-width: 600px;
+    margin: 0 auto var(--space-2xl);
+    font-size: clamp(1.02rem, 1.4vw, 1.18rem);
+    line-height: var(--leading-relaxed);
+    color: var(--ink-dim, var(--ink));
+    opacity: .9;
+    animation: fadeUp .9s ease-out .35s both;
+  }
+  .portal-lede strong { color: var(--ink); font-weight: 600; }
+  .portal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    animation: fadeUp .9s ease-out .45s both;
+  }
+  .install-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 48px;
+    padding: 0 16px 0 18px;
+    border-radius: var(--radius-lg);
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+    background: color-mix(in srgb, var(--bg) 82%, black 18%);
+    color: var(--ink);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .install-pill:hover { border-color: var(--moon-bright); box-shadow: 0 0 24px -6px var(--moon-glow); }
+  .install-prompt { color: var(--warm-bright); }
+  .install-pill svg { width: 16px; height: 16px; opacity: .6; }
+  .portal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 22px;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s, background .2s;
+  }
+  .portal-btn-primary {
+    background: linear-gradient(180deg, var(--moon-bright), var(--accent-mid));
+    color: #06121c;
+    box-shadow: 0 10px 30px -10px var(--moon-glow), inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .portal-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 38px -10px var(--moon-glow), inset 0 1px 0 rgba(255,255,255,.35); }
+  .portal-btn-ghost {
+    color: var(--ink);
+    border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    background: color-mix(in srgb, var(--bg) 50%, transparent);
+  }
+  .portal-btn-ghost:hover { border-color: color-mix(in srgb, var(--ink) 40%, transparent); }
+  .portal-note {
+    margin-top: var(--space-xl);
+    font-size: var(--text-sm);
+    color: var(--ink-dim, var(--ink));
+    opacity: .6;
+    animation: fadeUp .9s ease-out .55s both;
+  }
+  .portal-note a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
+
+  /* ── Recall: three sessions, one memory ── */
+  .recall { margin-bottom: var(--section-gap); }
+  .recall-head { text-align: center; margin-bottom: var(--space-2xl); }
+  .recall-eyebrow {
+    font-size: var(--text-xs);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--moon-bright);
+    margin: 0 0 var(--space-md);
+  }
+  .recall-title {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .recall-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+  .recall-track::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--moon-glow), var(--warm-glow), transparent);
+    background-size: 200% 100%;
+    animation: thread 6s linear infinite;
+    z-index: 0;
+  }
+  @keyframes thread { to { background-position: -200% 0; } }
+  .recall-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(12px);
+    text-align: left;
+  }
+  .recall-card-glow {
+    border-color: color-mix(in srgb, var(--warm-bright) 40%, transparent);
+    box-shadow: 0 0 40px -18px var(--warm-glow);
+  }
+  .recall-tag {
+    align-self: flex-start;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: var(--text-xs);
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--moon-bright) 14%, transparent);
+    color: var(--moon-bright);
+  }
+  .recall-card-glow .recall-tag { background: color-mix(in srgb, var(--warm-bright) 16%, transparent); color: var(--warm-bright); }
+  .recall-you {
+    margin: 0;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 13px;
+    color: var(--ink-dim, var(--ink));
+    opacity: .75;
+  }
+  .recall-soma { margin: 0; font-size: var(--text-sm); line-height: var(--leading-relaxed); color: var(--ink); }
+  .recall-soma code { font-size: .9em; }
+  .recall-foot {
+    margin-top: auto;
+    padding-top: 8px;
+    font-size: var(--text-xs);
+    color: var(--ink-dim, var(--ink));
+    opacity: .55;
+    border-top: 1px dashed color-mix(in srgb, var(--ink) 12%, transparent);
+  }
+
+  /* ── Ladder ── */
+  .ladder { margin-bottom: var(--section-gap); }
+  .ladder-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    counter-reset: none;
+  }
+  .ladder-step {
+    position: relative;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: .78;
+  }
+  .ladder-step h3 { margin: 0; font-size: var(--text-base); color: var(--ink); }
+  .ladder-step p { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--ink-dim, var(--ink)); }
+  .ladder-num { font-family: var(--font-mono, ui-monospace, monospace); font-size: var(--text-xs); color: var(--ink-dim, var(--ink)); opacity: .6; }
+  .ladder-state {
+    margin-top: auto;
+    align-self: flex-start;
+    font-size: var(--text-xs);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+    color: var(--ink-dim, var(--ink));
+  }
+  .ladder-step-live {
+    opacity: 1;
+    border-color: color-mix(in srgb, var(--moon-bright) 45%, transparent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--moon-bright) 10%, transparent), color-mix(in srgb, var(--bg) 70%, transparent));
+    box-shadow: 0 0 40px -20px var(--moon-glow);
+  }
+  .ladder-step-live .ladder-state { border-color: var(--moon-bright); color: var(--moon-bright); }
+
+  @media (max-width: 760px) {
+    .portal { min-height: auto; padding-top: var(--space-xl); }
+    .ring-3 { display: none; }
+    .ring-2 { width: 400px; height: 400px; }
+    .ring-1 { width: 240px; height: 240px; }
+    .portal-actions { flex-direction: column; width: 100%; }
+    .install-pill, .portal-btn { width: 100%; justify-content: center; }
+    .recall-track, .ladder-steps { grid-template-columns: 1fr; }
+    .recall-track::before { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ring, .portal-glow, .portal-grad, .launch-dot, .recall-track::before, .portal-core { animation: none !important; }
+  }
+
+  /* ── Hero (legacy, unused) ── */
   .hero {
     text-align: center;
     margin-bottom: var(--section-gap);
