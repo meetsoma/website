@@ -7,9 +7,12 @@ heat-default: cold
 tags: [tools, safety, self-awareness, scripts]
 applies-to: [always]
 gates:
-  - command: "\\| *(tail|head|grep|sort|uniq|wc)[^;]*; *echo\\b[^;]*\\$\\?"
-    mode: remind
-    rule: "That exit code is the PIPE's last command, not yours — including when you wrap it in a label like echo \"rc=$?\". Run the command bare and read $? immediately; this has reported exit=0 over a FAILED git push."
+  # Anchored at ^ so the pipefail carve-out can see behind the pipe (no variable-length lookbehind).
+  # Two constructs are deliberately allowed through: `set -o pipefail` (which makes $? meaningful)
+  # and `| grep -q X` (where the filter's status IS the answer you want).
+  - command: "^(?!.*pipefail).*?\\| *(?! *grep +-[a-zA-Z]*q)(tail|head|grep|sort|uniq|wc)[^;]*; *echo\\b[^;]*\\$\\?"
+    mode: block
+    rule: "That exit code is the PIPE's last command, not yours — including when you wrap it in a label like echo \"rc=$?\". This has reported exit=0 over a FAILED git push. Fix: run the command bare and read $? on its own line, or use ${PIPESTATUS[0]}. Genuinely want the filter's status? `grep -q` and `set -o pipefail` are both allowed through."
   - command: "\\bpgrep\\s+-f\\s+(?:'[^']*'|\"[^\"]*\"|\\S+)\\s*\\|\\s*head\\b"
     mode: remind
     rule: "`pgrep -f X | head` returns A matching process, not THE one holding the resource — it can hand back a days-old zombie while the port is held by something else. Ask who holds the resource instead: `lsof -nP -iTCP:<port> -sTCP:LISTEN`."
@@ -19,7 +22,11 @@ gates:
   - command: "python3?[\\s\\S]*?(?:open\\([^)]*\\.md[^)]*[\"']w[\"']|\\.md[\"']\\)\\.write_text)"
     mode: block
     rule: "Do NOT write .md with python — open(p,'w') truncates BEFORE it can fail, so a UnicodeEncodeError on emoji or box-drawing leaves a 0-byte file. No encoding argument fixes it. Use the edit tool."
-  - command: "(?<!['\"])\\b(grep|egrep|zgrep) +(-[a-zA-Z]*[rR]|--recursive\\b|--[a-zA-Z-]+=?[^ ]* +-[a-zA-Z]*[rR])"
+  # Two carve-outs, each a case where recursive grep is the CORRECT tool:
+  #  1. Command position, not quote adjacency — so prose about the rule never trips it.
+  #  2. `.git/` `node_modules/` `/etc/` `/usr/` `/var/` — territory a gitignore-respecting,
+  #     project-scoped index cannot reach. There, recursive grep is the only thing that works.
+  - command: "^(?!.*(?:\\.git/|node_modules/|/etc/|/usr/|/var/))(?:.*[;&|(]\\s*|\\s*)(grep|egrep|zgrep) +(-[a-zA-Z]*[rR]|--recursive\\b|--[a-zA-Z-]+=?[^ ]* +-[a-zA-Z]*[rR])"
     mode: block
     rule: "Don't grep -r a tree. WHICH tool depends on the QUESTION: 'where is this string / symbol / file?' -> soma:code.find (respects .gitignore, ~10x faster, ranked). 'where did this IDEA come from, who said it, how did it evolve?' -> soma:seam.trace (walks sessions + preloads + journal as ONE corpus; code.find CANNOT see that and will hand you literal hits while the answer sits in a session log). Scoped to one known dir, `grep -l` with explicit globs is fine."
   - command: "\\bfind +(~|\\$HOME|/Users/[^/]+) "
@@ -34,8 +41,8 @@ gates:
 scope: bundled
 tier: core
 created: 2026-03-10
-updated: 2026-08-10
-version: 3.1.0
+updated: 2026-10-03
+version: 3.2.0
 author: meetsoma
 license: MIT
 ---

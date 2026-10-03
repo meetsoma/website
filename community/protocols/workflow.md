@@ -6,10 +6,12 @@ description: "Test before commit, commit before moving on, push before walking a
 heat-default: cold
 tags: [workflow, git, testing, deployment]
 applies-to: [git]
-scope: hub
+# `scope:` corrected `hub` → `bundled` (s01-6c4763) — see community-safe.md. Comment stays ABOVE the
+# key: the release gate reads the rest of the line as the value.
+scope: bundled
 tier: community
 created: 2026-03-12
-updated: 2026-04-12
+updated: 2026-10-03
 version: 1.0.0
 author: meetsoma
 license: MIT

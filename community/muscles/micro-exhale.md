@@ -2,14 +2,14 @@
 name: micro-exhale
 type: muscle
 status: active
-description: "after major completions, append `## HH:MM` summary to session log. One file per day, read first, never overwrite. Checkpoint within session, not a full exhale."
+description: "after major completions, checkpoint the session log — read it first, FOLD into the section that already covers this thread, append a new `## HH:MM` only for genuinely new work. One file per day. Checkpoint within session, not a full exhale."
 heat: 0
 heat-default: hot
 triggers: [micro-exhale, daily-log, workflow-summary, session-memory, memory, workflow, logging, sessions]
 scope: hub
 tier: official
 created: 2026-03-10
-updated: 2026-04-04
+updated: 2026-10-03
 version: 1.0.0
 author: meetsoma
 license: MIT
@@ -19,7 +19,7 @@ loads: 0
 # Micro-Exhale — Muscle
 
 ## TL;DR
-**Micro-Exhale** — after major completions, append `## HH:MM` summary to session log. One file per day, read first, never overwrite. Checkpoint within session, not a full exhale.
+**Micro-Exhale** — after major completions, checkpoint the session log: read it first, FOLD into the section that already covers this thread, append a new `## HH:MM` only for genuinely new work. One file per day. Checkpoint within session, not a full exhale.
 
 ## When to Write
 
@@ -47,7 +47,7 @@ loads: 0
 
 ## Rules
 
-1. **Read the file first** — if it exists, append. If it doesn't, create with frontmatter:
+1. **Read the file first** — if it doesn't exist, create with frontmatter:
    ```yaml
    ---
    type: log
@@ -55,7 +55,10 @@ loads: 0
    ---
    ```
 2. **One file per day** — `YYYY-MM-DD.md` in `.soma/memory/sessions/`
-3. **Never overwrite** — always append new `## HH:MM` sections
+3. **Fold before you append** — a log is a briefing, not a transcript. If a section already covers
+   this thread, EDIT it in place; append a new `## HH:MM` only when the work is genuinely new.
+   Never delete or rewrite the whole file. *Tell you got this wrong: one section per completion —
+   the reader needs the current state of each thread, not the history of your appends.*
 4. **Be concrete** — file paths, commit hashes, exact decisions. No prose summaries.
 5. **Keep it fast** — 2-5 minutes max. If it takes longer, you're writing a preload, not a micro-exhale.
 

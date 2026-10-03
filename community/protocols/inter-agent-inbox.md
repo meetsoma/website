@@ -5,16 +5,20 @@ status: active
 description: "File-based messaging between AI agents. Drop a markdown file in the recipient's inbox directory. No automation needed — just files. Enables asynchronous collaboration across sessions and agent systems."
 heat-default: cold
 tags: [communication, multi-agent, collaboration, inbox, async]
-applies-to: [multi-agent, teams, workspaces]
+# `multi-agent`, `teams` and `workspaces` are NOT ProjectSignal values (core/protocols.ts:44), and
+# matching is `appliesTo.some(tag => signals.has(tag))` — so this protocol matched NOTHING and had
+# never loaded for any user since it was written. Corrected 2026-08-14.
+# `multi-repo` (≥2 git children of the project dir, protocols.ts:158) is the closest DETECTABLE
+# proxy for "several agents share this workspace", and it is the safe default: it costs a solo
+# user nothing. Override per project by editing this line — that is what `applies-to` is for.
+applies-to: [multi-repo]
 scope: community
 tier: official
 created: 2026-03-26
-updated: 2026-04-12
+updated: 2026-10-03
 version: 1.0.0
 author: meetsoma
 license: MIT
-origin: s01-6641b5
-seeded-from: meetsoma/.soma/inbox/README.md
 ---
 
 ## TL;DR

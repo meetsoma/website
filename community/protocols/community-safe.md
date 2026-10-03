@@ -6,10 +6,15 @@ description: "Community/public content must never contain private data. ⚠ The 
 heat-default: cold
 tags: [privacy, safety, self-awareness]
 applies-to: [always]
-scope: hub
+# `scope:` corrected `hub` → `bundled` (s01-6c4763): this SHIPS in the npm bundle — build-dist.mjs:442
+# copies repos/community/protocols/ wholesale — so `hub` described an install path it never took.
+# `scope:` does not gate npm; nothing about the tarball changed. Keep the comment ABOVE the key:
+# the release gate reads the REST OF THE LINE as the value, so a trailing `#` comment becomes part
+# of it and the mismatch persists (measured here, first attempt).
+scope: bundled
 tier: core
 created: 2026-03-10
-updated: 2026-08-10
+updated: 2026-10-03
 version: 2.1.0
 author: Curtis Mercier
 license: CC BY 4.0
