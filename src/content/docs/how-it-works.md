@@ -13,7 +13,7 @@ Sessions are breaths: inhale (configurable boot steps: identity, preload, protoc
 
 ## The Core Idea
 
-meetsoma core is the open-source harness you install. Soma is the agent that lives in it — an AI coding agent that **remembers**. Unlike tools that start fresh every session, Soma carries identity, context, and learned patterns across sessions.
+meetsoma core is the harness you install — it goes open source with 0.50.0. Soma is the agent that lives in it — an AI coding agent that **remembers**. Unlike tools that start fresh every session, Soma carries identity, context, and learned patterns across sessions.
 
 σῶμα (sōma) — *Greek for "body."* The vessel that grows around you.
 

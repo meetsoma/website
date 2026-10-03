@@ -32,7 +32,7 @@ Entries are short: what changed, and what it means for you.
 
 ## [0.50.0] — 2026-10-02
 
-The first meetsoma core release — now open source.
+The first meetsoma core release — and the one that ships it open source.
 
 ### Added
 - **Find and reopen any session.** `soma attach` lists running sessions and takes you to one; `soma start` does the same for stopped ones and reopens them with full history.
