@@ -39,7 +39,7 @@ When a scoped call returns nothing, it prints a `💡 Try instead` hint for the 
 Function/class/section index with line numbers. Use this **before editing any file you haven't read recently**.
 
 ```bash
-$ soma code map repos/agent/extensions/soma-addons/code.ts
+$ soma code map extensions/soma-addons/code.ts
 
  30 │   // ── ANSI-stripping + soma code subprocess helper ──────────────────────────
  32 │ const ANSI_RE = /\u001b\[[0-9;]*m/g;
@@ -96,9 +96,9 @@ Every reference to a symbol, classified as **DEF** (definition) or **USE** (call
 ```bash
 $ soma code refs invalidateCompiledPrompt
 
-DEF  repos/agent/extensions/soma-boot.ts:2182: function invalidateCompiledPrompt() {
-USE  repos/agent/extensions/soma-boot.ts:2370:     invalidateCompiledPrompt();
-USE  repos/agent/extensions/soma-boot.ts:2375:     invalidateCompiledPrompt();
+DEF  extensions/soma-boot.ts:2182: function invalidateCompiledPrompt() {
+USE  extensions/soma-boot.ts:2370:     invalidateCompiledPrompt();
+USE  extensions/soma-boot.ts:2375:     invalidateCompiledPrompt();
 ...
 8 total refs across 1 files
 ```
@@ -123,7 +123,7 @@ Line-specific text replacement. Guards against accidental multi-site edits — t
 Directory tree with file sizes. Respects `.gitignore`. Use for orientation before planning a refactor or grepping broadly.
 
 ```bash
-$ soma code structure repos/agent/extensions
+$ soma code structure extensions
 extensions/
 ├── soma-boot.ts            132.0K
 ├── soma-breathe.ts          45.1K
@@ -256,7 +256,7 @@ Every unscoped `grep -rn` that returns a large result adds its whole output to t
 
 ## Implementation
 
-Single bash script: `repos/agent/scripts/soma-code.sh` (~990 lines, v3.1).
+Single bash script: `scripts/soma-code.sh` (~990 lines, v3.1).
 
 Core techniques:
 

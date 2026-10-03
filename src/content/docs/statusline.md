@@ -2,7 +2,7 @@
 title: "Statusline & Notices"
 description: "The three-line footer, every indicator, and the toast notices Soma shows you — including the preload lifecycle."
 section: "Reference"
-updated: 2026-09-05
+updated: 2026-10-03
 order: 7.5
 ---
 
@@ -79,7 +79,7 @@ want to pick up. Each tells you exactly what to do:
 | Tag | Trigger | Action |
 |-----|---------|--------|
 | `🔄 /reload` | `extensions/*.ts`, `core/*.ts` edited | Run `/reload` to re-import. |
-| `⚠ sync dev + /reload` | A `reload`-class edit landed in a **different worktree** than the runtime loads from | `soma-dev sync dev`, then `/reload`. |
+| `⚠ sync dev + /reload` | A `reload`-class edit landed in a **different worktree** than the runtime loads from | Sync your dev tree to the runtime, then `/reload`. |
 | `📝 /rebuild?` | `body/*.md` edited | **Optional** — only if you want it applied mid-session. Skip freely; preloads/journal/identity land naturally on fresh boot. |
 | `⚠ relaunch` | `dist/*`, `core/*.js` (Pi's static imports, frozen at boot) | `/exit`, then `soma`. `/reload` can't help. |
 

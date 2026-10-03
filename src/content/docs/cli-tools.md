@@ -2,7 +2,7 @@
 title: "CLI Tools: How meetsoma core Surfaces Tools to the Agent"
 description: "The three patterns for adding a tool. Pattern 1 (commands/.sh drop-in) is the answer most of the time. Decision flow ladder + reload semantics."
 section: "Reference"
-updated: 2026-10-02
+updated: 2026-10-03
 order: 12
 ---
 
@@ -44,7 +44,7 @@ The handler at `soma-boot.ts:3520-3531` reads the directory per call, so new fil
 
 | Where it lives | Who gets it |
 |---|---|
-| `repos/agent/.soma/amps/scripts/commands/` (workspace template) → `~/.soma/amps/scripts/commands/` (per-user via `soma init`) | Every Soma install |
+| this repo's `.soma/amps/scripts/commands/` (workspace template) → `~/.soma/amps/scripts/commands/` (per-user via `soma init`) | Every Soma install |
 | `meetsoma/community/scripts/<name>/` → `/hub install script <name>` lands at `~/.soma/amps/scripts/` | Hub users |
 | `<project>/.soma/amps/scripts/commands/` | Workspace-specific |
 
@@ -183,9 +183,7 @@ Regenerate the count: `python3 .soma/amps/scripts/soma-tools-audit.py`.
 
 ## Related docs
 
-- `dev-tools.md` — what `dev:*` is for, families inventory
 - Optional advanced pack — not installed with meetsoma core; its caps report clearly when it is absent
 - `extending.md` — Pi extension API surface
 - `body.md` — body file system + cache budget
-- `body/soma-tools.md` (workspace-private) — extension topology + audit tables (regenerable)
 - `core/body.ts` — body walker (non-recursive, flat-only)

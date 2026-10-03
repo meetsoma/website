@@ -2,7 +2,7 @@
 title: "Scripts"
 description: "Standalone tools that ship with Soma — codebase navigation, memory tracing, session focus, doc scraping, and more."
 section: "Reference"
-updated: 2026-10-02
+updated: 2026-10-03
 order: 9
 ---
 
@@ -161,70 +161,20 @@ Shared theming for all Soma scripts. Provides colors, header/footer helpers, and
 
 ---
 
-## Advanced Scripts (Pro tier)
-
-These 5 scripts ship as compiled `.js` files (base64-encoded bash) and provide deeper capabilities — dependency analysis, memory tracing, doc scraping, remote repo inspection, and browser automation.
-
-**Every install gets these working today** — a Pro session token is provisioned automatically on first `soma` invocation, no separate signup step. The auth scaffold inside each compiled script is real (not a no-op); if a metered Pro tier ships later, only the token-provisioning source changes — the scripts themselves ship unchanged.
-
-### soma seam
-
-Trace concepts through memory, code, and sessions. The memory superpower — finds connections across your entire `.soma/` workspace.
-
-```bash
-soma seam trace <term>              # follow a concept through everything
-soma seam graph <session-id>        # map everything connected to a session
-soma seam timeline [--tag TAG]      # chronological evolution of a concept
-soma seam code <pattern>            # code + the ideas/plans that reference it
-soma seam seeds [--unplanted]       # find seeds that haven't become plans
-soma seam gaps                      # find orphan documents (no connections)
-soma seam web <term> [-o FILE]      # generate a full markdown web of connections
-```
-
-### soma refactor
-
-Dependency analysis for safe refactoring. Scan before renaming or deleting anything.
-
-```bash
-soma refactor scan <file>           # dependency graph + blast radius
-soma refactor refs <symbol>         # cross-file reference analysis
-soma refactor graph <file>          # import/require tree
-```
-
-### soma scrape
-
-Intelligent doc discovery and scraping. Give it a library name, it finds the repo, scans for docs, pulls them locally into `.soma/knowledge/`.
-
-```bash
-soma scrape resolve <name>          # find repo + doc sources
-soma scrape pull <name> [--full]    # download docs locally
-soma scrape search <name> <query>   # search within scraped docs
-soma scrape discover <topic>        # broad search across GitHub, npm, MDN
-soma scrape list                    # show all scraped sources
-```
-
-**Requires:** `gh` (GitHub CLI), `curl`, `jq`.
-
-### soma github
-
-Remote repo analysis — scan GitHub repos WITHOUT cloning.
-
-```bash
-soma github <repo> structure         # file tree + sizes
-soma github <repo> map <file>        # function/class index
-soma github <repo> deps              # dependency analysis
-soma github <repo> audit             # security + quality scan
-soma github <repo> routes            # route discovery (web frameworks)
-soma github <repo> stats             # repo statistics
-```
-
 ### soma browser
 
 CDP-based browser automation for testing and scraping (shell CLI).
 
 > **Note:** This is the **shell-CLI counterpart**. For agent-facing browser automation use `soma:browser.*` — the newer multi-browser configurable system that supports Chrome / Brave / Edge / Arc / Vivaldi / Chromium / Firefox via env + settings. See `browser-setup.md` for setup and `cli-tools.md` for the three-pattern model. The shell `soma browser` is kept for direct terminal use (bridge-proxied, hardcoded for Brave Beta on port 9333).
 
+
 ---
+
+## Advanced Scripts
+
+A few heavier tools — concept tracing across memory, refactor analysis, doc scraping and remote
+repo inspection — are not part of meetsoma core. They will be offered separately; details when
+they are ready. The tools that would wrap them say so when they are not installed.
 
 ## Hub Scripts (install with `/hub install script <name>`)
 

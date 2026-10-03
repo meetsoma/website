@@ -2,7 +2,7 @@
 title: "Install Architecture"
 description: "How Soma installs, updates, and manages versions — the full flow from npm to runtime."
 section: "Reference"
-updated: 2026-10-02
+updated: 2026-10-03
 order: 20
 ---
 
@@ -226,9 +226,9 @@ The **agent version** is what matters for features and compatibility. The **CLI 
 For meetsoma core developers, `soma-install.sh dev` creates symlinks instead of using the meetsoma/core clone:
 
 ```
-~/.soma/agent/core/        → symlink → repos/agent/core/
-~/.soma/agent/extensions/  → symlink → repos/agent/extensions/
-~/.soma/agent/dist/         → symlink → repos/agent/dist/
+~/.soma/agent/core/        → symlink → <your checkout>/core/
+~/.soma/agent/extensions/  → symlink → <your checkout>/extensions/
+~/.soma/agent/dist/         → symlink → <your checkout>/dist/
 ```
 
 This means edits to source files are live — no rebuild needed. The `getAgentVersion()` function in thin-cli.js follows symlinks to find the real `package.json`.

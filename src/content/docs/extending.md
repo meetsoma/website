@@ -2,7 +2,7 @@
 title: "Extending meetsoma core"
 description: "Skills, extensions, events, APIs — build on top of Soma."
 section: "Extending"
-updated: 2026-10-02
+updated: 2026-10-03
 order: 5
 ---
 
@@ -172,7 +172,7 @@ Decision matrix for what to run after editing:
 | **`pi.registerTool` `description` / `parameters` / `promptSnippet`** of an existing tool | **Busts cache** on next compile | `/reload` (updates registry) + `/rebuild` (so the model actually sees the new fields). Without `/rebuild`, registry has new fields but prompt instructs the model to use old ones — tool calls fail with parameter-validation errors. |
 | **New `route.provide("soma:foo.bar", impl)` cap** (e.g. dropping a new file in `soma-addons/`) | **Cache-safe** — caps live in soma-route's registry, not in prompt | `/reload` — the meta-tool's `session_start` handler scans `*-addons/` and dynamic-imports new files. (No file watcher; rescan only fires on session_start.) |
 | **`route.provide` cap impl body** | **Cache-safe** — caps not in prompt | `/reload` — same Node-memory rule as `pi.registerTool` execute. |
-| **CLI script behind a wrapper** (e.g. `repos/agent/scripts/soma-code.sh` while `soma-addons/code.ts` shells out to it via `execSync`) | None | **Nothing.** Each cap invocation spawns a fresh subprocess; the OS reads the script at exec time. Edit the script, save, next call uses the new code. |
+| **CLI script behind a wrapper** (e.g. `scripts/soma-code.sh` while `soma-addons/code.ts` shells out to it via `execSync`) | None | **Nothing.** Each cap invocation spawns a fresh subprocess; the OS reads the script at exec time. Edit the script, save, next call uses the new code. |
 | **`amps/scripts/*` drop-in** (e.g. `soma <name>` script discovery) | None | **Nothing for the script itself.** `/reload` only if you also edited `soma-boot.ts`'s discovery logic. |
 | **`body/*.md`** (identity, soul, voice, mind template) | **Recompiles on next compile** (the running session is snapshotted — safe to edit mid-session) | `/rebuild` if you want it live now; otherwise it takes effect next session. |
 
@@ -340,24 +340,6 @@ Soma ships with these extensions:
 
 These install to `~/.soma/agent/extensions/` and can be customized or replaced.
 
-## Multi-agent Workflows (`soma-dev delegate`)
-
-Developers can compose child agents into named pipelines via `soma-dev delegate <workflow>`:
-
-| Workflow | Pipeline | Use when |
-|---|---|---|
-| `pr` | brief → `changelog_curator + pr_author + doc_writer + verifier` | About to open a PR; want rich CHANGELOG narrative + PR description auto-drafted |
-| `pr-brief` | `soma-pr-brief.sh` only (no agents, instant) | Just the structured brief for manual PR writing |
-| `ci-fix <url>` | `issue_investigator → builder → verifier` | A nightly test failed and filed a GitHub issue |
-| `cycle <brief.md>` | `intern (investigate) → intern (build) → verifier → pr_author` | Multi-step cycle that exceeds builder's 25-call default budget |
-| `changelog` | `changelog_curator` | Just the rich `[Unreleased]` section |
-| `doc-update` | `doc_writer` | Recent code changes need doc sync |
-| `audit [tickets...]` | `auditor` | Batch verdict on kanban tickets (SHIPPED / STALE / STILL-VALID) |
-
-Each role has a budget cap (`max-tool-calls` + `max-cost-usd`) defined in `body/children/<role>.md` frontmatter. The `intern` role has the largest budget (80 calls / $0.80) for complex investigations + builds; `builder` is bounded for surgical edits (25 calls / $0.50).
-
-For a deep cycle (cycle 16's 9-step model-aware-breathe implementation took ~80+ tool calls), use `soma-dev delegate cycle <brief.md>` to chain investigate → build → verify → PR-author. See `scripts/_dev/soma-dev/commands/delegate.sh`.
-
 ## Namespaces
 
 Soma uses three top-level meta-tools to organize capabilities. Each is a single Pi tool registration with multiple addons routed through `soma-route`:
@@ -441,20 +423,6 @@ Project-local caps are the right call when the cap is genuinely
 project-specific (operates on this project's files, this project's
 secrets, this project's structure). Promote to global when a second
 project would benefit from the same cap.
-
-### `dev:*` namespace (agent-contributor only)
-
-The `dev:*` namespace is for tools that audit, lint, or inspect the agent itself — things only people working on Soma need. It's intentionally NOT shipped to end users:
-
-- `extensions/dev-tools.ts` registers the meta-tool
-- `extensions/dev-addons/*.ts` are the cap families
-- `build-dist.mjs` builds them locally for dogfood
-- `soma-release.sh § Step 3` strips them from the public `meetsoma/core` copy
-- `verify-bootstrap-clean.sh § Test 5` asserts the strip code is in place
-
-Result: dev contributors can call `dev:hub.audit` to verify hub state; end users running `npm install meetsoma` never see the namespace.
-
-For the full design + reasoning: `.soma/releases/plans/active/dev-meta-tool/README.md`.
 
 ### soma-route.ts
 

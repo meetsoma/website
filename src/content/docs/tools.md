@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via settings.json, and the bundled set
 status: active
-updated: 2026-10-01
+updated: 2026-10-03
 ---
 
 # Tools
@@ -15,7 +15,7 @@ full guidance (`promptSnippet` + `promptGuidelines`). Disable any tool via
 
 **Two routes** for a tool to enter Soma:
 
-1. **Bundled** — ships with Soma, defined in `repos/agent/extensions/*.ts`
+1. **Bundled** — ships with Soma, defined in `extensions/*.ts`
 2. **Project extension** — dropped at `.soma/extensions/*.ts` (per workspace)
 
 Both flow through the same pipeline and render identically in the prompt.
@@ -55,7 +55,7 @@ own settings — e.g. a read-only `verifier` disabling `delegate`, `write`, `edi
 
 ## Bundled tools
 
-Shipped in `repos/agent/extensions/` as of v0.20.2.1.
+Shipped in `extensions/` as of v0.20.2.1.
 
 | Tool | Extension | Purpose |
 |---|---|---|

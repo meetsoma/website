@@ -12,7 +12,7 @@ order: 29
 Soma has **three** ways to delegate work to a child agent:
 
 - **Synchronous** — `delegate(task)` from inside Soma. The parent blocks, the child runs in-process, you get back a summary + MLR. Single tool call. Good for small, bounded tasks where you want the answer right now.
-- **Headless** — `delegate(task, headless:true)`. The child runs as a `soma -p` subprocess (print mode): no interactive terminal, completion signalled by **exit code**, with auto-retry + model fallback; output returns inline. Chain sequential steps with `chain:[{role,task},...]`. **This is the reliable, unattended path** — use it for productive/batch work you don't need to watch (running a cycle queue, mechanical edits). Because it's print mode, a broken project extension is isolated, not fatal — **but that isolation is total: `--no-extensions` also unloads `soma-guard`, so protocol-declared gates (RELEASE-FLOW reminders, the `repos/agent` vs `~/.soma/agent` warning, any `paths:`/`command:` gate) never fire on this path.** A headless child editing a gated path gets no reminder at all. Use `background:true` for anything that touches a gated path.
+- **Headless** — `delegate(task, headless:true)`. The child runs as a `soma -p` subprocess (print mode): no interactive terminal, completion signalled by **exit code**, with auto-retry + model fallback; output returns inline. Chain sequential steps with `chain:[{role,task},...]`. **This is the reliable, unattended path** — use it for productive/batch work you don't need to watch (running a cycle queue, mechanical edits). Because it's print mode, a broken project extension is isolated, not fatal — **but that isolation is total: `--no-extensions` also unloads `soma-guard`, so protocol-declared gates (release reminders, path-scoped / command-scoped gates) never fire on this path.** A headless child editing a gated path gets no reminder at all. Use `background:true` for anything that touches a gated path.
 - **Background** — `delegate(task, background:true)`, or `soma children spawn <role> "<task>"` from your shell. The child launches in a *detached interactive terminal* (tmux/cmux) and the parent returns immediately. Use it when you want to **watch the child live** or steer it mid-run.
 
 > **Which one?** Answer now → synchronous. Done reliably without watching → **headless**. Watch/steer live → background. (Reaching for `background` for unattended batch work is a common miss — it spawns an *interactive* session, so an unattended task can land on the shell. `headless` is the right tool there.)
@@ -48,8 +48,6 @@ brew install tmux
 ```
 
 On Linux, use your distro's package manager (`apt install tmux`, `dnf install tmux`, etc.). Tmux is also preinstalled on most CI runners.
-
-Soma also supports a **cmux** driver that's dev-only — it lives under `repos/agent/scripts/_dev/` and does not ship to npm users. If you're working on Soma itself and you already run cmux, you get that driver "for free."
 
 If no driver is available, `delegate(background:true)` and `soma children spawn` both return an error that tells you what to install.
 
@@ -263,6 +261,6 @@ The agent itself can run these too: when `delegate(background:true)` fails with 
 ## See also
 
 - `docs/commands.md §Script Commands` — shell CLI commands (`soma children ...`)
-- `.soma/releases/v0.20.x/plans/children-control-panel.md` — full design doc for the delegation system, phase breakdown, and open work
+
 - `core/terminal-drivers/types.ts` — the `TerminalDriver` interface
 - `extensions/soma-delegate.ts` — the Pi-tool registration + driver dispatch

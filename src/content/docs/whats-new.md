@@ -249,10 +249,10 @@ Always background (tmux). **Use `delegate` normally; reach for this when the pro
 
 ### 🐛 Bugs you can stop stepping around
 
-- `soma-dev sync dev` / `sync main` now actually write STATE.md's activity log (all writers were broken;
+- The dev↔runtime sync commands (`sync dev` / `sync main`) now actually write STATE.md's activity log (all writers were broken;
   on a default install none had ever appended a row) — and they assert the row arrived, not just exit 0.
 - `dist/.dev-synced` carries provenance (`branch@sha`, version, piVersion, timestamp) instead of being a
-  zero-byte flag; `soma-dev switch status` prints it and states that the git ref describes the CHECKOUT,
+  zero-byte flag; `switch status` prints it and states that the git ref describes the CHECKOUT,
   not the dist.
 
 ---
@@ -496,7 +496,7 @@ Preload state tracking across `/exhale`, `/breathe`, auto-rotation, and keepaliv
 
 **Route caps:** `preload:lifecycle`, `preload:transition`, `preload:reset`, `preload:noteToolCall`.
 
-Detail: `.soma/cycles/audit-improve/29-preload-lifecycle/cycle.md`
+Detail: the preload-lifecycle cycle plan.
 
 ### 🆕 New caps
 
@@ -526,7 +526,7 @@ Tier breakdown:
 - `extensions/soma-addons/seam.ts` — the new family.
 - `.soma/memory/webs/` — where `seam.web` persists trace artifacts.
 
-Detail: `.soma/releases/v0.27.x/plans/seam-addon-family.md`.
+Detail: the seam-addon-family design plan.
 
 ---
 
@@ -536,7 +536,7 @@ The "first end-to-end autonomous PR ship" patch. Cycles 16 + 17 land together: S
 
 ### 🆕 New caps & workflows
 
-- **`soma-dev delegate cycle <brief>`** — full implementation pipeline for any markdown brief (cycle.md, inbox/*.md, plans/*.md). Pipeline: `intern` (investigate, 80-call) → `intern` (build, 80-call) → `verifier` (25-call) → `pr_author` (30-call). Total ~215 tool calls / ~$2.50 per cycle. Outputs `/tmp/soma-cycle-investigation.md`, `/tmp/soma-cycle-impl-summary.md`, `/tmp/soma-pr-description.md`. Flags: `--no-pr`, `--no-verify`. Use this when `builder`'s 25-call default is too small for a multi-step cycle.
+- **`delegate cycle <brief>`** — full implementation pipeline for any markdown brief (cycle.md, inbox/*.md, plans/*.md). Pipeline: `intern` (investigate, 80-call) → `intern` (build, 80-call) → `verifier` (25-call) → `pr_author` (30-call). Total ~215 tool calls / ~$2.50 per cycle. Outputs `/tmp/soma-cycle-investigation.md`, `/tmp/soma-cycle-impl-summary.md`, `/tmp/soma-pr-description.md`. Flags: `--no-pr`, `--no-verify`. Use this when `builder`'s 25-call default is too small for a multi-step cycle.
 - **`/auto-breathe model-aware`** — NEW subcommand. The auto-breathe enum is now tri-state: `off` / `global` / `model-aware`. `model-aware` reads `ctx.model.id` and selects per-glob thresholds from `breathe.thresholds` map. Default install ships `model-aware`. Backward-compat: boolean still parses (true → "global", false → "off") via migration `breathe-tri-state-v0.27.0`.
 - **`tokens_input` now includes cache_read** in `runDelegation()` results. Previously reported only the uncached delta (showing `tokens_input: 3` for repeated calls with stable prefix). New fields: `tokens_input_uncached` + `tokens_input_cached` for transparency. Was *NOT* a delegation-degraded bug — was a metric-display bug. The model received the full prompt all along.
 - **`route.provide("preload:wasInjected", ...)`** — new route cap exposing whether `session_start`'s "new"/"resume" branch already injected the preload. `/inhale` post-await queries this and skips its own send if true. Available cycle-17+.
@@ -564,8 +564,8 @@ The "first end-to-end autonomous PR ship" patch. Cycles 16 + 17 land together: S
 
 ### 📁 New files / locations
 
-- `.soma/cycles/audit-improve/16-model-aware-breathe-collapse/cycle.md` — full plan for tri-state + per-model thresholds.
-- `.soma/cycles/audit-improve/17-rotation-mechanism-repair/cycle.md` — 5-bug rotation-mechanism audit + fixes.
+- The model-aware-breathe-collapse plan — full plan for tri-state + per-model thresholds.
+- The rotation-mechanism-repair plan — 5-bug rotation-mechanism audit + fixes.
 - `migrations/phases/v0.26.2-to-v0.27.0.md` — the breathe-tri-state migration journal.
 - 5 new test files: `test-breathe-tri-state.sh`, `test-breathe-migration.sh`, `test-breathe-model-thresholds.sh`, `test-breathe-warn-range.sh`, `test-breathe-exhale-once.sh`. 81 new test cases covering the tri-state + per-model paths.
 
@@ -582,9 +582,9 @@ The "autonomous CI/PR pipeline" minor. Three layers ship together: nightly tests
 
 ### 🆕 New caps & workflows
 
-- **`soma-dev delegate <workflow>`** — multi-agent orchestrator. Workflows: `pr` (full PR pipeline), `pr-brief` (brief only), `ci-fix <url>` (issue → fix → verify), `changelog` (rich CHANGELOG), `doc-update`, `audit [tickets...]`. Composes `changelog_curator + pr_author + doc_writer + verifier` (or `issue_investigator + builder + verifier` for ci-fix).
+- **`delegate <workflow>`** — multi-agent orchestrator. Workflows: `pr` (full PR pipeline), `pr-brief` (brief only), `ci-fix <url>` (issue → fix → verify), `changelog` (rich CHANGELOG), `doc-update`, `audit [tickets...]`. Composes `changelog_curator + pr_author + doc_writer + verifier` (or `issue_investigator + builder + verifier` for ci-fix).
 - **`dev:issue.{create,list}`** — GitHub issues from inside soma sessions. `create` files structured nightly-failure issues with dedupe gate (skip if open issue exists for same failure).
-- **`soma-dev check-phases`** — 30-second pre-release gate (upstream sync + tests + tsc) before the full 5-min `soma-release-prepare.sh`.
+- **`check-phases`** — 30-second pre-release gate (upstream sync + tests + tsc) before the full 5-min `soma-release-prepare.sh`.
 - **`soma-pr-brief.sh`** — generates structured PR brief (git-cliff CHANGELOG diff, affected files, semver bump type, docs to update, roadmap suggestion). Used as input to delegate workflows.
 - **`{{pi_gap}}` body var** — reads `PI_UPSTREAM.md` at session start, injects live Pi version-gap into the system prompt. Updated by 6h GitHub Actions monitor.
 - **3 new child role bodies** — `pr_author` (rich PR descriptions), `issue_investigator` (root-cause tracer for nightly failures), `changelog_curator` (rich `[Unreleased]` narratives, replaces auto-bullet noise).
@@ -598,7 +598,7 @@ The "autonomous CI/PR pipeline" minor. Three layers ship together: nightly tests
 
 ### 🧰 Release flow consolidation
 
-- Archived stale `soma-ship.sh`. Wired `soma-dev ship/release/beta` subcommands.
+- Archived stale `soma-ship.sh`. Wired the `ship`/`release`/`beta` subcommands.
 - `pr-check.yml` hardened: tsc typecheck job + changelog blocking + conventional-commit format validation.
 - `cliff.toml` added — git-cliff configured for Keep-A-Changelog format from conventional commits (feat→Added, fix→Fixed, ci/chore/test filtered).
 - `release-please` auto-trigger enabled on push to dev (proposes; release-please takes over as canonical in v0.27.1).
@@ -641,7 +641,7 @@ Both run as part of `npm test`; both fail loud if real drift exists.
 ### 🧰 Workflows
 
 - **Anti-accretion sweep** (governed by `amps/protocols/atlas.md` v1.1.0): when `body/STATE.md` exceeds 6KB, run an anti-accretion sweep — session-history paragraphs ("sNN-XXXXXX shipped...") belong in `memory/sessions/` and `memory/journal/`, not in STATE. STATE holds *current state + pointers*; history references the actual session log. First live run cut `body/STATE.md` 18,148 → 5,513 bytes (-70%) without losing any current state.
-- **Phase 6 (Reflect) step 4 expanded** (`releases/cycles/soma-dev/phases/6-reflect.md`): post-release body+state audit now mechanical. Run `soma:body.audit` (catches duplicate slot interpolations, lazy-frontmatter lies) + `soma:body.slots` (token budget per slot) + the size gate on STATE.md. Plus stale-state scan: pulse.md, _recent-lessons.md, ecosystem.md, journal.md "Latest".
+- **Phase 6 (Reflect) step 4 expanded** (release phase doc): post-release body+state audit now mechanical. Run `soma:body.audit` (catches duplicate slot interpolations, lazy-frontmatter lies) + `soma:body.slots` (token budget per slot) + the size gate on STATE.md. Plus stale-state scan: pulse.md, _recent-lessons.md, ecosystem.md, journal.md "Latest".
 - **In-flight test detection pattern** (for any future test asserting build artifacts or release-pipeline state): detect `chore(release): vX.Y.Z` HEAD subject; if matches, skip the transient assertion with a SKIP not FAIL. Re-run post-ship for verification. Pattern lives in `body/_recent-lessons.md § In-flight test detection`.
 
 ### 📁 New files / locations
@@ -734,13 +734,13 @@ The "release orchestrator + tree-hygiene" arc.
 
 ### 🔄 Behavior changes
 
-- **Release orchestrator is now 10 gates** (was 8). New: **tree-hygiene** (Phase 0.5) — halts on uncommitted state in `repos/agent/` other than `M CHANGELOG.md`. Prevents agent-spawned files leaking into ship. **website-readiness** (Phase 5.5) — calls `tests/test-release-surfaces.sh` for CHANGELOG ↔ roadmap.json drift.
+- **Release orchestrator is now 10 gates** (was 8). New: **tree-hygiene** (Phase 0.5) — halts on uncommitted state in this repo other than `M CHANGELOG.md`. Prevents agent-spawned files leaking into ship. **website-readiness** (Phase 5.5) — calls `tests/test-release-surfaces.sh` for CHANGELOG ↔ roadmap.json drift.
 - **Phase 4-ship.md and 4.5-audit.md are archived.** Their work is now inside `soma-release-prepare.sh` + `soma-release-ship.sh`.
 
 ### 📜 Plans referenced this arc
 
-- `releases/RELEASE-FLOW.md` — current head (10 gates documented)
-- Old phase docs: `releases/cycles/soma-dev/phases/_archive/`
+- The release-flow doc — current head (10 gates documented)
+- Old phase docs: archived alongside it.
 
 ---
 

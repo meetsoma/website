@@ -8,7 +8,10 @@ description: How Sonnet 4.6's 1M context tier works under OAuth, and what to ena
 
 Sonnet 4.6 supports up to 1M token context. Above some account-specific threshold below the full window, requests bill at the "extra usage" tier and require explicit account-side enrollment + client-side opt-in. Get either out of order and the API rejects every request.
 
-**The exact threshold isn't documented in a place we've sourced.** Empirically on one Claude Max plan, the wall hit at ~40-48% of Sonnet 4.6's reported 1M context window (~400-480K tokens). Your account may be different. Watch for the `extra usage required for long context` 429 to detect yours.
+**The threshold depends on your plan and is not published as a single number.** It can sit well
+below the full 1M window, so don't assume you have all of it. The reliable signal is the
+`extra usage required for long context` 429 described below: when you see it, you have found
+your account's limit.
 
 ## The two switches
 

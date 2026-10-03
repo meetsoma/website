@@ -24,19 +24,15 @@ The full runtime is open source and free on npm, day one:
 - Identity, protocols, muscles, and scripts: the four AMPS layers
 - The full tool registry, including browser automation, code navigation, and delegation
 
-A few advanced scripts (seam tracing, refactor analysis) live outside the core in an optional
-pack; the tools that wrap them say so when the pack isn't installed.
-
 ## What's optional
 
-Beyond the core install, there's more you can opt into as you need it:
+The core is complete on its own. More is on the way that builds on it, all opt-in:
 
-- **Register your soma**: connect an installed agent to an account
 - **Hub**: a community library of shared protocols, muscles, skills, and scripts
-- **Somaverse**: a cloud workspace layer for teams and cross-project views
-- **Pro / enterprise**: tiers built on top of the same open-source core
+- **Register your soma**: connect an installed agent to an account
+- **Somaverse**: a cloud workspace across your projects
 
-None of these are required to use meetsoma core. They layer on top when you want them.
+None of these are required to use meetsoma core. We'll share details as each one is ready.
 
 ## Install in one command
 
