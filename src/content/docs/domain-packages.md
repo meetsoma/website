@@ -2,7 +2,7 @@
 title: "Domain Packages"
 description: "Bundle a whole domain — protocols, muscles, scripts and body files — into one folder soma loads as if it were native."
 section: "Extending"
-updated: 2026-10-02
+updated: 2026-09-20
 order: 5.4
 ---
 

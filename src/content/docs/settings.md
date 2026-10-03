@@ -2,7 +2,7 @@
 title: "Engine Settings"
 description: "All runtime settings — models, compaction, UI, retry, shell, and more."
 section: "Reference"
-updated: 2026-10-02
+updated: 2026-10-03
 order: 6.3
 ---
 
@@ -135,7 +135,9 @@ Read from `~/.soma/agent/settings.json` when `soma:agent.delegate` spawns a chil
 
 | Setting | Type | Default | Description |
 |---------|------|---------|-------------|
-| `delegate.defaultModel` | string | — | Model for any child whose call and role name none. Below an explicit `model:` and a role's `default-model`; above the first entry of `enabledModels`. |
+| `delegate.defaultModel` | string | — | Model for any child whose call and role name none. Below an explicit `model:`, `delegate.override` and a role's `default-model`; above the first entry of `enabledModels`. |
+| `delegate.tiers` | object | `{}` | Named model groups: `{"cheap": ["opencode-go/space-bunny-free", "opencode/space-bunny-free"], "judge": "opus"}`. A role (`default-model: cheap`), an explicit `model:` or `delegate.override` may name a tier. A list takes turns between its models and skips any that recently failed to start on this machine, so the same model on two accounts shares the load. A tier named like a built-in alias (`haiku`) replaces it. |
+| `delegate.override` | string | — | Model or tier for **every** child without an explicit `model:`, ahead of each role's own `default-model`. For blanket switches ("all children on X this week"); remove it to return to role defaults. |
 | `delegate.headlessChain` | string[] | built-in list | Models a **headless** child (`headless:true`, chains, or a non-`claude-cli` sync call) tries in order when none is named, as `"provider/model"`. Free tiers end and rate-limit without notice — when headless work starts failing with 4xx or "unavailable", edit this list. Four or five entries across providers lets a burst of children survive a per-minute limit. |
 | `delegate.terminal` | string | auto | Terminal driver for `background:true` children (`"tmux"`). `soma terminals prefer <driver>` writes it. |
 

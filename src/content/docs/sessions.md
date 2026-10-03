@@ -2,7 +2,7 @@
 title: "Sessions"
 description: "Session management — tree navigation, forking, compaction, and branch summarization."
 section: "Core Concepts"
-updated: 2026-10-02
+updated: 2026-10-01
 order: 3.2
 ---
 

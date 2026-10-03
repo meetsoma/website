@@ -2,7 +2,7 @@
 title: "Memory Layout"
 description: "Project vs user level storage, git strategy, data flow."
 section: "Core Concepts"
-updated: 2026-10-02
+updated: 2026-10-01
 order: 4
 ---
 

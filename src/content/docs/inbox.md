@@ -2,7 +2,7 @@
 title: "Inbox"
 description: "Asynchronous messaging between agents, sessions, and humans — file-based, no automation needed."
 section: "Core Concepts"
-updated: 2026-10-02
+updated: 2026-10-01
 order: 4.5
 ---
 

@@ -7,9 +7,10 @@ order: 0.5
 
 # What is meetsoma core?
 
-**meetsoma core** is the harness you install: `npm i -g meetsoma`, then run `soma`. It ships **open source with 0.50.0**.
-in any project. It's the runtime. The breath cycle, the memory layout, the protocol system, the
-tool registry, everything that makes a session pick up where the last one left off.
+**meetsoma core** is the harness you install: `npm i -g meetsoma`, then run `soma` in any project.
+It's the runtime: the breath cycle, the memory layout, the protocol system, the tool registry,
+everything that makes a session pick up where the last one left off. It goes **open source under
+the MIT licence with 0.50.0**.
 
 **Soma** is the agent that lives inside it. Not a brand name for the software, the thing you
 actually talk to. Soma remembers across sessions, grows its own tools, and carries identity,

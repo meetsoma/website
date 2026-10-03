@@ -2,7 +2,7 @@
 title: "Body Architecture"
 description: "Structured identity with templates, variables, lazy loading, and the soma chain."
 section: "Core Concepts"
-updated: 2026-10-02
+updated: 2026-10-01
 order: 3.5
 ---
 

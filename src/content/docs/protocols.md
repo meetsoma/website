@@ -123,7 +123,8 @@ gates:
 
 | mode | behaviour |
 |---|---|
-| `remind` (default) | Blocks **once**, shows `rule`, and the identical retry goes through. A `paths` gate then stays quiet for the rest of the session; a `command` gate repeats on a later independent break, and at 5 suggests writing a muscle. |
+| `remind` (default) | Blocks **once**, shows `rule`, and the identical retry goes through. A `paths` gate then stays quiet for the rest of the session; a `command` gate repeats on a later independent break, and at 5 suggests writing a muscle. Reading a gated file first shows its `rule` in the read result and the edit is not blocked. |
+| `advise` | `paths` gates only. Never blocks: the edit goes through and `rule` is attached to its result, once per session. For rules a follow-up edit can satisfy (size, "lean, don't add") — a block makes the model resend the whole edit. |
 | `block` | Stays blocked until `read-first` has been read this session. For the rare thing that must not proceed unread. |
 | `warn` | UI notice only. ⚠ The model does **not** see notifications — `warn` reminds a human, not the agent. |
 
