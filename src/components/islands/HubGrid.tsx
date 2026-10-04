@@ -21,6 +21,7 @@ interface HubItem {
   breadcrumb?: string;
   heatDefault?: string;
   tier?: string;
+  status?: string;
   tags?: string[];
   topic?: string[];
   appliesTo?: string[];
@@ -70,17 +71,29 @@ const typeConfig: Record<string, { icon: string; color: string; label: string; s
 };
 
 /** Merge static props with live index — live wins on slug+type collision (newer version). */
+/** Same mapping as listingState() in lib/hub.ts: the live hub-index.json carries the RAW community status. */
+function listingState(status: unknown): 'active' | 'legacy' | 'hidden' {
+  if (status === 'deprecated' || status === 'dormant' || status === 'legacy') return 'legacy';
+  if (status === 'draft' || status === 'archived' || status === 'hidden') return 'hidden';
+  return 'active';
+}
+
 function mergeItems(staticItems: HubItem[], liveItems: HubItem[]): HubItem[] {
   const map = new Map<string, HubItem>();
   for (const item of staticItems) {
     map.set(`${item.type}:${item.slug}`, item);
   }
-  for (const item of liveItems) {
+  for (const raw of liveItems) {
+    const item = { ...raw, status: listingState(raw.status) };
     const key = `${item.type}:${item.slug}`;
     const existing = map.get(key);
     // Live wins if new item or newer version
     if (!existing || item.version > existing.version) {
       map.set(key, item);
+    } else if (item.status !== (existing.status || 'active')) {
+      // A listing state (legacy/hidden) is moderation, not content: the published index wins at once,
+      // without waiting for a version bump or a site rebuild.
+      map.set(key, { ...existing, status: item.status });
     }
   }
   return Array.from(map.values());
@@ -107,6 +120,7 @@ export default function HubGrid({ items }: Props) {
 
   // Filter items
   const filtered = allItems.filter(item => {
+    if (item.status === 'hidden') return false; // not listed; its page still resolves by URL
     if (typeFilter !== 'all' && item.type !== typeFilter) return false;
     if (tierFilter !== 'all' && item.tier !== tierFilter) return false;
     if (searchQuery) {
@@ -175,6 +189,7 @@ export default function HubGrid({ items }: Props) {
                   <p class="card-desc">{item.breadcrumb || item.description}</p>
                   <div class="card-meta">
                     {item.tier && <span class={`card-tier tier-${item.tier}`}>{item.tier}</span>}
+                    {item.status === 'legacy' && <span class="card-tier tier-legacy" title="Kept for existing users; not recommended for new installs">legacy</span>}
                     {item.heatDefault && <span class="card-heat">{item.heatDefault}</span>}
                   </div>
                   {((item.tags && item.tags.length > 0) || (item.topic && item.topic.length > 0)) && (

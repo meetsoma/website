@@ -19,6 +19,13 @@ const localHasContent = fs.existsSync(path.join(localCopy, 'protocols'))
   && fs.readdirSync(path.join(localCopy, 'protocols')).some(f => f.endsWith('.md'));
 const COMMUNITY_ROOT = localHasContent ? localCopy : siblingRepo;
 
+/** Community `status:` -> how the hub lists it. Mirrored in components/islands/HubGrid.tsx for the live index. */
+export function listingState(status: unknown): 'active' | 'legacy' | 'hidden' {
+  if (status === 'deprecated' || status === 'dormant') return 'legacy';
+  if (status === 'draft' || status === 'archived') return 'hidden';
+  return 'active';
+}
+
 interface ForkedFrom {
   slug: string;
   type: string;
@@ -43,6 +50,10 @@ interface HubItem {
   heatDefault?: string;
   appliesTo?: string[];
   tier?: 'core' | 'official' | 'community' | 'pro';
+  /** Listing state, derived from the community frontmatter `status:` (FRONTMATTER.md vocabulary, CI-validated):
+   *  deprecated | dormant -> legacy (listed with a badge); draft | archived -> hidden (not listed; the page still
+   *  resolves by URL); active | stable | absent -> active. See listingState(). */
+  status?: 'active' | 'legacy' | 'hidden';
   tags?: string[];
   topic?: string[];
   keywords?: string[];
@@ -144,6 +155,7 @@ function loadDir(type: HubItem['type'], dir: string): HubItem[] {
       heatDefault: meta['heat-default'],
       appliesTo: Array.isArray(meta['applies-to']) ? meta['applies-to'] : undefined,
       tier: meta.tier || undefined,
+      status: listingState(meta.status),
       tags: Array.isArray(meta.tags) ? meta.tags : undefined,
       topic: Array.isArray(meta.topic) ? meta.topic : undefined,
       keywords: Array.isArray(meta.keywords) ? meta.keywords : undefined,
@@ -156,6 +168,7 @@ function loadDir(type: HubItem['type'], dir: string): HubItem[] {
       if (manifest.author) item.author = manifest.author;
       if (manifest.version) item.version = manifest.version;
       if (manifest.tier) item.tier = manifest.tier;
+      if (manifest.status) item.status = listingState(manifest.status);
       item.manifest = manifest;
     }
 

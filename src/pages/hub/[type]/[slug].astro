@@ -132,6 +132,9 @@ const hubItemJsonLd = {
       <span class="type-badge"><Icon name={typeIconNames[item.type] as any} size={16} /> {typeLabels[item.type]}</span>
       <h1 class="title">{item.name}</h1>
       {item.breadcrumb && <p class="breadcrumb">{item.breadcrumb}</p>}
+      {(item.status === 'legacy' || item.status === 'hidden') && (
+        <p class="legacy-note">Legacy: kept for existing users. It may rely on tools that have moved or are not in Soma core yet, so it is not recommended for new installs.</p>
+      )}
       <div class="meta-row">
         {item.tier && <span class={`tier-badge tier-${item.tier}`}>{item.tier}</span>}
         <span class="meta-item">by {item.author}</span>
@@ -448,6 +451,14 @@ const hubItemJsonLd = {
   }
 
   .meta-item.heat { color: var(--promo-text); }
+
+  .legacy-note {
+    margin: var(--space-sm) 0;
+    padding: var(--space-sm) var(--space-md);
+    border-left: 2px solid var(--promo-text);
+    color: var(--ink-muted);
+    font-size: 0.92em;
+  }
 
   .tier-badge {
     font-family: var(--font-mono);
