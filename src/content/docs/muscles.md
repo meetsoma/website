@@ -23,7 +23,7 @@ at all.**
 | **Answers** | *"how do I do this well?"* | *"may I do this — and if not, what instead?"* |
 | **Nature** | knowledge, method, judgement | a rule, with consequences |
 | **Arrives** | loaded by heat, or summoned by a gate's `read-first` | fires at the moment its rule is broken |
-| **Effect on a tool call** | improves it — you write better code because you read it | **gates it** — `remind`, `block`, or redirect to the right tool |
+| **Effect on a tool call** | improves it — you write better code because you read it | **gates it** — `remind`, `block`, `advise`, or redirect to the right tool |
 | **Prompt cost** | resident: hot = full body, warm = TL;DR, cold = free | ~zero until broken (a `gates:` block loads nothing) |
 | **Fails by** | never being recalled — a reflex you didn't have | over-firing on innocent work, or its premise going stale |
 | **Good fit** | "here is the tone the roadmap needs" | "don't `grep -r` a tree — use `soma:code.find`" |

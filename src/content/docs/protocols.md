@@ -212,6 +212,20 @@ gate whose `rule` is a paragraph is a document with extra steps.
 Projects that prefer configuration over authoring can declare the same thing in
 `settings.json` under `guard.pathGates`; explicit settings win over protocol-declared gates.
 
+## Built-in Checks
+
+Some rules don't need a protocol at all — the guard checks the input itself. These fire on every session without any frontmatter declaration:
+
+| Check | What it catches |
+|---|---|
+| **Literal backslash-escapes** | A model that means `—` sometimes writes `\u2014` as six characters in prose — these break later edit anchors. Refused in `.md`/`.mdx`/`.txt` files (not inside code spans or fenced blocks). |
+| **Edit-input integrity** | A control character or decoded escape in a tool payload that would corrupt the file — a form feed from a decoded `\f`, or a line break glued to an entity name where an em dash was meant. Blocked before the write lands. |
+| **Placeholder edits** | Replacing 40+ characters with 1–3 non-space characters — often a stand-in (`x`, `ok`) the model meant to fill in later. Advised, never blocked — the edit goes through with a note. |
+| **Commit missed its own edit** | An edit batched in the same tool block as a `git commit` can run after the `git add` — the commit ships without the change. The guard notices and names the file. |
+| **In-flight write race** | A call that reads, commits, or deploys a file whose write is still in flight in the same parallel tool block is held until the write lands. |
+| **Child timeout** | A delegated child's `bash` call with no explicit timeout gets the foreground budget, so a hung process can't freeze a lane silently. |
+| **Sleep with live children** | A foreground `sleep` ≥30s while delegated children of the same session are running — a poll is not a lane. Reminded once. |
+
 ### 3. Write the body
 
 ```markdown

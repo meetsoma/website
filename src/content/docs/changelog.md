@@ -20,6 +20,7 @@ Entries are short: what changed, and what it means for you.
 ## [Unreleased]
 
 ### Fixed
+- **`context_status` reports how much context is left and nothing else** until the prep line, so a long session is not nudged to hand work off early.
 - **Soma's fixes to the Pi engine now reach every install.** They are applied after `npm install` (including `soma init` and `soma update`), so the crash guards, the edit-tool fix and the Claude version floor work for everyone, not only on a build machine. They need `python3`; without it Soma says so and still runs.
 - **A background child no longer misses its task.** It used to spend its first turn greeting and asking what to build, and the task typed meanwhile could be lost. A child now answers `ready` and takes the task as its next message.
 - **`soma -p` before Soma is set up no longer waits for input.** It says the runtime is needed and exits with an error, so scripts and CI fail fast.

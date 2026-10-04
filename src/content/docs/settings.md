@@ -2,7 +2,7 @@
 title: "Engine Settings"
 description: "All runtime settings — models, compaction, UI, retry, shell, and more."
 section: "Reference"
-updated: 2026-10-04
+updated: 2026-10-03
 order: 6.3
 ---
 
