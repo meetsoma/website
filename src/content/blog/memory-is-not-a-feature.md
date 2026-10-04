@@ -9,6 +9,10 @@ draft: false
 image: "/images/blog/og-memory-is-not-a-feature.png"
 ---
 
+> **Note on licensing (kept as the record).** The licence argument near the end of this post reflects March 2026. The
+> core goes **open source with 0.50.0**; the BSL-1.1 source-available posture described here does not apply to it.
+> The exact licence text ships in the repository's `LICENSE`.
+
 Every major AI framework just added "agent memory" to their roadmap.
 
 OpenAI has conversation history. Anthropic has project knowledge. LangChain has memory modules. Google has context caching. The multi-agent frameworks — OpenClaw, NemoClaw, CrewAI — they all have "persistent state."

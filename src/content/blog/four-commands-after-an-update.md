@@ -33,7 +33,7 @@ Run the combined form when in doubt. It's idempotent — no harm running it when
 
 ## 1. `soma update`
 
-Pulls the latest runtime. Updates the `~/.soma/agent/` install from the `soma-beta` release tag. Nothing opinionated — just newer code.
+Pulls the latest runtime. Updates the `~/.soma/agent/` install from the latest meetsoma core release. Nothing opinionated — just newer code.
 
 ```bash
 soma update

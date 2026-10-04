@@ -2,10 +2,13 @@
 title: Bridge Setup
 description: Configure the local Somaverse bridge daemon — lifecycle, config, connectivity
 status: shipped-v0.22.0
-updated: 2026-10-02
+updated: 2026-10-04
 ---
 
 # Bridge Setup
+
+> **Self-hosted Somaverse only.** You do not need the bridge to use Soma or the cloud workspace: run `soma login`
+> to register or sign in at somaverse.ai. This page is for running a local Somaverse checkout yourself.
 
 The **bridge daemon** (`bridge.ts` from the Somaverse checkout) is the local
 WebSocket relay that lets your TUI agent talk to:
@@ -72,7 +75,7 @@ If you're inside an agent session, the same surface is available via
 | `somaverse:bridge.logs` | `soma bridge logs` (supports `{lines?:50}`) |
 
 Call via `somaverse(op='call', cap='somaverse:bridge.status')`. The meta-tool
-routes to the addon; no cache bust per cap.
+routes to the cap family; no cache bust per cap.
 
 ## How it resolves
 

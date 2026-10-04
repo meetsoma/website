@@ -2,7 +2,7 @@
 title: Tools
 description: Soma tools — registration, configuration via settings.json, and the bundled set
 status: active
-updated: 2026-10-03
+updated: 2026-10-04
 ---
 
 # Tools
@@ -69,7 +69,7 @@ Shipped in `extensions/` as of v0.20.2.1.
 | `soma` (`cap='soma:code.blast'`) | `soma-addons/code.ts` | Every file touching a symbol with severity — pre-deletion check. |
 | `soma` (`cap='soma:code.outline'`) | `soma-addons/code.ts` | Markdown/text headings with line numbers — cheap orientation. (Was `file_outline`.) |
 | `soma` (`cap='soma:code.history'`) | `soma-addons/code.ts` | `git log` for a file as structured output (sha + date + author + subject). Replaces raw `git log --format` shell calls. (v0.23.0+.) |
-| `soma` (`cap='soma:github.meta|files|search|refs|blast|audit|releases|diff|compare|file_diff|local_path|local_map|local_find|local_refs|local_blast|local_structure|cache_list|cache_clean'`) | `scripts/soma-github.js` | GitHub repo tools. API-mode: metadata, file tree, search, symbol refs, releases, diffs. Local-mode: fetch repo tarball (~1–5s) to `~/.soma/cache/gh/`, then run `soma-code` against it — treats any public repo like a local codebase. (v0.24.0+.) |
+| `soma` (`cap='soma:github.meta|files|search|refs|blast|audit|releases|diff|compare|file_diff|local_path|local_map|local_find|local_refs|local_blast|local_structure|cache_list|cache_clean'`) | `scripts/soma-github.js` | GitHub repo tools. API-mode: metadata, file tree, search, symbol refs, releases, diffs. Local-mode: fetch repo tarball (~1–5s) to `~/.soma/cache/gh/`, then run `soma-code` against it — treats any public repo like a local codebase. (v0.24.0+.) Pro package, not in meetsoma core. |
 | `soma` (`cap='soma:body.slots'`) | `soma-addons/body.ts` | Slot map of `_mind.md` with per-slot cache-impact. Run before editing body templates. |
 | `soma` (`cap='soma:body.cost'`) | `soma-addons/body.ts` | Cache-invalidation cost of editing a specific slot. args: `{slot}`. |
 | `soma` (`cap='soma:body.audit'`) | `soma-addons/body.ts` | Heuristic audit of the body compile: duplicate slots, missing files, cache-unfriendly ordering. |
@@ -81,23 +81,23 @@ Shipped in `extensions/` as of v0.20.2.1.
 | `soma` (`cap='soma:focus.show|set|clear|dry_run'`) | `soma-addons/focus.ts` | Boot-focus primer. `set <keyword>` seam-traces + primes next session's MAP + muscles. |
 | `soma` (`cap='soma:new.muscle|protocol'`) | `soma-addons/new.ts` | Crystallize a pattern. Scaffolds `.soma/amps/muscles/<name>.md` or `.../protocols/<name>.md` with frontmatter. args: `{name, description?, tags?, global?, force?}`. |
 | `soma` (`cap='soma:terminals.list|detect|status|prefer|doctor'`) | `soma-addons/terminals.ts` | Terminal-driver management for `soma:agent.delegate(background:true)`. Detect + prefer a driver (tmux/cmux/ghostty/iterm/terminal). |
-| `soma` (`cap='soma:doorway.*'`) | `soma-addons/*.ts` | Folder-doorway navigation — `route --task` ranks what to read before writing into an unfamiliar tree. |
+| `soma` (`cap='soma:doorway.*'`) | `soma-addons/*.ts` | Folder-doorway navigation — `route --task` ranks what to read before writing into an unfamiliar tree. Maintainer tree only, not in meetsoma core. |
 | `soma` (`cap='soma:session.name'`) | boot | Rename this session for the resume picker; bare call reports the current name. |
 | `soma` (`cap='soma:settings.*'`) | settings | `list/get/set/doctor` — what a setting resolves to and where it came from. |
 | `soma` (`cap='soma:markdown.*'`) | soma-addons | Outline and groom long markdown documents by heading. |
-| `soma` (`cap='soma:cycles.*'`) | soma-addons | Cross-tree cycle registry (9 caps): validate, drift, stale, duplicates, trees, dashboard, outline… |
+| `soma` (`cap='soma:cycles.*'`) | soma-addons | Maintainer tree only, not in meetsoma core. Cross-tree cycle registry (9 caps): validate, drift, stale, duplicates, trees, dashboard, outline… |
 | `soma` (`cap='soma:code.comments'`) | soma-addons/code.ts | Census the comments in a file with line ranges. |
-| `soma` (`cap='soma:seam.trace|web'`) | soma-addons/seam.ts | Walk sessions + preloads + journal as ONE corpus — where an idea came from and how it evolved. |
+| `soma` (`cap='soma:seam.trace|web'`) | soma-addons/seam.ts | Walk sessions + preloads + journal as ONE corpus — where an idea came from and how it evolved. Pro package, not in meetsoma core. |
 | `soma` (`cap='soma:inbox.list|read|actioned|archive|send'`) | `soma-addons/inbox.ts` | Markdown-inbox read-status. `.list {status?}` shows letters; `.read/.actioned {file}` mark a letter handled so it stops surfacing at boot; `.archive {file}` moves it to `inbox/_archive/`. `file` = filename, slug, or unique partial. Resolves the `.soma/` chain from cwd. |
-| `somaverse` (`cap='somaverse:workspace.*'`) | `somaverse-addons/workspace.ts` | Panes / channels / seams (status, send, connect, snapshot, add_pane, remove_pane, list_plugins, …). Requires bridge + paired hub. |
+| `somaverse` (`cap='somaverse:workspace.*'`) | `somaverse-addons/workspace.ts` | Panes / channels / seams (status, send, connect, snapshot, add_pane, remove_pane, list_plugins, …). Requires a paired device (`somaverse:auth.start`). |
 | `somaverse` (`cap='somaverse:plugin.read|write'`) | `somaverse-addons/plugin.ts` | Plugin-state persistence (Somadian-backed). |
-| `somaverse` (`cap='somaverse:ai.*'`) | `somaverse-addons/ai.ts` | Local semantic search: load model, index, search, embed. |
-| `somaverse` (`cap='somaverse:bridge.status|config|setup|start|stop|restart|logs'`) | `somaverse-addons/bridge.ts` | Local bridge daemon lifecycle from within the agent. Wraps `soma bridge` CLI. |
+| `somaverse` (`cap='somaverse:ai.*'`) | `somaverse-addons/ai.ts` | Local semantic search: load model, index, search, embed. Self-hosted Somaverse only (not in core). |
+| `somaverse` (`cap='somaverse:bridge.status|config|setup|start|stop|restart|logs'`) | `somaverse-addons/bridge.ts` | Local bridge daemon lifecycle from within the agent. Wraps `soma bridge` CLI. Self-hosted Somaverse only (not in core). |
 | `somaverse` (`cap='somaverse:auth.status|start|logout'`) | `somaverse-addons/auth.ts` | Device pairing with the Somaverse hub. Long-running `start` opens browser + polls; `logout` removes `~/.soma/device-key`. |
 
 > **Namespace migration (v0.22.0):** flat `code_*` / `file_outline` / `workspace_*` / `plugin_state_*` / `browser_*` / `ai_*` / `dev:body.*` / `delegate` / `children` tools were folded into the `soma:*` + `somaverse:*` meta-tools. Call via `soma(op='call', cap='soma:code.find', args={...})` or `somaverse(op='call', cap='somaverse:workspace.status')`. Use `soma(op='list')` / `somaverse(op='list')` to discover the full catalog. Legacy flat names no longer resolve as direct tools — call them through the meta-tools.
 >
-> **Cache math:** 1 meta-tool registration costs 1 tool slot in the prompt; addons are free (discovered at runtime via the factory). Flat tools cost linear: N tools = N slots. Since the v0.22.0 consolidation, the prompt registers `soma` / `somaverse` / `dev` / `capabilities`, plus Pi builtins (`bash` / `read` / `write` / `edit`), plus the 10 `office_*` still parked as flat. Approximately 19 slots for 100+ reachable caps.
+> **Cache math:** 1 meta-tool registration costs 1 tool slot in the prompt; cap families are free (discovered at runtime via the factory). Flat tools cost linear: N tools = N slots. Since the v0.22.0 consolidation, the prompt registers `soma` / `somaverse` / `dev` / `capabilities`, plus Pi builtins (`bash` / `read` / `write` / `edit`), plus the 10 `office_*` still parked as flat. Approximately 19 slots for 100+ reachable caps.
 | `context_status` | `soma-context.ts` | Current context usage + runway to the rotate line `{percent, tokens, contextWindow, rotateAt, runwayToRotate}`. Text form: `59% · 6% to the 65% rotate line` (model-aware). |
 | `search` | `soma-search.ts` | Unified search — local ripgrep (default), Brave API, semantic (v0.20.3.1). |
 

@@ -8,7 +8,7 @@ order: 26
 # Customization
 
 <!-- tldr -->
-Six layers of customization, from quick settings to full prompt control: persona (name/emoji), voice (`body/voice.md`), rules (protocols), patterns (muscles), tools (scripts), and prompt structure (`body/_mind.md`). Start small — change one thing, see the effect. Most customization is just editing markdown files.
+Six layers of customization, from quick settings to full prompt control: the agent's name and emoji, voice (`body/voice.md`), rules (protocols), patterns (muscles), tools (scripts), and prompt structure (`body/_mind.md`). Start small — change one thing, see the effect. Most customization is just editing markdown files.
 <!-- /tldr -->
 
 ## The Quick Wins (5 minutes)
@@ -369,7 +369,7 @@ From lightest to heaviest:
 
 | Layer | What | Effort | Effect |
 |-------|------|--------|--------|
-| **Settings** | `settings.json` | 1 min | Boot steps, thresholds, persona |
+| **Settings** | `settings.json` | 1 min | Boot steps, thresholds, name/emoji |
 | **Voice** | `body/voice.md` | 5 min | How the agent communicates |
 | **Protocols** | `amps/protocols/` | 10 min | Behavioral rules |
 | **Muscles** | `amps/muscles/` | Organic | Learned patterns (grows over time) |

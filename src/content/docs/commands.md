@@ -2,7 +2,7 @@
 title: "Commands"
 description: "Slash commands, CLI flags, context warnings, the breath cycle."
 section: "Reference"
-updated: 2026-10-02
+updated: 2026-10-04
 order: 7
 ---
 
@@ -281,7 +281,7 @@ These commands are run from your **shell** (terminal), not inside the Soma TUI.
 | `soma inhale --list` | **Show available preloads** — lists all preloads with age and staleness. Stale (>48h) preloads are flagged with ⚠. Use to see what the agent will load. |
 | `soma inhale <name>` | **Load a specific preload** — partial name match (e.g. `soma inhale s01-xxxxxx`). Useful when you want a specific session's context, not the latest. Composes with `--model` and other session flags. |
 | `soma preload` 🚧 | **List preload lanes** — one numbered row per preload, newest sealed first: age, arc, lane, what it supersedes. With two live lanes, this is how you choose instead of guessing which one `soma inhale` will take. |
-| `soma --package <a,b>` | **Mount only these domain packages** for the session — the rest of your declared packages (their doorway, protocols, muscles, body files, tools) stay out. Repeatable; composes with `soma inhale`. A preload can say the same thing with `focus: [a, b]` in its frontmatter. See [Domain packages → Focusing a session](/docs/domain-packages#focusing-a-session-on-some-of-them). |
+| `soma --domain <a,b>` | **Mount only these domains** for the session — the rest of your declared domains (their doorway, protocols, muscles, body files, tools) stay out. Repeatable; composes with `soma inhale`. A preload can say the same thing with `focus: [a, b]` in its frontmatter. (`--package` is the old spelling, still accepted.) See [Domains → Focusing a session](/docs/domain-packages#focusing-a-session-on-some-of-them). |
 | `soma preload <#\|name>` 🚧 | **Start a session on that preload** — by row number or partial name; extra flags (`--model …`) pass through to `soma inhale`. |
 | `soma -c` | **Continue session** - reopens the last session with full conversation history preserved. No new boot sequence - you're back in the same context. |
 | `soma -r` | **Resume picker** - choose from previous sessions to restore. |

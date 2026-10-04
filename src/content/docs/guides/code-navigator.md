@@ -65,7 +65,7 @@ What it picks up (per-language):
 | JSON | top-level `"key":` pairs, nested object/array entry lines |
 | Markdown | `---` frontmatter delimiters, `#`/`##`/`###`/`####` heading hierarchy with indent |
 
-`map` is also smart enough to show tool-registration blocks as green section markers with the tool name on the next line — so a multi-hundred-line addon file like `somaverse-addons/workspace.ts` (10 `route.provide("somaverse:workspace.*")` caps) becomes browsable in under 30 lines of output.
+`map` is also smart enough to show tool-registration blocks as green section markers with the tool name on the next line — so a multi-hundred-line cap family file like `somaverse-addons/workspace.ts` (10 `route.provide("somaverse:workspace.*")` caps) becomes browsable in under 30 lines of output.
 
 ### `soma code find <pattern> [path] [ext_or_type]`
 

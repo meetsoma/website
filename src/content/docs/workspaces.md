@@ -2,7 +2,7 @@
 title: "Workspaces"
 description: "Parent-child inheritance, monorepo patterns, solo body mode."
 section: "Core Concepts"
-updated: 2026-09-02
+updated: 2026-10-04
 order: 8
 ---
 
@@ -61,7 +61,7 @@ On boot, Soma walks up the filesystem from your CWD looking for `.soma/` directo
 
 ```
 child (.soma/ in current project)
-  → declared domain packages (settings.json → domainPackages)
+  → declared domains (settings.json → domainPackages)
     → parent (.soma/ in workspace root)
       → global (~/.soma/agent/)
 ```
@@ -75,7 +75,7 @@ Each level contributes:
 | **Parent** | Context — adds below child's identity | Discovered alongside child's | Fill remaining budget | Listed after packages |
 | **Global** | Baseline — universal traits | Discovered last | Fill remaining budget | Listed last |
 
-A project can also declare [domain packages](/docs/domain-packages) — folders of body files,
+A project can also declare [domains](/docs/domain-packages) — folders of body files,
 protocols and scripts that load like part of the project only when that project is open.
 
 Identity layers stack (all are visible). Protocols and muscles merge into one pool — the heat system decides what loads regardless of which level they came from.

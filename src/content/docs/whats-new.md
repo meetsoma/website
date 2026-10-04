@@ -62,9 +62,9 @@ A `[dev]` tag = dev install only (not shipped in the end-user tarball).
   no longer pays for a large handoff. Same for `--provider` / `--thinking-level`.
   `preload.skipOnModelOverride: false` keeps the old behaviour; `soma inhale` still loads by name
   either way.
-- **`focus: [somaverse]` in a preload, or `soma --package somaverse` on the command line, scopes a
-  session to only the domain packages it needs** — doorway, protocols, muscles, body files and tools
-  together. Your own `.soma` and parents are untouched; a focus naming an unmountable package warns
+- **`focus: [somaverse]` in a preload, or `soma --package somaverse` (now `soma --domain`) on the command line, scopes a
+  session to only the domains it needs** — doorway, protocols, muscles, body files and tools
+  together. Your own `.soma` and parents are untouched; a focus naming an unmountable domain warns
   at boot.
 - **`soma terminals tune` fixes the tmux settings that flatten a modern terminal's keys**
   (`extended-keys`, `allow-passthrough`, `focus-events`…) — shows what's missing, asks, appends

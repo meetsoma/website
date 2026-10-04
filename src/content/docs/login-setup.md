@@ -2,7 +2,7 @@
 title: "Login & Pairing"
 description: "Connect your Soma agent to Somaverse — device pairing, checking status, and unpairing."
 section: "Core Concepts"
-updated: 2026-08-10
+updated: 2026-10-04
 order: 5.2
 ---
 
@@ -98,6 +98,6 @@ running against production leaves you with a key the production hub has never se
 
 ## See also
 
-- [bridge-setup.md](./bridge-setup.md) — the local bridge daemon; a separate layer from pairing
+- The local bridge daemon (self-hosted Somaverse only, not part of core) is a separate layer from pairing
 - [hub.md](./hub.md) — the community content hub (no login required)
 - [troubleshooting.md](./troubleshooting.md) — general diagnostics

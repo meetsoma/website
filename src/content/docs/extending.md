@@ -2,7 +2,7 @@
 title: "Extending meetsoma core"
 description: "Skills, extensions, events, APIs — build on top of Soma."
 section: "Extending"
-updated: 2026-10-03
+updated: 2026-10-04
 order: 5
 ---
 
@@ -159,8 +159,8 @@ Four separate concerns. Each lever covers a different layer.
 - `agent-session.js:1894` — `session.reload()` shutdown→buildRuntime→session_start
 - `extensions/loader.js:271` — `loadExtensionModule` creates fresh jiti per reload (`moduleCache: false`)
 - `soma-boot.js` cache-stickiness — system prompt restored from disk on reload (avoids cache write)
-- Pi changelog **0.80.6** (July 2026, current) — `route.provide()` addon pattern is the canonical cache-safe path. `pi.registerTool()` still exists for top-level tools but busts the prompt cache (~$1-2/session). Prefer addons.
-- `extensions/_shared/meta-tool-factory.ts:96-130` — addons auto-discovered via `readdirSync` + dynamic `import()` on `session_start`
+- Pi changelog **0.80.6** (July 2026, current) — `route.provide()` cap family pattern is the canonical cache-safe path. `pi.registerTool()` still exists for top-level tools but busts the prompt cache (~$1-2/session). Prefer cap families. (A cap family is one file in the namespace's `-addons/` directory.)
+- `extensions/_shared/meta-tool-factory.ts:96-130` — cap families auto-discovered via `readdirSync` + dynamic `import()` on `session_start`
 - `extensions/soma-addons/code.ts:38` — canonical "thin wrapper around CLI" pattern (`runCode()` shells out via `execSync`)
 
 Decision matrix for what to run after editing:
@@ -342,25 +342,25 @@ These install to `~/.soma/agent/extensions/` and can be customized or replaced.
 
 ## Namespaces
 
-Soma uses three top-level meta-tools to organize capabilities. Each is a single Pi tool registration with multiple addons routed through `soma-route`:
+Soma uses three top-level meta-tools to organize capabilities. Each is a single Pi tool registration with multiple cap families routed through `soma-route`:
 
 | Namespace | Audience | Distribution | Caps |
 |-----------|----------|--------------|------|
-| `soma:*` | Every Soma install | Ships in npm tarball | `soma:agent.*`, `soma:body.*`, `soma:browser.*`, `soma:code.*`, `soma:docs.*`, `soma:focus.*`, `soma:github.*`, `soma:new.*`, `soma:terminals.*` |
-| `somaverse:*` | Somaverse-licensed | Proprietary, separate install | workspace ops, plugin builder, AI helpers |
+| `soma:*` | Every Soma install | Ships in npm tarball | `soma:agent.*`, `soma:body.*`, `soma:browser.*`, `soma:code.*`, `soma:docs.*`, `soma:focus.*`, `soma:new.*`, `soma:terminals.*` (`soma:github.*` and `soma:seam.*` are a pro package, not in meetsoma core) |
+| `somaverse:*` | Registered somas (`soma login`) | Client ships in meetsoma core, dormant until the device is paired | workspace ops, plugin state, pairing |
 | `dev:*` | **Agent contributors only** | Build-excluded from the npm tarball + `meetsoma/core` | `dev:hub.*` (hub introspection), `dev:audit.*` (deps + CI), `dev:opencode.*` (ask/poll/models transform transport) |
 
 ### When to add a new cap
 
 1. **Pick the namespace.** If end users would benefit → `soma:*`. If only people working ON the agent need it → `dev:*`. If it's part of the proprietary tier → `somaverse:*`.
-2. **Pick the family.** Group by domain (`code`, `docs`, `hub`, etc.). New family = new file under the namespace's addon dir.
-3. **Implement.** Mirror an existing addon (e.g. `soma-addons/docs.ts`). Each cap is an `*Impl` async function + a `route.provide` registration. The meta-tool factory auto-discovers files under `<namespace>-addons/` at session-start.
-4. **No `pi.registerTool` for new top-level tools.** A top-level tool grows the always-loaded prompt schema every turn (leanness); an addon adds the same capability with zero schema growth. Always add as an addon under an existing meta-tool.
+2. **Pick the family.** Group by domain (`code`, `docs`, `hub`, etc.). New family = new file under the namespace's cap family dir.
+3. **Implement.** Mirror an existing cap family (e.g. `soma-addons/docs.ts`). Each cap is an `*Impl` async function + a `route.provide` registration. The meta-tool factory auto-discovers files under `<namespace>-addons/` at session-start.
+4. **No `pi.registerTool` for new top-level tools.** A top-level tool grows the always-loaded prompt schema every turn (leanness); a cap family adds the same capability with zero schema growth. Always add as a cap family under an existing meta-tool.
 5. **Test with `<namespace>(op='list')` and `<namespace>(op='call', cap='<namespace>:<family>.<action>', args={...})`.**
 
 ### Project-local caps (route.provide, no factory)
 
-The `createMetaTool` factory only auto-discovers addons in the **global**
+The `createMetaTool` factory only auto-discovers cap families in the **global**
 `~/.soma/agent/extensions/<namespace>-addons/` directory. For caps that
 should only load when CWD is in a specific project (e.g. project-specific
 tooling like a project-specific audit), register directly in a
@@ -390,27 +390,27 @@ export default function myProjectAddon(pi: ExtensionAPI) {
 }
 ```
 
-**Same cache-safety as factory-discovered addons.** Cap lives in soma-route's
+**Same cache-safety as factory-discovered cap families.** Cap lives in soma-route's
 runtime registry, not the system prompt. Zero cost.
 
 **Same invocation surface.** `soma(op='call', cap='soma:myfamily.action', args={...})`
-just works — no UI difference between project-local and global addons.
+just works — no UI difference between project-local and global cap families.
 
 **Why session_start, not module top-level:** the route singleton is
 initialized when soma-route's `session_start` handler fires. Registering
 before that is racey. The `pi.on("session_start", ...)` defer pattern
 is the same discipline `createMetaTool` uses internally.
 
-**Pattern: thin addon, fat CLI.** For non-trivial logic, put the body in
+**Pattern: thin cap family, fat CLI.** For non-trivial logic, put the body in
 a CLI script (`.mjs` / `.sh` / any subprocess-runnable file) and shell
 out from the cap via `execSync`. Edits to the script are picked up next
 invocation — no `/reload` needed. Reference: `soma-addons/code.ts` shells
 out to `soma code` CLI; `<your-project>/.soma/extensions/meta-addon.ts`
 shells out to `meta.mjs`.
 
-**When to use this vs. global factory addon:**
+**When to use this vs. global factory cap family:**
 
-| Concern | Project-local route.provide | Global factory addon |
+| Concern | Project-local route.provide | Global factory cap family |
 |---|---|---|
 | Where it loads | Only when CWD is in this project | Everywhere |
 | Where to put the file | `<project>/.soma/extensions/*.ts` | `~/.soma/agent/extensions/<ns>-addons/*.ts` |

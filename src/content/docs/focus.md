@@ -2,7 +2,7 @@
 title: "Focus"
 description: "Seam-traced boot priming — focus the agent on a topic before the session starts."
 section: "Guide"
-updated: 2026-09-06
+updated: 2026-10-04
 order: 11
 ---
 
@@ -14,8 +14,8 @@ Run `soma focus <keyword>` before starting a session to prime the agent for a sp
 
 > **Not the same as `focus:` in a preload.** `soma focus <keyword>` changes *what is hot* — which muscles
 > and protocols load first. `focus: [package]` in a preload's frontmatter (or `soma --package <name>`)
-> changes *what is mounted* — which domain packages are in the session at all. See
-> [Domain packages → Focusing a session](/docs/domain-packages#focusing-a-session-on-some-of-them).
+> changes *what is mounted* — which domains are in the session at all. See
+> [Domains → Focusing a session](/docs/domain-packages#focusing-a-session-on-some-of-them).
 
 ## The Problem
 

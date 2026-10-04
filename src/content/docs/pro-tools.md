@@ -9,7 +9,7 @@ draft: true
 # Pro Tools — `_pro/`
 
 <!-- tldr -->
-meetsoma core is open source and free. The `_pro/` scripts are NOT part of it: they are excluded from the core export and are not compiled by `build-dist.mjs`, so they form an optional pack (delivery still being designed). The tier plumbing (`script-resolver.ts`, a graceful "PRO feature" degrade message, a provisioned session token) is still in the code, built for a metered Pro/enterprise tier later in the ladder (core → hub → Somaverse → pro/enterprise). No separate `pro:*` meta-tool router exists; PRO functionality rides the `soma:*` namespace with conditional script-presence checks.
+meetsoma core is open source and free. The `_pro/` scripts are NOT part of it: they are excluded from the core export and are not compiled by `build-dist.mjs`, so they form an optional package (delivery still being designed). The tier plumbing (`script-resolver.ts`, a graceful "PRO feature" degrade message, a provisioned session token) is still in the code, built for a metered Pro/enterprise tier later in the ladder (core → hub → Somaverse → pro/enterprise). No separate `pro:*` meta-tool router exists; PRO functionality rides the `soma:*` namespace with conditional script-presence checks.
 <!-- /tldr -->
 
 ## Tier model
@@ -19,7 +19,7 @@ Soma ships in two trees, defined by which subdirectories ship in the install:
 | Tier | What ships | Distribution |
 |---|---|---|
 | **Core (open source)** | `extensions/` (no `dev-addons/`), `core/`, `dist/`, bundled `amps/`, `templates/` | `meetsoma/core` (GitHub, public) + npm `meetsoma` launcher — free |
-| **Pro pack (optional)** | `scripts/_pro/` | not in the core export; delivery being designed |
+| **Pro package (optional)** | `scripts/_pro/` | not in the core export; delivery being designed |
 | **Dev** | All of Core + `scripts/_dev/`, `extensions/dev-addons/`, source `.ts` files | Dev tree only — internal contributors |
 
 The split is enforced by the core export: `scripts/_dev/soma-core-excludes.txt` lists `scripts/_pro/`, so it never reaches `meetsoma/core`. A core cap that wraps a `_pro/` script finds nothing and returns the graceful "PRO feature" message below instead of failing.
@@ -61,12 +61,13 @@ async function ancestorsImpl(args: any = {}): Promise<string> {
 }
 ```
 
-If `resolveScript("soma-seam.sh", "pro")` doesn't find the script (the normal case on a meetsoma core install, which has no `_pro/` pack), `proFeatureMessage(...)` returns:
+If `resolveScript("soma-seam.sh", "pro")` doesn't find the script (the normal case on a meetsoma core install, which has no `_pro/` package), `proFeatureMessage(...)` returns:
 
 ```
 [soma:seam.ancestors] PRO feature — script not found.
 
-This cap wraps `_pro/soma-seam.sh`. Run `soma doctor` to repair the install.
+This cap wraps `soma-seam.sh`, which is not part of meetsoma core: it belongs to an
+optional package that is not available yet (see the roadmap at soma.gravicity.ai/roadmap/).
 ```
 
 No crash, no confusing error — clear path forward.
@@ -124,6 +125,6 @@ Before shipping a `_pro/` script:
 
 - `cli-tools.md` — the three patterns + decision flow
 - `dev-tools.md` — `dev:*` namespace + dev tree exclusions
-- `extending.md` — Pi extension API + addon pattern
+- `extending.md` — Pi extension API + cap family pattern
 - `browser-setup.md` — the configurable `soma:browser.*` system (newer, supersedes `_pro/soma-browser.sh` for agent use)
 - `extensions/_shared/script-resolver.ts` — the graceful-degrade helper

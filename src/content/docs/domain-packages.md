@@ -2,12 +2,12 @@
 title: "Domain Packages"
 description: "Bundle a whole domain — protocols, muscles, scripts and body files — into one folder soma loads as if it were native."
 section: "Extending"
-updated: 2026-09-20
+updated: 2026-10-04
 order: 5.4
 ---
 
 <!-- tldr -->
-A domain package is a mini `.soma` in one folder: its own `amps/protocols/`, `amps/muscles/`, `amps/scripts/` and `body/`. Put it in `.soma/packages/<name>/`, declare it in `settings.json`, and soma loads its contents **where soma already looks** — gates fire, muscles load, scripts appear in the catalog. Undeclare it and all of that withdraws in one move. A skill is a doorway; a package is a doorway **plus** the machinery behind it.
+A domain is a mini `.soma` in one folder: its own `amps/protocols/`, `amps/muscles/`, `amps/scripts/` and `body/`. Put it in `.soma/packages/<name>/`, declare it in `settings.json`, and soma loads its contents **where soma already looks** — gates fire, muscles load, scripts appear in the catalog. Undeclare it and all of that withdraws in one move. A skill is a doorway; a domain is a doorway **plus** the machinery behind it. (Called a domain package before 0.50; the settings key is still `domainPackages`.)
 <!-- /tldr -->
 
 ## Why they exist
@@ -35,7 +35,7 @@ Nothing else changes. The loaders that already walk your `.soma/` find a package
 same places they always look — so a package's gates fire, its muscles load, and its scripts appear
 in your boot catalog exactly as if you had written them yourself.
 
-## What a domain package is
+## What a domain is
 
 A **skill** is a doorway: a `SKILL.md` whose description sits in the catalog, with the body loaded
 on demand. That is the right shape for *instructions*.
@@ -44,7 +44,7 @@ It is the wrong shape for *machinery*. A skill cannot carry a path gate, a chain
 or a script that shows up in your boot catalog — because soma resolves exactly one directory per
 content kind per root, and a skill folder is not one of those roots.
 
-A **domain package** is that missing root. It is a directory laid out like a small `.soma`:
+A **domain** is that missing root. It is a directory laid out like a small `.soma`:
 
 ```
 .soma/packages/my-domain/
@@ -137,21 +137,21 @@ needs, and no others:
 
 ```yaml
 # in the preload's frontmatter
-focus: [somaverse]            # one or more package folder names
+focus: [somaverse]            # one or more domain folder names
 ```
 
 ```bash
-soma --package somaverse      # same thing from the command line; repeatable, wins over the preload
+soma --domain somaverse      # same thing from the command line; repeatable, wins over the preload
 ```
 
-Every other package is left out of the chain for that session — its doorway, protocols, muscles,
+Every other domain is left out of the chain for that session — its doorway, protocols, muscles,
 body files and tools together. Your project's own `.soma`, its parents and the global `.soma` are
-never affected; only package roots are. A focus that names no mountable package warns at boot and
+never affected; only domain roots are. A focus that names no mountable package warns at boot and
 names what *is* mountable, so a typo cannot quietly narrow the session. `deny` is applied first,
 then `autoDir`/`connect`, then focus.
 
-> A focused-out package's **gates go with it**. Focus is for a lane that genuinely does not touch
-> that domain; if the work might, leave the package in.
+> A focused-out domain's **gates go with it**. Focus is for a lane that genuinely does not touch
+> that domain; if the work might, leave the domain in.
 
 ## The manifest
 
@@ -195,7 +195,7 @@ is otherwise silent.
 
 **Use a skill** when you are packaging instructions someone reads.
 
-**Use a domain package** when the domain owns *machinery* — a gate that must fire, muscles that
+**Use a domain** when the subject owns *machinery* — a gate that must fire, muscles that
 should load like your own, scripts that belong in the catalog, or body files that should resolve as
 `{{variables}}`. If one workspace carries several bodies of knowledge that should not be merged into
 one folder, this is the shape that keeps them separate without keeping them out.

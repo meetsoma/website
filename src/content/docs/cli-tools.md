@@ -2,7 +2,7 @@
 title: "CLI Tools: How meetsoma core Surfaces Tools to the Agent"
 description: "The three patterns for adding a tool. Pattern 1 (commands/.sh drop-in) is the answer most of the time. Decision flow ladder + reload semantics."
 section: "Reference"
-updated: 2026-10-03
+updated: 2026-10-04
 order: 12
 ---
 
@@ -54,18 +54,18 @@ Every namespaced cap (`soma:*`, `dev:*`, `somaverse:*`) lives behind exactly **o
 
 1. Calls `pi.registerTool(...)` **once** per namespace — cache cost is constant.
 2. Auto-discovers `<name>-addons/*.ts` at `session_start`.
-3. Each addon calls `route.provide("name:family.cap", fn, { description })` to register caps into `globalThis.__somaRoute`.
+3. Each cap family calls `route.provide("name:family.cap", fn, { description })` to register caps into `globalThis.__somaRoute`.
 4. At call time, `<name>(op='call', cap='name:family.cap', args={...})` dispatches through the router.
 
 **Three meta-tool routers exist:**
 
-| Router | Source | Addon dir | Tier |
+| Router | Source | Cap family dir | Tier |
 |---|---|---|---|
 | `soma:*` | `extensions/soma-tools.ts` | `soma-addons/` | Free — always-on |
 | `dev:*` | — | — | Internal — dev tree only |
 | `somaverse:*` | `somaverse/builds/*/extensions/somaverse-tools.ts` | `somaverse-addons/` | Somaverse builds only |
 
-Some advanced tools live in an optional pack that is not installed with meetsoma core. Their caps are wrapped by `soma:*` routers and report clearly when the pack is missing — the failure is a message, not a crash.
+Some advanced tools live in an optional package that is not installed with meetsoma core. Their caps are wrapped by `soma:*` routers and report clearly when the package is missing — the failure is a message, not a crash.
 
 **Add a cap:**
 
@@ -95,7 +95,7 @@ export function register(route: any): void {
 
 **Reload semantics:**
 
-- The cap appears in `soma(op='list')` only after the next `session_start` (addon auto-discovery runs once per session).
+- The cap appears in `soma(op='list')` only after the next `session_start` (cap family auto-discovery runs once per session).
 - The **underlying script or function** is callable RIGHT NOW (via `Bash` or direct subprocess) if you know what you wrote.
 - This is the trap: treating "not visible in `op='list'`" as "not callable." They're different things.
 
@@ -144,7 +144,7 @@ Is it bootstrap-essential (like `capabilities`)?
   heat.sh
   hub.sh
 
-extensions/soma-addons/         Pattern 2 — soma:* family addons
+extensions/soma-addons/         Pattern 2 — soma:* cap families
   agent.ts        (7 caps)
   body.ts         (3 caps)
   browser.ts      (17 caps)
@@ -156,7 +156,7 @@ extensions/soma-addons/         Pattern 2 — soma:* family addons
   seam.ts         (8 caps)
   terminals.ts    (5 caps)
 
-extensions/dev-addons/          Pattern 2 — dev:* family addons (internal)
+extensions/dev-addons/          Pattern 2 — dev:* cap families (internal)
   audit.ts        (3 caps)
   changelog.ts    (2 caps)
   doctor.ts       (1 cap)
@@ -179,11 +179,11 @@ Regenerate the count: `python3 .soma/amps/scripts/soma-tools-audit.py`.
 
 `/hub install` today supports six content types: `protocol`, `muscle`, `skill`, `template`, **`script`**, `automation`. Scripts land at `~/.soma/amps/scripts/` immediately — they work without a restart (Pattern 1 if dropped in `commands/`, or shell-callable directly).
 
-**Extensions (Pattern 2 addons) are NOT hub-installable today.** Adding extension side-loading would require a core change to `soma-hub.ts` and the addon auto-discovery loop. Documented gap. The workaround: ship the underlying shell script via the hub (Pattern 1) and have the cap surface ship in a Soma release (Pattern 2).
+**Extensions (Pattern 2 cap families) are NOT hub-installable today.** Adding extension side-loading would require a core change to `soma-hub.ts` and the cap family auto-discovery loop. Documented gap. The workaround: ship the underlying shell script via the hub (Pattern 1) and have the cap surface ship in a Soma release (Pattern 2).
 
 ## Related docs
 
-- Optional advanced pack — not installed with meetsoma core; its caps report clearly when it is absent
+- Optional advanced package — not installed with meetsoma core; its caps report clearly when it is absent
 - `extending.md` — Pi extension API surface
 - `body.md` — body file system + cache budget
 - `core/body.ts` — body walker (non-recursive, flat-only)

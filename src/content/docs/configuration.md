@@ -2,14 +2,14 @@
 title: "Configuration"
 description: "Settings, heat thresholds, muscle budgets — tune Soma's behavior."
 section: "Reference"
-updated: 2026-10-01
+updated: 2026-10-04
 order: 6
 ---
 
 # Configuration
 
 <!-- tldr -->
-`settings.json` at any level in the soma chain (project → parent → global). Project overrides parent overrides global. Controls: heat thresholds, muscle budgets, boot steps (including git-context), context warning thresholds, preload staleness, auto-detection, parent-child inheritance, persona, system prompt toggles, guard rules. Only set what you want to change — defaults fill the rest.
+`settings.json` at any level in the soma chain (project → parent → global). Project overrides parent overrides global. Controls: heat thresholds, muscle budgets, boot steps (including git-context), context warning thresholds, preload staleness, auto-detection, parent-child inheritance, agent name/emoji, system prompt toggles, guard rules. Only set what you want to change — defaults fill the rest.
 <!-- /tldr -->
 
 Soma's behavior is controlled through `settings.json` files. Settings are optional — Soma works with sensible defaults out of the box.
@@ -197,9 +197,9 @@ Controls what a child `.soma/` inherits from its parent chain. All default to `t
 
 See [How It Works](/docs/how-it-works#parent-child-workspaces) for the full inheritance model.
 
-### Domain Packages
+### Domains
 
-Which [domain packages](domain-packages.md) this project mounts. A package is a folder laid out like a small `.soma` — its own protocols, muscles, scripts and body files — that loads where soma already looks.
+Which [domains](domain-packages.md) this project mounts. A domain is a folder laid out like a small `.soma` — its own protocols, muscles, scripts and body files — that loads where soma already looks. (Called domain packages before 0.50; the settings key is still `domainPackages`.)
 
 | Key | Default | Description |
 |-----|---------|-------------|
@@ -224,13 +224,13 @@ Which [domain packages](domain-packages.md) this project mounts. A package is a 
 }
 ```
 
-Earlier entries win a name collision. Search order is project → your packages → parent(s) → global, so turning inheritance off keeps the packages you declared and drops only what you inherit.
+Earlier entries win a name collision. Search order is project → your domains → parent(s) → global, so turning inheritance off keeps the domains you declared and drops only what you inherit.
 
-See [Domain Packages](domain-packages.md) for what a package contains, what travels with it, and when to build one instead of a skill.
+See [Domains](domain-packages.md) for what a domain contains, what travels with it, and when to build one instead of a skill.
 
-### Persona
+### Name & Emoji
 
-Cosmetic identity overrides — give your agent a custom name, emoji, or icon.
+Cosmetic identity overrides — give your agent a custom name, emoji, or icon. (The settings key is `"persona"`.)
 
 | Key | Default | Description |
 |-----|---------|-------------|

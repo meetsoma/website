@@ -276,13 +276,13 @@ The badge is a timestamp. It says "I was here when it started."
   </div>
 </div>
 
-Soma core stays open source. Always. You can run `npm install -g meetsoma` and get an AI agent with persistent memory, evolving identity, and a growing body of learned behavior. That doesn't change.
+meetsoma core stays open source. Always. You can run `npm install -g meetsoma` and get an AI agent with persistent memory, evolving identity, and a growing body of learned behavior. That doesn't change.
 
 Somaverse is the hosted layer — the workspace, the visual tools, the multiplayer infrastructure. It's where Soma gets eyes and hands. Where the terminal agent becomes a workspace agent.
 
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:32px 0; font-family:'Satoshi',system-ui,sans-serif;">
   <div style="background:rgba(11,16,24,0.85); border:1px solid rgba(124,178,212,0.2); border-radius:10px; padding:20px;">
-    <div style="font-size:13.5px; font-weight:700; color:#7cb2d4; margin-bottom:8px;">Soma Core — Open Source</div>
+    <div style="font-size:13.5px; font-weight:700; color:#7cb2d4; margin-bottom:8px;">meetsoma core — Open Source</div>
     <div style="font-size:13px; color:#9dafc4; line-height:1.6;">
       Terminal agent · persistent memory<br/>
       Identity · protocols · muscles · scripts<br/>

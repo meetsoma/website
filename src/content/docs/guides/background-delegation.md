@@ -115,7 +115,7 @@ log in `## MLRX notes`, where it costs nothing, and keep out of the role anythin
 that does not change what the *next* child does.
 
 Lean generic roles (`auditor`, `builder`, `verifier`, …) ship by default. Evolve
-them into named domain personas with explicit phase workflows as the work demands
+them into named domain roles with explicit phase workflows as the work demands
 it. Scaffold a new one from `body/children/_child-template.md`. Run
 `delegate(help: true)` to see the roles this install has and a quick recap of
 this pattern.

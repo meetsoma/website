@@ -47,7 +47,7 @@ All three are technically correct responses to a 429 — but the underlying prob
 
 ## How Soma injects the beta header
 
-The mechanism is `scripts/_dev/patches/apply-patches.sh` (build-time string injection into `node_modules/@earendil-works/pi-ai/dist/providers/anthropic.js`). It adds `context-1m-2025-08-07` to the OAuth `anthropic-beta` header.
+The mechanism is `scripts/patches/apply-patches.sh` (build-time string injection into `node_modules/@earendil-works/pi-ai/dist/providers/anthropic.js`). It adds `context-1m-2025-08-07` to the OAuth `anthropic-beta` header.
 
 The patch is **disabled by default**. To enable:
 

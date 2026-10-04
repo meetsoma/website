@@ -2,7 +2,7 @@
 title: "Engine Settings"
 description: "All runtime settings — models, compaction, UI, retry, shell, and more."
 section: "Reference"
-updated: 2026-10-02
+updated: 2026-10-04
 order: 6.3
 ---
 
@@ -90,7 +90,7 @@ Controls how long conversations are summarized to stay within context limits.
 
 > **⚠ Long-context billing prerequisite (Sonnet 4.6 only).** Setting `anthropic.enableLongContext: true` makes Soma add the `context-1m-2025-08-07` beta header to every Anthropic OAuth request. **Your Anthropic account MUST have long-context billing enabled FIRST** at [claude.ai/settings/usage](https://claude.ai/settings/usage). Without it, EVERY request fails with `429 "Extra usage is required for long context requests"` — even at 0% context. Anthropic interprets the header as "this client is willing to pay long-context rates" and rejects accounts that aren't enrolled.
 >
-> **Opus 4.7 has 1M natively under OAuth** (Anthropic granted Claude Code OAuth clients native 1M for Opus). Sonnet 4.6 does NOT — needs the beta opt-in + billing enrollment. The setting is informational; the actual header injection is via `scripts/_dev/patches/apply-patches.sh` at build time. Auto-apply on setting flip is a follow-up.
+> **Opus 4.7 has 1M natively under OAuth** (Anthropic granted Claude Code OAuth clients native 1M for Opus). Sonnet 4.6 does NOT — needs the beta opt-in + billing enrollment. The setting is informational; the actual header injection is via `scripts/patches/apply-patches.sh` at build time. Auto-apply on setting flip is a follow-up.
 
 ## Shell
 
