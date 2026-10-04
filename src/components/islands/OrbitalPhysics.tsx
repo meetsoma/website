@@ -540,6 +540,8 @@ export default function OrbitalPhysics() {
         }}
       >
         <svg
+          role="link"
+          aria-label="Somaverse"
           viewBox="0 0 100 100"
           width="96"
           height="96"
@@ -549,7 +551,9 @@ export default function OrbitalPhysics() {
             cursor: 'pointer',
           }}
           class="orbital-center-float"
-          onClick={() => { window.location.href = '/verse/'; }}
+          // The Somaverse mark goes to the Somaverse landing page. /verse/ stays a hidden easter egg, reached only
+          // from the mini soma on the homepage avatar (index.astro .moon-egg) and the roadmap's ✦ items.
+          onClick={() => { window.location.href = 'https://somaverse.ai/'; }}
         >
           <defs>
             <linearGradient id="gcw-grad" x1="0%" y1="0%" x2="100%" y2="100%">
