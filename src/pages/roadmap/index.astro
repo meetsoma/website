@@ -34,6 +34,15 @@ const shippingSoon: { title: string; blurb: string; status: string; cycle: strin
 // still renders cleanly (see v0.20.0 / v0.22.0 / v0.24.0 / v0.26.0 below).
 const upcoming: { name: string; icon: string; description: string; status: string; statusColor: string; version?: string; date?: string; blogPost?: string; image?: string }[] = [
   {
+    name: 'Reopen a session and it still reads from the cache, and a cloned repo runs nothing until you trust it',
+    icon: 'protocols',
+    description: 'Close a session and reopen it with soma start inside the cache window (an hour for Claude models with long retention, five minutes otherwise): Soma keeps its system prompt exactly as it was, so the provider reads the conversation from cache instead of processing it again. On a live session reopened 3.6 minutes later, 30,350 tokens came from cache and 29 were written; before, every restart wrote 199,000 to 365,000 again. soma start shows which stopped sessions are still warm. And a folder that arrives with a .soma/ (a cloned repo) keeps its notes but runs none of its code or scripts until you trust it.',
+    status: 'Shipped',
+    statusColor: 'var(--green-bright, #4ade80)',
+    version: 'v0.50.0',
+    date: '2026-10-04',
+  },
+  {
     name: 'meetsoma core goes open source — session management, transcript reduction, browser tools',
     icon: 'extensions',
     description: 'Install from npm, read the full runtime on GitHub. soma attach lists every running session and takes you to one; soma start reopens stopped ones with full history. /reduce shrinks long transcripts ~60% while keeping the original; /resume-reduced continues in the copy so you can keep going instead of rotating. soma -c continues YOUR session, not whichever child wrote last. Browser health check proves a tab is painted, hydrated, and running your latest build before you debug.',
@@ -123,18 +132,8 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     date: '2026-06-01',
     image: '/images/roadmap/browser-tools.svg',
   },
-  {
-    name: 'Stop crashing on compaction',
-    icon: 'protocols',
-    description: 'Your soma keeps running through compaction. Older extensions that returned bare strings (the pattern `_tool-template.ts` shipped for weeks) now just work — Soma lifts them into the right envelope before they hit Pi. The preload notify goes yellow when stale (`5+ tool calls since save`), green when refreshed — one notification per state change, not every turn.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-    version: 'v0.26.0',
-    date: '2026-05-07',
-    image: '/images/roadmap/compaction-resilience-dominoes.svg',
-  },
-
   // ─── Archived (2026-10-04: carousel cap 10) ──────────────────────
+  // v0.26.0 - Stop crashing on compaction (archived 2026-10-04 for the v0.50.0 resume-cache card)
   // v0.38.0 — Caselaw Researcher (soma:caselaw held from core)
   // v0.25.0 — The warning that meant something else
   // v0.24.0 — Any GitHub repo is a local codebase (soma:github + dev:* held from core)
