@@ -37,10 +37,8 @@ const upcoming: { name: string; icon: string; description: string; status: strin
     name: 'Reopen a session and it still reads from the cache, and a cloned repo runs nothing until you trust it',
     icon: 'protocols',
     description: 'Close a session and reopen it with soma start inside the cache window (an hour for Claude models with long retention, five minutes otherwise): Soma keeps its system prompt exactly as it was, so the provider reads the conversation from cache instead of processing it again. On a live session reopened 3.6 minutes later, 30,350 tokens came from cache and 29 were written; before, every restart wrote 199,000 to 365,000 again. soma start shows which stopped sessions are still warm. And a folder that arrives with a .soma/ (a cloned repo) keeps its notes but runs none of its code or scripts until you trust it.',
-    status: 'Shipped',
-    statusColor: 'var(--green-bright, #4ade80)',
-    version: 'v0.50.0',
-    date: '2026-10-04',
+    status: 'Ships in the next release',
+    statusColor: 'var(--promo-text, #e8a87c)',
   },
   {
     name: 'meetsoma core goes open source — session management, transcript reduction, browser tools',
@@ -147,7 +145,8 @@ function formatDate(d?: string): string {
   if (!d) return '';
   const date = new Date(d);
   if (Number.isNaN(+date)) return d;
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  // timeZone UTC: a bare YYYY-MM-DD parses as UTC midnight; formatting it in the builder's local zone showed every card a day early.
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
 }
 ---
 
