@@ -11,7 +11,7 @@ applies-to: [git]
 scope: bundled
 tier: community
 created: 2026-03-12
-updated: 2026-10-03
+updated: 2026-08-16
 version: 1.0.0
 author: meetsoma
 license: MIT

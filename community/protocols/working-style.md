@@ -16,7 +16,7 @@ gates:
 scope: bundled
 tier: official
 created: 2026-03-10
-updated: 2026-10-03
+updated: 2026-08-14
 version: 1.2.0
 author: meetsoma
 license: MIT

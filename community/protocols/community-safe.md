@@ -14,7 +14,7 @@ applies-to: [always]
 scope: bundled
 tier: core
 created: 2026-03-10
-updated: 2026-10-03
+updated: 2026-08-16
 version: 2.1.0
 author: Curtis Mercier
 license: CC BY 4.0
