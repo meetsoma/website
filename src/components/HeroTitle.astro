@@ -65,9 +65,11 @@ const Tag = level === 1 ? 'h1' : 'h2';
   }
   .hero-title.is-center { text-align: center; }
 
+  /* Same font and weight as the title (Curtis 2026-10-04: a lighter "The" read as the wrong font),
+   * matching the homepage's "The agent that". */
   .hero-prefix {
-    color: var(--ink-soft);
-    font-weight: var(--weight-medium);
+    color: var(--ink);
+    font-weight: inherit;
     margin-right: 0.2em;
   }
 

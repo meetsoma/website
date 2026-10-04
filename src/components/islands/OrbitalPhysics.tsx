@@ -554,11 +554,13 @@ export default function OrbitalPhysics() {
           <defs>
             <linearGradient id="gcw-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#f0c866"/>
-              <stop offset="100%" stop-color="#f0c866"/>
+              <stop offset="100%" stop-color="#e8a87c"/>
             </linearGradient>
           </defs>
-          <circle cx="50" cy="50" r="46" fill="none" stroke="url(#gcw-grad)" stroke-width="2.75"/>
-          <text x="50" y="68" text-anchor="middle" fill="url(#gcw-grad)" font-size="58" font-weight="800" font-family="Manrope, system-ui, sans-serif">{"\u03C3"}</text>
+          {/* The current Somaverse mark (somaverse/app/src/components/brand.tsx SigmaBadge): ring stroke = the σ stem width
+              (0.1493 x font size), glyph dead-centre (baseline = 50 + 0.2632 x font size), gold -> warm. */}
+          <circle cx="50" cy="50" r="44" fill="none" stroke="url(#gcw-grad)" stroke-width="10.75"/>
+          <text x="50" y="69" text-anchor="middle" fill="url(#gcw-grad)" font-size="72" font-weight="800" font-family="Manrope, system-ui, sans-serif">{"\u03C3"}</text>
         </svg>
         <span
           class="orbital-center-title"
