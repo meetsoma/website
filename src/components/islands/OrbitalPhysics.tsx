@@ -117,6 +117,7 @@ export default function OrbitalPhysics() {
     containerRect: DOMRect | null;
     centerX: number; centerY: number;
     halfSize: number;
+    scale: number;
     raf: number;
   }>({
     nodes: new Map(),
@@ -125,6 +126,7 @@ export default function OrbitalPhysics() {
     containerRect: null,
     centerX: 0, centerY: 0,
     halfSize: 0,
+    scale: 1,
     raf: 0,
   });
 
@@ -143,6 +145,12 @@ export default function OrbitalPhysics() {
     p.centerX = rect.width / 2;
     p.centerY = rect.height / 2;
     p.halfSize = Math.min(rect.width, rect.height) / 2;
+    // Node and badge sizes are fixed px, but the orbits shrink with the container, so on a phone the
+    // inner ring ran into the outer labels and the centre title. Scale the nodes with the orbits
+    // (full size at the 710px max, floor 0.8 so labels stay readable) and drop the extras when compact.
+    p.scale = Math.max(0.8, Math.min(1, p.halfSize / 355));
+    container.style.setProperty('--orb-s', String(p.scale));
+    container.dataset.compact = String(p.scale < 0.86);
 
     for (const def of NODES) {
       const angleRad = (def.homeAngle * Math.PI) / 180;
@@ -236,7 +244,7 @@ export default function OrbitalPhysics() {
         // ── 6. Update DOM ──
         const el = nodeElsRef.current.get(id);
         if (el) {
-          el.style.transform = `translate(${node.x}px, ${node.y}px) translate(-50%, -50%)`;
+          el.style.transform = `translate(${node.x}px, ${node.y}px) translate(-50%, -50%) scale(${p.scale})`;
         }
 
         // Update tether line
@@ -522,7 +530,7 @@ export default function OrbitalPhysics() {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -50%)',
+          transform: 'translate(-50%, -50%) scale(var(--orb-s, 1))',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -553,6 +561,7 @@ export default function OrbitalPhysics() {
           <text x="50" y="68" text-anchor="middle" fill="url(#gcw-grad)" font-size="58" font-weight="800" font-family="Manrope, system-ui, sans-serif">{"\u03C3"}</text>
         </svg>
         <span
+          class="orbital-center-title"
           style={{
             fontFamily: "'Manrope', system-ui, sans-serif",
             fontSize: 'var(--text-xl)',
@@ -573,7 +582,7 @@ export default function OrbitalPhysics() {
         alt=""
         width="60"
         height="60"
-        className="orbital-center-float"
+        className="orbital-center-float orbital-mascot"
         style={{
           position: 'absolute',
           top: 'calc(50% - 76px)',
@@ -654,6 +663,7 @@ export default function OrbitalPhysics() {
             {/* Sublabel for inner nodes */}
             {def.sublabel && (
               <span
+                class="orbital-sublabel"
                 style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.7rem',

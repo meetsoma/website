@@ -108,3 +108,9 @@
     font-size: 0.74rem;
   }
 }
+
+/* Compact (small containers): the nodes scale with the orbits (--orb-s, set by the island); the
+   sublabels, the centre title and the mascot are what collided with the inner ring, so they go. */
+[data-compact="true"] .orbital-sublabel,
+[data-compact="true"] .orbital-center-title,
+[data-compact="true"] .orbital-mascot { display: none; }

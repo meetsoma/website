@@ -40,9 +40,10 @@ const recentPosts = posts.slice(0, 3);
         <span class="launch-arrow">→</span>
       </a>
 
-      <h1 class="portal-title">
-        The agent that <span class="portal-grad">remembers.</span>
+      <h1 class="portal-title" aria-label="The agent that remembers, learns, adapts, builds its own tools, and exhales.">
+        The agent that <span class="hero-track" aria-hidden="true"><span class="hero-rail"><span class="portal-grad">remembers.</span><span class="portal-grad">learns.</span><span class="portal-grad">adapts.</span><span class="portal-grad">builds its own tools.</span><span class="portal-grad">exhales.</span><span class="portal-grad">remembers.</span></span></span>
       </h1>
+      <p class="hero-note" aria-hidden="true"></p>
 
       <p class="portal-lede">
         <strong>meetsoma core</strong> is the harness Soma runs in. It ships open source with 0.50.0. <strong>Soma</strong> is the agent that lives in it.
@@ -217,6 +218,59 @@ const recentPosts = posts.slice(0, 3);
           } catch {}
         });
       });
+      // Hero "handoff" (cycle homepage-hero, option e): the last word rolls to the next like a session
+      // handing off, a quiet note says what was carried forward, and it rests on "remembers.". Plays once;
+      // hovering or tapping the title replays it. Static "remembers." without JS or under reduced motion.
+      (() => {
+        const title = document.querySelector('.portal-title') as HTMLElement | null;
+        const track = document.querySelector('.hero-track') as HTMLElement | null;
+        const rail = document.querySelector('.hero-rail') as HTMLElement | null;
+        const note = document.querySelector('.hero-note') as HTMLElement | null;
+        if (!title || !track || !rail || !note) return;
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const items = Array.from(rail.children) as HTMLElement[];
+        // One note per word, in the same order as the rail: what the agent carried into that state.
+        const notes = ['', 'carried forward: your corrections', "carried forward: this project's rules",
+          'carried forward: the scripts it wrote', 'carried forward: its own handoff', ''];
+        const STEP = 1700;
+        let timers: number[] = [];
+        let playing = false;
+        // A long phrase ("builds its own tools.") is wider than a phone's title line: shrink just that item to fit.
+        const shrink = () => {
+          const avail = title.clientWidth * 0.98;
+          items.forEach(el => {
+            el.style.transform = '';
+            const w = el.offsetWidth;
+            el.style.transformOrigin = 'left center';
+            if (w > avail) el.style.transform = `scale(${(avail / w).toFixed(3)})`;
+          });
+        };
+        const fit = (i: number) => { track.style.width = items[i].getBoundingClientRect().width + 'px'; };
+        const go = (i: number) => {
+          rail.style.transform = `translateY(${-1.08 * i}em)`;
+          fit(i);
+          note.textContent = notes[i] || '';
+          note.classList.toggle('on', !!notes[i]);
+        };
+        const play = () => {
+          if (playing) return;
+          playing = true;
+          timers.forEach(clearTimeout); timers = [];
+          track.classList.add('live');
+          go(0);
+          items.forEach((_, i) => { if (i) timers.push(window.setTimeout(() => go(i), i * STEP)); });
+          timers.push(window.setTimeout(() => { playing = false; }, items.length * STEP));
+        };
+        shrink();
+        fit(0);
+        // Widths change when the webfont arrives; measure again then.
+        document.fonts?.ready.then(() => window.dispatchEvent(new Event('resize')));
+        window.addEventListener('resize', () => { shrink(); }, { passive: true });
+        window.addEventListener('resize', () => fit(Math.round(-parseFloat(rail.style.transform.replace(/[^-.0-9]/g, '') || '0') / 1.08)));
+        window.setTimeout(play, 900);
+        title.addEventListener('mouseenter', play);
+        title.addEventListener('click', play);
+      })();
     </script>
 
     <!-- The Breath — visual storytelling -->
@@ -594,6 +648,15 @@ const recentPosts = posts.slice(0, 3);
   .launch-arrow { color: var(--moon-bright); transition: transform .25s; }
   .launch-pill:hover .launch-arrow { transform: translateX(3px); }
 
+  /* Hero handoff (cycle homepage-hero, option e) */
+  .hero-track { display: inline-block; position: relative; overflow: hidden; vertical-align: bottom; height: 1.08em;
+                transition: width .9s cubic-bezier(.7,0,.2,1); }
+  .hero-rail { display: inline-flex; flex-direction: column; align-items: flex-start; transition: transform .9s cubic-bezier(.7,0,.2,1); }
+  .hero-rail > span { display: block; height: 1.08em; line-height: 1.08em; white-space: nowrap; }
+  .hero-note { margin: calc(-1 * var(--space-lg, 16px)) 0 var(--space-lg, 16px); min-height: 1.3em; font-family: var(--font-mono);
+               font-size: .8rem; color: var(--ink-muted); text-align: center; opacity: 0; transition: opacity .5s ease; }
+  .hero-note.on { opacity: .85; }
+  @media (prefers-reduced-motion: reduce) { .hero-track, .hero-rail { transition: none; } }
   .portal-title {
     font-size: clamp(2.6rem, 6.4vw, 5.2rem);
     line-height: 1.02;
