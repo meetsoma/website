@@ -17,12 +17,14 @@
       "version": "0.50.0",
       "date": "2026-10-02",
       "title": "meetsoma core goes open source",
-      "tagline": "The harness Soma runs on ships from a public repo now, with a fresh version count to match.",
+      "tagline": "Install from npm, read the full runtime on GitHub, and pick up right where you left off — session management, transcript reduction, and browser tools all landed in the same release.",
       "features": {
         "added": [
-          "meetsoma core is open source: install with `npm i -g meetsoma`, read the full runtime at github.com/meetsoma/core.",
-          "No more request-access form. /open-source replaces the old sign-up page with install, contribute, and ladder info.",
-          "A coming-from-the-beta guide for anyone who installed Soma before this release."
+          "Find any session and jump back in — soma attach lists running sessions, soma start reopens stopped ones with full history. soma preload lets you pick a handoff lane by number.",
+          "Shrink a long transcript without losing work — /reduce strips ~60% while keeping the original untouched; /resume-reduced continues in the smaller copy so you can keep going instead of rotating.",
+          "soma -c continues YOUR session, not whichever delegated child wrote last — no more reconnecting to a scout after a delegation burst.",
+          "Browser tells you the truth before you debug — soma:browser.health proves a tab is painted, hydrated, and running your latest build, so you never chase a ghost in a stale page.",
+          "Address a peer directly from your output — @s01-xxxxxx sends an inbox letter, closing the delegation loop inside the session instead of through a separate tool."
         ],
         "changed": [
           "Versions 0.43–0.49 were never released. 0.50.0 starts the open-source line; everything before it is preserved at the legacy changelog."
@@ -1305,7 +1307,37 @@
   "shippingSoonNote": "HAND-CURATED. Rendered by src/pages/roadmap/index.astro (was hardcoded markup until s01-016071). Every entry MUST carry a resolvable `cycle` — test-release-surfaces.sh fails on a claim with no plan behind it. Curate at release time; see RELEASE-FLOW.md W1.",
   "shippingSoon": [
     {
-      "title": "Somaverse public beta",
+      "title": "Project trust — run code only after you approve it",
+      "blurb": "Opening a cloned project never runs its code until you say yes. A trust check gates every `.soma/` from an untrusted source, so downloading and reading a repo is safe by default.",
+      "status": "in-progress",
+      "cycle": "releases/cycles/project-trust"
+    },
+    {
+      "title": "Web search, included with your Soma",
+      "blurb": "A registered Soma can search the web from inside a session — no separate API key, no separate account. Built on your own SearXNG instance so the results stay private.",
+      "status": "in-progress",
+      "cycle": "releases/cycles/soma-search-api"
+    },
+    {
+      "title": "Packages — one name for every add-on",
+      "blurb": "Skills, extensions, and themes share one format and one name: a package. Each keeps its author's licence. Publish to the hub with a single command; install from anyone's.",
+      "status": "in-progress",
+      "cycle": "releases/cycles/soma-packages"
+    },
+    {
+      "title": "Blog posts that show what changed and when",
+      "blurb": "Every post on the Soma blog carries a version history — readers can see exactly what was added, changed, or fixed in each release a post covers, without leaving the page.",
+      "status": "planned",
+      "cycle": "releases/cycles/blog-versions"
+    },
+    {
+      "title": "Contributor kit — dev tools for registered contributors",
+      "blurb": "A curated set of tools, docs, and conventions for anyone who builds on meetsoma core. Registration gets you the kit; the kit gets you building the same way the core team does.",
+      "status": "planned",
+      "cycle": "releases/cycles/contributor-kit"
+    },
+    {
+      "title": "Somaverse sign-in — `soma login` opens your cloud workspace",
       "blurb": "Open registration, team workspaces, and pane drag-and-drop. The visual workspace for your agent — already live at somaverse.ai.",
       "status": "in-progress",
       "cycle": "../somaverse/.soma/cycles/somaverse-connection"
@@ -1315,12 +1347,6 @@
       "blurb": "Soma reaches you when a decision is needed. The file-based inbox works today — a delegated child can already write a report straight to its parent. Push notifications next.",
       "status": "in-progress",
       "cycle": "releases/cycles/children/child-parent-comms"
-    },
-    {
-      "title": "CLI convergence",
-      "blurb": "Less wrapping around the Pi engine. Upstream flags pass through cleanly, so the commands you already know keep working.",
-      "status": "in-progress",
-      "cycle": "releases/cycles/_archive/pi-native-simplification"
     },
     {
       "title": "Desktop app — signed builds, every platform",
