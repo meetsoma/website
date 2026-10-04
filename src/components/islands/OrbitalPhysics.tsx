@@ -42,49 +42,49 @@ const NODES: NodeDef[] = [
     color: 'accent', sublabel: 'the human',
     description: 'Soma learns from you. Your corrections become muscles, your preferences become protocols.',
     details: ['Corrections → muscles', 'Preferences → protocols', 'Context carries across sessions'],
-    href: '#' },
+    href: '/docs/getting-started/' },
   { id: 'pi', label: 'Pi', icon: 'pi', ring: 'inner', homeAngle: 315, orbitPct: 0.39,
     color: 'accent', sublabel: 'runtime',
     description: 'The engine underneath. Pi provides the extension system, tool access, and agent lifecycle.',
     details: ['27 extension events', 'TypeScript extensions', 'Tool & permission system'],
-    href: '#extensions' },
+    href: '/docs/install-architecture/' },
   { id: 'memory', label: 'Memory', icon: 'memory', ring: 'inner', homeAngle: 90, orbitPct: 0.39,
     color: 'warm', sublabel: '.soma/',
     description: 'Everything Soma learns persists in .soma/ — sessions, preloads, identity, and state.',
     details: ['Session logs', 'Preload continuations', 'Identity & state.json'],
-    href: '#' },
+    href: '/docs/memory-layout/' },
 
   // Outer ring — AMPS
   { id: 'automations', label: 'Automations', icon: 'automations', ring: 'outer', homeAngle: 0, orbitPct: 0.76,
     color: 'accent',
     description: 'Triggered action sequences — session start, post-commit, pre-deploy. Procedural flows that fire automatically.',
     details: ['Session start sequences', 'Post-commit verification', 'Pre-deploy checklists', 'Heat-tracked loading'],
-    href: '#automations' },
+    href: '/docs/maps/' },
   { id: 'muscles', label: 'Muscles', icon: 'muscles', ring: 'outer', homeAngle: 60, orbitPct: 0.76,
     color: 'accent',
     description: 'Learned patterns built from experience. Muscle memory that grows stronger with use.',
     details: ['Encode repeated workflows', 'Digest blocks for efficient loading', 'Heat up with use, fade when idle', 'Community-shareable'],
-    href: '#muscles' },
+    href: '/docs/muscles/' },
   { id: 'protocols', label: 'Protocols', icon: 'protocols', ring: 'outer', homeAngle: 120, orbitPct: 0.76,
     color: 'accent',
     description: 'Behavioral rules — not how to do a task, but how to be. Drop one in and the agent adapts.',
     details: ['Adaptive behavioral rules', 'Heat-based loading priority', 'TL;DR for token efficiency', 'Fork & customize'],
-    href: '#protocols' },
+    href: '/docs/protocols/' },
   { id: 'scripts', label: 'Scripts', icon: 'scripts', ring: 'outer', homeAngle: 180, orbitPct: 0.76,
     color: 'accent',
     description: 'Reusable bash tools the agent builds for itself and for you. Health checks, ship cycles, verification.',
     details: ['Health checks & verification', 'Ship cycles (test→commit→push)', 'Content auditing', 'Auto-discovered at boot'],
-    href: '#scripts' },
+    href: '/docs/scripts/' },
   { id: 'extensions', label: 'Extensions', icon: 'extensions', ring: 'outer', homeAngle: 240, orbitPct: 0.76,
     color: 'muted',
     description: 'TypeScript hooks into Pi\'s lifecycle. Boot sequences, custom UI, slash commands, background processes.',
     details: ['Boot sequences & identity', 'Custom headers & statuslines', 'Slash commands', 'Context monitoring'],
-    href: '#extensions' },
+    href: '/docs/extending/' },
   { id: 'skills', label: 'Skills', icon: 'skills', ring: 'outer', homeAngle: 300, orbitPct: 0.76,
     color: 'muted',
     description: 'Markdown files that give the agent domain expertise. Task-matched instructions loaded on demand.',
     details: ['Domain-specific instructions', 'Tool usage patterns', 'Decision frameworks', 'Auto-matched to tasks'],
-    href: '#skills' },
+    href: '/docs/skills/' },
 ];
 
 // ── Physics constants ──
@@ -118,6 +118,7 @@ export default function OrbitalPhysics() {
     centerX: number; centerY: number;
     halfSize: number;
     scale: number;
+    press: { id: string; x: number; y: number; t: number } | null;
     raf: number;
   }>({
     nodes: new Map(),
@@ -127,6 +128,7 @@ export default function OrbitalPhysics() {
     centerX: 0, centerY: 0,
     halfSize: 0,
     scale: 1,
+    press: null,
     raf: 0,
   });
 
@@ -335,6 +337,8 @@ export default function OrbitalPhysics() {
       }
       if (closest) {
         e.preventDefault();
+        // A press that barely moves and releases quickly is a CLICK: open that node's doc page (onMouseUp).
+        p.press = { id: closest, x: pos.x, y: pos.y, t: Date.now() };
         // Just mark as grabbed — physics handles the rest
         p.draggingId = closest;
         setActiveNode(closest);
@@ -342,7 +346,16 @@ export default function OrbitalPhysics() {
       }
     };
 
+    const openIfClick = () => {
+      const pr = p.press; p.press = null;
+      if (!pr) return;
+      const moved = Math.hypot(p.mouseX - pr.x, p.mouseY - pr.y);
+      const def = NODES.find(n => n.id === pr.id);
+      if (def && def.href.startsWith('/') && moved < 8 && Date.now() - pr.t < 450) window.location.href = def.href;
+    };
+
     const onMouseUp = () => {
+      openIfClick();
       if (p.draggingId) {
         p.draggingId = null;
         setActiveNode(null);
@@ -380,6 +393,7 @@ export default function OrbitalPhysics() {
       }
       if (closest) {
         e.preventDefault();
+        p.press = { id: closest, x: pos.x, y: pos.y, t: Date.now() };
         p.draggingId = closest;
         setActiveNode(closest);
       }
@@ -707,6 +721,7 @@ export default function OrbitalPhysics() {
               <li key={i}>{d}</li>
             ))}
           </ul>
+          {activeDef.href.startsWith('/') && <p class="orbital-info-more">Click to read the docs →</p>}
         </div>
       )}
 
@@ -727,8 +742,13 @@ export default function OrbitalPhysics() {
           pointerEvents: 'none',
         }}
       >
-        drag a node to explore
+        drag a node to explore · click to open its docs
       </div>
+      {/* The same destinations as plain links, for keyboards, screen readers and crawlers. */}
+      <nav class="orbital-sr-links" aria-label="Somaverse parts">
+        <a href="https://somaverse.ai/">Somaverse</a>
+        {NODES.filter(n => n.href.startsWith('/')).map(n => <a key={n.id} href={n.href}>{n.label}</a>)}
+      </nav>
     </div>
   );
 }

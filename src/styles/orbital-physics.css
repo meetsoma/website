@@ -114,3 +114,17 @@
 [data-compact="true"] .orbital-sublabel,
 [data-compact="true"] .orbital-center-title,
 [data-compact="true"] .orbital-mascot { display: none; }
+
+.orbital-info-more {
+  margin: 10px 0 0;
+  font-size: 0.74rem;
+  color: var(--accent);
+}
+
+/* Visually hidden, still in the tab order and the accessibility tree. */
+.orbital-sr-links a {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.orbital-sr-links a:focus { left: 50%; bottom: -64px; transform: translateX(-50%); width: auto; height: auto; clip: auto;
+  overflow: visible; z-index: 50; background: var(--surface-card-strong); color: var(--ink); padding: 6px 10px;
+  border-radius: 8px; border: 1px solid var(--border-accent); }
